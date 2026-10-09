@@ -82,7 +82,7 @@
 \textbf{記号} & \textbf{意味} \\
 \midrule
 $\phi$, $m$ & 実スカラー場と、その（繰り込まれた）質量 \\
-$g$ & 3点結合定数（旧模型ファイルの $\lambda$ と同じ）。$d=4$ では質量次元1、$d=6$ では無次元 \\
+$g$ & 3点結合定数（旧模型ファイルの $\lambda$、模型ファイル \texttt{Src/Phi3.fr} の \texttt{gphi} と同じ）。$d=4$ では質量次元1、$d=6$ では無次元 \\
 $Y$ & 線形項の係数。タドポールを打ち消すように決める \\
 $d$, $D$, $\epsilon$ & 時空次元（4 または 6）、正則化した次元 $D=d-2\epsilon$、その差 \\
 $\mu$ & 繰り込みスケール。結合定数の次元を補う因子 $\mu^\epsilon$ に現れる \\
@@ -317,7 +317,9 @@ $d=6$：有限部分 & Feynman パラメータ積分の数値 & — & 使えな�
 
 \paragraph{タドポールの扱い。}本ノートでは、$Y$ でタドポールを打ち消す方法をとった。これは1ループでは、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除くことと同じである。2ループ以上では、ループの内側にタドポールが付いた図も $Y$ の高次の項で消えるので、同じ除き方で済むかどうかを確かめる必要がある。
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1) から始める。最初に作る \texttt{Phi3.fr} は、旧模型ファイルの記号 \texttt{lam} を \texttt{g} に変えたものになる。
+\paragraph{模型ファイル。}第~\ref{sec:plan} 節の手順 (1) として、FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
+
+\paragraph{今後。}次は第~\ref{sec:plan} 節の手順 (2)、木の振幅の検算である。
 
 \appendix
 

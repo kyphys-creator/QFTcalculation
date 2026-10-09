@@ -1,0 +1,81 @@
+(* ::Package:: *)
+
+(* Phi3.fr -- FeynRules model file for the phi^3 toy model
+   (models/phi3/ResearchNote/note.tex, Eq. (1)).
+
+   L = 1/2 (d phi)^2 - 1/2 m^2 phi^2 - g/3! phi^3        (g is called gphi here)
+
+   - phi: one real scalar of mass m.  The coupling g of the note is the parameter
+     gphi (TeX "g").  It cannot be called g: FeynRules' UFO writer then hits
+     $RecursionLimit.  gphi equals lam in the old backup file
+     (models/backup_20261009/feynrules_Library_Models/Phi3/Phi3.fr), whose kinetic
+     term was written D[phi, mu] and therefore vanished.
+   - Only the 4-dimensional tree-level Lagrangian is here.  The linear term
+     Y phi (tadpole cancellation), the counterterms and the factor mu^eps are
+     added when the loop calculation is set up (FeynCalc), as in the note.
+   - Feynman rules: propagator i/(p^2-m^2), vertex -I gphi.
+   - Load from this folder:
+       $FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}];
+       SetDirectory[$FeynRulesPath]; << FeynRules`
+       SetDirectory[".../models/phi3/Src"]; LoadModel["Phi3.fr"]
+*)
+
+M$ModelName = "Phi3";
+
+M$Information = {
+  Authors -> {"K. Yasuda"},
+  Date    -> "2026-10-09",
+  Version -> "1.0",
+  Comment -> "Real scalar phi^3 toy model (cross-check model for the loop stack)"
+};
+
+(* gphi is the only coupling; PHI counts its powers (MadGraph coupling order) *)
+M$InteractionOrderHierarchy = {
+  {PHI, 1}
+};
+
+(* ************************** *)
+(* *****   Parameters   ***** *)
+(* ************************** *)
+
+M$Parameters = {
+  gphi == {
+    ParameterType    -> External,
+    BlockName        -> PHI3BLOCK,
+    OrderBlock       -> 1,
+    Value            -> 1.0,
+    InteractionOrder -> {PHI, 1},
+    TeX              -> "g",
+    Description      -> "Cubic coupling (mass dimension 1 in d = 4)"
+  }
+};
+
+(* ************************** *)
+(* *****   Particles    ***** *)
+(* ************************** *)
+
+(* The mass m and the width wphi are declared through Mass/Width:
+   FeynRules adds them as external parameters (blocks MASS and DECAY). *)
+M$ClassesDescription = {
+  S[1] == {
+    ClassName       -> phi,
+    SelfConjugate   -> True,
+    Mass            -> {m, 1.0},
+    Width           -> {wphi, 0},
+    PDG             -> 9000001,
+    PropagatorLabel -> "phi",
+    PropagatorType  -> ScalarDash,
+    PropagatorArrow -> None,
+    ParticleName    -> "phi",
+    FullName        -> "phi",
+    Description     -> "Real scalar field"
+  }
+};
+
+(* ************************** *)
+(* *****   Lagrangian   ***** *)
+(* ************************** *)
+
+(* del[phi, mu] is the partial derivative.  (Mathematica's D[phi, mu] would
+   differentiate with respect to the symbol mu and give 0.) *)
+LPhi3 := 1/2 del[phi, mu] del[phi, mu] - 1/2 m^2 phi^2 - gphi/6 phi^3;
