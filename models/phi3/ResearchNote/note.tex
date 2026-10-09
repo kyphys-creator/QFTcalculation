@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usetikzlibrary{arrows.meta,calc,positioning}
 \usepackage[font=small,labelfont=bf]{caption}
+\usepackage{graphicx}
 \usepackage{xurl}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
@@ -40,7 +41,7 @@
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、最小引き算の対抗項は質量項 $\delta_m=g^2/(2(4\pi)^2\epsilon)$ だけが残る（$\delta_Z=\delta_g=0$）。$d=6$ では三つとも発散し、$\delta_Z=-g^2/(12(4\pi)^3\epsilon)$、$\delta_m=-g^2m^2/(2(4\pi)^3\epsilon)$、$\delta_g=-g^3/(2(4\pi)^3\epsilon)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その最初の二段階を実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、最小引き算の対抗項は質量項 $\delta_m=g^2/(2(4\pi)^2\epsilon)$ だけが残る（$\delta_Z=\delta_g=0$）。$d=6$ では三つとも発散し、$\delta_Z=-g^2/(12(4\pi)^3\epsilon)$、$\delta_m=-g^2m^2/(2(4\pi)^3\epsilon)$、$\delta_g=-g^3/(2(4\pi)^3\epsilon)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その最初の三段階を実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分 $B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $4\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \section{目的と問い}\label{sec:intro}
@@ -49,7 +50,7 @@
 
 求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) 最小引き算（MS）の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、$d=4$ の質量の走り）。(iv) 木レベルの $\phi\phi\to\phi\phi$ 振幅。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)、(2) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:xsec} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(3) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:b0} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -313,7 +314,7 @@ $d=6$：有限部分 & Feynman パラメータ積分の数値 & — & 使えな�
 
 \section{検算の結果}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順のうち、(1) 模型ファイルの作成と (2) 木の振幅の検算を行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順のうち、(1) 模型ファイルの作成、(2) 木の振幅の検算、(3) $d=4$ の1ループの検算を行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も \texttt{Src/generated/} に書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
 
@@ -342,13 +343,57 @@ $\sqrt{s}$ [GeV] & 解析式 [pb] & MadGraph [pb] & 差／誤差 \\
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (3)：$d=4$ の1ループ。}三つの観点から確かめた。まず図と規格化である。\texttt{Src/generated/Phi3\_FA} から FeynArts でタドポール・自己エネルギー・三角形の1PI 図を作ると、それぞれ1つずつ現れた。自己エネルギーではタドポールの付いた図を、三角形ではそれに加えて外線の自己エネルギーを除いた。\texttt{PreFactor -> 1} としてテンソル積分を FeynCalc で PaVe 関数まで簡約すると、振幅は
+\begin{equation}
+A_1=\frac{i\pi^2g}{2}\,A_0(m^2),\qquad
+A_2=\frac{i\pi^2g^2}{2}\,B_0(p^2;m^2,m^2),\qquad
+A_3=i\pi^2g^3\,C_0
+\label{eq:A123}
+\end{equation}
+となった。これは図~\ref{fig:rules} の Feynman 則と、対称性因子 $1/2,\ 1/2,\ 1$ から予想される形と記号として一致する。FeynCalc の PaVe 関数は $\int\dd^Dq\,(\cdots)=i\pi^2\times\mathrm{PaVe}$ で定義されている。$A_n$ は測度 $\dd^Dq$ で書いた値なので、本ノートの $V_n$（測度 $\dd^Dq/(2\pi)^D$）とは $V_n=A_n/(2\pi)^D$ の関係にある。
+
+次に発散部分である。Package-X（FeynHelpers 経由）で $A_n$ を $\epsilon$ について展開し、$V_n$ の $1/\epsilon$ の係数を取り出した。その値は、$V_1$ が $igm^2/(2(4\pi)^2)$、$V_2$ が $ig^2/(2(4\pi)^2)$、$V_3$ が $0$ で、表~\ref{tab:poles} の $d=4$ の列に式~\eqref{eq:V} の係数を掛けたものと一致した。$V_2$ の極が式~\eqref{eq:V} の対抗項で消える条件から、$\delta_Z=0$、$\delta_m=g^2/(2(4\pi)^2\epsilon)$、$\delta_g=0$ を得た。これは式~\eqref{eq:ct4} の再現である。
+
+最後に有限部分である。$A_0$、$B_0$、$C_0$ を、LoopTools の規約（$\Delta=0$、$\mu=m=1$）で比べた。これは $\overline{\mathrm{MS}}$ の有限部分にあたる。FeynCalc の規格化とは $B_0^{\mathrm{FC}}=1/\epsilon-\gamma_E-\ln\pi+B_0^{\mathrm{LT}}$ の関係にある。$B_0$ の基準値は\ref{app:b0} で導く閉じた式で、これは30桁で計算した Feynman パラメータ積分とも相対 $10^{-17}$ 以下で一致する。$p^2/m^2=-10$ から $30$ までの15点で、Package-X・LoopTools・COLLIER の値は、いずれも閉じた式と相対 $4.4\times10^{-15}$ 以内で一致した（表~\ref{tab:oneloop4}、図~\ref{fig:b0}）。閾値より上の6点では、三つとも虚部が $\mathrm{Im}\,B_0=\pi\beta$（$\beta=\sqrt{1-4m^2/p^2}$）を相対 $2\times10^{-15}$ 以内で満たした。これは光学定理の表れで、自己エネルギー $\Sigma\equiv iV_2$ について $\mathrm{Im}\,\Sigma=-\sqrt{p^2}\,\Gamma(\phi^*\to\phi\phi)$ と書ける（\ref{app:b0}）。$C_0$ の基準値は、閾値より下の点では Feynman パラメータの2重積分（30桁）、閾値より上の点では Package-X とした。
+
+この比較で、ツールの不具合と制限が三つ見つかった。第一に、この Mac でビルドした LoopTools 2.16 は、閾値より下で外運動量がゼロでない $C_0$ を誤って返す。例えば $C_0(1,1,1)$ は $-0.671253$ であるべきところ、$6.872+34.19\,i$ となる。Fortran から直接呼ぶと計算が終わらない。この振る舞いは gfortran 14 と 15、最適化の有無のいずれでも変わらない。LoopTools の $A_0$、$B_0$ と、閾値より上の $C_0$ は正しい。第二に、COLLIER の $C_0$ は外運動量がすべて厳密にゼロの場合を扱わず（エラー出力は ``case not implemented''）、番兵値 $10^{50}$ を返す。運動量をわずかにずらせば正しい極限に近づく。第三に、FeynHelpers で Package-X の $C_0$ を展開した式（\texttt{PaXC0Expand -> True}）は、適用範囲付きの式（\texttt{ConditionalExpression}）で、閾値より下では値を持たない。Package-X 本体の数値関数 \texttt{ScalarC0} は全点で正しく評価できたので、それを使った。
+
+\begin{table}[tbp]
+\centering\small
+\caption{$d=4$ の有限部分の比較（$m=\mu=1$、$\Delta=0$）。数値は基準値からの相対的なずれで、$B_0$ と $\mathrm{Im}\,B_0/(\pi\beta)$ は全点での最大値である。$C_0(p_1^2,p_2^2,(p_1+p_2)^2)$ の内線の質量はすべて $m$。$C_0$ の基準値は、閾値より下では Feynman パラメータ積分、閾値より上では Package-X である。}
+\label{tab:oneloop4}
+\begin{tabular}{llccc}
+\toprule
+量 & 基準値 & Package-X & LoopTools & COLLIER \\
+\midrule
+$A_0(m^2)$ & $1$（厳密） & $0$ & $0$ & $0$ \\
+$B_0(p^2)$、15点 & 閉じた式 & $4.4\times10^{-16}$ & $4.4\times10^{-15}$ & $1.5\times10^{-15}$ \\
+$\mathrm{Im}\,B_0/(\pi\beta)$、6点 & $1$ & $2.0\times10^{-15}$ & $2.2\times10^{-16}$ & $2.2\times10^{-16}$ \\
+$C_0(0,0,0)$ & $-1/2$ & $0$ & $0$ & 扱えない \\
+$C_0(1,1,1)$ & $-0.671253105748$ & $1.7\times10^{-17}$ & $52$（誤り） & $1.5\times10^{-16}$ \\
+$C_0(1,1,3.5)$ & $-1.101657275584$ & $3.8\times10^{-17}$ & $12$（誤り） & $5.2\times10^{-15}$ \\
+$C_0(1,1,5)$ & $-1.046775104156-0.973846104955\,i$ & 基準 & $3.2\times10^{-16}$ & $4.7\times10^{-16}$ \\
+$C_0(1,1,10)$ & $-0.204564231729-0.789218088790\,i$ & 基準 & $3.0\times10^{-16}$ & $5.8\times10^{-16}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.6\linewidth]{../figs/b0_d4.pdf}
+\caption{$B_0(p^2;m,m)$ の実部（上）と虚部（下）（$m=\mu=1$、$\Delta=0$）。実線は\ref{app:b0} の閉じた式、記号は Package-X・LoopTools・COLLIER の値、下の破線は $\pi\beta$、点線は閾値 $p^2=4m^2$ である。}
+\label{fig:b0}
+\end{figure}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{決まっていないこと。}有限部分の規約（$\overline{\mathrm{MS}}$ か on-shell か）は、有限部分を比べる段階で決める必要がある。on-shell にすると、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$d=6$ の有限部分は Package-X と LoopTools で検算できないので、Feynman パラメータ積分の数値計算が唯一の独立な検算になる。2ループ用に推奨された pySecDec などが入れば、それが二つ目の検算手段になる~\cite{review}。
 
 \paragraph{タドポールの扱い。}本ノートでは、$Y$ でタドポールを打ち消す方法をとった。これは1ループでは、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除くことと同じである。2ループ以上では、ループの内側にタドポールが付いた図も $Y$ の高次の項で消えるので、同じ除き方で済むかどうかを確かめる必要がある。
 
-\paragraph{今後。}次は第~\ref{sec:plan} 節の手順 (3)、$d=4$ の1ループの検算である。極と対抗項（式~\eqref{eq:ct4}）を FeynCalc で、有限部分を Package-X・LoopTools・Feynman パラメータ積分の数値積分で確かめる。
+\paragraph{LoopTools の $C_0$。}手順 (3) で見つかった LoopTools の $C_0$ の誤りは、コンパイラの版や最適化によらない。そのため、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。当面、$C_0$ には Package-X と COLLIER を使い、LoopTools は $A_0$ と $B_0$ にだけ使う。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。
+
+\paragraph{今後。}次は第~\ref{sec:plan} 節の手順 (4)、$d=6$ の1ループの検算である。FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。
 
 \appendix
 
@@ -499,6 +544,80 @@ $E_i'=\sqrt{k^2+m^2}$ だから、$\dd(E_1'+E_2')/\dd k=k/E_1'+k/E_2'=k(E_1'+E_2
 t=(p_1-k_1)^2=2m^2-2(EE-p^2\cos\theta)=2m^2-2(p^2+m^2)+2p^2\cos\theta=-2p^2(1-\cos\theta).
 \end{equation*}
 $u=(p_1-k_2)^2$ は $\vec k_2=-\vec k_1$ なので $\cos\theta\to-\cos\theta$ として $u=-2p^2(1+\cos\theta)$ である。確かに $s+t+u=4p^2+4m^2-4p^2=4m^2$ を満たす。
+
+\section{$B_0$ の閉じた式と虚部の導出}\label{app:b0}
+
+\paragraph{出発点。}式~\eqref{eq:IN-general} で $N=2$、$q_1=0$、$q_2=p$ とすると $\Delta=m^2-x(1-x)p^2$ であり、
+\begin{equation*}
+I_2=\frac{i\,\Gamma(\epsilon)}{(4\pi)^{2-\epsilon}}\int_0^1\dd x\,\Delta^{-\epsilon}=\frac{i}{(4\pi)^2}\,\Gamma(\epsilon)(4\pi)^{\epsilon}\int_0^1\dd x\,\Delta^{-\epsilon}
+\end{equation*}
+となる。$\Delta\le0$ となる運動学では $m^2\to m^2-i0$ なので、$\Delta\to\Delta-i0$ と読む。$\Gamma(\epsilon)=\Gamma(1+\epsilon)/\epsilon=1/\epsilon-\gamma_E+O(\epsilon)$（$\Gamma'(1)=-\gamma_E$）、$(4\pi)^\epsilon=1+\epsilon\ln4\pi+O(\epsilon^2)$、$\Delta^{-\epsilon}=1-\epsilon\ln\Delta+O(\epsilon^2)$ より、
+\begin{equation*}
+\Gamma(\epsilon)(4\pi)^\epsilon\Delta^{-\epsilon}=\frac1\epsilon-\gamma_E+\ln4\pi-\ln\Delta+O(\epsilon).
+\end{equation*}
+結合定数から来る $\mu^{2\epsilon}=1+2\epsilon\ln\mu+O(\epsilon^2)$ を掛けると $\ln\Delta\to\ln(\Delta/\mu^2)$ となるので、
+\begin{gather*}
+\mu^{2\epsilon}I_2=\frac{i}{(4\pi)^2}\Bigl[\Delta_{\mathrm{UV}}+B_0(p^2;m,m)\Bigr]+O(\epsilon),\\
+\Delta_{\mathrm{UV}}\equiv\frac1\epsilon-\gamma_E+\ln4\pi,\qquad
+B_0(p^2;m,m)\equiv-\int_0^1\dd x\,\ln\frac{m^2-x(1-x)p^2-i0}{\mu^2}
+\end{gather*}
+を得る。この $B_0$ が LoopTools の規約（$\Delta=0$）の値で、$\overline{\mathrm{MS}}$ の有限部分にあたる。$a\equiv p^2/m^2$、$D(x)\equiv1-ax(1-x)$ と置くと、$m^2>0$ より
+\begin{equation*}
+B_0=-\ln\frac{m^2}{\mu^2}-I(a),\qquad I(a)\equiv\int_0^1\dd x\,\ln\bigl(D(x)-i0\bigr).
+\end{equation*}
+
+\paragraph{補助積分。}実数 $c$ に対して
+\begin{equation*}
+\int_0^1\dd x\,\ln|x-c|=(1-c)\ln|1-c|+c\ln|c|-1
+\end{equation*}
+が成り立つ。実際、$x\ne c$ で $\frac{\dd}{\dd x}\bigl[(x-c)\ln|x-c|-x\bigr]=\ln|x-c|$ であり、この原始関数は $t\ln|t|\to0$（$t\to0$）より $x=c$ でも連続なので、両端の値の差が上式になる。
+
+\paragraph{根。}$a\ne0$ のとき $D(x)=ax^2-ax+1=a(x-x_+)(x-x_-)$、$x_\pm=(1\pm\beta)/2$、$\beta\equiv\sqrt{1-4/a}$ と因数分解できる。根と係数の関係から $x_++x_-=1$、$x_+x_-=1/a$ であり、$x_+-x_-=\beta$、$1-x_\pm=x_\mp$、$2x_\pm-1=\pm\beta$ が成り立つ。$\beta$ は $a<0$ で $\beta>1$、$a>4$ で $0<\beta<1$ の実数である。
+
+\paragraph{$a<0$。}$x_-=(1-\beta)/2<0$、$x_+>1$ なので、$[0,1]$ 上で $(x-x_+)(x-x_-)<0$ であり、$a<0$ と合わせて $D>0$ となる（$i0$ は効かない）。よって $\ln D=\ln(-a)+\ln|x-x_+|+\ln|x-x_-|$ である。補助積分と $1-x_\pm=x_\mp$ から
+\begin{equation*}
+\int_0^1\ln|x-x_+|\,\dd x=x_-\ln|x_-|+x_+\ln x_+-1,\qquad
+\int_0^1\ln|x-x_-|\,\dd x=x_+\ln x_++x_-\ln|x_-|-1 .
+\end{equation*}
+また $|x_+x_-|=-1/a$ から $\ln(-a)=-\ln x_+-\ln|x_-|$ である。これらを足すと、$|x_-|=(\beta-1)/2$ を使って
+\begin{equation*}
+I(a)=-2+(2x_+-1)\ln x_++(2x_--1)\ln|x_-|=-2+\beta\ln\frac{x_+}{|x_-|}=-2+\beta\ln\frac{\beta+1}{\beta-1}
+\end{equation*}
+となり、$B_0=-\ln(m^2/\mu^2)+2+\beta\ln\dfrac{\beta-1}{\beta+1}$ を得る。
+
+\paragraph{$a>4$。}$0<x_-<x_+<1$ で、$x_-<x<x_+$ では $D<0$ である。$D-i0$ の偏角は $-\pi$ なので、そこでは $\ln(D-i0)=\ln|D|-i\pi$ となる。$\ln|D|=\ln a+\ln|x-x_+|+\ln|x-x_-|$ に、上と同じ補助積分（今度は $x_\pm>0$）と $\ln a=-\ln x_+-\ln x_-$ を使うと、
+\begin{gather*}
+\mathrm{Re}\,I(a)=-2+(2x_+-1)\ln x_++(2x_--1)\ln x_-=-2+\beta\ln\frac{x_+}{x_-}=-2+\beta\ln\frac{1+\beta}{1-\beta},\\
+\mathrm{Im}\,I(a)=-\pi(x_+-x_-)=-\pi\beta
+\end{gather*}
+となる。よって $B_0=-\ln(m^2/\mu^2)+2+\beta\ln\dfrac{1-\beta}{1+\beta}+i\pi\beta$ である。
+
+\paragraph{$a=0$ と $a=4$。}$a=0$ では $D=1$ で $I=0$、$B_0=-\ln(m^2/\mu^2)$ である。$a=4$ では $D=(1-2x)^2\ge0$ で、$u=1-2x$ と置くと $I=2\int_0^1\ln|1-2x|\,\dd x=\int_{-1}^{1}\ln|u|\,\dd u=2\int_0^1\ln u\,\dd u=-2$ となり、$B_0=-\ln(m^2/\mu^2)+2$ である。
+
+\paragraph{$0<a<4$。}$D>0$ で実根を持たない。部分積分すると、$D(1)=1$ より境界項が消えて
+\begin{equation*}
+I(a)=\bigl[x\ln D\bigr]_0^1-\int_0^1\dd x\,\frac{xD'(x)}{D(x)}=-\int_0^1\dd x\,\frac{2ax^2-ax}{D(x)}
+\end{equation*}
+となる（$D'(x)=2ax-a$）。分子を $2ax^2-ax=2D(x)+(ax-2)$、さらに $ax-2=\tfrac12D'(x)+\tfrac{a-4}{2}$ と分け、$\int_0^1D'/D\,\dd x=[\ln D]_0^1=0$ を使うと、
+\begin{equation*}
+I(a)=-2-\frac{a-4}{2}\int_0^1\frac{\dd x}{D(x)} .
+\end{equation*}
+$D(x)=a\bigl[(x-\tfrac12)^2+b^2\bigr]$、$b^2=(4-a)/(4a)>0$ と平方完成すると、
+\begin{equation*}
+\int_0^1\frac{\dd x}{D(x)}=\frac{1}{ab}\Bigl[\arctan\frac{x-1/2}{b}\Bigr]_0^1=\frac{2}{ab}\arctan\frac{1}{2b}.
+\end{equation*}
+$\tilde\beta\equiv\sqrt{4/a-1}$ と置くと $(4-a)/(ab)=2\tilde\beta$、$1/(2b)=1/\tilde\beta$ なので、$I(a)=-2+2\tilde\beta\arctan(1/\tilde\beta)$、すなわち $B_0=-\ln(m^2/\mu^2)+2-2\tilde\beta\arctan(1/\tilde\beta)$ である。以上の五つの場合が、\texttt{oneloop4\_numeric.py} の閉じた式である。
+
+\paragraph{虚部と光学定理。}以上から $\mathrm{Im}\,B_0=\pi\beta\,\theta(p^2-4m^2)$ である。虚部は、二つの $\phi$ を実際に生成できる閾値 $p^2=4m^2$ から現れる。これを崩壊幅と結びつける。1PI の2点関数 $V_2$ を伝播関数 $D=i/(p^2-m^2)$ に繰り返し挿入すると、$D+DV_2D+\cdots=D/(1-V_2D)=i/(p^2-m^2-iV_2)$ となる。そこで自己エネルギーを $\Sigma\equiv iV_2$ と定義すると、完全な伝播関数は $i/(p^2-m^2-\Sigma)$ である。式~\eqref{eq:V} と上の結果から、有限部分は
+\begin{equation*}
+\Sigma=i\cdot\frac{g^2}{2}\,\mu^{2\epsilon}I_2=i\cdot\frac{g^2}{2}\cdot\frac{i}{(4\pi)^2}\bigl(\Delta_{\mathrm{UV}}+B_0\bigr)=-\frac{g^2}{2(4\pi)^2}\bigl(\Delta_{\mathrm{UV}}+B_0\bigr),\qquad
+\mathrm{Im}\,\Sigma=-\frac{g^2\pi\beta}{2(4\pi)^2}=-\frac{g^2\beta}{32\pi}
+\end{equation*}
+となる。一方、質量 $M\equiv\sqrt{p^2}>2m$ の $\phi^*$ が二つの $\phi$ に崩壊する幅を求める。木の振幅の大きさは頂点 $-ig$ から $|\mathcal{M}|=g$ である。\ref{app:xsec} の2体位相空間は、$k_f=M\beta/2$ を使って $\int\dd\Phi_2=4\pi k_f/(16\pi^2M)=\beta/(8\pi)$ となる。同種粒子の因子 $1/2$ も含めて
+\begin{equation*}
+\Gamma(\phi^*\to\phi\phi)=\frac{1}{2M}\cdot\frac12\cdot g^2\cdot\frac{\beta}{8\pi}=\frac{g^2\beta}{32\pi M}.
+\end{equation*}
+よって $\mathrm{Im}\,\Sigma=-M\,\Gamma(\phi^*\to\phi\phi)$ が成り立つ。これは自己エネルギーに対する光学定理（ユニタリー性）であり、完全な伝播関数が $i/(p^2-m^2-\mathrm{Re}\,\Sigma+iM\Gamma)$ という Breit--Wigner 形になることと整合する。
 
 \begin{thebibliography}{9}
 \small
