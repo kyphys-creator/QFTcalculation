@@ -40,7 +40,7 @@
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、最小引き算の対抗項は質量項 $\delta_m=g^2/(2(4\pi)^2\epsilon)$ だけが残る（$\delta_Z=\delta_g=0$）。$d=6$ では三つとも発散し、$\delta_Z=-g^2/(12(4\pi)^3\epsilon)$、$\delta_m=-g^2m^2/(2(4\pi)^3\epsilon)$、$\delta_g=-g^3/(2(4\pi)^3\epsilon)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定める。比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$ がその内容である。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、最小引き算の対抗項は質量項 $\delta_m=g^2/(2(4\pi)^2\epsilon)$ だけが残る（$\delta_Z=\delta_g=0$）。$d=6$ では三つとも発散し、$\delta_Z=-g^2/(12(4\pi)^3\epsilon)$、$\delta_m=-g^2m^2/(2(4\pi)^3\epsilon)$、$\delta_g=-g^3/(2(4\pi)^3\epsilon)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その最初の二段階を実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \section{目的と問い}\label{sec:intro}
@@ -49,7 +49,7 @@
 
 求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) 最小引き算（MS）の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、$d=4$ の質量の走り）。(iv) 木レベルの $\phi\phi\to\phi\phi$ 振幅。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:tree} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)、(2) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:xsec} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -311,15 +311,44 @@ $d=6$：有限部分 & Feynman パラメータ積分の数値 & — & 使えな�
 
 \paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。
 
+\section{検算の結果}\label{sec:checks}
+
+第~\ref{sec:plan} 節の手順のうち、(1) 模型ファイルの作成と (2) 木の振幅の検算を行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で再実行できる。
+
+\paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も \texttt{Src/generated/} に書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
+
+\paragraph{手順 (2)：木の振幅。}\texttt{Src/generated/Phi3\_FA} の FeynArts 模型から $\phi\phi\to\phi\phi$ の木の図を作ると、$s,t,u$ の3つが対称性因子 $1$ で現れた。FeynCalc で振幅を組み立てて Mandelstam 変数で書くと、式~\eqref{eq:Mtree} との差は記号として $0$ になった。数値でも、$\sqrt{s}=5$、$\cos\theta=0.3$、$m=g=1$ で $\mathcal{M}=0.1463531980$ となり、式~\eqref{eq:Mtree} を Python で評価した値と一致した。FeynArts の \texttt{CreateFeynAmp} は既定で因子 $-i$ を掛けるので、出力は図の和 $i\mathcal{M}$ ではなく $\mathcal{M}$ そのものになる。FeynRules の模型には、一時フォルダに置いたコピーに FeynCalc 用のパッチ（\texttt{FAPatch}）を当ててから読み込んだ。
+
+続いて、UFO を MadGraph 3.8.1 に読み込ませ、$\phi$ どうしを固定エネルギーで衝突させて全断面積を求めた。カットはかけず、$m=g=1$（単位は GeV）とした。比べる相手は、式~\eqref{eq:Mtree} の $|\mathcal{M}|^2$ を角度について数値積分した
+\begin{equation}
+\sigma=\frac12\int\!\dd\Omega\,\frac{|\mathcal{M}|^2}{64\pi^2s},\qquad
+t=-2p^2(1-\cos\theta),\quad u=-2p^2(1+\cos\theta),\quad p^2=\frac{s}{4}-m^2
+\label{eq:sigma}
+\end{equation}
+である（\ref{app:xsec}）。因子 $1/2$ は、終状態の二つの $\phi$ が同種粒子であることから来る。表~\ref{tab:tree} に示すように、$\sqrt{s}=2.5,\,5,\,10$ のすべてで、MadGraph の値は式~\eqref{eq:sigma} と統計誤差の1.3倍以内で一致した。なお、MadGraph は読み込んだ UFO に残る Python 2 の構文をその場で Python 3 に書き換える。そこで \texttt{Src/work/} に置いたコピーを読ませ、\texttt{Src/generated/} は FeynRules の出力のまま保った。
+
+\begin{table}[tbp]
+\centering\small
+\caption{$\phi\phi\to\phi\phi$ の木の全断面積（$m=g=1$、単位は GeV、$1~\mathrm{GeV}^{-2}=0.3893794\times10^{9}$~pb）。「解析式」は式~\eqref{eq:sigma} の数値積分（相対精度 $10^{-12}$）、MadGraph の誤差はモンテカルロ積分の統計誤差である。}
+\label{tab:tree}
+\begin{tabular}{rrrr}
+\toprule
+$\sqrt{s}$ [GeV] & 解析式 [pb] & MadGraph [pb] & 差／誤差 \\
+\midrule
+2.5 & $4.62046\times10^{5}$ & $(4.6190\pm0.0152)\times10^{5}$ & $-0.10$ \\
+5 & $1.45187\times10^{4}$ & $(1.4480\pm0.0030)\times10^{4}$ & $-1.27$ \\
+10 & $8.03317\times10^{2}$ & $(8.0270\pm0.0102)\times10^{2}$ & $-0.60$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{決まっていないこと。}有限部分の規約（$\overline{\mathrm{MS}}$ か on-shell か）は、有限部分を比べる段階で決める必要がある。on-shell にすると、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$d=6$ の有限部分は Package-X と LoopTools で検算できないので、Feynman パラメータ積分の数値計算が唯一の独立な検算になる。2ループ用に推奨された pySecDec などが入れば、それが二つ目の検算手段になる~\cite{review}。
 
 \paragraph{タドポールの扱い。}本ノートでは、$Y$ でタドポールを打ち消す方法をとった。これは1ループでは、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除くことと同じである。2ループ以上では、ループの内側にタドポールが付いた図も $Y$ の高次の項で消えるので、同じ除き方で済むかどうかを確かめる必要がある。
 
-\paragraph{模型ファイル。}第~\ref{sec:plan} 節の手順 (1) として、FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
-
-\paragraph{今後。}次は第~\ref{sec:plan} 節の手順 (2)、木の振幅の検算である。
+\paragraph{今後。}次は第~\ref{sec:plan} 節の手順 (3)、$d=4$ の1ループの検算である。極と対抗項（式~\eqref{eq:ct4}）を FeynCalc で、有限部分を Package-X・LoopTools・Feynman パラメータ積分の数値積分で確かめる。
 
 \appendix
 
@@ -438,6 +467,38 @@ $s$ チャンネルの図は、頂点2つ（$-ig$ ずつ）と、運動量 $p_1+
 i\mathcal{M}=-ig^2\left[\frac{1}{s-m^2}+\frac{1}{t-m^2}+\frac{1}{u-m^2}\right]
 \end{equation*}
 となり、式~\eqref{eq:Mtree} を得る。木のレベルでは $\mu^\epsilon\to1$ とした。
+
+\section{断面積の式の導出}\label{app:xsec}
+
+\paragraph{出発点。}$2\to2$ 散乱 $p_1+p_2\to k_1+k_2$ の断面積は、流束因子と2体の位相空間を使って
+\begin{equation*}
+\sigma=\frac{S}{4E_1E_2|\vec v_1-\vec v_2|}\int|\mathcal{M}|^2\,\dd\Phi_2,\qquad
+\dd\Phi_2=\frac{\dd^3k_1}{(2\pi)^32E_1'}\,\frac{\dd^3k_2}{(2\pi)^32E_2'}\,(2\pi)^4\delta^4(p_1+p_2-k_1-k_2)
+\end{equation*}
+と書ける。$E_{1,2}$ は始状態、$E'_{1,2}$ は終状態のエネルギーである。$S$ は終状態の同種粒子による因子で、終状態の角度を全立体角で積分するとき、二つの $\phi$ を二重に数えないために $S=1/2$ とする。
+
+\paragraph{2体位相空間。}重心系では $\vec k_2=-\vec k_1$ で、$\dd^3k_2$ を $\delta^3$ で積分すると、$(2\pi)^4/(2\pi)^6=1/(4\pi^2)$ より
+\begin{equation*}
+\dd\Phi_2=\frac{1}{4\pi^2}\,\frac{k^2\,\dd k\,\dd\Omega}{4E_1'E_2'}\,\delta\bigl(\sqrt{s}-E_1'-E_2'\bigr),\qquad k\equiv|\vec k_1| .
+\end{equation*}
+$E_i'=\sqrt{k^2+m^2}$ だから、$\dd(E_1'+E_2')/\dd k=k/E_1'+k/E_2'=k(E_1'+E_2')/(E_1'E_2')$ で、根 $E_1'+E_2'=\sqrt{s}$ ではこれが $k\sqrt{s}/(E_1'E_2')$ になる。よって $\delta(\sqrt s-E_1'-E_2')=\frac{E_1'E_2'}{k_f\sqrt s}\delta(k-k_f)$ であり、
+\begin{equation*}
+\dd\Phi_2=\frac{1}{16\pi^2}\,\frac{k_f^2}{E_1'E_2'}\,\frac{E_1'E_2'}{k_f\sqrt s}\,\dd\Omega=\frac{k_f}{16\pi^2\sqrt s}\,\dd\Omega .
+\end{equation*}
+
+\paragraph{流束因子。}重心系では二つの速度は逆向きで、大きさは $k_i/E_1$、$k_i/E_2$ である（$k_i$ は始状態の運動量の大きさ）。よって $4E_1E_2|\vec v_1-\vec v_2|=4E_1E_2(k_i/E_1+k_i/E_2)=4k_i(E_1+E_2)=4k_i\sqrt s$ となる。
+
+\paragraph{まとめ。}以上から
+\begin{equation*}
+\frac{\dd\sigma}{\dd\Omega}=S\,\frac{|\mathcal{M}|^2}{4k_i\sqrt s}\,\frac{k_f}{16\pi^2\sqrt s}=S\,\frac{|\mathcal{M}|^2}{64\pi^2s}\,\frac{k_f}{k_i}
+\end{equation*}
+を得る。四つの粒子の質量がすべて $m$ なら $k_f=k_i=p$、$p^2=s/4-m^2$ で $k_f/k_i=1$ となり、$S=1/2$ とともに式~\eqref{eq:sigma} になる。$|\mathcal{M}|^2$ は方位角によらないので、$\dd\Omega=2\pi\,\dd\!\cos\theta$ とした。
+
+\paragraph{$t$ と $u$。}$\theta$ を $\vec p_1$ と $\vec k_1$ のなす角とする。$E_1=E_1'=E=\sqrt{p^2+m^2}$ なので、
+\begin{equation*}
+t=(p_1-k_1)^2=2m^2-2(EE-p^2\cos\theta)=2m^2-2(p^2+m^2)+2p^2\cos\theta=-2p^2(1-\cos\theta).
+\end{equation*}
+$u=(p_1-k_2)^2$ は $\vec k_2=-\vec k_1$ なので $\cos\theta\to-\cos\theta$ として $u=-2p^2(1+\cos\theta)$ である。確かに $s+t+u=4p^2+4m^2-4p^2=4m^2$ を満たす。
 
 \begin{thebibliography}{9}
 \small

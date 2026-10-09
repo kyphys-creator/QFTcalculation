@@ -8,3 +8,4 @@
 *.toc
 environment/tests/out/
 py.py
+models/phi3/Src/work/
