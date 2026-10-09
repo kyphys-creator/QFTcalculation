@@ -1,0 +1,525 @@
+! This fils was generated automatically by FeynRules
+!
+!-------------------------------------------------------
+!-- Interactions ---------------------------------------
+!-------------------------------------------------------
+!
+!- Interactions associated with Standard Model
+!
+
+VERTEX 11 22 11   # e- a e-
+    1 -1.*ee*(0,1)  # right-handed coupling
+    2 -1.*ee*(0,1)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 13 22 13   # mu- a mu-
+    1 -1.*ee*(0,1)  # right-handed coupling
+    2 -1.*ee*(0,1)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 15 22 15   # ta- a ta-
+    1 -1.*ee*(0,1)  # right-handed coupling
+    2 -1.*ee*(0,1)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 11 -24 12   # e- W- ve
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 13 -24 14   # mu- W- vm
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 15 -24 16   # ta- W- vt
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 12 24 11   # ve W+ e-
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 14 24 13   # vm W+ mu-
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 16 24 15   # vt W+ ta-
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 12 23 12   # ve Z ve
+    1 0.  # right-handed coupling
+    2 0.5*ee*(0,1)*sw*pow(cw,-1.)+0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 14 23 14   # vm Z vm
+    1 0.  # right-handed coupling
+    2 0.5*ee*(0,1)*sw*pow(cw,-1.)+0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 16 23 16   # vt Z vt
+    1 0.  # right-handed coupling
+    2 0.5*ee*(0,1)*sw*pow(cw,-1.)+0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 11 23 11   # e- Z e-
+    1 ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 0.5*ee*(0,1)*sw*pow(cw,-1.)-0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 13 23 13   # mu- Z mu-
+    1 ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 0.5*ee*(0,1)*sw*pow(cw,-1.)-0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 15 23 15   # ta- Z ta-
+    1 ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 0.5*ee*(0,1)*sw*pow(cw,-1.)-0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 11 25 11   # e- H e-
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a1*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 13 25 11   # mu- H e-
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a2*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 15 25 11   # ta- H e-
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a3*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 11 25 13   # e- H mu-
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a1*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 13 25 13   # mu- H mu-
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a2*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 15 25 13   # ta- H mu-
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a3*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 11 25 15   # e- H ta-
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a1*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 13 25 15   # mu- H ta-
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a2*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 15 25 15   # ta- H ta-
+    1 -1.*(0,1)*ytau*pow(Sqrt2,-1.)  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a3*Conj(yl(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 5 22 5   # b a b
+    1 -0.3333333333333333*ee*(0,1)  # right-handed coupling
+    2 -0.3333333333333333*ee*(0,1)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 5 25 5   # b H b
+    1 -1.*(0,1)*yb*pow(Sqrt2,-1.)  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a3*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 5 25 1   # b H d
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a3*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 5 25 3   # b H s
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a3*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 5 -24 6   # b W- t
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 5 23 5   # b Z b
+    1 0.3333333333333333*ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 -0.16666666666666666*ee*(0,1)*sw*pow(cw,-1.)-0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 4 22 4   # c a c
+    1 0.6666666666666666*ee*(0,1)  # right-handed coupling
+    2 0.6666666666666666*ee*(0,1)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 4 25 4   # c H c
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a2*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 4 25 6   # c H t
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a2*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 4 25 2   # c H u
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a2*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 4 24 5   # c W+ b
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a3*I2a2*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 4 24 1   # c W+ d
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a1*I2a2*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 4 24 3   # c W+ s
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a2*I2a2*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 4 23 4   # c Z c
+    1 -0.6666666666666666*ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 -0.16666666666666666*ee*(0,1)*sw*pow(cw,-1.)+0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 1 22 1   # d a d
+    1 -0.3333333333333333*ee*(0,1)  # right-handed coupling
+    2 -0.3333333333333333*ee*(0,1)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 1 25 5   # d H b
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a1*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 1 25 1   # d H d
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a1*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 1 25 3   # d H s
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a1*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 1 -24 2   # d W- u
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 1 23 1   # d Z d
+    1 0.3333333333333333*ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 -0.16666666666666666*ee*(0,1)*sw*pow(cw,-1.)-0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 3 22 3   # s a s
+    1 -0.3333333333333333*ee*(0,1)  # right-handed coupling
+    2 -0.3333333333333333*ee*(0,1)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 3 25 5   # s H b
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a2*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 3 25 1   # s H d
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a2*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 3 25 3   # s H s
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a2*Conj(yd(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 3 -24 4   # s W- c
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 3 23 3   # s Z s
+    1 0.3333333333333333*ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 -0.16666666666666666*ee*(0,1)*sw*pow(cw,-1.)-0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 6 22 6   # t a t
+    1 0.6666666666666666*ee*(0,1)  # right-handed coupling
+    2 0.6666666666666666*ee*(0,1)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 6 25 4   # t H c
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a3*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 6 25 6   # t H t
+    1 -1.*(0,1)*yt*pow(Sqrt2,-1.)  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a3*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 6 25 2   # t H u
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a3*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 6 24 5   # t W+ b
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a3*I2a3*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 6 24 1   # t W+ d
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a1*I2a3*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 6 24 3   # t W+ s
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a2*I2a3*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 6 23 6   # t Z t
+    1 -0.6666666666666666*ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 -0.16666666666666666*ee*(0,1)*sw*pow(cw,-1.)+0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 2 22 2   # u a u
+    1 0.6666666666666666*ee*(0,1)  # right-handed coupling
+    2 0.6666666666666666*ee*(0,1)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 2 25 4   # u H c
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a2*I2a1*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 2 25 6   # u H t
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a3*I2a1*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 2 25 2   # u H u
+    1 0.  # right-handed coupling
+    2 -1.*(0,1)*I1a1*I2a1*Conj(yu(2.))*pow(Sqrt2,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFS  # Lorentz structure
+
+VERTEX 2 24 5   # u W+ b
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a3*I2a1*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 2 24 1   # u W+ d
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a1*I2a1*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 2 24 3   # u W+ s
+    1 0.  # right-handed coupling
+    2 ee*(0,1)*I1a2*I2a1*Conj(CKM(2.))*pow(Sqrt2,-1.)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 2 23 2   # u Z u
+    1 -0.6666666666666666*ee*(0,1)*sw*pow(cw,-1.)  # right-handed coupling
+    2 -0.16666666666666666*ee*(0,1)*sw*pow(cw,-1.)+0.5*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 D[1,3]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 5 21 5   # b g b
+    1 (0,1)*G  # right-handed coupling
+    2 (0,1)*G  # left-handed coupling
+    3 T[2]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 4 21 4   # c g c
+    1 (0,1)*G  # right-handed coupling
+    2 (0,1)*G  # left-handed coupling
+    3 T[2]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 1 21 1   # d g d
+    1 (0,1)*G  # right-handed coupling
+    2 (0,1)*G  # left-handed coupling
+    3 T[2]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 3 21 3   # s g s
+    1 (0,1)*G  # right-handed coupling
+    2 (0,1)*G  # left-handed coupling
+    3 T[2]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 6 21 6   # t g t
+    1 (0,1)*G  # right-handed coupling
+    2 (0,1)*G  # left-handed coupling
+    3 T[2]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 2 21 2   # u g u
+    1 (0,1)*G  # right-handed coupling
+    2 (0,1)*G  # left-handed coupling
+    3 T[2]  # colour structure
+    4 FFV  # Lorentz structure
+
+VERTEX 25 25 25   # H H H
+    1 -6.*(0,1)*lam*vev  # right-handed coupling
+    2 -6.*(0,1)*lam*vev  # left-handed coupling
+    3 None  # colour structure
+    4 SSS  # Lorentz structure
+
+VERTEX 25 25 25 25   # H H H H
+    1 -6.*(0,1)*lam  # right-handed coupling
+    2 -6.*(0,1)*lam  # left-handed coupling
+    3 None  # colour structure
+    4 SSSS  # Lorentz structure
+
+VERTEX 22 -24 24   # a W- W+
+    1 -1.*ee*(0,1)  # right-handed coupling
+    2 -1.*ee*(0,1)  # left-handed coupling
+    3 None  # colour structure
+    4 Gauge3  # Lorentz structure
+
+VERTEX 21 21 21   # g g g
+    1 G  # right-handed coupling
+    2 G  # left-handed coupling
+    3 f[2]  # colour structure
+    4 Gauge3  # Lorentz structure
+
+VERTEX 24 24 23   # W+ W+ Z
+    1 -1.*cw*ee*(0,1)*pow(sw,-1.)  # right-handed coupling
+    2 -1.*cw*ee*(0,1)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 Gauge3  # Lorentz structure
+
+VERTEX 22 22 -24 24   # a a W- W+
+    1 -1.*pow(ee,2.)  # right-handed coupling
+    2 -1.*pow(ee,2.)  # left-handed coupling
+    3 None  # colour structure
+    4 Gauge4  # Lorentz structure
+
+VERTEX 22 23 24 -24   # a Z W+ W-
+    1 -1.*cw*pow(ee,2.)*pow(sw,-1.)  # right-handed coupling
+    2 -1.*cw*pow(ee,2.)*pow(sw,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 Gauge4  # Lorentz structure
+
+VERTEX 21 21 21 21   # g g g g
+    1 -1.*pow(G,2.)  # right-handed coupling
+    2 -1.*pow(G,2.)  # left-handed coupling
+    3 F  # colour structure
+    4 Gluon4  # Lorentz structure
+
+VERTEX 24 -24 24 24   # W+ W- W+ W+
+    1 pow(ee,2.)*pow(Psw2,-1.)  # right-handed coupling
+    2 pow(ee,2.)*pow(Psw2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 Gauge4  # Lorentz structure
+
+VERTEX 24 24 23 23   # W+ W+ Z Z
+    1 -1.*Pcw2*pow(ee,2.)*pow(Psw2,-1.)  # right-handed coupling
+    2 -1.*Pcw2*pow(ee,2.)*pow(Psw2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 Gauge4  # Lorentz structure
+
+VERTEX 24 25 24   # W+ H W+
+    1 0.5*(0,1)*vev*pow(ee,2.)*pow(Psw2,-1.)  # right-handed coupling
+    2 0.5*(0,1)*vev*pow(ee,2.)*pow(Psw2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 VVS  # Lorentz structure
+
+VERTEX 23 25 23   # Z H Z
+    1 (0,1)*vev*pow(ee,2.)+0.5*(0,1)*Psw2*vev*pow(ee,2.)*pow(Pcw2,-1.)+0.5*(0,1)*Pcw2*vev*pow(ee,2.)*pow(Psw2,-1.)  # right-handed coupling
+    2 (0,1)*vev*pow(ee,2.)+0.5*(0,1)*Psw2*vev*pow(ee,2.)*pow(Pcw2,-1.)+0.5*(0,1)*Pcw2*vev*pow(ee,2.)*pow(Psw2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 VVS  # Lorentz structure
+
+VERTEX 24 25 25 24   # W+ H H W+
+    1 0.5*(0,1)*pow(ee,2.)*pow(Psw2,-1.)  # right-handed coupling
+    2 0.5*(0,1)*pow(ee,2.)*pow(Psw2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 VVSS  # Lorentz structure
+
+VERTEX 23 25 25 23   # Z H H Z
+    1 (0,1)*pow(ee,2.)+0.5*(0,1)*Psw2*pow(ee,2.)*pow(Pcw2,-1.)+0.5*(0,1)*Pcw2*pow(ee,2.)*pow(Psw2,-1.)  # right-handed coupling
+    2 (0,1)*pow(ee,2.)+0.5*(0,1)*Psw2*pow(ee,2.)*pow(Pcw2,-1.)+0.5*(0,1)*Pcw2*pow(ee,2.)*pow(Psw2,-1.)  # left-handed coupling
+    3 None  # colour structure
+    4 VVSS  # Lorentz structure
+

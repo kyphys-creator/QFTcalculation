@@ -1,0 +1,46 @@
+(* ************************** *)
+(* *****  Information   ***** *)
+(* ************************** *)
+M$ModelName = "Higgs-portal";
+
+FeynmanGauge = True;
+
+(* New Particle *)
+M$InteractionOrderHierarchy = {
+  {NP, 1}
+};
+
+(* particle *)
+M$ClassesDescription = {
+
+S[99] == {
+    ClassName        -> dm,
+    SelfConjugate    -> True,
+    Mass             -> {Mdm, 100.},
+    Width            -> 0.,
+    ParticleName     -> "~DM",
+    PropagatorLabel  -> "DM",
+    PropagatorType   -> ScalarDash,
+    PropagatorArrow  -> None,
+    PDG              -> 5000001
+    }
+
+};
+
+(* coupling *)
+M$Parameters = {
+
+  cDM == { 
+    ParameterType    -> External, 
+    ParameterName    -> cDM,
+    BlockName        -> Coupling, 
+    InteractionOrder -> {{NP, 1}, {QED, 1}},
+    Value            -> 1.,
+    Description      -> "Dark matter coupling"
+  }
+
+};
+
+(* Lagrangian *)
+
+Ldm := cDM/2 vev H dm dm + cDM/4 H H dm dm

@@ -1,0 +1,19 @@
+!
+! This file has been generated automatically by FeynRules
+!
+SMINPUTS 1 aEWM1 R
+SMINPUTS 2 Gf R
+SMINPUTS 3 aS R
+YUKAWA 5 ymb R
+YUKAWA 6 ymt R
+YUKAWA 15 ymtau R
+MASS 23 MZ R
+MASS 24 MW R
+MASS 15 MTA R
+MASS 6 MT R
+MASS 5 MB R
+MASS 25 MH R
+DECAY 23 WZ R
+DECAY 24 WW R
+DECAY 6 WT R
+DECAY 25 WH R

@@ -1,0 +1,2 @@
+import WEff_UFO
+compute_widths wp- --body_decay=2 --output=./param_card.dat

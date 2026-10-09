@@ -1,0 +1,56 @@
+(* QED モデルの FeynRules モデルファイル *)
+
+(* インデックス定義 *)
+IndexRange[Index[Generation]] = Range[1]; (* 目的: 世代インデックスの定義。ここでは φ が1種類しかないため、1つの世代だけが必要です。*)
+
+(* パラメータの定義 *)
+M$Parameters = {
+  mf == {
+    TeX -> "m_f",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "Fermion mass"
+  },
+ e == {
+    TeX -> "e",
+    ParameterType -> External,
+    Value -> 0.313,
+    Description -> "Electric charge"
+  }
+};
+
+(* ゲージ群はU(1) *)
+M$GaugeGroups = {
+  U1EM == {
+    Abelian -> True,
+    GaugeBoson -> A,
+    CouplingConstant -> e,
+    Charge -> Qem
+  }
+};
+
+
+(* 粒子の定義 *)
+M$ClassesDescription = {
+ V[1] == {
+  ClassName -> A,
+  SelfConjugate -> True,
+  Mass -> 0,
+  Width -> 0,
+  QuantumNumbers -> {},
+  Indices -> {}
+},
+ F[1] == {
+  ClassName -> psi,
+  SelfConjugate -> False,
+  Mass -> {{mf, 1.0}},
+  Width -> {{psi, 0}},
+  QuantumNumbers -> {Qem -> -1}
+  Indices -> {Index[Generation]},
+  FlavorIndex -> Generation,
+　PropagatorLabel -> {"\\psi"},
+  Description -> "Dirac fermion"
+ }
+};
+
+L = -1/4 FS[A, mu, nu] FS[A, mu, nu] + I psibar[s1] * gamma[mu, s1, s2] * DC[psi[s2], mu] - mf psibar[s1] * psi[s1];

@@ -6,3 +6,5 @@
 *.fdb_latexmk
 *.fls
 *.toc
+environment/tests/out/
+py.py

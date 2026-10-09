@@ -1,0 +1,62 @@
+(* Scalar QED with quartic scalar self-interaction *)
+
+(* インデックス定義 *)
+IndexRange[Index[Generation]] = Range[1];
+
+(* パラメータの定義 *)
+M$Parameters = {
+  msq == {
+    TeX -> "m_s",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "Scalar mass"
+  },
+  e == {
+    TeX -> "e",
+    ParameterType -> External,
+    Value -> 0.313,
+    Description -> "Electric charge"
+  },
+  lam == {
+    TeX -> "\\lambda",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "Quartic scalar coupling"
+  }
+};
+
+(* ゲージ群の定義 *)
+M$GaugeGroups = {
+  U1EM == {
+    Abelian -> True,
+    GaugeBoson -> A,
+    CouplingConstant -> e,
+    Charge -> Qem
+  }
+};
+
+(* 粒子の定義 *)
+M$ClassesDescription = {
+  V[1] == {
+    ClassName -> A,
+    SelfConjugate -> True,
+    Mass -> 0,
+    Width -> 0,
+    Indices -> {},
+    QuantumNumbers -> {}
+  },
+  S[1] == {
+    ClassName -> phi,
+    SelfConjugate -> False,
+    Mass -> {{msq, 1.0}},
+    Width -> {{phi, 0}},
+    QuantumNumbers -> {Qem -> 1},
+    Indices -> {Index[Generation]},
+    FlavorIndex -> Generation,
+    PropagatorLabel -> {"\\phi"},
+    Description -> "Complex scalar"
+  }
+};
+
+(* ラグランジアン *)
+L = -1/4 FS[A, mu, nu] FS[A, mu, nu] + DC[phibar, mu] DC[phi, mu] - msq^2 phibar phi - lam (phibar phi)^2;

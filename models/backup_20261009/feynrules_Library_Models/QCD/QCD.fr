@@ -1,0 +1,86 @@
+(* QCD Model with Ghost *)
+
+(* インデックス定義 *)
+IndexRange[Index[Colour]] = NoUnfold[Range[3]];
+IndexRange[Index[Gluon]] = NoUnfold[Range[8]];
+IndexRange[Index[Generation]] = Range[1];  (* 1世代 *)
+IndexStyle[Colour, i];
+IndexStyle[Gluon, a];
+IndexStyle[Generation, f];
+
+(* パラメータ定義 *)
+M$Parameters = {
+  gs == {
+    TeX -> "g_s",
+    ParameterType -> External,
+    Value -> 1.23,
+    Description -> "QCD coupling constant"
+  },
+  mq == {
+    TeX -> "m_q",
+    ParameterType -> External,
+    Value -> 4.8,
+    Description -> "Quark mass"
+  }
+};
+
+(* ゲージ群の定義 *)
+M$GaugeGroups = {
+  SU3C == {
+    Abelian -> False,
+    GaugeBoson -> G,
+    CouplingConstant -> gs,
+    StructureConstant -> f,
+    Representations -> {{T, Colour}},
+    Definitions -> {T[a__] -> GellMann[a]/2}
+  }
+};
+
+(* 粒子定義 *)
+M$ClassesDescription = {
+  (* グルーオン *)
+  V[1] == {
+    ClassName -> G,
+    SelfConjugate -> True,
+    Indices -> {Index[Gluon]},
+    Mass -> 0,
+    Width -> 0,
+    QuantumNumbers -> {},
+    ColorRep -> O,
+    Description -> "Gluon",
+    PropagatorType -> C  (* “curly” line（ぐるぐる波線） *)
+  },
+
+  (* クォーク（1世代） *)
+  F[1] == {
+    ClassName -> q,
+    SelfConjugate -> False,
+    Indices -> {Index[Colour], Index[Generation]},
+    FlavorIndex -> Generation,
+    Mass -> {{mq, 1.0}},
+    QuantumNumbers -> {},
+    ColorRep -> T,
+    Description -> "Quark"
+  },
+
+  (* ゴースト *)
+  U[1] == {
+  ClassName       -> ghG,
+  SelfConjugate   -> False,
+  Indices         -> {Index[Gluon]},
+  Ghost           -> G,
+  QuantumNumbers  -> {GhostNumber -> 1},
+  Mass            -> 0,
+  Width           -> 0,
+  PropagatorLabel -> "ghG",
+  PropagatorType  -> GhostDash,
+  PropagatorArrow -> Forward,
+  Description     -> "Gluon ghost"
+}
+};
+
+(* ラグランジアン *)
+LQCD = -1/4 FS[G, mu, nu, a] FS[G, mu, nu, a] + I qbar[s1, i] * gamma[mu, s1, s2] * DC[q[s2, i], mu] - mq qbar[s1, i] * q[s1, i];
+(*LGhost = - DC[ghGbar[a], mu] * DC[ghG[a], mu];*)
+LGhost = - ghGbar[a] * del[DC[ghG[a], mu], mu];(* ファデーエフ・ポポフ法でのゴーストの導入 *)
+L = LQCD + LGhost;

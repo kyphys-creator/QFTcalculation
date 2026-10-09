@@ -1,0 +1,35 @@
+#!/bin/bash
+# Minimal arm64 stand-in for Wolfram's MathLink "mcc".
+# The mcc script shipped with Mathematica 14.x predates Apple Silicon: it splits
+# paths that contain spaces ("Wolfram 2.app") and links for i386.  This wrapper
+# covers what LoopTools and FormCalc use: "-o OUT", ".tm" templates (run through
+# mprep), and pass-through of compiler/linker arguments.  It compiles with $CC
+# (default cc) and links the arm64 slice of libMLi4.a statically.
+CA="$HOME/hep/opt/Wolfram142/Contents/SystemFiles/Links/MathLink/DeveloperKit/MacOSX-ARM64/CompilerAdditions"
+out=a.out
+pass=()
+tmp=()
+link=1
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -o) out="$2"; shift 2 ;;
+    -xo) mkdir -p "$2/MacOSX-ARM64"; out="$2/MacOSX-ARM64/$(basename "$2")"; shift 2 ;;
+    -n|-st|-dy|-b32|-b64|-b32_64|--verbose) shift ;;   # mcc-only flags, no-op here
+    -c|-E|-P) link=0; pass+=("$1"); shift ;;
+    *.tm)
+      # like mcc: write OUT.tm.c in the working directory so that headers next
+      # to the template (#include "...") are found
+      c="$(basename "$out").$(basename "$1" .tm).tm.c"
+      "$CA/mprep" -o "$c" "$1" || exit 1
+      pass+=("-I$(dirname "$1")" "$c"); tmp+=("$c"); shift ;;
+    *) pass+=("$1"); shift ;;
+  esac
+done
+if [ $link = 1 ]; then
+  ${CC:-cc} -I"$CA" "${pass[@]}" -o "$out" "$CA/libMLi4.a" -lc++ -framework Foundation
+else
+  ${CC:-cc} -I"$CA" "${pass[@]}" -o "$out"
+fi
+rc=$?
+rm -f "${tmp[@]}"
+exit $rc

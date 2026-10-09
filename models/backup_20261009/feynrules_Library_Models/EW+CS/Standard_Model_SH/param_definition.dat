@@ -1,0 +1,23 @@
+!
+! Internal Parameters 
+!
+aEW = pow(aEWM1,-1.) R ! Electroweak coupling contant
+G = 2.*sqrt(aS)*sqrt(M_PI) R ! Strong coupling constant at the Z pole
+MW = sqrt(0.5*pow(MZ,2.)+sqrt(0.25*pow(MZ,4.)-1.*aEW*M_PI*pow(Gf,-1.)*pow(MZ,2.)*pow(sqrt(2.),-1.))) R ! W mass
+ee = 2.*sqrt(aEW)*sqrt(M_PI) R ! Electric coupling constant
+sw2 = 1.-1.*pow(MW,2.)*pow(MZ,-2.) R ! Squared Sin of the Weinberg angle
+cw = sqrt(1.-1.*sw2) R ! Cosine of the Weinberg angle
+sw = sqrt(sw2) R ! Sine of the Weinberg angle
+g1 = ee*pow(cw,-1.) R ! U(1)Y coupling constant at the Z pole
+gw = ee*pow(sw,-1.) R ! Weak coupling constant at the Z pole
+vev = 2.*MW*sw*pow(ee,-1.) R ! Higgs vacuum expectation value
+lam = 0.5*pow(MH,2.)*pow(vev,-2.) R ! Higgs quartic coupling
+yb = ymb*pow(vev,-1.)*sqrt(2.) R ! Down-type Yukawa couplings ( yb )
+yt = ymt*pow(vev,-1.)*sqrt(2.) R ! Up-type Yukawa couplings ( yt )
+ytau = ymtau*pow(vev,-1.)*sqrt(2.) R ! Lepton Yukawa couplings ( ytau )
+muH = sqrt(lam*pow(vev,2.)) R ! Coefficient of the quadratic piece of the Higgs potential
+Sqrt2 = sqrt(2.) R ! Internal Definition
+SqrtPi = sqrt(M_PI) R ! Internal Definition
+Psw2 = pow(sw,2.) R ! Internal Definition
+Pcw2 = pow(cw,2.) R ! Internal Definition
+!

@@ -1,0 +1,74 @@
+WEff
+ Parameters
+  Name         | Value       |> Comment                                                                <|
+aEWM1          |127.9        |Inverse of the EW coupling constant at the Z pole                         |
+Gf             |0.0000116637 |Fermi constant                                                            |
+aS             |0.1184       |Strong coupling constant at the Z pole                                    |
+ymdo           |0.00504      |Down Yukawa mass                                                          |
+ymup           |0.00255      |Up Yukawa mass                                                            |
+yms            |0.101        |Strange Yukawa mass                                                       |
+ymc            |1.27         |Charm Yukawa mass                                                         |
+ymb            |4.7          |Bottom Yukawa mass                                                        |
+ymt            |172          |Top Yukawa mass                                                           |
+yme            |0.000511     |Electron Yukawa mass                                                      |
+ymm            |0.10566      |Muon Yukawa mass                                                          |
+ymtau          |1.777        |Tau Yukawa mass                                                           |
+cabi           |0.227736     |Cabibbo angle                                                             |
+CRq1x1         |1.           |Right-handed W' couplings to quarks ( CRq1x1 )                            |
+CRq1x2         |0.           |Right-handed W' couplings to quarks ( CRq1x2 )                            |
+CRq1x3         |0.           |Right-handed W' couplings to quarks ( CRq1x3 )                            |
+CRq2x1         |0.           |Right-handed W' couplings to quarks ( CRq2x1 )                            |
+CRq2x2         |1.           |Right-handed W' couplings to quarks ( CRq2x2 )                            |
+CRq2x3         |0.           |Right-handed W' couplings to quarks ( CRq2x3 )                            |
+CRq3x1         |0.           |Right-handed W' couplings to quarks ( CRq3x1 )                            |
+CRq3x2         |0.           |Right-handed W' couplings to quarks ( CRq3x2 )                            |
+CRq3x3         |1.           |Right-handed W' couplings to quarks ( CRq3x3 )                            |
+CRl1x1         |1.           |Right-handed W' couplings to leptons ( CRl1x1 )                           |
+CRl1x2         |0.           |Right-handed W' couplings to leptons ( CRl1x2 )                           |
+CRl1x3         |0.           |Right-handed W' couplings to leptons ( CRl1x3 )                           |
+CRl2x1         |0.           |Right-handed W' couplings to leptons ( CRl2x1 )                           |
+CRl2x2         |1.           |Right-handed W' couplings to leptons ( CRl2x2 )                           |
+CRl2x3         |0.           |Right-handed W' couplings to leptons ( CRl2x3 )                           |
+CRl3x1         |0.           |Right-handed W' couplings to leptons ( CRl3x1 )                           |
+CRl3x2         |0.           |Right-handed W' couplings to leptons ( CRl3x2 )                           |
+CRl3x3         |1.           |Right-handed W' couplings to leptons ( CRl3x3 )                           |
+CLq1x1         |1.           |Left-handed W' couplings to quarks ( CLq1x1 )                             |
+CLq1x2         |0.           |Left-handed W' couplings to quarks ( CLq1x2 )                             |
+CLq1x3         |0.           |Left-handed W' couplings to quarks ( CLq1x3 )                             |
+CLq2x1         |0.           |Left-handed W' couplings to quarks ( CLq2x1 )                             |
+CLq2x2         |1.           |Left-handed W' couplings to quarks ( CLq2x2 )                             |
+CLq2x3         |0.           |Left-handed W' couplings to quarks ( CLq2x3 )                             |
+CLq3x1         |0.           |Left-handed W' couplings to quarks ( CLq3x1 )                             |
+CLq3x2         |0.           |Left-handed W' couplings to quarks ( CLq3x2 )                             |
+CLq3x3         |1.           |Left-handed W' couplings to quarks ( CLq3x3 )                             |
+CLl1x1         |1.           |Left-handed W' couplings to leptons ( CLl1x1 )                            |
+CLl1x2         |0.           |Left-handed W' couplings to leptons ( CLl1x2 )                            |
+CLl1x3         |0.           |Left-handed W' couplings to leptons ( CLl1x3 )                            |
+CLl2x1         |0.           |Left-handed W' couplings to leptons ( CLl2x1 )                            |
+CLl2x2         |1.           |Left-handed W' couplings to leptons ( CLl2x2 )                            |
+CLl2x3         |0.           |Left-handed W' couplings to leptons ( CLl2x3 )                            |
+CLl3x1         |0.           |Left-handed W' couplings to leptons ( CLl3x1 )                            |
+CLl3x2         |0.           |Left-handed W' couplings to leptons ( CLl3x2 )                            |
+CLl3x3         |1.           |Left-handed W' couplings to leptons ( CLl3x3 )                            |
+gL             |0.1          |Left-handed W' coupling constant                                          |
+gR             |0.1          |Right-handed W' coupling constant                                         |
+GG             |1.21977796370|Strong coupling constant at the Z pole   This value will be ignored and ca|
+MZ             |91.1876      |Mass of G0.                                                               |
+Me             |0.000511     |Mass of e.                                                                |
+MMU            |0.10566      |Mass of mu.                                                               |
+MTA            |1.777        |Mass of ta.                                                               |
+MU             |0.00255      |Mass of u.                                                                |
+MC             |1.27         |Mass of c.                                                                |
+MT             |172          |Mass of t.                                                                |
+MD             |0.00504      |Mass of d.                                                                |
+MS             |0.101        |Mass of s.                                                                |
+MB             |4.7          |Mass of b.                                                                |
+MH             |125          |Mass of H.                                                                |
+MWp            |1000.        |Mass of Wp.                                                               |
+%WZ            |2.4952       |Width of G0.                                                              |
+%WW            |2.085        |Width of GP.                                                              |
+%WT            |1.50833649   |Width of t.                                                               |
+%WH            |0.00407      |Width of H.                                                               |
+%WWp           |10.          |Width of Wp.                                                              |
+E              |2.71828182845|The base of the natural logarithm.                                        |
+Pi             |3.14159265358|The circumference of a circle divided by the diameter.                    |

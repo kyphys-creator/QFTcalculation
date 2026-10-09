@@ -1,0 +1,17 @@
+set automatic_html_opening False
+generate e+ e- > mu+ mu-
+output out/mg5_ee_mumu
+launch out/mg5_ee_mumu
+0
+set nevents 2000
+0
+import model loop_sm
+generate g g > h [noborn=QCD]
+output out/mg5_ggh
+launch out/mg5_ggh
+0
+set nevents 2000
+set ebeam1 6500
+set ebeam2 6500
+0
+quit

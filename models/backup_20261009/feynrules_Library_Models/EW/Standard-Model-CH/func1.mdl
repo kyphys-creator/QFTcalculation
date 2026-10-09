@@ -1,0 +1,277 @@
+Standard Model
+ Constraints
+  Name         |> Expression                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <|
+%*slhaFound    |1+access("vars1.lha", 0)                                                                                       %Check whether LHA file is present.
+%*rdSLHA       |if(slhaFound,slhaRead("vars1.lha", 0),-1)                                                                      %Read LHA file.
+%aEWM1         |if(slhaFound,if(slhaValExists("SMINPUTS",1,1),slhaVal("SMINPUTS",0,1,1),aEWM1Def),aEWM1Def)                    %Inverse of the EW coupling constant at the Z pole 
+%Gf            |if(slhaFound,if(slhaValExists("SMINPUTS",1,2),slhaVal("SMINPUTS",0,1,2),GfDef),GfDef)                          %Fermi constant                                    
+%aS            |if(slhaFound,if(slhaValExists("SMINPUTS",1,3),slhaVal("SMINPUTS",0,1,3),aSDef),aSDef)                          %Strong coupling constant at the Z pole            
+%ymb           |if(slhaFound,if(slhaValExists("YUKAWA",1,5),slhaVal("YUKAWA",0,1,5),ymbDef),ymbDef)                            %Bottom Yukawa mass                                
+%ymt           |if(slhaFound,if(slhaValExists("YUKAWA",1,6),slhaVal("YUKAWA",0,1,6),ymtDef),ymtDef)                            %Top Yukawa mass                                   
+%ymtau         |if(slhaFound,if(slhaValExists("YUKAWA",1,15),slhaVal("YUKAWA",0,1,15),ymtauDef),ymtauDef)                      %Tau Yukawa mass                                   
+%MZ            |if(slhaFound,if(slhaValExists("MASS",1,23),slhaVal("MASS",0,1,23),MZDef),MZDef)                                %Mass of G0.                                       
+%MTA           |if(slhaFound,if(slhaValExists("MASS",1,15),slhaVal("MASS",0,1,15),MTADef),MTADef)                              %Mass of ta.                                       
+%MT            |if(slhaFound,if(slhaValExists("MASS",1,6),slhaVal("MASS",0,1,6),MTDef),MTDef)                                  %Mass of t.                                        
+%MB            |if(slhaFound,if(slhaValExists("MASS",1,5),slhaVal("MASS",0,1,5),MBDef),MBDef)                                  %Mass of b.                                        
+%MH            |if(slhaFound,if(slhaValExists("MASS",1,25),slhaVal("MASS",0,1,25),MHDef),MHDef)                                %Mass of H.                                        
+%WZ            |if(slhaFound,if(1+slhaDecayExists(23),slhaWidth(23),WZDef),WZDef)                                              %Width of G0.                                      
+%WW            |if(slhaFound,if(1+slhaDecayExists(24),slhaWidth(24),WWDef),WWDef)                                              %Width of GP.                                      
+%WT            |if(slhaFound,if(1+slhaDecayExists(6),slhaWidth(6),WTDef),WTDef)                                                %Width of t.                                       
+%WH            |if(slhaFound,if(1+slhaDecayExists(25),slhaWidth(25),WHDef),WHDef)                                              %Width of H.                                       
+aEW            |pow(aEWM1,-1)                                                                                                  % Electroweak coupling contant                      
+MW             |pow(pow(MZ,2)/2.+pow(-(aEW*Pi*pow(2,-0.5)*pow(Gf,-1)*pow(MZ,2))+pow(MZ,4)/4.,0.5),0.5)                         % W mass                                            
+EE             |2*pow(aEW,0.5)*pow(Pi,0.5)                                                                                     % Electric coupling constant                        
+sw2            |1-pow(MW,2)*pow(MZ,-2)                                                                                         % Squared Sin of the Weinberg angle                 
+cw             |pow(1-sw2,0.5)                                                                                                 % Cosine of the Weinberg angle                      
+sw             |pow(sw2,0.5)                                                                                                   % Sine of the Weinberg angle                        
+g1             |EE*pow(cw,-1)                                                                                                  % U(1)Y coupling constant at the Z pole             
+gw             |EE*pow(sw,-1)                                                                                                  % Weak coupling constant at the Z pole              
+vev            |2*MW*sw*pow(EE,-1)                                                                                             % Higgs vacuum expectation value                    
+lam            |(pow(MH,2)*pow(vev,-2))/2.                                                                                     % Higgs quartic coupling                            
+yb             |ymb*pow(2,0.5)*pow(vev,-1)                                                                                     % Down-type Yukawa couplings ( yb )                 
+yt             |ymt*pow(2,0.5)*pow(vev,-1)                                                                                     % Up-type Yukawa couplings ( yt )                   
+ytau           |ymtau*pow(2,0.5)*pow(vev,-1)                                                                                   % Lepton Yukawa couplings ( ytau )                  
+muH            |pow(lam*pow(vev,2),0.5)                                                                                        % Coefficient of the quadratic piece of the Higgs po
+I1b1           |1                                                                                                              % Abbreviation used in optimizatized FeynRules outpu
+I1b2           |1                                                                                                              % Abbreviation used in optimizatized FeynRules outpu
+I1b3           |1                                                                                                              % Abbreviation used in optimizatized FeynRules outpu
+I2b1           |1                                                                                                              % Abbreviation used in optimizatized FeynRules outpu
+I2b2           |1                                                                                                              % Abbreviation used in optimizatized FeynRules outpu
+I2b3           |1                                                                                                              % Abbreviation used in optimizatized FeynRules outpu
+I3b3           |yt                                                                                                             % Abbreviation used in optimizatized FeynRules outpu
+I4b33          |yb                                                                                                             % Abbreviation used in optimizatized FeynRules outpu
+x1x0           |-6*lam                                                                                                         % Z.f  Z.f  Z.f  Z.f   coupling.
+x2x0           |-2*lam                                                                                                         % Z.f  Z.f  W+.f W-.f  coupling.
+x3x0           |-4*lam                                                                                                         % W+.f W+.f W-.f W-.f  coupling.
+x4x0           |-2*lam                                                                                                         % Z.f  Z.f  H    H     coupling.
+x5x0           |-2*lam                                                                                                         % W+.f W-.f H    H     coupling.
+x6x0           |-6*lam                                                                                                         % H    H    H    H     coupling.
+x7x0           |-2*lam*vev                                                                                                     % Z.f  Z.f  H     coupling.
+x8x0           |-2*lam*vev                                                                                                     % W+.f W-.f H     coupling.
+x9x0           |-6*lam*vev                                                                                                     % H    H    H     coupling.
+x10x0          |2                                                                                                              % a    a    W+.f W-.f  coupling.
+x11x0          |-1                                                                                                             % a    W+.f W-.f  coupling.
+x12x0          |1                                                                                                              % a.C  W-.c W+    coupling.
+x13x0          |-1                                                                                                             % a.C  W+.c W-    coupling.
+x14x0          |-0.5*(vev*pow(sw,-1))                                                                                          % W+.C a.c  W-.f  coupling.
+x15x0          |1                                                                                                              % W+.C a.c  W-    coupling.
+x16x0          |(vev*pow(sw,-2))/4.                                                                                            % W+.C W-.c Z.f   coupling.
+x17x0          |-0.25*(vev*pow(sw,-2))                                                                                         % W+.C W-.c H     coupling.
+x18x0          |-1                                                                                                             % W+.C W-.c a     coupling.
+x19x0          |-(cw*pow(sw,-1))                                                                                               % W+.C W-.c Z     coupling.
+x20x0          |(vev*pow(cw,-1))/4.-(cw*vev*pow(sw,-2))/4.                                                                     % W+.C Z.c  W-.f  coupling.
+x21x0          |cw*pow(sw,-1)                                                                                                  % W+.C Z.c  W-    coupling.
+x22x0          |(vev*pow(sw,-1))/2.                                                                                            % W-.C a.c  W+.f  coupling.
+x23x0          |-1                                                                                                             % W-.C a.c  W+    coupling.
+x24x0          |-0.25*(vev*pow(sw,-2))                                                                                         % W-.C W+.c Z.f   coupling.
+x25x0          |-0.25*(vev*pow(sw,-2))                                                                                         % W-.C W+.c H     coupling.
+x26x0          |1                                                                                                              % W-.C W+.c a     coupling.
+x27x0          |cw*pow(sw,-1)                                                                                                  % W-.C W+.c Z     coupling.
+x28x0          |(vev*pow(cw,-1)*(-1+pow(cw,2)*pow(sw,-2)))/4.                                                                  % W-.C Z.c  W+.f  coupling.
+x29x0          |-(cw*pow(sw,-1))                                                                                               % W-.C Z.c  W+    coupling.
+x30x0          |-0.25*(vev*pow(cw,-1)*pow(sw,-2)*(pow(cw,2)+pow(sw,2)))                                                        % Z.C  W-.c W+.f  coupling.
+x31x0          |cw*pow(sw,-1)                                                                                                  % Z.C  W-.c W+    coupling.
+x32x0          |(vev*pow(cw,-1)*(1+pow(cw,2)*pow(sw,-2)))/4.                                                                   % Z.C  W+.c W-.f  coupling.
+x33x0          |-(cw*pow(sw,-1))                                                                                               % Z.C  W+.c W-    coupling.
+x34x0          |-0.25*(vev*pow(cw,-2)*pow(sw,-2)*pow(pow(cw,2)+pow(sw,2),2))                                                   % Z.C  Z.c  H     coupling.
+x35x0          |1                                                                                                              % g.C  g.c  g     coupling.
+x36x0          |1                                                                                                              % g    g    g     coupling.
+x37x           |-pow(2,-0.5)                                                                                                   % g    g    g        coupling.
+x38x0          |(I1b1*I2b1*CKM(2)*yd(2))/2.                                                                                    % W-.f d~   u     coupling.
+x39x0          |(I1b1*I2b2*CKM(2)*yd(2))/2.                                                                                    % W-.f d~   c     coupling.
+x40x0          |(I1b1*CKM(2))/2.                                                                                               % W-.f d~   t     coupling.
+x40x1          |I3b3-I2b3*yd(2)                                                                                                % W-.f d~   t        coupling.
+x40x2          |I3b3+I2b3*yd(2)                                                                                                % W-.f d~   t        coupling.
+x41x0          |(I1b2*I2b1*CKM(2)*yd(2))/2.                                                                                    % W-.f s~   u     coupling.
+x42x0          |(I1b2*I2b2*CKM(2)*yd(2))/2.                                                                                    % W-.f s~   c     coupling.
+x43x0          |(I1b2*CKM(2))/2.                                                                                               % W-.f s~   t     coupling.
+x43x1          |I3b3-I2b3*yd(2)                                                                                                % W-.f s~   t        coupling.
+x43x2          |I3b3+I2b3*yd(2)                                                                                                % W-.f s~   t        coupling.
+x44x0          |(I1b3*I2b1*CKM(2)*yd(2))/2.                                                                                    % W-.f b~   u     coupling.
+x45x0          |(I1b3*I2b2*CKM(2)*yd(2))/2.                                                                                    % W-.f b~   c     coupling.
+x46x0          |(I1b3*CKM(2))/2.                                                                                               % W-.f b~   t     coupling.
+x46x1          |I3b3-I2b3*yd(2)                                                                                                % W-.f b~   t        coupling.
+x46x2          |I3b3+I2b3*yd(2)                                                                                                % W-.f b~   t        coupling.
+x47x0          |-0.5*(I1b1*I2b1*pow(2,-0.5)*yd(2))                                                                             % Z.f  d~   d     coupling.
+x48x0          |-0.5*(I1b1*I2b2*pow(2,-0.5)*yd(2))                                                                             % Z.f  d~   s     coupling.
+x49x0          |-0.5*(I1b1*I2b3*pow(2,-0.5)*yd(2))                                                                             % Z.f  d~   b     coupling.
+x50x0          |-0.5*(I1b2*I2b1*pow(2,-0.5)*yd(2))                                                                             % Z.f  s~   d     coupling.
+x51x0          |-0.5*(I1b2*I2b2*pow(2,-0.5)*yd(2))                                                                             % Z.f  s~   s     coupling.
+x52x0          |-0.5*(I1b2*I2b3*pow(2,-0.5)*yd(2))                                                                             % Z.f  s~   b     coupling.
+x53x0          |-0.5*(I1b3*I2b1*pow(2,-0.5)*yd(2))                                                                             % Z.f  b~   d     coupling.
+x54x0          |-0.5*(I1b3*I2b2*pow(2,-0.5)*yd(2))                                                                             % Z.f  b~   s     coupling.
+x55x0          |-0.5*pow(2,-0.5)                                                                                               % Z.f  b~   b     coupling.
+x55x1          |yb-I1b3*I2b3*yd(2)                                                                                             % Z.f  b~   b        coupling.
+x55x2          |yb+I1b3*I2b3*yd(2)                                                                                             % Z.f  b~   b        coupling.
+x56x0          |(I1b1*I2b1*pow(2,-0.5)*yd(2))/2.                                                                               % H    d~   d     coupling.
+x57x0          |(I1b1*I2b2*pow(2,-0.5)*yd(2))/2.                                                                               % H    d~   s     coupling.
+x58x0          |(I1b1*I2b3*pow(2,-0.5)*yd(2))/2.                                                                               % H    d~   b     coupling.
+x59x0          |(I1b2*I2b1*pow(2,-0.5)*yd(2))/2.                                                                               % H    s~   d     coupling.
+x60x0          |(I1b2*I2b2*pow(2,-0.5)*yd(2))/2.                                                                               % H    s~   s     coupling.
+x61x0          |(I1b2*I2b3*pow(2,-0.5)*yd(2))/2.                                                                               % H    s~   b     coupling.
+x62x0          |(I1b3*I2b1*pow(2,-0.5)*yd(2))/2.                                                                               % H    b~   d     coupling.
+x63x0          |(I1b3*I2b2*pow(2,-0.5)*yd(2))/2.                                                                               % H    b~   s     coupling.
+x64x0          |-0.5*pow(2,-0.5)                                                                                               % H    b~   b     coupling.
+x64x1          |yb+I1b3*I2b3*yd(2)                                                                                             % H    b~   b        coupling.
+x64x2          |yb-I1b3*I2b3*yd(2)                                                                                             % H    b~   b        coupling.
+x65x0          |(I1b1*I2b1*yl(2))/2.                                                                                           % W-.f e+   ve    coupling.
+x66x0          |(I1b1*I2b2*yl(2))/2.                                                                                           % W-.f e+   vm    coupling.
+x67x0          |(I1b1*I2b3*yl(2))/2.                                                                                           % W-.f e+   vt    coupling.
+x68x0          |(I1b2*I2b1*yl(2))/2.                                                                                           % W-.f mu+  ve    coupling.
+x69x0          |(I1b2*I2b2*yl(2))/2.                                                                                           % W-.f mu+  vm    coupling.
+x70x0          |(I1b2*I2b3*yl(2))/2.                                                                                           % W-.f mu+  vt    coupling.
+x71x0          |(I1b3*I2b1*yl(2))/2.                                                                                           % W-.f ta+  ve    coupling.
+x72x0          |(I1b3*I2b2*yl(2))/2.                                                                                           % W-.f ta+  vm    coupling.
+x73x0          |(I1b3*I2b3*yl(2))/2.                                                                                           % W-.f ta+  vt    coupling.
+x74x0          |-0.5*(I1b1*I2b1*pow(2,-0.5)*yl(2))                                                                             % Z.f  e+   e-    coupling.
+x75x0          |-0.5*(I1b1*I2b2*pow(2,-0.5)*yl(2))                                                                             % Z.f  e+   mu-   coupling.
+x76x0          |-0.5*(I1b1*I2b3*pow(2,-0.5)*yl(2))                                                                             % Z.f  e+   ta-   coupling.
+x77x0          |-0.5*(I1b2*I2b1*pow(2,-0.5)*yl(2))                                                                             % Z.f  mu+  e-    coupling.
+x78x0          |-0.5*(I1b2*I2b2*pow(2,-0.5)*yl(2))                                                                             % Z.f  mu+  mu-   coupling.
+x79x0          |-0.5*(I1b2*I2b3*pow(2,-0.5)*yl(2))                                                                             % Z.f  mu+  ta-   coupling.
+x80x0          |-0.5*(I1b3*I2b1*pow(2,-0.5)*yl(2))                                                                             % Z.f  ta+  e-    coupling.
+x81x0          |-0.5*(I1b3*I2b2*pow(2,-0.5)*yl(2))                                                                             % Z.f  ta+  mu-   coupling.
+x82x0          |-0.5*pow(2,-0.5)                                                                                               % Z.f  ta+  ta-   coupling.
+x82x1          |ytau-I1b3*I2b3*yl(2)                                                                                           % Z.f  ta+  ta-      coupling.
+x82x2          |ytau+I1b3*I2b3*yl(2)                                                                                           % Z.f  ta+  ta-      coupling.
+x83x0          |(I1b1*I2b1*pow(2,-0.5)*yl(2))/2.                                                                               % H    e+   e-    coupling.
+x84x0          |(I1b1*I2b2*pow(2,-0.5)*yl(2))/2.                                                                               % H    e+   mu-   coupling.
+x85x0          |(I1b1*I2b3*pow(2,-0.5)*yl(2))/2.                                                                               % H    e+   ta-   coupling.
+x86x0          |(I1b2*I2b1*pow(2,-0.5)*yl(2))/2.                                                                               % H    mu+  e-    coupling.
+x87x0          |(I1b2*I2b2*pow(2,-0.5)*yl(2))/2.                                                                               % H    mu+  mu-   coupling.
+x88x0          |(I1b2*I2b3*pow(2,-0.5)*yl(2))/2.                                                                               % H    mu+  ta-   coupling.
+x89x0          |(I1b3*I2b1*pow(2,-0.5)*yl(2))/2.                                                                               % H    ta+  e-    coupling.
+x90x0          |(I1b3*I2b2*pow(2,-0.5)*yl(2))/2.                                                                               % H    ta+  mu-   coupling.
+x91x0          |-0.5*pow(2,-0.5)                                                                                               % H    ta+  ta-   coupling.
+x91x1          |ytau+I1b3*I2b3*yl(2)                                                                                           % H    ta+  ta-      coupling.
+x91x2          |ytau-I1b3*I2b3*yl(2)                                                                                           % H    ta+  ta-      coupling.
+x92x0          |(I1b1*I2b1*pow(2,-0.5)*yu(2))/2.                                                                               % Z.f  u~   u     coupling.
+x93x0          |(I1b1*I2b2*pow(2,-0.5)*yu(2))/2.                                                                               % Z.f  u~   c     coupling.
+x94x0          |(I1b1*I2b3*pow(2,-0.5)*yu(2))/2.                                                                               % Z.f  u~   t     coupling.
+x95x0          |(I1b2*I2b1*pow(2,-0.5)*yu(2))/2.                                                                               % Z.f  c~   u     coupling.
+x96x0          |(I1b2*I2b2*pow(2,-0.5)*yu(2))/2.                                                                               % Z.f  c~   c     coupling.
+x97x0          |(I1b2*I2b3*pow(2,-0.5)*yu(2))/2.                                                                               % Z.f  c~   t     coupling.
+x98x0          |(I1b3*I2b1*pow(2,-0.5)*yu(2))/2.                                                                               % Z.f  t~   u     coupling.
+x99x0          |(I1b3*I2b2*pow(2,-0.5)*yu(2))/2.                                                                               % Z.f  t~   c     coupling.
+x100x0         |pow(2,-0.5)/2.                                                                                                 % Z.f  t~   t     coupling.
+x100x1         |yt-I1b3*I2b3*yu(2)                                                                                             % Z.f  t~   t        coupling.
+x100x2         |yt+I1b3*I2b3*yu(2)                                                                                             % Z.f  t~   t        coupling.
+x101x0         |(I1b1*I2b1*pow(2,-0.5)*yu(2))/2.                                                                               % H    u~   u     coupling.
+x102x0         |(I1b1*I2b2*pow(2,-0.5)*yu(2))/2.                                                                               % H    u~   c     coupling.
+x103x0         |(I1b1*I2b3*pow(2,-0.5)*yu(2))/2.                                                                               % H    u~   t     coupling.
+x104x0         |(I1b2*I2b1*pow(2,-0.5)*yu(2))/2.                                                                               % H    c~   u     coupling.
+x105x0         |(I1b2*I2b2*pow(2,-0.5)*yu(2))/2.                                                                               % H    c~   c     coupling.
+x106x0         |(I1b2*I2b3*pow(2,-0.5)*yu(2))/2.                                                                               % H    c~   t     coupling.
+x107x0         |(I1b3*I2b1*pow(2,-0.5)*yu(2))/2.                                                                               % H    t~   u     coupling.
+x108x0         |(I1b3*I2b2*pow(2,-0.5)*yu(2))/2.                                                                               % H    t~   c     coupling.
+x109x0         |-0.5*pow(2,-0.5)                                                                                               % H    t~   t     coupling.
+x109x1         |yt+I1b3*I2b3*yu(2)                                                                                             % H    t~   t        coupling.
+x109x2         |yt-I1b3*I2b3*yu(2)                                                                                             % H    t~   t        coupling.
+x110x0         |-0.5*pow(sw,-1)                                                                                                % a    Z.f  W-.f W+    coupling.
+x111x0         |pow(sw,-1)/2.                                                                                                  % a    W-.f H    W+    coupling.
+x112x0         |(vev*pow(sw,-1))/2.                                                                                            % a    W-.f W+    coupling.
+x113x0         |pow(sw,-1)/2.                                                                                                  % Z.f  W-.f W+    coupling.
+x114x0         |pow(sw,-1)/2.                                                                                                  % W-.f H    W+    coupling.
+x115x0         |-1                                                                                                             % a    W+   W-    coupling.
+x116x0         |-0.5*pow(sw,-1)                                                                                                % a    Z.f  W+.f W-    coupling.
+x117x0         |-0.5*pow(sw,-1)                                                                                                % a    W+.f H    W-    coupling.
+x118x0         |-0.5*(vev*pow(sw,-1))                                                                                          % a    W+.f W-    coupling.
+x119x0         |-0.5*pow(sw,-1)                                                                                                % Z.f  W+.f W-    coupling.
+x120x0         |pow(sw,-1)/2.                                                                                                  % W+.f H    W-    coupling.
+x121x0         |pow(sw,-2)/2.                                                                                                  % Z.f  Z.f  W+   W-    coupling.
+x122x0         |pow(sw,-2)/2.                                                                                                  % W+.f W-.f W+   W-    coupling.
+x123x0         |pow(sw,-2)/2.                                                                                                  % H    H    W+   W-    coupling.
+x124x0         |(vev*pow(sw,-2))/2.                                                                                            % H    W+   W-    coupling.
+x125x0         |-1                                                                                                             % a    a    W+   W-    coupling.
+x126x0         |-(cw*pow(sw,-1))                                                                                               % W+   W-   Z     coupling.
+x127x0         |pow(sw,-2)                                                                                                     % W+   W+   W-   W-    coupling.
+x128x0         |(I1b1*I2b1*yu(2)*HC(CKM)(2))/2.                                                                                % W+.f u~   d     coupling.
+x129x0         |(I1b1*I2b2*yu(2)*HC(CKM)(2))/2.                                                                                % W+.f u~   s     coupling.
+x130x0         |(I1b1*I2b3*yu(2)*HC(CKM)(2))/2.                                                                                % W+.f u~   b     coupling.
+x131x0         |(I1b2*I2b1*yu(2)*HC(CKM)(2))/2.                                                                                % W+.f c~   d     coupling.
+x132x0         |(I1b2*I2b2*yu(2)*HC(CKM)(2))/2.                                                                                % W+.f c~   s     coupling.
+x133x0         |(I1b2*I2b3*yu(2)*HC(CKM)(2))/2.                                                                                % W+.f c~   b     coupling.
+x134x0         |(I1b3*I2b1*yu(2)*HC(CKM)(2))/2.                                                                                % W+.f t~   d     coupling.
+x135x0         |(I1b3*I2b2*yu(2)*HC(CKM)(2))/2.                                                                                % W+.f t~   s     coupling.
+x136x0         |0.5                                                                                                            % W+.f t~   b     coupling.
+x136x1         |I4b33-I1b3*I2b3*yu(2)*HC(CKM)(2)                                                                               % W+.f t~   b        coupling.
+x136x2         |I4b33+I1b3*I2b3*yu(2)*HC(CKM)(2)                                                                               % W+.f t~   b        coupling.
+x137x0         |ytau/2.                                                                                                        % W+.f vt~  ta-   coupling.
+x138x0         |-(sw*pow(cw,-1))+cw*pow(sw,-1)                                                                                 % a    W+.f W-.f Z     coupling.
+x139x0         |(pow(cw,-1)*pow(sw,-1)*(pow(cw,2)+pow(sw,2)))/2.                                                               % Z.f  H    Z     coupling.
+x140x0         |(sw*pow(cw,-1))/2.-(cw*pow(sw,-1))/2.                                                                          % W+.f W-.f Z     coupling.
+x141x0         |pow(cw,-1)/2.                                                                                                  % Z.f  W-.f W+   Z     coupling.
+x142x0         |-0.5*pow(cw,-1)                                                                                                % W-.f H    W+   Z     coupling.
+x143x0         |-0.5*(vev*pow(cw,-1))                                                                                          % W-.f W+   Z     coupling.
+x144x0         |pow(cw,-1)/2.                                                                                                  % Z.f  W+.f W-   Z     coupling.
+x145x0         |pow(cw,-1)/2.                                                                                                  % W+.f H    W-   Z     coupling.
+x146x0         |(vev*pow(cw,-1))/2.                                                                                            % W+.f W-   Z     coupling.
+x147x0         |cw*pow(sw,-1)                                                                                                  % a    W+   W-   Z     coupling.
+x148x0         |(pow(cw,-2)*pow(sw,-2)*pow(pow(cw,2)+pow(sw,2),2))/2.                                                          % Z.f  Z.f  Z    Z     coupling.
+x149x0         |(pow(cw,-2)*pow(sw,-2)*pow(pow(cw,2)-pow(sw,2),2))/2.                                                          % W+.f W-.f Z    Z     coupling.
+x150x0         |(pow(cw,-2)*pow(sw,-2)*pow(pow(cw,2)+pow(sw,2),2))/2.                                                          % H    H    Z    Z     coupling.
+x151x0         |(vev*pow(cw,-2)*pow(sw,-2)*pow(pow(cw,2)+pow(sw,2),2))/2.                                                      % H    Z    Z     coupling.
+x152x0         |-(pow(cw,2)*pow(sw,-2))                                                                                        % W+   W-   Z    Z     coupling.
+x153x0         |-1                                                                                                             % a    e+   e-    coupling.
+x154x0         |-1                                                                                                             % a    mu+  mu-   coupling.
+x155x0         |-1                                                                                                             % a    ta+  ta-   coupling.
+x156x0         |0.6666666666666666                                                                                             % a    u~   u     coupling.
+x157x0         |0.6666666666666666                                                                                             % a    c~   c     coupling.
+x158x0         |0.6666666666666666                                                                                             % a    t~   t     coupling.
+x159x0         |-0.3333333333333333                                                                                            % a    d~   d     coupling.
+x160x0         |-0.3333333333333333                                                                                            % a    s~   s     coupling.
+x161x0         |-0.3333333333333333                                                                                            % a    b~   b     coupling.
+x162x0         |1                                                                                                              % g    u~   u     coupling.
+x163x0         |1                                                                                                              % g    c~   c     coupling.
+x164x0         |1                                                                                                              % g    t~   t     coupling.
+x165x0         |1                                                                                                              % g    d~   d     coupling.
+x166x0         |1                                                                                                              % g    s~   s     coupling.
+x167x0         |1                                                                                                              % g    b~   b     coupling.
+x168x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W+   u~   d     coupling.
+x169x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W+   c~   s     coupling.
+x170x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W+   t~   b     coupling.
+x171x0         |-0.5*(I1b1*I2b1*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   d~   u     coupling.
+x172x0         |-0.5*(I1b1*I2b2*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   d~   c     coupling.
+x173x0         |-0.5*(I1b1*I2b3*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   d~   t     coupling.
+x174x0         |-0.5*(I1b2*I2b1*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   s~   u     coupling.
+x175x0         |-0.5*(I1b2*I2b2*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   s~   c     coupling.
+x176x0         |-0.5*(I1b2*I2b3*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   s~   t     coupling.
+x177x0         |-0.5*(I1b3*I2b1*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   b~   u     coupling.
+x178x0         |-0.5*(I1b3*I2b2*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   b~   c     coupling.
+x179x0         |-0.5*(I1b3*I2b3*CKM(2)*pow(2,-0.5)*pow(sw,-1))                                                                 % W-   b~   t     coupling.
+x180x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W+   ve~  e-    coupling.
+x181x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W+   vm~  mu-   coupling.
+x182x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W+   vt~  ta-   coupling.
+x183x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W-   e+   ve    coupling.
+x184x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W-   mu+  vm    coupling.
+x185x0         |-0.5*(pow(2,-0.5)*pow(sw,-1))                                                                                  % W-   ta+  vt    coupling.
+x186x0         |-0.08333333333333333*(pow(cw,-1)*pow(sw,-1))                                                                   % Z    u~   u     coupling.
+x186x1         |-3*pow(cw,2)+5*pow(sw,2)                                                                                       % Z    u~   u        coupling.
+x186x2         |3*(pow(cw,2)+pow(sw,2))                                                                                        % Z    u~   u        coupling.
+x187x0         |-0.08333333333333333*(pow(cw,-1)*pow(sw,-1))                                                                   % Z    c~   c     coupling.
+x187x1         |-3*pow(cw,2)+5*pow(sw,2)                                                                                       % Z    c~   c        coupling.
+x187x2         |3*(pow(cw,2)+pow(sw,2))                                                                                        % Z    c~   c        coupling.
+x188x0         |-0.08333333333333333*(pow(cw,-1)*pow(sw,-1))                                                                   % Z    t~   t     coupling.
+x188x1         |-3*pow(cw,2)+5*pow(sw,2)                                                                                       % Z    t~   t        coupling.
+x188x2         |3*(pow(cw,2)+pow(sw,2))                                                                                        % Z    t~   t        coupling.
+x189x0         |(pow(cw,-1)*pow(sw,-1))/12.                                                                                    % Z    d~   d     coupling.
+x189x1         |-3*pow(cw,2)+pow(sw,2)                                                                                         % Z    d~   d        coupling.
+x189x2         |3*(pow(cw,2)+pow(sw,2))                                                                                        % Z    d~   d        coupling.
+x190x0         |(pow(cw,-1)*pow(sw,-1))/12.                                                                                    % Z    s~   s     coupling.
+x190x1         |-3*pow(cw,2)+pow(sw,2)                                                                                         % Z    s~   s        coupling.
+x190x2         |3*(pow(cw,2)+pow(sw,2))                                                                                        % Z    s~   s        coupling.
+x191x0         |(pow(cw,-1)*pow(sw,-1))/12.                                                                                    % Z    b~   b     coupling.
+x191x1         |-3*pow(cw,2)+pow(sw,2)                                                                                         % Z    b~   b        coupling.
+x191x2         |3*(pow(cw,2)+pow(sw,2))                                                                                        % Z    b~   b        coupling.
+x192x0         |-0.25*(pow(cw,-1)*pow(sw,-1)*(pow(cw,2)+pow(sw,2)))                                                            % Z    ve~  ve    coupling.
+x193x0         |-0.25*(pow(cw,-1)*pow(sw,-1)*(pow(cw,2)+pow(sw,2)))                                                            % Z    vm~  vm    coupling.
+x194x0         |-0.25*(pow(cw,-1)*pow(sw,-1)*(pow(cw,2)+pow(sw,2)))                                                            % Z    vt~  vt    coupling.
+x195x0         |(pow(cw,-1)*pow(sw,-1))/4.                                                                                     % Z    e+   e-    coupling.
+x195x1         |-pow(cw,2)+3*pow(sw,2)                                                                                         % Z    e+   e-       coupling.
+x195x2         |pow(cw,2)+pow(sw,2)                                                                                            % Z    e+   e-       coupling.
+x196x0         |(pow(cw,-1)*pow(sw,-1))/4.                                                                                     % Z    mu+  mu-   coupling.
+x196x1         |-pow(cw,2)+3*pow(sw,2)                                                                                         % Z    mu+  mu-      coupling.
+x196x2         |pow(cw,2)+pow(sw,2)                                                                                            % Z    mu+  mu-      coupling.
+x197x0         |(pow(cw,-1)*pow(sw,-1))/4.                                                                                     % Z    ta+  ta-   coupling.
+x197x1         |-pow(cw,2)+3*pow(sw,2)                                                                                         % Z    ta+  ta-      coupling.
+x197x2         |pow(cw,2)+pow(sw,2)                                                                                            % Z    ta+  ta-      coupling.

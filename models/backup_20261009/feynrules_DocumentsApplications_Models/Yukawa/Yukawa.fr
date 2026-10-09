@@ -1,0 +1,62 @@
+(* φ³ モデルの FeynRules モデルファイル *)
+
+(* インデックス定義 *)
+IndexRange[Index[Generation]] = Range[1]; (* 目的: 世代インデックスの定義。ここでは φ が1種類しかないため、1つの世代だけが必要です。*)
+
+(* パラメータの定義 *)
+M$Parameters = {
+  lam == {(* λ (lam): φ³ 相互作用の結合定数、外部パラメータ。 *)
+    TeX -> "\\lambda",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "Cubic coupling constant"
+  },
+  m == {(* m: φ の質量、外部パラメータ。 *)
+    TeX -> "m",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "Scalar mass"
+  },
+  y == {
+    TeX -> "y",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "Yukawa coupling"
+  },
+  mf == {
+    TeX -> "m_f",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "Fermion mass"
+  }
+};
+
+(* ゲージ群はなし *)
+M$GaugeGroups = {};(* 意味: この理論にはゲージ相互作用が存在しない、純粋なスカラー理論であることを示しています。 *)
+
+(* 粒子の定義 *)
+M$ClassesDescription = {
+ S[1] == {(* S[1]: スピン0のスカラー場の定義。 *)
+  ClassName -> phi,(* phi: クラス名（ラグランジアンなどで使用）。 *)
+  SelfConjugate -> True, (* SelfConjugate -> True: 自己共役な場、実スカラー場であることを意味します。 *)
+  Mass -> {{m, 1.0}}, (* Mass -> {{m, 1.0}}: 先ほど定義した質量 m を使っています。 *)
+  Width -> {{phi, 0}}, (* Width -> 0: 幅（崩壊幅）0（安定な粒子）。 *)
+  QuantumNumbers -> {}, (* QuantumNumbers -> {}: 電荷などの量子数なし。 *)
+  Indices -> {},(* Indices -> {}: インデックスなし（単一粒子）。 *)
+　PropagatorLabel -> {"\\phi"},
+  Description -> "Real scalar field"
+ },
+ F[1] == {
+  ClassName -> psi,
+  SelfConjugate -> False,
+  Mass -> {{mf, 1.0}},
+  Width -> {{psi, 0}},
+  QuantumNumbers -> {},
+  Indices -> {Index[Generation]},
+  FlavorIndex -> Generation,
+　PropagatorLabel -> {"\\psi"},
+  Description -> "Dirac fermion"
+ }
+};
+
+L = 1/2 D[phi, mu] D[phi, mu] - 1/2 m^2 phi^2 - lam/6 phi^3 + I psibar . gamma[mu] . D[psi, mu] - mf psibar . psi - y phi psibar . psi;

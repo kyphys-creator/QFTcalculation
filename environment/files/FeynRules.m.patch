@@ -1,0 +1,35 @@
+--- FeynRules.m.orig	2026-10-09 13:16:32
++++ FeynRules.m	2026-10-09 13:23:07
+@@ -21,6 +21,19 @@
+ 
+ 
+ (* ::Section:: *)
++(*Compatibility with Mathematica 14.1+ (local patch, 2026-10-09)*)
++
++
++(* Mathematica 14.1 added System`MatrixSymbol, which shadows FeynRules`MatrixSymbol
++   (used e.g. in mixing declarations) and makes its definitions fail with
++   SetDelayed::write in the main kernel and in every parallel subkernel.  The
++   built-in symbol is removed in this session only, before FeynRulesPackage.m is
++   read.  The code is a string so that it is parsed separately in each kernel. *)
++FR$MatrixSymbolFix = "If[Names[\"System`MatrixSymbol\"] =!= {}, Unprotect[System`MatrixSymbol]; ClearAttributes[System`MatrixSymbol, {Protected, ReadProtected}]; Remove[System`MatrixSymbol]]";
++ToExpression[FR$MatrixSymbolFix];
++
++
++(* ::Section:: *)
+ (*Main call to the package*)
+ 
+ 
+@@ -36,10 +49,11 @@
+            LaunchKernels[];
+            FR$KernelNumber = $KernelCount
+            ];
+-		DistributeDefinitions[$FeynRulesPath];
++		DistributeDefinitions[$FeynRulesPath, FR$MatrixSymbolFix];
+ 		ParallelEvaluate[
+ 			$Output={};
+ 			If[$VersionNumber>=12.2, SetOptions[ValueQ, Method->"Legacy"]]; (* Compatilibity with Mathematica 12.2 *)
++			ToExpression[FR$MatrixSymbolFix]; (* Compatibility with Mathematica 14.1+ (local patch) *)
+ 			SetDirectory[$FeynRulesPath];
+ 			Get[ToFileName[$FeynRulesPath, "FeynRulesPackage.m"]];
+ 			$Output={OutputStream["stdout",1]};

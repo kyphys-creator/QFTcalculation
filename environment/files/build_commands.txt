@@ -1,0 +1,74 @@
+# Commands used to build the loop-calculation stack on 2026-10-09 (Apple M3, macOS 26.2).
+# A record, not an unattended script: run step by step and check each result.
+# Prerequisites: Homebrew gcc (gfortran 15.2), cmake, gmp, mpfr, zstd; Mathematica 14.2.1.
+
+## 0. Layout, PATH, SDK
+mkdir -p ~/hep/{src,bin,lib,include,opt,mathematica}
+#   append files/zshrc_block.sh to ~/.zshrc  (PATH and SDKROOT)
+export PATH="$HOME/hep/bin:$PATH" SDKROOT="$(xcrun --show-sdk-path)"
+ln -sf "/Applications/Wolfram 2.app/Contents/MacOS/wolframscript" ~/hep/bin/wolframscript
+ln -sfn "/Applications/Wolfram 2.app" ~/hep/opt/Wolfram142        # space-free path
+cp files/mcc files/mg5_aMC ~/hep/bin/ && chmod +x ~/hep/bin/mcc ~/hep/bin/mg5_aMC
+brew install flint
+
+## 1. Sources (curl: no com.apple.quarantine attribute)
+cd ~/hep/src
+curl -fLO https://github.com/form-dev/form/releases/download/v5.0.2/form-5.0.2.tar.gz
+curl -fLO https://feynarts.de/looptools/LoopTools-2.16.tar.gz
+curl -fLO https://feynarts.de/formcalc/FormCalc-9.10.tar.gz
+curl -fLO https://feynarts.de/FeynArts-3.12.tar.gz
+curl -fLO https://feynrules.irmp.ucl.ac.be/downloads/feynrules-current.tar.gz
+curl -fLO https://launchpad.net/mg5amcnlo/3.0/3.8.x/+download/MG5_aMC_v3.8.1.tar.gz
+curl -fL -o collier-1.2.10.tar.gz "https://collier.hepforge.org/downloads/?f=collier-1.2.10.tar.gz"
+curl -fL -o package-x-root.tar.gz \
+  "https://gitlab.com/api/v4/projects/mule-tools%2Fpackage-x/repository/archive.tar.gz?sha=root"
+
+## 2. FORM 5.0.2
+tar xzf form-5.0.2.tar.gz && cd form-5.0.2
+./configure --prefix=$HOME/hep --with-gmp=/opt/homebrew --with-mpfr=/opt/homebrew \
+            --with-flint=/opt/homebrew --with-zstd=/opt/homebrew --enable-threaded
+make -j8 && make install && cd ..
+
+## 3. COLLIER 1.2.10 (shared library)
+tar xzf collier-1.2.10.tar.gz && cd collier-COLLIER-1.2.10 && mkdir -p build && cd build
+cmake .. -DCMAKE_Fortran_COMPILER=/opt/homebrew/bin/gfortran -DCMAKE_INSTALL_PREFIX=$HOME/hep \
+         -DCMAKE_INSTALL_NAME_DIR=$HOME/hep/lib -DCMAKE_BUILD_TYPE=Release
+make -j8 && make install && cd ../..
+
+## 4. LoopTools 2.16 (library + MathLink executable; mcc = ~/hep/bin/mcc)
+tar xzf LoopTools-2.16.tar.gz && cd LoopTools-2.16
+FC=/opt/homebrew/bin/gfortran ./configure --prefix=$HOME/hep     # must report "do we have MathLink... yes"
+make -j8 && make install && cd ..
+
+## 5. Mathematica packages (~/Library/Wolfram/Applications)
+#   FeynCalc 10.2.1 + patched FeynArts 3.12 (official installer, run in wolframscript):
+#     Get["https://raw.githubusercontent.com/FeynCalc/feyncalc/master/install.m"];
+#     InstallFeynCalc[AutoOverwriteFeynCalcDirectory -> True, AutoInstallFeynArts -> True,
+#       AutoEnableTraditionalForm -> True, AutoDisableInsufficientVersionWarning -> True];
+#   FeynHelpers 2.0 (new kernel, after <<FeynCalc`):
+#     Get["https://raw.githubusercontent.com/FeynCalc/feynhelpers/master/install.m"];
+#     InstallFeynHelpers[AutoOverwriteFeynHelpersDirectory -> True];
+FH=~/Library/Wolfram/Applications/FeynCalc/AddOns/FeynHelpers
+mkdir -p $FH/ExternalTools/LoopTools && ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
+#   Package-X (readable source) + PVReduce
+mkdir -p package-x && tar xzf package-x-root.tar.gz -C package-x --strip-components=1
+cp -R package-x/X ~/Library/Wolfram/Applications/X
+cp package-x/PVReduce/PVReduce.m ~/Library/Wolfram/Applications/X/PVReduce.m   # context X`PVReduce`
+#   FeynRules 2.3.49 + MatrixSymbol patch
+mkdir -p fr && tar xzf feynrules-current.tar.gz -C fr
+cp -R fr/feynrules-current ~/Library/Wolfram/Applications/FeynRules
+cd ~/Library/Wolfram/Applications/FeynRules && cp -p FeynRules.m FeynRules.m.orig \
+  && patch -p0 FeynRules.m < .../environment/files/FeynRules.m.patch && cd ~/hep/src
+#   unpatched FeynArts 3.12 + FormCalc 9.10 for FormCalc work
+cd ~/hep/mathematica && tar xzf ~/hep/src/FeynArts-3.12.tar.gz && tar xzf ~/hep/src/FormCalc-9.10.tar.gz
+cd FormCalc-9.10 && DEST=MacOSX-ARM64 MCC=$HOME/hep/bin/mcc ./compile
+cp .../environment/files/FeynArts.m .../environment/files/FormCalc.m ~/Library/Wolfram/Applications/
+
+## 6. MadGraph5_aMC@NLO 3.8.1
+~/miniforge3/bin/conda create -y -n qft python=3.12 numpy scipy six
+cd ~/hep && tar xzf src/MG5_aMC_v3.8.1.tar.gz
+cd ~/hep/MG5_aMC_v3_8_1        # install from here, otherwise HEPTools lands in the cwd
+printf 'install ninja\ninstall collier\nquit\n' > /tmp/inst.mg5 && mg5_aMC /tmp/inst.mg5
+
+## 7. Verification
+.../environment/tests/run_all.sh

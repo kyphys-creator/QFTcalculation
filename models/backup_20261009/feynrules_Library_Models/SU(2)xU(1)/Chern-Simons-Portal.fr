@@ -1,0 +1,34 @@
+M$ModelName = "ChernSimons";
+M$Information = {Authors -> {"M.Ovchynnikov"}, Version -> "1.0", Date -> "6.20.2019", Institutions -> {"Leiden university"}, Emails -> {"ovchynnikov@lorentz.leidenuniv.nl"} };
+
+M$ClassesDescription = {
+V[92] == {
+ClassName -> xb,
+SelfConjugate -> True,
+PDG -> 1234567,
+Mass -> {Mxb, 1},
+ParticleName -> "xb",
+Width -> {Wxb,1}}
+}
+
+M$Parameters = {
+cW == {
+Value -> 0.001,
+InteractionOrder -> {NP, 1},
+Description -> "X boson coupling to W bosons"},
+
+cZ == {
+Value -> 0.001,
+InteractionOrder -> {NP, 1},
+Description -> "X boson coupling to Z bosons"},
+
+cZgamma == {
+Value -> 0.001,
+InteractionOrder -> {NP, 1},
+Description -> "X boson coupling to Z bosons and photons"},
+
+Cmu == {
+Value -> 0.1,
+InteractionOrder -> {NP, 1},
+Description -> "X boson coupling to muons"}
+}

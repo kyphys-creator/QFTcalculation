@@ -1,0 +1,6 @@
+! This fils was generated automatically by FeynRules
+!
+PARAMDEFINITION = param_definition.dat
+IDENTFILE = ident_card.dat
+PARAMCARD = param_card.dat
+INTERACTIONS = Interactions.dat

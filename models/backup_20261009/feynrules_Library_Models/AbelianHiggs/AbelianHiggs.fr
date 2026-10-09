@@ -1,0 +1,86 @@
+(* Abelian Higgs モデル *)
+
+(* インデックス定義 *)
+IndexRange[Index[Generation]] = Range[1];
+
+(* パラメータの定義 *)
+M$Parameters = {
+  mu2 == {
+    TeX -> "\\mu^2",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "Negative squared mass term"
+  },
+  lam == {
+    TeX -> "\\lambda",
+    ParameterType -> External,
+    Value -> 0.5,
+    Description -> "Quartic scalar coupling"
+  },
+  vev == {
+    TeX -> "v",
+    ParameterType -> External,
+    Value -> 1.0,
+    Description -> "VEV of the scalar field"
+  },
+  e == {
+    TeX -> "e",
+    ParameterType -> External,
+    Value -> 0.313,
+    Description -> "Electric charge"
+  }
+};
+
+(* ゲージ群の定義 *)
+M$GaugeGroups = {
+  U1X == {
+    Abelian -> True,
+    GaugeBoson -> A,
+    CouplingConstant -> e,
+    Charge -> QX
+  }
+};
+
+(* 粒子の定義 *)
+M$ClassesDescription = {
+  V[1] == {
+    ClassName -> A,
+    SelfConjugate -> True,
+    Mass -> {MAH, 0},
+    Width -> {WAH, 0},
+    QuantumNumbers -> {},
+    Indices -> {}
+  },
+  S[1] == {
+    ClassName -> phi,
+    SelfConjugate -> False,
+    Unphysical -> True,
+    QuantumNumbers -> {QX -> 1},
+    Indices -> {Index[Generation]},
+    FlavorIndex -> Generation,
+    Definitions -> { 
+      phi -> (vev + h + I * chi)/Sqrt[2]
+    },
+    Description -> "Complex scalar"
+  },
+  S[2] == {
+  ClassName -> h,
+  SelfConjugate -> True,
+  Mass -> {mh, Sqrt[2 lam] * vev},
+  Width -> {wh, 0},
+  Indices -> {},
+  Description -> "Physical Higgs"
+  },
+  S[3] == {
+  ClassName -> chi,
+  SelfConjugate -> True,
+  Mass -> {mchi, 0},
+  Width -> {wchi, 0},
+  Indices -> {},
+  Goldstone -> A,
+  Description -> "Goldstone boson"
+  }
+};
+
+(* ラグランジアン *)
+L := -1/4 FS[A, mu, nu] FS[A, mu, nu] + DC[phibar, mu] DC[phi, mu] + mu2 phibar phi - lam (phibar phi)^2;

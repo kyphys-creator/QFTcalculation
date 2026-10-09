@@ -1,0 +1,5 @@
+#!/bin/bash
+# Launch MadGraph5_aMC@NLO 3.8.1 with the conda env "qft" (Python 3.12) and the
+# macOS SDK visible to gfortran (needed whenever MG5 compiles process code).
+export SDKROOT="${SDKROOT:-$(xcrun --show-sdk-path)}"
+exec "$HOME/miniforge3/envs/qft/bin/python" "$HOME/hep/MG5_aMC_v3_8_1/bin/mg5_aMC" "$@"

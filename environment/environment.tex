@@ -1,0 +1,574 @@
+% environment.tex — ループ計算環境の構築記録（2026年10月9日）
+% コンパイル: lualatex environment.tex（参照解決のため2回）
+% 付録Cは files/ 以下のファイルを \VerbatimInput で取り込む。
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}% 一般句読点（– — ‘ ’ など）は欧文フォントで組む
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{fancyvrb,fvextra}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={ループ計算環境の構築記録},pdfauthor={}}
+
+% 色（Mathematica 依存）
+\definecolor{cMf}{RGB}{253,229,204}\definecolor{cMd}{RGB}{204,112,26}  % Mathematica 必須
+\definecolor{cOf}{RGB}{214,232,247}\definecolor{cOd}{RGB}{46,99,158}   % Mathematica 不要
+\definecolor{cPf}{RGB}{228,228,228}\definecolor{cPd}{RGB}{110,110,110} % 補助
+\definecolor{cGf}{RGB}{226,243,229}\definecolor{cGd}{RGB}{52,128,72}   % 成功・一致
+\definecolor{cRf}{RGB}{252,226,226}\definecolor{cRd}{RGB}{190,30,30}   % 失敗
+\definecolor{cQf}{RGB}{255,246,214}\definecolor{cQd}{RGB}{176,140,20}  % 手順
+
+\tikzset{
+  tool/.style={draw,rounded corners=1.5pt,minimum height=0.48cm,text width=4.6cm,align=flush center,
+    inner sep=1.6pt,line width=0.5pt,font=\footnotesize},
+  tM/.style={tool,fill=cMf,draw=cMd},
+  tO/.style={tool,fill=cOf,draw=cOd},
+  tN/.style={tool,fill=white,draw=cPd},
+  flow/.style={-{Stealth[length=2mm]},thick,black!70},
+  panel/.style={fill=black!3,draw=black!22,rounded corners=3pt},
+  ptitle/.style={font=\footnotesize\bfseries,anchor=north,align=flush center,inner sep=2pt},
+}
+
+\newcommand{\MGaMC}{MG5\_aMC@NLO}
+\newcommand{\bq}{\textasciigrave}
+\newcommand{\pth}[1]{\texttt{\textasciitilde/}\nolinkurl{#1}}
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+\fvset{fontsize=\footnotesize,frame=lines,framesep=2mm,breaklines=true,breakanywhere=true}
+
+\title{ループ計算環境の構築記録\\[2pt]{\large \texttt{\textasciitilde/hep} に組んだ1ループ計算スタック（Apple M3・Mathematica 14.2）}}
+\author{}
+\date{2026年10月9日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。
+\end{abstract}
+
+\section{はじめに}\label{sec:intro}
+
+本稿の問いは次の一つである。\textbf{この Mac で1ループ計算を正しく、かつ再現可能に行うために、どのような環境を組み、それが正しく動くことをどう確かめたか。}環境を組み直した理由は、旧環境に五つの問題があったことである。FeynCalc は 10.1.0 で、外部ツールとの連携を担う FeynHelpers が入っていなかった。LoopTools はビルドされておらず、Package-X は難読化された旧配布版だった。FormCalc に付属する FORM の実行ファイルは、検証のために起動した直後に macOS によって削除された。FeynRules は Mathematica 14 で読み込むたびにエラーを出した。さらに、同じツールのコピーが Library・Documents・Downloads・Dropbox に散らばり、どれが使われているのか分からなかった。そこで同じリポジトリのレビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、1ループの中核部分を導入することにした。2ループ用のツールと、EFT・暗黒物質・熱的ループ用のツールは、本稿の範囲外である。
+
+\paragraph{設定。}対象とする計算機と、ビルドに使った共通の基盤を表~\ref{tab:machine} に示す。Mathematica は 14.2.1（\texttt{/Applications/Wolfram 2.app}）と 14.1.0（\texttt{/Applications/Wolfram.app}）の二つが入っている。両者は同じ \texttt{\$UserBaseDirectory}（\pth{Library/Wolfram}）を参照するので、パッケージはどちらからも見える。ビルドと検証には 14.2.1 だけを使った。
+
+\begin{table}[tbp]
+\centering\small
+\caption{計算機と共通の基盤（2026年10月9日時点）。}
+\label{tab:machine}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.0cm}X}
+\toprule
+\textbf{項目} & \textbf{内容} \\
+\midrule
+計算機 & Apple M3（8コア）、メモリ 16 GB \\
+OS & macOS 26.2。Command Line Tools の SDK は 15.2 \\
+Mathematica & Wolfram 14.2.1（ビルドと検証に使用）、14.1.0 \\
+コンパイラ & Homebrew gcc 15.2.0（gfortran）、Apple clang 16.0.0、cmake 3.31.1 \\
+数値ライブラリ & GMP 6.3.0、MPFR 4.2.2、FLINT 3.6.0、zstd 1.5.7（いずれも Homebrew） \\
+Python & miniforge（conda 24.11.3）の環境 \texttt{qft}：Python 3.12.15、numpy 2.5.3、scipy 1.18.1、six 1.17.0 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{前提。}本稿は次の前提に立つ。
+\begin{enumerate}
+\item 版と日付は2026年10月9日時点のものである。
+\item ソフトウェアは公式の配布元から \texttt{curl} で取得した。ソースから構築できるものはこの Mac で構築した。
+\item 「正しく動く」かどうかは、既知の厳密値、独立な別実装、または独立な解析計算との数値の一致で判定する。
+\item パスの \texttt{\textasciitilde} はホームディレクトリ \nolinkurl{/Users/koichiro} を表す。
+\end{enumerate}
+本文で使う用語と記号を表~\ref{tab:terms} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{本稿で使う用語と記号。}
+\label{tab:terms}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.6cm}X}
+\toprule
+\textbf{用語・記号} & \textbf{意味} \\
+\midrule
+\texttt{\textasciitilde/hep} & 今回の構成で、Mathematica パッケージ以外を置いた場所（ソース、ビルド結果、MadGraph） \\
+Applications & \pth{Library/Wolfram/Applications}。Mathematica がパッケージを探す場所 \\
+MathLink, \texttt{mcc} & Mathematica と外部プログラムをつなぐ通信規格と、そのためのコンパイラ・スクリプト \\
+UFO & 模型を MadGraph などへ渡す Python 形式（Universal FeynRules Output） \\
+HEPTools & MadGraph が1ループ計算に使う外部ライブラリ群（Ninja、OneLOop、COLLIER） \\
+PaVe, $A_0, B_0, C_0$ & Passarino--Veltman のスカラー関数。規格化は LoopTools に合わせ、$\mu^2=1$、$\Delta=0$ とする（\ref{app:derivations}） \\
+$B_0(s;m_0,m_1)$ & 外運動量の2乗 $s$、内線質量 $m_0,m_1$ の2点関数。本稿では $B_0(2;1,1)$ を検算に使う \\
+SDKROOT & gfortran や clang が使う macOS SDK の場所を示す環境変数 \\
+quarantine & macOS がダウンロードしたファイルに付ける拡張属性 \texttt{com.apple.quarantine} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+本稿の構成は次の通りである。第~\ref{sec:migration} 節で旧環境の撤去と自作模型の退避を、第~\ref{sec:layout} 節で導入した構成を述べる。第~\ref{sec:issues} 節では、この Mac に固有の障害とその対処を、第~\ref{sec:tests} 節では検証の方法と結果を示す。第~\ref{sec:usage} 節に使い方を、第~\ref{sec:discussion} 節に検証していない点と今後の課題をまとめる。付録には、ファイル配置、検算に使った解析式の導出、変更・作成したファイルの全文を載せる。
+
+\section{旧環境の撤去と自作模型の退避}\label{sec:migration}
+
+撤去の手順を図~\ref{fig:migration} に示す。最も注意したのは、ツールのフォルダの中に自作のファイルが紛れていないかである。FeynRules と FeynArts は、利用者の模型を自分の \texttt{Models} フォルダに置く使い方を前提にしており、MadGraph も計算結果をインストール先に書き出すことがある。そこで、展開済みのフォルダを元の tarball のファイル一覧と突き合わせ、tarball にないファイルを洗い出した。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  st/.style={draw=cQd,fill=cQf,rounded corners=2pt,text width=3.55cm,align=flush left,font=\footnotesize,
+    inner sep=3pt,minimum height=1.45cm,line width=0.5pt},
+  num/.style={font=\footnotesize\bfseries,text=cQd!80!black},
+]
+\node[st] (s1) at (0,0)    {\textbf{1 棚卸し}\\5系統の所在を列挙。展開済みフォルダを元の tarball と照合して自作ファイルを特定};
+\node[st] (s2) at (4.25,0) {\textbf{2 退避}\\自作模型・NLOCT の出力・samples を \texttt{models/backup\_20261009} へ \texttt{rsync}};
+\node[st] (s3) at (8.5,0)  {\textbf{3 照合}\\\texttt{diff -rq} で全件一致を確認（570ファイル、9.3 MB）};
+\node[st] (s4) at (12.75,0){\textbf{4 撤去}\\22項目を \texttt{/usr/bin/trash} でゴミ箱へ。Mathematica には触れない};
+\node[st] (s5) at (0,-2.1)    {\textbf{5 取得}\\公式配布元から \texttt{curl} で取得（quarantine 属性が付かない）};
+\node[st] (s6) at (4.25,-2.1) {\textbf{6 ビルド}\\FORM、COLLIER、LoopTools、FormCalc の補助ツール};
+\node[st] (s7) at (8.5,-2.1)  {\textbf{7 導入}\\Mathematica パッケージ、MadGraph と HEPTools};
+\node[st,draw=cGd,fill=cGf] (s8) at (12.75,-2.1){\textbf{8 検証}\\\texttt{tests/run\_all.sh} で10項目};
+\foreach \a/\b in {s1/s2,s2/s3,s3/s4,s5/s6,s6/s7,s7/s8} \draw[flow] (\a) -- (\b);
+\draw[flow] (s4.south) -- ++(0,-0.18) -| (s5.north);
+\end{tikzpicture}
+\caption{移行の手順。1〜4 が旧環境の撤去、5〜8 が新しい環境の構築である。自作のファイルは、元と一致することを確かめてから撤去した（手順3）。}
+\label{fig:migration}
+\end{figure}
+
+\paragraph{見つかった自作ファイル。}突き合わせの結果、FeynArts・FormCalc・MadGraph のフォルダには、ビルドで生じたファイル以外の追加はなかった。MadGraph のフォルダに計算結果は残っていなかった。一方、模型のフォルダには自作のものが多数あった。Library の FeynRules の \texttt{Models} には、AbelianHiggs、B-L-SM、EW、EW+CS、EW+pions、Phi3、QCD、QED、SMnew、SU(2)xU(1)、Yukawa、pseudoYukawa、scalarQED などの模型が356ファイルあった。FeynCalc に同梱された FeynArts の \texttt{Models} には、FeynRules から書き出した模型が15個あった。Documents にあった古いコピーには、これらの旧版があり、QED だけは Library の版と中身が異なっていた。Downloads と Dropbox の \texttt{feynrules-current} には NLOCT の出力（SMQCDrenoL、SM\_NLO）があった。
+
+\paragraph{退避と照合。}これらを元のフォルダ構成のまま \nolinkurl{QFTcalculation/models/backup_20261009/} にコピーした。出どころは同じ場所の README に記録した。コピーのたびに \texttt{diff -rq} で元と比べ、570ファイル（9.3 MB）すべてが一致することを確かめた。今後、自作の模型はインストール先の外のこのフォルダで管理する。FeynRules では \texttt{LoadModel} にフルパスを渡せばよく、模型を FeynRules のフォルダに戻す必要はない。
+
+\paragraph{撤去。}撤去した22項目を表~\ref{tab:removed} に示す。削除には \texttt{rm} ではなく macOS の \texttt{/usr/bin/trash} を使ってゴミ箱へ移した。Finder の「戻す」で元の場所に復元できる。Mathematica の二つの版と、micrOMEGAs 6.0 に同梱された LoopTools 2.12 は、撤去の対象から外した。
+
+\begin{table}[tbp]
+\centering\small
+\caption{ゴミ箱へ移した22項目。}
+\label{tab:removed}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}X>{\raggedleft\arraybackslash}p{1.0cm}}
+\toprule
+\textbf{場所} & \textbf{撤去したもの} & \textbf{項目数} \\
+\midrule
+\pth{Library/Wolfram/} \nolinkurl{Applications} & FeynCalc（10.1.0、パッチ版 FeynArts 3.12 同梱）、FeynRules（2.3.49）、LieART（2.1.0）、X（Package-X 2.1.1 の旧配布版） & 4 \\
+\pth{Documents} & \texttt{Applications}（FeynCalc・FeynRules・X の旧コピー）、\texttt{feynrules-current} & 2 \\
+\pth{Downloads} & FeynArts-3.12、FormCalc-9.10、MG5\_aMC\_v3\_6\_2、feynrules-current、feynrules-samples と、それぞれの tarball・zip & 12 \\
+\pth{Dropbox} & GraduateResearch の FeynArts-3.11 と feynrules-current、Examples の FeynRules と feynrules-current & 4 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{導入した構成}\label{sec:layout}
+
+導入した環境の全体像を図~\ref{fig:arch} に、各ツールの版と配置を表~\ref{tab:installed} に示す。構成は三つの層に分かれる。一つ目は Mathematica パッケージの層で、Applications に置いた FeynCalc、Package-X、FeynRules からなる。二つ目は C と Fortran の層で、\pth{hep} の下にソースから構築した FORM、LoopTools、COLLIER と、FormCalc 用の FeynArts・FormCalc を置いた。三つ目は MadGraph の層で、conda 環境 \texttt{qft} の Python で動く \MGaMC{} 3.8.1 と、その HEPTools からなる。\pth{hep} の大きさは 549 MB である。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[on background layer]
+  \fill[panel] (0,0.35) rectangle (5.4,-5.55);
+  \fill[panel] (5.65,0.35) rectangle (11.05,-5.55);
+  \fill[panel] (11.3,0.35) rectangle (16.7,-5.55);
+\end{scope}
+\node[ptitle] at (2.7,0.35) {Mathematica 14.2.1\\Applications};
+\node[ptitle] at (8.35,0.35) {\texttt{\textasciitilde/hep}\\（ソースから構築）};
+\node[ptitle] at (14.0,0.35) {\MGaMC{} 3.8.1\\conda 環境 \texttt{qft}};
+% Mathematica
+\node[tM] (FC) at (2.7,-0.95) {FeynCalc 10.2.1};
+\node[tM,text width=4.1cm] (FAp) at (2.95,-1.55) {FeynArts 3.12（パッチ版）};
+\node[tM,text width=4.1cm] (FH) at (2.95,-2.15) {FeynHelpers 2.0};
+\node[tM] (PX) at (2.7,-3.0) {Package-X 2.1.1 + PVReduce 0.1.0};
+\node[tN] (ST) at (2.7,-3.8) {入口：FeynArts.m、FormCalc.m};
+\node[tM] (FR) at (2.7,-4.75) {FeynRules 2.3.49 + NLOCT\\（MatrixSymbol パッチ）};
+\draw[cMd,thick] (FC.south west) ++(0.15,0) |- (FAp.west);
+\draw[cMd,thick] (FC.south west) ++(0.15,0) |- (FH.west);
+% ~/hep
+\node[tO] (FORM) at (8.35,-0.95) {FORM 5.0.2 / TFORM};
+\node[tO] (LT) at (8.35,-1.75) {LoopTools 2.16\\ライブラリ + MathLink 版};
+\node[tO] (COL) at (8.35,-2.6) {COLLIER 1.2.10};
+\node[tM] (FAu) at (8.35,-3.35) {FeynArts 3.12（パッチなし）};
+\node[tM] (FCa) at (8.35,-4.05) {FormCalc 9.10（FORM 4.2.1 同梱）};
+\node[tN] (MCC) at (8.35,-4.8) {代替 \texttt{mcc}（ビルド時のみ）};
+% MG5
+\node[tO,text width=4.3cm] (MG) at (14.0,-0.95) {\MGaMC{} 3.8.1};
+\node[tN,text width=4.3cm] (MOD) at (14.0,-1.75) {模型：sm、loop\_sm、自作の UFO};
+\node[tO,text width=4.3cm] (HT) at (14.0,-2.65) {HEPTools：Ninja 1.2.1・\\OneLOop 3.6・COLLIER 1.2.9};
+\node[tN,text width=4.3cm] (PY) at (14.0,-3.6) {Python 3.12.15（numpy、scipy、six）};
+\draw[flow] (MG) -- (MOD);
+% arrows
+\draw[flow,cOd] (FH.east) -- (LT.west);
+\draw[flow,cMd] (FH.south) -- node[right,font=\scriptsize] {PaXEvaluate} (FH.south |- PX.north);
+\draw[flow] (ST.east) -- (FAu.west);
+\draw[flow] (ST.east) -- (FCa.west);
+\draw[flow,dashed] (MCC.east) -- ++(0.3,0) |- (LT.east);
+\draw[flow,cGd] (FR.south) -- ++(0,-0.35) -| node[pos=0.04,above,font=\scriptsize,text=cGd] {WriteUFO} ($(MOD.east)+(0.3,0)$) -- (MOD.east);
+% toolchain
+\node[draw=black!40,fill=black!6,rounded corners=2pt,text width=16.4cm,align=flush center,font=\footnotesize,inner sep=3pt]
+  at (8.35,-6.05) {共通の基盤：Homebrew gcc 15.2（gfortran）・Apple clang 16・macOS SDK 15.2（SDKROOT）・GMP 6.3・MPFR 4.2.2・FLINT 3.6・zstd 1.5.7};
+% legend
+\begin{scope}[shift={(0.2,-6.85)},every node/.append style={font=\footnotesize}]
+  \node[tM,text width=0.5cm,minimum height=0.32cm] (L1) at (0.3,0) {};
+  \node[anchor=west] at (L1.east) {Mathematica が必要};
+  \node[tO,text width=0.5cm,minimum height=0.32cm] (L2) at (4.3,0) {};
+  \node[anchor=west] at (L2.east) {Mathematica は不要};
+  \node[tN,text width=0.5cm,minimum height=0.32cm] (L3) at (8.3,0) {};
+  \node[anchor=west] at (L3.east) {補助（入口、スクリプト、データ）};
+\end{scope}
+\end{tikzpicture}
+\caption{導入した環境の全体像。左が Mathematica パッケージ（Applications）、中央が \texttt{\textasciitilde/hep} に構築したプログラム、右が MadGraph である。青の矢印は FeynHelpers から LoopTools の MathLink 実行ファイルを呼ぶ経路（\texttt{LToolsEvaluate}）、緑の矢印は FeynRules から MadGraph へ模型を渡す経路である。FeynRules の FeynArts 出力は、パッチ版とパッチなしのどちらの FeynArts でも読める。破線の \texttt{mcc} は LoopTools の構築にだけ使った。}
+\label{fig:arch}
+\end{figure}
+
+\begin{table}[tbp]
+\centering\small
+\caption{導入したツールの版、配置、入手元。Applications は \texttt{\textasciitilde/Library/Wolfram/Applications} を表す。}
+\label{tab:installed}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.3cm}}
+\toprule
+\textbf{ツール} & \textbf{版} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+FORM / TFORM & 5.0.2 & \texttt{\textasciitilde/hep/bin} & GitHub（form-dev）~\cite{form5,url:form} \\
+LoopTools & 2.16 & \texttt{\textasciitilde/hep/\{lib,include,bin\}} & feynarts.de~\cite{fcalc,url:feynarts} \\
+COLLIER & 1.2.10 & \texttt{\textasciitilde/hep/lib} & HepForge~\cite{collier,url:collier} \\
+FeynCalc & 10.2.1 & Applications/FeynCalc & 公式インストーラ~\cite{fc102,fc10} \\
+FeynArts（パッチ版） & 3.12 & FeynCalc/FeynArts & FeynCalc のミラー~\cite{fa3} \\
+FeynHelpers & 2.0.0 & FeynCalc/AddOns/FeynHelpers & 公式インストーラ~\cite{fc102,fh1} \\
+Package-X（ソース版） & 2.1.1 & Applications/X & GitLab（mule-tools）~\cite{px1,px2,url:px} \\
+PVReduce & 0.1.0 & Applications/X/PVReduce.m & 同上 \\
+FeynArts（パッチなし） & 3.12 & \texttt{\textasciitilde/hep/mathematica} & feynarts.de~\cite{fa3,url:feynarts} \\
+FormCalc & 9.10 & \texttt{\textasciitilde/hep/mathematica} & feynarts.de~\cite{fcalc,url:feynarts} \\
+FeynRules + NLOCT & 2.3.49 & Applications/FeynRules & 公式サイト~\cite{fr2,nloct,url:fr} \\
+\MGaMC{} & 3.8.1 & \texttt{\textasciitilde/hep/MG5\_aMC\_v3\_8\_1} & Launchpad~\cite{mg5,url:mg5} \\
+HEPTools（Ninja、OneLOop、COLLIER） & 1.2.1、3.6、1.2.9 & MG5 の \texttt{HEPTools} & MadGraph の \texttt{install}~\cite{ninja,ninjamg,oneloop,collier} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{FeynArts を二つ置いた理由。}FeynCalc は、自分の記号とぶつかる FeynArts の記号を改名するパッチを当てて、FeynArts を読み込む。一方、FormCalc はパッチのない FeynArts を前提にしている。そこで、パッチ版は FeynCalc のフォルダの中に、パッチなし版は \pth{hep/mathematica} に置いた。FeynCalc はパッチ版を自分のフォルダから明示的なパスで読むので、二つは衝突しない。パッチなし版と FormCalc を \texttt{<<FeynArts\bq} や \texttt{<<FormCalc\bq} で読めるように、Applications には数行の入口ファイル（\ref{app:files}）を置いた。同じカーネルで両方の FeynArts を読み込んではならない。
+
+\paragraph{Package-X の版。}Package-X は開発元が更新をやめており、McMule グループが CC-BY-4.0 で再公開している~\cite{url:px}。旧配布版は Mathematica の \texttt{Encode} で難読化されていたが、今回は同じ 2.1.1 の読めるソースを入れた。PVReduce のコンテキストは \texttt{X\bq PVReduce\bq} なので、ファイルは \texttt{X/PVReduce.m} に置いた。COLLIER を Package-X から呼ぶ拡張 CollierLink は導入できなかった。実行時に必要なライブラリが Intel Mac 用しか配布されていないためである。
+
+\paragraph{COLLIER が二つある理由。}単体の COLLIER（1.2.10）と、MadGraph が HEPTools として自前で入れた COLLIER（1.2.9）は、別々のライブラリである。前者は Fortran や C から直接使い、後者は MadLoop だけが使う。互いに干渉しない。
+
+\section{この環境に固有の問題と対処}\label{sec:issues}
+
+導入の途中で見つかった問題と、その対処を表~\ref{tab:issues} にまとめる。原因が確定していないものは「推論」と書いた。以下、主なものを順に説明する。
+
+\begin{table}[tbp]
+\centering\small
+\caption{この Mac に固有の問題と対処。}
+\label{tab:issues}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+gfortran のリンク & \texttt{ld: library 'System' not found} & gfortran 15.2 が macOS SDK を見つけない & \texttt{\textasciitilde/.zshrc} で SDKROOT を設定 \\
+MathLink の \texttt{mcc} & パスが空白で分断され、i386 向けにリンクされる & 2012年版のスクリプトが arm64 とパスの空白を想定していない & 代替の \texttt{\textasciitilde/hep/bin/mcc} \\
+FeynRules & 読み込み時に \texttt{SetDelayed::write}（\texttt{MatrixSymbol}） & 14.1 で入った \texttt{System\bq MatrixSymbol} が同名の記号を隠す & FeynRules.m に局所パッチ（元は \texttt{.orig}） \\
+FeynHelpers & \texttt{LToolsLoadLibrary\allowbreak ::nobinary} & LoopTools を既定の場所でしか探さない & シンボリックリンクを置く \\
+ブラウザで取得した実行ファイル & 起動した直後にファイルが消える & quarantine 属性の付いた未署名のバイナリ（推論） & \texttt{curl} で取得し直す \\
+CollierLink & 導入できない & 実行時ライブラリが Intel Mac 用のみで、ソースが非公開 & FeynHelpers の \texttt{LToolsEvaluate} で代用 \\
+MadGraph の \texttt{install} & HEPTools が作業フォルダに入る & 相対パスで導入される & MadGraph のフォルダで実行 \\
+Ninja & 4倍精度なしでビルドされる & HEPTools の構成 & MadLoop は不安定な点で COLLIER・CutTools に切り替える \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{gfortran と macOS SDK。}LoopTools の configure は、Fortran と C のリンクを確かめる段階で止まった。同じ小さなプログラムを手でリンクすると、\texttt{ld: library 'System' not found} が出た。Homebrew の gfortran 15.2 が、macOS 26.2 の Command Line Tools にある SDK（15.2）を見つけられないためである。環境変数 \texttt{SDKROOT=\$(xcrun --show-sdk-path)} を与えるとリンクが通り、テストプログラムは期待どおりの終了コード 95 を返した。MadGraph はプロセスを生成するたびに gfortran でコンパイルするので、この設定は今後も常に必要になる。そこで \pth{.zshrc} の末尾に専用のブロックを足した（\ref{app:files}）。ただし、Dock から起動したアプリは \pth{.zshrc} を読まない。Mathematica のノートブックから Fortran をコンパイルする場合は、ターミナルで行う必要がある。
+
+\paragraph{MathLink の \texttt{mcc}。}LoopTools の Mathematica インターフェースは、MathLink の実行ファイルとして作られる。そのためのコンパイラ・スクリプト \texttt{mcc} は、Mathematica 14.2.1 に付属するものでも2012年版のままだった。このスクリプトは \texttt{Wolfram 2.app} の空白でパスを分断し、arm64 の Mac でも i386 向けにリンクしようとする。64ビットを指定する \texttt{-b64} も「この環境では生成できない」として拒否された。一方、部品である \texttt{mprep} と \texttt{libMLi4.a}（x86\_64 と arm64 のユニバーサル版）はそろっていた。そこで、\texttt{.tm} ファイルを \texttt{mprep} で C に変換し、arm64 の \texttt{libMLi4.a} を静的にリンクするだけの代替スクリプトを書いた（\ref{app:files}）。これで作った試験用の MathLink プログラムは、Mathematica から呼ぶと \texttt{Test[41] = 42} を返した。LoopTools はこのスクリプトで構築した。
+
+\paragraph{FeynRules と \texttt{MatrixSymbol}。}FeynRules 2.3.49（2021年）は今も最新版である。Mathematica 14.1 は \texttt{System\bq MatrixSymbol} を組み込み記号として加えた（\texttt{WolframLanguageData} の導入版は 14.1）。FeynRules は同じ名前の記号を自分のコンテキストで定義し、模型ファイルの混合行列の宣言でも使う。組み込み記号が先に見つかると、FeynRules の定義は保護された記号への代入とみなされ、\texttt{SetDelayed::write} で失敗する。問題を難しくしていたのは、FeynRules が Feynman 則の計算を並列化するために8個のサブカーネルを立ち上げ、それぞれで FeynRules を読み直すことである（図~\ref{fig:matrixsymbol}）。主カーネルでだけ組み込み記号を外す試験では、主カーネルのメッセージは5件から0件に減ったが、サブカーネルから同じメッセージが24件届いた。そこで FeynRules.m の2か所、すなわち主カーネルでの読み込みの直前と、サブカーネルへの \texttt{ParallelEvaluate} の中で、組み込み記号を外すようにした。コードを文字列で持たせ、各カーネルで \texttt{ToExpression} する形にしたのは、ファイルを読む時点で記号が解決されてしまうのを避けるためである。パッチの後は、標準模型の読み込み、UFO 出力、FeynArts 出力を通してメッセージは0件になった。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  k/.style={draw=cPd,fill=white,rounded corners=2pt,text width=6.6cm,align=flush center,font=\footnotesize,inner sep=3pt,minimum height=0.95cm},
+  bad/.style={draw=cRd,fill=cRf,rounded corners=2pt,text width=6.6cm,align=flush center,font=\footnotesize,inner sep=3pt},
+  good/.style={draw=cGd,fill=cGf,rounded corners=2pt,text width=6.6cm,align=flush center,font=\footnotesize,inner sep=3pt},
+  hd/.style={font=\small\bfseries},
+]
+\node[hd] at (0,0.95) {パッチ前};
+\node[hd] at (8.6,0.95) {パッチ後};
+% before
+\node[k] (m0) at (0,-0.3) {主カーネル：\texttt{Get[FeynRulesPackage.m]}\\\texttt{MatrixSymbol} $\to$ \texttt{System\bq MatrixSymbol}（14.1〜、保護）};
+\node[k,fill=black!4] at (0.12,-1.68) {};
+\node[k,fill=black!2] at (0.06,-1.62) {};
+\node[k] (s0) at (0,-1.56) {並列サブカーネル ×8：\texttt{ParallelEvaluate[Get[...]]}\\同じく組み込み記号に解決される};
+\node[bad] (r0) at (0,-3.0) {FeynRules の \texttt{MatrixSymbol} の定義が\\各カーネルで \texttt{SetDelayed::write} により失敗};
+\draw[flow,cRd] (m0) -- (s0);
+\draw[flow,cRd] (s0) -- (r0);
+% after
+\node[k,draw=cMd,fill=cMf] (p) at (8.6,0.0) {FeynRules.m：\texttt{FR\$MatrixSymbolFix}（文字列）};
+\node[k] (m1) at (8.6,-1.0) {主カーネル：\texttt{ToExpression[FR\$MatrixSymbolFix]}\\$\to$ \texttt{Get[FeynRulesPackage.m]}};
+\node[k] (s1) at (8.6,-2.1) {サブカーネル ×8：\texttt{ParallelEvaluate} 内で同じ処理\\$\to$ \texttt{Get[FeynRulesPackage.m]}};
+\node[good] (r1) at (8.6,-3.2) {\texttt{MatrixSymbol} $\to$ \texttt{FeynRules\bq MatrixSymbol}\\標準模型の読み込みと出力でメッセージ 0 件};
+\draw[flow] (p) -- (m1);
+\draw[flow] (m1) -- (s1);
+\draw[flow,cGd] (s1) -- (r1);
+\end{tikzpicture}
+\caption{FeynRules と \texttt{MatrixSymbol} の衝突と、局所パッチの働き。FeynRules はサブカーネルでも自分を読み込み直すので、組み込み記号は主カーネルとサブカーネルの両方で外す必要がある。主カーネルだけで外した試験では、サブカーネルから24件のメッセージが届いた。}
+\label{fig:matrixsymbol}
+\end{figure}
+
+FeynMaster のマニュアルは、FeynRules の3つのファイルで \texttt{MatrixSymbol} を \texttt{FRMatrixSymbol} に改名する対処を、FeynRules の開発者の提案として紹介している~\cite{url:feynmaster}。今回はこの方法を採らなかった。\texttt{MatrixSymbol} は模型ファイルの混合行列の宣言で利用者が書く名前なので、改名するとそれを使う模型が動かなくなるからである。退避した自作の模型には \texttt{MatrixSymbol} を使うものはなかった。また、ほかにも同じ種類の衝突がないかを確かめた。FeynRules のソースに現れる識別子のうち組み込み記号と同じ名前のもの465個について、導入された版を \texttt{WolframLanguageData} で調べたところ、13.0以降に導入されたものは \texttt{MatrixSymbol}（14.1）だけだった。なお、FeynRules 2.3.49 を Mathematica 14.0.0 で使って UFO を生成した例が、2024年の論文の付属データにある~\cite{allanach}。
+
+\paragraph{FeynHelpers が LoopTools を探す場所。}FeynHelpers の \texttt{LToolsEvaluate} は、LoopTools の MathLink 実行ファイルを \nolinkurl{FeynHelpers/ExternalTools/LoopTools/LoopTools} にしか探さない。ここに \pth{hep/bin/LoopTools} へのシンボリックリンクを置いた。ビルドしたものは一つだけなので、LoopTools を更新してもリンクを張り直す必要はない。
+
+\paragraph{ブラウザで取得した実行ファイル。}旧環境で FormCalc に付属する FORM のバージョンを確かめるために起動したところ、二か所にあった \texttt{form} が直後に消えた。ゴミ箱にはなく、読めた範囲のシステムログにも記録はなかった。どちらのファイルにも quarantine 属性が付いていたので、macOS のセキュリティ機能が未署名のバイナリを削除したと考えられる（推論）。今回は \texttt{curl} で取得し直した。そのため、ファイルに付くのは \texttt{com.apple.provenance} だけで、同じ FormCalc 付属の FORM 4.2.1 は問題なく起動した。
+
+\paragraph{CollierLink、HEPTools、Ninja。}CollierLink は実行時に \texttt{libcollierX.dylib} を呼ぶが、このライブラリは Intel Mac 用しか配布されておらず、ソースも公開されていない。Package-X の式の数値評価は、FeynHelpers 経由の LoopTools で代用できる。MadGraph の \texttt{install ninja}・\texttt{install collier} は、実行したときの作業フォルダに HEPTools を作る。MadGraph のフォルダで実行し直して、正しい場所に入れた。Ninja は4倍精度なしでビルドされたが、MadLoop は数値が不安定な位相空間点で COLLIER や CutTools に切り替えるので、実用上の支障はない。
+
+\paragraph{検証で踏んだ二つの落とし穴。}一つ目は、FeynRules の試験で Feynman 則の計算結果を変数 \texttt{v} に代入したことである。\texttt{v} は標準模型ファイルでヒッグス場の真空期待値を表すので、続く UFO 出力からフェルミオンとゲージ粒子の頂点がすべて消え、評価されないコードを粒子名に含む頂点が3000個以上できた。一時は FeynRules と Mathematica 14 の非互換だと判断しかけたが、代入をやめると出力は正常に戻った。模型の記号に値を代入してはならない。二つ目は、試験スクリプトに \texttt{formcalc.wl} という名前を付けたことである。macOS のファイル名は大文字と小文字を区別しないので、そのフォルダで \texttt{Get["FormCalc\bq"]} を実行すると、Mathematica は本物の FormCalc ではなくこのスクリプト（\texttt{FormCalc.wl} と同一視される）を読み、自分自身を呼んで再帰の上限に達した。試験スクリプトにはすべて \texttt{test\_} を付けた。
+
+\section{検証}\label{sec:tests}
+
+各ツールが正しく動くことを、表~\ref{tab:tests} の10項目で確かめた。項目ごとに、結果を独立に知る手段を用意した。手段は三種類ある。一つ目は既知の厳密値で、$B_0$ と $C_0$ がこれに当たる。二つ目は独立な別実装で、同じ $B_0$ を四つの経路で計算した。三つ目は独立な解析計算で、$e^+e^-\to\mu^+\mu^-$ の断面積がこれに当たる。厳密値と解析式の導出は\ref{app:derivations} に、試験スクリプトは \nolinkurl{environment/tests/} にある。
+
+\begin{table}[tbp]
+\centering\small
+\caption{検証の結果。「期待値」は独立に求めた値、「結果」は導入した環境での値である。MadGraph の誤差はモンテカルロ積分の統計誤差。}
+\label{tab:tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & FORM 5.0.2 & $(x+y)^4$ の二項展開 & $y^4+4xy^3+6x^2y^2+4x^3y+x^4$ & 一致 \\
+2 & COLLIER 1.2.10 & $B_0(2;1,1)=2-\pi/2=0.429203673205103$ & $0.429203673205$ & 出力12桁で一致 \\
+3 & LoopTools 2.16（MathLink） & $B_0(2;1,1)=0.42920367320510338$、$C_0(0,0,0;1,1,1)=-1/2$ & $0.42920367320510344$、$-0.5$ & 倍精度で一致 \\
+4 & FeynHelpers 2 & LoopTools 経由と Package-X 経由の $B_0$ が一致 & ともに $1/\epsilon-1.2927418775458297$ & 一致 \\
+5 & Package-X + PVReduce & $B_0=2+1/\epsilon+\mathrm{DiscB}+\ln(\mu^2/m^2)$；$B_1=-B_0/2$（等質量） & 同じ式 & 一致 \\
+6 & FeynCalc + FeynArts（パッチ版） & 光子の自己エネルギー：9種のフェルミオンごとに $A_0$ と $B_0$、横波の構造 & PaVe 関数18個、$p^2g^{\mu\nu}-p^\mu p^\nu$ の構造あり & 期待どおり \\
+7 & FeynArts（パッチなし）+ FormCalc & $e^+e^-\to\mu^+\mu^-$（木）で \texttt{CalcFeynAmp} が完了 & 振幅1個、略記8個 & 完了 \\
+8 & FeynRules 2.3.49 & 標準模型：メッセージなし、MadGraph の \texttt{sm} の頂点をすべて含む & メッセージ0件、163頂点が \texttt{sm} の153頂点をすべて含む & 一致 \\
+9 & MadGraph（木） & $e^+e^-\to\mu^+\mu^-$、$\sqrt{s}=1$~TeV、$|\eta_\ell|<2.5$：解析式 0.10426 pb & $0.10437\pm0.00018$ pb & $0.6\sigma$ で一致 \\
+10 & MadGraph（ループ誘起） & $gg\to H$、13 TeV、LO：独立な検算なし & $15.76\pm0.05$ pb & 実行を確認 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{$B_0$ の相互検算。}最も重要な検算は、同じ $B_0(2;1,1)$ を独立な経路で計算させることである（図~\ref{fig:b0}）。厳密値は $2-\pi/2=0.42920367320510338\ldots$ である（\ref{app:derivations}）。LoopTools はこれを倍精度の全桁で再現し、COLLIER は出力した12桁で再現した。Package-X の解析式 $2+1/\epsilon+\mathrm{DiscB}(s;m,m)+\ln(\mu^2/m^2)$ は、$s=2$、$m=\mu=1$ で $\mathrm{DiscB}=-\pi/2$ となり、同じ有限部分を与える。FeynHelpers を通すと、LoopTools 経由でも Package-X 経由でも $1/\epsilon-1.2927418775458297$ が返り、両者は倍精度の全桁で一致した。この値は $2-\pi/2-\gamma_E-\ln\pi$ に等しく、厳密値とは $-(\gamma_E+\ln\pi)$ だけずれる。このずれは、FeynCalc が紫外発散を $1/\epsilon-\gamma_E-\ln\pi$ の形で書く規格化をとるためと解釈できる（推論）。いずれにせよ、二つの経路が同じ規格化で同じ値を返すことが確かめられた。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  n/.style={draw=cOd,fill=cOf,rounded corners=2pt,text width=4.9cm,align=flush center,font=\footnotesize,inner sep=3pt},
+  nm/.style={draw=cMd,fill=cMf,rounded corners=2pt,text width=4.9cm,align=flush center,font=\footnotesize,inner sep=3pt},
+  ex/.style={draw=cGd,fill=cGf,rounded corners=3pt,text width=4.2cm,align=flush center,font=\footnotesize,inner sep=4pt,line width=0.8pt},
+  e/.style={thick,black!60},
+  lab/.style={font=\scriptsize,fill=white,inner sep=1pt,align=flush center},
+]
+\node[ex] (E) at (0,0) {\textbf{厳密値}\\$B_0(2;1,1)=2-\pi/2$\\$=0.42920367320510338$};
+\node[n] (LT) at (-5.4,1.7) {LoopTools 2.16（MathLink）\\$0.42920367320510344$};
+\node[n] (CO) at (5.4,1.7) {COLLIER 1.2.10（Fortran）\\$0.429203673205$（出力12桁）};
+\node[nm] (PX) at (-5.4,-1.8) {Package-X 2.1.1（\texttt{LoopRefine}）\\$2+\frac{1}{\epsilon}+\mathrm{DiscB}(s;m,m)+\ln\frac{\mu^2}{m^2}$\\$\mathrm{DiscB}(2;1,1)=-\pi/2$};
+\node[nm] (FH) at (5.4,-1.8) {FeynHelpers 2\\\texttt{LToolsEvaluate}：$\frac{1}{\epsilon}-1.2927418775458297$\\\texttt{PaXEvaluate}：$\frac{1}{\epsilon}+2-\gamma_E-\frac{\pi}{2}-\ln\pi$};
+\draw[e] (LT) -- node[lab] {倍精度で一致} (E);
+\draw[e] (CO) -- node[lab] {12桁で一致} (E);
+\draw[e] (PX) -- node[lab] {有限部分が\\厳密に一致} (E);
+\draw[e] (FH) -- node[lab] {差は $-(\gamma_E+\ln\pi)$\\（規格化）} (E);
+\draw[e,dashed] (FH.north) -- node[lab,right] {二つの経路が\\倍精度で一致} ++(0,0.9);
+\end{tikzpicture}
+\caption{$B_0(2;1,1)$ の相互検算。緑が厳密値、青が Mathematica を使わない数値実装、橙が Mathematica 上の実装である。FeynHelpers の二つの経路（LoopTools 経由と Package-X 経由）は互いに一致し、厳密値とは規格化に由来する定数 $-(\gamma_E+\ln\pi)$ だけずれる。}
+\label{fig:b0}
+\end{figure}
+
+\paragraph{記号計算の連携。}FeynCalc とパッチ版 FeynArts の組では、標準模型（スカラーと $W,Z$ を除く）で1ループの光子の自己エネルギーを生成し、テンソル積分を PaVe 関数まで簡約した。9種のフェルミオンのループからそれぞれ $A_0$ と $B_0$ が一つずつ現れ、計18個になった。結果は横波の構造 $p^2g^{\mu\nu}-p^\mu p^\nu$ を持ち、ゲージ不変性から期待される形になっている。パッチなし FeynArts と FormCalc の組では、$e^+e^-\to\mu^+\mu^-$ の木の振幅について \texttt{CalcFeynAmp} が FORM との連携を含めて完了した。
+
+\paragraph{FeynRules から MadGraph へ。}FeynRules で標準模型を読み込み、UFO と FeynArts の模型を出力した。メッセージは0件だった。出力した UFO の163頂点の粒子の組を、MadGraph 同梱の \texttt{sm} の153頂点と比べると、\texttt{sm} の頂点はすべて含まれていた。余分な10頂点は、ヒッグス粒子とゴールドストーン粒子（$G^0,G^\pm$）が u・d・s クォークに結合する頂点だけである。MadGraph の \texttt{sm} は u・d・s を質量ゼロとして扱うので、これらの湯川結合を持たない。差はこれで説明できる。
+
+\paragraph{MadGraph。}$e^+e^-\to\mu^+\mu^-$ を MadGraph の既定の設定で計算した。ビームは各 500 GeV（$\sqrt{s}=1$~TeV）、レプトンには $|\eta_\ell|<2.5$ と $p_T>10$~GeV のカットがかかる。結果は $0.10437\pm0.00018$~pb だった。同じ電弱パラメータを使い、$\gamma$ と $Z$ の交換を含む最低次の解析式で計算すると $0.10426$~pb になる（\ref{app:derivations}）。両者の差は統計誤差の0.6倍である。ループ誘起過程 $gg\to H$ は、\texttt{loop\_sm} 模型で13 TeV の LO として計算し、$15.76\pm0.05$~pb を得た（PDF は nn23lo1、$m_H=125$~GeV、$m_t=173$~GeV）。こちらは独立な検算をしておらず、MadLoop・Ninja・COLLIER の連携が動くことの確認にとどまる。
+
+\section{使い方}\label{sec:usage}
+
+新しいターミナルは \pth{.zshrc} を読むので、\texttt{form}、\texttt{lt}、\texttt{mg5\_aMC}、\texttt{wolframscript} がそのまま使える。MadGraph は付属の起動スクリプトを通して、conda 環境 \texttt{qft} と SDKROOT を設定した状態で起動する。
+
+\begin{Verbatim}
+form file.frm        # FORM 5.0.2 (tform for the multi-threaded version)
+lt                   # LoopTools command-line front end
+mg5_aMC              # MadGraph5_aMC@NLO 3.8.1 with the conda env qft and SDKROOT
+\end{Verbatim}
+
+Mathematica では、用途に応じて次のように読み込む。パッチ版とパッチなし版の FeynArts は、別々のカーネルで使う。
+
+\begin{Verbatim}
+(* FeynCalc + FeynArts + FeynHelpers *)
+$LoadAddOns = {"FeynArtsLoader", "FeynHelpers"};
+<< FeynCalc`
+
+(* FeynArts + FormCalc (separate kernel) *)
+<< FeynArts`
+<< FormCalc`
+
+(* Package-X and PVReduce *)
+<< X`
+<< X`PVReduce`
+
+(* FeynRules; load models from the backup folder by full path *)
+$FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}];
+SetDirectory[$FeynRulesPath]; << FeynRules`
+LoadModel["~/Documents/Claude/QFTcalculation/models/backup_20261009/feynrules_Library_Models/AbelianHiggs/AbelianHiggs.fr"]
+\end{Verbatim}
+
+ツールを更新したときは、試験をすべて実行し直す。MadGraph の試験を除けば数分で終わる。
+
+\begin{Verbatim}
+~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh            # all ten checks
+~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh --no-mg5   # skip MadGraph
+\end{Verbatim}
+
+\section{議論と今後}\label{sec:discussion}
+
+\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FeynRules の NLOCT による1ループの対抗項と NLO 用 UFO、FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO QCD 計算（\texttt{[QCD]}）、Mathematica 14.1.0 での動作である。また、MadGraph の $gg\to H$ には独立な検算がない。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。
+
+\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、今回の局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。
+
+\paragraph{今後。}レビューが推奨した構成のうち、2ループ用のツール（Kira 3.1、FIRE 7.1、pySecDec 1.6.6、AMFlow 2.0、TSIL 1.46、feyntrop）と、EFT・暗黒物質・熱的ループ用のツール（Matchete、DsixTools、wilson、DirectDM、MadDM、DRalgo）は、まだ入れていない。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。
+
+\appendix
+
+\section{ファイルの配置}\label{app:layout}
+
+導入後の主なファイルの配置を示す。ソースとビルドのログは \pth{hep/src} に残してある。
+
+\begin{Verbatim}
+~/hep/
+  README.md                     runbook (English)
+  bin/   form tform lt LoopTools fcc f++ mcc mg5_aMC wolframscript(-> Wolfram 2.app)
+  lib/   libooptools.a libcollier.dylib cmake/
+  include/  looptools.h clooptools.h collier.mod
+  mathematica/  FeynArts-3.12/  FormCalc-9.10/ (MacOSX-ARM64/: ReadForm, form 4.2.1, ...)
+  MG5_aMC_v3_8_1/  (HEPTools/: ninja, oneloop, collier 1.2.9)
+  opt/Wolfram142 -> /Applications/Wolfram 2.app
+  src/   tarballs, build trees, *.log
+~/Library/Wolfram/Applications/
+  FeynCalc/  (FeynArts/ = patched 3.12, AddOns/FeynHelpers/,
+              AddOns/FeynHelpers/ExternalTools/LoopTools/LoopTools -> ~/hep/bin/LoopTools)
+  FeynRules/ (FeynRules.m patched, FeynRules.m.orig)
+  X/         (Package-X source, PVReduce.m)
+  FeynArts.m FormCalc.m   loader stubs -> ~/hep/mathematica
+~/miniforge3/envs/qft/      Python 3.12 for MadGraph
+~/Documents/Claude/QFTcalculation/
+  environment/  environment.tex  files/  tests/
+  models/backup_20261009/   user models (README inside)
+\end{Verbatim}
+
+\section{検算に使った値の導出}\label{app:derivations}
+
+\paragraph{$B_0(2;1,1)$。}LoopTools の規格化では、2点関数は
+\begin{equation}
+\begin{split}
+B_0(s;m_0,m_1)&=\frac{(2\pi\mu)^{4-D}}{i\pi^2}\int d^Dq\,\frac{1}{(q^2-m_0^2)\bigl((q+p)^2-m_1^2\bigr)}\\
+&=\Delta-\int_0^1 dx\,\ln\frac{x m_1^2+(1-x)m_0^2-x(1-x)s-i\varepsilon}{\mu^2}
+\end{split}
+\end{equation}
+である~\cite{fcalc}。ここで $s=p^2$、$\Delta=2/(4-D)-\gamma_E+\ln4\pi$ であり、LoopTools の既定値は $\Delta=0$、$\mu=1$ である。等質量 $m_0=m_1=m$ では、$a=s/m^2$ と置いて
+\begin{equation}
+B_0(s;m,m)=\Delta-\ln\frac{m^2}{\mu^2}-I(a),\qquad I(a)=\int_0^1dx\,\ln D(x),\quad D(x)=ax^2-ax+1
+\end{equation}
+となる。$0<a<4$ では $D(x)>0$ なので $i\varepsilon$ は効かない。$I(a)$ を部分積分すると、$D(1)=1$ より境界項は消え、
+\begin{equation}
+I(a)=\bigl[x\ln D\bigr]_0^1-\int_0^1dx\,\frac{xD'(x)}{D(x)}=-\int_0^1dx\,\frac{2ax^2-ax}{D(x)}.
+\end{equation}
+分子を $2ax^2-ax=2D(x)+(ax-2)$ と分け、さらに $ax-2=\tfrac12D'(x)+\tfrac{a-4}{2}$ と書くと、$\int_0^1D'/D\,dx=[\ln D]_0^1=0$ より
+\begin{equation}
+I(a)=-2-\frac{a-4}{2}\int_0^1\frac{dx}{D(x)}.
+\end{equation}
+$D(x)=a\bigl[(x-\tfrac12)^2+b^2\bigr]$、$b^2=(4-a)/(4a)>0$ と平方完成すると、
+\begin{equation}
+\int_0^1\frac{dx}{D(x)}=\frac{1}{ab}\Bigl[\arctan\frac{x-1/2}{b}\Bigr]_0^1=\frac{2}{ab}\arctan\frac{1}{2b}.
+\end{equation}
+$\tilde\beta=\sqrt{4/a-1}$ と置くと、$(4-a)/(ab)=2\tilde\beta$、$1/(2b)=1/\tilde\beta$ なので
+\begin{equation}
+I(a)=-2+2\tilde\beta\arctan\frac{1}{\tilde\beta},\qquad
+B_0(s;m,m)=\Delta-\ln\frac{m^2}{\mu^2}+2-2\tilde\beta\arctan\frac{1}{\tilde\beta}.
+\end{equation}
+$s=2$、$m=\mu=1$、$\Delta=0$ では $a=2$、$\tilde\beta=1$、$\arctan1=\pi/4$ だから、$B_0(2;1,1)=2-\pi/2=0.42920367320510338\ldots$ である。
+
+\paragraph{Package-X の $\mathrm{DiscB}$。}FeynHelpers が展開した Package-X の式では
+\begin{equation}
+\mathrm{DiscB}(s;m,m)=\frac{\sqrt{s(s-4m^2)}}{s}\ln\frac{2m^2-s+\sqrt{s(s-4m^2)}}{2m^2}
+\end{equation}
+である。$s=2$、$m=1$ では $\sqrt{s(s-4m^2)}=\sqrt{-4}=2i$、対数の引数は $(2-2+2i)/2=i$ で $\ln i=i\pi/2$ だから、$\mathrm{DiscB}=2i\cdot(i\pi/2)/2=-\pi/2$ となる。よって Package-X の有限部分 $2+\mathrm{DiscB}+\ln(\mu^2/m^2)$ は $2-\pi/2$ で、上の結果と一致する。FeynHelpers が返した値は $2-\pi/2-\gamma_E-\ln\pi=0.4292036732-0.5772156649-1.1447298858=-1.2927418775$ である。
+
+\paragraph{$C_0(0,0,0;1,1,1)$。}外運動量がすべてゼロなら3本のプロパゲータはどれも $q^2-m^2$ で、積分は有限（$D=4$）である。Wick 回転 $q^0=iq_E^0$（$d^4q=i\,d^4q_E$、$q^2=-q_E^2$）と $\int d^4q_E=\pi^2\int_0^\infty t\,dt$（$t=q_E^2$）を使うと、
+\begin{equation}
+C_0=\frac{1}{i\pi^2}\int\frac{d^4q}{(q^2-m^2)^3}=-\frac{1}{\pi^2}\int\frac{d^4q_E}{(q_E^2+m^2)^3}=-\int_0^\infty\frac{t\,dt}{(t+m^2)^3}.
+\end{equation}
+$t/(t+m^2)^3=1/(t+m^2)^2-m^2/(t+m^2)^3$ より、最後の積分は $1/m^2-m^2/(2m^4)=1/(2m^2)$ である。よって $C_0=-1/(2m^2)$ で、$m=1$ では $-1/2$ となる。
+
+\paragraph{$e^+e^-\to\mu^+\mu^-$ の断面積。}出発点は、質量のないレプトンに対する最低次の $\gamma$ と $Z$ 交換の微分断面積である。
+\begin{equation}
+\frac{d\sigma}{d\cos\theta}=\frac{\pi\alpha^2}{2s}\Bigl[(1+\cos^2\theta)A_0+2\cos\theta\,A_1\Bigr],
+\end{equation}
+\begin{equation}
+A_0=1+2v^2\,\mathrm{Re}\,\chi+(v^2+a^2)^2|\chi|^2,\quad
+A_1=2a^2\,\mathrm{Re}\,\chi+4v^2a^2|\chi|^2,\quad
+\chi=\frac{1}{4s_W^2c_W^2}\,\frac{s}{s-M_Z^2+iM_Z\Gamma_Z}.
+\end{equation}
+ここで電子とミューオンの結合は等しく、$v=-\tfrac12+2s_W^2$、$a=-\tfrac12$ である（$T_3=-\tfrac12$、$Q=-1$）。$\chi=0$ とすると、全断面積は純 QED の $4\pi\alpha^2/(3s)$ に戻る。MadGraph の \texttt{sm} の電弱パラメータは $\alpha^{-1}(M_Z)=132.507$、$G_F=1.16639\times10^{-5}$~GeV$^{-2}$、$M_Z=91.188$~GeV、$\Gamma_Z=2.441404$~GeV である。$M_W$ と $s_W^2$ は
+\begin{equation}
+M_W^2=\frac{M_Z^2}{2}+\sqrt{\frac{M_Z^4}{4}-\frac{\pi\alpha M_Z^2}{\sqrt2\,G_F}},\qquad s_W^2=1-\frac{M_W^2}{M_Z^2}
+\end{equation}
+から、$M_W=80.4190$~GeV、$s_W^2=0.22225$ と決まる。重心系で二つのミューオンは背中合わせなので、$|\eta_\ell|<2.5$ は $|\cos\theta|<c_0=\tanh2.5=0.98661$ と同値である。$p_T>10$~GeV は $\sin\theta>0.02$、すなわち $|\cos\theta|<0.9998$ でこれより弱い。$\Delta R_{\ell\ell}>0.4$ は背中合わせなので常に満たされる。積分範囲が対称なので $\cos\theta$ に比例する項は消え、
+\begin{equation}
+\sigma=\frac{\pi\alpha^2}{2s}A_0\int_{-c_0}^{c_0}(1+c^2)\,dc=\frac{\pi\alpha^2}{2s}A_0\Bigl(2c_0+\frac{2c_0^3}{3}\Bigr).
+\end{equation}
+$\sqrt s=1$~TeV では $A_0=1.14522$ となる。$\pi\alpha^2/(2s)=8.9465\times10^{-11}$~GeV$^{-2}$、$2c_0+2c_0^3/3=2.61347$、換算係数 $0.3893794\times10^9$~pb\,GeV$^2$ を掛けて、$\sigma=0.10426$~pb を得る。この計算は \nolinkurl{tests/ee_mumu_analytic.py} で再現できる。
+
+\section{変更・作成したファイルの全文}\label{app:files}
+
+いずれも \nolinkurl{environment/files/} に同じものを置いてある。
+
+\paragraph{\texttt{\textasciitilde/.zshrc} に追加したブロック。}
+\VerbatimInput{files/zshrc_block.sh}
+
+\paragraph{代替の \texttt{mcc}（\texttt{\textasciitilde/hep/bin/mcc}）。}
+\VerbatimInput{files/mcc}
+
+\paragraph{MadGraph の起動スクリプト（\texttt{\textasciitilde/hep/bin/mg5\_aMC}）。}
+\VerbatimInput{files/mg5_aMC}
+
+\paragraph{FeynRules.m への局所パッチ（\texttt{diff -u}）。}
+\VerbatimInput{files/FeynRules.m.patch}
+
+\paragraph{Applications の入口ファイル。}
+\VerbatimInput{files/FeynArts.m}
+\VerbatimInput{files/FormCalc.m}
+
+\paragraph{FeynHelpers 用のリンク。}
+\begin{Verbatim}
+FH=~/Library/Wolfram/Applications/FeynCalc/AddOns/FeynHelpers
+mkdir -p $FH/ExternalTools/LoopTools
+ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
+\end{Verbatim}
+
+ビルドと導入に使ったコマンドの記録は \nolinkurl{files/build_commands.txt} にある。
+
+\begin{thebibliography}{99}
+\small
+\bibitem{fc102} V. Shtabovenko, ``FeynCalc 10.2 and FeynHelpers 2: Multiloop calculations streamlined,'' \href{https://arxiv.org/abs/2512.19858}{arXiv:2512.19858}.
+\bibitem{fc10} V. Shtabovenko, R. Mertig, F. Orellana, ``FeynCalc 10: Do multiloop integrals dream of computer codes?,'' Comput.Phys.Commun. \textbf{306} (2025) 109357, \href{https://arxiv.org/abs/2312.14089}{arXiv:2312.14089}.
+\bibitem{fh1} V. Shtabovenko, ``FeynHelpers: Connecting FeynCalc to FIRE and Package-X,'' Comput.Phys.Commun. \textbf{218} (2017) 48, \href{https://arxiv.org/abs/1611.06793}{arXiv:1611.06793}.
+\bibitem{fa3} T. Hahn, ``Generating Feynman diagrams and amplitudes with FeynArts 3,'' Comput.Phys.Commun. \textbf{140} (2001) 418, \href{https://arxiv.org/abs/hep-ph/0012260}{arXiv:hep-ph/0012260}.
+\bibitem{fcalc} T. Hahn, M. Perez-Victoria, ``Automatized one loop calculations in four-dimensions and D-dimensions,'' Comput.Phys.Commun. \textbf{118} (1999) 153, \href{https://arxiv.org/abs/hep-ph/9807565}{arXiv:hep-ph/9807565}.
+\bibitem{collier} A. Denner, S. Dittmaier, L. Hofer, ``COLLIER: a fortran-based Complex One-Loop LIbrary in Extended Regularizations,'' Comput.Phys.Commun. \textbf{212} (2017) 220, \href{https://arxiv.org/abs/1604.06792}{arXiv:1604.06792}.
+\bibitem{px1} H. H. Patel, ``Package-X: A Mathematica package for the analytic calculation of one-loop integrals,'' Comput.Phys.Commun. \textbf{197} (2015) 276, \href{https://arxiv.org/abs/1503.01469}{arXiv:1503.01469}.
+\bibitem{px2} H. H. Patel, ``Package-X 2.0: A Mathematica package for the analytic calculation of one-loop integrals,'' Comput.Phys.Commun. \textbf{218} (2017) 66, \href{https://arxiv.org/abs/1612.00009}{arXiv:1612.00009}.
+\bibitem{form5} J. Davies \textit{et al.}, ``FORM Version 5.0,'' \href{https://arxiv.org/abs/2601.19982}{arXiv:2601.19982}.
+\bibitem{fr2} A. Alloul \textit{et al.}, ``FeynRules 2.0 -- A complete toolbox for tree-level phenomenology,'' Comput.Phys.Commun. \textbf{185} (2014) 2250, \href{https://arxiv.org/abs/1310.1921}{arXiv:1310.1921}.
+\bibitem{nloct} C. Degrande, ``Automatic evaluation of UV and R2 terms for beyond the Standard Model Lagrangians: a proof-of-principle,'' Comput.Phys.Commun. \textbf{197} (2015) 239, \href{https://arxiv.org/abs/1406.3030}{arXiv:1406.3030}.
+\bibitem{mg5} J. Alwall \textit{et al.}, ``The automated computation of tree-level and next-to-leading order differential cross sections, and their matching to parton shower simulations,'' JHEP \textbf{07} (2014) 079, \href{https://arxiv.org/abs/1405.0301}{arXiv:1405.0301}.
+\bibitem{ninja} T. Peraro, ``Ninja: Automated Integrand Reduction via Laurent Expansion for One-Loop Amplitudes,'' Comput.Phys.Commun. \textbf{185} (2014) 2771, \href{https://arxiv.org/abs/1403.1229}{arXiv:1403.1229}.
+\bibitem{ninjamg} V. Hirschi, T. Peraro, ``Tensor integrand reduction via Laurent expansion,'' JHEP \textbf{06} (2016) 060, \href{https://arxiv.org/abs/1604.01363}{arXiv:1604.01363}.
+\bibitem{oneloop} A. van Hameren, ``OneLOop: For the evaluation of one-loop scalar functions,'' Comput.Phys.Commun. \textbf{182} (2011) 2427, \href{https://arxiv.org/abs/1007.4716}{arXiv:1007.4716}.
+\bibitem{allanach} B. Allanach, ``LHC di-lepton searches for $Z'$ bosons which explain measurements of $b\to s\ell^+\ell^-$ transitions,'' Phys.Lett.B \textbf{858} (2024) 139055, \href{https://arxiv.org/abs/2404.14748}{arXiv:2404.14748}（付属 UFO は FeynRules 2.3.49 と Mathematica 14.0.0 で生成）.
+\bibitem{url:form} FORM releases. \url{https://github.com/form-dev/form/releases}
+\bibitem{url:feynarts} FeynArts, FormCalc, LoopTools. \url{https://feynarts.de/}
+\bibitem{url:collier} COLLIER. \url{https://collier.hepforge.org/}
+\bibitem{url:px} Package-X（McMule による再公開）. \url{https://mule-tools.gitlab.io/package-x/}
+\bibitem{url:fr} FeynRules. \url{https://feynrules.irmp.ucl.ac.be/}
+\bibitem{url:mg5} MadGraph5\_aMC@NLO. \url{https://launchpad.net/mg5amcnlo}
+\bibitem{url:feynmaster} D. Fontes, J. C. Rom\~ao, FeynMaster Manual v2（Mathematica 14 での FeynRules の \texttt{MatrixSymbol} の扱い）. \url{https://porthos.tecnico.ulisboa.pt/FeynMaster/Manual/Manual-v2.pdf}
+\end{thebibliography}
+
+\end{document}
