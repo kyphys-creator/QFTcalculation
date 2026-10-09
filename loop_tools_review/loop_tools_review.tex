@@ -1,0 +1,880 @@
+% loop_tools_review.tex — Feynman 図のループ計算支援ツール：比較レビュー（2026年10月9日時点）
+% コンパイル: lualatex loop_tools_review.tex（参照解決のため2回）
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}% 一般句読点（– — ‘ ’ など）は欧文フォントで組む
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={Feynman 図のループ計算支援ツール：比較レビュー},pdfauthor={}}
+
+% ツールの色分け（Mathematica 依存とライセンス）
+\definecolor{cMf}{RGB}{253,229,204}\definecolor{cMd}{RGB}{204,112,26}  % Mathematica 必須
+\definecolor{cOf}{RGB}{214,232,247}\definecolor{cOd}{RGB}{46,99,158}   % Mathematica 不要・OSS
+\definecolor{cPf}{RGB}{228,228,228}\definecolor{cPd}{RGB}{110,110,110} % 非 OSS・制限付き
+\definecolor{cQf}{RGB}{255,246,214}\definecolor{cQd}{RGB}{176,140,20}  % フローチャートの問い
+\definecolor{cAf}{RGB}{226,243,229}\definecolor{cAd}{RGB}{52,128,72}   % フローチャートの答え
+\definecolor{evF}{RGB}{46,99,158}   % 年表：前段・代数
+\definecolor{evN}{RGB}{204,112,26}  % 年表：1ループ・NLO
+\definecolor{evI}{RGB}{52,128,72}   % 年表：IBP
+\definecolor{evE}{RGB}{120,70,160}  % 年表：積分の評価
+\definecolor{evB}{RGB}{0,128,128}   % 年表：BSM・EFT
+\definecolor{evL}{RGB}{110,110,110} % 年表：ML・LLM
+\definecolor{evX}{RGB}{190,30,30}   % 年表：開発終了
+
+\tikzset{
+  tool/.style={draw,rounded corners=1.5pt,minimum height=0.46cm,text width=2.85cm,align=center,
+    inner sep=1.4pt,line width=0.5pt,font=\footnotesize},
+  tM/.style={tool,fill=cMf,draw=cMd},
+  tO/.style={tool,fill=cOf,draw=cOd},
+  tP/.style={tool,fill=cPf,draw=cPd},
+  tU/.style={tool,fill=white,draw=cPd,densely dotted},
+  tN/.style={tool,fill=white,draw=cPd},
+  tX/.style={tM,draw=evX,dashed,line width=0.9pt},
+  flow/.style={-{Stealth[length=2mm]},thick,black!70},
+}
+
+\newcommand{\MGaMC}{MG5\_aMC@NLO}
+% \paragraph の見出し記号（■ は欧文フォントに無いので罫で描く）
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+
+\title{Feynman 図のループ計算を支援するツール\\[2pt]{\large 比較レビュー：二極化した生態系と FeynCalc 10.2 による橋渡し}}
+\author{}
+\date{2026年10月9日時点}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本稿は、Feynman 図のループ計算を支援するソフトウェアを、模型の実装から積分の評価までの段階ごとに比較し、2026年10月時点の版・保守状況・ライセンスを整理する。想定読者は、1ループを主に、時に2ループを要する BSM・暗黒物質・ニュートリノ（CEvNS を含む）現象論の研究者である。主な結論は三つある。第一に、FeynHelpers 2（2025年12月）によって、FeynArts $\to$ FeynCalc の Mathematica 環境から Kira 3.1・FIRE 7.1 による IBP 簡約、さらに pySecDec 1.6.6・FIESTA による数値評価まで、文書化された経路でつながった。2ループは別の基盤を要する世界ではなく、既存の構成の延長になった。第二に、2025--2026年には FORM 5.0、Kira 3（Kira 2.3 比で最大約100倍、開発者の計測）、FIRE 7（FIRE 6.5 比で5--50倍）、AMFlow 2.0 が出た。その一方で、1ループ解析計算の要である Package-X の開発終了が公式に明記され、BSM の NLO 電弱繰り込みを自動化した汎用生成器はまだない。第三に、実務の律速はソルバの性能ではない。$\gamma_5$ スキーム・$O(\epsilon)$ 項・繰り込みスキームを一貫させること、そして Mathematica と少人数の開発者に依存する保守リスクである。これらを踏まえ、FeynRules $\to$ FeynArts $\to$ FeynCalc+FeynHelpers 2 $\to$ Package-X／LoopTools の主系統と、FeynArts $\to$ FormCalc $\to$ LoopTools の検算系統を併走させる構成と、既知の結果の再現を合格基準とする学習経路を示す。
+\end{abstract}
+
+\section{はじめに}
+
+本稿が答える問いは次の一つである。\textbf{1ループを主に、時に2ループを要する現象論計算を、どのツールをどの段階でどう組み合わせれば、正しく、かつ再現可能に行えるか。}対象とする計算は、BSM 模型での崩壊幅や低エネルギー観測量、暗黒物質のループ誘起過程、ニュートリノ散乱の放射補正、EFT の整合と走行、そして時に必要になる2ループの質量補正や自己エネルギーである。この問いを今あらためて立てる理由は、2025年後半から2026年にかけて主要ツールの版が一斉に更新され、同時に定番ツールの一つが開発を終えたからである。2020年頃の知識で組んだ構成は、もはや最適ではない。
+
+\paragraph{設定。}ループ計算の流れを五つの段階に分けて整理する（図~\ref{fig:landscape}）。(i) 模型の実装と Feynman 則の導出、(ii) ダイアグラムの生成、(iii) 振幅の構築と Dirac・カラー代数、(iv) 簡約（1ループではテンソル簡約、多ループでは IBP 簡約）、(v) 積分の評価（解析的または数値的）である。これとは別に、(ii)--(v) を一括で行う自動 NLO 生成器と、EFT の整合や熱的ループといった特定用途のツールがある。各ツールは、機能、最新版とその日付、保守状況、ライセンスと Mathematica への依存、学習コストの五つの軸で評価する。図~\ref{fig:landscape} が示すように、ツール群は Mathematica 中心の1ループ・BSM 系と、QGRAF+FORM 中心の多ループ精密系に二極化しており、FeynHelpers 2 がその間を橋渡ししている。
+
+\paragraph{前提。}本稿は次の前提に立つ。
+\begin{enumerate}
+\item 情報は2026年10月9日時点のものである。版と日付は、各プロジェクトのリポジトリ（GitHub・GitLab のタグとリリース）、公式ページ、arXiv・INSPIRE の書誌情報で確認した。
+\item 速度の比較は、特に断らない限り各開発者自身のベンチマークに基づく。同じハードウェアで複数のツールを比べた中立なベンチマークは見つからなかった。
+\item 出典で直接支えられない判断には「推論」と明記する。
+\item 一次資料で確認できなかった版情報と主張は\ref{app:unverified} にまとめる。
+\end{enumerate}
+本文で使う略語を表~\ref{tab:abbr} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{本稿で使う略語。}
+\label{tab:abbr}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.2cm}X}
+\toprule
+\textbf{略語} & \textbf{意味} \\
+\midrule
+IBP & 部分積分（integration-by-parts）恒等式。多ループ積分をマスター積分へ簡約する \\
+PV, PaVe & Passarino--Veltman 簡約と、その結果現れるスカラー・テンソル係数関数 \\
+TID & FeynCalc のテンソル積分分解関数 \\
+OPP & Ossola--Papadopoulos--Pittau の被積分関数簡約 \\
+R2 & 1ループ振幅の有理項のうち、分子の $(D-4)$ 次元成分から生じる部分 \\
+OLP & one-loop provider。モンテカルロ生成器に1ループ振幅を供給するライブラリ \\
+UFO & Universal FeynRules Output。模型を生成器へ渡す形式 \\
+NDR, BMHV, HV, KKS, DRED, Larin & $\gamma_5$ と正則化のスキーム：素朴な次元正則化、Breitenlohner--Maison--'t~Hooft--Veltman、't~Hooft--Veltman、Kreimer--K\"orner--Schilcher、次元簡約、Larin の処方 \\
+AMF & 補助質量フロー（auxiliary mass flow） \\
+DE & 微分方程式。$\epsilon$ 形式は正準形の DE を指す \\
+QMC & 準モンテカルロ積分 \\
+MB & Mellin--Barnes 表示 \\
+MPL, GPL & 多重ポリログ（Goncharov ポリログ） \\
+MZV & 多重ゼータ値 \\
+EFT, SMEFT, WCxf & 有効場理論、標準模型 EFT、Wilson 係数の交換形式 \\
+OSS & オープンソースソフトウェア \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  stage/.style={fill=black!72,text=white,font=\footnotesize\bfseries,minimum height=0.58cm,
+    text width=2.95cm,align=center,inner sep=1pt},
+  lane/.style={fill=black!3,draw=black!22,rounded corners=3pt},
+  lanetitle/.style={font=\footnotesize\bfseries,anchor=north west,inner sep=2pt},
+]
+% 列の中心 x = 0, 3.4, 6.8, 10.2, 13.6
+\foreach \i/\t in {1/模型・Feynman 則,2/ダイアグラム生成,3/振幅構築・代数,4/簡約,5/積分の評価}
+  \node[stage] (S\i) at ({3.4*(\i-1)},0) {\t};
+\foreach \i/\j in {1/2,2/3,3/4,4/5} \draw[flow] (S\i) -- (S\j);
+
+% ---- 1ループ・BSM 系
+\begin{scope}[on background layer]
+  \fill[lane] (-1.62,-0.48) rectangle (15.22,-2.72);
+  \fill[lane] (-1.62,-2.88) rectangle (15.22,-6.62);
+  \fill[lane] (-1.62,-6.78) rectangle (15.22,-7.98);
+\end{scope}
+\node[lanetitle] at (-1.62,-0.48) {1ループ・BSM 系（Mathematica 中心）};
+\node[lanetitle] at (-1.62,-2.88) {多ループ精密系（QGRAF+FORM 中心）};
+\node[lanetitle] at (-1.62,-6.78) {自動 NLO（UFO 経由）};
+
+\node[tM] at (0,-1.2) {FeynRules 2.3};
+\node[tM] at (0,-1.72) {SARAH 4.15};
+\node[tM] (FA) at (3.4,-1.2) {FeynArts 3.12};
+\node[tM] (FC) at (6.8,-1.2) {FeynCalc 10.2.1};
+\node[tM] at (6.8,-1.72) {FormCalc 9.10};
+\node[tM] at (10.2,-1.2) {TID・PaVe 簡約};
+\node[tO] at (10.2,-1.72) {OPP：Ninja・CutTools};
+\node[tX] at (13.6,-1.2) {Package-X 2.1.1};
+\node[tO] at (13.6,-1.72) {LoopTools 2.16};
+\node[tO] at (13.6,-2.24) {COLLIER 1.2.8};
+
+% ---- 多ループ精密系
+\node[tN] at (0,-3.6) {模型ファイル（手書き）};
+\node[tP] at (3.4,-3.6) {QGRAF（非 OSS）};
+\node[tO] at (3.4,-4.12) {FORM 5 \texttt{diagrams\_}};
+\node[tO] at (3.4,-4.64) {FeynGraph（試験段階）};
+\node[tO] at (6.8,-3.6) {FORM 5 + color.h};
+\node[tO] at (6.8,-4.12) {tapir 3.3};
+\node[tM] at (6.8,-4.64) {alibrary};
+\node[tO] (KI) at (10.2,-3.6) {Kira 3.1};
+\node[tO] at (10.2,-4.12) {FIRE 7.1};
+\node[tM] at (10.2,-4.64) {Blade};
+\node[tM] at (10.2,-5.16) {NeatIBP 1.1};
+\node[tO] (PS) at (13.6,-3.6) {pySecDec 1.6.6};
+\node[tM] at (13.6,-4.12) {AMFlow 2.0};
+\node[tU] at (13.6,-4.64) {FIESTA 5};
+\node[tO] at (13.6,-5.16) {LINE};
+\node[tO] at (13.6,-5.68) {feyntrop};
+\node[tO] at (13.6,-6.2) {TSIL 1.46};
+
+% ---- 自動 NLO
+\node[tM] at (0,-7.52) {NLO UFO（NLOCT）};
+\node[tO,text width=6.15cm] at (5.1,-7.33) {\MGaMC{} 3.8（MadLoop）};
+\node[tO,text width=6.15cm] at (11.9,-7.33) {OLP：OpenLoops 2.1.5・Recola2・GoSam 3.0.3};
+\node[font=\footnotesize,text=black!70] at (11.9,-7.72) {（Sherpa 3・WHIZARD 3.1.8 から呼び出す）};
+
+% ---- FeynHelpers 2 による橋渡し
+\draw[-{Stealth[length=2.4mm]},line width=1.2pt,evE] (FC.east) .. controls (8.9,-1.6) and (8.0,-3.2) .. (KI.west);
+\node[font=\footnotesize\bfseries,text=evE,fill=white,inner sep=1.5pt,rounded corners=1pt] at (8.5,-2.8) {FeynHelpers 2};
+
+% ---- 凡例
+\begin{scope}[shift={(-1.55,-8.5)},every node/.append style={font=\footnotesize}]
+  \node[tM,text width=0.5cm,minimum height=0.32cm] (L1) at (0.3,0) {};
+  \node[anchor=west] at (L1.east) {Mathematica 必須};
+  \node[tO,text width=0.5cm,minimum height=0.32cm] (L2) at (3.6,0) {};
+  \node[anchor=west] at (L2.east) {Mathematica 不要};
+  \node[tP,text width=0.5cm,minimum height=0.32cm] (L3) at (6.9,0) {};
+  \node[anchor=west] at (L3.east) {非 OSS};
+  \node[tU,text width=0.5cm,minimum height=0.32cm] (L4) at (9.0,0) {};
+  \node[anchor=west] at (L4.east) {依存は未確認};
+  \node[tX,text width=0.5cm,minimum height=0.32cm] (L5) at (11.6,0) {};
+  \node[anchor=west] at (L5.east) {開発終了};
+\end{scope}
+\end{tikzpicture}
+\caption{ループ計算の五段階と主要ツール（2026年10月9日時点の最新版）。上段が Mathematica 中心の1ループ・BSM 系、中段が QGRAF+FORM 中心の多ループ精密系、下段が UFO 経由の自動 NLO 生成器である。紫の矢印は FeynHelpers 2 による橋渡しを表す。FeynHelpers 2 は FeynCalc から Kira・FIRE の簡約と pySecDec・FIESTA の数値評価を呼び出せるほか、QGRAF・LoopTools・Package-X へのインターフェースも持つ。色は動作に Mathematica が必要かどうかを示す。}
+\label{fig:landscape}
+\end{figure}
+
+
+本稿の構成は次の通りである。第~\ref{sec:frontend} 節でダイアグラム生成と振幅代数（$\gamma_5$ の扱いを含む）を、第~\ref{sec:oneloop} 節で1ループ積分と自動 NLO 生成器を扱う。第~\ref{sec:ibp} 節で多ループの IBP 簡約を、第~\ref{sec:integrals} 節でマスター積分の評価を比較する。第~\ref{sec:bsm} 節では BSM・EFT・熱的ループに固有のツールを、第~\ref{sec:trends} 節では生態系全体の潮流とリスクを述べる。これらを踏まえて第~\ref{sec:stack} 節で推奨構成と学習経路を示し、第~\ref{sec:conclusion} 節で結論をまとめる。
+
+
+\section{ダイアグラム生成と振幅代数}\label{sec:frontend}
+
+ダイアグラム生成から振幅構築までの前段には、ほぼ独立した二つの生態系がある。1ループ・BSM 側は Mathematica の連鎖である。FeynRules・SARAH・LanHEP でモデルを実装し、FeynArts でダイアグラムと振幅を生成し、FeynCalc または FormCalc+LoopTools で代数処理する。自動 NLO は UFO 経由で MadGraph5\_aMC@NLO に渡す。多ループ精密 QCD 側は、QGRAF+FORM に color.h とトポロジー処理（tapir、alibrary、自作スクリプト）を組み合わせ、IBP 簡約へ渡す。採用度の代理指標として INSPIRE の被引用数（2026-10-09 取得）を見る。粗い目安にすぎないが、\textbf{FeynRules 2.0 が3146、FeynArts 3 が2541、UFO が1691、QGRAF が1512、SARAH 4 が1109} である。FeynCalc 10 は3年弱で244に達し、2026年1月公開の FORM 5.0 論文はすでに46ある~\cite{r1,r2,r3,r4,r5}。両系の境界を最もよく示す事実がある。FeynCalc の開発者自身が、中間式が$10^5$--$10^6$項に達する多ループ計算を Mathematica だけで行うことを勧めず、QGRAF+FORM を推奨している~\cite{r6}。
+
+\paragraph{1ループ・BSM 側。}1ループ側の主要ツールは、更新は遅いが保守は続いている。FeynArts の最新は \textbf{3.12（2026-08-10）}で、変更はゴースト鎖の連結に関する小修正のみである。前版 3.11 は2022年3月である~\cite{r7}。FeynCalc は \textbf{10.2（2025-12-22）と 10.2.1（2026-06-11）}を出した。主な追加は、マルチコア並列化、ゼロ・グラム行列式のテンソル積分処理、スケールレス・過剰決定トポロジーの検出、Chetyrkin の赤外再配置（\texttt{FCLoopAddAuxiliaryMass}）、レガシー記号の FeynCalcLegacy アドオンへの分離である~\cite{r8,r9}。FeynCalc の自動インストーラは、パッチを当てた FeynArts も同時に入れる。FeynHelpers は 1.0.0（2016）から9年ぶりに \textbf{2.0.0（2025-12-22）}となり、QGRAF・FIRE・Kira・FIESTA・pySecDec・LoopTools・Fermat へのインターフェースを備えた~\cite{r10,r11}。FeynRules は 2.3 系が配布されている~\cite{r12}。UFO 2.0（EPJC 83 (2023)）は、崩壊、独自プロパゲータ、形状因子、パラメータの走行、R2/UV 対抗項のタグ付けを規格に取り込んだ~\cite{r13}。SARAH の公式 HepForge ページはボット対策で読めなかった。非公式ミラーに 4.15.3/4.15.4（2025年4月）のコミットがあるだけなので、\textbf{版は未検証}である~\cite{r14}。LanHEP は 4.0.0（2020-01-16）以降の更新がなく、現行 Mathematica 環境との整合は利用者が確認すべきである~\cite{r15}。
+
+\paragraph{FORM 5.0 と QGRAF。}多ループ側の最大の出来事は \textbf{FORM 5.0（2026-01-27）} である。主な新機能は四つある。GRACE グラフ生成器に基づく \texttt{diagrams\_} により FORM スクリプトの中で直接ダイアグラムを生成できる。MPFR による任意精度浮動小数点係数と、MZV・Euler 和の数値評価が入った。FLINT との連携で多項式演算が大幅に速くなった。TFORM も改良された~\cite{r16}。ただしパッチ版で \textbf{SEVERE 指定のバグが2件}修正されている。5.0.1 では項が消えるソートのバグ、5.0.2 では \texttt{On highfirst;} と \texttt{FactArg} を併用すると単変数多項式の全体因子が消える FLINT 連携のバグである。使うなら \textbf{5.0.2（2026-09-18）以上に固定}すべきである~\cite{r17,r18}。ネイティブ Windows、32ビット版、ParFORM、チェックポイント機能は非推奨になった。QGRAF は Fortran 製で "all-rights-reserved" の非オープンソースである。Gentoo の overlay に 4.0.5 が載っているが、本家ページには到達できなかったので\textbf{版と日付は未検証}である。CERN LCG スタックは今も 3.1.4 を配布している~\cite{r19,r20}。FORM 5 の \texttt{diagrams\_} は新しく、2026年9月にも修正が入ったばかりである。2026年時点の本番計算では QGRAF を使い続けるのが妥当である。
+
+\paragraph{周辺ツールと新規参入。}周辺には次のツールがある。tapir（Python 3、v3.3 は2024-05-28）は、トポロジー同定・部分分数・FORM 出力を担う~\cite{r21,r22}。alibrary は QGRAF・FORM・Feynson・LiteRed・FIRE・Kira・pySecDec を呼び出す Mathematica のハブである。最終コミットは2026-02-18で、GitHub 上にライセンス表記がない~\cite{r23}。ほかに HepLib 1.2（C++/GiNaC、CPC 321 (2026)）~\cite{r24}、FeAmGen.jl（Julia、CPC 301 (2024)）~\cite{r25}、FeynRules+QGRAF+FeynCalc を駆動する FeynMaster 2.1（2025年4月）~\cite{r26} がある。QGRAF でダイアグラムを作り FORM で代数処理する新しい Mathematica 多ループ基盤 ANATAR（JHEP 04 (2026) 199）も登場した~\cite{r27}。新規参入では、FeynGraph（Rust 製で Python/Mathematica バインディングあり、MPL-2.0）が「まだ試験段階」と自ら断りつつ、SM の2ループ $gg\to gg$ で88,366ダイアグラムを生成する例を示している~\cite{r28}。各ツールの現状を表~\ref{tab:frontend} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{ダイアグラム生成・模型実装・振幅代数ツールの現状（2026年10月9日時点）。「Mathematica」欄は動作に Mathematica が必要かを示す。「?」付きの版は一次資料で確認できていない。}
+\label{tab:frontend}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=0.74\hsize}X>{\raggedright\arraybackslash\hsize=1.55\hsize}X>{\raggedright\arraybackslash\hsize=1.42\hsize}X>{\raggedright\arraybackslash\hsize=1.10\hsize}X>{\raggedright\arraybackslash\hsize=0.58\hsize}X>{\raggedright\arraybackslash\hsize=0.62\hsize}X}
+\toprule
+\textbf{ツール} & \textbf{役割} & \textbf{最新版（日付）} & \textbf{言語・ライセンス} & \textbf{Mathematica} & \textbf{状態} \\
+\midrule
+FeynArts & ダイアグラム・振幅生成 & 3.12 (2026-08-10) & Mathematica, LGPL & 必須 & 低速だが保守 \\
+FeynCalc & Dirac/カラー代数、テンソル簡約、トポロジー処理 & 10.2.1 (2026-06-11) & Mathematica, GPL-3 & 必須（13/14推奨） & 活発 \\
+FeynHelpers & 外部ツール連携 & 2.0.0 (2025-12-22) & Mathematica, GPL-3 & 必須 & 活発 \\
+FeynRules / UFO & ラグランジアン $\to$ Feynman 則 & 2.3系 / UFO 2.0 & Mathematica & 必須 & 保守 \\
+SARAH & モデル構築、SPheno 生成 & 4.15.4?（非公式ミラーのみ） & Mathematica & 必須 & \textbf{未検証} \\
+LanHEP & Feynman 則 & 4.0.0 (2020-01-16) & C & 不要 & 古い \\
+QGRAF & ダイアグラム生成 & 4.0.5?（Gentoo のみ） & Fortran, 非OSS & 不要 & \textbf{未検証} \\
+FORM & 大規模代数、5.0から図生成も & 5.0.2 (2026-09-18) & C, GPL-3 & 不要 & 活発 \\
+tapir & トポロジー処理 & v3.3 (2024-05-28) & Python 3 & 不要 & 保守 \\
+FeynGraph & ダイアグラム生成 & 0.1系（試験段階） & Rust, MPL-2.0 & 不要 & 新規 \\
+Symbolica & CAS・コード生成 & 3.0.1 (2026-10-06) & Rust/Python, source-available & 不要 & 活発 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{$\gamma_5$ スキームとカラー代数。}FeynCalc の \texttt{FCSetDiracGammaScheme} は NDR（既定）、NDR-Discard、BMHV、Larin を切り替えられる。既定の NDR では $\gamma_5$ を D 次元で反可換とする。単一 $\gamma_5$ を含むトレースは well-defined でないとして未評価のまま残し、扱いを利用者に委ねる。NDR-Discard はそれをゼロにする。BMHV は代数的に無矛盾だが、カレントが保存しないことが多い。対称性を回復する有限対抗項を FeynCalc は自動生成しないので、利用者が与える必要がある。Larin は主に QCD で使われ、BMHV と等価な結果への近道である~\cite{r29}。これと対照的に、FORM の \texttt{tracen} は $\gamma_5$ が現れると致命的エラーで止まり、\texttt{trace4} は Chisholm 恒等式などの4次元関係を使う~\cite{r30}。そのため FORM パイプラインでの BMHV・Larin 処理は各グループの自作になり、グループ間でコードを持ち回れない原因になっている。FeynGraph・Symbolica・spenso など新しい Rust/Python 系ツールについては、$\gamma_5$ スキームを支援するという文書は見つからなかった。
+
+1ループに限れば、正則化スキームに依存するのは有理項 R2 だけであり、異常も有理部分にしか効かない。HV と KKS の R2 は、W のハドロン崩壊への NLO QCD のようなカイラル過程で食い違う~\cite{r31}。一方、SM の1ループでは NDR と KKS が等価である~\cite{r32}。GoSam は HV と DRED を実装している~\cite{r33}。多ループでは BMHV が実用域に入った。アーベル型カイラルゲージ理論の3ループ完全繰り込み~\cite{r34}、非反可換 $\gamma_5$ によるカイラルゲージ理論の4ループ繰り込み（JHEP 08 (2025)）~\cite{r35}、BMHV でのアクシオン EFT（2026）~\cite{r36} が出ている。奇数個の $\gamma_5$ を含むトレースに対する新しい処方 g5anchor も提案された~\cite{r37}。SMEFT の HH 生成では、$\gamma_5$ スキーム依存性が具体的に問題にされている~\cite{r38}。カラー代数では、任意の単純リー群を扱う FORM パッケージ color.h が今も標準である~\cite{r39}。Mathematica 側には ColorMath~\cite{r40} と、カラー代数ルーチンを全面的に書き直した FeynCalc 10 がある~\cite{r41}。ニュートリノ過程のように、カイラルな弱い流れが主役の計算では、曖昧なトレースを見える形で残す FeynCalc の設計が安全装置として働く。現実的な運用は、NDR で計算し、Levi-Civita 項が生き残った場合だけ BMHV と有限対抗項に切り替えることである（推論）。
+
+
+\section{1ループ積分と自動 NLO 生成器}\label{sec:oneloop}
+
+\paragraph{解析計算と Package-X。}1ループの解析計算では、三つのツールが競合ではなく補完の関係にある~\cite{r10}。FeynCalc は Dirac 代数と、TID による PaVe 関数への簡約を担う。Package-X は PV 関数の閉形式を与える。FormCalc/LoopTools は数値コードを生成する。Package-X は、最大4本の異なるプロパゲータをもつ任意ランクのテンソル積分を解析的に与える。UV/IR 発散の分離、テイラー展開、任意精度数値、フェルミオン鎖の操作までこなす~\cite{r42}。自己エネルギー・頂点・箱関数の閉形式や、閾値近傍・小質量での展開には、今もこれが最も便利である。しかし最後の番号付き版は \textbf{2.1.1（2018年）}である。FeynCalc 10.2 論文は、\textbf{開発が公式に放棄された}こと、そして \textbf{$O(\epsilon)$ 以上の項を一度も含んでいない}ことを明記している~\cite{r10}。現在は McMule グループ（mule-tools）が CC-BY-4.0 で再公開している。入手できるのは、legacy の v2.1.1-patched-2、読める形のソース（元は Mathematica の Encode で難読化されていた）、COLLIER 1.2 に対応した CollierLink 1.0.1、PVReduce 0.1.0 である~\cite{r43}。同じ論文は、1ループ解析結果のオープンなライブラリが必要だと訴えている。これは代わりになるものが存在しないことの裏返しである。
+
+$O(\epsilon)$ が欠けていることは、具体的な落とし穴になる。D 次元の代数が $(D-4)\times 1/\epsilon$ 型の項を作る場合を考える。$O(\epsilon^0)$ までしかない PV 関数を代入すると、D を積分との積を取るまで記号のまま保っておかない限り、有理項を誤る。2ループで対抗項を挿入するときにも同じ問題が出る（推論）。FeynHelpers 2 は、Package-X による解析評価と、LoopTools による数値評価（\texttt{LToolsEvaluate}、規格化は FeynCalc に合わせ済み）を同じインターフェースで提供する~\cite{r10}。ランダムな運動学点と閾値近傍で両者を突き合わせるのが、最も安上がりな防御になる。
+
+\paragraph{数値ライブラリ。}数値ライブラリは成熟しており、最近の更新は保守的なものだけである。LoopTools の最新は \textbf{2.16（2024-11-02）}で、変更は Ecoeffb のダミー引数の修正である。前版 2.15 は2020年に出た。FF ライブラリに基づき、Fortran・C++・Mathematica のインターフェースと四倍精度版を持つ（LGPL）~\cite{r44}。FormCalc の最新は \textbf{9.10（2024-10-11）}で、変更は新しい Wolfram 製品名に合わせたコンパイルスクリプトの修正だけである。FORM を同梱し、LoopTools にリンクする Fortran/C コードを生成する（LGPL）~\cite{r45}。COLLIER（Fortran95、GPLv3）は数値テンソル積分ライブラリで、複素質量を扱え、ソフト・コリニア特異点には質量正則化も選べる~\cite{r46}。CERN LCG には 1.2.8 があるが、リリース日は確認できていない~\cite{r47}。QCDLoop 2 はスカラー積分用の C++ ライブラリで、倍精度と四倍精度を同時に扱う~\cite{r48}。OneLOop は 3.6（2015）で止まっている~\cite{r49}。Golem95C・CutTools・Samurai も事実上凍結しているが、MG5\_aMC・GoSam・MCFM のフォールバックとして今も呼ばれている。Laurent 展開による被積分関数簡約 Ninja は、GoSam 3 で既定でビルドされる~\cite{r50}。2024--2026年に注目すべき新しい単独の1ループ積分ライブラリは現れなかった。生態系は COLLIER（テンソル積分）、OneLOop/QCDLoop（スカラー積分）、Ninja（被積分関数簡約）に収束している。
+
+\paragraph{数値不安定性。}数値不安定性の主因は、コリニア・閾値・前方運動学で生じる小さなグラム行列式である。対策はツールごとに異なる。OpenLoops 2 は解析的手法と、必要な箇所だけ四倍精度を使うハイブリッド精度を組み合わせ、CPU 負荷をほとんど増やさずに回避する~\cite{r51}。2.1.3 では IR 特異領域用の hp\_mode=3 が加わった~\cite{r52}。MadLoop は位相空間の各点を二つの評価モードで比べ、不安定なら点全体を四倍精度で計算し直す。四倍精度は約2桁遅い。簡約ライブラリを試す順序の既定は Ninja $\to$ COLLIER $\to$ CutTools である~\cite{r53,r54}。記号計算側では、FeynCalc 10.2 の \texttt{FCLoopFindTensorBasis} が外部運動量の線形独立な基底を選び直す。これにより、従来のテンソル簡約が破綻するゼロ・グラム点も扱えるようになった。ただしその場合、1ループでも IBP が必要になることがある~\cite{r10}。1ループ積分ツールの現状を表~\ref{tab:oneloop} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{1ループ積分の解析・数値ツールの現状。}
+\label{tab:oneloop}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=0.76\hsize}X>{\raggedright\arraybackslash\hsize=1.73\hsize}X>{\raggedright\arraybackslash\hsize=1.09\hsize}X>{\raggedright\arraybackslash\hsize=0.52\hsize}X>{\raggedright\arraybackslash\hsize=0.90\hsize}X}
+\toprule
+\textbf{ツール} & \textbf{種別} & \textbf{最新版（日付）} & \textbf{ライセンス} & \textbf{状態} \\
+\midrule
+Package-X & 解析的 PV（$\leq$4プロパゲータ、任意ランク） & 2.1.1 (2018)、mule-tools が再公開 & CC-BY-4.0 & \textbf{開発放棄、$O(\epsilon)$ なし} \\
+LoopTools & 数値 PV（FF ベース、四倍精度版） & 2.16 (2024-11-02) & LGPL & 保守のみ \\
+FormCalc & 振幅簡約 $\to$ Fortran/C コード & 9.10 (2024-10-11) & LGPL & 保守のみ \\
+COLLIER & 数値テンソル積分、複素質量 & 1.2.8（LCG、日付不明） & GPLv3 & 成熟 \\
+QCDLoop 2 & スカラー積分（C++） & 2.0.9（openSUSE パッケージ） & 未確認 & 成熟 \\
+OneLOop & スカラー積分（Fortran） & 3.6 (2015) & 未確認 & 凍結だが依存先多数 \\
+Ninja & 被積分関数簡約（Laurent 展開） & --- & 未確認 & GoSam 3 の既定 \\
+CutTools / Samurai / Golem95C & OPP、d 次元カット、テンソル形状因子 & 凍結 & 未確認 & フォールバックとして残存 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{自動 NLO 生成器。}実の放射、減算、パートンシャワーとの整合まで含む NLO 断面積は、MG5\_aMC@NLO（MadLoop）か、Sherpa・WHIZARD に OLP（OpenLoops 2、Recola2、GoSam 3）を組み合わせて計算する。MG5\_aMC は版ごとに次の機能を加えた。\textbf{3.6.0（2024-09-30）}で EW Sudakov 補正、LO 用の GPU/SIMD プラグイン、OpenMP。\textbf{3.7.0（2026-01-05）}で超周辺衝突の NLO とマルチ GPU。\textbf{3.8.0（2026年9月）}で MadSpin2、量子情報（密度行列）モード、P 波クォーコニウム~\cite{r55,r56}。ループ誘起過程は 2.3 系（2015）から自動化されている~\cite{r57}。OpenLoops の最新は \textbf{2.1.5（2025-09-19）}で、2.1.3 で Python 3 必須化と Apple silicon 対応を済ませた~\cite{r52}。GoSam は \textbf{3.0.3（2025-11-27）}が最新で、SciPost Phys. Codebases 62（2026年1月）として出版された~\cite{r58,r59}。WHIZARD は \textbf{3.1.8（2026-03-03）}で、GoSam 3 対応、Recola によるループ誘起過程と偏極、LLVM flang 対応を加えた~\cite{r60}。Sherpa 3 は JHEP 12 (2024) 156 として公開された~\cite{r61}。MCFM 10.3.1（2026年7月）は手書きの解析振幅を集めたプロセスライブラリで、汎用生成器ではない~\cite{r62}。NLOX は v1.2（2021）以降更新がなく、ライセンスも非商用の CC BY-NC 3.0 である~\cite{r63}。
+
+BSM 研究者にとっての壁は、電弱補正の繰り込みである。SM の NLO EW は MG5\_aMC、OpenLoops 2、Recola、NLOX で実用段階にあり、複素質量スキームにも対応している~\cite{r64,r51}。BSM の NLO QCD は、NLOCT が作る R2・UV 対抗項入りの UFO を使えば MG5\_aMC で日常的に計算できる。ただし NLOCT には制約が多い。次元4以下の繰り込み可能な模型と Feynman ゲージに限られ、繰り込み可能性そのものは検査しない。2015年頃の論文以降、新しいリリースもない~\cite{r65}。各生成器の状況は次の通りである。MG5\_aMC で一般の UFO に対する EW 補正の自動化は、2025年1月の時点で「進行中」とされている~\cite{r66}。BSM の NLO-QCD UFO では、混合 UV/R2 対抗項がない限り EW タグ付きのダイアグラムが捨てられる~\cite{r67}。GoSam 3 は SMEFT の QCD 補正をほぼ自動化したが、EW ループ振幅を生成できても \textbf{EW 繰り込みは自動化していない}~\cite{r68}。最も完成度が高いのは Recola2 と REPT1L の組み合わせで、UFO から出発して繰り込み済みの1ループモデルファイル（2HDM、ヒッグス一重項拡張、SMEFT）を作れる~\cite{r69}。しかし2017年の時点で扱えるのはスカラー・Dirac フェルミオン・ベクトルに限られ~\cite{r70}、REPT1L 自体が公開されているかも確認できていない。OpenLoops の UFO ベースの BSM 化は既存コードとの互換性問題で断念され、新しい生成器の開発に切り替えられたが、まだ開発中である~\cite{r71}。EFT の整合ツール Matchete の UFO 出力も木レベルで、1ループの UV/R2 への拡張は開発中である~\cite{r72}。Majorana 型の暗黒物質やニュートリノを含む模型で NLO EW を求めるなら、現状で最も確実なのは FeynArts/FormCalc か FeynCalc で対抗項を手で実装する道である（推論）。各生成器の状況を表~\ref{tab:nlo} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{自動 NLO 生成器の現状。ライセンス欄の「未確認」は一次資料で確かめられなかったことを示す。}
+\label{tab:nlo}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=0.84\hsize}X>{\raggedright\arraybackslash\hsize=0.95\hsize}X>{\raggedright\arraybackslash\hsize=1.05\hsize}X>{\raggedright\arraybackslash\hsize=1.58\hsize}X>{\raggedright\arraybackslash\hsize=0.58\hsize}X}
+\toprule
+\textbf{生成器} & \textbf{最新版（日付）} & \textbf{SM の NLO} & \textbf{BSM の扱い} & \textbf{ライセンス} \\
+\midrule
+MG5\_aMC@\allowbreak NLO (MadLoop) & 3.8.0 (2026年9月) & QCD+EW、ループ誘起 & NLO UFO で QCD は日常的、一般 UFO の EW は「進行中」 & NCSA 型 \\
+OpenLoops 2 & 2.1.5 (2025-09-19) & QCD+EW、複素質量 & BSM 用の新生成器は開発中 & 未確認 \\
+Recola2 & 2.3.0（LCG\_110、日付不明） & QCD+EW & REPT1L によるモデルファイル（2HDM、HSESM、SMEFT） & 未確認 \\
+GoSam & 3.0.3 (2025-11-27) & QCD、EW ループは生成のみ & SMEFT の QCD 補正、EW 繰り込みは非自動 & GPLv3+ \\
+WHIZARD & 3.1.8 (2026-03-03) & QCD+EW（レプトン衝突器に強い） & UFO BSM の NLO QCD は2024年12月時点で開発中 & 未確認 \\
+Sherpa & 3系 (2024) & OLP 経由で QCD+EW & OLP 次第 & 未確認 \\
+NLOX & 1.2 (2021) & QCD$\times$EW の全結合次数 & SM のみ & CC BY-NC 3.0 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\section{多ループ積分の IBP 簡約}\label{sec:ibp}
+
+2026年に活発に開発されている汎用の公開 IBP 簡約コードは、\textbf{Kira 3.1、FIRE 7.1、Blade} の三つである。これに NeatIBP 1.1（syzygy で小さな方程式系を生成）、FiniteFlow（有限体のデータフロー基盤）、ratracer（演算をトレースして再生する高速ソルバ）が加わる。Smirnov 兄弟の総説（2025年10月）は AIR から Blade までの系譜を整理している。ただし FiniteFlow・ratracer・交差理論・機械学習は扱っていない~\cite{r73}。
+
+\paragraph{Kira 3 と FIRE 7。}\textbf{Kira 3.0（2025-05-26）} は、シーディングの最適化と、有限体上の前進消去の後に方程式を選択する仕組みを入れた。ベンチマークは劇的である~\cite{r74}。3ループの TennisCourt では、生成される方程式が8,272,762本から387,011本に、メモリが35.4 GiB から0.56 GiB に、生成時間が41分36秒から28.7秒に減った。4ループのプロパゲータ型では改善はわずかで、性能向上は問題に依存する。\textbf{3.1（2025-11-28）} は、HPC 用の Apptainer 定義ファイルと、Mathematica の置換規則形式での数値出力を加えた~\cite{r75}。ライセンスは GPLv3 で、入力は YAML である。代数的に解くときは Fermat、有限体上で解くときは pyRed、再構成には FireFly を使う。代替の線形ソルバとして ratracer も選べる。\textbf{FIRE 7} は2025年10月に論文を出し（v2 は11月30日）、MSU の GitLab に \textbf{7.1 タグ（2026-05-13）}がある~\cite{r76,r77}。主な機能は、MPI 並列のモジュラー簡約（\texttt{FIRE7\_MPI}）、16個のプローブを同時に走らせる multiprime モード、balanced Zippel 再構成、Laporta 置換の前に記号的 IBP を消去する presolve である。式の簡約器の既定は Fermat から FLINT に替わり、Docker イメージ（\texttt{asmirnov80/fire}）も配布された。性能はソフト展開した4ループ箱型で237秒から4.7秒（約50倍）だが、二重箱型ではメモリが0.45 GB から1.4 GB に増える例もある。論文に Kira との比較はない。
+
+\paragraph{Blade・NeatIBP・FiniteFlow・ratracer。}\textbf{Blade}（CPC 310 (2025) 109538、MIT ライセンス、Mathematica $\geq$11.3 と FiniteFlow が必要）の方式は次の通りである。数値 IBP のプローブで多項式の仮定式を当てはめ、元の IBP 系より桁違いに小さいブロック三角形式の系を作る。こうして各プローブの評価を安くする。片足が質量をもつ3ループ4点の例では、$r_{\max}=4$ で必要な計算量が11000コア時間から180コア時間に減った~\cite{r78}。Gitee 上のコミットは2026-07-14まで続いている~\cite{r79}。\textbf{NeatIBP 1.1} は syzygy と加群交差で小さな IBP 系を作り、Kira に渡す。必要なのは Mathematica、Singular、Kira で、Linux 専用、GPLv3 である。質量ゼロの2ループ pentabox では、spanning cuts を使うと全体が5時間33分で済んだ（通常モードでは Kira の簡約だけで24時間）。一方、質量のあるプロパゲータを含むと spanning cuts の整合性検査が失敗しうる、と著者自身が注意している~\cite{r80}。これは多数の質量を持つ BSM 計算にとって重要な注意点である。FiniteFlow（MIT）は2026-10-02にもコミットがあり~\cite{r81}、ratracer は Kira+FireFly に比べ全体で約5倍速いと報告されている~\cite{r82}。
+
+\paragraph{ベンチマーク。}ツール間の速度比較は公平ではない。Kira 3 は Kira 2.3 と、FIRE 7 は FIRE 6.5 と、Blade は「ブロック三角形式なし」とだけ比べており、同じハードウェアでの中立なベンチマークは見つからなかった。唯一の横断的な比較は Kira 3 論文の doublePentagon（2ループ）である~\cite{r74}。Kira 3 は8.8秒で41,998本の方程式を生成した。NeatIBP と Blade は方程式系の作成に数時間かかった。方程式が最も少なかったのは Blade の3,497本である。しかし解く時間は全手法で0.42--3.3秒と、1桁の範囲に収まった。つまり差が出るのは準備段階であり、解く段階ではない。最前線の規模を示す例が、Guan・Mistlberger・Ruf による3ループ H+3パートン（2026年7月）である~\cite{r83}。この計算は Blade+FiniteFlow を改造して使い、CalcLoop で219個の積分族を46個に、目標積分を約700万から25万に減らした。それでも全簡約には \textbf{数十万コア時間} と O(100) GB のメモリを要し、論文は IBP を主要なボトルネックの一つと呼んでいる。
+
+\paragraph{凍結したツールとトポロジー写像。}開発が止まったツールも把握しておく必要がある。LiteRed 1.x は 1.84（2023-03-15）で開発を終え、利用者は全面的に書き直された LiteRed2 に移るよう案内されている。LiteRed は Mathematica 12.2 と 13.2 の名前衝突でパッチを要しており、Mathematica の版の変化が保守上の問題として繰り返し現れていることを示す~\cite{r84}。Reduze 2 は 2.5（2021）以降動きがない~\cite{r85}。マスター積分の数え上げツール Mint と Azurite も、2017年以降の更新が見つからない。トポロジーの写像には次の公開手段がある。Feynson（C++、GiNaC+Nauty）~\cite{r86}、FeynCalc 10.2 の \texttt{FCLoopFindTopologyMappings}、そして有理関数係数を許す新しい対称性探索（NeatIBP に実装済み、Kira にも導入予定）である~\cite{r87}。Feynman パラメータ表示で IBP と微分方程式を扱う AmpRed（CPC 312 (2025)）は、非相対論的なテンソル代数も備える~\cite{r88}。
+
+\paragraph{現象論者の入口。}BSM・暗黒物質で数スケールの2ループを扱う程度なら、Blade・NeatIBP・ratracer が必要な領域にはまず入らない。FeynHelpers 2 の \texttt{KiraCreateJobFile}・\texttt{KIRARunReduction}・\texttt{KiraImportResults}、\texttt{FIREPrepareStartFile}・\texttt{FIRERunReduction} を使えば、FeynCalc の \texttt{GLI}/\texttt{FCTopology} オブジェクトをそのまま Kira/FIRE に渡し、結果を取り込める。約200ページのマニュアルとインターフェースごとのチュートリアルもある~\cite{r10}。学習コストの中心はソルバの扱いではない。積分族の定義とトポロジーの写像である（推論）。主要な簡約ツールを表~\ref{tab:ibp} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{多ループ IBP 簡約ツールの比較。速度は各開発者自身のベンチマークに基づき、ツール間の中立な比較は存在しない。}
+\label{tab:ibp}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=0.72\hsize}X>{\raggedright\arraybackslash\hsize=1.05\hsize}X>{\raggedright\arraybackslash\hsize=1.05\hsize}X>{\raggedright\arraybackslash\hsize=1.18\hsize}X>{\raggedright\arraybackslash\hsize=1.0\hsize}X>{\raggedright\arraybackslash\hsize=1.0\hsize}X}
+\toprule
+\textbf{ツール} & \textbf{方式} & \textbf{最新版（日付）} & \textbf{言語・ライセンス} & \textbf{入力} & \textbf{向き} \\
+\midrule
+Kira & Laporta + 有限体（FireFly） & 3.1 (2025-11-28) & C++17, GPLv3 & YAML & 汎用、多スケール \\
+FIRE & Laporta + モジュラー演算、MPI & 7.1 (2026-05-13) & C++17 + Mathematica, GPLv2 & Mathematica/設定ファイル & スパコン、Mathematica 利用者 \\
+Blade & ブロック三角形式 & CPC 2025、2026-07 にコミット & Mathematica + FiniteFlow, MIT & Mathematica & 最大規模の解析的再構成 \\
+NeatIBP & syzygy・加群交差 & 1.1.0.6 (2025-10-23) & Mathematica + Singular, GPLv3 & config.txt $\to$ Kira & 高ランク・多点 \\
+FiniteFlow & 有限体データフロー & タグなし、2026-10-02 にコミット & C++ (Mathematica/Python), MIT & グラフ記述 & 専門家向け基盤 \\
+ratracer & 演算トレースの再生 & 2026-07 にコミット & C++, ライセンス記載なし & Kira 形式 & Kira の代替ソルバ \\
+LiteRed / LiteRed2 & 規則探索（ヒューリスティック） & 1.84 (2023-03) で終了 / 2 は版未確認 & Mathematica & Mathematica & 小規模問題 \\
+Reduze 2 & Laporta、MPI & 2.5 (2021) & C++ & --- & 凍結 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\section{マスター積分の評価}\label{sec:integrals}
+
+\paragraph{主力の数値ツール。}数値評価には成熟した主力ツールが三つある。一つ目は \textbf{pySecDec 1.6.6}（PyPI 2025-10-27、GPLv3）である。Linux/macOS に \texttt{pip} で入り、FORM・CUBA・QMC・GSL・Normaliz・Nauty は同梱されて自動でビルドされる~\cite{r89,r90}。1.6 で入った分散評価器 disteval と median QMC は、よくある場面で3--9倍の高速化をもたらした~\cite{r91}。ただし 1.6.1 で、1.6 の median QMC が\textbf{誤差を過小評価した誤った結果を返す}という重大なバグが直されている。1.6.6 では分子を含む積分の輪郭変形のバグも修正された~\cite{r92}。1.6.0 は避けるべきである。リポジトリは \texttt{secdec-research/secdec} に移っており、最終更新は2026-07-31である。二つ目は \textbf{FIESTA} である。最新タグは 5.0（2021）だが、dev ブランチでは2026年2月に polymake を使うオプションが加わった~\cite{r93}。FIESTA 6 も pySecDec 1.7 も存在しない。三つ目は \textbf{AMFlow} である。補助質量 $\eta$ を入れて $\eta$ の常微分方程式を作り、$\eta\to\infty$ の真空積分から境界値を得て $\eta\to 0$ まで運ぶ~\cite{r94}。\textbf{2.0（2026-07-10）}では、C++ の微分方程式ソルバが既定になった。Hidding--Usovitsch の FT 再帰モードも加わったが、高速な反面、結果が保証されるのはユークリッド領域だけである。IBP のインターフェースは \textbf{Kira 3 専用}となり、Kira 2.x は切り捨てられた~\cite{r95,r96}。AMFlow の著者たちは、セクター分解と MB 表示はどんな積分にも原理的に使えるが高精度を出すには非常に非効率だ、と評価している。実例として、質量を持つ $t\bar t$ 二重箱型を物理領域の点で20桁まで求めている~\cite{r94}。
+
+\paragraph{微分方程式ソルバ。}微分方程式を級数展開で解くソルバは、境界値さえあれば多数の点を高精度で運べる。DiffExp（Mathematica）は境界値の供給を利用者に求める。2026年6月の README には、AI 支援で書き直した版を別リポジトリに置いたという告知が加わった~\cite{r97}。SeaSyde は任意の複素内部質量を扱えるので、複素質量スキームで不安定な媒介粒子を扱うのに向く。ただし 1.1.1（2024-05-02）以降コミットがない~\cite{r98}。\textbf{LINE}（C/C++、GMP/MPFR/MPC、GPL-3.0、JHEP 07 (2025) 219）は、2ループまでの AMF を内蔵したオープンなソルバである。開発者は C で実装した理由として、Mathematica のライセンス問題を挙げている~\cite{r99,r100}。macOS でも clang と Homebrew の libomp でビルドできる~\cite{r101}。ここで版の固定の問題が起きる。LINE の AMF 境界値は Kira 2.3 で試験されているのに、AMFlow 2.0 は Kira 3 を要求する。両方を使うなら Kira を2系統入れる必要が出てくる（推論）。モンテカルロの中で積分を逐次評価する用途では、1ループの族でミリ秒、2ループで数百ミリ秒という微分方程式の数値積分も報告されている。ただしツール名は示されていない~\cite{r102}。
+
+\paragraph{トロピカル法と運動量空間。}運動量空間やトロピカル法も選択肢になった。feyntrop（MIT）は、物理領域・多スケール・多プロパゲータの準有限な積分を、トロピカル・モンテカルロで速く評価する~\cite{r103,r104}。その運動量空間版 momtrop（Rust）は、素朴なサンプリングに比べ$10^6$倍以上の収束加速を報告している~\cite{r105}。Local Unitarity の後継 gammaLoop（Rust、v0.3.4 は2026-03-06）は開発が非常に活発である。しかし2025年11月の時点でも「近く登場するプログラム」という扱いで、研究段階にある~\cite{r106,r107}。MB 系の MB.m は 1.2（2009）のままで、CUBA、CERNlib、f77 を必要とする~\cite{r108}。
+
+\paragraph{解析的な経路。}解析的な経路も整ってきた。正準（$\epsilon$ 形式）微分方程式への変換では、CANONICA（GPL-3.0、2025-09 に更新）と Libra が現役である~\cite{r109,r110}。CANONICA が失敗した問題を Libra が解いた例も報告されている~\cite{r111}。epsilon（2019）と Fuchsia（2021）は止まっている。Landau 特異点と symbol アルファベットの候補を図から出す SOFIA（CPC 320 (2026)）も出た~\cite{r112}。ハイパー対数による積分は線形還元可能な積分に限られる。そこでは HyperInt（Maple、2023-07 以降停止）、FORM 実装の HyperFORM（EPJC 86 (2026) 659）~\cite{r113}、そして2026年4月登場の SubTropica がある。SubTropica（Mathematica $\geq$13.1、MIT、v1.2.16）は、HyperInt を Mathematica で書き直した HyperIntica と、C++/FLINT のバックエンド HyperFLINT（3--10倍の高速化）を持つ。さらに504トポロジー、1,953件の文献記録を収めたオンラインライブラリも備える~\cite{r114,r115}。GPL 関数の数値評価には GiNaC（1.8.10 は2026-02-11、楕円型 MPL の \texttt{Gt} クラスを追加）~\cite{r116}、handyG~\cite{r117}、重み4まで対応する FastGPL~\cite{r118} がある。積分のデータベースとして作られた Loopedia は、2026-10-09 の時点で TLS エラーにより到達できなかった。
+
+\paragraph{出来合いのライブラリと領域展開。}現象論者にとって最も実用的なのは、出来合いのライブラリである。\textbf{TSIL 1.46（2025年7月、C、GPL）}は、任意の質量と外部運動量に対して、2ループ自己エネルギーの基底積分を「すべて」計算する。ただし基底への簡約と対抗項は利用者が用意する~\cite{r119}。3ループの真空積分には 3VIL 2.02~\cite{r120}、3ループの平面型自己エネルギーには TVID 2~\cite{r121} がある。ニュートリノや暗黒物質の質量分裂など、2ループの質量・混合補正は TSIL の守備範囲に直接入る。重い媒介粒子の極限には領域展開が使える。FIESTA の asy、pySecDec の幾何的領域展開（追加の正則化子が必要かを自動判定するが、混合符号の多項式は簡単な場合しか扱えない）、ASPIRE がある~\cite{r122,r123}。以上を状況別に整理したのが表~\ref{tab:integrals} であり、評価法を選ぶ手順を図~\ref{fig:integral-flow} に示す。
+
+\begin{table}[tbp]
+\centering\small
+\caption{マスター積分の評価法：状況別の第一選択と検算手段。}
+\label{tab:integrals}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=1.18\hsize}X>{\raggedright\arraybackslash\hsize=1.18\hsize}X>{\raggedright\arraybackslash\hsize=0.49\hsize}X>{\raggedright\arraybackslash\hsize=1.15\hsize}X}
+\toprule
+\textbf{状況} & \textbf{第一選択} & \textbf{検算・補助} & \textbf{注意点} \\
+\midrule
+2ループ自己エネルギー（任意質量） & TSIL 1.46 & pySecDec & 基底への簡約と対抗項は利用者側 \\
+数点、多スケール、物理領域、3--6桁 & pySecDec 1.6.6 / FIESTA 5 & feyntrop（準有限なら） & pySecDec 1.6.0 は避ける \\
+任意ループ、10桁以上、物理領域 & Kira 3.1 + AMFlow 2.0 & LINE / DiffExp & FT モードはユークリッド領域でのみ保証 \\
+質量・エネルギーのスキャン & 微分方程式を作り DiffExp/SeaSyde/LINE で運ぶ & AMFlow で境界値 & 複素質量なら SeaSyde \\
+重い媒介粒子の展開 & asy / pySecDec の領域展開 / ASPIRE & MB & 混合符号の多項式に注意 \\
+解析結果そのものが目的 & Libra/CANONICA $\to$ HyperInt/SubTropica $\to$ handyG/GiNaC & --- & 線形還元可能であることが前提 \\
+単一スケール、高ループ、準有限 & feyntrop & --- & 例外的な運動学では使えない \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+$m_\nu \ll m_W$ のような階層的な質量は、セクター分解の被積分関数を数値的に硬くする。その場合は、領域展開か、作業精度を高くした AMF/微分方程式法の方が頑健である。ただしこれはベンチマークで確かめていない推論である。
+
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  font=\small,
+  q/.style={draw=cQd,fill=cQf,rounded corners=5pt,text width=4.9cm,align=center,
+    minimum height=0.95cm,inner sep=3pt,line width=0.6pt},
+  a/.style={draw=cAd,fill=cAf,rounded corners=1.5pt,text width=8.7cm,align=left,
+    minimum height=0.95cm,inner sep=4pt,line width=0.6pt,font=\footnotesize},
+  st/.style={draw=black!60,fill=black!6,rounded corners=8pt,text width=4.9cm,align=center,
+    minimum height=0.8cm,inner sep=3pt},
+  yes/.style={flow},
+  no/.style={flow},
+  lab/.style={font=\scriptsize,text=black!70,inner sep=1.5pt},
+  node distance=0.55cm and 0.9cm,
+]
+\node[st] (s) {IBP 簡約後のマスター積分\\（または簡約前の個別の積分）};
+\node[q,below=of s] (q1) {2ループ自己エネルギーか？};
+\node[a,right=of q1] (a1) {\textbf{TSIL 1.46}：任意の質量・外部運動量で、2ループ自己エネルギーの基底積分をすべて計算する。基底への簡約と対抗項は利用者が用意する。};
+\node[q,below=of q1] (q2) {解析的な表式そのものが目的か？};
+\node[a,right=of q2] (a2) {\textbf{$\epsilon$ 形式の DE}（Libra・CANONICA） $\to$ \textbf{ハイパー対数積分}（HyperInt・SubTropica・HyperFORM） $\to$ 数値は handyG・GiNaC。線形還元可能な族に限る。};
+\node[q,below=of q2] (q3) {質量の階層を使って展開してよいか？（重い媒介粒子など）};
+\node[a,right=of q3] (a3) {\textbf{領域展開}：FIESTA の asy、pySecDec の幾何的領域展開、ASPIRE。混合符号の多項式は簡単な場合しか扱えない。};
+\node[q,below=of q3] (q4) {10桁以上の精度、または質量・エネルギーのスキャンが必要か？};
+\node[a,right=of q4] (a4) {\textbf{Kira 3.1 で IBP $\to$ AMFlow 2.0} で境界値を得て、DiffExp・SeaSyde（複素質量）・LINE で運ぶ。AMFlow の FT モードの結果が保証されるのはユークリッド領域だけ。};
+\node[q,below=of q4] (q5) {準有限で、運動学が例外的でないか？};
+\node[a,right=of q5] (a5) {\textbf{feyntrop}（トロピカル・モンテカルロ）。pySecDec で検算する。};
+\node[a,below=of q5,text width=4.9cm,align=center] (a6) {\textbf{pySecDec 1.6.6}・\textbf{FIESTA 5}\\数点・3--6桁・物理領域可\\（pySecDec 1.6.0 は避ける）};
+
+\draw[flow] (s) -- (q1);
+\foreach \i/\j in {1/2,2/3,3/4,4/5} {
+  \draw[no] (q\i) -- node[lab,right] {いいえ} (q\j);
+}
+\draw[no] (q5) -- node[lab,right] {いいえ} (a6);
+\foreach \i in {1,...,5} {
+  \draw[yes] (q\i) -- node[lab,above] {はい} (a\i);
+}
+\end{tikzpicture}
+\caption{マスター積分の評価法を選ぶ手順。上から順に問いに答え、最初に「はい」となった箇所の方法を第一選択とする。どの場合も、異なる方法による独立な検算が望ましい（表~\ref{tab:integrals}）。各ツールの版は2026年10月9日時点。}
+\label{fig:integral-flow}
+\end{figure}
+
+
+\section{BSM・EFT・熱的ループ}\label{sec:bsm}
+
+\paragraph{EFT の整合と走行。}1ループの整合（matching）は成熟している。中でも Matchete は活発に開発が続いている。サイト上の最新は \textbf{v0.6.0} で、Feynman 則の UFO 出力、半自動の対称性の自発的破れ、ゲージ固定、フレーバー対称性、冗長・evanescent 演算子の自動削減、Warsaw 基底への写像、WCxf 出力を備える（GPL-3.0、リリース日の記載なし）~\cite{r124}。v0.4.0 では一般 MSSM から SMEFT への1ループ整合を完全に実行した~\cite{r125}。2026年4月には、1ループの4D $\to$ 3D 次元還元と「supersoft」整合を自動化する Matchotter モジュールが公開された~\cite{r126}。図形的な方法で整合する Matchmakereft は、重いスカラーとフェルミオンについては成熟している~\cite{r127}。しかし2025年1月の時点で、重いベクトルの1ループ自動化は「未達成」とされる（二次要約）~\cite{r128}。2022年の講演で CoDEx が重いベクトルにも対応すると主張している件~\cite{r129} とは食い違ったまま、解決していない。走行（running）は DsixTools 2.x と wilson が主力である。DsixTools は SMEFT の1ループ RGE、SM の3ループ RGE、$\alpha_s$ とクォーク湯川の5ループ QCD を備える~\cite{r130}。wilson は v2.5.2（2025-04-08）が最新である~\cite{r131}。2025年には $\nu$SMEFT（ステライルニュートリノ）の走行を完全に数値で行う、初の公開コードが加わった~\cite{r132}。コード間の値の受け渡しは WCxf 形式で行う~\cite{r133}。
+
+2ループの状況は「結果はあるがツールはない」である。バリオン数を保存する次元6 SMEFT の2ループ RGE 一式は、2026年1月に Born・Fuentes-Martín・Thomsen が出した（JHEP 09 (2026) 106）。ただし Mathematica の付属ファイルとして配布されただけで、公開されている走行コードには組み込まれていない~\cite{r134}。実際、2026年の研究はこの行列を Warsaw 基底に変換し、独自に改造した DsixTools に移植して使った。その結果、2ループ効果が1ループでのゼロを破り、四クォーク・トップ湯川・ヒッグス--グルーオン演算子で無視できない効果を生むことを示した~\cite{r135}。トップ湯川演算子が2ループで $m_W$ をずらすという指摘もある~\cite{r136}。2ループの整合は形式の研究にとどまり、公開された自動化ツールは存在しない~\cite{r137}。
+
+\paragraph{暗黒物質とニュートリノ。}暗黒物質のループ計算では、ツールごとに担当範囲が分かれている。\textbf{MadDM v3.2} は、NLO の UFO が用意できる任意の暗黒物質模型について、ループ誘起の間接検出過程を自動化した。ガンマ線ラインのスペクトルを作り、Fermi-LAT と HESS のライン探索と比較できる~\cite{r138}。v3.3 は2025年6月の時点で $\beta$ 版だった~\cite{r139}。主な変更は GitHub への移行、Python 3 と MG5 3.x への対応、DarkART による DM--電子散乱、CosmiXs との連携である。ただし残存量の計算は今も木レベルの $2\to 2$ 消滅に限られ、安定版が出たかは確認できていない。残存量の NLO 化は模型ごとに進んでいる。MSSM には DM@NLO がある~\cite{r140}。RelExt では、CxSM で NLO EW+QCD の残存量を計算した例が「第一歩」として出たところである~\cite{r141}。直接検出には DirectDM がある。相対論的な Wilson 係数を非相対論的 EFT に整合し、EW スケールからハドロンスケールまで1ループの QCD/QED 走行を行う~\cite{r142}。ループは直接検出で特に重要になりうる。EW ループによって、速度で抑制されるはずの演算子が SI 散乱に寄与する~\cite{r143}。擬南部--ゴールドストーン型の暗黒物質では、木レベルが消えるため1ループが支配的になる~\cite{r144}。
+
+CEvNS とニュートリノ--電子散乱の放射補正は、少数の専門グループが EFT に基づく解析結果として公表しており、現象論者はそれを公式として使うのが普通である。Tomalak らは、100 MeV 以下のスピン0原子核での CEvNS を四フェルミ EFT から扱った~\cite{r145}。軽いレプトンのループが自明でない $q^2$ 依存性とフレーバー依存の補正を生むこと、パーセント精度の解析には1ループの EW と QCD の仮想補正が要ることを示した。2025年の続報では、SU(2) ChPT の中で関係する二つのクォーク流の相関関数がすべての次数で一致することを使い、ハドロンの不定性を\textbf{約35分の1、残りを0.3--0.4\%}まで下げた~\cite{r146,r147}。この結果は2026年のゲルマニウム CEvNS 解析でも入力として使われている~\cite{r148}。使用したツール名が論文中で確認できた例は一つだけで、$\nu$--$e$ 散乱の SM 1ループ計算が FeynArts でダイアグラムを生成し Package-X で積分した~\cite{r149}。$\mu e$ 散乱の計画では、FeynArts+FeynCalc と QGraf+Package-X+PVReduce の独立な2系統で1ループの2乗を計算している~\cite{r150}。この二つの例は、独立な2系統で交差検証するという進め方の手本になる。CEvNS の補正を自分で導き直すには、FeynArts/FeynCalc/Package-X 級のツールに加え、ChPT の相関関数という非摂動的なハドロン入力が要る。後者を自動で供給するツールは存在しない。
+
+\paragraph{有効ポテンシャルと熱的ループ。}ゼロ温度のスペクトル計算では、SARAH が一般の繰り込み可能理論の2ループ有効ポテンシャルを gaugeless 極限で実装しており、任意の模型で手軽に2ループ補正を出せる~\cite{r151}。外部運動量への依存まで含めるには TSIL が必要で、計算の複雑さと実行時間が大きく増える~\cite{r152}。有限温度の計算は二層に整理された。一層目は整合・有効ポテンシャルを作る層である。ここには NLO の次元還元を自動化する DRalgo（Mathematica、GPL-3.0）~\cite{r153} と、前述の Matchotter がある。二層目は相転移と重力波を計算する層である。3D の2ループポテンシャルまで扱う PhaseTracer2（EPJC 85 (2025) 559）~\cite{r154}、DRalgo と連携する PT2GWFinder~\cite{r155}、4D の1ループデイジー和を使う BSMPT v3~\cite{r156}、TransitionListener v2.0~\cite{r157} がここに入る。壁の速度は、非平衡の寄与まで含めて計算する初の公開ソフト WallGo（JHEP 04 (2025) 101）が担う~\cite{r158}。設定を変えても終端速度のばらつきは2\%以内だったと報告されている~\cite{r159}。3D EFT 経路が伸びている理由は、4D のデイジーポテンシャルにあるゲージ依存性とスケール依存性である~\cite{r160}。CosmoTransitions は旧来のツールで、BSMPT の著者は、あるベンチマークで CosmoTransitions の相の追跡が不安定だったと報告している。
+
+
+\section{生態系の潮流とリスク}\label{sec:trends}
+
+2024年9月以降の主なリリースと論文を図~\ref{fig:timeline} に時系列で示す。この期間の動きは、保守リスク、コンパイル言語への移行とライセンスの細分化、有限体と GPU、機械学習と LLM の四つにまとめられる。
+
+\paragraph{保守リスク。}最大のリスクは保守である。FeynCalc 10.2 論文は、多ループのソフトウェアは "is not something one can publish once and then leave" と書いている~\cite{r10}。同論文はさらに次のことも指摘する。公開されたコードの多くは保守されなくなり、いずれ動かなくなる。FORM・Mathematica・Kira などの新版で入るわずかな構文変更でもバグが生じる。少なくとも一人、そのコードを実際に使い続ける開発者が必要である。Package-X の放棄、LiteRed の Mathematica 版ごとのパッチ、AMFlow 2.0 による Kira 2.x の切り捨ては、いずれもこの指摘の実例である。
+
+\paragraph{コンパイル言語化とライセンス。}二つ目の潮流は、数値計算とコア部分が Mathematica の外へ、コンパイルされるオープンなコードへ移っていることである。例を挙げる。FORM 5.0 は図の生成と任意精度を取り込んだ。AMFlow 2.0 は C++ の微分方程式ソルバを既定にした。LINE は C で書かれた。SubTropica は C++ の HyperFLINT バックエンドを持つ。gammaLoop と momtrop は Rust 製である。GiNaC は楕円型 MPL に対応した~\cite{r16,r95,r116}。Rust 系の中心にあるのは Symbolica である。2025-11-23 に 1.0 となり、2026-10-06 には 3.0.1 に達した~\cite{r161,r162}。しかし Symbolica はオープンソースではなく、ソース公開型である。学術・非商用では1デバイス1コアまで無償だが、職務として使う場合は原則として有償ライセンスが必要とされる~\cite{r163}。したがって、多コアでの学術本番計算に FORM の代わりとしてそのまま使えるものではない。FIRE 7 の Symbolica バックエンドもライセンスを要する~\cite{r76}。MIT ライセンスで切り出されたのは Graphica（Feynman 型グラフの生成と正準化）と Numerica だけである。ライセンスの状況はかなり細かく分かれている。QGRAF は非オープンソース、NLOX は非商用、Package-X は CC-BY-4.0、gammaLoop は GitHub 上で "NOASSERTION"、momtrop と Vakint はライセンスを宣言していない。Mathematica を使わない1ループの連鎖は、部品だけなら揃っている（QGRAF または FORM 5 $\to$ FORM $\to$ Kira/FIRE $\to$ pySecDec/LoopTools）。しかしモデルファイルから駆動できる、BSM 向けの整ったチェーンは見つからなかった。これが生態系の主な空白である。
+
+\paragraph{有限体と GPU。}三つ目の潮流は、有限体と GPU である。有限体上の簡約は Kira 3 と FIRE 7 の中で標準になった。GPU で Zippel 再構成を行う実装は CPU 比で最大14.5倍を報告し、FIRE への統合が予定されているが、実際に統合されたかは確認できていない~\cite{r164}。CUDA で有限体上の行簡約を行う Linac は、HEP では GPU と有限体の組み合わせがまだほとんど探られていないと述べている~\cite{r165}。GPU が効くのは、pySecDec の QMC、MG5 の LO 計算、MadDM の将来のスキャンといった数値計算の側である。記号的な1ループ計算にはほとんど関係しない。
+
+\paragraph{機械学習。}機械学習による IBP 支援は、2025--2026年に概念実証の段階から学術誌の論文へ進んだ。主な例を挙げる。FunSearch で IBP 恒等式の選択ヒューリスティクスを改良した研究~\cite{r166}。説明可能な AI でシーディングを最適化した研究（JHEP 06 (2026) 225）~\cite{r167}。強化学習とメタヒューリスティクスの研究~\cite{r168}。目標積分とマスター積分を結ぶ「チューブ」に沿って疎にシードを置き、分子のべきに対してシード数を線形にしか増やさない tube seeding（2026年6月）である~\cite{r169}。ただし学習済みモデルを実行時に使う本番の簡約器はまだない。SAILIR は、2ループ triangle-box の16積分すべてで Kira より遅かった~\cite{r170}。1ループの簡約はすでに解けているので、1ループ中心の BSM 研究者にはこの流れはほぼ関係しない。
+
+\paragraph{LLM。}LLM エージェントは、まだ決定的な既存ツールを呼び出す「指揮役」にとどまる。Agentic Diagrammatica（2026年3月）は次のように動く。LLM が人間の検証できるダイアグラム仕様を書き、FeynCalc のコードを自動生成して厳密な結果を得る。検証されたのは、木レベルの $1\to 2$ 崩壊幅とミューオン崩壊だけである~\cite{r171}。2000問以上の Feynman 図タスクからなるベンチマーク FeynmanBench は、マルチモーダル LLM に系統的な失敗を見いだした。物理的な制約を安定して守れず、大域的なトポロジー条件にも違反する~\cite{r172}。2026年10月1日の BootLoops は、エージェント型 LLM が操作・拡張できるツールキットだという。簡約、微分方程式、高精度評価、整数関係の当てはめ、多ループ積分のブートストラップを含むと主張するが、抄録にはバックエンドの記載がない~\cite{r173}。LLM 系の論文は、いずれも抄録か検索要約でしか確認していない。現時点で妥当な使い方は、スクリプトの作成と既存ツールの駆動に使い、結果は必ず独立に検算することである。木レベルを超えると確認できた LLM ツールはまだない。
+
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\draw[line width=1.6pt,black!55] (0,0.15) -- (0,-14.635);
+\draw[black!30,dashed] (-8.3,-2.245) -- (8.3,-2.245);
+\node[anchor=south east,font=\footnotesize\bfseries,text=black!55,inner sep=1.5pt] at (8.3,-2.245) {2025年};
+\draw[black!30,dashed] (-8.3,-8.960) -- (8.3,-8.960);
+\node[anchor=south east,font=\footnotesize\bfseries,text=black!55,inner sep=1.5pt] at (8.3,-8.960) {2026年};
+\node[fill=white,font=\footnotesize\bfseries,inner sep=1.5pt] at (0,0.25) {2024年9月};
+\draw[black!45] (-0.08,-0.000) -- (0.08,-0.000);
+\draw[black!45] (-0.08,-0.552) -- (0.08,-0.552);
+\draw[black!45] (-0.08,-1.122) -- (0.08,-1.122);
+\draw[black!45] (-0.08,-1.674) -- (0.08,-1.674);
+\draw[black!45] (-0.08,-2.815) -- (0.08,-2.815);
+\draw[black!45] (-0.08,-3.330) -- (0.08,-3.330);
+\draw[black!45] (-0.08,-3.900) -- (0.08,-3.900);
+\draw[black!45] (-0.08,-4.452) -- (0.08,-4.452);
+\draw[black!45] (-0.08,-5.023) -- (0.08,-5.023);
+\draw[black!45] (-0.08,-5.575) -- (0.08,-5.575);
+\draw[black!45] (-0.08,-6.145) -- (0.08,-6.145);
+\draw[black!45] (-0.08,-6.715) -- (0.08,-6.715);
+\draw[black!45] (-0.08,-7.267) -- (0.08,-7.267);
+\draw[black!45] (-0.08,-7.838) -- (0.08,-7.838);
+\draw[black!45] (-0.08,-8.390) -- (0.08,-8.390);
+\draw[black!45] (-0.08,-9.530) -- (0.08,-9.530);
+\draw[black!45] (-0.08,-10.046) -- (0.08,-10.046);
+\draw[black!45] (-0.08,-10.616) -- (0.08,-10.616);
+\draw[black!45] (-0.08,-11.168) -- (0.08,-11.168);
+\draw[black!45] (-0.08,-11.738) -- (0.08,-11.738);
+\draw[black!45] (-0.08,-12.290) -- (0.08,-12.290);
+\draw[black!45] (-0.08,-12.860) -- (0.08,-12.860);
+\draw[black!45] (-0.08,-13.431) -- (0.08,-13.431);
+\draw[black!45] (-0.08,-13.983) -- (0.08,-13.983);
+\fill[evN] (0,-0.534) circle (0.07);
+\draw[evN!70,thin] (-0.10,-0.534) -- (-0.45,-0.224) -- (-0.60,-0.224);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-0.224) {\MGaMC{} 3.6.0（EW Sudakov、LO の GPU） {\color{black!50}09-30}};
+\fill[evN] (0,-0.736) circle (0.07);
+\draw[evN!70,thin] (-0.10,-0.736) -- (-0.45,-0.654) -- (-0.60,-0.654);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-0.654) {FormCalc 9.10 {\color{black!50}10-11}};
+\fill[evN] (0,-1.067) circle (0.07);
+\draw[evN!70,thin] (-0.10,-1.067) -- (-0.45,-1.084) -- (-0.60,-1.084);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-1.084) {Sherpa 3 論文 {\color{black!50}10月}};
+\fill[evN] (0,-1.141) circle (0.07);
+\draw[evN!70,thin] (-0.10,-1.141) -- (-0.45,-1.514) -- (-0.60,-1.514);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-1.514) {LoopTools 2.16 {\color{black!50}11-02}};
+\fill[evN] (0,-6.403) circle (0.07);
+\draw[evN!70,thin] (-0.10,-6.403) -- (-0.45,-6.403) -- (-0.60,-6.403);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-6.403) {GoSam 3.0.0（--3.0.3 は11月） {\color{black!50}8月}};
+\fill[evN] (0,-7.047) circle (0.07);
+\draw[evN!70,thin] (-0.10,-7.047) -- (-0.45,-7.047) -- (-0.60,-7.047);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-7.047) {OpenLoops 2.1.5 {\color{black!50}09-19}};
+\fill[evF] (0,-8.242) circle (0.07);
+\draw[evF!70,thin] (-0.10,-8.242) -- (-0.45,-8.242) -- (-0.60,-8.242);
+\node[anchor=east,font=\footnotesize,text=evF!85!black,inner sep=1pt] at (-0.62,-8.242) {Symbolica 1.0（ソース公開型） {\color{black!50}11-23}};
+\fill[evF] (0,-8.776) circle (0.07);
+\draw[evF!70,thin] (-0.10,-8.776) -- (-0.45,-8.690) -- (-0.60,-8.690);
+\node[anchor=east,font=\footnotesize,text=evF!85!black,inner sep=1pt] at (-0.62,-8.690) {\textbf{FeynCalc 10.2 + FeynHelpers 2.0} {\color{black!50}12-22}};
+\fill[evN] (0,-9.034) circle (0.07);
+\draw[evN!70,thin] (-0.10,-9.034) -- (-0.45,-9.200) -- (-0.60,-9.200);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-9.200) {\MGaMC{} 3.7.0 {\color{black!50}01-05}};
+\fill[evF] (0,-9.438) circle (0.07);
+\draw[evF!70,thin] (-0.10,-9.438) -- (-0.45,-9.630) -- (-0.60,-9.630);
+\node[anchor=east,font=\footnotesize,text=evF!85!black,inner sep=1pt] at (-0.62,-9.630) {\textbf{FORM 5.0}（図生成・FLINT・任意精度） {\color{black!50}01-27}};
+\fill[evN] (0,-10.082) circle (0.07);
+\draw[evN!70,thin] (-0.10,-10.082) -- (-0.45,-10.082) -- (-0.60,-10.082);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-10.082) {WHIZARD 3.1.8（GoSam 3 対応） {\color{black!50}03-03}};
+\fill[evF] (0,-11.922) circle (0.07);
+\draw[evF!70,thin] (-0.10,-11.922) -- (-0.45,-11.922) -- (-0.60,-11.922);
+\node[anchor=east,font=\footnotesize,text=evF!85!black,inner sep=1pt] at (-0.62,-11.922) {FeynCalc 10.2.1 {\color{black!50}06-11}};
+\fill[evF] (0,-13.026) circle (0.07);
+\draw[evF!70,thin] (-0.10,-13.026) -- (-0.45,-12.988) -- (-0.60,-12.988);
+\node[anchor=east,font=\footnotesize,text=evF!85!black,inner sep=1pt] at (-0.62,-12.988) {FeynArts 3.12 {\color{black!50}08-10}};
+\fill[evN] (0,-13.688) circle (0.07);
+\draw[evN!70,thin] (-0.10,-13.688) -- (-0.45,-13.418) -- (-0.60,-13.418);
+\node[anchor=east,font=\footnotesize,text=evN!85!black,inner sep=1pt] at (-0.62,-13.418) {\MGaMC{} 3.8.0 {\color{black!50}9月}};
+\fill[evF] (0,-13.744) circle (0.07);
+\draw[evF!70,thin] (-0.10,-13.744) -- (-0.45,-13.848) -- (-0.60,-13.848);
+\node[anchor=east,font=\footnotesize,text=evF!85!black,inner sep=1pt] at (-0.62,-13.848) {FORM 5.0.2（SEVERE 修正） {\color{black!50}09-18}};
+\fill[evF] (0,-14.075) circle (0.07);
+\draw[evF!70,thin] (-0.10,-14.075) -- (-0.45,-14.278) -- (-0.60,-14.278);
+\node[anchor=east,font=\footnotesize,text=evF!85!black,inner sep=1pt] at (-0.62,-14.278) {Symbolica 3.0.1 {\color{black!50}10-06}};
+\fill[evE] (0,-2.300) circle (0.07);
+\draw[evE!70,thin] (0.10,-2.300) -- (0.45,-2.485) -- (0.60,-2.485);
+\node[anchor=west,font=\footnotesize,text=evE!85!black,inner sep=1pt] at (0.62,-2.485) {{\color{black!50}1月} LINE（C 製 DE ソルバ）};
+\fill[evL] (0,-2.925) circle (0.07);
+\draw[evL!70,thin] (0.10,-2.925) -- (0.45,-2.915) -- (0.60,-2.915);
+\node[anchor=west,font=\footnotesize,text=evL!85!black,inner sep=1pt] at (0.62,-2.915) {{\color{black!50}2月} FunSearch による IBP シーディング};
+\fill[evI] (0,-3.293) circle (0.07);
+\draw[evI!70,thin] (0.10,-3.293) -- (0.45,-3.345) -- (0.60,-3.345);
+\node[anchor=west,font=\footnotesize,text=evI!85!black,inner sep=1pt] at (0.62,-3.345) {{\color{black!50}2月} NeatIBP 1.1 論文};
+\fill[evI] (0,-4.912) circle (0.07);
+\draw[evI!70,thin] (0.10,-4.912) -- (0.45,-4.912) -- (0.60,-4.912);
+\node[anchor=west,font=\footnotesize,text=evI!85!black,inner sep=1pt] at (0.62,-4.912) {{\color{black!50}05-26} \textbf{Kira 3.0}（最大約100倍）};
+\fill[evE] (0,-5.832) circle (0.07);
+\draw[evE!70,thin] (0.10,-5.832) -- (0.45,-5.832) -- (0.60,-5.832);
+\node[anchor=west,font=\footnotesize,text=evE!85!black,inner sep=1pt] at (0.62,-5.832) {{\color{black!50}7月} TSIL 1.46・3VIL 2.02};
+\fill[evI] (0,-7.396) circle (0.07);
+\draw[evI!70,thin] (0.10,-7.396) -- (0.45,-7.356) -- (0.60,-7.356);
+\node[anchor=west,font=\footnotesize,text=evI!85!black,inner sep=1pt] at (0.62,-7.356) {{\color{black!50}10月} \textbf{FIRE 7} 論文（5--50倍）};
+\fill[evE] (0,-7.746) circle (0.07);
+\draw[evE!70,thin] (0.10,-7.746) -- (0.45,-7.786) -- (0.60,-7.786);
+\node[anchor=west,font=\footnotesize,text=evE!85!black,inner sep=1pt] at (0.62,-7.786) {{\color{black!50}10-27} pySecDec 1.6.6};
+\fill[evI] (0,-8.334) circle (0.07);
+\draw[evI!70,thin] (0.10,-8.334) -- (0.45,-8.290) -- (0.60,-8.290);
+\node[anchor=west,font=\footnotesize,text=evI!85!black,inner sep=1pt] at (0.62,-8.290) {{\color{black!50}11-28} Kira 3.1};
+\fill[evX] (0,-8.776) circle (0.07);
+\draw[evX!70,thin] (0.10,-8.776) -- (0.45,-8.720) -- (0.60,-8.720);
+\node[anchor=west,font=\footnotesize,text=evX!85!black,inner sep=1pt] at (0.62,-8.720) {{\color{black!50}12-22} Package-X の開発終了が明記される};
+\fill[evE] (0,-9.714) circle (0.07);
+\draw[evE!70,thin] (0.10,-9.714) -- (0.45,-9.714) -- (0.60,-9.714);
+\node[anchor=west,font=\footnotesize,text=evE!85!black,inner sep=1pt] at (0.62,-9.714) {{\color{black!50}02-11} GiNaC 1.8.10（楕円 MPL）};
+\fill[evE] (0,-11.002) circle (0.07);
+\draw[evE!70,thin] (0.10,-11.002) -- (0.45,-10.980) -- (0.60,-10.980);
+\node[anchor=west,font=\footnotesize,text=evE!85!black,inner sep=1pt] at (0.62,-10.980) {{\color{black!50}4月} SubTropica・Matchotter};
+\fill[evI] (0,-11.389) circle (0.07);
+\draw[evI!70,thin] (0.10,-11.389) -- (0.45,-11.410) -- (0.60,-11.410);
+\node[anchor=west,font=\footnotesize,text=evI!85!black,inner sep=1pt] at (0.62,-11.410) {{\color{black!50}05-13} FIRE 7.1};
+\fill[evL] (0,-11.941) circle (0.07);
+\draw[evL!70,thin] (0.10,-11.941) -- (0.45,-11.879) -- (0.60,-11.879);
+\node[anchor=west,font=\footnotesize,text=evL!85!black,inner sep=1pt] at (0.62,-11.879) {{\color{black!50}6月} tube seeding};
+\fill[evE] (0,-12.456) circle (0.07);
+\draw[evE!70,thin] (0.10,-12.456) -- (0.45,-12.309) -- (0.60,-12.309);
+\node[anchor=west,font=\footnotesize,text=evE!85!black,inner sep=1pt] at (0.62,-12.309) {{\color{black!50}07-10} \textbf{AMFlow 2.0}（Kira 3 必須）};
+\fill[evI] (0,-12.529) circle (0.07);
+\draw[evI!70,thin] (0.10,-12.529) -- (0.45,-12.739) -- (0.60,-12.739);
+\node[anchor=west,font=\footnotesize,text=evI!85!black,inner sep=1pt] at (0.62,-12.739) {{\color{black!50}7月} 3ループ H+3パートン（Blade）};
+\fill[evL] (0,-13.983) circle (0.07);
+\draw[evL!70,thin] (0.10,-13.983) -- (0.45,-13.983) -- (0.60,-13.983);
+\node[anchor=west,font=\footnotesize,text=evL!85!black,inner sep=1pt] at (0.62,-13.983) {{\color{black!50}10-01} BootLoops（LLM エージェント）};
+\node[anchor=south east,font=\footnotesize\bfseries,text=black!70] at (-0.6,0.5) {前段・代数・1ループ・NLO};
+\node[anchor=south west,font=\footnotesize\bfseries,text=black!70] at (0.6,0.5) {IBP・積分評価・その他};
+\begin{scope}[shift={(-7.6,-15.35)},every node/.style={font=\footnotesize,anchor=west,inner sep=1pt}]
+  \foreach \c/\t [count=\k from 0] in {evF/前段・代数,evN/1ループ・NLO,evI/IBP 簡約,evE/積分評価・EFT,evL/ML・LLM,evX/開発終了} {
+    \fill[\c] ({2.55*\k},0) circle (0.07);
+    \node[text=\c!85!black] at ({2.55*\k+0.12},0) {\t};
+  }
+\end{scope}
+\end{tikzpicture}
+\caption{2024年9月から2026年10月までの主なリリースと論文（縦軸は時間に比例）。左側は前段・代数・1ループ・NLO のツール、右側は IBP 簡約・積分評価・その他である。日付は各リポジトリのタグまたは arXiv 投稿月による。2025年12月から2026年1月にかけて、FeynCalc 10.2 + FeynHelpers 2.0、\MGaMC{} 3.7.0、FORM 5.0 が集中して出ている。}
+\label{fig:timeline}
+\end{figure}
+
+
+\section{推奨構成と学習経路}\label{sec:stack}
+
+想定する読者は、1ループの崩壊・低エネルギー観測量・整合計算を主に扱い、ときどき2ループ（質量分裂、2ループ自己エネルギー、2ループ走行）が必要になる研究者である。その場合の最適な構成は、一つの Mathematica 環境の上に独立した2系統を持つことである。$\mu e$ 散乱の計画が FeynArts+FeynCalc と QGraf+Package-X+PVReduce の2系統で交差検証した例が、この方針の手本になる~\cite{r150}。用途ごとの構成を表~\ref{tab:stack} に、そのうち中心となるワークフローを図~\ref{fig:stack} に示す。
+
+\begin{table}[tbp]
+\centering\small
+\caption{用途別の推奨構成。「主系統」と「検算・代替」は独立な経路として併走させる。}
+\label{tab:stack}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=0.68\hsize}X>{\raggedright\arraybackslash\hsize=1.39\hsize}X>{\raggedright\arraybackslash\hsize=0.86\hsize}X>{\raggedright\arraybackslash\hsize=1.07\hsize}X}
+\toprule
+\textbf{用途} & \textbf{主系統} & \textbf{検算・代替} & \textbf{注意点} \\
+\midrule
+モデル実装 & FeynRules 2.3（UFO/FeynArts へ出力） & SARAH（SPheno・スペクトル用） & SARAH の版は要確認 \\
+1ループ振幅（解析） & FeynArts 3.12 $\to$ FeynCalc 10.2.1 $\to$ Package-X（FeynHelpers 2 経由） & FeynArts $\to$ FormCalc 9.10 $\to$ LoopTools 2.16 & Package-X は $O(\epsilon)$ なし・開発終了 \\
+1ループ数値 & LoopTools 2.16（\texttt{LToolsEvaluate}） & COLLIER（CollierLink） & ゼロ・グラム点は \texttt{FCLoopFindTensorBasis} \\
+$\gamma_5$ & NDR（既定、曖昧なトレースを可視化） & BMHV＋有限対抗項 & FORM では自前で実装 \\
+自動 NLO・ループ誘起 & MG5\_aMC 3.8 + NLO UFO & OpenLoops/Recola（Sherpa/WHIZARD 経由） & BSM の EW 繰り込みは非自動 \\
+暗黒物質の間接検出（ループ誘起） & MadDM 3.2（3.3 は $\beta$） & FeynCalc による手計算 & 残存量は木レベル $2\to 2$ のみ \\
+EFT の整合・走行 & Matchete 0.6 $\to$ DsixTools / wilson（WCxf） & Matchmakereft & 重いベクトルの1ループは要注意 \\
+暗黒物質の直接検出 & DirectDM & --- & ループ誘起の SI 寄与 \\
+2ループ IBP & FeynHelpers 2 $\to$ Kira 3.1 & FIRE 7.1（Docker） & AMFlow 2.0 は Kira 3 必須 \\
+2ループ数値 & pySecDec 1.6.6（数点）／AMFlow 2.0（高精度） & feyntrop、LINE & 自己エネルギーは TSIL 1.46 \\
+熱的ループ・相転移 & DRalgo / Matchotter $\to$ PhaseTracer2 / PT2GWFinder $\to$ WallGo & BSMPT v3 & 4D デイジーにはゲージ依存性 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{macOS と版の固定。}macOS での実務上の注意を挙げる。FeynCalc/FeynHelpers の著者は Linux を最も推奨し、macOS をその次、Windows（WSL 経由）を最も不向きとしている。外部ツールの多くはソースからのコンパイルが必要である~\cite{r10}。pySecDec は macOS を正式にサポートする~\cite{r90}。OpenLoops は 2.1.3 で Apple silicon に対応した。LINE は Homebrew の libomp でビルドできる。NeatIBP は Linux 専用である。Kira と FIRE で一番手間取るのは依存ライブラリ（GiNaC/CLN、FLINT、FireFly）で、FIRE の Docker イメージか、Linux クラスタ上での Kira の Apptainer が最も摩擦の少ない導入手段である~\cite{r76,r75}。運用では版を固定すること（Mathematica、FORM $\geq$5.0.2、pySecDec $\geq$1.6.1、Kira のメジャー版）と、計算環境を丸ごと保存することが、FeynCalc 著者の警告に対する最も直接的な対策になる。
+
+\paragraph{学習経路。}学習順序は、新しいツールを一つ導入するたびに、既知の結果との一致を合格基準にする設計がよい。以下の段階分けは各ツールの文書と依存関係から組み立てた推論であり、出典のある順序ではない。FORM は非対話的で、文単位のモジュール構造と dollar 変数の意味論を持つため、学習曲線が急である。そのため、必要になるまで後回しにしてよい。段階と合格基準を表~\ref{tab:learning} に示す。
+
+\begin{table}[tbp]
+\centering\small
+\caption{学習経路の段階と合格基準。段階分けは各ツールの文書と依存関係から組み立てた推論であり、出典のある順序ではない。}
+\label{tab:learning}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash\hsize=1.3\hsize}X>{\raggedright\arraybackslash\hsize=0.7\hsize}X}
+\toprule
+\textbf{段階} & \textbf{内容} & \textbf{合格基準} \\
+\midrule
+1 & 手で行った PV 簡約（スカラー自己エネルギー、頂点）を FeynCalc の TID と Package-X で再現する & UV 極と $\mu$ 依存性が手計算と一致する \\
+2 & FeynRules で BSM 模型を作り、FeynArts $\to$ FeynCalc で1ループ過程を計算する。例題は $\nu$--$e$ の SM 1ループ~\cite{r149}の再現 & LoopTools の数値と FormCalc 系統の結果が一致する \\
+3 & $\gamma_5$ と繰り込み。NDR と BMHV の比較、対抗項、複素質量スキーム & スキーム差を有限対抗項で説明できる \\
+4 & EFT。Matchete で重いスカラー1個の1ループ整合を手計算と照合し、DsixTools/wilson で走行、DirectDM へ渡す & WCxf 経由で受け渡した値が一致する \\
+5 & 自動化。MG5\_aMC の NLO UFO と MadDM のループ誘起過程 & 段階2の手計算と一致する \\
+6 & 2ループ。FeynHelpers 2 $\to$ Kira/FIRE $\to$ pySecDec で計算し、TSIL と比較する。必要なら AMFlow 2.0 も使う & 異なる2つの数値法が要求桁数で一致する \\
+7（任意） & FORM 5 の基礎と、熱的スタック（DRalgo $\to$ PhaseTracer2 $\to$ WallGo） & DRalgo と Matchotter で同じ模型の3D EFT が一致する \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  w/.style={tool,text width=2.45cm,minimum height=0.9cm},
+  rowlab/.style={font=\footnotesize\bfseries,anchor=east,align=right,text width=1.5cm},
+  chk/.style={draw=cAd,fill=cAf,rounded corners=1.5pt,text width=2.45cm,align=center,
+    minimum height=0.9cm,font=\footnotesize,inner sep=2pt,line width=0.6pt},
+]
+% 列 x = 0, 3.1, 6.2, 9.3, 12.4
+% 2ループ拡張
+\node[tO,w] (KF) at (6.2,2.1) {Kira 3.1／FIRE 7.1\\IBP 簡約};
+\node[tO,w,minimum height=1.25cm] (NUM) at (9.3,2.1) {pySecDec 1.6.6\\AMFlow 2.0\\TSIL 1.46};
+\node[chk] (C2) at (12.4,2.1) {異なる2つの数値法が要求桁数で一致};
+% 主系統
+\node[tM,w] (FR) at (0,0) {FeynRules 2.3\\（模型・UFO）};
+\node[tM,w] (FA) at (3.1,0) {FeynArts 3.12\\（図・振幅）};
+\node[tM,w] (FC) at (6.2,0) {FeynCalc 10.2.1\\（NDR、TID）};
+\node[tM,w,minimum height=1.25cm] (PX) at (9.3,0) {Package-X（解析）\\LoopTools（数値）};
+% 検算系統
+\node[tM,w] (FO) at (6.2,-1.75) {FormCalc 9.10\\（FORM 同梱）};
+\node[tO,w] (LT) at (9.3,-1.75) {LoopTools 2.16\\（Fortran／C）};
+\node[chk,minimum height=2.6cm] (C1) at (12.4,-0.875) {ランダムな運動学点と閾値近傍で\\主系統と検算系統が一致};
+
+\node[rowlab] at (-1.4,2.1) {2ループ\\拡張};
+\node[rowlab] at (-1.4,0) {主系統};
+\node[rowlab] at (-1.4,-1.75) {検算系統};
+
+\draw[flow] (FR) -- (FA);
+\draw[flow] (FA) -- (FC);
+\draw[flow] (FC) -- (PX);
+\draw[flow] (PX.east) -- (PX.east -| C1.west);
+\draw[flow] (FA.south) |- (FO.west);
+\draw[flow] (FO) -- (LT);
+\draw[flow] (LT.east) -- (LT.east -| C1.west);
+\draw[-{Stealth[length=2.4mm]},line width=1.2pt,evE] (FC.north) -- node[left,font=\footnotesize\bfseries,text=evE] {FeynHelpers 2} (KF.south);
+\draw[flow] (KF) -- (NUM);
+\draw[flow] (NUM) -- (C2);
+
+\node[draw=black!40,fill=black!3,rounded corners=2pt,text width=14.6cm,align=left,font=\footnotesize,inner sep=4pt,
+  anchor=north west] at (-2.9,-2.95)
+  {\textbf{版の固定}：Mathematica、FORM $\geq$ 5.0.2、pySecDec $\geq$ 1.6.1、Kira のメジャー版（AMFlow 2.0 は Kira 3 を要し、LINE の境界値は Kira 2.3 で試験されている）。計算環境は FIRE の Docker イメージや Kira の Apptainer 定義などで丸ごと保存する。};
+\end{tikzpicture}
+\caption{推奨するワークフロー。主系統（FeynArts $\to$ FeynCalc $\to$ Package-X／LoopTools）と検算系統（FeynArts $\to$ FormCalc $\to$ LoopTools）を同じ Mathematica 環境で併走させ、1ループの結果を突き合わせる。2ループが必要になったら、FeynHelpers 2 を介して同じセッションから IBP 簡約と数値評価へ進み、異なる2つの数値法で一致を確かめる。色の意味は図~\ref{fig:landscape} と同じである。}
+\label{fig:stack}
+\end{figure}
+
+
+\section{結論}\label{sec:conclusion}
+
+この分野の現象論者にとって、2025--2026年の決定的な変化は、ソルバが速くなったことそのものではない。2ループが同じ Mathematica セッションの延長になったことである。FeynHelpers 2 によって、2ループに進むときの追加コストは、新しい基盤の構築から二つの作業へと変わった。積分族を定義する技能を身につけることと、二つの数値法で結果を突き合わせる規律である。その一方で、結果の正しさを左右する部分は、まだどのツールも自動化していない。$\gamma_5$ の扱い、$O(\epsilon)$ 項、BSM の電弱繰り込みスキームである。FeynCalc は曖昧なトレースを見える形で残し、GoSam は EW 繰り込みを利用者に委ね、Package-X は $O(\epsilon)$ を持たない。ツールは問題を見えるようにするが、解いてはくれない。律速しているのは計算資源ではなく、物理的な判断である。
+
+戦略としては、Mathematica 中心のスタックを主軸に保ちつつ、二つの保険をかけるのが合理的である。一つは FORM 5 を最小限読み書きできる力、もう一つは LoopTools・COLLIER・pySecDec・TSIL というオープンな数値経路である。今後1--2年で注視すべき転換点は四つある。Package-X の解析結果ライブラリにオープンな後継が現れるか。Matchete の1ループ UV/R2 の UFO 出力が実装され、BSM の NLO が MG5 で使えるようになるか。2ループ SMEFT RGE が公開版の DsixTools・wilson に入るか。FORM 5 の \texttt{diagrams\_} と FeynGraph が QGRAF を置き換えるほど成熟するか。LLM については、FeynmanBench が示した失敗が解消されるまで、計算の指揮役として使い、結果の出所として使わないのが正しい。BootLoops は木レベルを超えると主張した最初の例だが、まだ検証されていない。
+
+
+\appendix
+
+\section{未検証の版情報と主張}\label{app:unverified}
+
+以下は、調査の過程で二次情報にしか頼れなかったもの、または情報源の間で食い違いが残ったものである（表~\ref{tab:unverified}）。数値や版を引用する前に、一次資料で確認すべきである。
+
+\begin{table}[tbp]
+\centering\small
+\caption{一次資料で確認できなかった版情報と主張。}
+\label{tab:unverified}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=1.15\hsize}X>{\raggedright\arraybackslash\hsize=0.85\hsize}X}
+\toprule
+\textbf{項目} & \textbf{状況} \\
+\midrule
+QGRAF 4.0.5 & Gentoo overlay の掲載のみ。本家ページに到達できず、版と日付は未検証 \\
+SARAH 4.15.3/4.15.4 & 非公式 GitHub ミラーのみ。HepForge はボット対策で読めず \\
+FIRE の公式版 & MSU GitLab には 7.1（2026-05-13）があるが、gitlab.com/feynmanintegrals/fire は 6.5.2 止まりに見える。本報告は MSU 側を正とした \\
+Symbolica の最新版 & GitHub のリリースは 3.0.1（2026-10-06）、PyPI は 3.0.0。3.0 のリリースノートは未取得 \\
+COLLIER 1.2.8、Recola2 2.3.0、QCDLoop 2.0.9 & LCG・パッケージの一覧に載っているだけで、リリース日は不明 \\
+OpenLoops・Recola・WHIZARD のライセンス & 未確認（GPLv3 と推定されるが未検証） \\
+REPT1L の公開状況、MG5/OpenLoops/Recola の R2 の $\gamma_5$ 規約 & 未確認 \\
+FIESTA 5 が Mathematica を必要とするか、AMFlow 2.0 が要する Mathematica の版と高速化の倍率 & 抄録・推測のみ \\
+LiteRed2 の版、GPU Zippel が FIRE に統合されたか & 未確認 \\
+MadDM 3.3 の安定版、micrOMEGAs 6.3.0、DRalgo の2026年の次元6拡張、wilson の NLO SMEFT $\to$ WET 整合 & 二次情報のみ \\
+Matchete v0.6.0 のリリース日 & サイトに記載なし \\
+Matchmakereft（重いベクトルは未達成）と CoDEx（対応済みと主張） & 食い違いは未解決 \\
+Tomalak らの CEvNS 計算と、IBD 補正論文が使ったソフトウェア & 未確認 \\
+Agentic Diagrammatica、FeynmanBench、BootLoops、FERMIACC など LLM 系論文 & 抄録・検索要約のみ \\
+SAILIR と arXiv:2502.09544 の著者 & 一部未確認 \\
+ESPP 2026 Briefing Book の FORM とコード保守に関する記述 & 検索要約のみで、原文は未確認 \\
+Fermat（Kira の代数ソルバ）のライセンス条件 & 未確認 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+\begin{thebibliography}{999}
+\small
+\bibitem{r1} INSPIRE: FeynRules. \url{https://inspirehep.net/literature?q=t%20%22FeynRules%202.0%22}
+\bibitem{r2} INSPIRE: FeynArts. \url{https://inspirehep.net/literature?q=t%20%22FeynArts%203%22}
+\bibitem{r3} INSPIRE: QGRAF. \url{https://inspirehep.net/literature?q=t%20%22automatic%20Feynman%20graph%20generation%22}
+\bibitem{r4} INSPIRE: FeynCalc. \url{https://inspirehep.net/literature?q=t%20FeynCalc}
+\bibitem{r5} INSPIRE: FORM. \url{https://inspirehep.net/literature?q=t%20%22FORM%22%20and%20a%20Vermaseren}
+\bibitem{r6} V. Shtabovenko, ``FeynCalc goes multiloop,'' J.Phys.Conf.Ser. \textbf{2438} (2023) 012140, \href{https://arxiv.org/abs/2112.14132}{arXiv:2112.14132}.
+\bibitem{r7} feynarts.de. \url{https://feynarts.de/}
+\bibitem{r8} GitHub releases. \url{https://github.com/FeynCalc/feyncalc/releases}
+\bibitem{r9} Changelog. \url{https://github.com/FeynCalc/feyncalc/blob/hotfix-stable/FeynCalc/Changelog.md}
+\bibitem{r10} V. Shtabovenko, ``FeynCalc 10.2 and FeynHelpers 2: Multiloop calculations streamlined,'' \href{https://arxiv.org/abs/2512.19858}{arXiv:2512.19858}.
+\bibitem{r11} GitHub FeynHelpers. \url{https://github.com/FeynCalc/feynhelpers}
+\bibitem{r12} FeynRules wiki. \url{https://feynrules.irmp.ucl.ac.be/}
+\bibitem{r13} L. Darmé \textit{et al.}, ``UFO 2.0: the ‘Universal Feynman Output’ format,'' Eur.Phys.J.C \textbf{83} (2023) 631, \href{https://arxiv.org/abs/2304.09883}{arXiv:2304.09883}.
+\bibitem{r14} GitHub mirror. \url{https://github.com/restrepo/SARAH}
+\bibitem{r15} LanHEP. \url{https://theory.sinp.msu.ru/~semenov/lanhep.html}
+\bibitem{r16} J. Davies \textit{et al.}, ``FORM Version 5.0,'' \href{https://arxiv.org/abs/2601.19982}{arXiv:2601.19982}.
+\bibitem{r17} FORM release notes. \url{https://github.com/form-dev/form/wiki/Release-Notes-FORM-5.0}
+\bibitem{r18} GitHub releases. \url{https://github.com/form-dev/form/releases}
+\bibitem{r19} Gentoo overlay. \url{https://gpo.zugaina.org/sci-physics/qgraf}
+\bibitem{r20} LCG. \url{https://lcginfo.cern.ch/pkgver/qgraf/3.1.4/devkey}
+\bibitem{r21} M. Gerlach, F. Herren, M. Lang, ``tapir: A tool for topologies, amplitudes, partial fraction decomposition and input for reductions,'' Comput.Phys.Commun. \textbf{282} (2023) 108544, \href{https://arxiv.org/abs/2201.05618}{arXiv:2201.05618}.
+\bibitem{r22} GitLab. \url{https://gitlab.com/tapir-devs/tapir}
+\bibitem{r23} GitHub alibrary. \url{https://github.com/magv/alibrary}
+\bibitem{r24} INSPIRE HepLib. \url{https://inspirehep.net/literature?q=t%20HepLib}
+\bibitem{r25} Q. Wu, Z. Li, ``FeAmGen.jl: A Julia program for Feynman Amplitude Generation,'' Comput.Phys.Commun. \textbf{301} (2024) 109230, \href{https://arxiv.org/abs/2310.07634}{arXiv:2310.07634}.
+\bibitem{r26} D. Fontes, J. C. Romão, ``FeynMaster Manual,'' \href{https://arxiv.org/abs/2504.01865}{arXiv:2504.01865}.
+\bibitem{r27} JHEP. \url{https://link.springer.com/article/10.1007/JHEP04(2026)199}
+\bibitem{r28} GitHub FeynGraph. \url{https://github.com/Jens-Braun/FeynGraph}
+\bibitem{r29} FeynCalc doc. \url{https://github.com/FeynCalc/feyncalc/blob/master/FeynCalc/Documentation/Markdown/FCSetDiracGammaScheme.md}
+\bibitem{r30} FORM manual. \url{https://form-dev.github.io/form-docs/stable/manual/}
+\bibitem{r31} H. Shao, Y. Zhang, K. Chao, ``Feynman Rules for the Rational Part of the Standard Model One-loop Amplitudes in the 't Hooft-Veltman $\gamma_5$ Scheme,'' JHEP \textbf{09} (2011) 048, \href{https://arxiv.org/abs/1106.5030}{arXiv:1106.5030}.
+\bibitem{r32} A. Denner, S. Dittmaier, ``Electroweak Radiative Corrections for Collider Physics,'' Phys.Rept. \textbf{864} (2020) 1, \href{https://arxiv.org/abs/1912.06823}{arXiv:1912.06823}.
+\bibitem{r33} G. Cullen \textit{et al.}, ``Automated One-Loop Calculations with GoSam,'' PoS \textbf{RADCOR2011} (2011) 013, \href{https://arxiv.org/abs/1201.2782}{arXiv:1201.2782}.
+\bibitem{r34} D. Stöckinger, M. Weißwange, ``Full three-loop renormalisation of an abelian chiral gauge theory with non-anticommuting $\gamma_{5}$ in the BMHV scheme,'' JHEP \textbf{02} (2024) 139, \href{https://arxiv.org/abs/2312.11291}{arXiv:2312.11291}.
+\bibitem{r35} A. von Manteuffel, D. Stöckinger, M. Weißwange, ``Four-loop renormalisation of chiral gauge theories with non-anticommuting $\gamma$$_{5}$ in the BMHV scheme,'' JHEP \textbf{08} (2025) 088, \href{https://arxiv.org/abs/2506.12253}{arXiv:2506.12253}.
+\bibitem{r36} D. Bisht, S. Chakraborty, A. Samanta, ``Axion EFT in the BMHV Scheme: Flavor Currents, Evanescent Operators and Ward Identities,'' \href{https://arxiv.org/abs/2603.26880}{arXiv:2603.26880}.
+\bibitem{r37} L. Chen, ``A procedure g5anchor to anchor $\gamma$$_{5}$ in Feynman diagrams for the Standard Model,'' JHEP \textbf{05} (2025) 109, \href{https://arxiv.org/abs/2409.08099}{arXiv:2409.08099}.
+\bibitem{r38} S. Di Noi \textit{et al.}, ``Subleading operators and $\gamma_5$-scheme dependence in SMEFT for Higgs boson pair production,'' PoS \textbf{LL2024} (2024) 021, \href{https://arxiv.org/abs/2407.04747}{arXiv:2407.04747}.
+\bibitem{r39} T. van Ritbergen, A. Schellekens, J. Vermaseren, ``Group theory factors for Feynman diagrams,'' Int.J.Mod.Phys.A \textbf{14} (1999) 41, \href{https://arxiv.org/abs/hep-ph/9802376}{arXiv:hep-ph/9802376}.
+\bibitem{r40} M. Sjödahl, ``ColorMath - A package for color summed calculations in SU(Nc),'' Eur.Phys.J.C \textbf{73} (2013) 2310, \href{https://arxiv.org/abs/1211.2099}{arXiv:1211.2099}.
+\bibitem{r41} V. Shtabovenko, R. Mertig, F. Orellana, ``FeynCalc 10: Do multiloop integrals dream of computer codes?,'' Comput.Phys.Commun. \textbf{306} (2025) 109357, \href{https://arxiv.org/abs/2312.14089}{arXiv:2312.14089}.
+\bibitem{r42} H. H. Patel, ``Package-X 2.0: A Mathematica package for the analytic calculation of one-loop integrals,'' Comput.Phys.Commun. \textbf{218} (2017) 66, \href{https://arxiv.org/abs/1612.00009}{arXiv:1612.00009}.
+\bibitem{r43} mule-tools Package-X. \url{https://mule-tools.gitlab.io/package-x/}
+\bibitem{r44} LoopTools. \url{https://feynarts.de/looptools/}
+\bibitem{r45} FormCalc. \url{https://feynarts.de/formcalc/}
+\bibitem{r46} A. Denner, S. Dittmaier, L. Hofer, ``COLLIER: a fortran-based Complex One-Loop LIbrary in Extended Regularizations,'' Comput.Phys.Commun. \textbf{212} (2017) 220, \href{https://arxiv.org/abs/1604.06792}{arXiv:1604.06792}.
+\bibitem{r47} LCG collier. \url{https://lcginfo.cern.ch/pkgver/collier/1.2.8/106a}
+\bibitem{r48} S. Carrazza, R. K. Ellis, G. Zanderighi, ``QCDLoop: a comprehensive framework for one-loop scalar integrals,'' Comput.Phys.Commun. \textbf{209} (2016) 134, \href{https://arxiv.org/abs/1605.03181}{arXiv:1605.03181}.
+\bibitem{r49} OneLOop. \url{https://helac-phegas.web.cern.ch/OneLOop.html}
+\bibitem{r50} GoSam GitHub. \url{https://github.com/gudrunhe/gosam}
+\bibitem{r51} F. Buccioni \textit{et al.}, ``OpenLoops 2,'' Eur.Phys.J.C \textbf{79} (2019) 866, \href{https://arxiv.org/abs/1907.13071}{arXiv:1907.13071}.
+\bibitem{r52} OpenLoops tags. \url{https://gitlab.com/openloops/OpenLoops/-/tags}
+\bibitem{r53} MadLoopParams.dat. \url{https://arxiv.org/src/1907.04898v1/anc/SUSYNLO/SUSY_t1t1/Events/run_m750/RunMaterial/MadLoopParams.dat}
+\bibitem{r54} V. Hirschi, T. Peraro, ``Tensor integrand reduction via Laurent expansion,'' JHEP \textbf{06} (2016) 060, \href{https://arxiv.org/abs/1604.01363}{arXiv:1604.01363}.
+\bibitem{r55} UpdateNotes. \url{https://raw.githubusercontent.com/mg5amcnlo/mg5amcnlo/3.x/UpdateNotes.txt}
+\bibitem{r56} launchpad milestones. \url{https://launchpad.net/mg5amcnlo/+milestones}
+\bibitem{r57} V. Hirschi, O. Mattelaer, ``Automated event generation for loop-induced processes,'' JHEP \textbf{10} (2015) 146, \href{https://arxiv.org/abs/1507.00020}{arXiv:1507.00020}.
+\bibitem{r58} GoSam tags. \url{https://github.com/gudrunhe/gosam/tags}
+\bibitem{r59} SciPost. \url{https://scipost.org/SciPostPhysCodeb.62}
+\bibitem{r60} WHIZARD v3.1.8. \url{https://gitlab.tp.nt.uni-siegen.de/whizard/public/-/tags/v3.1.8}
+\bibitem{r61} Sherpa Collaboration, ``Event generation with Sherpa 3,'' JHEP \textbf{12} (2024) 156, \href{https://arxiv.org/abs/2410.22148}{arXiv:2410.22148}.
+\bibitem{r62} MCFM. \url{https://mcfm.fnal.gov/doc/}
+\bibitem{r63} S. Honeywell \textit{et al.}, ``NLOX, a one-loop provider for Standard Model processes,'' Comput.Phys.Commun. \textbf{257} (2020) 107284, \href{https://arxiv.org/abs/1812.11925}{arXiv:1812.11925}.
+\bibitem{r64} R. Frederix \textit{et al.}, ``The automation of next-to-leading order electroweak calculations,'' JHEP \textbf{11} (2021) 085, \href{https://arxiv.org/abs/1804.10017}{arXiv:1804.10017}.
+\bibitem{r65} C. Degrande, ``Automatic evaluation of UV and R2 terms for beyond the Standard Model Lagrangians: a proof-of-principle,'' Comput.Phys.Commun. \textbf{197} (2015) 239, \href{https://arxiv.org/abs/1406.3030}{arXiv:1406.3030}.
+\bibitem{r66} H. Shao, ``Automation of Electroweak Corrections,'' \href{https://arxiv.org/abs/2501.05199}{arXiv:2501.05199}.
+\bibitem{r67} B. Fuks, H. Shao, ``QCD next-to-leading-order predictions matched to parton showers for vector-like quark models,'' Eur.Phys.J.C \textbf{77} (2017) 135, \href{https://arxiv.org/abs/1610.04622}{arXiv:1610.04622}.
+\bibitem{r68} SciPost Codeb. 62. \url{https://scipost.org/SciPostPhysCodeb.62/pdf}
+\bibitem{r69} A. Denner, J. Lang, S. Uccirati, ``Recola2: REcursive Computation of One-Loop Amplitudes 2,'' Comput.Phys.Commun. \textbf{224} (2018) 346, \href{https://arxiv.org/abs/1711.07388}{arXiv:1711.07388}.
+\bibitem{r70} A. Denner, J. Lang, S. Uccirati, ``Recola2: a one-loop matrix-element generator for BSM theories and SM effective field theory,'' PoS \textbf{RADCOR2017} (2017) 019, \href{https://arxiv.org/abs/1712.04754}{arXiv:1712.04754}.
+\bibitem{r71} DFG GEPRIS. \url{https://gepris.dfg.de/gepris/projekt/337250025/ergebnisse}
+\bibitem{r72} L. Hourtz \textit{et al.}, ``UFO Sightings with Matchete: Connecting BSM Lagrangians with Event Generators,'' \href{https://arxiv.org/abs/2609.28619}{arXiv:2609.28619}.
+\bibitem{r73} A. Smirnov, V. Smirnov, ``Two decades of algorithmic Feynman integral reduction,'' \href{https://arxiv.org/abs/2510.10748}{arXiv:2510.10748}.
+\bibitem{r74} F. Lange, J. Usovitsch, Z. Wu, ``Kira 3: integral reduction with efficient seeding and optimized equation selection,'' Comput.Phys.Commun. \textbf{322} (2026) 109999, \href{https://arxiv.org/abs/2505.20197}{arXiv:2505.20197}.
+\bibitem{r75} Kira releases. \url{https://gitlab.com/kira-pyred/kira/-/releases}
+\bibitem{r76} A. V. Smirnov, M. Zeng, ``FIRE 7: Automatic Reduction with Modular Approach,'' Comput.Phys.Commun. \textbf{325} (2026) 110200, \href{https://arxiv.org/abs/2510.07150}{arXiv:2510.07150}.
+\bibitem{r77} FIRE tags. \url{https://gitlab.srcc.msu.ru/feynmanintegrals/fire/-/tags}
+\bibitem{r78} X. Guan \textit{et al.}, ``Blade: A package for block-triangular form improved Feynman integrals decomposition,'' Comput.Phys.Commun. \textbf{310} (2025) 109538, \href{https://arxiv.org/abs/2405.14621}{arXiv:2405.14621}.
+\bibitem{r79} Gitee Blade. \url{https://gitee.com/multiloop-pku/blade}
+\bibitem{r80} Z. Wu \textit{et al.}, ``Performing integration-by-parts reductions using NeatIBP 1.1 + Kira,'' Comput.Phys.Commun. \textbf{316} (2025) 109798, \href{https://arxiv.org/abs/2502.20778}{arXiv:2502.20778}.
+\bibitem{r81} GitHub FiniteFlow. \url{https://github.com/peraro/finiteflow}
+\bibitem{r82} V. Magerya, ``Rational Tracer: a Tool for Faster Rational Function Reconstruction,'' \href{https://arxiv.org/abs/2211.03572}{arXiv:2211.03572}.
+\bibitem{r83} X. Guan, B. Mistlberger, M. S. Ruf, ``Three-Loop QCD Corrections to Scattering Amplitudes of a Higgs Boson and Three Partons,'' \href{https://arxiv.org/abs/2607.12033}{arXiv:2607.12033}.
+\bibitem{r84} LiteRed. \url{https://inp.nsk.su/~lee/programs/LiteRed/}
+\bibitem{r85} AUR reduze. \url{https://aur.archlinux.org/pkgbase/reduze}
+\bibitem{r86} GitHub Feynson. \url{https://github.com/magv/feynson}
+\bibitem{r87} Z. Wu, Y. Zhang, ``A new method for finding more symmetry relations of Feynman integrals,'' Comput.Phys.Commun. \textbf{314} (2025) 109681, \href{https://arxiv.org/abs/2406.20016}{arXiv:2406.20016}.
+\bibitem{r88} W. Chen, ``Semi-automatic calculations of multi-loop Feynman amplitudes with AmpRed,'' Comput.Phys.Commun. \textbf{312} (2025) 109607, \href{https://arxiv.org/abs/2408.06426}{arXiv:2408.06426}.
+\bibitem{r89} PyPI. \url{https://pypi.org/project/pySecDec/}
+\bibitem{r90} installation. \url{https://secdec.readthedocs.io/en/stable/installation.html}
+\bibitem{r91} V. Magerya, ``Evaluating scattering amplitudes with pySecDec 1.6,'' PoS \textbf{RADCOR2023} (2024) 072, \href{https://arxiv.org/abs/2311.00492}{arXiv:2311.00492}.
+\bibitem{r92} GitHub releases. \url{https://github.com/gudrunhe/secdec/releases}
+\bibitem{r93} GitLab FIESTA. \url{https://gitlab.com/feynmanintegrals/fiesta/-/branches}
+\bibitem{r94} X. Liu, Y. Ma, ``AMFlow: A Mathematica package for Feynman integrals computation via auxiliary mass flow,'' Comput.Phys.Commun. \textbf{283} (2023) 108565, \href{https://arxiv.org/abs/2201.11669}{arXiv:2201.11669}.
+\bibitem{r95} CHANGELOG. \url{https://gitlab.com/multiloop-pku/amflow/-/blob/master/CHANGELOG.md}
+\bibitem{r96} R. Huang, X. Liu, Y. Ma, ``AMFlow 2.0: significant algorithmic and software improvements for Feynman integral evaluation,'' \href{https://arxiv.org/abs/2607.08477}{arXiv:2607.08477}.
+\bibitem{r97} GitLab DiffExp. \url{https://gitlab.com/hiddingm/diffexp}
+\bibitem{r98} GitHub SeaSyde. \url{https://github.com/TommasoArmadillo/SeaSyde}
+\bibitem{r99} R. M. Prisco, J. Ronca, F. Tramontano, ``LINE: Loop Integrals Numerical Evaluation,'' JHEP \textbf{07} (2025) 219, \href{https://arxiv.org/abs/2501.01943}{arXiv:2501.01943}.
+\bibitem{r100} Ronca slides. \url{https://indico.ph.liv.ac.uk/event/1868/contributions/9295/attachments/4257/6021/Ronca-Liverpool2025.pdf}
+\bibitem{r101} GitHub LINE. \url{https://github.com/line-git/line}
+\bibitem{r102} P. Petit Rosàs, ``Evaluation of Feynman integrals via numerical integration of differential equations,'' \href{https://arxiv.org/abs/2603.05336}{arXiv:2603.05336}.
+\bibitem{r103} M. Borinsky, H. J. Munch, F. Tellander, ``Tropical Feynman integration in the Minkowski regime,'' Comput.Phys.Commun. \textbf{292} (2023) 108874, \href{https://arxiv.org/abs/2302.08955}{arXiv:2302.08955}.
+\bibitem{r104} GitHub feyntrop. \url{https://github.com/michibo/feyntrop}
+\bibitem{r105} M. Borinsky, M. Fraaije, ``Tropical sampling from Feynman measures,'' Comput.Phys.Commun. \textbf{317} (2025) 109846, \href{https://arxiv.org/abs/2504.09613}{arXiv:2504.09613}.
+\bibitem{r106} GitHub gammaloop. \url{https://github.com/alphal00p/gammaloop}
+\bibitem{r107} Indico CERN. \url{https://indico.cern.ch/event/1607635/sessions/631320/}
+\bibitem{r108} MBtools. \url{https://mbtools.hepforge.org/}
+\bibitem{r109} GitHub CANONICA. \url{https://github.com/christophmeyer/CANONICA}
+\bibitem{r110} R. N. Lee, ``Libra: A package for transformation of differential systems for multiloop integrals,'' Comput.Phys.Commun. \textbf{267} (2021) 108058, \href{https://arxiv.org/abs/2012.00279}{arXiv:2012.00279}.
+\bibitem{r111} A. Belitsky, V. Smirnov, ``Near mass-shell double boxes,'' JHEP \textbf{05} (2024) 155, \href{https://arxiv.org/abs/2312.00641}{arXiv:2312.00641}.
+\bibitem{r112} M. Correia, M. Giroux, S. Mizera, ``SOFIA: Singularities of Feynman integrals automatized,'' Comput.Phys.Commun. \textbf{320} (2026) 109970, \href{https://arxiv.org/abs/2503.16601}{arXiv:2503.16601}.
+\bibitem{r113} A. Kardos, S. Moch, O. Schnetz, ``HyperFORM: a FORM package for parametric integration with hyperlogarithms,'' Eur.Phys.J.C \textbf{86} (2026) 659, \href{https://arxiv.org/abs/2511.19992}{arXiv:2511.19992}.
+\bibitem{r114} GitHub SubTropica. \url{https://github.com/SubTropica/SubTropica}
+\bibitem{r115} M. Giroux, S. Mizera, G. Salvatori, ``SubTropica,'' \href{https://arxiv.org/abs/2604.20954}{arXiv:2604.20954}.
+\bibitem{r116} ginac.de. \url{https://www.ginac.de/}
+\bibitem{r117} GitLab handyG. \url{https://gitlab.com/mule-tools/handyg}
+\bibitem{r118} Y. Wang, L. L. Yang, B. Zhou, ``FastGPL: a C++ library for fast evaluation of generalized polylogarithms,'' \href{https://arxiv.org/abs/2112.04122}{arXiv:2112.04122}.
+\bibitem{r119} TSIL. \url{https://www.niu.edu/spmartin/TSIL/}
+\bibitem{r120} 3VIL. \url{https://www.niu.edu/spmartin/3VIL/}
+\bibitem{r121} S. Bauberger, A. Freitas, D. Wiegand, ``TVID 2: Evaluation of planar-type three-loop self-energy integrals with arbitrary masses,'' JHEP \textbf{01} (2020) 024, \href{https://arxiv.org/abs/1908.09887}{arXiv:1908.09887}.
+\bibitem{r122} G. Heinrich \textit{et al.}, ``Expansion by regions with pySecDec,'' Comput.Phys.Commun. \textbf{273} (2022) 108267, \href{https://arxiv.org/abs/2108.10807}{arXiv:2108.10807}.
+\bibitem{r123} B. Ananthanarayan \textit{et al.}, ``Unveiling Regions in multi-scale Feynman Integrals using Singularities and Power Geometry,'' Eur.Phys.J.C \textbf{79} (2019) 57, \href{https://arxiv.org/abs/1810.06270}{arXiv:1810.06270}.
+\bibitem{r124} Matchete. \url{https://matchete.gitlab.io/}
+\bibitem{r125} S. Kraml \textit{et al.}, ``SUSY meets SMEFT: complete one-loop matching of the general MSSM,'' JHEP \textbf{04} (2026) 028, \href{https://arxiv.org/abs/2506.05201}{arXiv:2506.05201}.
+\bibitem{r126} J. Fuentes-Martín, J. López Miras, A. Moreno-Sánchez, ``Matchotter: An Automated Tool for Dimensional Reduction at Finite Temperature,'' \href{https://arxiv.org/abs/2604.21972}{arXiv:2604.21972}.
+\bibitem{r127} A. Carmona \textit{et al.}, ``Matchmakereft: automated tree-level and one-loop matching,'' SciPost Phys. \textbf{12} (2022) 198, \href{https://arxiv.org/abs/2112.10787}{arXiv:2112.10787}.
+\bibitem{r128} J. ter Hoeve, ``Fingerprinting New Physics with Effective Field Theories,'' \href{https://arxiv.org/abs/2501.08818}{arXiv:2501.08818}.
+\bibitem{r129} CoDEx talk. \url{https://indico.icc.ub.edu/event/128/contributions/1426/attachments/575/1101/CoDEx_SMEFT_Tools22.pdf}
+\bibitem{r130} DsixTools. \url{https://dsixtools.github.io/}
+\bibitem{r131} GitHub wilson. \url{https://github.com/wilson-eft/wilson}
+\bibitem{r132} EPJC 2025. \url{https://link.springer.com/article/10.1140/epjc/s10052-025-14127-8}
+\bibitem{r133} WCxf. \url{https://wcxf.github.io/codes.html}
+\bibitem{r134} L. Born, J. Fuentes-Martín, A. E. Thomsen, ``Next-to-leading order running in the SMEFT,'' JHEP \textbf{09} (2026) 106, \href{https://arxiv.org/abs/2601.19974}{arXiv:2601.19974}.
+\bibitem{r135} L. Mantani, P. Olgoso, A. N. Rossia, ``The effect of the two-loop SMEFT RGEs at future colliders,'' \href{https://arxiv.org/abs/2604.16599}{arXiv:2604.16599}.
+\bibitem{r136} L. Born, A. Greljo, A. E. Thomsen, ``When Two Loops Matter: Electroweak Precision in the SMEFT,'' \href{https://arxiv.org/abs/2604.26817}{arXiv:2604.26817}.
+\bibitem{r137} J. Fuentes-Martín \textit{et al.}, ``A guide to functional methods beyond one-loop order,'' JHEP \textbf{08} (2025) 099, \href{https://arxiv.org/abs/2412.12270}{arXiv:2412.12270}.
+\bibitem{r138} EPJC. \url{https://link.springer.com/article/10.1140/epjc/s10052-023-11377-2}
+\bibitem{r139} Dark Tools 2025 talk. \url{https://agenda.irmp.ucl.ac.be/event/5375/contributions/14435/attachments/3612/4888/Massaro_TALK_DarkTools_2025.pdf}
+\bibitem{r140} J. Harz \textit{et al.}, ``Precision predictions for dark matter with DM@NLO in the MSSM,'' Eur.Phys.J.C \textbf{84} (2024) 342, \href{https://arxiv.org/abs/2312.17206}{arXiv:2312.17206}.
+\bibitem{r141} P. Brica \textit{et al.}, ``Full Next-To Leading-Order Electroweak and QCD Corrections to the Relic Density in the CxSM,'' \href{https://arxiv.org/abs/2607.19179}{arXiv:2607.19179}.
+\bibitem{r142} F. Bishara \textit{et al.}, ``DirectDM: a tool for dark matter direct detection,'' \href{https://arxiv.org/abs/1708.02678}{arXiv:1708.02678}.
+\bibitem{r143} A. Crivellin, F. D'Eramo, M. Procura, ``New Constraints on Dark Matter Effective Theories from Standard Model Loops,'' Phys.Rev.Lett. \textbf{112} (2014) 191304, \href{https://arxiv.org/abs/1402.1173}{arXiv:1402.1173}.
+\bibitem{r144} D. Azevedo \textit{et al.}, ``One-loop contribution to dark-matter-nucleon scattering in the pseudo-scalar dark matter model,'' JHEP \textbf{01} (2019) 138, \href{https://arxiv.org/abs/1810.06105}{arXiv:1810.06105}.
+\bibitem{r145} O. Tomalak \textit{et al.}, ``Flavor-dependent radiative corrections in coherent elastic neutrino-nucleus scattering,'' JHEP \textbf{02} (2021) 097, \href{https://arxiv.org/abs/2011.05960}{arXiv:2011.05960}.
+\bibitem{r146} O. Tomalak, ``Reducing hadronic uncertainty in low-energy neutral-current processes,'' Phys.Lett.B \textbf{873} (2026) 140181, \href{https://arxiv.org/abs/2506.03255}{arXiv:2506.03255}.
+\bibitem{r147} PLB. \url{https://www.sciencedirect.com/science/article/pii/S0370269326000353}
+\bibitem{r148} JHEP 08 (2026) 077. \url{https://link.springer.com/article/10.1007/JHEP08(2026)077}
+\bibitem{r149} J. Huang, S. Zhou, ``Elastic neutrino-electron scattering at the one-loop level in the standard model,'' Phys.Rev.D \textbf{111} (2025) 033005, \href{https://arxiv.org/abs/2412.17047}{arXiv:2412.17047}.
+\bibitem{r150} A. Broggio \textit{et al.}, ``Muon-electron scattering at NNLO,'' JHEP \textbf{01} (2023) 112, \href{https://arxiv.org/abs/2212.06481}{arXiv:2212.06481}.
+\bibitem{r151} M. D. Goodsell, S. Paßehr, ``All two-loop scalar self-energies and tadpoles in general renormalisable field theories,'' Eur.Phys.J.C \textbf{80} (2020) 417, \href{https://arxiv.org/abs/1910.02094}{arXiv:1910.02094}.
+\bibitem{r152} M. Goodsell, K. Nickel, F. Staub, ``Generic two-loop Higgs mass calculation from a diagrammatic approach,'' Eur.Phys.J.C \textbf{75} (2015) 290, \href{https://arxiv.org/abs/1503.03098}{arXiv:1503.03098}.
+\bibitem{r153} A. Ekstedt, P. Schicho, T. V. Tenkanen, ``DRalgo: A package for effective field theory approach for thermal phase transitions,'' Comput.Phys.Commun. \textbf{288} (2023) 108725, \href{https://arxiv.org/abs/2205.08815}{arXiv:2205.08815}.
+\bibitem{r154} P. Athron \textit{et al.}, ``PhaseTracer2: from the effective potential to gravitational waves,'' Eur.Phys.J.C \textbf{85} (2025) 559, \href{https://arxiv.org/abs/2412.04881}{arXiv:2412.04881}.
+\bibitem{r155} V. Brdar \textit{et al.}, ``$\text{PT2GWFinder}$ : A package for cosmological first-order phase transitions and gravitational waves,'' Comput.Phys.Commun. \textbf{323} (2026) 110119, \href{https://arxiv.org/abs/2505.04744}{arXiv:2505.04744}.
+\bibitem{r156} P. Basler \textit{et al.}, ``BSMPT v3 a tool for phase transitions and primordial gravitational waves in extended Higgs sectors,'' Comput.Phys.Commun. \textbf{316} (2025) 109766, \href{https://arxiv.org/abs/2404.19037}{arXiv:2404.19037}.
+\bibitem{r157} J. Matuszak, C. Tasillo, ``TransitionListener v2.0 -- Robust gravitational wave predictions for cosmological phase transitions,'' \href{https://arxiv.org/abs/2605.15259}{arXiv:2605.15259}.
+\bibitem{r158} A. Ekstedt \textit{et al.}, ``How fast does the WallGo? A package for computing wall velocities in first-order phase transitions,'' JHEP \textbf{04} (2025) 101, \href{https://arxiv.org/abs/2411.04970}{arXiv:2411.04970}.
+\bibitem{r159} G. C. Dorsch, M. Lewicki, D. A. Pinto, ``Benchmarking wall velocities in cosmological phase transitions: Fluid Ansatz and WallGo,'' \href{https://arxiv.org/abs/2607.18207}{arXiv:2607.18207}.
+\bibitem{r160} P. Athron \textit{et al.}, ``Cosmological phase transitions: From perturbative particle physics to gravitational waves,'' Prog.Part.Nucl.Phys. \textbf{135} (2024) 104094, \href{https://arxiv.org/abs/2305.02357}{arXiv:2305.02357}.
+\bibitem{r161} symbolica.io. \url{https://symbolica.io/posts/stable_release/}
+\bibitem{r162} GitHub releases. \url{https://github.com/benruijl/symbolica/releases}
+\bibitem{r163} symbolica.io license. \url{https://symbolica.io/license/}
+\bibitem{r164} A. V. Smirnov, B. I. Rozhnov, V. V. Voevodin, ``GPU Implementation of Zippel Method for Feynman Integral Reconstruction,'' \href{https://arxiv.org/abs/2505.24256}{arXiv:2505.24256}.
+\bibitem{r165} G. De Laurentis, J. Franklin, ``Linac: linear algebra with CUDA over finite fields,'' \href{https://arxiv.org/abs/2605.25863}{arXiv:2605.25863}.
+\bibitem{r166} M. von Hippel, M. Wilhelm, ``Refining Integration-by-Parts Reduction of Feynman Integrals with Machine Learning,'' JHEP \textbf{05} (2025) 185, \href{https://arxiv.org/abs/2502.05121}{arXiv:2502.05121}.
+\bibitem{r167} Z. Song \textit{et al.}, ``Explainable AI-assisted optimization for Feynman integral reduction,'' JHEP \textbf{06} (2026) 225, \href{https://arxiv.org/abs/2502.09544}{arXiv:2502.09544}.
+\bibitem{r168} M. Zeng, ``Reinforcement learning and metaheuristics for Feynman-integral reduction,'' Phys.Rev.D \textbf{112} (2025) 114051, \href{https://arxiv.org/abs/2504.16045}{arXiv:2504.16045}.
+\bibitem{r169} J. Berman \textit{et al.}, ``Efficient AI-Inspired Reduction of Feynman Integrals via Tube Seeding,'' \href{https://arxiv.org/abs/2606.10698}{arXiv:2606.10698}.
+\bibitem{r170} D. Shih, ``Learning to Unscramble Feynman Loop Integrals with SAILIR,'' \href{https://arxiv.org/abs/2604.05034}{arXiv:2604.05034}.
+\bibitem{r171} T. Menzo \textit{et al.}, ``Agentic Diagrammatica: Towards Autonomous Symbolic Computation in High Energy Physics,'' \href{https://arxiv.org/abs/2603.26990}{arXiv:2603.26990}.
+\bibitem{r172} Z. Wang \textit{et al.}, ``FeynmanBench: Benchmarking Multimodal LLMs on Diagrammatic Physics Reasoning,'' \href{https://arxiv.org/abs/2604.03893}{arXiv:2604.03893}.
+\bibitem{r173} M. D. Schwartz, ``BootLoops: an LLM-driven toolkit for exact quantitative science,'' \href{https://arxiv.org/abs/2610.02286}{arXiv:2610.02286}.
+\end{thebibliography}
+
+
+\end{document}
