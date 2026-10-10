@@ -41,7 +41,7 @@
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。質量は $\mu\,\dd m^2/\dd\mu=-5g^2m^2/(6(4\pi)^3)$ で走り、場の異常次元は $g^2/(12(4\pi)^3)$ である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その十段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。最後に、FeynRules の NLOCT で対抗項を含む UFO を作り、MadGraph の1ループ計算（MadLoop）と比べた。NLOCT の対抗項は on-shell の処方の手計算と記号として一致した。MadLoop の値は、on-shell の対抗項では S 行列要素の式と、極だけの $\overline{\mathrm{MS}}$ の対抗項では $\overline{\mathrm{MS}}$ の振幅と、相対 $3\times10^{-13}$ 以内で一致した。最後に、$\phi\phi$ 散乱の全断面積を $g^6$ まで求めた。それには、$2\to2$ の1ループの補正と、同じ次数の $\phi\phi\to\phi\phi\phi$ の両方が要る。$g=m$ では、1ループの補正は木の断面積の $0.9$〜$2\%$、$2\to3$ は $\sqrt s=20m$ で $2\%$ である。1ループの補正の角度積分は MadLoop と相対 $10^{-14}$ 以内で一致し、$2\to3$ は自前の二つの積分と MadGraph が $\sqrt s=4m,\,5m$ で一致した。さらに $d=6$ の1ループの $\phi\phi\to\phi\phi$ を、次元をずらす関係で4点関数まで広げて計算した。極は $d=6$ の対抗項で消え、虚部はユニタリー性と一致した。S 行列要素が $\mu$ によらないことから三つのツールの数値で逆算した $\beta$ 関数は、$\beta(g)=-3g^3/(4(4\pi)^3)$ と相対 $10^{-15}$ で一致した。最後に、両方の次元で、S 行列要素が $\mu$ によらないことを使い、6点の数値から質量の走りと $\beta$ 関数を同時に読み取った。$d=4$ では、MadLoop を含む四つのツールで $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ と $\beta=0$ が得られた。$d=6$ では、$\beta(g)$ と $\overline{\mathrm{MS}}$ の質量の走り $-5g^2m^2/(6(4\pi)^3)$ が得られた。極質量で書けば、質量の走りは0になった。いずれも相対 $10^{-15}$ の精度である。これらの係数で、無次元のパラメータの空間での繰り込み群の流れも描いた。$d=4$ の流れは、べき数え上げから $\overline{\mathrm{MS}}$ では全次数で正しい。最後に、S 行列要素には現れない $d=6$ の場の異常次元を、1PI の2点関数の $\mu$ 依存から三つのツールで読み取った。2点・3点関数からは質量の走りと $\beta$ も別の経路で再現され、三つの RG 関数はすべて相対 $10^{-15}$ で手計算と一致した。三つは5ループの文献の1ループの項とも符号まで一致し、これは $d=6$ の対抗項の文献による検算にもなっている。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。質量は $\mu\,\dd m^2/\dd\mu=-5g^2m^2/(6(4\pi)^3)$ で走り、場の異常次元は $g^2/(12(4\pi)^3)$ である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その十一段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。最後に、FeynRules の NLOCT で対抗項を含む UFO を作り、MadGraph の1ループ計算（MadLoop）と比べた。NLOCT の対抗項は on-shell の処方の手計算と記号として一致した。MadLoop の値は、on-shell の対抗項では S 行列要素の式と、極だけの $\overline{\mathrm{MS}}$ の対抗項では $\overline{\mathrm{MS}}$ の振幅と、相対 $3\times10^{-13}$ 以内で一致した。最後に、$\phi\phi$ 散乱の全断面積を $g^6$ まで求めた。それには、$2\to2$ の1ループの補正と、同じ次数の $\phi\phi\to\phi\phi\phi$ の両方が要る。$g=m$ では、1ループの補正は木の断面積の $0.9$〜$2\%$、$2\to3$ は $\sqrt s=20m$ で $2\%$ である。1ループの補正の角度積分は MadLoop と相対 $10^{-14}$ 以内で一致し、$2\to3$ は自前の二つの積分と MadGraph が $\sqrt s=4m,\,5m$ で一致した。さらに $d=6$ の1ループの $\phi\phi\to\phi\phi$ を、次元をずらす関係で4点関数まで広げて計算した。極は $d=6$ の対抗項で消え、虚部はユニタリー性と一致した。S 行列要素が $\mu$ によらないことから三つのツールの数値で逆算した $\beta$ 関数は、$\beta(g)=-3g^3/(4(4\pi)^3)$ と相対 $10^{-15}$ で一致した。最後に、両方の次元で、S 行列要素が $\mu$ によらないことを使い、6点の数値から質量の走りと $\beta$ 関数を同時に読み取った。$d=4$ では、MadLoop を含む四つのツールで $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ と $\beta=0$ が得られた。$d=6$ では、$\beta(g)$ と $\overline{\mathrm{MS}}$ の質量の走り $-5g^2m^2/(6(4\pi)^3)$ が得られた。極質量で書けば、質量の走りは0になった。いずれも相対 $10^{-15}$ の精度である。これらの係数で、無次元のパラメータの空間での繰り込み群の流れも描いた。$d=4$ の流れは、べき数え上げから $\overline{\mathrm{MS}}$ では全次数で正しい。最後に、S 行列要素には現れない $d=6$ の場の異常次元を、1PI の2点関数の $\mu$ 依存から三つのツールで読み取った。2点・3点関数からは質量の走りと $\beta$ も別の経路で再現され、三つの RG 関数はすべて相対 $10^{-15}$ で手計算と一致した。三つは5ループの文献の1ループの項とも符号まで一致し、これは $d=6$ の対抗項の文献による検算にもなっている。最後に、$d=6$ の漸近自由を90°散乱の有効結合で見た。結合を固定した1ループの計算は $\ln(\sqrt s/m)$ について傾き $-\frac{11}{6}$ の対数を含み、$\alpha(m)=0.1$ では $\sqrt s\approx3\times10^3m$ で破綻する。傾きのうち $-\frac32$ は $\beta$ から、$-\frac13$ は外線の場の異常次元から来る。$g(\sqrt s)$ と外線の因子 $(\alpha(\sqrt s)/\alpha(m))^{2/9}$ で繰り込み群の改良をすると、有効結合は $1/\ln s$ のように滑らかに小さくなった。この計算では、COLLIER の箱図が $\sqrt s\gg m$ で精度を失うことも分かった。そのため、高エネルギーの基準には Package-X の解析式を30桁で評価した値を使い、LoopTools がそれと $2\times10^{-13}$ で一致した。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \section{目的と問い}\label{sec:intro}
@@ -50,7 +50,7 @@
 
 求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、質量の走り、場の異常次元と、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) $\phi\phi\to\phi\phi$ の木の振幅と、$d=4$ での1ループの振幅、およびその S 行列要素。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(10) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:anom} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(11) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:af} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -105,6 +105,7 @@ $\sigma^{(0)},\ \sigma^{(1)},\ \sigma_{2\to3}$ & $\phi\phi\to\phi\phi$ の木の
 $\beta(g)$ & $\beta\equiv\dd g/\dd\ln\mu$（$\epsilon\to0$ の値） \\
 $\gamma$ & 質量の2乗の走り $\gamma\equiv\mu\,\dd m^2/\dd\mu$（$m$ は $\overline{\mathrm{MS}}$ の質量または極質量、式~\eqref{eq:rgfit}） \\
 $\gamma_\phi$ & 場の異常次元 $\gamma_\phi\equiv\frac12\mu\,\dd\ln Z/\dd\mu$ \\
+$\alpha,\ \alpha_{\mathrm{eff}}$ & $d=6$ のループの展開のパラメータ $\alpha\equiv g^2/(4\pi)^3$ と、90°散乱で測った有効結合（式~\eqref{eq:aeff}） \\
 $E,\ V,\ L,\ I$ & 図の外線、頂点、ループ、内線の数 \\
 \bottomrule
 \end{tabularx}
@@ -458,17 +459,18 @@ $d=4$：全断面積 \eqref{eq:sigmatot} & \ref{app:sigma} & — & — & — & M
 $d=6$：1ループの $\phi\phi\to\phi\phi$ \eqref{eq:M6}、$\beta$ \eqref{eq:rg6} & \ref{app:scat6} & 次元をずらす関係で極と有限部分 & $D_{00}$ などから & 同左 & — \\
 $d=4,\,6$：質量の走りと $\beta$（$\phi\phi\to\phi\phi$ の $\mu$ 依存） & \ref{app:ren}, \ref{app:rg} & $\mu$ を変えて $\phi\phi\to\phi\phi$ を評価 & 数値 & 数値 & MadLoop の $\mu_R$ を変える（$d=4$） \\
 $d=6$：場の異常次元（1PI 関数の $\mu$ 依存）、文献との照合 & \ref{app:ren}, \ref{app:anom} & $\mu$ を変えて $V_2$、$V_3$ を評価 & 次元をずらす関係で使う & 同左（$C_0^{(6)}$ は $\mu$ 依存だけ） & — \\
+$d=6$：高エネルギーの散乱と漸近自由 & \ref{app:af} & — & 解析式（30桁） & 数値 & — \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点 $m=g=\mu=1$ で、Package-X の解析式・LoopTools の数値・Feynman パラメータ積分の数値積分が、倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。有限部分は規約に依存するので、すべて $\overline{\mathrm{MS}}$（第~\ref{sec:setup} 節の前提4）にそろえて比べる。LoopTools（$\Delta=0$）と COLLIER（$\Delta_{\mathrm{UV}}=0$）は、既定で $\overline{\mathrm{MS}}$ の値を返す。一方、FeynCalc の PaVe 関数は測度 $\dd^Dq/(i\pi^2)$ で規格化されているので、その $\epsilon^0$ の係数は $\overline{\mathrm{MS}}$ の値から $-(\gamma_E+\ln\pi)$ だけずれる~\cite{env}。そこで FeynCalc の振幅は、本ノートの $V_n$ に直し、$\overline{\mathrm{MS}}$ の対抗項を加えてから比べる。MadGraph の断面積は、式~\eqref{eq:Mtree} を自分で数値積分した値と、統計誤差の範囲で一致することを求める。
 
-\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。(5) $d=4$ の1ループの $\phi\phi\to\phi\phi$ を、FeynCalc と FormCalc の二つの経路で式~\eqref{eq:M1} と記号として比べ、Package-X・LoopTools・COLLIER の数値を互いに比べる。虚部は式~\eqref{eq:unit} で確かめる。(6) FeynRules の NLOCT で対抗項を含む UFO を作り、MadLoop の値を式~\eqref{eq:Mphys}（on-shell の対抗項）と式~\eqref{eq:M1}（$\overline{\mathrm{MS}}$ の対抗項）に比べる。(7) 式~\eqref{eq:sigmatot} の全断面積を求め、$\sigma^{(1)}$ を MadLoop の角度積分と、$\sigma_{2\to3}$ を MadGraph の木の計算と比べる。(8) $d=6$ の1ループの $\phi\phi\to\phi\phi$ を計算し、極が式~\eqref{eq:ct6} の対抗項で消えること、虚部がユニタリー性を満たすこと、S 行列要素の $\mu$ 依存から $\beta$ 関数が再現されることを確かめる。(9) 両方の次元で、$\phi\phi\to\phi\phi$ の S 行列要素が $\mu$ によらないことを使い、6点のツールの数値から質量の走りと $\beta$ 関数を同時に読み取って、式~\eqref{eq:beta6}、式~\eqref{eq:mrun4} などと比べる。その係数で、無次元のパラメータの空間での流れを描く。(10) $d=6$ の場の異常次元を1PI の2点・3点関数の $\mu$ 依存から読み取り、質量の走りと $\beta$ とともに文献の値と照合する。
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。(5) $d=4$ の1ループの $\phi\phi\to\phi\phi$ を、FeynCalc と FormCalc の二つの経路で式~\eqref{eq:M1} と記号として比べ、Package-X・LoopTools・COLLIER の数値を互いに比べる。虚部は式~\eqref{eq:unit} で確かめる。(6) FeynRules の NLOCT で対抗項を含む UFO を作り、MadLoop の値を式~\eqref{eq:Mphys}（on-shell の対抗項）と式~\eqref{eq:M1}（$\overline{\mathrm{MS}}$ の対抗項）に比べる。(7) 式~\eqref{eq:sigmatot} の全断面積を求め、$\sigma^{(1)}$ を MadLoop の角度積分と、$\sigma_{2\to3}$ を MadGraph の木の計算と比べる。(8) $d=6$ の1ループの $\phi\phi\to\phi\phi$ を計算し、極が式~\eqref{eq:ct6} の対抗項で消えること、虚部がユニタリー性を満たすこと、S 行列要素の $\mu$ 依存から $\beta$ 関数が再現されることを確かめる。(9) 両方の次元で、$\phi\phi\to\phi\phi$ の S 行列要素が $\mu$ によらないことを使い、6点のツールの数値から質量の走りと $\beta$ 関数を同時に読み取って、式~\eqref{eq:beta6}、式~\eqref{eq:mrun4} などと比べる。その係数で、無次元のパラメータの空間での流れを描く。(10) $d=6$ の場の異常次元を1PI の2点・3点関数の $\mu$ 依存から読み取り、質量の走りと $\beta$ とともに文献の値と照合する。(11) $d=6$ の90°散乱を高エネルギーまで計算し、結合を固定した計算の対数と、繰り込み群で改良した有効結合を比べる。
 
 \section{検算の結果}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順 (1)〜(10)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算、$d=4$ の1ループの $\phi\phi\to\phi\phi$ の検算、MadLoop との比較、全断面積の計算、$d=6$ の1ループの $\phi\phi\to\phi\phi$ の検算、繰り込み群の検算、$d=6$ の場の異常次元の検算をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で、$\phi\phi\to\phi\phi$ の検算は \texttt{run\_scat4\_check.sh} で、MadLoop との比較は \texttt{generate\_Phi3\_NLO.sh} と \texttt{run\_madloop\_check.sh} で、全断面積は \texttt{run\_xsec\_check.sh} で、$d=6$ の $\phi\phi\to\phi\phi$ は \texttt{run\_scat6\_check.sh} で、繰り込み群は \texttt{run\_rg4\_check.sh} で、場の異常次元は \texttt{run\_anom6\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順 (1)〜(11)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算、$d=4$ の1ループの $\phi\phi\to\phi\phi$ の検算、MadLoop との比較、全断面積の計算、$d=6$ の1ループの $\phi\phi\to\phi\phi$ の検算、繰り込み群の検算、$d=6$ の場の異常次元の検算、$d=6$ の漸近自由の散乱での確認をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で、$\phi\phi\to\phi\phi$ の検算は \texttt{run\_scat4\_check.sh} で、MadLoop との比較は \texttt{generate\_Phi3\_NLO.sh} と \texttt{run\_madloop\_check.sh} で、全断面積は \texttt{run\_xsec\_check.sh} で、$d=6$ の $\phi\phi\to\phi\phi$ は \texttt{run\_scat6\_check.sh} で、繰り込み群は \texttt{run\_rg4\_check.sh} で、場の異常次元は \texttt{run\_anom6\_check.sh} で、漸近自由は \texttt{run\_af6\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も \texttt{Src/generated/} に書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
 
@@ -792,15 +794,63 @@ $\beta$ & $\mu\,\dd g/\dd\mu$ & $-\frac{3g^3}{4(4\pi)^3}$ & $-3.7794766914\times
 \label{fig:anom6}
 \end{figure}
 
+\paragraph{手順 (11)：$d=6$ の漸近自由を散乱で見る。}$d=6$ の $g$ は高エネルギーで小さくなる（式~\eqref{eq:beta6}）。これを散乱で見るため、極質量 $m_{\mathrm p}$（$=m=1$）と $\overline{\mathrm{MS}}$ の $g(\mu)$ で書いた90°散乱の S 行列要素から、有効結合を
+\begin{equation}
+\alpha_{\mathrm{eff}}(s)\equiv\frac{\mathrm{Re}\,\mathcal{M}_{\mathrm{phys}}(s,\theta=90^\circ)}{(4\pi)^3\,\hat{\mathcal M}^{(0)}},\qquad
+\hat{\mathcal M}^{(0)}\equiv-\sum_x\frac{1}{x-m_{\mathrm p}^2}
+\label{eq:aeff}
+\end{equation}
+と定義する。木のレベルでは $\alpha_{\mathrm{eff}}=\alpha\equiv g^2/(4\pi)^3$ である。1ループでは $\alpha_{\mathrm{eff}}=\alpha(\mu)+\alpha(\mu)^2c(s;\mu)$ と書ける。$c\equiv(4\pi)^3\,\mathrm{Re}\,\mathcal{M}^{(1)}_{\mathrm{phys}}/(g^4\hat{\mathcal M}^{(0)})$ は1ループの係数で、式~\eqref{eq:rg6} から $c(s;\mu)=c(s;m)+\frac32\ln(\mu/m)$ である。$\mu=m$ に固定した計算（固定次数）では、$c(s;m)$ が $\ln(\sqrt s/m)$ の大きな対数を含む。その係数は $-\frac32$ だけではない（\ref{app:af}）。S 行列要素は、外線を切り離した部分 $G$ と外線の留数 $R^2$ の積で、$R^2$ は $p^2=m^2$ で決まるので $\ln(m^2/\mu^2)$ を含む。この対数の $\mu$ 依存は場の異常次元で決まる（$4\gamma_\phi=\alpha/3$）。$\mu=\sqrt s$ と選んでも、外線の対数は $\ln(s/m^2)$ として残る。合わせて、$s\gg m^2$ では $c(s;m)\simeq\mathrm{const}-\frac{11}{6}\ln(\sqrt s/m)$ となる。$c=c_G+c_R$ と留数の部分 $c_R=-B_0^{(6)\prime}(m^2)$ を分けると、$G$ の係数 $c_G(s;\sqrt s)$ には大きな対数が残らない。そこで、$g$ を $g(\sqrt s)$ に、$R^2$ を $\mu=m$ から $\sqrt s$ まで繰り込み群で運ぶと
+\begin{equation}
+\alpha_{\mathrm{eff}}=\bigl[1-\alpha(m)\,B_0^{(6)\prime}(m^2)\big|_{\mu=m}\bigr]\Bigl(\frac{\alpha(\sqrt s)}{\alpha(m)}\Bigr)^{2/9}\bigl[\alpha(\sqrt s)+\alpha(\sqrt s)^2\,c_G(s;\sqrt s)\bigr],\qquad
+\alpha(\mu)=\frac{\alpha(m)}{1+\frac32\alpha(m)\ln(\mu/m)}
+\label{eq:af}
+\end{equation}
+を得る（\ref{app:af}）。指数 $\frac29=4\gamma_\phi/(\frac32\alpha)$ は、外線の異常次元と $\beta$ の比である。式~\eqref{eq:af} を $\alpha(m)$ の2次まで展開すると、固定次数の式に戻る。
+
+数値は、$\sqrt s=2.5m$ から $1.45\times10^6m$ までの65点で求めた。COLLIER の箱図はこの領域で精度を失うので（後述）、基準には Package-X の解析式（$C_0$、$D_0$ を対数と二重対数で書いたもの）を30桁で評価した値を使った。FeynCalc の PaVe 関数の規格化は、$\epsilon^0$ の係数に極の係数の $\gamma_E+\ln\pi$ 倍を足して $\overline{\mathrm{MS}}$ に直した（第~\ref{sec:plan} 節）。手順 (8) の点（$\sqrt s=5m$、$\cos\theta=0.3$）では、COLLIER と全桁で一致した。$c(s;\sqrt s)-c(s;m)=\frac32\ln(\sqrt s/m)$ は相対 $7\times10^{-16}$ で成り立ち、虚部は $\mu$ によらなかった。$c(s;m)$ の局所的な傾き $\dd c/\dd\ln\sqrt s$ は、$\sqrt s=69m$ で $-1.776$、$1.9\times10^3m$ で $-1.8330$、$5\times10^4m$ 以上で $-1.83333$ となり、$-\frac{11}{6}$ に収束した。$c_G(s;\sqrt s)$ は $4.94959$ に収束し、$\sqrt s$ の最後の1桁（$1.5\times10^5m$ から $1.45\times10^6m$）で $7\times10^{-8}$ しか変わらなかった。$G$ には $\ln(s/m^2)$ が残らないことが確かめられた（図~\ref{fig:af6} 上）。
+
+図~\ref{fig:af6} 下は、$\alpha(m)=0.1$ での有効結合である。固定次数の $\alpha_{\mathrm{eff}}$ は対数とともに直線的に減り、$\sqrt s\approx3.4\times10^3m$ で0を横切って意味を失う。式~\eqref{eq:af} は、$1/\ln s$ のように滑らかに減り続ける。$\sqrt s=1.45\times10^6m$ では $\alpha_{\mathrm{eff}}=0.286\,\alpha(m)$ で、$\alpha(\sqrt s)=0.320\,\alpha(m)$ より小さい。外線の因子 $(\alpha(\sqrt s)/\alpha(m))^{2/9}$ の分だけ、有効結合は $g$ の走りより速く小さくなる。$g(\sqrt s)$ だけを使い、外線の対数を1ループのまま残した場合（$\alpha(\sqrt s)+\alpha(\sqrt s)^2c(s;\sqrt s)$）は $0.322\,\alpha(m)$ で、両者の差は $\alpha^2\ln^2$ 以上の項である。$c_G\approx5$ は大きく、$\alpha(m)=0.1$ では1ループの補正が $\alpha(\sqrt s)c_G\approx0.16$〜$0.33$ になる。この大きさの定数を正しく扱うには、2ループの計算が要る。
+
+この手順で、ツールの高エネルギーでの振る舞いの違いが分かった（表~\ref{tab:af6tools}）。LoopTools は、$\sqrt s=10^4m$ まで Package-X と相対 $2.4\times10^{-13}$ 以内で一致した。COLLIER は、$s$ チャンネルを含む箱図 $D_{00}(s,t)$ で精度を失った。既定の COLI では、実部は正しいが、虚部のずれが $\sqrt s\approx130m$ から $10^{-8}$ を超え、$10^4m$ では $44\%$ になった。もう一方の DD は $\sqrt s\approx830m$ までは $10^{-8}$ 程度で正しいが、$1.26\times10^3m$ 以上では値が全く誤っていた。COLLIER の二つの方式を比べれば食い違いは分かるが、どちらが正しいかは決まらない。高い精度の独立な基準が要る。
+
+\begin{table}[tbp]
+\centering\small
+\caption{90°散乱の1ループの振幅（$\mu=m$ と $\sqrt s$ の大きい方）の、Package-X（30桁）からの相対的なずれ。COLLIER は二つの方式（COLI、DD）で別々に求めた。}
+\label{tab:af6tools}
+\begin{tabular}{rccccc}
+\toprule
+$\sqrt s/m$ & LoopTools & COLI：実部 & COLI：虚部 & DD：実部 & DD：虚部 \\
+\midrule
+30.1 & $2.1\times10^{-14}$ & $2.9\times10^{-14}$ & $2.6\times10^{-11}$ & $2.3\times10^{-13}$ & $4.0\times10^{-12}$ \\
+158 & $6.9\times10^{-15}$ & $1.1\times10^{-14}$ & $8.3\times10^{-8}$ & $1.3\times10^{-11}$ & $4.4\times10^{-9}$ \\
+362 & $1.9\times10^{-14}$ & $1.8\times10^{-14}$ & $5.1\times10^{-7}$ & $1.3\times10^{-11}$ & $4.6\times10^{-8}$ \\
+831 & $8.2\times10^{-15}$ & $1.5\times10^{-14}$ & $7.0\times10^{-5}$ & $5.9\times10^{-12}$ & $9.6\times10^{-11}$ \\
+1257 & $2.4\times10^{-14}$ & $6.2\times10^{-14}$ & $1.4\times10^{-4}$ & $0.89$ & $60$ \\
+4363 & $6.1\times10^{-14}$ & $5.4\times10^{-14}$ & $1.8\times10^{-2}$ & $0.89$ & $71$ \\
+$10^4$ & $1.3\times10^{-14}$ & $2.1\times10^{-14}$ & $0.44$ & $0.89$ & $79$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.6\linewidth]{../figs/af6_d6.pdf}
+\caption{$d=6$ の90°散乱（$m_{\mathrm p}=1$）。上：1ループの係数。実線は $\mu=m$ の $c(s;m)$、点線は傾き $-\frac{11}{6}$ の漸近線、破線は外線の留数を除いた $\mu=\sqrt s$ の $c_G(s;\sqrt s)$ である。下：$\alpha(m)=0.1$ での有効結合（式~\eqref{eq:aeff}）。破線は固定次数、一点鎖線は $g(\sqrt s)$ だけを使ったもの、実線は外線の因子も含めた式~\eqref{eq:af}、点線は $\alpha(\sqrt s)$ である。値は Package-X の解析式（30桁）による。}
+\label{fig:af6}
+\end{figure}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$\phi\phi\to\phi\phi$ については、on-shell の処方との関係を式~\eqref{eq:Mphys} と\ref{app:lsz} で求めた。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。
 
 \paragraph{タドポールの扱い。}本ノートでは、$Y$ でタドポールを打ち消す方法をとった。これは1ループでは、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除くことと同じである。2ループ以上では、ループの内側にタドポールが付いた図も $Y$ の高次の項で消えるので、同じ除き方で済むかどうかを確かめる必要がある。
 
-\paragraph{LoopTools の $C_0$。}手順 (3) で見つかった LoopTools の $C_0$ の誤りは、コンパイラの版や最適化によらない。そのため、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。この誤りは $C_{00}$ を通して $d=6$ の $C_0^{(6)}$ にも現れた。当面、$C_0$ と $C_{00}$ には Package-X と COLLIER を使い、LoopTools は $A_0$、$B_0$ と、それから作る $A_{00}$、$B_{00}$ にだけ使う。ただし、手順 (5) に現れた $C_0(m^2,m^2,x)$（$x<0$ または $x>4m^2$）と $D_0$（物理的な点）は、LoopTools でも正しかった。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。
+\paragraph{LoopTools の $C_0$。}手順 (3) で見つかった LoopTools の $C_0$ の誤りは、コンパイラの版や最適化によらない。そのため、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。この誤りは $C_{00}$ を通して $d=6$ の $C_0^{(6)}$ にも現れた。当面、$C_0$ と $C_{00}$ には Package-X と COLLIER を使い、LoopTools は $A_0$、$B_0$ と、それから作る $A_{00}$、$B_{00}$ にだけ使う。ただし、手順 (5) に現れた $C_0(m^2,m^2,x)$（$x<0$ または $x>4m^2$）と $D_0$（物理的な点）は、LoopTools でも正しかった。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。手順 (10) では、誤った $C_0^{(6)}$ の $\mu$ 依存は正しかった。
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(10) はすべて終わった。次の候補は三つある。一つ目は、$d=4$ の2ループの自己エネルギーを計算し、1ループの対抗項の挿入だけで有限になることを確かめることである。これは、$d=4$ の繰り込み群の流れが全次数で正しいという\ref{app:rg} の主張を直接確かめる。二つ目は、手順 (7) で見つかった、$\sqrt s=10m$ の $2\to3$ での MadGraph の $0.8\%$ のずれの原因を調べることである。三つ目は2ループで、環境の記録で保留したツール（Kira、FIRE、pySecDec など）を入れる必要がある。
+\paragraph{COLLIER の高エネルギーの箱図。}手順 (11) で、COLLIER の箱図は $s\gg m^2$ で精度を失った（表~\ref{tab:af6tools}）。既定の方式 COLI では虚部だけが徐々にずれ、DD は $\sqrt s\gtrsim10^3m$ で全く誤った値を返した。手順 (5)〜(10) の点は $\sqrt s\le10m$ で、そこでは COLLIER は正しい。COLLIER には精度の目安を返す関数（\texttt{GetAccFlag\_cll} など）があるが、今回は使っていない。高エネルギーや質量の比が大きい計算では、LoopTools か Package-X の高精度の値で確かめる必要がある。
+
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(11) はすべて終わった。次の候補は三つある。一つ目は、$d=4$ の2ループの自己エネルギーを計算し、1ループの対抗項の挿入だけで有限になることを確かめることである。これは、$d=4$ の繰り込み群の流れが全次数で正しいという\ref{app:rg} の主張を直接確かめる。二つ目は、手順 (7) で見つかった、$\sqrt s=10m$ の $2\to3$ での MadGraph の $0.8\%$ のずれの原因を調べることである。三つ目は2ループで、環境の記録で保留したツール（Kira、FIRE、pySecDec など）を入れる必要がある。
 
 \appendix
 
@@ -1324,6 +1374,30 @@ Y=\mathcal{M}^{(1)}+(R^2-1)\,\mathcal{M}^{(0)}=\mathcal{M}^{(1)}+\frac{g^4}{(4\p
 \paragraph{RG 関数と対抗項。}$\delta_i=c_i\Delta_{\mathrm{UV}}$ と書く。$c_Z$、$c_m$ は $g^2$ に、$c_g$ は $g^3$ に比例するので、$\beta_\epsilon=-\epsilon g$ を使うと $\dd c_Z/\dd\ln\mu=-2\epsilon c_Z$ などとなる。\ref{app:ren} と同じ計算を一般の係数で行うと、1ループで次の関係を得る（$\epsilon\Delta_{\mathrm{UV}}\to1$）。まず $\gamma_\phi=\frac12\,\dd\delta_Z/\dd\ln\mu=-c_Z$ である。次に $m_0^2=(m^2+\delta_m)(1-\delta_Z)=m^2+(c_m-m^2c_Z)\Delta_{\mathrm{UV}}$ が $\mu$ によらないことから $\gamma=2(c_m-m^2c_Z)$ である。最後に $g_0\mu^{-\epsilon}=g+(c_g-\frac32gc_Z)\Delta_{\mathrm{UV}}$ から $\beta=2(c_g-\frac32gc_Z)$ である。式~\eqref{eq:ct6} では $c_Z=-\frac{g^2}{12K}$、$c_m-m^2c_Z=-\frac{5g^2m^2}{12K}$、$c_g-\frac32gc_Z=-\frac{3g^3}{8K}$ なので、上の三つの値が出る。この関係は線形で逆に解けるので、三つの RG 関数が分かれば $c_Z$、$c_m$、$c_g$ は一意に決まる。
 
 \paragraph{文献との対応。}文献~\cite{bgks} は $d=6-\epsilon_{\mathrm B}$ で $g_0=g\mu^{\epsilon_{\mathrm B}/2}Z_g$ と書くので、$\epsilon_{\mathrm B}=2\epsilon$ で、同論文の $\beta=-\frac{\epsilon_{\mathrm B}}2g+\cdots$ の第1項は本ノートの $\beta_\epsilon=-\epsilon g$ と同じである。同論文の $\phi_0=Z_\phi\phi$ は本ノートの $Z_\phi=Z^{1/2}$ にあたるので、$\gamma_\phi$ の定義は同じである。$m_0^2=m^2Z_{m^2}$ と $m_0$ が $\mu$ によらないことから、$\mu\,\dd\ln m^2/\dd\mu=-\gamma_{m^2}$ である。Lee--Yang 型の理論は $g_0\to ig_0$（繰り込まれた結合も $g_{\mathrm{LY}}=ig$）で得られる。実の結合の理論で $\beta=b\,g^3$、$\gamma=c\,g^2$ とすると、$\mu\,\dd g_{\mathrm{LY}}/\dd\mu=i\beta=ib(-ig_{\mathrm{LY}})^3=-b\,g_{\mathrm{LY}}^3$、$c\,g^2=c(-ig_{\mathrm{LY}})^2=-c\,g_{\mathrm{LY}}^2$ である。同論文の Lee--Yang 型の値 $-b=\frac34$、$-c_\phi=-\frac1{12}$、$-c_{m^2}=-\frac56$ から、実の結合では $b=-\frac34$、$c_\phi=\frac1{12}$、$c_{m^2}=\frac56$ となる。同論文の $g$ を $g/(4\pi)^{3/2}$ と読むと、$\beta=-\frac{3g^3}{4K}$、$\gamma_\phi=\frac{g^2}{12K}$、$\mu\,\dd m^2/\dd\mu=-\frac{5g^2m^2}{6K}$ を得る。
+
+\section{高エネルギーの散乱と繰り込み群の導出}\label{app:af}
+
+\paragraph{有効結合と1ループの係数。}$K\equiv(4\pi)^3$、$\alpha\equiv g^2/K$ とし、極質量を $m$ と書く。\ref{app:scat6} より $\mathcal{M}_{\mathrm{phys}}=g^2\hat{\mathcal M}^{(0)}+\mathcal{M}^{(1)}_{\mathrm{phys}}+O(g^6)$ なので、式~\eqref{eq:aeff} は $\alpha_{\mathrm{eff}}=\alpha(\mu)+\alpha(\mu)^2c(s;\mu)+O(\alpha^3)$ を与える。式~\eqref{eq:rg6} の第1式は $\mu\,\partial\mathcal{M}^{(1)}_{\mathrm{phys}}/\partial\mu=\frac{3g^4}{2K}\hat{\mathcal M}^{(0)}$ と書けるので、$\mu\,\partial c/\partial\mu=\frac32$、すなわち $c(s;\mu)=c(s;m)+\frac32\ln(\mu/m)$ である。$\dd\alpha/\dd\ln\mu=2g\beta/K=-\frac32\alpha^2$ なので、$\alpha_{\mathrm{eff}}$ は $O(\alpha^2)$ まで $\mu$ によらない。
+
+\paragraph{外線の留数。}\ref{app:lsz} より $\mathcal{M}_{\mathrm{phys}}=R^2\,G$ で、$G$ は外線を切り離した振幅（内線の質量を極質量で書き直したもの）である。$R^2=1+2\Sigma'(m^2)=1-\alpha B_0^{(6)\prime}(m^2)$ を木に掛けた項 $(R^2-1)g^2\hat{\mathcal M}^{(0)}$ が、$c$ の中の $c_R\equiv-B_0^{(6)\prime}(m^2)$ である。残りを $c_G\equiv c-c_R$ と書く。式~\eqref{eq:B06m} の $B_0^{(6)\prime}(m^2)=\frac{17}{18}-\frac{\pi}{2\sqrt3}+\frac13\ln\frac\mu m$ から $\mu\,\partial c_R/\partial\mu=-\frac13$、したがって $\mu\,\partial c_G/\partial\mu=\frac32+\frac13=\frac{11}{6}$ である。$R^2$ の $\mu$ 依存は $\dd\ln R^2/\dd\ln\mu=-\frac\alpha3=-4\gamma_\phi$ で、手順 (10) の場の異常次元に一致する（繰り込まれた場の留数は $Z^{-1}$ に比例する）。
+
+\paragraph{$G$ に大きな対数がないこと。}$\mu=\sqrt s$ とし、角度を固定して $s\to\infty$ とする。$G$ の各項は、$m\to0$ の極限が有限で $1/s$ に比例するか、$m^2/s$ だけ小さい。箱図 $D_0^{(6)}=\int\dd F\,\Delta^{-1}$ は、$m\to0$ で $\Delta=-sx_1x_3-tx_2x_4-i0$ となる。被積分関数は単体の上で可積分なので極限は有限で、$1/s$ に角度の関数を掛けた形になる。三角形の $C_0^{(6)}(m^2,m^2,x)=\int\dd F\ln(\Delta/\mu^2)$ では、$m\to0$ で $\Delta\to-xx_ix_j$ となる。対数は可積分なので、$C_0^{(6)}$ は $\ln(-x/\mu^2)$ と定数の和に近づく。内線の自己エネルギー $B_0^{(6)}(x)/(x-m^2)^2$ は $\frac x6\ln(-x/\mu^2)/x^2$ のように振る舞う。内線の質量の書き直しの項 $B_0^{(6)}(m^2)/(x-m^2)^2$ は $m^2/x^2$ に比例する。よって $\mu=\sqrt s$ では $s\,G$ は角度だけの関数に近づき、$c_G(s;\sqrt s)$ は定数に近づく。$\ln(m^2/\mu^2)$ が残るのは、$p^2=m^2$ で決まる $R^2$ だけである。これを合わせると
+\begin{equation*}
+c(s;m)=c_G(s;\sqrt s)+c_R(\sqrt s)-\frac32\ln\frac{\sqrt s}{m}\simeq c_G(\infty)-\Bigl(\frac{17}{18}-\frac{\pi}{2\sqrt3}\Bigr)-\frac{11}{6}\ln\frac{\sqrt s}{m}
+\end{equation*}
+となる。傾き $-\frac{11}{6}$ のうち $-\frac32$ は $\beta$ から、$-\frac13$ は外線4本の $\gamma_\phi$ から来る。
+
+\paragraph{繰り込み群による改良。}$\mathcal{M}_{\mathrm{phys}}=R(\mu)^2G(\mu)$ で $\mu=\sqrt s$ とする。$G(\sqrt s)$ には大きな対数がないので、1ループの展開 $G/(K\hat{\mathcal M}^{(0)})=\alpha(\sqrt s)+\alpha(\sqrt s)^2c_G(s;\sqrt s)$ が使える。$R(\sqrt s)^2$ は、$\mu=m$ の値（大きな対数を含まない）から $\dd\ln R^2/\dd\ln\mu=-\alpha(\mu)/3$ を積分して得る。式~\eqref{eq:af} の $\alpha(\mu)$ について $\int_m^{\sqrt s}\alpha\,\dd\ln\mu=\frac23\ln\bigl(1+\frac32\alpha(m)\ln\frac{\sqrt s}m\bigr)=\frac23\ln\frac{\alpha(m)}{\alpha(\sqrt s)}$ なので
+\begin{equation*}
+R(\sqrt s)^2=R(m)^2\exp\Bigl[-\frac13\cdot\frac23\ln\frac{\alpha(m)}{\alpha(\sqrt s)}\Bigr]=R(m)^2\Bigl(\frac{\alpha(\sqrt s)}{\alpha(m)}\Bigr)^{2/9},\qquad R(m)^2=1-\alpha(m)\,B_0^{(6)\prime}(m^2)\big|_{\mu=m}
+\end{equation*}
+である。両者を掛けて式~\eqref{eq:af} を得る。これは $\beta$ と $\gamma_\phi$ の1ループの値で $\alpha^n\ln^n$ の項をすべて足し上げ、1ループの定数 $c_G$ を含めたものである。次の $\alpha^{n+1}\ln^n$ の項には、2ループの $\beta$ と $\gamma_\phi$ が要る。
+
+\paragraph{固定次数との一致。}$\ell\equiv\ln(\sqrt s/m)$ とする。$\alpha(\sqrt s)=\alpha(m)[1-\frac32\alpha(m)\ell]+O(\alpha^3)$、$(\alpha(\sqrt s)/\alpha(m))^{2/9}=1-\frac13\alpha(m)\ell+O(\alpha^2)$、$c_G(s;\sqrt s)=c_G(s;m)+\frac{11}6\ell$ を式~\eqref{eq:af} に入れると
+\begin{equation*}
+\alpha_{\mathrm{eff}}=\alpha(m)\Bigl[1-\alpha(m)B_0^{(6)\prime}(m^2)-\frac{11}{6}\alpha(m)\ell+\alpha(m)\Bigl(c_G(s;m)+\frac{11}{6}\ell\Bigr)\Bigr]+O(\alpha^3)=\alpha(m)+\alpha(m)^2c(s;m)+O(\alpha^3)
+\end{equation*}
+となる（$\mu=m$ で $c=c_G-B_0^{(6)\prime}$）。固定次数の $\alpha_{\mathrm{eff}}=\alpha(m)[1+\alpha(m)c(s;m)]$ は、上の漸近形で $\frac{11}{6}\ell=1/\alpha(m)+c_G(\infty)-0.038$ となるところで0を横切る。$\alpha(m)=0.1$、$c_G(\infty)\approx4.95$ では $\ell\approx8.1$、すなわち $\sqrt s\approx3.4\times10^3m$ である。
 
 \begin{thebibliography}{9}
 \small
