@@ -1,8 +1,8 @@
 #!/bin/bash
 # Tree-level check of phi phi -> phi phi (research note, step (2)).
-#   1. FeynArts + FeynCalc amplitude vs Eq. (11), symbolically     (tree_feyncalc.wl)
+#   1. FeynArts + FeynCalc amplitude vs Eq. (16) (eq:Mtree), symbolically     (tree_feyncalc.wl)
 #   2. MadGraph cross sections at sqrt(s) = 2.5, 5, 10              (tree_mg5.mg5)
-#   3. numerical integration of |Eq. (11)|^2 and comparison         (tree_sigma.py)
+#   3. numerical integration of |Eq. (16) (eq:Mtree)|^2 and comparison         (tree_sigma.py)
 # Needs Src/generated/ (run generate_Phi3.wl first).  MadGraph output goes to Src/work/.
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"

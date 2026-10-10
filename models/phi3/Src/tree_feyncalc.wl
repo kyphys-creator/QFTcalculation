@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* tree_feyncalc.wl -- tree-level phi phi -> phi phi with FeynArts + FeynCalc
-   (research note, step (2): compare with Eq. (11), M = -g^2 [1/(s-m^2)+1/(t-m^2)+1/(u-m^2)]).
+   (research note, step (2): compare with Eq. (16) (eq:Mtree), M = -g^2 [1/(s-m^2)+1/(t-m^2)+1/(u-m^2)]).
 
    Usage:  wolframscript -file tree_feyncalc.wl     (run generate_Phi3.wl first)
    Uses the FeynArts model in Src/generated/Phi3_FA.  A copy is patched with FAPatch in a
@@ -38,7 +38,7 @@ SetMandelstam[s, t, u, p1, p2, -k1, -k2, m, m, m, m];
 mTreeFC$ = Simplify[FeynAmpDenominatorExplicit[Total[ampTree$]]];
 Print["M (FeynCalc) = ", InputForm[mTreeFC$]];
 
-(* ---------- comparison with the note, Eq. (11) ---------- *)
+(* ---------- comparison with the note, Eq. (16) (eq:Mtree) ---------- *)
 mTreeNote$ = -gphi^2 (1/(s - m^2) + 1/(t - m^2) + 1/(u - m^2));
 Print["M(FeynCalc) - M(note, Eq. 11) = ", Simplify[mTreeFC$ - mTreeNote$], "   (expect 0)"];
 

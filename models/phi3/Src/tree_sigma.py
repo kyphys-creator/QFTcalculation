@@ -1,4 +1,4 @@
-"""Tree-level sigma(phi phi -> phi phi) from Eq. (11) of the research note, for comparison
+"""Tree-level sigma(phi phi -> phi phi) from Eq. (16) (eq:Mtree) of the research note, for comparison
 with MadGraph (step (2) of the plan).
 
   M = -g^2 [1/(s-m^2) + 1/(t-m^2) + 1/(u-m^2)],   m = g = 1 (GeV units in MadGraph)
