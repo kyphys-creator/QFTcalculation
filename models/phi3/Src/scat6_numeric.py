@@ -1,32 +1,48 @@
-"""One-loop phi phi -> phi phi in d = 6: comparison, unitarity and beta function (research note, step (8)).
+# %% [markdown]
+# # Step (8): d = 6 one-loop phi phi -> phi phi: comparison, unitarity and the beta function
+#
+# One-loop phi phi -> phi phi in d = 6: comparison, unitarity and beta function (research note, step (8)).
+#
+# M1 (MS-bar, note Eq. (22) (eq:M6); m = g = 1) from FeynCalc + Package-X, FeynCalc + LoopTools (results/scat6_feyncalc.csv)
+# and COLLIER (results/scat6_collier*.csv) at the six points of step (5) for mu = 1, 1/2, 2.
+#   Re M1: COLLIER is the reference.
+#   Im M1: s-channel unitarity with the d = 6 two-body phase space (note, App. L),
+#       Im M1(s, t) = (1/4) (2 pi)^-4 p^3/(4 sqrt(s)) * 4 pi int_0^pi sin^3(a) da int_0^pi sin^2(b) db M0(s, t1) M0(s, t2),
+#       t1 = -2 p^2 (1 - cos a),  t2 = -2 p^2 (1 - cos(theta) cos a - sin(theta) sin a cos b).
+#   beta function: the S-matrix element in terms of the pole mass m_p and the MS-bar coupling g(mu),
+#       M_phys = M0 + M1_phys,  M1_phys = M1 + 1/(2(4pi)^3) sum_x [2 B0^(6)'(m^2)/(x - m^2) - B0^(6)(m^2)/(x - m^2)^2],
+#       with B0^(6)(m^2) = m^2 (-17/9 + pi/(2 sqrt 3) + (5/6) L) and B0^(6)'(m^2) = 17/18 - pi/(2 sqrt 3) - L/6,
+#       L = ln(m^2/mu^2) (from Eq. (13)), must not depend on mu:  beta = (d M1_phys/d ln mu) / (2 g sum_x 1/(x - m^2)),
+#       to be compared with Eq. (14), beta = -3 g^3/(4 (4 pi)^3).
+# Writes results/scat6_comparison.csv, ../figs/scat6_d6.pdf (same layout as scat4_d4.pdf) and
+# ../figs/scat6_rg_d6.pdf (mu-dependence of the S-matrix element).
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python scat6_numeric.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-M1 (MS-bar, note Eq. (22) (eq:M6); m = g = 1) from FeynCalc + Package-X, FeynCalc + LoopTools (results/scat6_feyncalc.csv)
-and COLLIER (results/scat6_collier*.csv) at the six points of step (5) for mu = 1, 1/2, 2.
-  Re M1: COLLIER is the reference.
-  Im M1: s-channel unitarity with the d = 6 two-body phase space (note, App. L),
-      Im M1(s, t) = (1/4) (2 pi)^-4 p^3/(4 sqrt(s)) * 4 pi int_0^pi sin^3(a) da int_0^pi sin^2(b) db M0(s, t1) M0(s, t2),
-      t1 = -2 p^2 (1 - cos a),  t2 = -2 p^2 (1 - cos(theta) cos a - sin(theta) sin a cos b).
-  beta function: the S-matrix element in terms of the pole mass m_p and the MS-bar coupling g(mu),
-      M_phys = M0 + M1_phys,  M1_phys = M1 + 1/(2(4pi)^3) sum_x [2 B0^(6)'(m^2)/(x - m^2) - B0^(6)(m^2)/(x - m^2)^2],
-      with B0^(6)(m^2) = m^2 (-17/9 + pi/(2 sqrt 3) + (5/6) L) and B0^(6)'(m^2) = 17/18 - pi/(2 sqrt 3) - L/6,
-      L = ln(m^2/mu^2) (from Eq. (13)), must not depend on mu:  beta = (d M1_phys/d ln mu) / (2 g sum_x 1/(x - m^2)),
-      to be compared with Eq. (14), beta = -3 g^3/(4 (4 pi)^3).
-Writes results/scat6_comparison.csv, ../figs/scat6_d6.pdf (same layout as scat4_d4.pdf) and
-../figs/scat6_rg_d6.pdf (mu-dependence of the S-matrix element).
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python scat6_numeric.py
-"""
+# %%
 import csv
 import math
 import os
+import sys
 
 import mpmath as mp
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 K6 = (4 * math.pi) ** 3
 BETA = -3 / (4 * K6)
 TOL = 1e-9     # Package-X's numerical D0 limits it to ~1e-10 where Re M1 is a cancellation of larger terms
 
 
+# %% [markdown]
+# ## Tree amplitude, the S-matrix conversion (Eq. (23)) and closed forms
+
+# %%
 def tree(s, t):
     u = 4 - s - t
     return -(1 / (s - 1) + 1 / (t - 1) + 1 / (u - 1))
@@ -62,6 +78,7 @@ def b06_closed(p2, mu2=1):
     return -1 + p2 / 9 + mp.log(1 / mp.mpf(mu2)) / 3 - mp.mpf(2) / 3 * (1 - p2 / 4) * b0_closed(p2, mu2)
 
 
+# %%
 # the closed forms used in the conversion, against Eq. (13)
 with mp.workdps(30):
     for mu in (0.5, 1.0, 2.0):
@@ -70,6 +87,10 @@ with mp.workdps(30):
 print("B0^(6)(m^2) and B0^(6)'(m^2) used in the conversion agree with Eq. (13): ok")
 
 
+# %% [markdown]
+# ## The d = 6 unitarity integral and the optical theorem
+
+# %%
 def im_unitarity(s, cth, dps=20):
     with mp.workdps(dps):
         s, cth = mp.mpf(s), mp.mpf(cth)
@@ -116,10 +137,19 @@ def read(path, cols):
     return out
 
 
+# %% [markdown]
+# ## The tool values
+
+# %%
 fc = read(os.path.join(HERE, "results", "scat6_feyncalc.csv"), ["packagex", "looptools"])
 co = read(os.path.join(HERE, "results", "scat6_collier.csv"), ["collier"])
 tools = ("packagex", "looptools", "collier")
 
+
+# %% [markdown]
+# ## Comparison at the six points
+
+# %%
 rows = []
 print(f"\n{'sqrt(s)':>7} {'cos':>4} {'mu':>4} {'Re M1 (COLLIER)':>22} {'Im M1 (unitarity)':>22} | Re: PX LT | Im: PX LT COLLIER")
 imref = {}
@@ -137,6 +167,11 @@ for key in sorted(fc):
     rows.append([rs, cth, mu, v["s"], v["t"], tree(v["s"], v["t"]), re_ref, im_ref,
                  *(x for k in tools for x in (v[k].real, v[k].imag, dre[k], dim[k]))])
 
+
+# %% [markdown]
+# ## beta from the mu-dependence of the S-matrix element
+
+# %%
 print("\nbeta function from the mu-dependence of M1_phys (mu = 1/2 and 2), expected beta = -3/(4 (4 pi)^3) = %.10e:" % BETA)
 betas = []
 for rs in (2.5, 5.0, 10.0):
@@ -158,6 +193,8 @@ for rs in (2.5, 5.0, 10.0):
 maxdev = max(abs(b / BETA - 1) for *_, b in betas)
 print(f"  max relative deviation from Eq. (14): {maxdev:.1e}")
 
+
+# %%
 with open(os.path.join(HERE, "results", "scat6_comparison.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["sqrts", "costheta", "mu", "s", "t", "tree", "re_ref_collier", "im_ref_unitarity",
@@ -168,9 +205,15 @@ with open(os.path.join(HERE, "results", "scat6_comparison.csv"), "w", newline=""
     for rs, cth, k, b in betas:
         w.writerow([rs, cth, k, b, BETA])
 
+
+# %% [markdown]
+# ## Figures
+
+# %%
 # ---------------- figures ----------------
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker
 import numpy as np
@@ -206,6 +249,8 @@ ax2.legend(loc="upper left", ncol=2)
 ax1.set_title(r"$d=6$, $\sqrt{s}=5m$, $\mu=m$", fontsize=8)
 fig.savefig(os.path.join(figdir, "scat6_d6.pdf"))
 
+
+# %%
 # (2) mu-dependence of the S-matrix element at sqrt(s) = 5, cos(theta) = 0.3
 musc = read(os.path.join(HERE, "results", "scat6_collier_muscan.csv"), ["collier"])
 mus = np.array(sorted(k[2] for k in musc))

@@ -1,20 +1,32 @@
 (* ::Package:: *)
 
-(* scat6_feyncalc.wl -- one-loop phi phi -> phi phi in d = 6 (research note, step (8)).
+(* ::Title:: *)
+(*Step (8): one-loop phi phi -> phi phi in d = 6 (dimension shift, Package-X and LoopTools)*)
 
-   (a) The FeynArts amplitude is the same as in d = 4 (12 diagrams, scat4_feyncalc.wl):
-         A = I Pi^2 g^4 [ D0(s,t) + D0(s,u) + D0(t,u) + sum_x ( 2 C0(x)/(x - m^2) + B0(x)/(2 (x - m^2)^2) ) ],
-       with the PaVe functions now read in D = 6 - 2 Epsilon; M = -I A/(2 Pi)^D.
-   (b) Through the dimension shift PaVe^(D+2) = -2 Pi PaVe_00^(D) (note, App. H), Package-X evaluates the
-       D = 6 - 2 Epsilon functions as -2 Pi times D00, C00, B00 in D = 4 - 2 Epsilon.  The MS-bar
-       counterterms of Eq. (8) enter the tree-like diagrams: on each internal line g^2 (deltaZ x - deltam)/(x - m^2)^2
-       and at each of the two vertices -g deltag/(x - m^2).  The poles cancel, and the MS-bar amplitude equals
-         M1 = g^4/(4 Pi)^3 [ sum D0^(6) + sum_x ( 2 C0^(6)(x)/(x - m^2) + B0^(6)(x)/(2 (x - m^2)^2) ) ]   (Eq. (22) (eq:M6))
-       with the d = 6 MS-bar finite parts X_N of Eq. (12) (D0^(6) = int dF/Delta for the finite box).
-   (c) M1 at the six points of step (5) for mu = 1, 1/2, 2 (m = g = 1) with Package-X (D0, C0 from its
-       numerical functions) and LoopTools -> Src/results/scat6_feyncalc.csv.
 
-   Usage:  wolframscript -file scat6_feyncalc.wl      (run generate_Phi3.wl first) *)
+(* ::Text:: *)
+(*(a) The FeynArts amplitude is the same as in d = 4 (12 diagrams, scat4_feyncalc.wl):*)
+(*      A = I Pi^2 g^4 [ D0(s,t) + D0(s,u) + D0(t,u) + sum_x ( 2 C0(x)/(x - m^2) + B0(x)/(2 (x - m^2)^2) ) ],*)
+(*    with the PaVe functions now read in D = 6 - 2 Epsilon; M = -I A/(2 Pi)^D.*)
+(*(b) Through the dimension shift PaVe^(D+2) = -2 Pi PaVe_00^(D) (note, App. H), Package-X evaluates the*)
+(*    D = 6 - 2 Epsilon functions as -2 Pi times D00, C00, B00 in D = 4 - 2 Epsilon.  The MS-bar*)
+(*    counterterms of Eq. (8) enter the tree-like diagrams: on each internal line g^2 (deltaZ x - deltam)/(x - m^2)^2*)
+(*    and at each of the two vertices -g deltag/(x - m^2).  The poles cancel, and the MS-bar amplitude equals*)
+(*      M1 = g^4/(4 Pi)^3 [ sum D0^(6) + sum_x ( 2 C0^(6)(x)/(x - m^2) + B0^(6)(x)/(2 (x - m^2)^2) ) ]   (Eq. (22) (eq:M6))*)
+(*    with the d = 6 MS-bar finite parts X_N of Eq. (12) (D0^(6) = int dF/Delta for the finite box).*)
+(*(c) M1 at the six points of step (5) for mu = 1, 1/2, 2 (m = g = 1) with Package-X (D0, C0 from its*)
+(*    numerical functions) and LoopTools -> Src/results/scat6_feyncalc.csv.*)
+(**)
+(*Usage:  wolframscript -file scat6_feyncalc.wl      (run generate_Phi3.wl first)*)
+
+
+(* ::Text:: *)
+(*How to run.  Batch:  wolframscript -file scat6_feyncalc.wl.  Interactive:  ~/hep/bin/wopen scat6_feyncalc.wl, then "Run All Code" or Shift+Return cell by cell; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]) and show intermediate objects without changing anything.*)
+
+
+(* ::Section:: *)
+(*Setup*)
+
 
 $FeynCalcStartupMessages = False;
 $LoadAddOns = {"FeynArtsLoader", "FeynHelpers"};
@@ -25,13 +37,21 @@ srcDirS6$ = Which[
    $Notebooks, NotebookDirectory[],
    True, Directory[]];
 
-(* ---------- patched copy of the FeynRules-generated FeynArts model ---------- *)
+
+(* ::Section:: *)
+(*patched copy of the FeynRules-generated FeynArts model*)
+
+
 modelTmpDirS6$ = CreateDirectory[];
 CopyDirectory[FileNameJoin[{srcDirS6$, "generated", "Phi3_FA"}], FileNameJoin[{modelTmpDirS6$, "Phi3_FA"}]];
 FAPatch[PatchModelsOnly -> True, FAModelsDirectory -> FileNameJoin[{modelTmpDirS6$, "Phi3_FA"}], Quiet -> True];
 modelS6$ = FileNameJoin[{modelTmpDirS6$, "Phi3_FA", "Phi3_FA"}];
 
-(* ---------- (a) diagrams and amplitude ---------- *)
+
+(* ::Section:: *)
+(*(a) diagrams and amplitude*)
+
+
 diagsS6$ = InsertFields[CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}],
    {S[1], S[1]} -> {S[1], S[1]}, InsertionLevel -> {Particles}, Model -> modelS6$, GenericModel -> modelS6$];
 Print["(a) number of diagrams (expect 12): ", Length[CreateFeynAmp[diagsS6$]]];
@@ -47,7 +67,29 @@ handS6$ = I Pi^2 gphi^4 (d0[Sort[{s, t}]] + d0[Sort[{s, u}]] + d0[Sort[{t, u}]] 
     Sum[2 c0[x]/(x - m^2) + b0[x]/(2 (x - m^2)^2), {x, {s, t, u}}]);
 Print["(a) A - I Pi^2 g^4 [same form as Eq. (17)] = ", Simplify[(ampS6$ /. canonS6$) - handS6$], "  (expect 0)"];
 
-(* ---------- (b) dimension shift, poles, MS-bar counterterms ---------- *)
+
+(* ::Subsubsection:: *)
+(*Inspect: the 12 diagrams (the same as in d = 4)*)
+
+
+If[$Notebooks,
+  Show[#, ImageSize -> 560] & /@ Render[Paint[diagsS6$, ColumnsXRows -> {4, 3}, Numbering -> Simple, DisplayFunction -> Identity]]
+]
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the amplitude collected by integral (PaVe functions read in D = 6 - 2 Epsilon)*)
+
+
+If[$Notebooks,
+  Collect[ampS6$ /. canonS6$, {_d0, _c0, _b0}, Simplify] // TraditionalForm
+]
+
+
+(* ::Section:: *)
+(*(b) dimension shift, poles, MS-bar counterterms*)
+
+
 k6S6$ = (4 Pi)^3;
 dUVS6$ = 1/Epsilon - EulerGamma + Log[4 Pi];
 shiftS6$ = {d0[{a_, b_}] :> -2 Pi PaVe[0, 0, {m^2, m^2, m^2, m^2, a, b}, {m^2, m^2, m^2, m^2}],
@@ -73,7 +115,29 @@ logRulesS6$ = {Log[4 Pi] -> 2 Log[2] + Log[Pi], Log[2 Pi] -> Log[2] + Log[Pi]};
 Print["(b) MS-bar M - Eq. (22) (eq:M6) with the X_N of Eq. (12) = ", Simplify[(mMSS6$ - formulaS6$) /. logRulesS6$], "  (expect 0)"];
 (* the tadpole-free check of the B0^(6) closed form of Eq. (13) is in oneloop6_feyncalc.wl *)
 
-(* ---------- (c) numerical values ---------- *)
+
+(* ::Subsubsection:: *)
+(*Inspect: the counterterms of Eq. (8) and their insertion into the tree diagrams*)
+
+
+If[$Notebooks,
+  TableForm[{{"deltaZ", TraditionalForm[dZS6$]}, {"deltam", TraditionalForm[dmS6$]}, {"deltag", TraditionalForm[dgS6$]}, {"M_CT", TraditionalForm[mCTS6$]}}]
+]
+
+
+(* ::Subsubsection:: *)
+(*Inspect: Eq. (22) written with the X_N of Eq. (12)*)
+
+
+If[$Notebooks,
+  formulaS6$ // Short[#, 6] &
+]
+
+
+(* ::Section:: *)
+(*(c) numerical values*)
+
+
 pointsS6$ = Flatten[Table[Module[{ss = rs^2, p2}, p2 = ss/4 - 1;
      {rs, ct, ss, -2 p2 (1 - ct), -2 p2 (1 + ct)}], {rs, {5/2, 5, 10}}, {ct, {3/10, 9/10}}], 1];
 musS6$ = {1, 1/2, 2};
@@ -104,6 +168,24 @@ Export[FileNameJoin[{resultsDirS6$, "scat6_feyncalc.csv"}], StringRiffle[csvLine
 Print["(c) wrote ", Length[rowsS6$], " rows to results/scat6_feyncalc.csv"];
 Print["(c) M1 at mu = 1 (Package-X) = ", Select[rowsS6$, #[[6]] == 1 &][[All, 7]]];
 Print["(c) M1 at mu = 1 (LoopTools) = ", Select[rowsS6$, #[[6]] == 1 &][[All, 8]]];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the values at the six points for mu = 1, 1/2, 2*)
+
+
+If[$Notebooks,
+  TableForm[{N[#[[1]]], N[#[[2]]], N[#[[6]]], NumberForm[#[[7]], 10], NumberForm[#[[8]], 10]} & /@ rowsS6$, TableHeadings -> {None, {"sqrt(s)", "cos", "mu", "M1 (Package-X)", "M1 (LoopTools)"}}]
+]
+
+
+(* ::Section:: *)
+(*Cleanup*)
+
+
+(* ::Text:: *)
+(*Skip this cell while you are still inspecting: it releases libraries and temporary files.*)
+
 
 LToolsUnLoadLibrary[];
 DeleteDirectory[modelTmpDirS6$, DeleteContents -> True];

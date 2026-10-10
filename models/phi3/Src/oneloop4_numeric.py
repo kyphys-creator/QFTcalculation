@@ -1,28 +1,44 @@
-"""d = 4 one-loop check, finite parts (research note, step (3)).
+# %% [markdown]
+# # Step (3): d = 4 one-loop finite parts against closed forms and the optical theorem
+#
+# d = 4 one-loop check, finite parts (research note, step (3)).
+#
+# Reference values: MS-bar finite parts at m = mu = 1 (DeltaUV = 1/eps - gamma_E + ln 4 pi subtracted;
+# the same as LoopTools' Delta = 0 and COLLIER's Delta_UV = 0):
+#   A0 = m^2 (1 - ln m^2/mu^2) = 1
+#   B0(p^2) closed form (Appendix G of the note), cross-checked by the Feynman-parameter integral
+#       B0 = - int_0^1 dx ln(m^2 - x(1-x) p^2 - i0)
+#   C0 below threshold: C0 = - int dF 1/Delta,  Delta = m^2 - x1 x2 p1^2 - x2 x3 p2^2 - x1 x3 p3^2
+#   (above threshold only the tools are compared with each other).
+# Optical theorem: Im B0 = pi beta for p^2 > 4 m^2, beta = sqrt(1 - 4 m^2/p^2).
+#
+# Reads results/oneloop4_mathematica.csv (Package-X, LoopTools) and results/oneloop4_collier.csv,
+# writes results/oneloop4_comparison.csv and ../figs/b0_d4.pdf.
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python oneloop4_numeric.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-Reference values: MS-bar finite parts at m = mu = 1 (DeltaUV = 1/eps - gamma_E + ln 4 pi subtracted;
-the same as LoopTools' Delta = 0 and COLLIER's Delta_UV = 0):
-  A0 = m^2 (1 - ln m^2/mu^2) = 1
-  B0(p^2) closed form (Appendix G of the note), cross-checked by the Feynman-parameter integral
-      B0 = - int_0^1 dx ln(m^2 - x(1-x) p^2 - i0)
-  C0 below threshold: C0 = - int dF 1/Delta,  Delta = m^2 - x1 x2 p1^2 - x2 x3 p2^2 - x1 x3 p3^2
-  (above threshold only the tools are compared with each other).
-Optical theorem: Im B0 = pi beta for p^2 > 4 m^2, beta = sqrt(1 - 4 m^2/p^2).
-
-Reads results/oneloop4_mathematica.csv (Package-X, LoopTools) and results/oneloop4_collier.csv,
-writes results/oneloop4_comparison.csv and ../figs/b0_d4.pdf.
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python oneloop4_numeric.py
-"""
+# %%
 import csv
 import os
+import sys
 
 import mpmath as mp
 
 mp.mp.dps = 30
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 TOL = 1e-10          # relative agreement required (double-precision tools)
 
 
+# %% [markdown]
+# ## Reference values: closed forms and Feynman-parameter integrals
+
+# %%
 def b0_closed(p2, m2=1, mu2=1):
     p2, m2, mu2 = mp.mpf(p2), mp.mpf(m2), mp.mpf(mu2)
     base = 2 - mp.log(m2 / mu2)
@@ -73,9 +89,20 @@ def read(path, cols):
     return out
 
 
+# %% [markdown]
+# ## The tool values
+# Package-X and LoopTools through FeynCalc (oneloop4_feyncalc.wl), COLLIER (oneloop4_collier.f90).
+
+# %%
 mma = read(os.path.join(HERE, "results", "oneloop4_mathematica.csv"), ["packagex", "looptools"])
 col = read(os.path.join(HERE, "results", "oneloop4_collier.csv"), ["collier"])
 
+
+# %% [markdown]
+# ## Comparison with the reference values
+# Relative deviations; LoopTools' C0 below threshold is wrong (step (3)).
+
+# %%
 rows = []
 closed_vs_feyn = []
 print(f"{'func':4} {'args':>18} {'reference':>34} {'src':>9} | rel. deviation  PX  LT  COLLIER")
@@ -109,6 +136,11 @@ for key in mma:
                  *(x for k in ("packagex", "looptools", "collier") for x in (vals[k].real, vals[k].imag, dev[k]))])
 
 print(f"\nB0 closed form vs Feynman-parameter integral: max rel. difference {max(closed_vs_feyn):.1e}")
+
+# %% [markdown]
+# ## Optical theorem: Im B0 = pi beta above threshold
+
+# %%
 # optical theorem: Im B0 = pi beta above threshold
 print("\noptical theorem, p^2 > 4 m^2:  Im B0 / (pi beta) for Package-X, LoopTools, COLLIER")
 for key in mma:
@@ -118,6 +150,8 @@ for key in mma:
         v = dict(mma[key], **col[key])
         print(f"  p^2 = {a1:5}: {v['packagex'].imag / pib:.15f} {v['looptools'].imag / pib:.15f} {v['collier'].imag / pib:.15f}")
 
+
+# %%
 with open(os.path.join(HERE, "results", "oneloop4_comparison.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["func", "arg1", "arg2", "arg3", "reference_source", "re_ref", "im_ref",
@@ -125,9 +159,15 @@ with open(os.path.join(HERE, "results", "oneloop4_comparison.csv"), "w", newline
                 "re_collier", "im_collier", "reldev_collier"])
     w.writerows(rows)
 
+
+# %% [markdown]
+# ## Figure: Re and Im of B0(p^2; m, m)
+
+# %%
 # ---------------- figure: Re and Im of B0(p^2; m, m) ----------------
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 

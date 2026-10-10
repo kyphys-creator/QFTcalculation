@@ -1,30 +1,46 @@
-"""d = 6 one-loop check, finite parts (research note, step (4)).
+# %% [markdown]
+# # Step (4): d = 6 one-loop finite parts against closed forms and the optical theorem
+#
+# d = 6 one-loop check, finite parts (research note, step (4)).
+#
+# MS-bar finite parts X_N of the D = 6 - 2 eps scalar integrals,
+#     mu^(2 eps) I_N = i/(4 pi)^3 [c_N DeltaUV + X_N],   DeltaUV = 1/eps - gamma_E + ln 4 pi,
+# at m = mu = 1 (note, App. H):
+#   A0^(6) = -(m^4/2) (3/2 - ln m^2/mu^2) = -3/4
+#   B0^(6)(p^2) = -(m^2 - p^2/6) + int_0^1 dx Delta ln(Delta - i0)/mu^2,   Delta = m^2 - x(1-x) p^2
+#               = -m^2 + p^2/9 + (m^2/3) ln(m^2/mu^2) - (2/3)(m^2 - p^2/4) B0(p^2)   (closed form,
+#                 with the d = 4 MS-bar B0 of App. G)
+#   C0^(6) = int dF ln(Delta/mu^2)  (below threshold; above threshold only the tools are compared).
+# Optical theorem: Im B0^(6) = pi p^2 beta^3 / 6 for p^2 > 4 m^2.
+#
+# Reads results/oneloop6_mathematica.csv (Package-X, LoopTools via the dimension shift) and
+# results/oneloop6_collier.csv, writes results/oneloop6_comparison.csv and ../figs/b0_d6.pdf.
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python oneloop6_numeric.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-MS-bar finite parts X_N of the D = 6 - 2 eps scalar integrals,
-    mu^(2 eps) I_N = i/(4 pi)^3 [c_N DeltaUV + X_N],   DeltaUV = 1/eps - gamma_E + ln 4 pi,
-at m = mu = 1 (note, App. H):
-  A0^(6) = -(m^4/2) (3/2 - ln m^2/mu^2) = -3/4
-  B0^(6)(p^2) = -(m^2 - p^2/6) + int_0^1 dx Delta ln(Delta - i0)/mu^2,   Delta = m^2 - x(1-x) p^2
-              = -m^2 + p^2/9 + (m^2/3) ln(m^2/mu^2) - (2/3)(m^2 - p^2/4) B0(p^2)   (closed form,
-                with the d = 4 MS-bar B0 of App. G)
-  C0^(6) = int dF ln(Delta/mu^2)  (below threshold; above threshold only the tools are compared).
-Optical theorem: Im B0^(6) = pi p^2 beta^3 / 6 for p^2 > 4 m^2.
-
-Reads results/oneloop6_mathematica.csv (Package-X, LoopTools via the dimension shift) and
-results/oneloop6_collier.csv, writes results/oneloop6_comparison.csv and ../figs/b0_d6.pdf.
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python oneloop6_numeric.py
-"""
+# %%
 import csv
 import math
 import os
+import sys
 
 import mpmath as mp
 
 mp.mp.dps = 30
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 TOL = 1e-10          # agreement required (double-precision tools)
 
 
+# %% [markdown]
+# ## Reference values: closed forms (App. H) and Feynman-parameter integrals
+
+# %%
 def b0_closed(p2, m2=1, mu2=1):
     """d = 4 MS-bar B0(p^2; m, m) (App. G of the note; same as in oneloop4_numeric.py)."""
     p2, m2, mu2 = mp.mpf(p2), mp.mpf(m2), mp.mpf(mu2)
@@ -80,9 +96,19 @@ def read(path, cols):
     return out
 
 
+# %% [markdown]
+# ## The tool values
+# Package-X and LoopTools through the dimension shift (oneloop6_feyncalc.wl), COLLIER (oneloop6_collier.f90).
+
+# %%
 mma = read(os.path.join(HERE, "results", "oneloop6_mathematica.csv"), ["packagex", "looptools"])
 col = read(os.path.join(HERE, "results", "oneloop6_collier.csv"), ["collier"])
 
+
+# %% [markdown]
+# ## Comparison with the reference values
+
+# %%
 rows = []
 closed_vs_feyn = []
 print(f"{'func':4} {'args':>18} {'reference':>34} {'src':>9} | deviation  PX  LT  COLLIER")
@@ -115,6 +141,11 @@ for key in mma:
                  *(x for k in ("packagex", "looptools", "collier") for x in (vals[k].real, vals[k].imag, dev[k]))])
 
 print(f"\nB0^(6) closed form vs Feynman-parameter integral: max rel. difference {max(closed_vs_feyn):.1e}")
+
+# %% [markdown]
+# ## Optical theorem: Im B0^(6) = pi p^2 beta^3 / 6 above threshold
+
+# %%
 print("\noptical theorem, p^2 > 4 m^2:  Im B0^(6) / (pi p^2 beta^3 / 6) for Package-X, LoopTools, COLLIER")
 for key in mma:
     func, a1 = key[0], key[1]
@@ -124,6 +155,8 @@ for key in mma:
         print(f"  p^2 = {a1:5}: {v['packagex'].imag / expect:.15f} {v['looptools'].imag / expect:.15f} "
               f"{v['collier'].imag / expect:.15f}")
 
+
+# %%
 with open(os.path.join(HERE, "results", "oneloop6_comparison.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["func", "arg1", "arg2", "arg3", "reference_source", "re_ref", "im_ref",
@@ -131,9 +164,15 @@ with open(os.path.join(HERE, "results", "oneloop6_comparison.csv"), "w", newline
                 "re_collier", "im_collier", "dev_collier"])
     w.writerows(rows)
 
+
+# %% [markdown]
+# ## Figure: Re and Im of B0^(6)(p^2; m, m)
+
+# %%
 # ---------------- figure: Re and Im of B0^(6)(p^2; m, m) ----------------
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 

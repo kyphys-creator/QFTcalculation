@@ -1,28 +1,45 @@
-"""RG flow of the dimensionless parameters in d = 4 and d = 6 (research note, step (9), figs/rgflow.pdf).
+# %% [markdown]
+# # Step (9): RG flow of the dimensionless parameters in d = 4 and d = 6
+#
+# RG flow of the dimensionless parameters in d = 4 and d = 6 (research note, step (9), figs/rgflow.pdf).
+#
+# With t = ln(mu), the loop-expansion parameter a and y = m^2/mu^2 (m: MS-bar mass, g: MS-bar coupling) obey
+#     d = 4:  a = g^2/((4pi)^2 mu^2):  da/dt = -2 a,       dy/dt = c4 a - 2 y,        c4 = (4pi)^2 gamma/g^2
+#     d = 6:  a = g^2/(4pi)^3:         da/dt = b6 a^2,     dy/dt = (c6 a - 2) y,      b6 = 2 (4pi)^3 beta/g^3,
+#                                                                                     c6 = (4pi)^3 gamma/(g^2 m^2)
+# (note, App. M), gamma = mu dm^2/dmu and beta = mu dg/dmu.  The coefficients are built from the COLLIER fits of
+# step (9) (results/rg4_comparison.csv, rg4_numeric.py) and compared with the note's c4 = 1, b6 = -3/2, c6 = -5/6.
+# Exact trajectories (checked against the flow equations below):
+#     d = 4:  a = a0 e^{-2t},              y = e^{-2t} (y0 + c4 a0 t)
+#     d = 6:  a = a0 / (1 - b6 a0 t),      y = y0 e^{-2t} (1 - b6 a0 t)^{-c6/b6}
+# Arrows point toward the infrared (decreasing mu).  The star is the reference point of the note (m = g = 1 at mu = m).
+# Writes ../figs/rgflow.pdf.
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python rgflow.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-With t = ln(mu), the loop-expansion parameter a and y = m^2/mu^2 (m: MS-bar mass, g: MS-bar coupling) obey
-    d = 4:  a = g^2/((4pi)^2 mu^2):  da/dt = -2 a,       dy/dt = c4 a - 2 y,        c4 = (4pi)^2 gamma/g^2
-    d = 6:  a = g^2/(4pi)^3:         da/dt = b6 a^2,     dy/dt = (c6 a - 2) y,      b6 = 2 (4pi)^3 beta/g^3,
-                                                                                    c6 = (4pi)^3 gamma/(g^2 m^2)
-(note, App. M), gamma = mu dm^2/dmu and beta = mu dg/dmu.  The coefficients are built from the COLLIER fits of
-step (9) (results/rg4_comparison.csv, rg4_numeric.py) and compared with the note's c4 = 1, b6 = -3/2, c6 = -5/6.
-Exact trajectories (checked against the flow equations below):
-    d = 4:  a = a0 e^{-2t},              y = e^{-2t} (y0 + c4 a0 t)
-    d = 6:  a = a0 / (1 - b6 a0 t),      y = y0 e^{-2t} (1 - b6 a0 t)^{-c6/b6}
-Arrows point toward the infrared (decreasing mu).  The star is the reference point of the note (m = g = 1 at mu = m).
-Writes ../figs/rgflow.pdf.
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python rgflow.py
-"""
+# %%
 import csv
 import math
 import os
+import sys
 
 import numpy as np
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 K4 = (4 * math.pi) ** 2
 K6 = (4 * math.pi) ** 3
 
+
+# %% [markdown]
+# ## The flow coefficients from the step (9) fits
+
+# %%
 # the coefficients from the step (9) fits (COLLIER, m = g = 1)
 fits = {}
 with open(os.path.join(HERE, "results", "rg4_comparison.csv")) as fh:
@@ -39,6 +56,10 @@ for name, val, ref in (("c4", c4, 1.0), ("b6", b6, -1.5), ("c6", c6, -5 / 6)):
     assert abs(val / ref - 1) < 1e-13
 
 
+# %% [markdown]
+# ## Flow equations and exact trajectories
+
+# %%
 def flow4(a, y):
     return -2 * a, c4 * a - 2 * y
 
@@ -55,6 +76,7 @@ def traj6(a0, y0, t):
     return a0 / (1 - b6 * a0 * t), y0 * np.exp(-2 * t) * (1 - b6 * a0 * t) ** (-c6 / b6)
 
 
+# %%
 # the exact trajectories satisfy the flow equations (central differences)
 for traj, flow in ((traj4, flow4), (traj6, flow6)):
     for a0, y0 in ((0.3, 0.5), (0.7, -0.4), (1 / K4, 1.0)):
@@ -65,8 +87,14 @@ for traj, flow in ((traj4, flow4), (traj6, flow6)):
             assert abs((ap - am) / (2 * h) - fa) < 1e-8 and abs((yp - ym) / (2 * h) - fy) < 1e-8
 print("exact trajectories satisfy the flow equations: ok")
 
+
+# %% [markdown]
+# ## Figure
+
+# %%
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))

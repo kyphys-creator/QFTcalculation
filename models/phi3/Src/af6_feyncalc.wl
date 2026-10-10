@@ -1,18 +1,31 @@
 (* ::Package:: *)
 
-(* af6_feyncalc.wl -- one-loop phi phi -> phi phi in d = 6 at high energies with Package-X's analytic C0 and D0,
-   for asymptotic freedom in scattering (research note, step (11)).
+(* ::Title:: *)
+(*Step (11): one-loop phi phi -> phi phi in d = 6 at high energies (Package-X analytic C0, D0)*)
 
-   M1 (MS-bar, note Eq. (22) (eq:M6); m = g = 1) is assembled from the d = 6 finite parts X_N = -2 T00 (note, App. H)
-   of B00, C00, D00 in D = 4 - 2 Epsilon.  T00 is the MS-bar (LoopTools/COLLIER) value: FeynCalc's PaVe is normalized
-   with d^D q/(I Pi^2), so T = P_0 + (EulerGamma + Log[Pi]) P_{-1} from its Laurent coefficients (note, Sec. 4).  With PaXC0Expand/PaXD0Expand -> True the C0 and D0 inside are
-   explicit logarithms and dilogarithms, which are evaluated with 30 digits: COLLIER's box loses precision at s >> m^2
-   (note, step (11)), so these values are the reference.  LoopTools (machine precision) is evaluated as a third tool.
-   90-degree scattering at sqrt(s) = 2.5 * 4000^(k/40), k = 0 ... 64 (sqrt(s) = 2.5 ... 1.45e6), mu = 1 and mu = sqrt(s);
-   LoopTools for k <= 40; plus sqrt(s) = 5, cos(theta) = 0.3, mu = 1 (step (8) regression).
-   -> Src/results/af6_feyncalc.csv
 
-   Usage:  wolframscript -file af6_feyncalc.wl *)
+(* ::Text:: *)
+(*for asymptotic freedom in scattering (research note, step (11)).*)
+(**)
+(*M1 (MS-bar, note Eq. (22) (eq:M6); m = g = 1) is assembled from the d = 6 finite parts X_N = -2 T00 (note, App. H)*)
+(*of B00, C00, D00 in D = 4 - 2 Epsilon.  T00 is the MS-bar (LoopTools/COLLIER) value: FeynCalc's PaVe is normalized*)
+(*with d^D q/(I Pi^2), so T = P_0 + (EulerGamma + Log[Pi]) P_{-1} from its Laurent coefficients (note, Sec. 4).  With PaXC0Expand/PaXD0Expand -> True the C0 and D0 inside are*)
+(*explicit logarithms and dilogarithms, which are evaluated with 30 digits: COLLIER's box loses precision at s >> m^2*)
+(*(note, step (11)), so these values are the reference.  LoopTools (machine precision) is evaluated as a third tool.*)
+(*90-degree scattering at sqrt(s) = 2.5 * 4000^(k/40), k = 0 ... 64 (sqrt(s) = 2.5 ... 1.45e6), mu = 1 and mu = sqrt(s);*)
+(*LoopTools for k <= 40; plus sqrt(s) = 5, cos(theta) = 0.3, mu = 1 (step (8) regression).*)
+(*-> Src/results/af6_feyncalc.csv*)
+(**)
+(*Usage:  wolframscript -file af6_feyncalc.wl*)
+
+
+(* ::Text:: *)
+(*How to run.  Batch:  wolframscript -file af6_feyncalc.wl.  Interactive:  ~/hep/bin/wopen af6_feyncalc.wl, then "Run All Code" or Shift+Return cell by cell; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]) and show intermediate objects without changing anything.*)
+
+
+(* ::Section:: *)
+(*Setup*)
+
 
 $FeynCalcStartupMessages = False;
 $LoadAddOns = {"FeynHelpers"};
@@ -22,6 +35,11 @@ srcDirAF$ = Which[
    StringQ[$InputFileName] && $InputFileName =!= "", DirectoryName[$InputFileName],
    $Notebooks, NotebookDirectory[],
    True, Directory[]];
+
+
+(* ::Section:: *)
+(*(a) the d = 6 finite parts B0^(6), C0^(6), D0^(6) with analytic C0 and D0*)
+
 
 finAF$[expr_] := SeriesCoefficient[expr, {Epsilon, 0, 0}] + (EulerGamma + Log[Pi]) SeriesCoefficient[expr, {Epsilon, 0, -1}];
 (* the d = 6 MS-bar finite parts as functions of the invariants and mu (X_N = -2 T00) *)
@@ -34,6 +52,21 @@ Print["(a) mu d/dmu of B0^(6), C0^(6), D0^(6) (note: -2 (1 - x/6), -1, 0): ",
 
 Print["(a) B0^(6)(1), C0^(6)(1,1,1), C0^(6)(1,1,5) at mu = 1 (step (10): -0.9819892067718, -0.1455982473842, -0.5746357444754 - 0.1597522094015 I): ",
   N[{b06AF$ /. {x -> 1, mu -> 1}, Normal[c06AF$] /. {x -> 1, mu -> 1}, Normal[c06AF$] /. {x -> 5, mu -> 1}}, 13]];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the analytic D0^(6)(x, y) (logarithms and dilogarithms, shortened)*)
+
+
+If[$Notebooks,
+  Short[Normal[d06AF$], 8]
+]
+
+
+(* ::Section:: *)
+(*(b) the one-loop amplitude at high energies (Package-X at 30 digits, LoopTools)*)
+
+
 kAF$ = (4 Pi)^3;
 amp1AF$[ss_, tt_, muv_] := Module[{uu = 4 - ss - tt, xs, val},
    xs = {ss, tt, uu};
@@ -61,6 +94,16 @@ Module[{st = kin$[5, 3/10]},
 Print["(b) all Package-X values numeric: ", And @@ (NumericQ[#[[5]]] & /@ rows$),
   ";  smallest precision ", Min[Precision[#[[5]]] & /@ rows$]];
 
+
+(* ::Subsubsection:: *)
+(*Inspect: s Re M1 in 90-degree scattering at mu = m (logarithmic growth) and mu = sqrt(s)*)
+
+
+If[$Notebooks,
+  ListLogLinearPlot[{Cases[rows$, {k_ /; k >= 0, rs_, 0, 1, px_, _} :> {N[rs], N[rs^2 Re[px]]}], Cases[rows$, {k_ /; k >= 0, rs_, 0, muv_ /; muv =!= 1, px_, _} :> {N[rs], N[rs^2 Re[px]]}]}, Joined -> True, PlotLegends -> {"mu = m", "mu = sqrt(s)"}, AxesLabel -> {"sqrt(s)/m", "s Re M1"}, ImageSize -> 480]
+]
+
+
 num$[x_] := If[x === Indeterminate, "nan", ToString[NumberForm[N[x, 20], 20, NumberFormat -> (Row[{#1, If[#3 === "", "", "e" <> #3]}] &)]]];
 csv$ = Prepend[StringRiffle[{ToString[#[[1]]], num$[#[[2]]], num$[#[[3]]], num$[#[[4]]], num$[Re[#[[5]]]], num$[Im[#[[5]]]],
        If[#[[6]] === Indeterminate, "nan", num$[Re[#[[6]]]]], If[#[[6]] === Indeterminate, "nan", num$[Im[#[[6]]]]]}, ","] & /@ rows$,
@@ -68,4 +111,14 @@ csv$ = Prepend[StringRiffle[{ToString[#[[1]]], num$[#[[2]]], num$[#[[3]]], num$[
 Quiet[CreateDirectory[FileNameJoin[{srcDirAF$, "results"}]]];
 Export[FileNameJoin[{srcDirAF$, "results", "af6_feyncalc.csv"}], StringRiffle[csv$, "\n"] <> "\n", "Text"];
 Print["(b) wrote ", Length[rows$], " rows to results/af6_feyncalc.csv"];
+
+
+(* ::Section:: *)
+(*Cleanup*)
+
+
+(* ::Text:: *)
+(*Skip this cell while you are still inspecting: it releases libraries and temporary files.*)
+
+
 LToolsUnLoadLibrary[];

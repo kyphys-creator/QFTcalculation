@@ -1,34 +1,46 @@
-"""Renormalization group of the one-loop phi phi -> phi phi amplitude in d = 4 and d = 6 (research note, step (9)).
+# %% [markdown]
+# # Step (9): renormalization group from the mu-dependence of phi phi -> phi phi (d = 4 and d = 6)
+#
+# Renormalization group of the one-loop phi phi -> phi phi amplitude in d = 4 and d = 6 (research note, step (9)).
+#
+# d = 4: M1 (MS-bar, note Eq. (17) (eq:M1); m = g = 1) from FeynCalc + Package-X, FeynCalc + LoopTools (results/rg4_feyncalc.csv),
+# COLLIER (results/rg4_collier*.csv) and MadLoop with the pole-only MS-bar counterterms (work/ml_MSbar, built by
+# run_madloop_check.sh; M1 = finite/M0) at the six points of step (5) for mu = 1, 1/2, 2.
+# d = 6: M1 (Eq. (22) (eq:M6)) from results/scat6_feyncalc.csv and results/scat6_collier.csv (step (8)).
+#
+# The S-matrix element, written with a mass parameter m (MS-bar m(mu) or pole m_p) and the MS-bar coupling g(mu),
+#     M = M0(m, g) + Y(mu),   Y = M1 + (conversion to the S-matrix element, note Eq. (20) (eq:Mphys), Apps. J, L),
+# must not depend on mu (note Eq. (27) (eq:rgfit), App. M).  With A = sum_x 1/(x - m^2)^2, B = sum_x 1/(x - m^2),
+# dM0/dm^2 = -g^2 A and dM0/dg = -2 g B,
+#     mu dY/dmu = g^2 A gamma + 2 g B beta,   gamma = mu dm^2/dmu,   beta = mu dg/dmu.
+# The slope S = [Y(2) - Y(1/2)] / (2 ln 2) at the six points determines (gamma, beta) by least squares.  Y:
+#     d = 4, MS-bar m:  Y = M1 + (1/(4pi)^2) sum_x B0'(m^2)/(x - m^2)          (the residue; mu-independent)
+#                       expected gamma = g^2/(4pi)^2 (Eq. (15)), beta = 0;
+#     d = 4, pole m:    Y = M1_phys of Eq. (20)                                 expected gamma = beta = 0;
+#     d = 6, pole m:    Y = M1_phys (App. L)                                    expected gamma = 0, beta = -3 g^3/(4 (4pi)^3) (Eq. (14));
+#     d = 6, MS-bar m:  Y = M1 + (1/(4pi)^3) sum_x B0^(6)'(m^2)/(x - m^2)
+#                       expected gamma = -5 g^2 m^2/(6 (4pi)^3) (App. D), beta = -3 g^3/(4 (4pi)^3).
+# Writes results/rg4_comparison.csv and ../figs/rg4_d4.pdf (the same layout as figs/scat6_rg_d6.pdf).
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python rg4_numeric.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-d = 4: M1 (MS-bar, note Eq. (17) (eq:M1); m = g = 1) from FeynCalc + Package-X, FeynCalc + LoopTools (results/rg4_feyncalc.csv),
-COLLIER (results/rg4_collier*.csv) and MadLoop with the pole-only MS-bar counterterms (work/ml_MSbar, built by
-run_madloop_check.sh; M1 = finite/M0) at the six points of step (5) for mu = 1, 1/2, 2.
-d = 6: M1 (Eq. (22) (eq:M6)) from results/scat6_feyncalc.csv and results/scat6_collier.csv (step (8)).
-
-The S-matrix element, written with a mass parameter m (MS-bar m(mu) or pole m_p) and the MS-bar coupling g(mu),
-    M = M0(m, g) + Y(mu),   Y = M1 + (conversion to the S-matrix element, note Eq. (20) (eq:Mphys), Apps. J, L),
-must not depend on mu (note Eq. (27) (eq:rgfit), App. M).  With A = sum_x 1/(x - m^2)^2, B = sum_x 1/(x - m^2),
-dM0/dm^2 = -g^2 A and dM0/dg = -2 g B,
-    mu dY/dmu = g^2 A gamma + 2 g B beta,   gamma = mu dm^2/dmu,   beta = mu dg/dmu.
-The slope S = [Y(2) - Y(1/2)] / (2 ln 2) at the six points determines (gamma, beta) by least squares.  Y:
-    d = 4, MS-bar m:  Y = M1 + (1/(4pi)^2) sum_x B0'(m^2)/(x - m^2)          (the residue; mu-independent)
-                      expected gamma = g^2/(4pi)^2 (Eq. (15)), beta = 0;
-    d = 4, pole m:    Y = M1_phys of Eq. (20)                                 expected gamma = beta = 0;
-    d = 6, pole m:    Y = M1_phys (App. L)                                    expected gamma = 0, beta = -3 g^3/(4 (4pi)^3) (Eq. (14));
-    d = 6, MS-bar m:  Y = M1 + (1/(4pi)^3) sum_x B0^(6)'(m^2)/(x - m^2)
-                      expected gamma = -5 g^2 m^2/(6 (4pi)^3) (App. D), beta = -3 g^3/(4 (4pi)^3).
-Writes results/rg4_comparison.csv and ../figs/rg4_d4.pdf (the same layout as figs/scat6_rg_d6.pdf).
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python rg4_numeric.py
-"""
+# %%
 import csv
 import math
 import os
+import sys
 import re
 import subprocess
 
 import numpy as np
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 K4 = (4 * math.pi) ** 2
 K6 = (4 * math.pi) ** 3
 B0PM = 2 * math.pi / (3 * math.sqrt(3)) - 1          # m^2 B0'(m^2), mu-independent
@@ -37,6 +49,10 @@ MUS = (0.5, 1.0, 2.0)
 POINTS = [(rs, ct) for rs in (2.5, 5.0, 10.0) for ct in (0.3, 0.9)]
 
 
+# %% [markdown]
+# ## Helper functions: tree, the sums A and B, conversions, MadLoop runs
+
+# %%
 def tree(s, t):
     u = 4 - s - t
     return -(1 / (s - 1) + 1 / (t - 1) + 1 / (u - 1))
@@ -105,6 +121,10 @@ def run_madloop(rs, ct, mu):
     return float(re.search(r"Matrix element finite\s*=\s*(\S+)", out).group(1))
 
 
+# %% [markdown]
+# ## d = 4: the tools at mu = 1/2, 1, 2 (MadLoop included)
+
+# %%
 # ---------------- d = 4: the tools at mu = 1/2, 1, 2 ----------------
 fc = read(os.path.join(HERE, "results", "rg4_feyncalc.csv"), ["packagex", "looptools"])
 co = read(os.path.join(HERE, "results", "rg4_collier.csv"), ["collier"])
@@ -133,12 +153,22 @@ for key in sorted(d4):
     rows.append([rs, ct, mu, v["s"], v["t"], tree(v["s"], v["t"]), re_ref, v["collier"].imag,
                  *(v[k].real for k in tools4), *(dre[k] for k in tools4)])
 
+
+# %% [markdown]
+# ## d = 6: the values of step (8)
+
+# %%
 # ---------------- d = 6: step (8) ----------------
 fc6 = read(os.path.join(HERE, "results", "scat6_feyncalc.csv"), ["packagex", "looptools"])
 co6 = read(os.path.join(HERE, "results", "scat6_collier.csv"), ["collier"])
 d6 = {key: {**fc6[key], **co6[key]} for key in fc6}
 tools6 = ("packagex", "looptools", "collier")
 
+
+# %% [markdown]
+# ## Slopes in ln(mu) and the two-parameter fits (Eq. (27))
+
+# %%
 # ---------------- slopes and the two-parameter fits ----------------
 CASES = [
     # name, data, tools, Y(v, s, t, mu, tool), expected gamma, expected beta
@@ -175,6 +205,8 @@ for name, data, tools, yfun, g_exp, b_exp in CASES:
               f"fit residual {res:.0e},  linearity in ln mu {lin:.0e}")
         fit_rows.append([name, k, gam, bet, g_exp, b_exp, dg, db, res, lin])
 
+
+# %%
 with open(os.path.join(HERE, "results", "rg4_comparison.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["sqrts", "costheta", "mu", "s", "t", "tree", "re_ref_collier", "im_collier",
@@ -188,9 +220,15 @@ with open(os.path.join(HERE, "results", "rg4_comparison.csv"), "w", newline="") 
                 "fit_residual", "linearity"])
     w.writerows(fit_rows)
 
+
+# %% [markdown]
+# ## Figure: the S-matrix element with m fixed and with m(mu) running
+
+# %%
 # ---------------- figure: the same layout as figs/scat6_rg_d6.pdf ----------------
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker
 

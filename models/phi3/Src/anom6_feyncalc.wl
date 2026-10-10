@@ -1,15 +1,28 @@
 (* ::Package:: *)
 
-(* anom6_feyncalc.wl -- d = 6 renormalized 1PI two- and three-point functions at several mu, for the
-   field anomalous dimension (research note, step (10)).
+(* ::Title:: *)
+(*Step (10): d = 6 renormalized two- and three-point functions at several mu (field anomalous dimension)*)
 
-   The FeynArts self-energy and vertex amplitudes are read in D = 6 - 2 Epsilon through the dimension shift
-   PaVe^(D+2) = -2 Pi PaVe_00^(D) (as in oneloop6_feyncalc.wl), and the MS-bar finite parts
-     B0^(6)(p^2) and C0^(6)(p1^2, p2^2, p3^2)     (note, Eqs. (11)-(12): V_2 = I g^2 B0^(6)/(2K), V_3 = I g^3 C0^(6)/K)
-   are evaluated with Package-X and LoopTools at m = 1 and mu = 1, 1/2, 2 -> Src/results/anom6_feyncalc.csv.
-   LoopTools' C00 inherits its C0 error below threshold (note, step (3)); its C0^(6) values are written as a record only.
 
-   Usage:  wolframscript -file anom6_feyncalc.wl      (run generate_Phi3.wl first) *)
+(* ::Text:: *)
+(*field anomalous dimension (research note, step (10)).*)
+(**)
+(*The FeynArts self-energy and vertex amplitudes are read in D = 6 - 2 Epsilon through the dimension shift*)
+(*PaVe^(D+2) = -2 Pi PaVe_00^(D) (as in oneloop6_feyncalc.wl), and the MS-bar finite parts*)
+(*  B0^(6)(p^2) and C0^(6)(p1^2, p2^2, p3^2)     (note, Eqs. (11)-(12): V_2 = I g^2 B0^(6)/(2K), V_3 = I g^3 C0^(6)/K)*)
+(*are evaluated with Package-X and LoopTools at m = 1 and mu = 1, 1/2, 2 -> Src/results/anom6_feyncalc.csv.*)
+(*LoopTools' C00 inherits its C0 error below threshold (note, step (3)); its C0^(6) values are written as a record only.*)
+(**)
+(*Usage:  wolframscript -file anom6_feyncalc.wl      (run generate_Phi3.wl first)*)
+
+
+(* ::Text:: *)
+(*How to run.  Batch:  wolframscript -file anom6_feyncalc.wl.  Interactive:  ~/hep/bin/wopen anom6_feyncalc.wl, then "Run All Code" or Shift+Return cell by cell; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]) and show intermediate objects without changing anything.*)
+
+
+(* ::Section:: *)
+(*Setup*)
+
 
 $FeynCalcStartupMessages = False;
 $LoadAddOns = {"FeynArtsLoader", "FeynHelpers"};
@@ -25,6 +38,11 @@ CopyDirectory[FileNameJoin[{srcDirA6$, "generated", "Phi3_FA"}], FileNameJoin[{m
 FAPatch[PatchModelsOnly -> True, FAModelsDirectory -> FileNameJoin[{modelTmpDirA6$, "Phi3_FA"}], Quiet -> True];
 modelA6$ = FileNameJoin[{modelTmpDirA6$, "Phi3_FA", "Phi3_FA"}];
 insertA6$[tops_, proc_] := InsertFields[tops, proc, InsertionLevel -> {Particles}, Model -> modelA6$, GenericModel -> modelA6$];
+
+(* ::Section:: *)
+(*(a) self-energy and vertex amplitudes*)
+
+
 diagSEA6$  = insertA6$[CreateTopologies[1, 1 -> 1, ExcludeTopologies -> {Tadpoles}], {S[1]} -> {S[1]}];
 diagVtxA6$ = insertA6$[CreateTopologies[1, 1 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}], {S[1]} -> {S[1], S[1]}];
 ampA6$[diags_, in_, out_] := FCE[TID[FCFAConvert[CreateFeynAmp[diags, Truncated -> True, PreFactor -> 1],
@@ -34,6 +52,20 @@ ampSEA6$  = ampA6$[diagSEA6$, {p}, {p}];
 ampVtxA6$ = ampA6$[diagVtxA6$, {p}, {k1, k2}];
 Print["(a) self-energy and vertex amplitudes (expect I Pi^2 gphi^2/2 B0, I Pi^2 gphi^3 C0): ",
   InputForm /@ {ampSEA6$, ampVtxA6$}];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the self-energy and vertex diagrams*)
+
+
+If[$Notebooks,
+  Row[Flatten[Show[#, ImageSize -> 200] & /@ Render[Paint[#, ColumnsXRows -> 1, Numbering -> Simple, DisplayFunction -> Identity]] & /@ {diagSEA6$, diagVtxA6$}], "    "]
+]
+
+
+(* ::Section:: *)
+(*(b) the MS-bar finite parts B0^(6), C0^(6) and their mu-dependence*)
+
 
 kA6$ = (4 Pi)^3;
 shiftA6$ = {B0[s_, a_, b_] :> -2 Pi PaVe[0, 0, {s}, {a, b}],
@@ -59,9 +91,24 @@ pxC06A6$[inv_, muv_] := Chop[N[(msbar6A6$[PaXEvaluate[vtxAtA6$ @@ inv /. shiftA6
 Print["(b) Package-X: mu d C0^(6)/d mu at (1,1,1) (note: -1) = ",
   Chop[(pxC06A6$[{1, 1, 1}, 1 + 10^-6] - pxC06A6$[{1, 1, 1}, 1 - 10^-6])/(Log[1 + 10^-6] - Log[1 - 10^-6]), 10^-8]];
 
+
+(* ::Subsubsection:: *)
+(*Inspect: B0^(6) and its mu-dependence; the p^2 term of mu dB0^(6)/dmu gives gamma_phi (step (10))*)
+
+
+If[$Notebooks,
+  TableForm[{{"B0^(6)(p^2 = psq)", TraditionalForm[b06PXA6$]}, {"mu dB0^(6)/dmu", TraditionalForm[Simplify[mu D[b06PXA6$, mu]]]}}]
+]
+
+
 (* LoopTools *)
 ltA6$[n_, amp_, muv_] := Module[{v = Chop[msbar6A6$[LToolsEvaluate[amp /. shiftA6$, LToolsSetMudim -> muv^2]][[2]]/normA6$[[n]]]},
    If[NumericQ[v], v, Indeterminate]];
+
+
+(* ::Section:: *)
+(*(c) values at mu = 1, 1/2, 2 with Package-X and LoopTools*)
+
 
 p2ListA6$ = {-5, -1, 0, 1, 2, 3, 5, 8};
 invListA6$ = {{0, 0, 0}, {1, 1, 1}, {1, 1, 7/2}, {1, 1, 5}};
@@ -71,6 +118,16 @@ rowsA6$ = Join[
    Flatten[Table[{"C06", Sequence @@ inv, muv, pxC06A6$[inv, muv], ltA6$[2, vtxAtA6$ @@ inv, muv]},
      {muv, {1, 1/2, 2}}, {inv, invListA6$}], 1]];
 
+
+(* ::Subsubsection:: *)
+(*Inspect: the values (LoopTools C0^(6) below threshold is wrong, its mu-dependence is right)*)
+
+
+If[$Notebooks,
+  TableForm[{#[[1]], N[#[[2]]], N[#[[3]]], N[#[[4]]], N[#[[5]]], NumberForm[#[[6]], 10], If[#[[7]] === Indeterminate, "NaN", NumberForm[#[[7]], 10]]} & /@ rowsA6$, TableHeadings -> {None, {"X", "arg1", "arg2", "arg3", "mu", "Package-X", "LoopTools"}}]
+]
+
+
 numStrA6$[x_] := If[x === Indeterminate, "nan", ToString[CForm[N[x]]]];
 csvA6$ = Prepend[
    StringRiffle[Join[{#[[1]]}, numStrA6$ /@ {#[[2]], #[[3]], #[[4]], #[[5]], Re[#[[6]]], Im[#[[6]]],
@@ -79,6 +136,15 @@ csvA6$ = Prepend[
 Quiet[CreateDirectory[FileNameJoin[{srcDirA6$, "results"}]]];
 Export[FileNameJoin[{srcDirA6$, "results", "anom6_feyncalc.csv"}], StringRiffle[csvA6$, "\n"] <> "\n", "Text"];
 Print["(c) wrote ", Length[rowsA6$], " rows to results/anom6_feyncalc.csv"];
+
+
+(* ::Section:: *)
+(*Cleanup*)
+
+
+(* ::Text:: *)
+(*Skip this cell while you are still inspecting: it releases libraries and temporary files.*)
+
 
 LToolsUnLoadLibrary[];
 DeleteDirectory[modelTmpDirA6$, DeleteContents -> True];

@@ -1,30 +1,42 @@
-"""Total cross section of phi phi scattering to O(g^6) in d = 4 (research note, step (7), Eq. (21)).
+# %% [markdown]
+# # Step (7): total cross section of phi phi scattering to O(g^6) in d = 4
+#
+# Total cross section of phi phi scattering to O(g^6) in d = 4 (research note, step (7), Eq. (21)).
+#
+#     sigma_tot = sigma0(2->2) + sigma1(2->2) + sigma(2->3),   inputs m_p = g = 1 (on-shell scheme).
+#   sigma0 = (1/2) int dOmega |M0|^2/(64 pi^2 s) (Eq. (25));
+#   sigma1 = int dOmega M0 Re M1_phys/(64 pi^2 s) = (2 pi/(64 pi^2 s)) * 2 int_0^1 dc M0 Re M1_phys
+#            (the integrand is even in c = cos(theta)); Gauss-Legendre nodes in y = ln((m^2 - t)/m^2), in which the
+#            forward peak of the t-channel propagator (width ~ m^2/(2 p^2) in c at large s) becomes e^-y and its
+#            interference with the other channels becomes flat; M1_phys = M1 (MS-bar, mu = m, COLLIER, xsec_collier)
+#            + 1/(2(4pi)^2) sum_x [2 B0'(m^2)/(x-m^2) - B0(m^2)/(x-m^2)^2] (Eq. (20)), Gauss-Legendre nodes;
+#            MadLoop (work/ml_OS from run_madloop_check.sh) is run at the same nodes for comparison;
+#   sigma(2->3) = (1/3!) (1/(4 p sqrt(s))) int |M|^2 dPhi_3, tree level, M = -g^3 sum over the 15 cubic trees
+#            of 1/((P1^2 - m^2)(P2^2 - m^2)); adaptive (VEGAS-type) Monte Carlo over
+#            dPhi_3 = dPhi_2(P; k1, Q) dQ^2/(2 pi) dPhi_2(Q; k2, k3);
+#            compared with MadGraph (work/xsec_mg5_2to3.log, sqrt(s) = 4, 5, 10).
+# Writes results/xsec.csv and ../figs/xsec_d4.pdf.
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python xsec_numeric.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-    sigma_tot = sigma0(2->2) + sigma1(2->2) + sigma(2->3),   inputs m_p = g = 1 (on-shell scheme).
-  sigma0 = (1/2) int dOmega |M0|^2/(64 pi^2 s) (Eq. (25));
-  sigma1 = int dOmega M0 Re M1_phys/(64 pi^2 s) = (2 pi/(64 pi^2 s)) * 2 int_0^1 dc M0 Re M1_phys
-           (the integrand is even in c = cos(theta)); Gauss-Legendre nodes in y = ln((m^2 - t)/m^2), in which the
-           forward peak of the t-channel propagator (width ~ m^2/(2 p^2) in c at large s) becomes e^-y and its
-           interference with the other channels becomes flat; M1_phys = M1 (MS-bar, mu = m, COLLIER, xsec_collier)
-           + 1/(2(4pi)^2) sum_x [2 B0'(m^2)/(x-m^2) - B0(m^2)/(x-m^2)^2] (Eq. (20)), Gauss-Legendre nodes;
-           MadLoop (work/ml_OS from run_madloop_check.sh) is run at the same nodes for comparison;
-  sigma(2->3) = (1/3!) (1/(4 p sqrt(s))) int |M|^2 dPhi_3, tree level, M = -g^3 sum over the 15 cubic trees
-           of 1/((P1^2 - m^2)(P2^2 - m^2)); adaptive (VEGAS-type) Monte Carlo over
-           dPhi_3 = dPhi_2(P; k1, Q) dQ^2/(2 pi) dPhi_2(Q; k2, k3);
-           compared with MadGraph (work/xsec_mg5_2to3.log, sqrt(s) = 4, 5, 10).
-Writes results/xsec.csv and ../figs/xsec_d4.pdf.
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python xsec_numeric.py
-"""
+# %%
 import csv
 import math
 import os
+import sys
 import re
 import subprocess
 
 import numpy as np
 from scipy.integrate import quad
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 GEV2_TO_PB = 0.3893794e9
 K = 16 * math.pi ** 2
 B0M = 2 - math.pi / math.sqrt(3)              # B0(m^2; m, m) at mu = m
@@ -36,6 +48,10 @@ NGL = (32, 64)                      # Gauss-Legendre nodes for c in [0, 1]; the 
 TOL = 1e-10
 
 
+# %% [markdown]
+# ## Tree amplitude, kinematics and Gauss-Legendre nodes in y = ln((m^2 - t)/m^2)
+
+# %%
 def tree(s, t):
     u = 4 - s - t
     return -(1 / (s - 1) + 1 / (t - 1) + 1 / (u - 1))
@@ -68,6 +84,10 @@ def sigma0_quad(rs):
     return 0.5 * 2 * math.pi * val / (64 * math.pi ** 2 * s)
 
 
+# %% [markdown]
+# ## sigma^(1): M1 at the nodes from COLLIER
+
+# %%
 # ---------------- M1 at the nodes (COLLIER) ----------------
 nodes = [(rs, c, w, n) for n in NGL for rs in SQRTS_GRID for c, w in zip(*gl_nodes(rs, n))]
 with open(os.path.join(HERE, "work", "xsec_nodes.txt"), "w") as fh:
@@ -98,6 +118,11 @@ for n in NGL:
         res[(rs, n)] = sigma_2to2(rs, n, m1[i:i + n])
         i += n
 
+
+# %% [markdown]
+# ## MadLoop at the same nodes
+
+# %%
 # ---------------- MadLoop at the same nodes ----------------
 def run_madloop(rs, c):
     d = os.path.join(HERE, "work", "ml_OS", "SubProcesses", "P0_phiphi_phiphi")
@@ -124,6 +149,10 @@ for rs in SQRTS_ML:
     ml[rs] = (pref * sum(wi * b for wi, (b, _) in zip(w, vals)), pref * sum(wi * f for wi, (_, f) in zip(w, vals)))
 
 
+# %% [markdown]
+# ## sigma(2 -> 3): adaptive Monte Carlo (VEGAS-type) in two parametrizations
+
+# %%
 # ---------------- 2 -> 3 (adaptive Monte Carlo) ----------------
 # The cross section is dominated, increasingly with s, by a narrow region where two t-channel-like
 # propagators are both small (two particles close to the beam directions).  Uniform sampling of
@@ -285,6 +314,11 @@ if os.path.exists(logf):
 mg5_23 = mg5_all[:3]                # sqrt(s) = 4, 5, 10 with 10000 events
 mg5_10 = mg5_all[3:]                # sqrt(s) = 10 again (iseed 777, 4242, 31 with sde_strategy 2, 32 with hard_survey 2)
 
+
+# %% [markdown]
+# ## Results
+
+# %%
 # ---------------- output ----------------
 rows = []
 print(f"{'sqrt(s)':>7} {'sigma0':>14} {'sigma1':>14} {'s1/s0':>9} {'n=32 vs 64':>10} {'sigma(2->3)':>22} {'s23/s0':>9}")
@@ -335,8 +369,14 @@ with open(os.path.join(HERE, "results", "xsec.csv"), "w", newline="") as fh:
         wtr.writerow(r + list(mlv) + list(mbv) + list(mgv))
 
 # ---------------- figure ----------------
+
+# %% [markdown]
+# ## Figure
+
+# %%
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))

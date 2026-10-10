@@ -1,30 +1,46 @@
-"""MadLoop check of the one-loop phi phi -> phi phi amplitude (research note, step (6)).
+# %% [markdown]
+# # Step (6): MadLoop against the S-matrix element (on-shell) and the MS-bar amplitude
+#
+# MadLoop check of the one-loop phi phi -> phi phi amplitude (research note, step (6)).
+#
+# Runs the MadLoop standalone programs built by run_madloop_check.sh (work/ml_OS, work/ml_MSbar) at the
+# six points of step (5) with mu_R = m, and at sqrt(s) = 5m, cos(theta) = 0.3 with mu_R = m/2, 2m, 5m.
+# MadLoop returns, with the identical-particle factor 1/2 of the final state,
+#     born = |M0|^2 / 2,   finite = 2 Re(M0* M1) / 2 = M0 Re M1   (M0 real),   and the 1/eps, 1/eps^2 parts.
+# Predictions (m = g = 1; M1 = Re M1(mu = m) of step (5), results/scat4_comparison.csv):
+#     MSbar counterterms (deltaZ = deltag = 0, pole-only deltam): M1(mu) = M1(m) + ln(mu^2/m^2)/(2(4pi)^2) sum_x 1/(x-m^2)^2,
+#         i.e. the note's Eq. (17) at scale mu (B0 depends on mu only through + ln mu^2);
+#     OS counterterms (NLOCT): Eq. (20), M1_phys = M1(m) + 1/(2(4pi)^2) sum_x [2 B0'(m^2)/(x-m^2) - B0(m^2)/(x-m^2)^2]
+#         with B0(m^2) = 2 - pi/sqrt(3), m^2 B0'(m^2) = 2 pi/(3 sqrt(3)) - 1 at mu = m; independent of mu.
+# Writes results/madloop.csv.
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python madloop_numeric.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-Runs the MadLoop standalone programs built by run_madloop_check.sh (work/ml_OS, work/ml_MSbar) at the
-six points of step (5) with mu_R = m, and at sqrt(s) = 5m, cos(theta) = 0.3 with mu_R = m/2, 2m, 5m.
-MadLoop returns, with the identical-particle factor 1/2 of the final state,
-    born = |M0|^2 / 2,   finite = 2 Re(M0* M1) / 2 = M0 Re M1   (M0 real),   and the 1/eps, 1/eps^2 parts.
-Predictions (m = g = 1; M1 = Re M1(mu = m) of step (5), results/scat4_comparison.csv):
-    MSbar counterterms (deltaZ = deltag = 0, pole-only deltam): M1(mu) = M1(m) + ln(mu^2/m^2)/(2(4pi)^2) sum_x 1/(x-m^2)^2,
-        i.e. the note's Eq. (17) at scale mu (B0 depends on mu only through + ln mu^2);
-    OS counterterms (NLOCT): Eq. (20), M1_phys = M1(m) + 1/(2(4pi)^2) sum_x [2 B0'(m^2)/(x-m^2) - B0(m^2)/(x-m^2)^2]
-        with B0(m^2) = 2 - pi/sqrt(3), m^2 B0'(m^2) = 2 pi/(3 sqrt(3)) - 1 at mu = m; independent of mu.
-Writes results/madloop.csv.
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python madloop_numeric.py
-"""
+# %%
 import csv
 import math
 import os
+import sys
 import re
 import subprocess
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 K = 16 * math.pi ** 2
 B0M = 2 - math.pi / math.sqrt(3)
 B0PM = 2 * math.pi / (3 * math.sqrt(3)) - 1
 TOL = 1e-10
 
 
+# %% [markdown]
+# ## Kinematics and the MadLoop standalone runs
+
+# %%
 def kinematics(rs, ct):
     s = rs * rs
     p2 = s / 4 - 1
@@ -51,6 +67,10 @@ def run_madloop(scheme, rs, ct, mu):
     return val
 
 
+# %% [markdown]
+# ## Predictions from step (5) (Eqs. (17) and (20))
+
+# %%
 ref = {}
 with open(os.path.join(HERE, "results", "scat4_comparison.csv")) as fh:
     for r in csv.DictReader(fh):
@@ -66,6 +86,10 @@ def predictions(rs, ct, mu):
     return {"born": m0 * m0 / 2, "MSbar": m0 * m1_ms, "OS": m0 * m1_os, "M0": m0, "M1_MSbar_mu_m": m1, "M1_phys": m1_os}
 
 
+# %% [markdown]
+# ## MadLoop at the six points and at several mu_R
+
+# %%
 runs = [(rs, ct, 1.0) for rs in (2.5, 5.0, 10.0) for ct in (0.3, 0.9)] + [(5.0, 0.3, mu) for mu in (0.5, 2.0, 5.0)]
 rows = []
 print(f"{'scheme':6} {'sqrt(s)':>7} {'cos':>4} {'mu_R':>5} {'finite (MadLoop)':>22} {'prediction':>22} {'rel.dev':>8} "
@@ -82,6 +106,8 @@ for scheme in ("OS", "MSbar"):
         rows.append([scheme, rs, ct, mu, v["born"], v["finite"], v["1eps"], v["2eps"], pr["born"], pr[scheme], dborn, dfin,
                      pr["M0"], pr["M1_MSbar_mu_m"], pr["M1_phys"]])
 
+
+# %%
 with open(os.path.join(HERE, "results", "madloop.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["scheme", "sqrts", "costheta", "mu_R", "born_madloop", "finite_madloop", "eps1_madloop", "eps2_madloop",

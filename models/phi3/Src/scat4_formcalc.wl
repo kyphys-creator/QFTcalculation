@@ -1,19 +1,32 @@
 (* ::Package:: *)
 
-(* scat4_formcalc.wl -- one-loop phi phi -> phi phi in d = 4 with the unpatched FeynArts 3.12 and
-   FormCalc 9.10 (research note, step (5)); independent of FeynCalc.  Run in its own kernel: the
-   patched (FeynCalc) and unpatched FeynArts must not be loaded together.
+(* ::Title:: *)
+(*Step (5): one-loop phi phi -> phi phi in d = 4 with the unpatched FeynArts 3.12 and FormCalc 9.10*)
 
-   CalcFeynAmp gives the amplitude M (default PreFactor -I (2 Pi)^-4) in terms of LoopTools'
-   functions B0i, C0i, D0i, whose normalization (2 Pi mu)^(4 - D)/(I Pi^2) int d^D q makes LoopTools'
-   Delta the note's DeltaUV.  The truncated amplitude (no tadpoles, no external-leg corrections) is
-     (a) compared symbolically with the note's Eq. (17) (eq:M1);
-     (b) evaluated with LoopTools (MathLink) at Delta = 0, mu = m = g = 1, i.e. in MS-bar: the MS-bar
-         counterterm -g^2 deltam sum_x 1/(x - m^2)^2, deltam = g^2 DeltaUV/(2 (4 Pi)^2), cancels exactly
-         the Delta-dependence, which is checked by evaluating at Delta = 1 as well;
-   and written to Src/results/scat4_formcalc.csv.
 
-   Usage:  wolframscript -file scat4_formcalc.wl      (run generate_Phi3.wl first) *)
+(* ::Text:: *)
+(*FormCalc 9.10 (research note, step (5)); independent of FeynCalc.  Run in its own kernel: the*)
+(*patched (FeynCalc) and unpatched FeynArts must not be loaded together.*)
+(**)
+(*CalcFeynAmp gives the amplitude M (default PreFactor -I (2 Pi)^-4) in terms of LoopTools'*)
+(*functions B0i, C0i, D0i, whose normalization (2 Pi mu)^(4 - D)/(I Pi^2) int d^D q makes LoopTools'*)
+(*Delta the note's DeltaUV.  The truncated amplitude (no tadpoles, no external-leg corrections) is*)
+(*  (a) compared symbolically with the note's Eq. (17) (eq:M1);*)
+(*  (b) evaluated with LoopTools (MathLink) at Delta = 0, mu = m = g = 1, i.e. in MS-bar: the MS-bar*)
+(*      counterterm -g^2 deltam sum_x 1/(x - m^2)^2, deltam = g^2 DeltaUV/(2 (4 Pi)^2), cancels exactly*)
+(*      the Delta-dependence, which is checked by evaluating at Delta = 1 as well;*)
+(*and written to Src/results/scat4_formcalc.csv.*)
+(**)
+(*Usage:  wolframscript -file scat4_formcalc.wl      (run generate_Phi3.wl first)*)
+
+
+(* ::Text:: *)
+(*How to run.  Batch:  wolframscript -file scat4_formcalc.wl  (in its own kernel: the patched FeynArts of FeynCalc must not be loaded).  Interactive:  ~/hep/bin/wopen scat4_formcalc.wl  (in its own kernel: the patched FeynArts of FeynCalc must not be loaded), then "Run All Code" or Shift+Return cell by cell; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]) and show intermediate objects without changing anything.*)
+
+
+(* ::Section:: *)
+(*Setup*)
+
 
 Get["FeynArts`"];
 Get["FormCalc`"];
@@ -26,7 +39,11 @@ modelFC4$ = FileNameJoin[{srcDirFC4$, "generated", "Phi3_FA", "Phi3_FA"}];   (* 
 workDirFC4$ = CreateDirectory[];
 SetDirectory[workDirFC4$];   (* FormCalc writes its FORM files here *)
 
-(* ---------- (a) amplitude ---------- *)
+
+(* ::Section:: *)
+(*(a) amplitude*)
+
+
 diagsFC4$ = InsertFields[CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}],
    {S[1], S[1]} -> {S[1], S[1]}, InsertionLevel -> {Particles}, Model -> modelFC4$, GenericModel -> modelFC4$];
 ampFC4$ = CalcFeynAmp[CreateFeynAmp[diagsFC4$], Dimension -> D];
@@ -41,7 +58,29 @@ handFC4$ = gphi^4/(4 Pi)^2 (d0[Sort[{S, T}]] + d0[Sort[{S, U}]] + d0[Sort[{T, U}
     Sum[2 c0[x]/(x - m^2) + b0[x]/(2 (x - m^2)^2), {x, {S, T, U}}]);
 Print["(a) M (FormCalc) - Eq. (17) (eq:M1) = ", Simplify[(exprFC4$ /. canonFC4$) - handFC4$], "  (expect 0)"];
 
-(* ---------- (b) numerical values with LoopTools ---------- *)
+
+(* ::Subsubsection:: *)
+(*Inspect: the 12 diagrams (unpatched FeynArts)*)
+
+
+If[$Notebooks,
+  Show[#, ImageSize -> 560] & /@ Render[Paint[diagsFC4$, ColumnsXRows -> {4, 3}, Numbering -> Simple, DisplayFunction -> Identity]]
+]
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the FormCalc amplitude collected by integral (LoopTools' B0i, C0i, D0i renamed)*)
+
+
+If[$Notebooks,
+  Collect[exprFC4$ /. canonFC4$, {_d0, _c0, _b0}, Simplify] // TraditionalForm
+]
+
+
+(* ::Section:: *)
+(*(b) numerical values with LoopTools*)
+
+
 Install[FileNameJoin[{$HomeDirectory, "hep", "bin", "LoopTools"}]];
 SetMudim[1];
 pointsFC4$ = Flatten[Table[Module[{ss = rs^2, p2}, p2 = ss/4 - 1;
@@ -58,6 +97,16 @@ SetDelta[0];
 Print["(b) M(Delta = 1) - M(Delta = 0) - g^4/(2 (4 Pi)^2) sum 1/(x - m^2)^2 = ", Chop[N[deltaDepFC4$], 10^-15], "  (expect 0)"];
 Print["(b) M1 (FormCalc + LoopTools, MS-bar) = ", rowsFC4$[[All, 6]]];
 
+
+(* ::Subsubsection:: *)
+(*Inspect: the values at the six points and the Delta check*)
+
+
+If[$Notebooks,
+  TableForm[MapThread[{N[#1[[1]]], N[#1[[2]]], NumberForm[#1[[6]], 12], ScientificForm[Chop[N[#2], 10^-15], 2]} &, {rowsFC4$, deltaDepFC4$}], TableHeadings -> {None, {"sqrt(s)", "cos", "M1 (MS-bar)", "Delta check"}}]
+]
+
+
 resultsDirFC4$ = FileNameJoin[{srcDirFC4$, "results"}];
 Quiet[CreateDirectory[resultsDirFC4$]];
 numStrFC4$[x_] := ToString[CForm[N[x]]];
@@ -66,6 +115,15 @@ csvLinesFC4$ = Prepend[
    "sqrts,costheta,s,t,u,re_formcalc,im_formcalc"];
 Export[FileNameJoin[{resultsDirFC4$, "scat4_formcalc.csv"}], StringRiffle[csvLinesFC4$, "\n"] <> "\n", "Text"];
 Print["(b) wrote ", Length[rowsFC4$], " rows to results/scat4_formcalc.csv"];
+
+
+(* ::Section:: *)
+(*Cleanup*)
+
+
+(* ::Text:: *)
+(*Skip this cell while you are still inspecting: it releases libraries and temporary files.*)
+
 
 ResetDirectory[];
 DeleteDirectory[workDirFC4$, DeleteContents -> True];

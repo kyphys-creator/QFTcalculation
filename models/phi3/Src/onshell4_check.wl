@@ -1,22 +1,40 @@
 (* ::Package:: *)
 
-(* onshell4_check.wl -- symbolic checks of the S-matrix element and the scheme conversion for
-   phi phi -> phi phi in d = 4 (research note, App. J, Eqs. (19)-(20)).  Package-X (through FeynHelpers) supplies
-   the MS-bar B0(p^2; m, m) as an explicit function.
+(* ::Title:: *)
+(*S-matrix element and scheme conversion for phi phi -> phi phi in d = 4: symbolic checks (note, App. J, Eqs. (19)-(20))*)
 
-   (1) B0(m^2; m, m) = -L + 2 - Pi/Sqrt[3] and m^2 B0'(m^2; m, m) = 2 Pi/(3 Sqrt[3]) - 1, L = Log[m^2/mu^2].
-   (2) the pole mass m_p^2 = m^2 - g^2/(2 (4 Pi)^2) B0(m^2) and the residue R = 1 - g^2/(2 (4 Pi)^2) B0'(m^2)
-       do not depend on mu at O(g^2), using mu dm^2/dmu = g^2/(4 Pi)^2.
-   (3) the B0 part of M_phys from the MS-bar amplitude (R^2, p_i^2 = m_p^2, m -> m_p in the tree)
-       equals the on-shell-scheme computation (on-shell self-energy, vertex counterterm 3/2 deltaZ),
-       up to O(g^6).
-   (4) M_phys^(1) does not depend on mu; the MS-bar M0(m(mu)) + M1(mu) does not either, at O(g^4).
 
-   Usage:  wolframscript -file onshell4_check.wl *)
+(* ::Text:: *)
+(*phi phi -> phi phi in d = 4 (research note, App. J, Eqs. (19)-(20)).  Package-X (through FeynHelpers) supplies*)
+(*the MS-bar B0(p^2; m, m) as an explicit function.*)
+(**)
+(*(1) B0(m^2; m, m) = -L + 2 - Pi/Sqrt[3] and m^2 B0'(m^2; m, m) = 2 Pi/(3 Sqrt[3]) - 1, L = Log[m^2/mu^2].*)
+(*(2) the pole mass m_p^2 = m^2 - g^2/(2 (4 Pi)^2) B0(m^2) and the residue R = 1 - g^2/(2 (4 Pi)^2) B0'(m^2)*)
+(*    do not depend on mu at O(g^2), using mu dm^2/dmu = g^2/(4 Pi)^2.*)
+(*(3) the B0 part of M_phys from the MS-bar amplitude (R^2, p_i^2 = m_p^2, m -> m_p in the tree)*)
+(*    equals the on-shell-scheme computation (on-shell self-energy, vertex counterterm 3/2 deltaZ),*)
+(*    up to O(g^6).*)
+(*(4) M_phys^(1) does not depend on mu; the MS-bar M0(m(mu)) + M1(mu) does not either, at O(g^4).*)
+(**)
+(*Usage:  wolframscript -file onshell4_check.wl*)
+
+
+(* ::Text:: *)
+(*How to run.  Batch:  wolframscript -file onshell4_check.wl.  Interactive:  ~/hep/bin/wopen onshell4_check.wl, then "Run All Code" or Shift+Return cell by cell; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]) and show intermediate objects without changing anything.*)
+
+
+(* ::Section:: *)
+(*Setup*)
+
 
 $FeynCalcStartupMessages = False;
 $LoadAddOns = {"FeynHelpers"};
 Get["FeynCalc`"];
+
+
+(* ::Section:: *)
+(*the MS-bar B0 from Package-X*)
+
 
 k4 = (4 Pi)^2;
 (* MS-bar B0(p2; mm, mm) at scale mu (App. G), from Package-X in FeynCalc's normalization *)
@@ -28,6 +46,20 @@ b0p[p2_, mass_] := (D[b0Expr, pp] /. {pp -> p2, mm -> mass});
 logRules = {Log[4 Pi] -> 2 Log[2] + Log[Pi], Log[2 Pi] -> Log[2] + Log[Pi]};
 zeroQ[expr_] := Simplify[PowerExpand[expr /. logRules], m > 0 && mu > 0 && mp > 0] === 0;
 
+
+(* ::Subsubsection:: *)
+(*Inspect: the MS-bar B0(pp; mm, mm) from Package-X*)
+
+
+If[$Notebooks,
+  TraditionalForm[b0Expr]
+]
+
+
+(* ::Section:: *)
+(*(1) B0 and B0' at p^2 = m^2*)
+
+
 (* (1) closed forms at p^2 = m^2 (the limit avoids the 0/0 form of Package-X's expression) *)
 b0AtM = Limit[b0[pp, m], pp -> m^2, Assumptions -> m > 0 && mu > 0];
 b0pAtM = Limit[b0p[pp, m], pp -> m^2, Assumptions -> m > 0 && mu > 0];
@@ -36,12 +68,40 @@ Print["(1) B0(m^2) = ", InputForm[Simplify[b0AtM]], " ; expect -L + 2 - Pi/Sqrt[
 Print["(1) m^2 B0'(m^2) = ", InputForm[Simplify[m^2 b0pAtM]], " ; expect 2 Pi/(3 Sqrt[3]) - 1 -> ",
   zeroQ[m^2 b0pAtM - (2 Pi/(3 Sqrt[3]) - 1)], "  (numerically ", N[2 Pi/(3 Sqrt[3]) - 1], ")"];
 
+
+(* ::Subsubsection:: *)
+(*Inspect: B0(m^2) and m^2 B0'(m^2)*)
+
+
+If[$Notebooks,
+  TableForm[{{"B0(m^2)", TraditionalForm[Simplify[b0AtM]]}, {"m^2 B0'(m^2)", TraditionalForm[Simplify[m^2 b0pAtM]]}}]
+]
+
+
+(* ::Section:: *)
+(*(2) pole mass and residue: mu-independence at O(g^2)*)
+
+
 (* (2) mu-independence at O(g^2): d/dln(mu) acts explicitly and through m^2(mu), mu dm^2/dmu = g^2/k4 *)
 dLnMu[expr_] := mu D[expr, mu] + D[expr /. m -> Sqrt[msq], msq] (g^2/k4) /. msq -> m^2;
 mp2 = m^2 - g^2/(2 k4) b0AtM;
 res = 1 - g^2/(2 k4) b0pAtM;
 Print["(2) d m_p^2/dln(mu) at O(g^2) = ", Simplify[SeriesCoefficient[dLnMu[mp2], {g, 0, 2}]], "  (expect 0)"];
 Print["(2) d R/dln(mu) at O(g^2) = ", Simplify[SeriesCoefficient[dLnMu[res], {g, 0, 2}]], "  (expect 0)"];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the pole mass and the residue*)
+
+
+If[$Notebooks,
+  TableForm[{{"m_p^2", TraditionalForm[mp2]}, {"R", TraditionalForm[res]}}]
+]
+
+
+(* ::Section:: *)
+(*(3) MS-bar route vs on-shell route*)
+
 
 (* (3) MS-bar route vs on-shell route.  This is algebra in B0, so B0 is kept as an unspecified function
    bb (bb' = B0'); boxes and triangles are common and drop out.  A numerical spot check with the explicit
@@ -76,7 +136,30 @@ mPhNum = routes[b0mp][[4]];
 Print["(3) Eq. (20) (eq:Mphys) B0 terms at m_p = 1, s = 25, t = -7.35 with mu = 1/2, 1, 2: ",
   N[mPhNum /. numPt /. mu -> #, 15] & /@ {1/2, 1, 2}];
 
+
+(* ::Subsubsection:: *)
+(*Inspect: the two routes and the B0 terms of Eq. (20), with B0 kept as a function bb*)
+
+
+If[$Notebooks,
+  TableForm[{{"MS-bar route", TraditionalForm[rMS]}, {"on-shell route", TraditionalForm[rOS]}, {"Eq. (20) B0 terms", TraditionalForm[mPh]}}]
+]
+
+
+(* ::Section:: *)
+(*(4) mu-independence of the S-matrix element*)
+
+
 (* (4) mu-independence *)
 Print["(4) d M_phys^(1)/d mu = ", zeroQ[D[routes[b0mp][[4]], mu]], " (expect True: no mu dependence)"];
 gMS = -g^2 Sum[1/(x - m^2), {x, xs}] + g^4/(2 k4) Sum[b0[x, m]/(x - m^2)^2, {x, xs}];
 Print["(4) d[M0(m(mu)) + M1(mu)]/dln(mu) at O(g^4) = ", zeroQ[SeriesCoefficient[dLnMu[gMS], {g, 0, 4}]], " (expect True)"];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the MS-bar M0 + M1 (B0 part) used in (4)*)
+
+
+If[$Notebooks,
+  TraditionalForm[gMS]
+]

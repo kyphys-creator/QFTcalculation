@@ -1,28 +1,40 @@
 (* ::Package:: *)
 
-(* oneloop6_feyncalc.wl -- one-loop check in d = 6 (research note, step (4)).
+(* ::Title:: *)
+(*Step (4): one-loop check in d = 6 (FeynCalc in D = 6 - 2 Epsilon, dimension shift to Package-X and LoopTools)*)
 
-   The FeynArts amplitudes are the same as in d = 4 (the diagrams do not depend on D),
-     A_n = I Pi^2 (gphi^n / S) PaVe,   S = 2, 2, 1,
-   but the PaVe functions are now read in D = 6 - 2 Epsilon.  The note's V_n is
-   V_n = A_n/(2 Pi)^D = (gphi^n / S) I_N.
-   (a) diagrams and amplitudes (as in oneloop4_feyncalc.wl).
-   (b) FeynCalc's Feynman parametrization (FCFeynmanParametrize with D -> 6 - 2 Epsilon) of the
-       scalar integrals I_1, I_2, I_3, compared numerically with the note's general formula
-       (App. C); the UV poles of V_n (Table 2), the MS-bar counterterms divided by DeltaUV
-       (Eq. (8)), beta(g) from g_0 = mu^Epsilon (g + deltag)(1 + deltaZ)^(-3/2) (Eq. (14)), and the
-       MS-bar finite part of the tadpole integral.
-   (c) Package-X and LoopTools through the dimension shift (note, App. H)
-         PaVe^(D+2) = -2 Pi PaVe_00^(D)        (FeynCalc normalization, d^D q/(I Pi^2)),
-       i.e. the D = 6 - 2 Epsilon scalar integrals are -2 Pi times the g^{mu nu} coefficients
-       A00, B00, C00 in D = 4 - 2 Epsilon, which Package-X and LoopTools can evaluate.
-       The poles are compared with (b).  The MS-bar finite parts X_N defined by
-         mu^(2 Epsilon) I_N = I/(4 Pi)^3 [c_N DeltaUV + X_N],   X_N = A0^(6), B0^(6), C0^(6),
-       are compared with closed forms and written to Src/results/oneloop6_mathematica.csv
-       (m = mu = 1).  Note: LoopTools 2.16 on this Mac returns wrong C0 below threshold (d = 4
-       check), and its C00 is built from C0; its C00 values are kept in the CSV as a record.
 
-   Usage:  wolframscript -file oneloop6_feyncalc.wl      (run generate_Phi3.wl first) *)
+(* ::Text:: *)
+(*The FeynArts amplitudes are the same as in d = 4 (the diagrams do not depend on D),*)
+(*  A_n = I Pi^2 (gphi^n / S) PaVe,   S = 2, 2, 1,*)
+(*but the PaVe functions are now read in D = 6 - 2 Epsilon.  The note's V_n is*)
+(*V_n = A_n/(2 Pi)^D = (gphi^n / S) I_N.*)
+(*(a) diagrams and amplitudes (as in oneloop4_feyncalc.wl).*)
+(*(b) FeynCalc's Feynman parametrization (FCFeynmanParametrize with D -> 6 - 2 Epsilon) of the*)
+(*    scalar integrals I_1, I_2, I_3, compared numerically with the note's general formula*)
+(*    (App. C); the UV poles of V_n (Table 2), the MS-bar counterterms divided by DeltaUV*)
+(*    (Eq. (8)), beta(g) from g_0 = mu^Epsilon (g + deltag)(1 + deltaZ)^(-3/2) (Eq. (14)), and the*)
+(*    MS-bar finite part of the tadpole integral.*)
+(*(c) Package-X and LoopTools through the dimension shift (note, App. H)*)
+(*      PaVe^(D+2) = -2 Pi PaVe_00^(D)        (FeynCalc normalization, d^D q/(I Pi^2)),*)
+(*    i.e. the D = 6 - 2 Epsilon scalar integrals are -2 Pi times the g^{mu nu} coefficients*)
+(*    A00, B00, C00 in D = 4 - 2 Epsilon, which Package-X and LoopTools can evaluate.*)
+(*    The poles are compared with (b).  The MS-bar finite parts X_N defined by*)
+(*      mu^(2 Epsilon) I_N = I/(4 Pi)^3 [c_N DeltaUV + X_N],   X_N = A0^(6), B0^(6), C0^(6),*)
+(*    are compared with closed forms and written to Src/results/oneloop6_mathematica.csv*)
+(*    (m = mu = 1).  Note: LoopTools 2.16 on this Mac returns wrong C0 below threshold (d = 4*)
+(*    check), and its C00 is built from C0; its C00 values are kept in the CSV as a record.*)
+(**)
+(*Usage:  wolframscript -file oneloop6_feyncalc.wl      (run generate_Phi3.wl first)*)
+
+
+(* ::Text:: *)
+(*How to run.  Batch:  wolframscript -file oneloop6_feyncalc.wl.  Interactive:  ~/hep/bin/wopen oneloop6_feyncalc.wl, then "Run All Code" or Shift+Return cell by cell; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]) and show intermediate objects without changing anything.*)
+
+
+(* ::Section:: *)
+(*Setup*)
+
 
 $FeynCalcStartupMessages = False;
 $LoadAddOns = {"FeynArtsLoader", "FeynHelpers"};
@@ -33,7 +45,11 @@ srcDirOL6$ = Which[
    $Notebooks, NotebookDirectory[],
    True, Directory[]];
 
-(* ---------- patched copy of the FeynRules-generated FeynArts model ---------- *)
+
+(* ::Section:: *)
+(*patched copy of the FeynRules-generated FeynArts model*)
+
+
 modelTmpDirOL6$ = CreateDirectory[];
 CopyDirectory[FileNameJoin[{srcDirOL6$, "generated", "Phi3_FA"}], FileNameJoin[{modelTmpDirOL6$, "Phi3_FA"}]];
 FAPatch[PatchModelsOnly -> True, FAModelsDirectory -> FileNameJoin[{modelTmpDirOL6$, "Phi3_FA"}], Quiet -> True];
@@ -41,11 +57,25 @@ modelOL6$ = FileNameJoin[{modelTmpDirOL6$, "Phi3_FA", "Phi3_FA"}];
 insertOL6$[tops_, proc_] := InsertFields[tops, proc, InsertionLevel -> {Particles},
    Model -> modelOL6$, GenericModel -> modelOL6$];
 
-(* ---------- (a) diagrams and amplitudes ---------- *)
+
+(* ::Section:: *)
+(*(a) diagrams and amplitudes*)
+
+
 diagTadOL6$ = insertOL6$[CreateTopologies[1, 1 -> 0], {S[1]} -> {}];
 diagSEOL6$  = insertOL6$[CreateTopologies[1, 1 -> 1, ExcludeTopologies -> {Tadpoles}], {S[1]} -> {S[1]}];
 diagVtxOL6$ = insertOL6$[CreateTopologies[1, 1 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}],
    {S[1]} -> {S[1], S[1]}];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the three diagrams (tadpole, self-energy, triangle)*)
+
+
+If[$Notebooks,
+  Row[Flatten[Show[#, ImageSize -> 180] & /@ Render[Paint[#, ColumnsXRows -> 1, Numbering -> Simple, DisplayFunction -> Identity]] & /@ {diagTadOL6$, diagSEOL6$, diagVtxOL6$}], "    "]
+]
+
 
 ampOL6$[diags_, in_, out_] := FCE[TID[FCFAConvert[CreateFeynAmp[diags, Truncated -> True, PreFactor -> 1],
      IncomingMomenta -> in, OutgoingMomenta -> out, LoopMomenta -> {q}, ChangeDimension -> D,
@@ -60,7 +90,20 @@ Print["(a) number of diagrams (expect 1, 1, 1): ",
 Print["(a) A_n - I Pi^2 gphi^n/S PaVe (expect 0, 0, 0): ", Simplify /@ {ampTadOL6$ - I Pi^2 gphi/2 A0[m^2],
    ampSEOL6$ - I Pi^2 gphi^2/2 B0[SPD[p], m^2, m^2], ampVtxOL6$ - I Pi^2 gphi^3 c0OL6$}];
 
-(* ---------- (b) Feynman parametrization in D = 6 - 2 Epsilon ---------- *)
+
+(* ::Subsubsection:: *)
+(*Inspect: each amplitude after the tensor reduction (the PaVe functions are now read in D = 6 - 2 Epsilon)*)
+
+
+If[$Notebooks,
+  TableForm[{{"tadpole", TraditionalForm[ampTadOL6$]}, {"self-energy", TraditionalForm[ampSEOL6$]}, {"triangle", TraditionalForm[ampVtxOL6$]}}]
+]
+
+
+(* ::Section:: *)
+(*(b) Feynman parametrization in D = 6 - 2 Epsilon*)
+
+
 kOL6$ = (4 Pi)^3;
 dimOL6$ = 6 - 2 Epsilon;
 invRulesOL6$ = {SPD[p, p] -> psq, SPD[k1, k1] -> p1sq, SPD[k2, k2] -> p2sq, SPD[k1, k2] -> (p3sq - p1sq - p2sq)/2};
@@ -94,6 +137,16 @@ checkPointOL6$ := Join[{Epsilon -> 1/7, m -> 13/10, psq -> RandomInteger[{-30, 3
 Print["(b) FCFeynmanParametrize / note's Eq. (4) at random points (expect 1): ",
   Table[Chop[N[(integrandOL6$[n]/noteIntegrandOL6$[n]) /. #, 30], 10^-25] & /@ Table[checkPointOL6$, {3}], {n, 3}]];
 
+
+(* ::Subsubsection:: *)
+(*Inspect: the Feynman-parameter integrands of I_1, I_2, I_3 in D = 6 - 2 Epsilon (x[1] eliminated)*)
+
+
+If[$Notebooks,
+  TableForm[{{"I_1", TraditionalForm[integrandOL6$[1]]}, {"I_2", TraditionalForm[integrandOL6$[2]]}, {"I_3", TraditionalForm[integrandOL6$[3]]}}]
+]
+
+
 (* UV poles of I_N: the 1/Epsilon coefficient is a polynomial in the x_j *)
 iPoleOL6$[n_] := Simplify[simplexIntegrateOL6$[n, Expand[SeriesCoefficient[integrandOL6$[n], {Epsilon, 0, -1}]]]];
 {i1PoleOL6$, i2PoleOL6$, i3PoleOL6$} = iPoleOL6$ /@ {1, 2, 3};
@@ -121,7 +174,29 @@ a06ParamOL6$ = Simplify[msbarSeriesOL6$[mu^(2 Epsilon) integrandOL6$[1]][[2]]/(I
 Print["(b) MS-bar A0^(6) from the parametrization = ", InputForm[a06ParamOL6$],
   "   note: -(m^4/2)(3/2 - Log[m^2/mu^2]) -> ", Simplify[PowerExpand[a06ParamOL6$ + m^4/2 (3/2 - Log[m^2/mu^2])]] === 0];
 
-(* ---------- (c) Package-X and LoopTools through the dimension shift ---------- *)
+
+(* ::Subsubsection:: *)
+(*Inspect: the 1/eps coefficients of I_1, I_2, I_3 and the MS-bar counterterms divided by DeltaUV*)
+
+
+If[$Notebooks,
+  TableForm[{{"I_1", TraditionalForm[i1PoleOL6$]}, {"I_2", TraditionalForm[i2PoleOL6$]}, {"I_3", TraditionalForm[i3PoleOL6$]}, {"deltaZ", TraditionalForm[cZOL6$]}, {"deltam", TraditionalForm[cmOL6$]}, {"deltag", TraditionalForm[cgOL6$]}}]
+]
+
+
+(* ::Subsubsection:: *)
+(*Inspect: beta in D dimensions and at Epsilon -> 0*)
+
+
+If[$Notebooks,
+  TableForm[{{"beta_eps", TraditionalForm[Simplify[betaEpsOL6$]]}, {"beta", TraditionalForm[betaOL6$]}}]
+]
+
+
+(* ::Section:: *)
+(*(c) Package-X and LoopTools through the dimension shift*)
+
+
 shiftOL6$ = {A0[a_] :> -2 Pi PaVe[0, 0, {}, {a}], B0[s_, a_, b_] :> -2 Pi PaVe[0, 0, {s}, {a, b}],
    C0[s1_, s2_, s3_, a_, b_, c_] :> -2 Pi PaVe[0, 0, {s1, s2, s3}, {a, b, c}]};
 (* V_n = A_n/(2 Pi)^D with D = 6 - 2 Epsilon; returns {1/Epsilon coefficient, MS-bar finite part} of V_n *)
@@ -143,6 +218,16 @@ b04PXOL6$ = Module[{s = Series[(2 Pi)^(2 Epsilon) PaXEvaluate[I Pi^2 gphi^2/2 B0
    Simplify[(SeriesCoefficient[s, 0] - SeriesCoefficient[s, -1] (Log[4 Pi] - EulerGamma))/(I gphi^2/(2 (4 Pi)^2)) /. ScaleMu -> mu, m > 0 && mu > 0]];
 Print["(c) Package-X B0^(6) - closed form (App. H) = ",
   Simplify[PowerExpand[b06PXOL6$ - (-m^2 + psq/9 + m^2/3 Log[m^2/mu^2] - 2/3 (m^2 - psq/4) b04PXOL6$)]], "  (expect 0)"];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the MS-bar A0^(6) and B0^(6) from Package-X through the dimension shift*)
+
+
+If[$Notebooks,
+  TableForm[{{"A0^(6)", TraditionalForm[a06PXOL6$]}, {"B0^(6)(p^2 = psq)", TraditionalForm[b06PXOL6$]}}]
+]
+
 
 (* numerical values at m = mu = 1 *)
 PaXEvaluate[B0[2, 1, 1]];   (* makes sure Package-X (context X`) is loaded *)
@@ -172,6 +257,24 @@ Print["(c) wrote ", Length[rowsOL6$], " rows to results/oneloop6_mathematica.csv
 Print["(c) max |Package-X - LoopTools| for A0^(6), B0^(6) = ", Max[Abs[#[[5]] - #[[6]]] & /@ Select[rowsOL6$, #[[1]] =!= "C06" &]]];
 Print["(c) |Package-X - LoopTools| for C0^(6) rows = ", Abs[#[[5]] - #[[6]]] & /@ Select[rowsOL6$, #[[1]] === "C06" &],
   "  (Indeterminate: LoopTools has no value)"];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the values (LoopTools C00 inherits its C0 error below threshold)*)
+
+
+If[$Notebooks,
+  TableForm[{#[[1]], N[#[[2]]], N[#[[3]]], N[#[[4]]], NumberForm[#[[5]], 12], If[#[[6]] === Indeterminate, "NaN", NumberForm[#[[6]], 12]]} & /@ rowsOL6$, TableHeadings -> {None, {"func", "arg1", "arg2", "arg3", "Package-X", "LoopTools"}}]
+]
+
+
+(* ::Section:: *)
+(*Cleanup*)
+
+
+(* ::Text:: *)
+(*Skip this cell while you are still inspecting: it releases libraries and temporary files.*)
+
 
 LToolsUnLoadLibrary[];
 DeleteDirectory[modelTmpDirOL6$, DeleteContents -> True];

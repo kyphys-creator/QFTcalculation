@@ -1,19 +1,37 @@
 (* ::Package:: *)
 
-(* nlo_ufo.wl -- step 3 of 3 of the NLO UFO generation (research note, step (6)).
-   FeynRules: read Src/generated/Phi3_CT.nlo, compare the counterterms with the note's App. J, and
-   write two UFOs with counterterm vertices (overwritten):
-     Src/generated/Phi3_NLO_OS_UFO     NLOCT's on-shell counterterms (deltaZ, deltam on shell; deltag = 0)
-     Src/generated/Phi3_NLO_MSbar_UFO  MS-bar: only the pole of the two-point counterterm, i.e. Eq. (7)
-   FeynmanGauge = True writes gauge = [0, 1] (the model has no gauge field); MadGraph refuses
-   non-QCD loops for a model that does not allow Feynman gauge.
+(* ::Title:: *)
+(*Step (6), 3 of 3: UFOs with counterterm vertices (on-shell and MS-bar) for MadLoop*)
 
-   Usage:  wolframscript -file nlo_ufo.wl     (after nlo_nloct.wl) *)
+
+(* ::Text:: *)
+(*FeynRules: read Src/generated/Phi3_CT.nlo, compare the counterterms with the note's App. J, and*)
+(*write two UFOs with counterterm vertices (overwritten):*)
+(*  Src/generated/Phi3_NLO_OS_UFO     NLOCT's on-shell counterterms (deltaZ, deltam on shell; deltag = 0)*)
+(*  Src/generated/Phi3_NLO_MSbar_UFO  MS-bar: only the pole of the two-point counterterm, i.e. Eq. (7)*)
+(*FeynmanGauge = True writes gauge = [0, 1] (the model has no gauge field); MadGraph refuses*)
+(*non-QCD loops for a model that does not allow Feynman gauge.*)
+(**)
+(*Usage:  wolframscript -file nlo_ufo.wl     (after nlo_nloct.wl)*)
+
+
+(* ::Text:: *)
+(*How to run.  Batch:  wolframscript -file nlo_ufo.wl  (in a fresh kernel).  Interactive:  ~/hep/bin/wopen nlo_ufo.wl  (in a fresh kernel), then "Run All Code" or Shift+Return cell by cell; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]) and show intermediate objects without changing anything.*)
+
+
+(* ::Section:: *)
+(*Setup*)
+
 
 srcDirNU$ = Which[
    StringQ[$InputFileName] && $InputFileName =!= "", DirectoryName[$InputFileName],
    $Notebooks, NotebookDirectory[],
    True, Directory[]];
+
+(* ::Section:: *)
+(*FeynRules, the model and the NLOCT counterterms*)
+
+
 $FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}];
 SetDirectory[$FeynRulesPath];
 Get["FeynRules`"];
@@ -25,7 +43,11 @@ Get["Phi3_CT.nlo"];
 R2$vertlist = DeleteCases[R2$vertlist, Last[{}]];   (* scalar theory: no R2 vertices *)
 Print["R2 vertices: ", R2$vertlist, ";  perturbed orders: ", FR$InteractionOrderPerturbativeExpansion];
 
-(* ---------- comparison with App. J ---------- *)
+
+(* ::Section:: *)
+(*comparison with App. J*)
+
+
 (* the two-point counterterm is I [deltaZ (p^2 - m^2) - 2 m deltam]; App. J: deltaZ = -g^2/(2(4Pi)^2) B0'(m^2),
    2 m deltam = deltam_os - deltaZ m^2 = -Sigma_0(m^2) = g^2/(2(4Pi)^2) (DeltaUV + B0(m^2)),
    with B0(m^2) = 2 - Pi/Sqrt[3] - 2 Log[m/mu] and m^2 B0'(m^2) = 2 Pi/(3 Sqrt[3]) - 1 *)
@@ -41,7 +63,20 @@ Print["2 m deltam (NLOCT) = ", InputForm[twoMdmNU$], "  App. J -> ",
 Print["vertex counterterm (NLOCT) = ", InputForm[uv3NU$], "  -3/2 I gphi deltaZ -> ",
   Simplify[uv3NU$ + 3/2 I gphi dZNU$] === 0];
 
-(* ---------- UFO outputs ---------- *)
+
+(* ::Subsubsection:: *)
+(*Inspect: the NLOCT counterterms against App. J*)
+
+
+If[$Notebooks,
+  TableForm[{{"two-point vertex", TraditionalForm[uv2NU$]}, {"deltaZ", TraditionalForm[dZNU$]}, {"2 m deltam", TraditionalForm[twoMdmNU$]}, {"three-point vertex", TraditionalForm[uv3NU$]}}]
+]
+
+
+(* ::Section:: *)
+(*UFO outputs*)
+
+
 FeynmanGauge = True;
 uvOSNU$ = UV$vertlist;
 uvMSNU$ = {{{{phi, 1}, {phi, 2}},

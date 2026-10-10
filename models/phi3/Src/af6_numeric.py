@@ -1,33 +1,49 @@
-"""Asymptotic freedom in d = 6 phi phi -> phi phi scattering (research note, step (11)).
+# %% [markdown]
+# # Step (11): asymptotic freedom in d = 6 phi phi -> phi phi scattering
+#
+# Asymptotic freedom in d = 6 phi phi -> phi phi scattering (research note, step (11)).
+#
+# 90-degree scattering, pole mass m = 1.  M1 (MS-bar, note Eq. (22) (eq:M6), g = 1) at mu = m and mu = sqrt(s):
+# Package-X with analytic C0, D0 at 30 digits (reference) and LoopTools (results/af6_feyncalc.csv), COLLIER with its two
+# branches COLI and DD (results/af6_collier.csv).
+# S-matrix element in terms of the pole mass and the MS-bar coupling g(mu) (note, App. L):
+#     M_phys = g^2 M0h + g^4 M1h_phys(mu),   M0h = -sum_x 1/(x - 1),   M1h_phys = M1 + conversion (Eq. (23)),
+# and the effective coupling measured in 90-degree scattering  alpha_eff(s) = Re M_phys / ((4pi)^3 M0h)  (= alpha at tree
+# level).  With alpha = g^2/K, K = (4pi)^3, and the one-loop coefficient  c(s; mu) = K Re M1h_phys / M0h:
+#     fixed order:              alpha_FO  = alpha_m + alpha_m^2 c(s; m)
+#     RG, coupling only:        alpha_RG1 = alpha(sqrt s) + alpha(sqrt s)^2 c(s; sqrt s)
+#     RG, coupling and legs:    alpha_RG2 = [1 - alpha_m B0'(m)] (alpha(sqrt s)/alpha_m)^(2/9) [alpha(sqrt s) + alpha(sqrt s)^2 c_G(s; sqrt s)]
+# where alpha(mu) = alpha_m/(1 + (3/2) alpha_m ln(mu/m)) (Eq. (14)), c = c_G + c_R splits off the residue of the external
+# legs, c_R(mu) = -B0^(6)'(m^2; mu), whose ln(mu) evolves with 4 gamma_phi (step (10)); 2/9 = 4 (1/12)/(3/2) (note, App. O).
+# Checks: c(s; sqrt s) - c(s; m) = (3/2) ln(sqrt s/m) (Eq. (24)); the large-s slope dc(s; m)/d ln sqrt(s) -> -3/2 - 1/3 = -11/6;
+# c_G(s; sqrt s) -> constant (no other logarithm of s/m^2).
+# Writes results/af6_comparison.csv and ../figs/af6_d6.pdf.
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python af6_numeric.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-90-degree scattering, pole mass m = 1.  M1 (MS-bar, note Eq. (22) (eq:M6), g = 1) at mu = m and mu = sqrt(s):
-Package-X with analytic C0, D0 at 30 digits (reference) and LoopTools (results/af6_feyncalc.csv), COLLIER with its two
-branches COLI and DD (results/af6_collier.csv).
-S-matrix element in terms of the pole mass and the MS-bar coupling g(mu) (note, App. L):
-    M_phys = g^2 M0h + g^4 M1h_phys(mu),   M0h = -sum_x 1/(x - 1),   M1h_phys = M1 + conversion (Eq. (23)),
-and the effective coupling measured in 90-degree scattering  alpha_eff(s) = Re M_phys / ((4pi)^3 M0h)  (= alpha at tree
-level).  With alpha = g^2/K, K = (4pi)^3, and the one-loop coefficient  c(s; mu) = K Re M1h_phys / M0h:
-    fixed order:              alpha_FO  = alpha_m + alpha_m^2 c(s; m)
-    RG, coupling only:        alpha_RG1 = alpha(sqrt s) + alpha(sqrt s)^2 c(s; sqrt s)
-    RG, coupling and legs:    alpha_RG2 = [1 - alpha_m B0'(m)] (alpha(sqrt s)/alpha_m)^(2/9) [alpha(sqrt s) + alpha(sqrt s)^2 c_G(s; sqrt s)]
-where alpha(mu) = alpha_m/(1 + (3/2) alpha_m ln(mu/m)) (Eq. (14)), c = c_G + c_R splits off the residue of the external
-legs, c_R(mu) = -B0^(6)'(m^2; mu), whose ln(mu) evolves with 4 gamma_phi (step (10)); 2/9 = 4 (1/12)/(3/2) (note, App. O).
-Checks: c(s; sqrt s) - c(s; m) = (3/2) ln(sqrt s/m) (Eq. (24)); the large-s slope dc(s; m)/d ln sqrt(s) -> -3/2 - 1/3 = -11/6;
-c_G(s; sqrt s) -> constant (no other logarithm of s/m^2).
-Writes results/af6_comparison.csv and ../figs/af6_d6.pdf.
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python af6_numeric.py
-"""
+# %%
 import csv
 import math
 import os
+import sys
 
 import numpy as np
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 K = (4 * math.pi) ** 3
 ALPHA_M = 0.1                   # alpha(m) = g(m)^2/(4pi)^3 used for the effective couplings
 
 
+# %% [markdown]
+# ## Conversion, tree amplitude and the running coupling
+
+# %%
 def b06m(mu):                   # Eq. (23) at m = 1: B0^(6)(m^2) and B0^(6)'(m^2)
     return -17 / 9 + math.pi / (2 * math.sqrt(3)) - 5 / 3 * math.log(mu)
 
@@ -53,6 +69,10 @@ def alpha_run(mu):
     return ALPHA_M / (1 + 1.5 * ALPHA_M * math.log(mu))
 
 
+# %% [markdown]
+# ## The values (Package-X at 30 digits, LoopTools, COLLIER COLI and DD)
+
+# %%
 # ---------------- read ----------------
 px, lt = {}, {}
 with open(os.path.join(HERE, "results", "af6_feyncalc.csv")) as fh:
@@ -70,6 +90,11 @@ with open(os.path.join(HERE, "results", "af6_collier.csv")) as fh:
         key = (k, "m" if abs(float(r["mu"]) - 1) < 1e-12 else "rs")
         co[int(r["mode"])][key] = complex(float(r["re_collier"]), float(r["im_collier"]))
 
+
+# %% [markdown]
+# ## Tools against Package-X
+
+# %%
 # ---------------- tools against Package-X (30 digits) ----------------
 print("one-loop amplitude against Package-X (analytic C0, D0, 30 digits): relative deviation of Re and Im, max over mu = m, sqrt(s)")
 print(f"{'sqrt(s)/m':>11} | {'LoopTools Re':>12} {'Im':>8} | {'COLI Re':>9} {'Im':>8} | {'DD Re':>8} {'Im':>8}")
@@ -91,6 +116,11 @@ for name, i in (("COLI", 4), ("DD", 6)):
     bad = [r[1] for r in tool_rows if r[0] >= 0 and max(r[i], r[i + 1]) > 1e-8]
     print(f"COLLIER {name}: deviation > 1e-8 from sqrt(s) = {min(bad):.4g} m on; largest {max(max(r[i], r[i + 1]) for r in tool_rows):.1e}")
 
+
+# %% [markdown]
+# ## One-loop coefficients and their logarithms
+
+# %%
 # ---------------- one-loop coefficients (Package-X) ----------------
 ks = list(range(0, 65))
 rs_arr, c_m, c_rs, cG_rs, cR_rs = [], [], [], [], []
@@ -123,6 +153,11 @@ for k in (0, 8, 16, 24, 32, 40, 48, 56, 64):
 # the approach to the limit: power corrections in m^2/s
 print(f"  c_G(s; sqrt s) at the three largest sqrt(s): {cG_rs[-3]:.10f}, {cG_rs[-2]:.10f}, {cG_rs[-1]:.10f}")
 
+
+# %% [markdown]
+# ## Effective couplings: fixed order and RG-improved (Eq. (30))
+
+# %%
 # ---------------- effective couplings ----------------
 a_rs = np.array([alpha_run(r) for r in rs_arr])
 a_fo = ALPHA_M + ALPHA_M ** 2 * c_m
@@ -141,6 +176,8 @@ print(f"  the fixed-order alpha_eff vanishes at sqrt(s) = {zero:.3g} m")
 print(f"  at sqrt(s) = 2.5 m: |RG2 - FO|/alpha_m = {abs(a_rg2[0] - a_fo[0]) / ALPHA_M:.1e}, |RG1 - FO|/alpha_m = "
       f"{abs(a_rg1[0] - a_fo[0]) / ALPHA_M:.1e}")
 
+
+# %%
 with open(os.path.join(HERE, "results", "af6_comparison.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["k", "sqrts", "reldev_re_looptools", "reldev_im_looptools", "reldev_re_coli", "reldev_im_coli",
@@ -152,9 +189,15 @@ with open(os.path.join(HERE, "results", "af6_comparison.csv"), "w", newline="") 
     for k in ks:
         w.writerow([k, rs_arr[k], c_m[k], c_rs[k], cG_rs[k], cR_rs[k], a_fo[k], a_rg1[k], a_rg2[k], a_rs[k], ALPHA_M])
 
+
+# %% [markdown]
+# ## Figure
+
+# %%
 # ---------------- figure ----------------
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.ticker
 

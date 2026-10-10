@@ -1,34 +1,51 @@
-"""Field anomalous dimension, mass running and beta in d = 6 from the 1PI functions (research note, step (10)).
+# %% [markdown]
+# # Step (10): d = 6 field anomalous dimension, mass running and beta from the 1PI functions
+#
+# Field anomalous dimension, mass running and beta in d = 6 from the 1PI functions (research note, step (10)).
+#
+# B0^(6)(p^2) and C0^(6) (MS-bar, note Eqs. (11)-(13); m = g = 1) from FeynCalc + Package-X, FeynCalc + LoopTools
+# (results/anom6_feyncalc.csv) and COLLIER (results/anom6_collier.csv) for mu = 1, 1/2, 2.
+# The renormalized 1PI functions obey  mu d Gamma^(n)/d mu = n gamma_phi Gamma^(n),  gamma_phi = (1/2) mu d ln Z/d mu
+# (Gamma^(n) = Z^(n/2) Gamma_0^(n), phi_0 = Z^(1/2) phi).  At one loop, with Sigma = -g^2 B0^(6)/(2K), K = (4pi)^3:
+#     n = 2, Gamma^(2) = p^2 - m^2 - Sigma:   -mu dSigma/dmu = gamma + 2 gamma_phi (p^2 - m^2),   gamma = mu dm^2/dmu,
+#     n = 3, Gamma^(3) = -g + g^3 C0^(6)/K:     beta = T + 3 g gamma_phi,   T = (g^3/K) mu dC0^(6)/dmu.
+# The two-point slopes at eight p^2 fix (gamma, gamma_phi) by least squares; T then gives beta.  Expected (note, App. D):
+#     gamma_phi = g^2/(12 K),  gamma = -5 g^2 m^2/(6 K),  beta = -3 g^3/(4 K).
+# Literature: Borinsky, Gracey, Kompaniets, Schnetz, Phys. Rev. D 103, 116024 (2021) [arXiv:2103.16224], Eqs. (28)-(30), give
+# the Lee-Yang theory (g -> i g) in d = 6 - eps with beta = mu dg/dmu, gamma_phi = mu d ln Z_phi/dmu (phi_0 = Z_phi phi),
+# gamma_{m^2} = mu d ln Z_{m^2}/dmu (m_0^2 = m^2 Z_{m^2}):  beta = -(eps/2) g + (3/4) g^3,  gamma_phi = -g^2/12,
+# gamma_{m^2} = -(5/6) g^2.  Undoing g -> i g (g^2 -> -g^2, beta -> -beta for the cubic term) and reading their g^2 as
+# g^2/K: beta = -(3/4) g^3/K, gamma_phi = g^2/(12 K), mu d ln m^2/dmu = -gamma_{m^2} = -(5/6) g^2/K.
+# Writes results/anom6_comparison.csv and ../figs/anom6_d6.pdf.
+# Usage (from Src/):  ~/miniforge3/envs/qft/bin/python anom6_numeric.py
+#
+# Batch: as in the usage line above.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%) one by one;
+# a bare expression at the end of a cell shows its value, and figures are drawn inline.
 
-B0^(6)(p^2) and C0^(6) (MS-bar, note Eqs. (11)-(13); m = g = 1) from FeynCalc + Package-X, FeynCalc + LoopTools
-(results/anom6_feyncalc.csv) and COLLIER (results/anom6_collier.csv) for mu = 1, 1/2, 2.
-The renormalized 1PI functions obey  mu d Gamma^(n)/d mu = n gamma_phi Gamma^(n),  gamma_phi = (1/2) mu d ln Z/d mu
-(Gamma^(n) = Z^(n/2) Gamma_0^(n), phi_0 = Z^(1/2) phi).  At one loop, with Sigma = -g^2 B0^(6)/(2K), K = (4pi)^3:
-    n = 2, Gamma^(2) = p^2 - m^2 - Sigma:   -mu dSigma/dmu = gamma + 2 gamma_phi (p^2 - m^2),   gamma = mu dm^2/dmu,
-    n = 3, Gamma^(3) = -g + g^3 C0^(6)/K:     beta = T + 3 g gamma_phi,   T = (g^3/K) mu dC0^(6)/dmu.
-The two-point slopes at eight p^2 fix (gamma, gamma_phi) by least squares; T then gives beta.  Expected (note, App. D):
-    gamma_phi = g^2/(12 K),  gamma = -5 g^2 m^2/(6 K),  beta = -3 g^3/(4 K).
-Literature: Borinsky, Gracey, Kompaniets, Schnetz, Phys. Rev. D 103, 116024 (2021) [arXiv:2103.16224], Eqs. (28)-(30), give
-the Lee-Yang theory (g -> i g) in d = 6 - eps with beta = mu dg/dmu, gamma_phi = mu d ln Z_phi/dmu (phi_0 = Z_phi phi),
-gamma_{m^2} = mu d ln Z_{m^2}/dmu (m_0^2 = m^2 Z_{m^2}):  beta = -(eps/2) g + (3/4) g^3,  gamma_phi = -g^2/12,
-gamma_{m^2} = -(5/6) g^2.  Undoing g -> i g (g^2 -> -g^2, beta -> -beta for the cubic term) and reading their g^2 as
-g^2/K: beta = -(3/4) g^3/K, gamma_phi = g^2/(12 K), mu d ln m^2/dmu = -gamma_{m^2} = -(5/6) g^2/K.
-Writes results/anom6_comparison.csv and ../figs/anom6_d6.pdf.
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python anom6_numeric.py
-"""
+# %%
 import csv
 import math
 import os
+import sys
 
 import mpmath as mp
 import numpy as np
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 K = (4 * math.pi) ** 3
 GPHI, GAMMA, BETA = 1 / (12 * K), -5 / (6 * K), -3 / (4 * K)
 MUS = (0.5, 1.0, 2.0)
 TOL = 1e-9     # Package-X's numerical C0 limits it to ~1e-12 here (cf. steps (5), (8))
 
+
+# %% [markdown]
+# ## Literature: Borinsky, Gracey, Kompaniets, Schnetz (2021), mapped to the real coupling
+
+# %%
 # the literature values (Lee-Yang form, coupling g_LY^2 = -g^2/K) mapped back to the real coupling
 LY = {"beta3": 3 / 4, "gphi": -1 / 12, "gm2": -5 / 6}
 LIT = {"beta": -LY["beta3"] / K, "gphi": -LY["gphi"] / K, "gamma": LY["gm2"] / K}
@@ -38,6 +55,10 @@ print("Borinsky-Gracey-Kompaniets-Schnetz (2021), Eqs. (28)-(30), mapped to the 
       "beta, gamma_phi and mu dm^2/dmu: ok")
 
 
+# %% [markdown]
+# ## Closed forms (Eq. (13))
+
+# %%
 def b0_closed(p2, mu):
     """d = 4 MS-bar B0(p^2; 1, 1) for any real p^2 (App. G)."""
     p2 = mp.mpf(p2)
@@ -69,11 +90,20 @@ def read(path, cols):
     return out
 
 
+# %% [markdown]
+# ## The tool values
+
+# %%
 fc = read(os.path.join(HERE, "results", "anom6_feyncalc.csv"), ["packagex", "looptools"])
 co = read(os.path.join(HERE, "results", "anom6_collier.csv"), ["collier"])
 data = {k: {**fc[k], **co[k]} for k in fc}
 tools = ("packagex", "looptools", "collier")
 
+
+# %% [markdown]
+# ## The values: tools against each other and against Eq. (13)
+
+# %%
 # ---------------- the values: tools against each other and against Eq. (13) ----------------
 rows = []
 print(f"\n{'X':4} {'args':>14} {'mu':>4} {'Re X (COLLIER)':>22} {'Im X (COLLIER)':>22} | PX  LT  closed form (B0^(6) only)")
@@ -93,6 +123,11 @@ for key in sorted(data):
     rows.append([func, a1, a2, a3, mu, ref.real, ref.imag, *(x for k in tools for x in (v[k].real, v[k].imag)), dcl])
 print(f"largest deviation from COLLIER (and Eq. (13)): B0^(6) {worst['B06']:.1e}, C0^(6) (Package-X) {worst['C06']:.1e}")
 
+
+# %% [markdown]
+# ## Slopes in ln(mu) and the fits (Eq. (28))
+
+# %%
 # ---------------- slopes in ln(mu) and the fits ----------------
 def slope(func, args, k):
     v = {mu: data[(func, *args, mu)][k] for mu in MUS}
@@ -136,6 +171,11 @@ for k in tools:
           f"(units g^3/K);  linearity in ln mu {max(lins):.0e};  |mu d Im/d mu| {max(ims):.0e}")
     fit_rows.append([k, gph, gam, bet, GPHI, GAMMA, BETA, res, float(np.ptp(T) * K), max(lins)])
 
+
+# %% [markdown]
+# ## Comparison with step (9)
+
+# %%
 # the mass running from the S-matrix element (step (9)) and from the two-point function
 rg = {}
 with open(os.path.join(HERE, "results", "rg4_comparison.csv")) as fh:
@@ -147,6 +187,8 @@ for k in tools:
     print(f"  {k:9}: gamma {rg[k][0]:+.10e} vs {fits[k][1]:+.10e} (rel. diff. {abs(fits[k][1] / rg[k][0] - 1):.1e}),  "
           f"beta {rg[k][1]:+.10e} vs {fits[k][2]:+.10e} (rel. diff. {abs(fits[k][2] / rg[k][1] - 1):.1e})")
 
+
+# %%
 with open(os.path.join(HERE, "results", "anom6_comparison.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["func", "arg1", "arg2", "arg3", "mu", "re_ref_collier", "im_ref_collier",
@@ -160,9 +202,15 @@ with open(os.path.join(HERE, "results", "anom6_comparison.csv"), "w", newline=""
                 "beta_expected", "fit_residual", "T_spread", "linearity"])
     w.writerows(fit_rows)
 
+
+# %% [markdown]
+# ## Figure
+
+# %%
 # ---------------- figure ----------------
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
