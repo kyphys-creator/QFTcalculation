@@ -50,7 +50,7 @@
 \maketitle
 
 \begin{abstract}
-本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。その後、$\phi^3$ 模型での検算で、この環境の LoopTools が閾値より下で外運動量がゼロでない $C_0$ を誤って返し、その誤りがテンソル係数 $C_{00}$ にも及ぶことが分かった。$C_0$ と $C_{00}$ には Package-X と COLLIER を使う。4点関数 $D_0$ は、外線と内線の質量がすべて等しいとき、ライブラリごとに異なる点で値を返さない。さらに MadLoop との比較で、NLOCT の不具合（FeynRules の \texttt{Core/Loop.m} に2つ目の局所パッチを当てた）と、MadGraph の1ループ計算が QCD と QED の摂動しか受け付けないことが分かった。全断面積の計算では、MadGraph の木の $2\to3$ の断面積が、高いエネルギーで誤差を小さく見積もり、自前の積分より $0.8\%$ 低く出た。$\phi\phi\to\phi\phi$ を高エネルギーまで計算すると、COLLIER の箱図が $\sqrt s\gg m$ で精度を失った。既定の方式 COLI では虚部が、もう一方の DD では $\sqrt s\gtrsim10^3m$ で値全体が誤る。LoopTools と、Package-X の解析式を30桁で評価した値は正しかった（第~\ref{sec:issues} 節）。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。
+本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。その後、$\phi^3$ 模型での検算で、この環境の LoopTools が閾値より下で外運動量がゼロでない $C_0$ を誤って返し、その誤りがテンソル係数 $C_{00}$ にも及ぶことが分かった。$C_0$ と $C_{00}$ には Package-X と COLLIER を使う。4点関数 $D_0$ は、外線と内線の質量がすべて等しいとき、ライブラリごとに異なる点で値を返さない。さらに MadLoop との比較で、NLOCT の不具合（FeynRules の \texttt{Core/Loop.m} に2つ目の局所パッチを当てた）と、MadGraph の1ループ計算が QCD と QED の摂動しか受け付けないことが分かった。全断面積の計算では、MadGraph の木の $2\to3$ の断面積が、高いエネルギーで誤差を小さく見積もり、自前の積分より $0.8\%$ 低く出た。$\phi\phi\to\phi\phi$ を高エネルギーまで計算すると、COLLIER の箱図が $\sqrt s\gg m$ で精度を失った。既定の方式 COLI では虚部が、もう一方の DD では $\sqrt s\gtrsim10^3m$ で値全体が誤る。LoopTools と、Package-X の解析式を30桁で評価した値は正しかった（第~\ref{sec:issues} 節）。計算のスクリプトは、まとめて実行できるうえ、Mathematica のノートブックや VS Code でセルごとにも実行できる形にした。これで途中の式や図を確かめられる（第~\ref{sec:usage} 節）。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。
 \end{abstract}
 
 \section{はじめに}\label{sec:intro}
@@ -280,9 +280,9 @@ LoopTools の $C_{00}$ & 閾値より下で外運動量がゼロでない $C_{00
 COLLIER の $C_0$ & 外運動量がすべて厳密にゼロのとき $10^{50}$ を返す & 仕様（``case not implemented''） & Package-X か LoopTools を使う \\
 FeynHelpers の $C_0$ 展開 & \texttt{PaXC0Expand -> True} の式が閾値より下で \texttt{Undefined} & 適用範囲付きの式（\texttt{ConditionalExpression}） & Package-X の \texttt{X\bq ScalarC0} で数値評価する \\
 $D_0$（外線と内線の質量がすべて等しい場合） & LoopTools は $t=0$ で \texttt{NaN}。COLLIER は $t=0$ で $10^{50}$ を返し、$s,t,u$ がすべて $4m^2$ より小さい点では停止する。Package-X の \texttt{X\bq ScalarD0} はその点で \texttt{Indeterminate} & 退化した運動学を各実装が扱わない（FF：``on threshold''、COLLIER：``lambda<0''） & どのライブラリも値を返す点で比べる。物理的な散乱の点（$s>4m^2$、$t,u<0$、$t\ne0$）では3つとも一致する \\
-COLLIER の $D_{00}$（$s\gg m^2$） & 箱図 $D_{00}(s,t)$ が高エネルギーで誤る。COLI は虚部だけが徐々にずれ（$\sqrt s=130m$ で $10^{-8}$、$10^4m$ で $44\%$）、DD は $\sqrt s\gtrsim1.3\times10^3m$ で値全体が誤る & 不明 & LoopTools か、Package-X の解析式（\texttt{PaXD0Expand -> True}）の高精度の値で確かめる \\
+COLLIER の $D_{00}$（$s\gg m^2$） & COLI は虚部が徐々にずれ（$\sqrt s=10^4m$ で $44\%$）、DD は $\sqrt s\gtrsim1.3\times10^3m$ で全体が誤る & 不明 & LoopTools か、Package-X の解析式（\texttt{PaXD0Expand -> True}）の高精度の値で確かめる \\
 FeynHelpers の \texttt{LToolsEvaluate} & 倍精度の係数を持つ $B_0$ に対して、テンソル積分を無視したという警告（\texttt{::tens}）を出す & 誤判定（値は正しい） & 運動学を有理数のまま渡す \\
-miniforge の base 環境 & numpy を読み込めない & \texttt{libgfortran} の rpath の重複（推論） & 触らずに環境 \texttt{qft} を使う \\
+miniforge & base 環境で numpy を読み込めない。\texttt{mamba} は \texttt{ImportError} & \texttt{libgfortran} の rpath の重複。古い mamba と新しい conda（推論） & 環境 \texttt{qft} と \texttt{conda install} を使う \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -437,6 +437,17 @@ SetDirectory[$FeynRulesPath]; << FeynRules`
 LoadModel["~/Documents/Claude/QFTcalculation/models/backup_20261009/feynrules_Library_Models/AbelianHiggs/AbelianHiggs.fr"]
 \end{Verbatim}
 
+\paragraph{対話的な実行。}計算のスクリプトは、まとめて実行できるだけでなく、セルごとに実行して途中の式や図を確かめられるように書く。この形は $\phi^3$ 模型の手順 (5)（\nolinkurl{models/phi3/Src/scat4_feyncalc.wl} と \nolinkurl{scat4_numeric.py}）で試作した。Wolfram のスクリプト（\texttt{.wl}）には、\texttt{(* ::Section:: *)} や \texttt{(* ::Text:: *)} などのフロントエンドのセルの印を付ける。\texttt{wolframscript -file} で実行すれば、従来どおり計算のセルが順に評価され、\texttt{Print} の行だけが出力される。同じファイルを \texttt{wopen}（\ref{app:files}）で開くと、Mathematica 14.2.1 のノートブックとしてセルに分かれて表示される。ダブルクリックで開くと古い 14.1（\texttt{Wolfram.app}）が選ばれることがあるので、使わない。途中の対象を表示するセルは \texttt{If[\$Notebooks, ...]} で囲む。表示するのは、ダイアグラム、図ごとの振幅とテンソル簡約の結果、極、数値の表である。こうしたセルは、ノートブックでは「Run All Code」でも評価され、\texttt{wolframscript} では評価されない。最初は入力セル（\texttt{(* ::Input:: *)}）として書いたが、「Run All Code」はこれを評価しないので、この形に改めた。FeynArts の \texttt{Paint} の結果をそのまま評価するとラベルしか表示されないので、\texttt{Show /@ Render[Paint[..., DisplayFunction -> Identity]]} で Graphics に直す。ファイルの場所は、\texttt{\$InputFileName} が空のときは \texttt{NotebookDirectory[]} から取る。フロントエンドで保存してもこの形式は保たれ、出力のセルは保存されない。同じファイルのウィンドウが開いたままだと、\texttt{open -a} はそれを前に出すだけでファイルを読み直さない。古いウィンドウを保存すると編集が上書きされるので、保存せずに閉じてから開き直す。
+
+Python のスクリプト（\texttt{.py}）は \texttt{\# \%\%} でセルに分け、説明は \texttt{\# \%\% [markdown]} のセルに書く。\texttt{python} で実行すれば全体が通り、図はファイルに保存される。VS Code では「Run Cell」でセルを対話ウィンドウに送ると、セルの最後の式の値と図がその場に表示される。そのため、conda 環境 \texttt{qft} に \texttt{ipykernel} 7.4.0 を加え、リポジトリの \nolinkurl{.vscode/settings.json} で \texttt{qft} の Python を指定した。対話的に実行するときは matplotlib の Agg を使わない（\texttt{"ipykernel" in sys.modules} で判定する）。\texttt{\_\_file\_\_} がないときは、作業ディレクトリ（ファイルのある場所）を使う。
+
+\begin{Verbatim}
+~/hep/bin/wopen ~/Documents/Claude/QFTcalculation/models/phi3/Src/scat4_feyncalc.wl
+                               # notebook in Mathematica 14.2.1; "Run All Code" shows the Inspect cells
+wolframscript -file scat4_feyncalc.wl      # batch: Inspect cells skipped, (a)/(b)/(c) lines printed
+~/miniforge3/envs/qft/bin/python scat4_numeric.py   # batch; in VS Code use "Run Cell" (# %%)
+\end{Verbatim}
+
 ツールを更新したときは、試験をすべて実行し直す。MadGraph の試験を除けば数分で終わる。
 
 \begin{Verbatim}
@@ -461,7 +472,7 @@ LoadModel["~/Documents/Claude/QFTcalculation/models/backup_20261009/feynrules_Li
 \begin{Verbatim}
 ~/hep/
   README.md                     runbook (English)
-  bin/   form tform lt LoopTools fcc f++ mcc mg5_aMC wolframscript(-> Wolfram 2.app)
+  bin/   form tform lt LoopTools fcc f++ mcc mg5_aMC wolframscript(-> Wolfram 2.app) wopen
   lib/   libooptools.a libcollier.dylib cmake/
   include/  looptools.h clooptools.h collier.mod
   mathematica/  FeynArts-3.12/  FormCalc-9.10/ (MacOSX-ARM64/: ReadForm, form 4.2.1, ...)
@@ -561,6 +572,9 @@ $\sqrt s=1$~TeV では $A_0=1.14522$ となる。$\pi\alpha^2/(2s)=8.9465\times1
 
 \paragraph{FeynRules の \texttt{Core/Loop.m}（NLOCT）への局所パッチ（\texttt{diff -u}）。}
 \VerbatimInput{files/Loop.m.patch}
+
+\paragraph{ノートブックを開くスクリプト（\texttt{\textasciitilde/hep/bin/wopen}）。}
+\VerbatimInput{files/wopen}
 
 \paragraph{Applications の入口ファイル。}
 \VerbatimInput{files/FeynArts.m}

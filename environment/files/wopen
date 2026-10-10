@@ -1,0 +1,7 @@
+#!/bin/bash
+# wopen -- open Wolfram Language files (.wl, .nb, .m) in Mathematica 14.2.1 ("/Applications/Wolfram 2.app"),
+# the version that wolframscript uses.  "/Applications/Wolfram.app" is the older 14.1, which macOS may pick
+# on a double click.  A .wl file with (* ::Section:: *)-style cell markup opens as a notebook: evaluate the
+# cells with Shift+Return ("Run All Code" runs only the code cells, not the "Inspect" input cells).
+# Usage:  wopen file.wl [more files]
+exec open -a "/Applications/Wolfram 2.app" "$@"

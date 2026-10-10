@@ -1,25 +1,37 @@
-"""One-loop phi phi -> phi phi in d = 4: comparison and unitarity check (research note, step (5)).
+# %% [markdown]
+# # Step (5): one-loop phi phi -> phi phi in d = 4 -- comparison and unitarity check
+#
+# The MS-bar truncated one-loop amplitude M1 (note, Eq. (17) (eq:M1); m = g = mu = 1) from
+# - FeynCalc + Package-X, FeynCalc + LoopTools (results/scat4_feyncalc.csv),
+# - FormCalc + LoopTools (results/scat4_formcalc.csv),
+# - COLLIER (results/scat4_collier.csv, scan: scat4_collier_scan.csv)
+#
+# is compared point by point.  Reference values:
+# - Re M1: COLLIER (no tool-independent value is available for the box in the physical region);
+# - Im M1: the s-channel unitarity relation with two tree amplitudes (note, App. I, eq:unit = Eq. (18)),
+#   Im M1(s, t) = (1/4) (p / (16 pi^2 sqrt(s))) int dOmega_k M0(s, t1) M0(s, t2),
+#   M0(s, t') = -g^2 [1/(s - m^2) + 1/(t' - m^2) + 1/(u' - m^2)], u' = 4 m^2 - s - t',
+#   t1 = (p1 - k)^2, t2 = (p3 - k)^2; the factor 1/4 = (1/2 from 2 Im M = sum |M|^2) x (1/2 identical
+#   particles).  In the forward direction it becomes the optical theorem Im M1(s, 0) = 2 p sqrt(s) sigma.
+#
+# Writes results/scat4_comparison.csv and ../figs/scat4_d4.pdf.
+#
+# Batch:  `~/miniforge3/envs/qft/bin/python scat4_numeric.py` (from Src/).
+# Interactive:  open in VS Code with the qft interpreter and run the cells (# %%) one by one
+# ("Run Cell", Shift+Return); a bare expression at the end of a cell shows its value, and the figure is drawn inline.
 
-The MS-bar truncated one-loop amplitude M1 (note, Eq. (17) (eq:M1); m = g = mu = 1) from
-  FeynCalc + Package-X, FeynCalc + LoopTools   (results/scat4_feyncalc.csv),
-  FormCalc + LoopTools                         (results/scat4_formcalc.csv),
-  COLLIER                                      (results/scat4_collier.csv, scan: scat4_collier_scan.csv)
-is compared point by point.  Reference values:
-  Re M1: COLLIER (no tool-independent value is available for the box in the physical region);
-  Im M1: the s-channel unitarity relation with two tree amplitudes (note, App. I, eq:unit = Eq. (18)),
-      Im M1(s, t) = (1/4) (p / (16 pi^2 sqrt(s))) int dOmega_k M0(s, t1) M0(s, t2),
-      M0(s, t') = -g^2 [1/(s - m^2) + 1/(t' - m^2) + 1/(u' - m^2)],  u' = 4 m^2 - s - t',
-      t1 = (p1 - k)^2, t2 = (p3 - k)^2; the factor 1/4 = (1/2 from 2 Im M = sum |M|^2) x (1/2 identical
-      particles).  In the forward direction it becomes the optical theorem Im M1(s, 0) = 2 p sqrt(s) sigma.
-Writes results/scat4_comparison.csv and ../figs/scat4_d4.pdf.
-Usage (from Src/):  ~/miniforge3/envs/qft/bin/python scat4_numeric.py
-"""
+# %%
 import csv
 import os
+import sys
 
 import mpmath as mp
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+try:
+    HERE = os.path.dirname(os.path.abspath(__file__))
+except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
+    HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 TOL = 1e-10
 M2 = 1
 
@@ -65,17 +77,32 @@ def read(path, cols):
     return out
 
 
+# %% [markdown]
+# ## The tool values
+# One dictionary per tool, keyed by (sqrt(s), cos(theta)).
+
+# %%
 fc = read(os.path.join(HERE, "results", "scat4_feyncalc.csv"), ["packagex", "looptools"])
 fo = read(os.path.join(HERE, "results", "scat4_formcalc.csv"), ["formcalc"])
 co = read(os.path.join(HERE, "results", "scat4_collier.csv"), ["collier"])
 tools = ("packagex", "looptools", "formcalc", "collier")
+{**fc[(5.0, 0.3)], **fo[(5.0, 0.3)], **co[(5.0, 0.3)]}          # inspect: one point, all tools
 
-# the unitarity code reproduces the optical theorem in the forward direction
+# %% [markdown]
+# ## The unitarity integral
+# In the forward direction it must reproduce the optical theorem with the tree cross section (Eq. (25)).
+
+# %%
 for rs in (2.5, 5, 10):
     lhs, rhs = im_unitarity(rs ** 2, 1), 2 * mp.sqrt(rs ** 2 / 4 - M2) * rs * sigma_tree(rs ** 2)
     assert abs(lhs / rhs - 1) < 1e-15, (rs, lhs, rhs)
 print("unitarity integral at cos(theta) = 1 equals 2 p sqrt(s) sigma_tree (optical theorem): ok")
 
+# %% [markdown]
+# ## Comparison at the six points
+# Re: relative deviation from COLLIER; Im: relative deviation from the unitarity integral.
+
+# %%
 rows = []
 print(f"\n{'sqrt(s)':>7} {'cos':>4} {'Re M1 (COLLIER)':>22} {'Im M1 (unitarity)':>22} | "
       "rel. dev. Re: PX LT FormCalc | Im: PX LT FormCalc COLLIER")
@@ -100,9 +127,13 @@ with open(os.path.join(HERE, "results", "scat4_comparison.csv"), "w", newline=""
                 *(f"{c}_{k}" for k in tools for c in ("re", "im", "reldev_re", "reldev_im"))])
     w.writerows(rows)
 
-# ---------------- figure: Re and Im of M1 at sqrt(s) = 5 versus cos(theta) ----------------
+# %% [markdown]
+# ## Figure: Re and Im of M1 at sqrt(s) = 5 versus cos(theta)
+
+# %%
 import matplotlib
-matplotlib.use("Agg")
+if not INTERACTIVE:
+    matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 

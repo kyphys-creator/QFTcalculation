@@ -1,0 +1,7 @@
+{
+    // Python scripts run cell by cell (# %% markers) in the interactive window with the qft conda env
+    // (numpy, mpmath, matplotlib, ipykernel); see ~/hep/README.md, "Interactive use".
+    "python.defaultInterpreterPath": "/Users/koichiro/miniforge3/envs/qft/bin/python",
+    "jupyter.notebookFileRoot": "${fileDirname}",
+    "jupyter.interactiveWindow.creationMode": "perFile"
+}
