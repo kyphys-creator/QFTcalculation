@@ -47,7 +47,7 @@ def im_unitarity(s, cth, dps=20):
 
 
 def sigma_tree(s, dps=20):
-    """Eq. (19) (eq:sigma) of the note: sigma = (1/2) int dOmega |M0|^2/(64 pi^2 s)."""
+    """Eq. (21) (eq:sigma) of the note: sigma = (1/2) int dOmega |M0|^2/(64 pi^2 s)."""
     with mp.workdps(dps):
         s = mp.mpf(s)
         p2 = s / 4 - M2

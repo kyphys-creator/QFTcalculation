@@ -41,16 +41,16 @@
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その五段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その五段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \section{目的と問い}\label{sec:intro}
 
 本ノートの問いは次の一つである。\textbf{$\phi^3$ 理論の1ループの紫外発散と繰り込みの構造は、$d=4$ と $d=6$ でどう違うか。そして、どの量をどの手段で突き合わせれば、計算環境の各部品を独立に検算できるか。}この問いを立てる理由は、ループ計算の環境を組み直したばかりで、その各部品がこちらの意図どおりに動くことを、手計算で答えが分かる模型で確かめたいからである~\cite{env}。$\phi^3$ 理論は3点結合を持つ最も簡単な相互作用理論であり、1ループの量はすべて手で計算できる。しかも次元によって性格が大きく変わる。$d=4$ では結合定数が質量次元を持つ超繰り込み可能な理論で、Package-X と LoopTools がそのまま使える。$d=6$ では繰り込み可能で漸近自由な理論になり、場・質量・結合のすべてが繰り込まれる~\cite{srednicki}。$d=6$ の積分は Package-X と LoopTools の守備範囲（$D=4-2\epsilon$）の外にあるので、FeynCalc を $D\neq4$ で使う練習にもなる。ただし、次元をずらす関係を通せば、これらのツールも $d=6$ に使える（第~\ref{sec:checks} 節）。
 
-求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) $\phi\phi\to\phi\phi$ の木の振幅と、$d=4$ での1ループの振幅。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
+求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) $\phi\phi\to\phi\phi$ の木の振幅と、$d=4$ での1ループの振幅、およびその S 行列要素。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(5) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:scat} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(5) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:lsz} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -97,6 +97,9 @@ $A_0^{(6)},\ B_0^{(6)},\ C_0^{(6)}$ & $d=6$ の1ループ積分の $\overline{\m
 $A_{00},\ B_{00},\ C_{00}$ & テンソル積分の $g^{\mu\nu}$ の係数（\ref{app:d6}） \\
 $s,\ t,\ u$ & Mandelstam 変数。$s+t+u=4m^2$ \\
 $\mathcal{M}^{(0)},\ \mathcal{M}^{(1)}$ & $\phi\phi\to\phi\phi$ の木の振幅（式~\eqref{eq:Mtree}）と、$d=4$ の1ループの振幅（式~\eqref{eq:M1}） \\
+$\Sigma$ & 自己エネルギー $\Sigma\equiv iV_2$。完全な伝播関数は $i/(p^2-m^2-\Sigma(p^2))$ \\
+$m_{\mathrm p},\ R$ & 完全な伝播関数の極の位置（極質量）と、そこでの留数（式~\eqref{eq:mpole}） \\
+$\mathcal{M}_{\mathrm{phys}}$ & $\phi\phi\to\phi\phi$ の S 行列要素（式~\eqref{eq:Mphys}） \\
 $\beta(g)$ & $\beta\equiv\dd g/\dd\ln\mu$（$\epsilon\to0$ の値） \\
 $E,\ V,\ L,\ I$ & 図の外線、頂点、ループ、内線の数 \\
 \bottomrule
@@ -338,7 +341,7 @@ d=4:\qquad \mu\frac{\dd m^2}{\dd\mu}=\frac{g^2}{(4\pi)^2}
 t_1=(p_1-k)^2,\quad t_2=(p_3-k)^2 .
 \label{eq:unit}
 \end{equation}
-$p=\sqrt{s/4-m^2}$ は重心系の運動量の大きさ、$k$ は中間状態の $\phi$ の一方の運動量で、積分はその向きについて行う。前方（$t=0$）では、これは光学定理 $\mathrm{Im}\,\mathcal{M}^{(1)}(s,0)=2p\sqrt s\,\sigma(\phi\phi\to\phi\phi)$ になる。$\mathcal{M}^{(1)}$ を S 行列要素にするには、外線の補正（留数と極質量）を加える必要がある（第~\ref{sec:discussion} 節）。
+$p=\sqrt{s/4-m^2}$ は重心系の運動量の大きさ、$k$ は中間状態の $\phi$ の一方の運動量で、積分はその向きについて行う。前方（$t=0$）では、これは光学定理 $\mathrm{Im}\,\mathcal{M}^{(1)}(s,0)=2p\sqrt s\,\sigma(\phi\phi\to\phi\phi)$ になる。ただし、$\mathcal{M}^{(1)}$ はまだ S 行列要素ではない。それを次に述べる。
 
 \begin{figure}[tbp]
 \centering
@@ -382,6 +385,24 @@ $p=\sqrt{s/4-m^2}$ は重心系の運動量の大きさ、$k$ は中間状態の
 \caption{$\phi\phi\to\phi\phi$ の1ループの図の3つの型（\ref{app:scat}）。三角形と内線の自己エネルギーは $s$ チャンネルのものを示した。箱図は外線を回る順に応じて $D_0(s,t)$、$D_0(s,u)$、$D_0(t,u)$ を与える。三角形は各チャンネルで頂点の二つの側に一つずつある。内線の自己エネルギーには、式~\eqref{eq:ct4} の質量の対抗項の挿入も加える。}
 \label{fig:scat}
 \end{figure}
+
+\paragraph{S 行列要素と繰り込みの処方（$d=4$）。}式~\eqref{eq:M1} の $\mathcal{M}^{(1)}$ は、外線の自己エネルギーを除き、外線を $\overline{\mathrm{MS}}$ の質量 $m$ の上に置いた振幅である。これを S 行列要素にするには二つの補正が要る。一つは外線の質量である。粒子の物理的な質量は、完全な伝播関数 $i/(p^2-m^2-\Sigma(p^2))$ の極の位置 $m_{\mathrm p}$ で、$\overline{\mathrm{MS}}$ の $m$ とは一致しない。もう一つは極での留数 $R$ で、これも1ではない。1ループでは、$\Sigma=-g^2B_0/(2(4\pi)^2)$（式~\eqref{eq:VR4}）から
+\begin{equation}
+m_{\mathrm p}^2=m^2+\Sigma(m_{\mathrm p}^2)=m^2-\frac{g^2}{2(4\pi)^2}\,B_0(m^2)+O(g^4),\qquad
+R=\frac{1}{1-\Sigma'(m_{\mathrm p}^2)}=1-\frac{g^2}{2(4\pi)^2}\,B_0'(m^2)+O(g^4)
+\label{eq:mpole}
+\end{equation}
+となる（\ref{app:lsz}）。$B_0(m^2)\equiv B_0(m^2;m,m)$ で、$B_0'$ は $p^2$ についての微分である。$m_{\mathrm p}$ と $R$ は $\mu$ によらない。$m^2$ の $\mu$ 依存（式~\eqref{eq:mrun4}）を、$B_0(m^2)$ の $\ln\mu^2$ がちょうど打ち消すからである。LSZ の簡約公式によれば、S 行列要素は、外線を切り離した振幅を $p_i^2=m_{\mathrm p}^2$ で評価し、外線1本ごとに $\sqrt R$ を掛けたものである~\cite{peskin}。そこで $R^2$ を掛け、木の振幅の内線の質量 $m$ も $m_{\mathrm p}$ で書き直して1ループまで展開すると、
+\begin{equation}
+\mathcal{M}_{\mathrm{phys}}=\mathcal{M}^{(0)}\big|_{m\to m_{\mathrm p}}+\mathcal{M}^{(1)}\big|_{m\to m_{\mathrm p}}
++\frac{g^4}{2(4\pi)^2}\sum_{x=s,t,u}\Bigl[\frac{2B_0'(m_{\mathrm p}^2)}{x-m_{\mathrm p}^2}-\frac{B_0(m_{\mathrm p}^2)}{(x-m_{\mathrm p}^2)^2}\Bigr]+O(g^6)
+\label{eq:Mphys}
+\end{equation}
+を得る。最後の項の $B_0'$ の部分は $R^2$ から、$B_0(m_{\mathrm p}^2)$ の部分は木の内線の質量の書き直しから来る。$\mathcal{M}^{(1)}$ の $B_0(x)$ の項とまとめると、各チャンネルの自己エネルギーの寄与は $\frac{g^4}{2(4\pi)^2}\bigl[B_0(x)-B_0(m_{\mathrm p}^2)+2(x-m_{\mathrm p}^2)B_0'(m_{\mathrm p}^2)\bigr]/(x-m_{\mathrm p}^2)^2$ となる。$B_0(x)-B_0(m_{\mathrm p}^2)$ と $B_0'$ は $\mu$ によらないので、$\mathcal{M}_{\mathrm{phys}}$ は $\mu$ によらない。一方、$\overline{\mathrm{MS}}$ で書いた $\mathcal{M}^{(0)}+\mathcal{M}^{(1)}$ の各項は $\mu$ に依存し、その依存は $m(\mu)$ の走りと打ち消し合う。
+
+同じ $\mathcal{M}_{\mathrm{phys}}$ は、on-shell の処方で直接計算しても得られる（\ref{app:lsz}）。on-shell の処方では、極がちょうど $m_{\mathrm p}$ にあり、留数がちょうど1になるように、質量の対抗項と場の繰り込みを決める。$d=4$ でも、場の繰り込み $\delta_Z^{\mathrm{os}}=\Sigma'(m_{\mathrm p}^2)$ は有限の値として残る。外線の因子 $\sqrt R$ は不要になり、代わりに内線の自己エネルギーの引き算と、頂点の対抗項 $-\frac32ig\,\delta_Z^{\mathrm{os}}$ が加わる。それらを足すと式~\eqref{eq:Mphys} に一致する。つまり、繰り込みの処方の違いは、入力のパラメータの定義（ここでは $m$ か $m_{\mathrm p}$ か）と、物理に効かない場の規格化の違いにすぎない。同じ物理的な入力で書けば、どの処方でも S 行列要素は（その次数で）一致する。結合 $g$ は、$d=4$ の1ループでは繰り込まれない（$\delta_g=\delta_Z=0$、裸の結合は $g_0=\mu^\epsilon g$）。このように裸の結合で $g$ を定義する限り、どちらの処方でも $g$ は同じである。$g$ を別の物理的な条件で定義するなら、その分の変換が加わる。式~\eqref{eq:mpole} と式~\eqref{eq:Mphys}、二つの導出の一致、$\mu$ によらないことは、\texttt{Src/onshell4\_check.wl} で記号として確かめた。
+
+大きさの目安として、$\mu=m$ では $B_0(m^2)=2-\pi/\sqrt3\approx0.186$、$m^2B_0'(m^2)=2\pi/(3\sqrt3)-1\approx0.209$ である。したがって $g=m$ では、$m_{\mathrm p}^2=m^2(1-5.9\times10^{-4})$、$R=1-6.6\times10^{-4}$ となる。どちらも小さいが、式~\eqref{eq:Mphys} の最後の項は $\mathcal{M}^{(1)}$ と同じ $g^4$ の次数である。例えば $\sqrt s=5m$、$\cos\theta=0.3$、$m_{\mathrm p}=g=1$ では、式~\eqref{eq:Mphys} の自己エネルギーの寄与（3つのチャンネルの合計）の実部は $-2.6\times10^{-4}$ で、$\mathrm{Re}\,\mathcal{M}^{(1)}=7.4\times10^{-4}$（表~\ref{tab:scat4}）と比べて無視できない。
 
 \section{検算の計画}\label{sec:plan}
 
@@ -551,13 +572,13 @@ $\sqrt s/m$ & $\cos\theta$ & $\mathcal{M}^{(0)}$ & $10^3\,\mathrm{Re}\,\mathcal{
 
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。その必要が出れば、式~\eqref{eq:VR4} から移せる。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。
+\paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$\phi\phi\to\phi\phi$ については、on-shell の処方との関係を式~\eqref{eq:Mphys} と\ref{app:lsz} で求めた。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。
 
 \paragraph{タドポールの扱い。}本ノートでは、$Y$ でタドポールを打ち消す方法をとった。これは1ループでは、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除くことと同じである。2ループ以上では、ループの内側にタドポールが付いた図も $Y$ の高次の項で消えるので、同じ除き方で済むかどうかを確かめる必要がある。
 
 \paragraph{LoopTools の $C_0$。}手順 (3) で見つかった LoopTools の $C_0$ の誤りは、コンパイラの版や最適化によらない。そのため、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。この誤りは $C_{00}$ を通して $d=6$ の $C_0^{(6)}$ にも現れた。当面、$C_0$ と $C_{00}$ には Package-X と COLLIER を使い、LoopTools は $A_0$、$B_0$ と、それから作る $A_{00}$、$B_{00}$ にだけ使う。ただし、手順 (5) に現れた $C_0(m^2,m^2,x)$（$x<0$ または $x>4m^2$）と $D_0$（物理的な点）は、LoopTools でも正しかった。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(5) はすべて終わった。次の候補は二つある。一つは、手順 (5) の振幅を MadGraph の1ループ計算（MadLoop）と比べることである。それには FeynRules の NLOCT で対抗項を含む UFO を作り、MadLoop の規約に合わせる必要がある。合わせるべき点は、繰り込みの規約（NLOCT と MadLoop の既定は質量と場を on-shell で繰り込む）と、MadLoop が返す量の規格化である。$\overline{\mathrm{MS}}$ の $\mathcal{M}^{(1)}$ を S 行列要素にするには、外線の留数 $R=1+\Sigma'(m^2)$ の因子 $R^2$（1ループでは $2\Sigma'(m^2)\mathcal{M}^{(0)}$）を加え、外線の運動量を極質量 $M^2=m^2+\Sigma(m^2)$ の上に置く必要がある。もう一つは、$d=6$ の質量の異常次元を式~\eqref{eq:ct6} から求めて、文献の値と照合することである。
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(5) はすべて終わった。次の候補は二つある。一つは、手順 (5) の振幅を MadGraph の1ループ計算（MadLoop）と比べることである。MadLoop 自身は繰り込みの処方を持たない。紫外発散を消す対抗項は UFO の対抗項の頂点から来て、それを FeynRules の NLOCT が作る。そこで、まず NLOCT が作った対抗項を読んで、質量・場・結合の規約を確かめる。NLOCT の基本の関数 \texttt{OnShellRenormalization} は質量と場を on-shell で繰り込むと理解しているが、結合の扱いを含め、この環境ではまだ確かめていない。そのうえで、MadLoop が返す量（木と1ループの干渉）の規格化を合わせ、式~\eqref{eq:Mphys}（$g$ の定義が違えばその変換を加えたもの）と比べる。もう一つは、$d=6$ の質量の異常次元を式~\eqref{eq:ct6} から求めて、文献の値と照合することである。
 
 \appendix
 
@@ -899,10 +920,69 @@ i\mathcal{M}=(-ig)\,\frac{i}{s-m^2}\,V_2(s)\,\frac{i}{s-m^2}\,(-ig)=\frac{g^2V_2
 
 $\mathcal{M}^{(1)}$ のどの項が虚部を持つかも確かめておく。$s>4m^2$ では $B_0(s)$ が虚部 $\pi\beta$ を持ち（\ref{app:b0}）、$C_0(s)$ と、対角の一方が $s$ の $D_0(s,t)$、$D_0(s,u)$ も、二つの内線が同時に質量殻に乗れるので虚部を持つ。一方、$t,u<0$ では $B_0(t)$、$C_0(t)$、$D_0(t,u)$ などは実数である（どの切断でも内線が質量殻に乗れない）。木の伝播関数 $1/(x-m^2)$ も実数である。したがって式~\eqref{eq:unit} は、3つの型の図の $s$ チャンネルの部分をまとめて確かめる。
 
+\section{S 行列要素と繰り込みの処方の導出}\label{app:lsz}
+
+\paragraph{極と留数。}\ref{app:b0} で見たように、1PI の2点関数を繰り返し挿入した完全な伝播関数は $i/(p^2-m^2-\Sigma(p^2))$ である（$\Sigma\equiv iV_2$）。$\Sigma$ は $\overline{\mathrm{MS}}$ で繰り込んだもので、1ループでは $\Sigma=-\frac{g^2}{2(4\pi)^2}B_0(p^2;m,m)$ である（式~\eqref{eq:VR4}）。閾値 $4m^2$ より下では $B_0$ は実数なので、$\Sigma$ も実数である。極の位置 $m_{\mathrm p}^2$ は $m_{\mathrm p}^2-m^2-\Sigma(m_{\mathrm p}^2)=0$ で決まる。$\Sigma=O(g^2)$ なので $m_{\mathrm p}^2-m^2=O(g^2)$ であり、$\Sigma(m_{\mathrm p}^2)-\Sigma(m^2)=\Sigma'\cdot(m_{\mathrm p}^2-m^2)+\cdots=O(g^4)$ である。よって $m_{\mathrm p}^2=m^2+\Sigma(m^2)+O(g^4)$ となる。また、極の近くで分母を展開すると
+\begin{equation*}
+p^2-m^2-\Sigma(p^2)=(p^2-m_{\mathrm p}^2)-\bigl[\Sigma(p^2)-\Sigma(m_{\mathrm p}^2)\bigr]=(p^2-m_{\mathrm p}^2)\bigl[1-\Sigma'(m_{\mathrm p}^2)\bigr]+O\bigl((p^2-m_{\mathrm p}^2)^2\bigr)
+\end{equation*}
+なので、完全な伝播関数は極の近くで $iR/(p^2-m_{\mathrm p}^2)$、$R=1/(1-\Sigma'(m_{\mathrm p}^2))=1+\Sigma'(m^2)+O(g^4)$ となる。$\Sigma$ を代入すると式~\eqref{eq:mpole} である。ここで $B_0(m_{\mathrm p}^2;m,m)$ と $B_0(m^2;m,m)$ の差も $O(g^2)$ なので、$O(g^2)$ の項ではどちらを使ってもよい。
+
+\paragraph{$B_0(m^2)$ と $B_0'(m^2)$。}\ref{app:b0} の $0<a<4$ の場合の式 $I(a)=-2+2\tilde\beta\arctan(1/\tilde\beta)$、$\tilde\beta=\sqrt{4/a-1}$ を使う（$a=p^2/m^2$、$B_0=-L-I(a)$、$L\equiv\ln(m^2/\mu^2)$）。$a=1$ では $\tilde\beta=\sqrt3$、$\arctan(1/\sqrt3)=\pi/6$ なので、$B_0(m^2)=-L+2-\pi/\sqrt3$ である。微分は、$\tilde\beta^2=4/a-1$ より $\dd\tilde\beta/\dd a=-2/(a^2\tilde\beta)$、$\frac{\dd}{\dd\tilde\beta}\arctan(1/\tilde\beta)=-1/(1+\tilde\beta^2)=-a/4$ を使って
+\begin{equation*}
+\frac{\dd I}{\dd a}=2\,\frac{\dd\tilde\beta}{\dd a}\Bigl[\arctan\frac1{\tilde\beta}-\frac{a\tilde\beta}{4}\Bigr]=-\frac{4}{a^2\tilde\beta}\arctan\frac1{\tilde\beta}+\frac1a
+\end{equation*}
+となる。$B_0'=\dd B_0/\dd p^2=-\frac1{m^2}\frac{\dd I}{\dd a}$ に $a=1$ を入れると、$m^2B_0'(m^2)=\frac{4}{\sqrt3}\cdot\frac\pi6-1=\frac{2\pi}{3\sqrt3}-1$ を得る。$L$ は $p^2$ によらないので、$B_0'$ は $\mu$ によらない。
+
+\paragraph{$\mu$ によらないこと。}$B_0(p^2;m,m)=-\int_0^1\dd x\,\ln[(m^2-x(1-x)p^2)/\mu^2]$ は $\mu$ に $+\ln\mu^2$ の形でだけ依存するので、$\mu\,\partial B_0/\partial\mu=2$ である。式~\eqref{eq:mrun4} の $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ と合わせると、
+\begin{equation*}
+\mu\frac{\dd m_{\mathrm p}^2}{\dd\mu}=\frac{g^2}{(4\pi)^2}-\frac{g^2}{2(4\pi)^2}\cdot2+O(g^4)=O(g^4)
+\end{equation*}
+となる（$B_0(m^2)$ の中の $m^2$ の走りは $O(g^4)$ にしか効かない）。$B_0'$ は $\mu$ によらないので、$R$ も $O(g^2)$ で $\mu$ によらない。
+
+\paragraph{LSZ の簡約公式。}繰り込まれた場 $\phi$ の4点グリーン関数を考える。外線の運動量を質量殻に近づけると、各外線は完全な伝播関数 $iR/(p_i^2-m_{\mathrm p}^2)$ の極を持つ。一方、正しく規格化した1粒子状態に対しては $\langle0|\phi(0)|p\rangle=\sqrt R$ である。LSZ の簡約公式は、S 行列要素が、外線の完全な伝播関数を取り除いたグリーン関数（外線を切り離した振幅）を $p_i^2=m_{\mathrm p}^2$ で評価し、外線1本ごとに $\sqrt R$ を掛けたものであることを示す~\cite{peskin}。外線を切り離した振幅とは、外線に自己エネルギーが挿入されていない図の和で、手順 (5) で計算した振幅（FeynArts の \texttt{WFCorrections} を除いたもの）がちょうどそれである。よって
+\begin{equation*}
+\mathcal{M}_{\mathrm{phys}}=R^2\,\mathcal{G}(p_i^2=m_{\mathrm p}^2),\qquad
+\mathcal{G}=\mathcal{M}^{(0)}+\mathcal{M}^{(1)}+O(g^6)
+\end{equation*}
+である。木の振幅 $\mathcal{M}^{(0)}=-g^2\sum_x1/(x-m^2)$ は外線の $p_i^2$ によらない。$\mathcal{M}^{(1)}$ はすでに $O(g^4)$ なので、外線を $m^2$ に置いても $m_{\mathrm p}^2$ に置いても、違いは $O(g^6)$ である。$s,t,u$ は $s+t+u=4m_{\mathrm p}^2$ を満たす物理的な運動学の値とする。
+
+\paragraph{$\overline{\mathrm{MS}}$ からの変換。}極質量の式から $m^2=m_{\mathrm p}^2-\Sigma(m_{\mathrm p}^2)+O(g^4)=m_{\mathrm p}^2+\frac{g^2}{2(4\pi)^2}B_0(m_{\mathrm p}^2)+O(g^4)$ である（右辺の $B_0$ は質量 $m_{\mathrm p}$ で評価してよい）。木の振幅の伝播関数を展開すると
+\begin{equation*}
+\frac{1}{x-m^2}=\frac{1}{x-m_{\mathrm p}^2}+\frac{m^2-m_{\mathrm p}^2}{(x-m_{\mathrm p}^2)^2}+O(g^4),\qquad
+\mathcal{M}^{(0)}=\mathcal{M}^{(0)}\big|_{m\to m_{\mathrm p}}-\frac{g^4}{2(4\pi)^2}\sum_x\frac{B_0(m_{\mathrm p}^2)}{(x-m_{\mathrm p}^2)^2}+O(g^6)
+\end{equation*}
+となる。留数の因子は $R^2=1+2\Sigma'(m_{\mathrm p}^2)+O(g^4)=1-\frac{g^2}{(4\pi)^2}B_0'(m_{\mathrm p}^2)+O(g^4)$ で、これを木の振幅に掛けると
+\begin{equation*}
+\bigl(R^2-1\bigr)\,\mathcal{M}^{(0)}=-\frac{g^2}{(4\pi)^2}B_0'(m_{\mathrm p}^2)\cdot\Bigl(-g^2\sum_x\frac{1}{x-m_{\mathrm p}^2}\Bigr)+O(g^6)=\frac{g^4}{2(4\pi)^2}\sum_x\frac{2B_0'(m_{\mathrm p}^2)}{x-m_{\mathrm p}^2}+O(g^6)
+\end{equation*}
+である。$R^2$ を $\mathcal{M}^{(1)}$ に掛けた分と、$\mathcal{M}^{(1)}$ の中の $m$ を $m_{\mathrm p}$ に変えた分は $O(g^6)$ である。以上を足すと式~\eqref{eq:Mphys} を得る。
+
+\paragraph{on-shell の処方での直接の計算。}裸のラグランジアン $\frac12(\partial\phi_0)^2-\frac12m_0^2\phi_0^2-\frac{g_0}{3!}\phi_0^3$ に $\phi_0=Z^{1/2}\phi$ を代入し、$Z=1+\delta_Z^{\mathrm{os}}$、$Zm_0^2=m_{\mathrm p}^2+\delta_m^{\mathrm{os}}$ と置く。結合は $\overline{\mathrm{MS}}$ と同じく $g_0=\mu^\epsilon g$ とする（$d=4$ の1ループでは $g$ は発散を持たないので、これで有限である）。すると $g_0Z^{3/2}=\mu^\epsilon g(1+\frac32\delta_Z^{\mathrm{os}})+\cdots$ なので、対抗項は
+\begin{equation*}
+\frac12\,\delta_Z^{\mathrm{os}}\,\partial_\mu\phi\,\partial^\mu\phi-\frac12\,\delta_m^{\mathrm{os}}\,\phi^2-\frac{\frac32\delta_Z^{\mathrm{os}}\,g\mu^\epsilon}{3!}\,\phi^3
+\end{equation*}
+となる。\ref{app:rules} と同じ規則で、2点の挿入は $i(\delta_Z^{\mathrm{os}}p^2-\delta_m^{\mathrm{os}})$、3点の挿入は $-\frac32ig\mu^\epsilon\delta_Z^{\mathrm{os}}$ である。2点の挿入は $\Sigma=iV_2$ に $-(\delta_Z^{\mathrm{os}}p^2-\delta_m^{\mathrm{os}})$ を加えるので、繰り込まれた自己エネルギーは $\Sigma^{\mathrm{os}}(p^2)=\Sigma_0(p^2)-\delta_Z^{\mathrm{os}}p^2+\delta_m^{\mathrm{os}}$ である。ここで $\Sigma_0=-\frac{g^2}{2(4\pi)^2}(\Delta_{\mathrm{UV}}+B_0)$ は対抗項を含まないループの値である（\ref{app:b0}）。極が $m_{\mathrm p}$ にあり留数が1である条件 $\Sigma^{\mathrm{os}}(m_{\mathrm p}^2)=0$、$\Sigma^{\mathrm{os}\prime}(m_{\mathrm p}^2)=0$ から、
+\begin{equation*}
+\delta_Z^{\mathrm{os}}=\Sigma_0'(m_{\mathrm p}^2)=-\frac{g^2}{2(4\pi)^2}B_0'(m_{\mathrm p}^2),\qquad
+\delta_m^{\mathrm{os}}=-\Sigma_0(m_{\mathrm p}^2)+\delta_Z^{\mathrm{os}}m_{\mathrm p}^2,
+\end{equation*}
+\begin{equation*}
+\Sigma^{\mathrm{os}}(p^2)=\Sigma_0(p^2)-\Sigma_0(m_{\mathrm p}^2)-(p^2-m_{\mathrm p}^2)\,\Sigma_0'(m_{\mathrm p}^2)=-\frac{g^2}{2(4\pi)^2}\Bigl[B_0(p^2)-B_0(m_{\mathrm p}^2)-(p^2-m_{\mathrm p}^2)B_0'(m_{\mathrm p}^2)\Bigr]
+\end{equation*}
+を得る。$\Delta_{\mathrm{UV}}$ は $\delta_m^{\mathrm{os}}$ にだけ入り、$\Sigma^{\mathrm{os}}$ からは消えている。この処方では $R=1$、極は $m_{\mathrm p}$ なので、S 行列要素は外線を切り離した振幅そのものである。箱図と三角形は $\overline{\mathrm{MS}}$ と同じである（ループの中の対抗項は $O(g^6)$）。内線の自己エネルギーは、\ref{app:scat} と同じ計算で $-g^2\Sigma^{\mathrm{os}}(x)/(x-m_{\mathrm p}^2)^2$ を与える。木の図の頂点の一方を3点の挿入に替えた図は、頂点が2つあるので、各チャンネルで $2\cdot\frac32\delta_Z^{\mathrm{os}}\cdot\bigl(-g^2/(x-m_{\mathrm p}^2)\bigr)$ を与える。各チャンネルで足すと
+\begin{equation*}
+\frac{g^4}{2(4\pi)^2}\,\frac{B_0(x)-B_0(m_{\mathrm p}^2)-(x-m_{\mathrm p}^2)B_0'(m_{\mathrm p}^2)}{(x-m_{\mathrm p}^2)^2}+\frac{g^4}{2(4\pi)^2}\,\frac{3B_0'(m_{\mathrm p}^2)}{x-m_{\mathrm p}^2}
+=\frac{g^4}{2(4\pi)^2}\,\frac{B_0(x)-B_0(m_{\mathrm p}^2)+2(x-m_{\mathrm p}^2)B_0'(m_{\mathrm p}^2)}{(x-m_{\mathrm p}^2)^2}
+\end{equation*}
+となり、$\overline{\mathrm{MS}}$ から変換した式~\eqref{eq:Mphys} と一致する。場の繰り込み $\delta_Z^{\mathrm{os}}$ は、外線4本の $\frac12\delta_Z^{\mathrm{os}}$ ずつ（$\overline{\mathrm{MS}}$ の側の $R^2$ にあたる）を、頂点2つの $\frac32\delta_Z^{\mathrm{os}}$ ずつと内線1本の $-\delta_Z^{\mathrm{os}}$ に移しただけで、合計の $2\delta_Z^{\mathrm{os}}=3\delta_Z^{\mathrm{os}}-\delta_Z^{\mathrm{os}}$ は変わらない。
+
+\paragraph{結合の定義と $\mu$ によらないこと。}上の二つの計算は、どちらも $g$ を裸の結合 $g_0=\mu^\epsilon g$ で定義している。$g$ を例えば質量殻上の3点関数で定義し直せば、$g=g'(1+c)$（$c=O(g^2)$）の変換で $\mathcal{M}^{(0)}\propto g^2$ から $2c\,\mathcal{M}^{(0)}$ が加わる。MadLoop と比べるときは、NLOCT の作る対抗項でこの点を確かめる必要がある。最後に、$\mathcal{M}_{\mathrm{phys}}$ に現れる $B_0(x)-B_0(m_{\mathrm p}^2)$ と $B_0'(m_{\mathrm p}^2)$ は $\ln\mu^2$ を含まず、$C_0$、$D_0$ も $\mu$ によらないので、$\mathcal{M}_{\mathrm{phys}}$ は $\mu$ によらない。$\overline{\mathrm{MS}}$ の側では、$\mathcal{M}^{(1)}$ の $B_0(x)$ の項が $\mu\,\partial/\partial\mu$ で $\frac{g^4}{(4\pi)^2}\sum_x(x-m^2)^{-2}$ を与え、$\mathcal{M}^{(0)}$ の $m^2$ の走りが $\frac{\partial\mathcal{M}^{(0)}}{\partial m^2}\cdot\frac{g^2}{(4\pi)^2}=-\frac{g^4}{(4\pi)^2}\sum_x(x-m^2)^{-2}$ を与えて打ち消し合う。
+
 \begin{thebibliography}{9}
 \small
 \bibitem{srednicki} M. Srednicki, \textit{Quantum Field Theory} (Cambridge University Press, 2007)。$d=6$ の $\phi^3$ 理論の繰り込み（第9--28章）。$d=6-\epsilon_{\mathrm S}$ の規約を使う。本ノートの式~\eqref{eq:ct6} との照合は、同書の値を記憶から引いたもので、式番号は未照合である。
-\bibitem{peskin} M. E. Peskin, D. V. Schroeder, \textit{An Introduction to Quantum Field Theory} (Addison-Wesley, 1995)。Feynman パラメータと $D$ 次元の積分（第6章、付録A）。
+\bibitem{peskin} M. E. Peskin, D. V. Schroeder, \textit{An Introduction to Quantum Field Theory} (Addison-Wesley, 1995)。Feynman パラメータと $D$ 次元の積分（第6章、付録A）。LSZ の簡約公式と、完全な伝播関数の極と留数（第7章）。
 \bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}、2026年10月9日）。
 \bibitem{review} Feynman 図のループ計算支援ツールの比較レビュー（本リポジトリ \nolinkurl{loop_tools_review/loop_tools_review.pdf}）。
 \end{thebibliography}
