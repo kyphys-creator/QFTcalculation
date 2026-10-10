@@ -50,7 +50,7 @@
 \maketitle
 
 \begin{abstract}
-本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。その後、$\phi^3$ 模型での検算で、この環境の LoopTools が閾値より下で外運動量がゼロでない $C_0$ を誤って返し、その誤りがテンソル係数 $C_{00}$ にも及ぶことが分かった。$C_0$ と $C_{00}$ には Package-X と COLLIER を使う。4点関数 $D_0$ は、外線と内線の質量がすべて等しいとき、ライブラリごとに異なる点で値を返さない（第~\ref{sec:issues} 節）。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。
+本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。その後、$\phi^3$ 模型での検算で、この環境の LoopTools が閾値より下で外運動量がゼロでない $C_0$ を誤って返し、その誤りがテンソル係数 $C_{00}$ にも及ぶことが分かった。$C_0$ と $C_{00}$ には Package-X と COLLIER を使う。4点関数 $D_0$ は、外線と内線の質量がすべて等しいとき、ライブラリごとに異なる点で値を返さない。さらに MadLoop との比較で、NLOCT の不具合（FeynRules の \texttt{Core/Loop.m} に2つ目の局所パッチを当てた）と、MadGraph の1ループ計算が QCD と QED の摂動しか受け付けないことが分かった（第~\ref{sec:issues} 節）。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。
 \end{abstract}
 
 \section{はじめに}\label{sec:intro}
@@ -178,7 +178,7 @@ quarantine & macOS がダウンロードしたファイルに付ける拡張属�
 \node[tM,text width=4.1cm] (FH) at (2.95,-2.15) {FeynHelpers 2.0};
 \node[tM] (PX) at (2.7,-3.0) {Package-X 2.1.1 + PVReduce 0.1.0};
 \node[tN] (ST) at (2.7,-3.8) {入口：FeynArts.m、FormCalc.m};
-\node[tM] (FR) at (2.7,-4.75) {FeynRules 2.3.49 + NLOCT\\（MatrixSymbol パッチ）};
+\node[tM] (FR) at (2.7,-4.75) {FeynRules 2.3.49 + NLOCT\\（局所パッチ 2 つ）};
 \draw[cMd,thick] (FC.south west) ++(0.15,0) |- (FAp.west);
 \draw[cMd,thick] (FC.south west) ++(0.15,0) |- (FH.west);
 % ~/hep
@@ -253,8 +253,8 @@ HEPTools（Ninja、OneLOop、COLLIER） & 1.2.1、3.6、1.2.9 & MG5 の \texttt{
 
 導入の途中で見つかった問題と、その対処を表~\ref{tab:issues} にまとめる。原因が確定していないものは「推論」と書いた。以下、主なものを順に説明する。
 
-\begin{table}[tbp]
-\centering\small
+\begin{table}[p]
+\centering\footnotesize
 \caption{この Mac に固有の問題と対処。}
 \label{tab:issues}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
@@ -264,6 +264,11 @@ HEPTools（Ninja、OneLOop、COLLIER） & 1.2.1、3.6、1.2.9 & MG5 の \texttt{
 gfortran のリンク & \texttt{ld: library 'System' not found} & gfortran 15.2 が macOS SDK を見つけない & \texttt{\textasciitilde/.zshrc} で SDKROOT を設定 \\
 MathLink の \texttt{mcc} & パスが空白で分断され、i386 向けにリンクされる & 2012年版のスクリプトが arm64 とパスの空白を想定していない & 代替の \texttt{\textasciitilde/hep/bin/mcc} \\
 FeynRules & 読み込み時に \texttt{SetDelayed::write}（\texttt{MatrixSymbol}） & 14.1 で入った \texttt{System\bq MatrixSymbol} が同名の記号を隠す & FeynRules.m に局所パッチ（元は \texttt{.orig}） \\
+NLOCT の繰り込み & \texttt{OnShell\allowbreak Renormalization} が、場の混合のない模型で止まる（\texttt{GetFC::Head}） & 混合の項を除く \texttt{DeleteCases} が、項が1つのとき積の因子を消す & \texttt{Core/Loop.m} に局所パッチ（元は \texttt{.orig}） \\
+NLOCT の $\delta Z$ & 場の繰り込みが決まらず、記号のまま出力に残る & flavor を展開しないと \texttt{FR\$Classes\allowbreak Translation} が空で、自分の場の $\delta Z$ を0と置く & \texttt{WriteFeynArtsOutput[..., FlavorExpand -> True]} \\
+NLOCT の出力 & R2 がないと \texttt{R2\$vertlist = \{Last[\{\}]\}}。\texttt{MSbar -> True} では2点の対抗項の $-i$ が抜ける & NLOCT の不具合 & 読み込み後に消す。$\overline{\mathrm{MS}}$ の対抗項は on-shell の極から作る \\
+MadGraph の1ループ & BSM の結合の次数でループを生成しない。\texttt{gauge = [0]} の模型も拒む & ループ用インターフェースが QCD と QED しか検査しない & 作業用の UFO で次数を QCD と改名。\texttt{FeynmanGauge = True} \\
+MadLoop の検査プログラム & 点ごとに $\mu_R=\sqrt s$ に置き直す & \texttt{check\_sa.f} の仕様 & 生成されたプログラムを書き換え、ファイルから読む \\
 FeynHelpers & \texttt{LToolsLoadLibrary\allowbreak ::nobinary} & LoopTools を既定の場所でしか探さない & シンボリックリンクを置く \\
 ブラウザで取得した実行ファイル & 起動した直後にファイルが消える & quarantine 属性の付いた未署名のバイナリ（推論） & \texttt{curl} で取得し直す \\
 CollierLink & 導入できない & 実行時ライブラリが Intel Mac 用のみで、ソースが非公開 & FeynHelpers の \texttt{LToolsEvaluate} で代用 \\
@@ -330,6 +335,8 @@ FeynMaster のマニュアルは、FeynRules の3つのファイルで \texttt{M
 続く $d=6$ の1ループの検算では、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であること（FeynCalc の規格化で $\mathrm{PaVe}^{(D+2)}=-2\pi\,\mathrm{PaVe}_{00}^{(D)}$）を使い、$D=4-2\epsilon$ 用のツールの $A_{00}$、$B_{00}$、$C_{00}$ から6次元の積分を求めた。そこで、LoopTools の $C_{00}$ も閾値より下で外運動量がゼロでない点では誤ることが分かった。例えば $C_{00}(1,1,1)$ から求めた6次元の有限部分は、正しい値 $-0.1456$ に対して $-5.17-22.8i$ になる。外運動量がすべてゼロの点では、$C_0$ は正しい $-1/2$ を返すのに、$C_{00}$ は Fortran から直接呼んでも \texttt{NaN} を返す。Passarino--Veltman の簡約では $C_{00}$ は $C_0$ を含むので、$C_0$ の誤りが及んだと考えられる。LoopTools の $A_{00}$ と $B_{00}$ は正しく、COLLIER の $C_{00}$ は外運動量がすべてゼロの点も含めて正しかった。
 
 さらに、1ループの $\phi\phi\to\phi\phi$ 振幅の検算で、4点関数 $D_0$ を扱える範囲がライブラリごとに違うことが分かった。外線の $p_i^2$ と内線の質量がすべて $m$ の運動学で、LoopTools は前方 $t=0$ で値を返さない（FF の実装が「閾値上の退化した場合」として扱えず、\texttt{NaN} になる）。COLLIER も $t=0$ では番兵値 $10^{50}$ を返す。$s,t,u$ がすべて $4m^2$ より小さい非物理的な点（例えば $s=2m^2$、$t=-m^2$）では、COLLIER は致命的エラーで停止し（\texttt{D0comb\_coli: case 1, lambda<0}）、Package-X の数値関数 \texttt{X\bq ScalarD0} は \texttt{Indeterminate} を返す。\texttt{X\bq ScalarD0} は厳密な数を引数にすると評価されずに残り、それに \texttt{N[..., 20]} を掛けると計算が終わらない。物理的な散乱の点（$s>4m^2$、$t,u<0$、$t\ne0$）では、3つのライブラリの $D_0$ は全桁で一致した。この振幅に現れる $C_0(m^2,m^2,x)$（$x<0$ または $x>4m^2$）は、LoopTools でも正しかった。また、FeynHelpers の \texttt{LToolsEvaluate} は、倍精度の数を係数に持つ $B_0$ を含む式に対して「テンソル積分を無視した」という警告（\texttt{::tens}）を出すが、値は正しい。運動学を有理数のまま渡せば警告は出ない。
+
+\paragraph{NLOCT と MadLoop。}$\phi^3$ 模型の1ループの $\phi\phi\to\phi\phi$ を MadLoop と比べるため（\nolinkurl{models/phi3/ResearchNote/note.pdf} の手順 (6)）、FeynRules に付属する NLOCT 1.02 で対抗項を含む UFO を作った。NLOCT の関数 \texttt{OnShellRenormalization} は、場の混合を扱う段階で、2点の対抗項の項のうち同じ場の組のものを \texttt{DeleteCases} で除く。混合のない模型ではこの段階に渡る式が1つの積になり、\texttt{DeleteCases} がその因子をすべて消して \texttt{FeynmanRules[1]} を呼び、\texttt{GetFC::Head} で止まる。FeynRules の \texttt{Core/Loop.m} に局所パッチを当て、項のリストに対して \texttt{DeleteCases} を適用し、混合の項が残らないときはこの段階を飛ばすようにした（\ref{app:files}）。元のファイルは \texttt{Loop.m.orig} として残した。次に、FeynRules は flavor を展開しないと FeynArts の模型の対応表 \texttt{FR\$ClassesTranslation} を空にする。すると NLOCT は FeynArts の粒子 \texttt{S[1]} を模型の場と結びつけられず、その場自身の $\delta Z$ を「関係のない場の $\delta Z$」として0と置き、$\delta Z$ が決まらないまま出力に残る。FeynArts の模型を \texttt{FlavorExpand -> True} で書き出すと対応表が書かれ、この問題は消える。NLOCT はさらに、R2 の頂点がないと不正な \texttt{R2\$vertlist = \{Last[\{\}]\}} を書き、\texttt{MSbar -> True} では2点の対抗項から因子 $-i$ を落とす。MadGraph 3.8.1 の1ループ用インターフェースは、ループ補正の種類を QCD か QED としてしか検査しない（\texttt{validate\_model} の既定値が QCD）。そのため、BSM の結合の次数（ここでは \texttt{PHI}）を摂動に指定すると「この模型はループを扱えない」として止まる。また、UFO が \texttt{gauge = [0]}（ユニタリーゲージのみ）と宣言していると、QCD 以外のループを生成しない。作業用の UFO のコピーで次数の名前を \texttt{QCD} に変え、\texttt{FeynmanGauge = True} として \texttt{gauge = [0, 1]} と書かせて回避した。MadLoop の単体の検査プログラム \texttt{check\_sa.f} は、位相空間の点ごとに $\mu_R=\sqrt s$ と置き直すので、比較では生成されたプログラムを書き換えて $\mu_R$ をファイルから読ませた。これらの回避策のもとで、NLOCT の対抗項は手計算の on-shell の処方と記号として一致し、MadLoop の値は手計算の式と相対 $3\times10^{-13}$ 以内で一致した。
 
 \paragraph{検証で踏んだ二つの落とし穴。}一つ目は、FeynRules の試験で Feynman 則の計算結果を変数 \texttt{v} に代入したことである。\texttt{v} は標準模型ファイルでヒッグス場の真空期待値を表すので、続く UFO 出力からフェルミオンとゲージ粒子の頂点がすべて消え、評価されないコードを粒子名に含む頂点が3000個以上できた。一時は FeynRules と Mathematica 14 の非互換だと判断しかけたが、代入をやめると出力は正常に戻った。模型の記号に値を代入してはならない。二つ目は、試験スクリプトに \texttt{formcalc.wl} という名前を付けたことである。macOS のファイル名は大文字と小文字を区別しないので、そのフォルダで \texttt{Get["FormCalc\bq"]} を実行すると、Mathematica は本物の FormCalc ではなくこのスクリプト（\texttt{FormCalc.wl} と同一視される）を読み、自分自身を呼んで再帰の上限に達した。試験スクリプトにはすべて \texttt{test\_} を付けた。
 
@@ -433,7 +440,7 @@ LoadModel["~/Documents/Claude/QFTcalculation/models/backup_20261009/feynrules_Li
 
 \paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FeynRules の NLOCT による1ループの対抗項と NLO 用 UFO、FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO QCD 計算（\texttt{[QCD]}）、Mathematica 14.1.0 での動作である。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。
 
-\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、今回の局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。
+\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。
 
 \paragraph{今後。}レビューが推奨した構成のうち、2ループ用のツール（Kira 3.1、FIRE 7.1、pySecDec 1.6.6、AMFlow 2.0、TSIL 1.46、feyntrop）と、EFT・暗黒物質・熱的ループ用のツール（Matchete、DsixTools、wilson、DirectDM、MadDM、DRalgo）は、まだ入れていない。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。
 
@@ -456,7 +463,7 @@ LoadModel["~/Documents/Claude/QFTcalculation/models/backup_20261009/feynrules_Li
 ~/Library/Wolfram/Applications/
   FeynCalc/  (FeynArts/ = patched 3.12, AddOns/FeynHelpers/,
               AddOns/FeynHelpers/ExternalTools/LoopTools/LoopTools -> ~/hep/bin/LoopTools)
-  FeynRules/ (FeynRules.m patched, FeynRules.m.orig)
+  FeynRules/ (FeynRules.m, Core/Loop.m patched; *.orig kept)
   X/         (Package-X source, PVReduce.m)
   FeynArts.m FormCalc.m   loader stubs -> ~/hep/mathematica
 ~/miniforge3/envs/qft/      Python 3.12 for MadGraph
@@ -543,6 +550,9 @@ $\sqrt s=1$~TeV では $A_0=1.14522$ となる。$\pi\alpha^2/(2s)=8.9465\times1
 
 \paragraph{FeynRules.m への局所パッチ（\texttt{diff -u}）。}
 \VerbatimInput{files/FeynRules.m.patch}
+
+\paragraph{FeynRules の \texttt{Core/Loop.m}（NLOCT）への局所パッチ（\texttt{diff -u}）。}
+\VerbatimInput{files/Loop.m.patch}
 
 \paragraph{Applications の入口ファイル。}
 \VerbatimInput{files/FeynArts.m}
