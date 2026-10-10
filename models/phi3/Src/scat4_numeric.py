@@ -47,7 +47,7 @@ def im_unitarity(s, cth, dps=20):
 
 
 def sigma_tree(s, dps=20):
-    """Eq. (22) (eq:sigma) of the note: sigma = (1/2) int dOmega |M0|^2/(64 pi^2 s)."""
+    """Eq. (25) (eq:sigma) of the note: sigma = (1/2) int dOmega |M0|^2/(64 pi^2 s)."""
     with mp.workdps(dps):
         s = mp.mpf(s)
         p2 = s / 4 - M2
@@ -132,7 +132,7 @@ ax2.set_ylabel(r"$10^3\,\mathrm{Im}\,\mathcal{M}^{(1)}$")
 ax2.set_xlabel(r"$\cos\theta$")
 ax1.legend(loc="upper left")
 ax2.legend(loc="upper left", ncol=2)
-ax1.set_title(r"$\sqrt{s}=5m$", fontsize=8)
+ax1.set_title(r"$d=4$, $\sqrt{s}=5m$, $\mu=m$", fontsize=8)
 figdir = os.path.join(HERE, "..", "figs")
 os.makedirs(figdir, exist_ok=True)
 fig.savefig(os.path.join(figdir, "scat4_d4.pdf"))

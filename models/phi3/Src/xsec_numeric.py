@@ -1,7 +1,7 @@
 """Total cross section of phi phi scattering to O(g^6) in d = 4 (research note, step (7), Eq. (21)).
 
     sigma_tot = sigma0(2->2) + sigma1(2->2) + sigma(2->3),   inputs m_p = g = 1 (on-shell scheme).
-  sigma0 = (1/2) int dOmega |M0|^2/(64 pi^2 s) (Eq. (22));
+  sigma0 = (1/2) int dOmega |M0|^2/(64 pi^2 s) (Eq. (25));
   sigma1 = int dOmega M0 Re M1_phys/(64 pi^2 s) = (2 pi/(64 pi^2 s)) * 2 int_0^1 dc M0 Re M1_phys
            (the integrand is even in c = cos(theta)); Gauss-Legendre nodes in y = ln((m^2 - t)/m^2), in which the
            forward peak of the t-channel propagator (width ~ m^2/(2 p^2) in c at large s) becomes e^-y and its
