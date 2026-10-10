@@ -41,7 +41,7 @@
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その六段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。最後に、FeynRules の NLOCT で対抗項を含む UFO を作り、MadGraph の1ループ計算（MadLoop）と比べた。NLOCT の対抗項は on-shell の処方の手計算と記号として一致した。MadLoop の値は、on-shell の対抗項では S 行列要素の式と、極だけの $\overline{\mathrm{MS}}$ の対抗項では $\overline{\mathrm{MS}}$ の振幅と、相対 $3\times10^{-13}$ 以内で一致した。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その七段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。最後に、FeynRules の NLOCT で対抗項を含む UFO を作り、MadGraph の1ループ計算（MadLoop）と比べた。NLOCT の対抗項は on-shell の処方の手計算と記号として一致した。MadLoop の値は、on-shell の対抗項では S 行列要素の式と、極だけの $\overline{\mathrm{MS}}$ の対抗項では $\overline{\mathrm{MS}}$ の振幅と、相対 $3\times10^{-13}$ 以内で一致した。最後に、$\phi\phi$ 散乱の全断面積を $g^6$ まで求めた。それには、$2\to2$ の1ループの補正と、同じ次数の $\phi\phi\to\phi\phi\phi$ の両方が要る。$g=m$ では、1ループの補正は木の断面積の $0.9$〜$2\%$、$2\to3$ は $\sqrt s=20m$ で $2\%$ である。1ループの補正の角度積分は MadLoop と相対 $10^{-14}$ 以内で一致し、$2\to3$ は自前の二つの積分と MadGraph が $\sqrt s=4m,\,5m$ で一致した。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \section{目的と問い}\label{sec:intro}
@@ -50,7 +50,7 @@
 
 求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) $\phi\phi\to\phi\phi$ の木の振幅と、$d=4$ での1ループの振幅、およびその S 行列要素。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(6) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:lsz} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(7) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:sigma} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -100,6 +100,7 @@ $\mathcal{M}^{(0)},\ \mathcal{M}^{(1)}$ & $\phi\phi\to\phi\phi$ の木の振幅�
 $\Sigma$ & 自己エネルギー $\Sigma\equiv iV_2$。完全な伝播関数は $i/(p^2-m^2-\Sigma(p^2))$ \\
 $m_{\mathrm p},\ R$ & 完全な伝播関数の極の位置（極質量）と、そこでの留数（式~\eqref{eq:mpole}） \\
 $\mathcal{M}_{\mathrm{phys}}$ & $\phi\phi\to\phi\phi$ の S 行列要素（式~\eqref{eq:Mphys}） \\
+$\sigma^{(0)},\ \sigma^{(1)},\ \sigma_{2\to3}$ & $\phi\phi\to\phi\phi$ の木の断面積、その1ループの補正、$\phi\phi\to\phi\phi\phi$ の断面積（式~\eqref{eq:sigmatot}） \\
 $\beta(g)$ & $\beta\equiv\dd g/\dd\ln\mu$（$\epsilon\to0$ の値） \\
 $E,\ V,\ L,\ I$ & 図の外線、頂点、ループ、内線の数 \\
 \bottomrule
@@ -404,6 +405,14 @@ R=\frac{1}{1-\Sigma'(m_{\mathrm p}^2)}=1-\frac{g^2}{2(4\pi)^2}\,B_0'(m^2)+O(g^4)
 
 大きさの目安として、$\mu=m$ では $B_0(m^2)=2-\pi/\sqrt3\approx0.186$、$m^2B_0'(m^2)=2\pi/(3\sqrt3)-1\approx0.209$ である。したがって $g=m$ では、$m_{\mathrm p}^2=m^2(1-5.9\times10^{-4})$、$R=1-6.6\times10^{-4}$ となる。どちらも小さいが、式~\eqref{eq:Mphys} の最後の項は $\mathcal{M}^{(1)}$ と同じ $g^4$ の次数である。例えば $\sqrt s=5m$、$\cos\theta=0.3$、$m_{\mathrm p}=g=1$ では、式~\eqref{eq:Mphys} の自己エネルギーの寄与（3つのチャンネルの合計）の実部は $-2.6\times10^{-4}$ で、$\mathrm{Re}\,\mathcal{M}^{(1)}=7.4\times10^{-4}$（表~\ref{tab:scat4}）と比べて無視できない。
 
+\paragraph{全断面積（$d=4$、$g^6$ まで）。}$\phi\phi$ 散乱の全断面積を、木の次数（$g^4$）の次まで求める。$|\mathcal{M}|^2$ を展開すると、1ループの補正 $2\,\mathrm{Re}(\mathcal{M}^{(0)*}\mathcal{M}^{(1)}_{\mathrm{phys}})$ は $g^6$ の次数である。同じ $g^6$ の次数で、終状態が三つの $\phi$ になる $\phi\phi\to\phi\phi\phi$ も寄与する（振幅は $g^3$）。よって、終状態を問わない全断面積は
+\begin{equation}
+\sigma_{\mathrm{tot}}=\sigma^{(0)}+\sigma^{(1)}+\sigma_{2\to3}+O(g^8),\qquad
+\sigma^{(1)}=\int\!\dd\Omega\,\frac{\mathcal{M}^{(0)}\,\mathrm{Re}\,\mathcal{M}^{(1)}_{\mathrm{phys}}}{64\pi^2s}
+\label{eq:sigmatot}
+\end{equation}
+となる（\ref{app:sigma}）。$\sigma^{(0)}$ は式~\eqref{eq:sigma}、$\sigma^{(1)}$ には同種粒子の因子 $\frac12$ と $2\,\mathrm{Re}$ の $2$ が打ち消し合って入っている。入力は極質量 $m_{\mathrm p}$ と $g$ である。粒子はすべて質量を持つので赤外発散はなく、三つの項はそれぞれ有限である。$2\to3$ は $\sqrt s>3m$ で開く。$\phi\phi\to\phi\phi\phi$ の振幅は、外線5本の3次の木の図15個の和で、各図は二つの伝播関数の積に比例する。
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。使うツールの版と配置は、計算環境の記録~\cite{env} にある。FeynCalc 10.2.1 と FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、FeynRules 2.3.49、\texttt{MG5\_aMC@NLO} 3.8.1 である。
@@ -423,17 +432,18 @@ $d=4$：有限部分（$\overline{\mathrm{MS}}$） & Feynman パラメータ積�
 $d=6$：$I_N$ の極、対抗項 \eqref{eq:ct6}、$\beta$ \eqref{eq:beta6} & \ref{app:integrals}, \ref{app:ren} & $D=6-2\epsilon$ の Feynman パラメータ表示 & 次元をずらす関係で使う & — & — \\
 $d=6$：有限部分（$\overline{\mathrm{MS}}$） & 閉じた式、Feynman パラメータ積分の数値 & — & 次元をずらす関係で使う & 同左 & — \\
 $d=4$：1ループの $\phi\phi\to\phi\phi$ \eqref{eq:M1} & \ref{app:scat}、虚部はユニタリー性 \eqref{eq:unit} & 振幅を記号として比べる。FormCalc でも同じ & $B_0$ は解析式、$C_0$、$D_0$ は数値 & 数値（FormCalc 経由も） & MadLoop（NLOCT で作った UFO） \\
+$d=4$：全断面積 \eqref{eq:sigmatot} & \ref{app:sigma} & — & — & — & MadLoop の角度積分、$2\to3$ の断面積 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点 $m=g=\mu=1$ で、Package-X の解析式・LoopTools の数値・Feynman パラメータ積分の数値積分が、倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。有限部分は規約に依存するので、すべて $\overline{\mathrm{MS}}$（第~\ref{sec:setup} 節の前提4）にそろえて比べる。LoopTools（$\Delta=0$）と COLLIER（$\Delta_{\mathrm{UV}}=0$）は、既定で $\overline{\mathrm{MS}}$ の値を返す。一方、FeynCalc の PaVe 関数は測度 $\dd^Dq/(i\pi^2)$ で規格化されているので、その $\epsilon^0$ の係数は $\overline{\mathrm{MS}}$ の値から $-(\gamma_E+\ln\pi)$ だけずれる~\cite{env}。そこで FeynCalc の振幅は、本ノートの $V_n$ に直し、$\overline{\mathrm{MS}}$ の対抗項を加えてから比べる。MadGraph の断面積は、式~\eqref{eq:Mtree} を自分で数値積分した値と、統計誤差の範囲で一致することを求める。
 
-\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。(5) $d=4$ の1ループの $\phi\phi\to\phi\phi$ を、FeynCalc と FormCalc の二つの経路で式~\eqref{eq:M1} と記号として比べ、Package-X・LoopTools・COLLIER の数値を互いに比べる。虚部は式~\eqref{eq:unit} で確かめる。(6) FeynRules の NLOCT で対抗項を含む UFO を作り、MadLoop の値を式~\eqref{eq:Mphys}（on-shell の対抗項）と式~\eqref{eq:M1}（$\overline{\mathrm{MS}}$ の対抗項）に比べる。
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。(5) $d=4$ の1ループの $\phi\phi\to\phi\phi$ を、FeynCalc と FormCalc の二つの経路で式~\eqref{eq:M1} と記号として比べ、Package-X・LoopTools・COLLIER の数値を互いに比べる。虚部は式~\eqref{eq:unit} で確かめる。(6) FeynRules の NLOCT で対抗項を含む UFO を作り、MadLoop の値を式~\eqref{eq:Mphys}（on-shell の対抗項）と式~\eqref{eq:M1}（$\overline{\mathrm{MS}}$ の対抗項）に比べる。(7) 式~\eqref{eq:sigmatot} の全断面積を求め、$\sigma^{(1)}$ を MadLoop の角度積分と、$\sigma_{2\to3}$ を MadGraph の木の計算と比べる。
 
 \section{検算の結果}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順 (1)〜(6)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算、$d=4$ の1ループの $\phi\phi\to\phi\phi$ の検算、MadLoop との比較をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で、$\phi\phi\to\phi\phi$ の検算は \texttt{run\_scat4\_check.sh} で、MadLoop との比較は \texttt{generate\_Phi3\_NLO.sh} と \texttt{run\_madloop\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順 (1)〜(6)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算、$d=4$ の1ループの $\phi\phi\to\phi\phi$ の検算、MadLoop との比較、全断面積の計算をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で、$\phi\phi\to\phi\phi$ の検算は \texttt{run\_scat4\_check.sh} で、MadLoop との比較は \texttt{generate\_Phi3\_NLO.sh} と \texttt{run\_madloop\_check.sh} で、全断面積は \texttt{run\_xsec\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も \texttt{Src/generated/} に書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
 
@@ -598,6 +608,40 @@ $\sqrt s/m$ & $\cos\theta$ & $\mu_R/m$ & on-shell：MadLoop & ずれ & $\overlin
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (7)：全断面積。}$m_{\mathrm p}=g=1$ として、式~\eqref{eq:sigmatot} の三つの項を $\sqrt s=2.2m$ から $20m$ まで求めた（表~\ref{tab:xsec}、図~\ref{fig:xsec}）。$\sigma^{(1)}$ の角度積分では、COLLIER で $\overline{\mathrm{MS}}$ の $\mathcal{M}^{(1)}$（$\mu=m$）を求め、式~\eqref{eq:Mphys} の処方の変換を足した。被積分関数は $\cos\theta\to-\cos\theta$ で対称なので、$0\le\cos\theta\le1$ で積分して2倍した。$\sqrt s$ が大きいと、$t$ チャンネルの伝播関数のために被積分関数は前方の幅 $\sim m^2/(2p^2)$ に集中する。そこで変数を $y=\ln((m^2-t)/m^2)$ に替えて Gauss--Legendre の求積を使った（\ref{app:sigma}）。分点を32から64に増やしても、$\sigma^{(1)}$ は相対 $10^{-14}$ 以下しか変わらなかった。$\sqrt s=2.5m,\,5m,\,10m$ では同じ分点で MadLoop を走らせて積分し、$\sigma^{(0)}$ と $\sigma^{(1)}$ がどちらも相対 $7\times10^{-15}$ 以内で一致した。$\sigma^{(1)}/\sigma^{(0)}$ は閾値の近くで $2\%$ と大きく、高いエネルギーでは $0.94\%$ に近づく。
+
+$\sigma_{2\to3}$ は、3体の位相空間 $\dd\Phi_3=\dd\Phi_2(P;k_1,Q)\,\frac{\dd Q^2}{2\pi}\,\dd\Phi_2(Q;k_2,k_3)$ をモンテカルロ積分して求めた（\ref{app:sigma}）。最初に一様なサンプリングで計算すると、$\sqrt s=10m$ では乱数の種を変えた結果が表示された誤差の2倍ほどばらつき、点数を増やすと値が上がっていった。$\sqrt s$ が大きいと、断面積の大部分を、二つの粒子がほぼビームの向きに出て二つの $t$ チャンネル型の伝播関数がともに小さくなる狭い領域が担うためである。そこで、格子を被積分関数に合わせる VEGAS 型の重点サンプリング（Lepage の方法）を numpy で書いて使った。さらに検算として、$\vec k_1$ と $\vec k_2$ の向きを変数にとり、$|\vec k_2|$ をエネルギー保存から解く別の変数の取り方でも積分した。二つの結果は、$\sqrt s=4m,\,5m,\,10m$ で統計誤差の1.1倍以内で一致した。MadGraph の行列要素は、自前の $|\mathcal{M}|^2/3!$ と同じ点で相対 $10^{-15}$ まで一致した。MadGraph の断面積は、$\sqrt s=4m$ と $5m$ では自前の値と統計誤差の0.5倍以内で一致した。ところが $\sqrt s=10m$ では、乱数の種と積分の設定（\texttt{sde\_strategy}、\texttt{hard\_survey}）を変えた5回の結果が $9.165$〜$9.260$~pb とばらついた。このばらつき（標準偏差 $0.036$~pb）は表示された誤差（約 $0.01$~pb）より大きく、平均 $9.220$~pb は自前の二つの値（$9.295\pm0.005$、$9.305\pm0.008$~pb）より $0.8\%$ 低い。行列要素は一致しているので、この差は MadGraph の位相空間の積分から来ていると考えられるが、原因は突き止めていない。自前の値は、異なる二つの変数の取り方で一致することを根拠に採った。
+
+$g=m$ では、$\sigma_{2\to3}/\sigma^{(0)}$ は閾値 $\sqrt s=3m$ から増え、$\sqrt s=20m$ で $2\%$ になる。$\sigma^{(0)}$ が $1/s^2$ のように速く減るのに対し、$2\to3$ はゆっくりとしか減らないからである。表の値を内挿すると、$\sqrt s$ が約 $8.6m$ を超えると $2\to3$ が1ループの補正より大きくなる。すべての比は $g^2/m^2$ に比例し、ループの因子 $g^2/(16\pi^2m^2)\approx6\times10^{-3}$ の程度である。
+
+\begin{table}[tbp]
+\centering\small
+\caption{$\phi\phi$ 散乱の全断面積（式~\eqref{eq:sigmatot}、$m_{\mathrm p}=g=1$、単位は $m^{-2}$）。$\sigma^{(0)}$ と $\sigma^{(1)}$ の求積の誤差は相対 $10^{-14}$ 以下、$\sigma_{2\to3}$ の統計誤差は相対 $0.1\%$ 以下である。$1~m^{-2}$ は $m=1$~GeV なら $0.3893794\times10^9$~pb にあたる。}
+\label{tab:xsec}
+\begin{tabular}{rcccccc}
+\toprule
+$\sqrt s/m$ & $\sigma^{(0)}$ & $\sigma^{(1)}$ & $\sigma^{(1)}/\sigma^{(0)}$ & $\sigma_{2\to3}$ & $\sigma_{2\to3}/\sigma^{(0)}$ & $\sigma_{\mathrm{tot}}$ \\
+\midrule
+2.2 & $2.9205\times10^{-3}$ & $5.8073\times10^{-5}$ & $0.0199$ & $0$ & $0$ & $2.9786\times10^{-3}$ \\
+2.5 & $1.1866\times10^{-3}$ & $1.8502\times10^{-5}$ & $0.0156$ & $0$ & $0$ & $1.2051\times10^{-3}$ \\
+3.5 & $1.8958\times10^{-4}$ & $2.1484\times10^{-6}$ & $0.0113$ & $9.2802\times10^{-8}$ & $0.0005$ & $1.9182\times10^{-4}$ \\
+4 & $1.0094\times10^{-4}$ & $1.0793\times10^{-6}$ & $0.0107$ & $1.3857\times10^{-7}$ & $0.0014$ & $1.0216\times10^{-4}$ \\
+5 & $3.7287\times10^{-5}$ & $3.7662\times10^{-7}$ & $0.0101$ & $1.2679\times10^{-7}$ & $0.0034$ & $3.7790\times10^{-5}$ \\
+7 & $8.9450\times10^{-6}$ & $8.6779\times10^{-8}$ & $0.0097$ & $6.4251\times10^{-8}$ & $0.0072$ & $9.0960\times10^{-6}$ \\
+10 & $2.0631\times10^{-6}$ & $1.9645\times10^{-8}$ & $0.0095$ & $2.3872\times10^{-8}$ & $0.0116$ & $2.1066\times10^{-6}$ \\
+15 & $3.9925\times10^{-7}$ & $3.7674\times10^{-9}$ & $0.0094$ & $6.6588\times10^{-9}$ & $0.0167$ & $4.0968\times10^{-7}$ \\
+20 & $1.2545\times10^{-7}$ & $1.1803\times10^{-9}$ & $0.0094$ & $2.5486\times10^{-9}$ & $0.0203$ & $1.2917\times10^{-7}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.6\linewidth]{../figs/xsec_d4.pdf}
+\caption{$\phi\phi$ 散乱の全断面積の三つの項（上）と、木の断面積に対する比（下）（$m_{\mathrm p}=g=1$）。線は自前の計算、×印は同じ分点で積分した MadLoop の $\sigma^{(1)}$、白丸は MadGraph の $\sigma_{2\to3}$（$\sqrt s=10m$ は5回のうち最初の1回）である。}
+\label{fig:xsec}
+\end{figure}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$\phi\phi\to\phi\phi$ については、on-shell の処方との関係を式~\eqref{eq:Mphys} と\ref{app:lsz} で求めた。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。
@@ -606,7 +650,7 @@ $\sqrt s/m$ & $\cos\theta$ & $\mu_R/m$ & on-shell：MadLoop & ずれ & $\overlin
 
 \paragraph{LoopTools の $C_0$。}手順 (3) で見つかった LoopTools の $C_0$ の誤りは、コンパイラの版や最適化によらない。そのため、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。この誤りは $C_{00}$ を通して $d=6$ の $C_0^{(6)}$ にも現れた。当面、$C_0$ と $C_{00}$ には Package-X と COLLIER を使い、LoopTools は $A_0$、$B_0$ と、それから作る $A_{00}$、$B_{00}$ にだけ使う。ただし、手順 (5) に現れた $C_0(m^2,m^2,x)$（$x<0$ または $x>4m^2$）と $D_0$（物理的な点）は、LoopTools でも正しかった。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(6) はすべて終わった。次の候補は三つある。一つ目は、$d=6$ の質量の異常次元を式~\eqref{eq:ct6} から求めて、文献の値と照合することである。二つ目は、手順 (6) の MadLoop の値を角度について積分し、1ループの補正を含む $\phi\phi\to\phi\phi$ の断面積を求めることである。質量のある粒子だけの理論なので赤外発散はなく、仮想補正だけで有限な断面積が得られる。式~\eqref{eq:Mphys} を数値積分した値と比べられる。三つ目は2ループで、環境の記録で保留したツール（Kira、FIRE、pySecDec など）を入れる必要がある。
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(7) はすべて終わった。次の候補は三つある。一つ目は、$d=6$ の質量の異常次元を式~\eqref{eq:ct6} から求めて、文献の値と照合することである。二つ目は、手順 (7) で見つかった、$\sqrt s=10m$ の $2\to3$ での MadGraph の $0.8\%$ のずれの原因を調べることである（積分の設定や位相空間の写像）。三つ目は2ループで、環境の記録で保留したツール（Kira、FIRE、pySecDec など）を入れる必要がある。
 
 \appendix
 
@@ -1006,6 +1050,26 @@ p^2-m^2-\Sigma(p^2)=(p^2-m_{\mathrm p}^2)-\bigl[\Sigma(p^2)-\Sigma(m_{\mathrm p}
 となり、$\overline{\mathrm{MS}}$ から変換した式~\eqref{eq:Mphys} と一致する。場の繰り込み $\delta_Z^{\mathrm{os}}$ は、外線4本の $\frac12\delta_Z^{\mathrm{os}}$ ずつ（$\overline{\mathrm{MS}}$ の側の $R^2$ にあたる）を、頂点2つの $\frac32\delta_Z^{\mathrm{os}}$ ずつと内線1本の $-\delta_Z^{\mathrm{os}}$ に移しただけで、合計の $2\delta_Z^{\mathrm{os}}=3\delta_Z^{\mathrm{os}}-\delta_Z^{\mathrm{os}}$ は変わらない。
 
 \paragraph{結合の定義と $\mu$ によらないこと。}上の二つの計算は、どちらも $g$ を裸の結合 $g_0=\mu^\epsilon g$ で定義している。$g$ を例えば質量殻上の3点関数で定義し直せば、$g=g'(1+c)$（$c=O(g^2)$）の変換で $\mathcal{M}^{(0)}\propto g^2$ から $2c\,\mathcal{M}^{(0)}$ が加わる。MadLoop と比べるときは、NLOCT の作る対抗項でこの点を確かめる必要がある。最後に、$\mathcal{M}_{\mathrm{phys}}$ に現れる $B_0(x)-B_0(m_{\mathrm p}^2)$ と $B_0'(m_{\mathrm p}^2)$ は $\ln\mu^2$ を含まず、$C_0$、$D_0$ も $\mu$ によらないので、$\mathcal{M}_{\mathrm{phys}}$ は $\mu$ によらない。$\overline{\mathrm{MS}}$ の側では、$\mathcal{M}^{(1)}$ の $B_0(x)$ の項が $\mu\,\partial/\partial\mu$ で $\frac{g^4}{(4\pi)^2}\sum_x(x-m^2)^{-2}$ を与え、$\mathcal{M}^{(0)}$ の $m^2$ の走りが $\frac{\partial\mathcal{M}^{(0)}}{\partial m^2}\cdot\frac{g^2}{(4\pi)^2}=-\frac{g^4}{(4\pi)^2}\sum_x(x-m^2)^{-2}$ を与えて打ち消し合う。
+
+\section{全断面積の式の導出}\label{app:sigma}
+
+\paragraph{次数の数え方。}終状態を問わない全断面積は、すべての終状態 $f$ についての $\sigma(\phi\phi\to f)$ の和である。$\phi\phi\to\phi\phi$ の振幅は $\mathcal{M}^{(0)}=O(g^2)$、$\mathcal{M}^{(1)}=O(g^4)$ なので、$|\mathcal{M}|^2=|\mathcal{M}^{(0)}|^2+2\,\mathrm{Re}(\mathcal{M}^{(0)*}\mathcal{M}^{(1)})+O(g^8)$ の第2項が $g^6$ の補正である。$\phi\phi\to\phi\phi\phi$ の木の振幅は頂点3つで $O(g^3)$、その2乗は $O(g^6)$ で、同じ次数になる。一つの $\phi$ だけの終状態は $s\ne m^2$ では運動学的に許されず、四つ以上の $\phi$ は $O(g^8)$ 以上である。よって式~\eqref{eq:sigmatot} を得る。どの項にも赤外発散はない（質量のない粒子がない）ので、$2\to2$ と $2\to3$ を別々に計算してよい。
+
+\paragraph{$\sigma^{(1)}$。}\ref{app:xsec} の式で $|\mathcal{M}|^2$ を $2\,\mathrm{Re}(\mathcal{M}^{(0)*}\mathcal{M}^{(1)}_{\mathrm{phys}})$ に替えると、$\sigma^{(1)}=\frac12\int\dd\Omega\,2\,\mathrm{Re}(\mathcal{M}^{(0)*}\mathcal{M}^{(1)}_{\mathrm{phys}})/(64\pi^2s)$ である。$\frac12$ は終状態の同種粒子の因子である。$\mathcal{M}^{(0)}$ は実数なので、これは式~\eqref{eq:sigmatot} の形になる。被積分関数は方位角によらず、$t\leftrightarrow u$ すなわち $\cos\theta\to-\cos\theta$ で対称なので、$\sigma^{(1)}=\frac{2\pi}{64\pi^2s}\cdot2\int_0^1\dd c\,\mathcal{M}^{(0)}\mathrm{Re}\,\mathcal{M}^{(1)}_{\mathrm{phys}}$（$c=\cos\theta$）である。$t=-2p^2(1-c)$ なので $c\in[0,1]$ は $t\in[-2p^2,0]$ にあたる。$y=\ln((m^2-t)/m^2)\in[0,\ln(1+2p^2/m^2)]$ と置くと $\dd c=e^ym^2\dd y/(2p^2)$ で、$t$ チャンネルの $1/(t-m^2)^2$ は $e^{-y}$、他のチャンネルとの干渉は定数の程度になり、被積分関数は滑らかになる。この $y$ で Gauss--Legendre の求積を行った。MadLoop の有限部分は $\mathcal{M}^{(0)}\mathrm{Re}\,\mathcal{M}^{(1)}$（同種粒子の因子 $\frac12$ を含む）なので、同じ分点で $\frac{2\pi}{64\pi^2s}\cdot2\sum_iw_i\times(\text{有限部分})$ とすれば $\sigma^{(1)}$ になる。
+
+\paragraph{$\phi\phi\to\phi\phi\phi$ の振幅。}すべての運動量を外向きにとり、$q_1=-p_1$、$q_2=-p_2$、$q_3=k_1$、$q_4=k_2$、$q_5=k_3$ とする。外線5本の3次の木の図は、真ん中の頂点に付く外線 $e$ を選び（5通り）、残る4本を二つの組 $\{a,b\}$、$\{c,d\}$ に分ける（3通り）ことで尽くされ、計15個である。各図は頂点3つ（$(-ig)^3=ig^3$）と伝播関数2本（$i^2=-1$）からなるので
+\begin{equation*}
+i\mathcal{M}_{2\to3}=-ig^3\sum_{15}\frac{1}{\bigl[(q_a+q_b)^2-m^2\bigr]\bigl[(q_c+q_d)^2-m^2\bigr]}
+\end{equation*}
+である。伝播関数の分母は、二つの始状態の和なら $s-m^2$、始状態と終状態の差なら $t$ 型で $\le-m^2$、二つの終状態の和なら $\ge3m^2$ で、どれも0にならない。よって被積分関数は有界である。終状態の三つの同種粒子の因子は $1/3!$ で、
+\begin{equation*}
+\sigma_{2\to3}=\frac{1}{3!}\,\frac{1}{4p\sqrt s}\int|\mathcal{M}_{2\to3}|^2\,\dd\Phi_3
+\end{equation*}
+となる（$4p\sqrt s$ は\ref{app:xsec} の流束因子）。
+
+\paragraph{3体の位相空間。}\ref{app:xsec} の規格化（$(2\pi)^4\delta^4$ と各粒子の $\dd^3k/((2\pi)^32E)$）では、中間の質量 $Q^2=(k_2+k_3)^2$ を挿入して $\dd\Phi_3=\dd\Phi_2(P;k_1,Q)\,\frac{\dd Q^2}{2\pi}\,\dd\Phi_2(Q;k_2,k_3)$ と分けられる。$\delta^4(P-k_1-k_2-k_3)=\int\dd^4Q\,\delta^4(P-k_1-Q)\delta^4(Q-k_2-k_3)$ と $\int\dd^4Q=\int\dd Q^2\,\dd^3Q/(2Q^0)$ を使えば、$(2\pi)$ の因子が $\frac{1}{2\pi}$ だけ残ることが分かる。\ref{app:xsec} の2体位相空間 $\dd\Phi_2(P;a,b)=|\vec p^{\,*}|\,\dd\Omega^*/(16\pi^2\sqrt{P^2})$（$\vec p^{\,*}$ は $P$ の静止系での運動量）を使い、$Q^2\in[4m^2,(\sqrt s-m)^2]$、二つの立体角を一様にとり、$Q$ の静止系の $k_2,k_3$ を重心系に Lorentz 変換した。$|\vec k_1|=\lambda^{1/2}(s,m^2,Q^2)/(2\sqrt s)$、$Q$ の静止系での $|\vec k_2|=\sqrt{Q^2/4-m^2}$ である。検算に使ったもう一つの変数の取り方では、$\dd\Phi_3=(2\pi)^{-5}\frac{\dd^3k_1}{2E_1}\frac{\dd^3k_2}{2E_2}\frac{1}{2E_3}\delta(\sqrt s-E_1-E_2-E_3)$（$\vec k_3=-\vec k_1-\vec k_2$）とし、$\vec k_2$ の向きを決めて $|\vec k_2|$ についての $\delta$ 関数を解いた。エネルギー保存の式は2乗を2回とると $|\vec k_2|$ の2次方程式になり、解は0、1、2個ある。各解に $|\partial(E_1+E_2+E_3)/\partial|\vec k_2||^{-1}$ を掛けて足した。
+
+\paragraph{重点サンプリング。}$\sqrt s$ が大きいと、二つの $t$ 型の伝播関数がともに $O(m^2)$ になる狭い領域（二つの終状態の粒子がそれぞれ始状態の粒子とほぼ同じ運動量を持つ配置）が積分の大部分を担う。一様なサンプリングではこの領域に落ちる点が少なく、誤差の見積もりも小さく出る。VEGAS 型の方法では、5つの積分変数それぞれの区間を、被積分関数の2乗の重みに比例するように反復して分割し直す。この格子で点を発生させ、ヤコビアンを掛けて平均する。適応の8回の後の8回の結果を誤差で重み付けして平均し、三つの乱数の種の結果のばらつきと内部の誤差の大きい方を誤差とした。
 
 \begin{thebibliography}{9}
 \small
