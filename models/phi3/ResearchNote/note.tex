@@ -41,7 +41,7 @@
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その五段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その六段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。最後に、FeynRules の NLOCT で対抗項を含む UFO を作り、MadGraph の1ループ計算（MadLoop）と比べた。NLOCT の対抗項は on-shell の処方の手計算と記号として一致した。MadLoop の値は、on-shell の対抗項では S 行列要素の式と、極だけの $\overline{\mathrm{MS}}$ の対抗項では $\overline{\mathrm{MS}}$ の振幅と、相対 $3\times10^{-13}$ 以内で一致した。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \section{目的と問い}\label{sec:intro}
@@ -50,7 +50,7 @@
 
 求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) $\phi\phi\to\phi\phi$ の木の振幅と、$d=4$ での1ループの振幅、およびその S 行列要素。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(5) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:lsz} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(6) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:lsz} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -422,18 +422,18 @@ $d=4$：$I_N$ の極、対抗項 \eqref{eq:ct4} & \ref{app:integrals}, \ref{app:
 $d=4$：有限部分（$\overline{\mathrm{MS}}$） & Feynman パラメータ積分の数値 & 振幅に $\overline{\mathrm{MS}}$ の対抗項を加える & 解析式 & 数値 & — \\
 $d=6$：$I_N$ の極、対抗項 \eqref{eq:ct6}、$\beta$ \eqref{eq:beta6} & \ref{app:integrals}, \ref{app:ren} & $D=6-2\epsilon$ の Feynman パラメータ表示 & 次元をずらす関係で使う & — & — \\
 $d=6$：有限部分（$\overline{\mathrm{MS}}$） & 閉じた式、Feynman パラメータ積分の数値 & — & 次元をずらす関係で使う & 同左 & — \\
-$d=4$：1ループの $\phi\phi\to\phi\phi$ \eqref{eq:M1} & \ref{app:scat}、虚部はユニタリー性 \eqref{eq:unit} & 振幅を記号として比べる。FormCalc でも同じ & $B_0$ は解析式、$C_0$、$D_0$ は数値 & 数値（FormCalc 経由も） & 次の段階（MadLoop） \\
+$d=4$：1ループの $\phi\phi\to\phi\phi$ \eqref{eq:M1} & \ref{app:scat}、虚部はユニタリー性 \eqref{eq:unit} & 振幅を記号として比べる。FormCalc でも同じ & $B_0$ は解析式、$C_0$、$D_0$ は数値 & 数値（FormCalc 経由も） & MadLoop（NLOCT で作った UFO） \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点 $m=g=\mu=1$ で、Package-X の解析式・LoopTools の数値・Feynman パラメータ積分の数値積分が、倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。有限部分は規約に依存するので、すべて $\overline{\mathrm{MS}}$（第~\ref{sec:setup} 節の前提4）にそろえて比べる。LoopTools（$\Delta=0$）と COLLIER（$\Delta_{\mathrm{UV}}=0$）は、既定で $\overline{\mathrm{MS}}$ の値を返す。一方、FeynCalc の PaVe 関数は測度 $\dd^Dq/(i\pi^2)$ で規格化されているので、その $\epsilon^0$ の係数は $\overline{\mathrm{MS}}$ の値から $-(\gamma_E+\ln\pi)$ だけずれる~\cite{env}。そこで FeynCalc の振幅は、本ノートの $V_n$ に直し、$\overline{\mathrm{MS}}$ の対抗項を加えてから比べる。MadGraph の断面積は、式~\eqref{eq:Mtree} を自分で数値積分した値と、統計誤差の範囲で一致することを求める。
 
-\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。(5) $d=4$ の1ループの $\phi\phi\to\phi\phi$ を、FeynCalc と FormCalc の二つの経路で式~\eqref{eq:M1} と記号として比べ、Package-X・LoopTools・COLLIER の数値を互いに比べる。虚部は式~\eqref{eq:unit} で確かめる。
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。(5) $d=4$ の1ループの $\phi\phi\to\phi\phi$ を、FeynCalc と FormCalc の二つの経路で式~\eqref{eq:M1} と記号として比べ、Package-X・LoopTools・COLLIER の数値を互いに比べる。虚部は式~\eqref{eq:unit} で確かめる。(6) FeynRules の NLOCT で対抗項を含む UFO を作り、MadLoop の値を式~\eqref{eq:Mphys}（on-shell の対抗項）と式~\eqref{eq:M1}（$\overline{\mathrm{MS}}$ の対抗項）に比べる。
 
 \section{検算の結果}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順 (1)〜(5)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算、$d=4$ の1ループの $\phi\phi\to\phi\phi$ の検算をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で、$\phi\phi\to\phi\phi$ の検算は \texttt{run\_scat4\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順 (1)〜(6)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算、$d=4$ の1ループの $\phi\phi\to\phi\phi$ の検算、MadLoop との比較をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で、$\phi\phi\to\phi\phi$ の検算は \texttt{run\_scat4\_check.sh} で、MadLoop との比較は \texttt{generate\_Phi3\_NLO.sh} と \texttt{run\_madloop\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も \texttt{Src/generated/} に書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
 
@@ -570,6 +570,34 @@ $\sqrt s/m$ & $\cos\theta$ & $\mathcal{M}^{(0)}$ & $10^3\,\mathrm{Re}\,\mathcal{
 \label{fig:scat4}
 \end{figure}
 
+\paragraph{手順 (6)：MadLoop との比較。}MadLoop 自身は繰り込みの処方を持たない。紫外発散を消す対抗項は、UFO の対抗項の頂点から来る。そこで、FeynRules に付属する NLOCT 1.02 で、対抗項を含む UFO を三つの段階で作った。(i) FeynRules で \texttt{OnShellRenormalization} を使い、$\phi\to(1+\frac12\delta Z)\phi$、$m\to m+\delta m$、$g\to g+\delta g$ と置いたラグランジアンを FeynArts の模型として書き出す。(ii) FeynRules を読み込まない別のカーネルで、パッチなしの FeynArts と NLOCT の \texttt{WriteCT} で対抗項を求める。NLOCT の既定では、質量と場は on-shell、結合は $\overline{\mathrm{MS}}$ で繰り込まれる。(iii) FeynRules に戻って、対抗項を含む UFO を書き出す。NLOCT の質量の対抗項は $m$ のずれ $\delta m$ で書かれるので、2点の対抗項は $i[\delta Z(p^2-m^2)-2m\,\delta m]$ である。\ref{app:lsz} の記号との関係は $\delta Z=\delta_Z^{\mathrm{os}}$、$2m\,\delta m=\delta_m^{\mathrm{os}}-\delta_Z^{\mathrm{os}}m^2=-\Sigma_0(m^2)$ である。NLOCT が求めた値は、$\delta Z=-\frac{g^2}{2(4\pi)^2}B_0'(m^2)$、$2m\,\delta m=\frac{g^2}{2(4\pi)^2}\bigl[\frac1\epsilon+B_0(m^2)\bigr]$、頂点の対抗項 $-\frac32ig\,\delta Z$ で、いずれも\ref{app:lsz} と記号として一致した。$g$ は発散を持たないので、$\overline{\mathrm{MS}}$ の $\delta g$ は0になる。つまり NLOCT の処方は、\ref{app:lsz} で $g$ を裸の結合で定義した on-shell の処方そのものである。この on-shell の UFO に加えて、2点の対抗項の極だけを残した UFO も作った。これは式~\eqref{eq:ct4} の $\overline{\mathrm{MS}}$ の対抗項（$\delta_Z=\delta_g=0$）にあたる。
+
+この過程で、ツールの不具合と制限が七つ見つかり、次のように回避した。(1) NLOCT の関数 \texttt{OnShell\allowbreak Renormalization} は、場の混合を一つも持たない模型では、混合を扱う段階で項の和でなく積を分解してしまい、途中で止まる。FeynRules の \texttt{Core/Loop.m} に局所パッチを当て、混合の項がないときはこの段階を飛ばした（元のファイルは \texttt{Loop.m.orig}）。(2) FeynRules は、flavor を展開しないと FeynArts の模型の場の対応表 \texttt{FR\$ClassesTranslation} を空にする。すると NLOCT は \texttt{S[1]} が \texttt{phi} だと分からず、$\phi$ の $\delta Z$ を0と置いてしまい、$\delta Z$ が決まらない。FeynArts の模型を \texttt{FlavorExpand -> True} で書き出して避けた。(3) R2 の頂点がない（スカラー理論）とき、NLOCT は不正な \texttt{R2\$vertlist = \{Last[\{\}]\}} を書く。読み込んだ後で空のリストに直した。(4) NLOCT の \texttt{MSbar -> True} は、この模型では2点の対抗項から因子 $-i$ が抜け、MadLoop で極が消えない。そこで $\overline{\mathrm{MS}}$ の対抗項は、on-shell の対抗項の極の部分を取り出して作った。(5) FeynRules の UFO は既定で \texttt{gauge = [0]}（ユニタリーゲージだけ）と書き、MadGraph はそのような模型では QCD 以外のループを生成しない。ゲージ場のない模型なので、\texttt{FeynmanGauge = True} として \texttt{gauge = [0, 1]} と書かせた。(6) MadGraph 3.8.1 の1ループ用インターフェースは、摂動の次数として QCD と QED しか受け付けない。作業用の UFO のコピーで、結合の次数の名前 \texttt{PHI} を \texttt{QCD} に変えた。色を持つ粒子はないので、これは名前だけの変更である。(7) MadLoop の単体の検査プログラムは、位相空間の点ごとに $\mu_R=\sqrt s$ と置き直す。生成されたプログラムを書き換え、$\mu_R$ をファイルから読むようにした。
+
+MadGraph は、Born の図3つ、ループの図12個、対抗項の図（on-shell で12個、$\overline{\mathrm{MS}}$ で3つ）を生成した。ループの図は手順 (5) の12個と同じで、タドポールと外線の自己エネルギーは MadGraph が既定で除く。MadLoop の行列要素は終状態の同種粒子の因子 $\frac12$ を含み、Born は $|\mathcal{M}^{(0)}|^2/2$、1ループの有限部分は $2\,\mathrm{Re}(\mathcal{M}^{(0)*}\mathcal{M}^{(1)})/2=\mathcal{M}^{(0)}\,\mathrm{Re}\,\mathcal{M}^{(1)}$ である。手順 (5) と同じ6点（$m=g=1$）で比べると、Born は相対 $10^{-15}$ 以下で一致し、$1/\epsilon$ と $1/\epsilon^2$ の係数は $4\times10^{-19}$ 以下で消えた（表~\ref{tab:madloop}）。有限部分は、on-shell の対抗項では式~\eqref{eq:Mphys} から作った $\mathcal{M}^{(0)}\,\mathrm{Re}\,\mathcal{M}^{(1)}_{\mathrm{phys}}$ と、$\overline{\mathrm{MS}}$ の対抗項では式~\eqref{eq:M1} から作った値と、どちらも相対 $3.1\times10^{-13}$ 以内で一致した。最大のずれは、有限部分が相殺で小さくなる $\sqrt s=10m$、$\cos\theta=0.3$ で生じる。$\sqrt s=5m$、$\cos\theta=0.3$ で $\mu_R$ を $m/2$ から $5m$ まで変えると、on-shell の値は全桁で変わらず、$\overline{\mathrm{MS}}$ の値は $B_0$ の $\ln\mu_R^2$ から予想されるとおりに変わった。on-shell と $\overline{\mathrm{MS}}$（$\mu_R=m$）の値の比はこの点で $1.39$ で、式~\eqref{eq:Mphys} の処方の変換の項が、MadLoop の結果でも同じ大きさで現れている。
+
+\begin{table}[tbp]
+\centering\small
+\caption{MadLoop の1ループの有限部分 $\mathcal{M}^{(0)}\,\mathrm{Re}\,\mathcal{M}^{(1)}$（同種粒子の因子 $\frac12$ を含む、$m=g=1$）と、手計算の式からの予想との相対的なずれ。on-shell は NLOCT の対抗項で、予想は式~\eqref{eq:Mphys}。$\overline{\mathrm{MS}}$ は極だけの対抗項で、予想は式~\eqref{eq:M1} を $\mu_R$ で評価した値である。どちらの予想も、表~\ref{tab:scat4} の $\mathrm{Re}\,\mathcal{M}^{(1)}$（$\mu=m$）から作った。}
+\label{tab:madloop}
+\begin{tabular}{rrrcccc}
+\toprule
+$\sqrt s/m$ & $\cos\theta$ & $\mu_R/m$ & on-shell：MadLoop & ずれ & $\overline{\mathrm{MS}}$：MadLoop & ずれ \\
+\midrule
+2.5 & 0.3 & 1 & $4.761384042\times10^{-3}$ & $3.3\times10^{-15}$ & $5.792134979\times10^{-3}$ & $2.7\times10^{-15}$ \\
+2.5 & 0.9 & 1 & $8.051496554\times10^{-3}$ & $6.7\times10^{-15}$ & $1.002187604\times10^{-2}$ & $5.0\times10^{-15}$ \\
+5 & 0.3 & 1 & $7.749289703\times10^{-5}$ & $2.3\times10^{-14}$ & $1.076579005\times10^{-4}$ & $1.7\times10^{-14}$ \\
+5 & 0.9 & 1 & $1.279565423\times10^{-3}$ & $2.7\times10^{-15}$ & $1.673142064\times10^{-3}$ & $2.3\times10^{-15}$ \\
+10 & 0.3 & 1 & $1.684755517\times10^{-6}$ & $3.1\times10^{-13}$ & $3.292476756\times10^{-6}$ & $1.6\times10^{-13}$ \\
+10 & 0.9 & 1 & $1.146856148\times10^{-4}$ & $2.1\times10^{-14}$ & $1.574646732\times10^{-4}$ & $1.5\times10^{-14}$ \\
+\midrule
+5 & 0.3 & 0.5 & $7.749289703\times10^{-5}$ & $2.3\times10^{-14}$ & $9.433571765\times10^{-5}$ & $1.9\times10^{-14}$ \\
+5 & 0.3 & 2 & $7.749289703\times10^{-5}$ & $2.3\times10^{-14}$ & $1.209800833\times10^{-4}$ & $1.5\times10^{-14}$ \\
+5 & 0.3 & 5 & $7.749289703\times10^{-5}$ & $2.3\times10^{-14}$ & $1.385910511\times10^{-4}$ & $1.3\times10^{-14}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$\phi\phi\to\phi\phi$ については、on-shell の処方との関係を式~\eqref{eq:Mphys} と\ref{app:lsz} で求めた。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。
@@ -578,7 +606,7 @@ $\sqrt s/m$ & $\cos\theta$ & $\mathcal{M}^{(0)}$ & $10^3\,\mathrm{Re}\,\mathcal{
 
 \paragraph{LoopTools の $C_0$。}手順 (3) で見つかった LoopTools の $C_0$ の誤りは、コンパイラの版や最適化によらない。そのため、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。この誤りは $C_{00}$ を通して $d=6$ の $C_0^{(6)}$ にも現れた。当面、$C_0$ と $C_{00}$ には Package-X と COLLIER を使い、LoopTools は $A_0$、$B_0$ と、それから作る $A_{00}$、$B_{00}$ にだけ使う。ただし、手順 (5) に現れた $C_0(m^2,m^2,x)$（$x<0$ または $x>4m^2$）と $D_0$（物理的な点）は、LoopTools でも正しかった。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(5) はすべて終わった。次の候補は二つある。一つは、手順 (5) の振幅を MadGraph の1ループ計算（MadLoop）と比べることである。MadLoop 自身は繰り込みの処方を持たない。紫外発散を消す対抗項は UFO の対抗項の頂点から来て、それを FeynRules の NLOCT が作る。そこで、まず NLOCT が作った対抗項を読んで、質量・場・結合の規約を確かめる。NLOCT の基本の関数 \texttt{OnShellRenormalization} は質量と場を on-shell で繰り込むと理解しているが、結合の扱いを含め、この環境ではまだ確かめていない。そのうえで、MadLoop が返す量（木と1ループの干渉）の規格化を合わせ、式~\eqref{eq:Mphys}（$g$ の定義が違えばその変換を加えたもの）と比べる。もう一つは、$d=6$ の質量の異常次元を式~\eqref{eq:ct6} から求めて、文献の値と照合することである。
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(6) はすべて終わった。次の候補は三つある。一つ目は、$d=6$ の質量の異常次元を式~\eqref{eq:ct6} から求めて、文献の値と照合することである。二つ目は、手順 (6) の MadLoop の値を角度について積分し、1ループの補正を含む $\phi\phi\to\phi\phi$ の断面積を求めることである。質量のある粒子だけの理論なので赤外発散はなく、仮想補正だけで有限な断面積が得られる。式~\eqref{eq:Mphys} を数値積分した値と比べられる。三つ目は2ループで、環境の記録で保留したツール（Kira、FIRE、pySecDec など）を入れる必要がある。
 
 \appendix
 
