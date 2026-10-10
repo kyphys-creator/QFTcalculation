@@ -41,16 +41,16 @@
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その最初の三段階を実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その四段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \section{目的と問い}\label{sec:intro}
 
-本ノートの問いは次の一つである。\textbf{$\phi^3$ 理論の1ループの紫外発散と繰り込みの構造は、$d=4$ と $d=6$ でどう違うか。そして、どの量をどの手段で突き合わせれば、計算環境の各部品を独立に検算できるか。}この問いを立てる理由は、ループ計算の環境を組み直したばかりで、その各部品がこちらの意図どおりに動くことを、手計算で答えが分かる模型で確かめたいからである~\cite{env}。$\phi^3$ 理論は3点結合を持つ最も簡単な相互作用理論であり、1ループの量はすべて手で計算できる。しかも次元によって性格が大きく変わる。$d=4$ では結合定数が質量次元を持つ超繰り込み可能な理論で、Package-X と LoopTools がそのまま使える。$d=6$ では繰り込み可能で漸近自由な理論になり、場・質量・結合のすべてが繰り込まれる~\cite{srednicki}。$d=6$ の積分は Package-X と LoopTools の守備範囲（$D=4-2\epsilon$）の外にあるので、FeynCalc を $D\neq4$ で使う練習にもなる。
+本ノートの問いは次の一つである。\textbf{$\phi^3$ 理論の1ループの紫外発散と繰り込みの構造は、$d=4$ と $d=6$ でどう違うか。そして、どの量をどの手段で突き合わせれば、計算環境の各部品を独立に検算できるか。}この問いを立てる理由は、ループ計算の環境を組み直したばかりで、その各部品がこちらの意図どおりに動くことを、手計算で答えが分かる模型で確かめたいからである~\cite{env}。$\phi^3$ 理論は3点結合を持つ最も簡単な相互作用理論であり、1ループの量はすべて手で計算できる。しかも次元によって性格が大きく変わる。$d=4$ では結合定数が質量次元を持つ超繰り込み可能な理論で、Package-X と LoopTools がそのまま使える。$d=6$ では繰り込み可能で漸近自由な理論になり、場・質量・結合のすべてが繰り込まれる~\cite{srednicki}。$d=6$ の積分は Package-X と LoopTools の守備範囲（$D=4-2\epsilon$）の外にあるので、FeynCalc を $D\neq4$ で使う練習にもなる。ただし、次元をずらす関係を通せば、これらのツールも $d=6$ に使える（第~\ref{sec:checks} 節）。
 
-求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、$d=4$ の質量の走り）。$d=4$ では繰り込まれた1PI 関数も求める。(iv) 木レベルの $\phi\phi\to\phi\phi$ 振幅。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
+求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) 木レベルの $\phi\phi\to\phi\phi$ 振幅。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(3) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:b0} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(4) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:d6} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -93,6 +93,8 @@ $I_N$ & $N$ 本の伝播関数を持つ1ループのスカラー積分 \\
 $x_j$, $\Delta$ & Feynman パラメータと、それで束ねた分母の定数部分（\ref{app:integrals}） \\
 $V_n$ & 1PI の $n$ 点関数。Feynman 則のとおり、$i$ の因子を含めた図の和 \\
 $A_0,\ B_0,\ C_0$ & $d=4$ の1ループ積分の $\overline{\mathrm{MS}}$ の有限部分（式~\eqref{eq:VR4}、\ref{app:b0}）。LoopTools の規約（$\Delta=0$）の値と同じ \\
+$A_0^{(6)},\ B_0^{(6)},\ C_0^{(6)}$ & $d=6$ の1ループ積分の $\overline{\mathrm{MS}}$ の有限部分（式~\eqref{eq:X6}、\ref{app:d6}） \\
+$A_{00},\ B_{00},\ C_{00}$ & テンソル積分の $g^{\mu\nu}$ の係数（\ref{app:d6}） \\
 $s,\ t,\ u$ & Mandelstam 変数。$s+t+u=4m^2$ \\
 $\beta(g)$ & $\beta\equiv\dd g/\dd\ln\mu$（$\epsilon\to0$ の値） \\
 $E,\ V,\ L,\ I$ & 図の外線、頂点、ループ、内線の数 \\
@@ -254,6 +256,26 @@ C_0=-\int\!\dd F\,\frac{1}{\Delta}
 \end{equation}
 は、1ループ積分から $\Delta_{\mathrm{UV}}$ を除いた $\overline{\mathrm{MS}}$ の有限部分で、LoopTools の規約（$\Delta=0$）の $B_0$、$C_0$ と同じものである。$C_0$ の $\Delta$ は式~\eqref{eq:IN-general} で $N=3$ としたものである。$V_3$ はもともと有限なので、規約によらない。タドポールの積分の有限部分は $A_0(m^2)=m^2\bigl(1-\ln(m^2/\mu^2)\bigr)$ だが、$V_1$ は $Y$ で打ち消すので $0$ である。$B_0$ は $\mu$ に $\ln\mu^2$ で依存する。その結果、自己エネルギー $\Sigma\equiv iV_2=-g^2B_0/(2(4\pi)^2)$ の $\mu$ 依存は式~\eqref{eq:mrun4} の $m^2$ の走りとちょうど打ち消し合い、伝播関数の分母 $p^2-m^2-\Sigma$ は $\mu$ によらない。
 
+\paragraph{$d=6$ の繰り込まれた1PI 関数。}$d=6$ でも、1ループ積分を $\mu^{2\epsilon}I_N=\frac{i}{(4\pi)^3}\bigl[c_N\Delta_{\mathrm{UV}}+X_N\bigr]+O(\epsilon)$ と、発散に比例する部分と有限部分 $X_N$ に分ける。表~\ref{tab:poles} の $d=6$ の列から、$c_1=-m^4/2$、$c_2=-(m^2-p^2/6)$、$c_3=-1/2$ である。式~\eqref{eq:ct6} の対抗項を式~\eqref{eq:V} に入れると、$V_2$ と $V_3$ は有限になり、
+\begin{equation}
+V_2(p^2)=\frac{ig^2}{2(4\pi)^3}\,B_0^{(6)}(p^2;m,m),\qquad
+V_3=\frac{ig^3}{(4\pi)^3}\,C_0^{(6)}
+\label{eq:VR6}
+\end{equation}
+となる（\ref{app:d6}）。有限部分は
+\begin{equation}
+A_0^{(6)}=-\frac{m^4}{2}\Bigl(\frac32-\ln\frac{m^2}{\mu^2}\Bigr),\qquad
+B_0^{(6)}=-\Bigl(m^2-\frac{p^2}{6}\Bigr)+\int_0^1\dd x\,\Delta\ln\frac{\Delta-i0}{\mu^2},\qquad
+C_0^{(6)}=\int\!\dd F\,\ln\frac{\Delta-i0}{\mu^2}
+\label{eq:X6}
+\end{equation}
+である。$B_0^{(6)}$ の $\Delta$ は $m^2-x(1-x)p^2$、$C_0^{(6)}$ の $\Delta$ は式~\eqref{eq:IN-general} で $N=3$ としたものである。$B_0^{(6)}$ は、$d=4$ の $B_0$ を使って閉じた形に書ける。
+\begin{equation}
+B_0^{(6)}(p^2;m,m)=-m^2+\frac{p^2}{9}+\frac{m^2}{3}\ln\frac{m^2}{\mu^2}-\frac23\Bigl(m^2-\frac{p^2}{4}\Bigr)B_0(p^2;m,m) .
+\label{eq:B06}
+\end{equation}
+閾値より上では $\mathrm{Im}\,B_0^{(6)}=\pi p^2\beta^3/6$ である。$d=4$ の $\mathrm{Im}\,B_0=\pi\beta$ と比べて閾値での立ち上がりが遅いのは、6次元の2体位相空間が終状態の運動量の3乗に比例するためである。$d=6$ でも光学定理 $\mathrm{Im}\,\Sigma=-\sqrt{p^2}\,\Gamma(\phi^*\to\phi\phi)$ が成り立つ（\ref{app:d6}）。
+
 \paragraph{繰り込み群。}裸の量が $\mu$ によらないことから、繰り込まれた量の走り方が決まる（\ref{app:ren}）。$d=6$ では
 \begin{equation}
 \beta(g)=-\frac{3g^3}{4(4\pi)^3}
@@ -318,19 +340,19 @@ Feynman 則・対称性因子 & \ref{app:rules} & FeynRules から書き出し�
 木の振幅 \eqref{eq:Mtree} & \ref{app:tree} & 記号として一致 & — & — & $d=4$ の断面積 \\
 $d=4$：$I_N$ の極、対抗項 \eqref{eq:ct4} & \ref{app:integrals}, \ref{app:ren} & TID で PaVe 関数へ、極を抽出 & 解析式 & — & — \\
 $d=4$：有限部分（$\overline{\mathrm{MS}}$） & Feynman パラメータ積分の数値 & 振幅に $\overline{\mathrm{MS}}$ の対抗項を加える & 解析式 & 数値 & — \\
-$d=6$：$I_N$ の極、対抗項 \eqref{eq:ct6}、$\beta$ \eqref{eq:beta6} & \ref{app:integrals}, \ref{app:ren} & $D=6-2\epsilon$ で計算 & 使えない & 使えない & — \\
-$d=6$：有限部分（$\overline{\mathrm{MS}}$） & Feynman パラメータ積分の数値 & — & 使えない & 使えない & — \\
+$d=6$：$I_N$ の極、対抗項 \eqref{eq:ct6}、$\beta$ \eqref{eq:beta6} & \ref{app:integrals}, \ref{app:ren} & $D=6-2\epsilon$ の Feynman パラメータ表示 & 次元をずらす関係で使う & — & — \\
+$d=6$：有限部分（$\overline{\mathrm{MS}}$） & 閉じた式、Feynman パラメータ積分の数値 & — & 次元をずらす関係で使う & 同左 & — \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点 $m=g=\mu=1$ で、Package-X の解析式・LoopTools の数値・Feynman パラメータ積分の数値積分が、倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。有限部分は規約に依存するので、すべて $\overline{\mathrm{MS}}$（第~\ref{sec:setup} 節の前提4）にそろえて比べる。LoopTools（$\Delta=0$）と COLLIER（$\Delta_{\mathrm{UV}}=0$）は、既定で $\overline{\mathrm{MS}}$ の値を返す。一方、FeynCalc の PaVe 関数は測度 $\dd^Dq/(i\pi^2)$ で規格化されているので、その $\epsilon^0$ の係数は $\overline{\mathrm{MS}}$ の値から $-(\gamma_E+\ln\pi)$ だけずれる~\cite{env}。そこで FeynCalc の振幅は、本ノートの $V_n$ に直し、$\overline{\mathrm{MS}}$ の対抗項を加えてから比べる。MadGraph の断面積は、式~\eqref{eq:Mtree} を自分で数値積分した値と、統計誤差の範囲で一致することを求める。
 
-\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。
 
 \section{検算の結果}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順のうち、(1) 模型ファイルの作成、(2) 木の振幅の検算、(3) $d=4$ の1ループの検算を行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順 (1)〜(4)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も \texttt{Src/generated/} に書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
 
@@ -401,15 +423,50 @@ $C_0(1,1,10)$ & $-0.204564231729-0.789218088790\,i$ & 基準 & $3.0\times10^{-16
 \label{fig:b0}
 \end{figure}
 
+\paragraph{手順 (4)：$d=6$ の1ループ。}図は $d=4$ と同じで、FeynCalc の振幅も式~\eqref{eq:A123} の形のままである。ただし、その PaVe 関数を $D=6-2\epsilon$ 次元の積分として読む。ここでも三つの観点から確かめた。
+
+まず極と対抗項である。FeynCalc の \texttt{FCFeynmanParametrize} で、スカラー積分 $I_1,I_2,I_3$ を $D=6-2\epsilon$ の Feynman パラメータ表示に直した。被積分関数と前因子は、ランダムに選んだ3点（$\epsilon=1/7$）で式~\eqref{eq:IN-general} と30桁で一致した。極の部分を Feynman パラメータで積分すると、表~\ref{tab:poles} の $d=6$ の列が記号として再現された。$V_2$ と $V_3$ の極を消す条件から決めた $\overline{\mathrm{MS}}$ の対抗項は式~\eqref{eq:ct6} と一致し、それから計算した $\beta(g)$ は式~\eqref{eq:beta6} と一致した。
+
+次に、Package-X・LoopTools・COLLIER を $d=6$ に使う方法である。これらは $D=4-2\epsilon$ の積分しか扱わない。しかし、$D+2$ 次元のスカラー積分は、$D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数に比例する（\ref{app:d6}）。FeynCalc の規格化では $\mathrm{PaVe}^{(D+2)}=-2\pi\,\mathrm{PaVe}_{00}^{(D)}$、すなわち $6-2\epsilon$ 次元の $A_0$、$B_0$、$C_0$ は、$4-2\epsilon$ 次元の $A_{00}$、$B_{00}$、$C_{00}$ の $-2\pi$ 倍である。$A_n$ の PaVe 関数をこの関係で置き換えて Package-X で評価すると、$V_1$、$V_2$、$V_3$ の極は上の結果と記号として一致し、有限部分も式~\eqref{eq:X6} の $A_0^{(6)}$ と式~\eqref{eq:B06} を記号として再現した。LoopTools と COLLIER では、$\overline{\mathrm{MS}}$ の有限部分が $X_N=-2\,T_{00}$（$T_{00}$ は $\Delta=0$ での $A_{00}$、$B_{00}$、$C_{00}$）として直接得られる。
+
+最後に有限部分である（表~\ref{tab:oneloop6}、図~\ref{fig:b06}）。基準点は $d=4$ と同じ $m=\mu=1$ である。$B_0^{(6)}$ の基準値は式~\eqref{eq:B06} で、これは30桁で計算した式~\eqref{eq:X6} の積分とも相対 $10^{-30}$ 以下で一致する。15点で、Package-X・LoopTools・COLLIER の値は、いずれも基準値と相対 $3.2\times10^{-14}$ 以内で一致した。ずれが最大になるのは $B_0^{(6)}$ が $0.063$ と小さい $p^2=-10m^2$ で、相殺による桁落ちのためである。閾値より上の6点では、三つとも虚部が $\mathrm{Im}\,B_0^{(6)}=\pi p^2\beta^3/6$ を相対 $1.4\times10^{-14}$ 以内で満たした。$C_0^{(6)}$ の基準値は、閾値より下では式~\eqref{eq:X6} の2重積分（30桁）、閾値より上では Package-X とした。Package-X と COLLIER は全点で一致した。$d=4$ では外運動量がすべてゼロの $C_0$ を扱えなかった COLLIER も、$C_{00}$ は正しく返した。LoopTools の $C_{00}$ は、閾値より下で外運動量がゼロでない点では誤り、外運動量がすべてゼロの点では \texttt{NaN} を返した（Fortran から直接呼んでも同じ）。Passarino--Veltman の簡約では $C_{00}$ は $C_0$ を含むので（Package-X の出力もそうなっている）、$d=4$ で見つけた $C_0$ の誤りがそのまま現れたと考えられる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{$d=6$ の $\overline{\mathrm{MS}}$ の有限部分（式~\eqref{eq:X6}）の比較（$m=\mu=1$）。Package-X・LoopTools・COLLIER の値は、$A_{00}$、$B_{00}$、$C_{00}$ から次元をずらす関係で求めた。数値は基準値からの相対的なずれ（基準値が $0$ の $C_0^{(6)}(0,0,0)$ では絶対的なずれ）で、$B_0^{(6)}$ と $\mathrm{Im}\,B_0^{(6)}/(\pi p^2\beta^3/6)$ は全点での最大値である。$C_0^{(6)}$ の引数は表~\ref{tab:oneloop4} の $C_0$ と同じである。}
+\label{tab:oneloop6}
+\begin{tabular}{llccc}
+\toprule
+量 & 基準値 & Package-X & LoopTools & COLLIER \\
+\midrule
+$A_0^{(6)}(m^2)$ & $-3/4$（厳密） & $0$ & $3.0\times10^{-16}$ & $0$ \\
+$B_0^{(6)}(p^2)$、15点 & 式~\eqref{eq:B06} & $2.9\times10^{-16}$ & $1.9\times10^{-14}$ & $3.2\times10^{-14}$ \\
+$\mathrm{Im}\,B_0^{(6)}/(\pi p^2\beta^3/6)$、6点 & $1$ & $6.0\times10^{-15}$ & $8.4\times10^{-15}$ & $1.4\times10^{-14}$ \\
+$C_0^{(6)}(0,0,0)$ & $0$ & $0$ & \texttt{NaN} & $0$ \\
+$C_0^{(6)}(1,1,1)$ & $-0.145598247384$ & $2.8\times10^{-17}$ & $160$（誤り） & $6.0\times10^{-16}$ \\
+$C_0^{(6)}(1,1,3.5)$ & $-0.345422361050$ & $6.3\times10^{-17}$ & $39$（誤り） & $1.7\times10^{-14}$ \\
+$C_0^{(6)}(1,1,5)$ & $-0.574635744475-0.159752209401\,i$ & 基準 & $1.0\times10^{-15}$ & $2.9\times10^{-15}$ \\
+$C_0^{(6)}(1,1,10)$ & $-0.498087303184-0.701557033468\,i$ & 基準 & $1.8\times10^{-16}$ & $1.6\times10^{-15}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.6\linewidth]{../figs/b0_d6.pdf}
+\caption{$d=6$ の $\overline{\mathrm{MS}}$ の $B_0^{(6)}(p^2;m,m)$ の実部（上）と虚部（下）（$m=\mu=1$）。実線は式~\eqref{eq:B06}、記号は次元をずらす関係で求めた Package-X・LoopTools・COLLIER の値、下の破線は $\pi p^2\beta^3/6$、点線は閾値 $p^2=4m^2$ である。}
+\label{fig:b06}
+\end{figure}
+
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。その必要が出れば、式~\eqref{eq:VR4} から移せる。$d=6$ の有限部分は Package-X と LoopTools で検算できないので、Feynman パラメータ積分の数値計算が唯一の独立な検算になる。2ループ用に推奨された pySecDec などが入れば、それが二つ目の検算手段になる~\cite{review}。
+\paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。その必要が出れば、式~\eqref{eq:VR4} から移せる。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。
 
 \paragraph{タドポールの扱い。}本ノートでは、$Y$ でタドポールを打ち消す方法をとった。これは1ループでは、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除くことと同じである。2ループ以上では、ループの内側にタドポールが付いた図も $Y$ の高次の項で消えるので、同じ除き方で済むかどうかを確かめる必要がある。
 
-\paragraph{LoopTools の $C_0$。}手順 (3) で見つかった LoopTools の $C_0$ の誤りは、コンパイラの版や最適化によらない。そのため、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。当面、$C_0$ には Package-X と COLLIER を使い、LoopTools は $A_0$ と $B_0$ にだけ使う。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。
+\paragraph{LoopTools の $C_0$。}手順 (3) で見つかった LoopTools の $C_0$ の誤りは、コンパイラの版や最適化によらない。そのため、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。この誤りは $C_{00}$ を通して $d=6$ の $C_0^{(6)}$ にも現れた。当面、$C_0$ と $C_{00}$ には Package-X と COLLIER を使い、LoopTools は $A_0$、$B_0$ と、それから作る $A_{00}$、$B_{00}$ にだけ使う。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。
 
-\paragraph{今後。}次は第~\ref{sec:plan} 節の手順 (4)、$d=6$ の1ループの検算である。FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(4) はすべて終わった。次の候補は二つある。一つは、$d=4$ の1ループの $\phi\phi\to\phi\phi$（箱図を含み、$D_0$ が現れる）を FeynCalc・Package-X・COLLIER で計算し、FeynRules の NLOCT で作った UFO を使って MadGraph の1ループ計算（MadLoop）と比べることである。もう一つは、$d=6$ の質量の異常次元を式~\eqref{eq:ct6} から求めて、文献の値と照合することである。
 
 \appendix
 
@@ -655,6 +712,69 @@ $\tilde\beta\equiv\sqrt{4/a-1}$ と置くと $(4-a)/(ab)=2\tilde\beta$、$1/(2b)
 \Gamma(\phi^*\to\phi\phi)=\frac{1}{2M}\cdot\frac12\cdot g^2\cdot\frac{\beta}{8\pi}=\frac{g^2\beta}{32\pi M}.
 \end{equation*}
 よって $\mathrm{Im}\,\Sigma=-M\,\Gamma(\phi^*\to\phi\phi)$ が成り立つ。これは自己エネルギーに対する光学定理（ユニタリー性）であり、完全な伝播関数が $i/(p^2-m^2-\mathrm{Re}\,\Sigma+iM\Gamma)$ という Breit--Wigner 形になることと整合する。
+
+\section{$d=6$ の有限部分と次元をずらす関係の導出}\label{app:d6}
+
+\paragraph{有限部分。}$K\equiv(4\pi)^3$ と書く。式~\eqref{eq:IN-general} で $D=6-2\epsilon$ とし、$(4\pi)^{\epsilon}=1+\epsilon\ln4\pi$、$\mu^{2\epsilon}\Delta^{-\epsilon}=1-\epsilon\ln(\Delta/\mu^2)$（いずれも $O(\epsilon^2)$ を除く）を使う。$N=1$ では $\Gamma(-2+\epsilon)=\Gamma(1+\epsilon)/\bigl(\epsilon(\epsilon-1)(\epsilon-2)\bigr)$ で、$1/\bigl((\epsilon-1)(\epsilon-2)\bigr)=\tfrac12\bigl(1+\tfrac32\epsilon\bigr)+O(\epsilon^2)$ より $\Gamma(-2+\epsilon)=\tfrac12\bigl(1/\epsilon+\tfrac32-\gamma_E\bigr)+O(\epsilon)$ である。よって
+\begin{equation*}
+\mu^{2\epsilon}I_1=-i\,\Gamma(-2+\epsilon)\,\frac{(4\pi)^\epsilon}{K}\,(m^2)^2\Bigl(\frac{m^2}{\mu^2}\Bigr)^{-\epsilon}
+=\frac{i}{K}\Bigl[-\frac{m^4}{2}\Delta_{\mathrm{UV}}-\frac{m^4}{2}\Bigl(\frac32-\ln\frac{m^2}{\mu^2}\Bigr)\Bigr]+O(\epsilon).
+\end{equation*}
+$N=2$ では \ref{app:b0} の $\Gamma(-1+\epsilon)=-1/\epsilon-1+\gamma_E+O(\epsilon)$ を使い、$\int_0^1\Delta\,\dd x=m^2-p^2/6$ より
+\begin{equation*}
+\mu^{2\epsilon}I_2=i\,\Gamma(-1+\epsilon)\,\frac{(4\pi)^\epsilon}{K}\int_0^1\dd x\,\Delta\Bigl(\frac{\Delta}{\mu^2}\Bigr)^{-\epsilon}
+=\frac{i}{K}\Bigl[-\Bigl(m^2-\frac{p^2}{6}\Bigr)(\Delta_{\mathrm{UV}}+1)+\int_0^1\dd x\,\Delta\ln\frac{\Delta}{\mu^2}\Bigr]+O(\epsilon).
+\end{equation*}
+$N=3$ では $\Gamma(\epsilon)=1/\epsilon-\gamma_E+O(\epsilon)$ と $\int\dd F=1/2$ より
+\begin{equation*}
+\mu^{2\epsilon}I_3=-i\,\Gamma(\epsilon)\,\frac{(4\pi)^\epsilon}{K}\int\!\dd F\Bigl(\frac{\Delta}{\mu^2}\Bigr)^{-\epsilon}
+=\frac{i}{K}\Bigl[-\frac12\Delta_{\mathrm{UV}}+\int\!\dd F\,\ln\frac{\Delta}{\mu^2}\Bigr]+O(\epsilon).
+\end{equation*}
+$\Delta\le0$ となる運動学では、\ref{app:b0} と同じく $\Delta\to\Delta-i0$ と読む。これらが $c_N$ と式~\eqref{eq:X6} の $X_N$ である。
+
+\paragraph{繰り込まれた1PI 関数。}式~\eqref{eq:ct6} から $i(\delta_Zp^2-\delta_m)=\frac{ig^2}{2K}\bigl(m^2-\frac{p^2}{6}\bigr)\Delta_{\mathrm{UV}}$、$-i\delta_g=\frac{ig^3}{2K}\Delta_{\mathrm{UV}}$ である。式~\eqref{eq:V} に入れると
+\begin{gather*}
+V_2=\frac{g^2}{2}\,\mu^{2\epsilon}I_2+i(\delta_Zp^2-\delta_m)=\frac{ig^2}{2K}\Bigl[c_2\Delta_{\mathrm{UV}}+B_0^{(6)}\Bigr]+\frac{ig^2}{2K}\Bigl(m^2-\frac{p^2}{6}\Bigr)\Delta_{\mathrm{UV}}=\frac{ig^2}{2K}\,B_0^{(6)},\\
+V_3=\mu^{\epsilon}\bigl(g^3\mu^{2\epsilon}I_3-i\delta_g\bigr)=\mu^\epsilon\,\frac{ig^3}{K}\Bigl[-\frac12\Delta_{\mathrm{UV}}+C_0^{(6)}+\frac12\Delta_{\mathrm{UV}}\Bigr]\to\frac{ig^3}{K}\,C_0^{(6)}
+\end{gather*}
+となり（いずれも $O(\epsilon)$ を除く）、式~\eqref{eq:VR6} を得る。
+
+\paragraph{$B_0^{(6)}$ の閉じた式。}\ref{app:b0} と同じく $a\equiv p^2/m^2$、$D(x)\equiv1-ax(1-x)$、$I(a)\equiv\int_0^1\ln(D-i0)\,\dd x$ とし、$J(a)\equiv\int_0^1D\ln(D-i0)\,\dd x$ と置く。$y\equiv x-\tfrac12$ とすると $D=c+ay^2$、$c\equiv1-a/4$ である。$y$ について部分積分すると、$y=\pm\tfrac12$ で $D=1$、$\ln D=0$ なので境界項は消え、
+\begin{equation*}
+J=\Bigl[y\,D\ln D\Bigr]_{-1/2}^{1/2}-\int_{-1/2}^{1/2}\dd y\,y\,\frac{\dd}{\dd y}(D\ln D)=-\int_{-1/2}^{1/2}\dd y\,2ay^2(\ln D+1)
+\end{equation*}
+となる（$\dd D/\dd y=2ay$）。$ay^2=D-c$ を使うと、右辺は $-2J-2\int D\,\dd y+2cI+2c$ である。$\int_{-1/2}^{1/2}D\,\dd y=c+a/12=1-a/6$ を入れて $J$ について解くと
+\begin{equation*}
+3J=2c(I+1)-2\Bigl(1-\frac a6\Bigr)=2cI-\frac a6,\qquad J(a)=\frac23\Bigl(1-\frac a4\Bigr)I(a)-\frac{a}{18}
+\end{equation*}
+を得る。$a=4$ では $D=(1-2x)^2$ で、$J=\int_0^1(1-2x)^2\ln(1-2x)^2\,\dd x=2\int_0^1u^2\ln u\,\dd u=-2/9$ となり、確かに上式（$I(4)=-2$）と一致する。$L\equiv\ln(m^2/\mu^2)$ と置くと、$\int_0^1\Delta\ln(\Delta/\mu^2)\,\dd x=m^2\bigl[J+(1-a/6)L\bigr]$ であり、\ref{app:b0} の $B_0=-L-I$ から $I=-B_0-L$ である。これらを式~\eqref{eq:X6} の $B_0^{(6)}$ に入れると
+\begin{equation*}
+B_0^{(6)}=-m^2\Bigl(1-\frac a6\Bigr)+m^2\Bigl[-\frac23\Bigl(1-\frac a4\Bigr)(B_0+L)-\frac a{18}+\Bigl(1-\frac a6\Bigr)L\Bigr]
+=m^2\Bigl[-1+\frac a9+\frac L3-\frac23\Bigl(1-\frac a4\Bigr)B_0\Bigr]
+\end{equation*}
+となり、式~\eqref{eq:B06} を得る。$L$ の係数は $1-a/6-\tfrac23(1-a/4)=\tfrac13$ である。虚部は $\mathrm{Im}\,B_0=\pi\beta$（$p^2>4m^2$）から $\mathrm{Im}\,B_0^{(6)}=\tfrac23\bigl(\tfrac{p^2}{4}-m^2\bigr)\pi\beta=\pi p^2\beta^3/6$ である。最後の等号には $p^2/4-m^2=p^2\beta^2/4$ を使った。
+
+\paragraph{光学定理。}式~\eqref{eq:VR6} から $\Sigma\equiv iV_2=-\frac{g^2}{2K}B_0^{(6)}$、$\mathrm{Im}\,\Sigma=-\frac{g^2}{2K}\cdot\frac{\pi p^2\beta^3}{6}=-\frac{g^2p^2\beta^3}{768\pi^2}$ である。一方、$d$ 次元の2体位相空間は、\ref{app:xsec} の計算で $\dd^3k\to\dd^{d-1}k=k^{d-2}\dd k\,\dd\Omega$、$(2\pi)^4/(2\pi)^6\to(2\pi)^d/(2\pi)^{2(d-1)}$ と置き換えれば、$\int\dd\Phi_2=(2\pi)^{2-d}k_f^{d-3}\,\Omega_{d-2}/(4\sqrt s)$ となる。ここで $\Omega_{d-2}=2\pi^{(d-1)/2}/\Gamma\bigl((d-1)/2\bigr)$ は $d-1$ 次元空間の単位球面の面積で、$d=4$ では $4\pi$、$d=6$ では $8\pi^2/3$ である（$\Gamma(5/2)=3\sqrt\pi/4$）。$d=4$ では \ref{app:b0} の $\beta/(8\pi)$ に戻る。$d=6$、$\sqrt s=M\equiv\sqrt{p^2}$、$k_f=M\beta/2$ では $\int\dd\Phi_2=\frac{1}{16\pi^4}\cdot\frac{M^3\beta^3}{8}\cdot\frac{8\pi^2}{3}\cdot\frac{1}{4M}=\frac{M^2\beta^3}{192\pi^2}$ である。$d=6$ では $g$ は無次元で、木の振幅は $|\mathcal{M}|=g$ のままなので、同種粒子の因子 $1/2$ を含めて
+\begin{equation*}
+\Gamma(\phi^*\to\phi\phi)=\frac{1}{2M}\cdot\frac12\cdot g^2\cdot\frac{M^2\beta^3}{192\pi^2}=\frac{g^2M\beta^3}{768\pi^2}
+\end{equation*}
+となる。よって $d=6$ でも $\mathrm{Im}\,\Sigma=-M\,\Gamma(\phi^*\to\phi\phi)$ が成り立つ。
+
+\paragraph{次元をずらす関係。}テンソル積分 $I_N^{\mu\nu}\equiv\int\frac{\dd^Dk}{(2\pi)^D}\,k^\mu k^\nu\prod_j\bigl[(k+q_j)^2-m^2\bigr]^{-1}$ の $g^{\mu\nu}$ の係数を $I_{N,00}^{(D)}$ と書く。\ref{app:integrals} と同じく Feynman パラメータでまとめて $\ell=k+Q$ とずらすと、$k^\mu k^\nu=\ell^\mu\ell^\nu-\ell^\mu Q^\nu-Q^\mu\ell^\nu+Q^\mu Q^\nu$ である。$\ell$ の1次の項は積分で消え、$Q^\mu Q^\nu$ は外運動量の積なので $g^{\mu\nu}$ に寄与しない。$\ell^\mu\ell^\nu$ は対称性から $g^{\mu\nu}\ell^2/D$ に置き換えられる。$\ell^2=(\ell^2-\Delta)+\Delta$ と分けて \ref{app:integrals} の $J_n$ を使うと
+\begin{align*}
+\int\frac{\dd^D\ell}{(2\pi)^D}\frac{\ell^2}{(\ell^2-\Delta)^n}=J_{n-1}+\Delta J_n
+&=\frac{i(-1)^{n-1}\Delta^{D/2+1-n}}{(4\pi)^{D/2}}\Bigl[\frac{\Gamma(n-1-D/2)}{\Gamma(n-1)}-\frac{\Gamma(n-D/2)}{\Gamma(n)}\Bigr]\\
+&=\frac{i(-1)^{n-1}}{(4\pi)^{D/2}}\,\frac{D}{2}\,\frac{\Gamma(n-1-D/2)}{\Gamma(n)}\,\Delta^{D/2+1-n}
+\end{align*}
+となる。最後の等号では $\Gamma(n-D/2)=(n-1-D/2)\Gamma(n-1-D/2)$、$\Gamma(n)=(n-1)\Gamma(n-1)$ を使った。これを $D$ で割ったものは、$D+2$ 次元の $J_n^{(D+2)}(\Delta)=\frac{i(-1)^n}{(4\pi)^{D/2+1}}\frac{\Gamma(n-1-D/2)}{\Gamma(n)}\Delta^{D/2+1-n}$ の $-4\pi/2=-2\pi$ 倍である。Feynman パラメータの積分 $\Gamma(N)\int\dd F$ は両辺で共通なので、
+\begin{equation*}
+I_{N,00}^{(D)}=-2\pi\,I_N^{(D+2)}
+\end{equation*}
+を得る。FeynCalc の規格化（$\int\dd^Dq=i\pi^2\,\mathrm{PaVe}$）に直すと、$I_N^{(D)}=i\pi^2\mathrm{PaVe}^{(D)}/(2\pi)^D$ などから $\mathrm{PaVe}^{(D+2)}=-2\pi\,\mathrm{PaVe}_{00}^{(D)}$ である。$D=4-2\epsilon$ とすれば $D+2=6-2\epsilon$ で、$\epsilon$ も $\mu^{2\epsilon}$ も両辺で共通である。LoopTools と COLLIER の規格化では、$\mu^{2\epsilon}I_{N,00}^{(4-2\epsilon)}=\frac{i}{(4\pi)^2}\bigl[c_{N,00}\Delta_{\mathrm{UV}}+T_{N,00}\bigr]$（$T_{N,00}$ は $\Delta=0$ の値）となる。\ref{app:b0} で $B_0$ について見たのと同じである。よって
+\begin{equation*}
+\mu^{2\epsilon}I_N^{(6-2\epsilon)}=-\frac{1}{2\pi}\cdot\frac{i}{(4\pi)^2}\bigl[c_{N,00}\Delta_{\mathrm{UV}}+T_{N,00}\bigr]=\frac{i}{(4\pi)^3}\bigl[-2c_{N,00}\Delta_{\mathrm{UV}}-2T_{N,00}\bigr]
+\end{equation*}
+であり、$c_N=-2c_{N,00}$、$X_N=-2T_{N,00}$ となる。例えば $A_{00}=\frac{m^2}{4}\bigl(A_0+\frac{m^2}{2}\bigr)$ の $\Delta=0$ の値は $\frac{m^4}{4}\bigl(\frac32-\ln\frac{m^2}{\mu^2}\bigr)$ で、$-2$ 倍すると式~\eqref{eq:X6} の $A_0^{(6)}$ になる。
 
 \begin{thebibliography}{9}
 \small
