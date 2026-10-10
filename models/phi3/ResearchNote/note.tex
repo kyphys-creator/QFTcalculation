@@ -41,7 +41,7 @@
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。質量は $\mu\,\dd m^2/\dd\mu=-5g^2m^2/(6(4\pi)^3)$ で走り、場の異常次元は $g^2/(12(4\pi)^3)$ である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その十三段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。最後に、FeynRules の NLOCT で対抗項を含む UFO を作り、MadGraph の1ループ計算（MadLoop）と比べた。NLOCT の対抗項は on-shell の処方の手計算と記号として一致した。MadLoop の値は、on-shell の対抗項では S 行列要素の式と、極だけの $\overline{\mathrm{MS}}$ の対抗項では $\overline{\mathrm{MS}}$ の振幅と、相対 $3\times10^{-13}$ 以内で一致した。最後に、$\phi\phi$ 散乱の全断面積を $g^6$ まで求めた。それには、$2\to2$ の1ループの補正と、同じ次数の $\phi\phi\to\phi\phi\phi$ の両方が要る。$g=m$ では、1ループの補正は木の断面積の $0.9$〜$2\%$、$2\to3$ は $\sqrt s=20m$ で $2\%$ である。1ループの補正の角度積分は MadLoop と相対 $10^{-14}$ 以内で一致し、$2\to3$ は自前の二つの積分と MadGraph が $\sqrt s=4m,\,5m$ で一致した。さらに $d=6$ の1ループの $\phi\phi\to\phi\phi$ を、次元をずらす関係で4点関数まで広げて計算した。極は $d=6$ の対抗項で消え、虚部はユニタリー性と一致した。S 行列要素が $\mu$ によらないことから三つのツールの数値で逆算した $\beta$ 関数は、$\beta(g)=-3g^3/(4(4\pi)^3)$ と相対 $10^{-15}$ で一致した。最後に、両方の次元で、S 行列要素が $\mu$ によらないことを使い、6点の数値から質量の走りと $\beta$ 関数を同時に読み取った。$d=4$ では、MadLoop を含む四つのツールで $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ と $\beta=0$ が得られた。$d=6$ では、$\beta(g)$ と $\overline{\mathrm{MS}}$ の質量の走り $-5g^2m^2/(6(4\pi)^3)$ が得られた。極質量で書けば、質量の走りは0になった。いずれも相対 $10^{-15}$ の精度である。これらの係数で、無次元のパラメータの空間での繰り込み群の流れも描いた。$d=4$ の流れは、べき数え上げから $\overline{\mathrm{MS}}$ では全次数で正しい。最後に、S 行列要素には現れない $d=6$ の場の異常次元を、1PI の2点関数の $\mu$ 依存から三つのツールで読み取った。2点・3点関数からは質量の走りと $\beta$ も別の経路で再現され、三つの RG 関数はすべて相対 $10^{-15}$ で手計算と一致した。三つは5ループの文献の1ループの項とも符号まで一致し、これは $d=6$ の対抗項の文献による検算にもなっている。最後に、$d=6$ の漸近自由を90°散乱の有効結合で見た。結合を固定した1ループの計算は $\ln(\sqrt s/m)$ について傾き $-\frac{11}{6}$ の対数を含み、$\alpha(m)=0.1$ では $\sqrt s\approx3\times10^3m$ で破綻する。傾きのうち $-\frac32$ は $\beta$ から、$-\frac13$ は外線の場の異常次元から来る。$g(\sqrt s)$ と外線の因子 $(\alpha(\sqrt s)/\alpha(m))^{2/9}$ で繰り込み群の改良をすると、有効結合は $1/\ln s$ のように滑らかに小さくなった。この計算では、COLLIER の箱図が $\sqrt s\gg m$ で精度を失うことも分かった。そのため、高エネルギーの基準には Package-X の解析式を30桁で評価した値を使い、LoopTools がそれと $2\times10^{-13}$ で一致した。最後に、$d=4$ の $\phi\phi\to\phi\phi$ の部分波から、摂動論が成り立つ $g/m$ の上限を求めた。部分波ごとのユニタリー性は1ループで成り立った。上限は、木のユニタリー性からは $g/m\le9.8$、1ループまで含めたユニタリー性からは $7.9$ である。ヒッグスの3点結合に直すと $\kappa_\lambda\lesssim6.4$ と $5.2$ になり、文献の値と同じ程度である。最後に、下に有界でないポテンシャルの偽の真空 $\phi=0$ の崩壊を、$O(d)$ 対称な bounce で調べた。$d=4$ の作用は $S_B=817.71\,m^2/g^2$ で、二つの独立な数値解法が一致した。同じ計算は、$d=3$ で文献の係数 4.85 を再現した。ユニタリー性の限界 $g/m\approx8$〜10 では $S_B\approx8.5$〜13 にすぎず、偽の真空はほとんど安定でない。宇宙年齢の間に崩れないためには $g/m<1.42$（$m=m_h$）が要り、これは摂動論の限界より強い。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算環境（FeynCalc、Package-X、LoopTools、FeynRules、MadGraph）を練習し検算するための玩具模型として、質量 $m$ を持つ実スカラー1つの $\phi^3$ 理論を定義し、時空次元 $d=4$ と $d=6$ の両方で扱う。ラグランジアンから Feynman 則と対称性因子を導き、べき数え上げと Feynman パラメータ表示によって、1ループのタドポール・自己エネルギー・頂点補正の紫外発散を両方の次元で求めた。繰り込みは $\overline{\mathrm{MS}}$ で行い、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$d=4$ では発散するのはタドポールと、自己エネルギーのうち外運動量によらない部分だけで、対抗項は質量項 $\delta_m=g^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ だけが残る（$\delta_Z=\delta_g=0$）。繰り込まれた自己エネルギーと頂点補正は、$\overline{\mathrm{MS}}$ の有限部分 $B_0$ と $C_0$ で書ける。$d=6$ では三つとも発散し、$\delta_Z=-g^2\Delta_{\mathrm{UV}}/(12(4\pi)^3)$、$\delta_m=-g^2m^2\Delta_{\mathrm{UV}}/(2(4\pi)^3)$、$\delta_g=-g^3\Delta_{\mathrm{UV}}/(2(4\pi)^3)$ となる。ここから $\beta(g)=-3g^3/(4(4\pi)^3)$ が出て、理論は漸近自由である。質量は $\mu\,\dd m^2/\dd\mu=-5g^2m^2/(6(4\pi)^3)$ で走り、場の異常次元は $g^2/(12(4\pi)^3)$ である。$d=4$ では結合定数は1ループで走らず、質量は $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ で走る。最後に、これらの手計算を各ツールの出力と突き合わせる計画を定め（比べる量、方法、一致の基準、数値の基準点 $m=g=\mu=1$）、その十四段階をすべて実行した。FeynRules の模型ファイルから書き出した FeynArts 模型で作った木の振幅は、式と記号として一致した。MadGraph の断面積は、$\sqrt{s}=2.5,\,5,\,10$ で式の数値積分と統計誤差の1.3倍以内で一致した。$d=4$ の1ループでは、FeynCalc の振幅、発散部分、対抗項が手計算と記号として一致した。有限部分は $\overline{\mathrm{MS}}$ で比べ、$B_0$ は Package-X・LoopTools・COLLIER の三つとも閉じた式と相対 $8\times10^{-15}$ 以内で一致し、虚部は光学定理 $\mathrm{Im}\,B_0=\pi\beta$ を満たした。一方、この環境の LoopTools は閾値より下の $C_0$ を誤って返すことが分かった。$d=6$ の1ループでは、FeynCalc の Feynman パラメータ表示から極・対抗項・$\beta(g)$ が記号として再現された。さらに、$D+2$ 次元のスカラー積分が $D$ 次元のテンソル積分の $g^{\mu\nu}$ の係数の $-2\pi$ 倍であることを使い、$D=4-2\epsilon$ 用の Package-X・LoopTools・COLLIER で $d=6$ の有限部分を計算した。Package-X と COLLIER の値は、閉じた式と Feynman パラメータ積分に相対 $4\times10^{-14}$ 以内で一致し、光学定理も満たした。LoopTools の $C_0$ の誤りは $d=6$ にも現れた。最後に、$d=4$ の1ループの $\phi\phi\to\phi\phi$ 振幅（12図）を、FeynCalc と FormCalc の独立な二つの経路で手計算の式と記号として一致させた。その数値は、物理的な散乱の6点で Package-X・LoopTools・COLLIER の間で相対 $2\times10^{-11}$ 以内で一致した。虚部は、木の振幅二つから作ったユニタリー性の積分と相対 $6\times10^{-14}$ 以内で一致した。さらに、$\overline{\mathrm{MS}}$ の振幅を S 行列要素に直す式（極質量と留数による変換）を導き、on-shell の処方で直接計算した結果と一致することを示した。最後に、FeynRules の NLOCT で対抗項を含む UFO を作り、MadGraph の1ループ計算（MadLoop）と比べた。NLOCT の対抗項は on-shell の処方の手計算と記号として一致した。MadLoop の値は、on-shell の対抗項では S 行列要素の式と、極だけの $\overline{\mathrm{MS}}$ の対抗項では $\overline{\mathrm{MS}}$ の振幅と、相対 $3\times10^{-13}$ 以内で一致した。最後に、$\phi\phi$ 散乱の全断面積を $g^6$ まで求めた。それには、$2\to2$ の1ループの補正と、同じ次数の $\phi\phi\to\phi\phi\phi$ の両方が要る。$g=m$ では、1ループの補正は木の断面積の $0.9$〜$2\%$、$2\to3$ は $\sqrt s=20m$ で $2\%$ である。1ループの補正の角度積分は MadLoop と相対 $10^{-14}$ 以内で一致し、$2\to3$ は自前の二つの積分と MadGraph が $\sqrt s=4m,\,5m$ で一致した。さらに $d=6$ の1ループの $\phi\phi\to\phi\phi$ を、次元をずらす関係で4点関数まで広げて計算した。極は $d=6$ の対抗項で消え、虚部はユニタリー性と一致した。S 行列要素が $\mu$ によらないことから三つのツールの数値で逆算した $\beta$ 関数は、$\beta(g)=-3g^3/(4(4\pi)^3)$ と相対 $10^{-15}$ で一致した。最後に、両方の次元で、S 行列要素が $\mu$ によらないことを使い、6点の数値から質量の走りと $\beta$ 関数を同時に読み取った。$d=4$ では、MadLoop を含む四つのツールで $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ と $\beta=0$ が得られた。$d=6$ では、$\beta(g)$ と $\overline{\mathrm{MS}}$ の質量の走り $-5g^2m^2/(6(4\pi)^3)$ が得られた。極質量で書けば、質量の走りは0になった。いずれも相対 $10^{-15}$ の精度である。これらの係数で、無次元のパラメータの空間での繰り込み群の流れも描いた。$d=4$ の流れは、べき数え上げから $\overline{\mathrm{MS}}$ では全次数で正しい。最後に、S 行列要素には現れない $d=6$ の場の異常次元を、1PI の2点関数の $\mu$ 依存から三つのツールで読み取った。2点・3点関数からは質量の走りと $\beta$ も別の経路で再現され、三つの RG 関数はすべて相対 $10^{-15}$ で手計算と一致した。三つは5ループの文献の1ループの項とも符号まで一致し、これは $d=6$ の対抗項の文献による検算にもなっている。最後に、$d=6$ の漸近自由を90°散乱の有効結合で見た。結合を固定した1ループの計算は $\ln(\sqrt s/m)$ について傾き $-\frac{11}{6}$ の対数を含み、$\alpha(m)=0.1$ では $\sqrt s\approx3\times10^3m$ で破綻する。傾きのうち $-\frac32$ は $\beta$ から、$-\frac13$ は外線の場の異常次元から来る。$g(\sqrt s)$ と外線の因子 $(\alpha(\sqrt s)/\alpha(m))^{2/9}$ で繰り込み群の改良をすると、有効結合は $1/\ln s$ のように滑らかに小さくなった。この計算では、COLLIER の箱図が $\sqrt s\gg m$ で精度を失うことも分かった。そのため、高エネルギーの基準には Package-X の解析式を30桁で評価した値を使い、LoopTools がそれと $2\times10^{-13}$ で一致した。最後に、$d=4$ の $\phi\phi\to\phi\phi$ の部分波から、摂動論が成り立つ $g/m$ の上限を求めた。部分波ごとのユニタリー性は1ループで成り立った。上限は、木のユニタリー性からは $g/m\le9.8$、1ループまで含めたユニタリー性からは $7.9$ である。ヒッグスの3点結合に直すと $\kappa_\lambda\lesssim6.4$ と $5.2$ になり、文献の値と同じ程度である。最後に、下に有界でないポテンシャルの偽の真空 $\phi=0$ の崩壊を、$O(d)$ 対称な bounce で調べた。$d=4$ の作用は $S_B=817.71\,m^2/g^2$ で、二つの独立な数値解法が一致した。同じ計算は、$d=3$ で文献の係数 4.85 を再現した。ユニタリー性の限界 $g/m\approx8$〜10 では $S_B\approx8.5$〜13 にすぎず、偽の真空はほとんど安定でない。宇宙年齢の間に崩れないためには $g/m<1.42$（$m=m_h$）が要り、これは摂動論の限界より強い。最後に、$d=4$ の崩壊率の1ループの前因子を、Gel'fand--Yaglom の方法で部分波ごとに求めた。負のモードと4つの並進の零モードを除き、発散する2次の項は運動量空間で $\overline{\mathrm{MS}}$ にした。前因子は $g$ によらない一つの数 $\ln\mathcal D=1.5222$（$\mu=m$）にまとまり、文献の局所的な公式と $2\times10^{-9}$ で一致した。宇宙論的な条件は $g/m<1.408$ になり、前因子を $m^4$ と置いた見積もりから $1\%$ だけ強まる。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \section{目的と問い}\label{sec:intro}
@@ -50,7 +50,7 @@
 
 求める量は四つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、質量の走り、場の異常次元と、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) $\phi\phi\to\phi\phi$ の木の振幅と、$d=4$ での1ループの振幅、およびその S 行列要素。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(13) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:bounce} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、その手順 (1)〜(14) の結果を示す。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:prefactor} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -107,6 +107,7 @@ $\gamma$ & 質量の2乗の走り $\gamma\equiv\mu\,\dd m^2/\dd\mu$（$m$ は $\
 $\gamma_\phi$ & 場の異常次元 $\gamma_\phi\equiv\frac12\mu\,\dd\ln Z/\dd\mu$ \\
 $a_\ell,\ g_{\mathrm{os}}$ & $\phi\phi\to\phi\phi$ の部分波（式~\eqref{eq:pw}）と、質量殻上の3点結合（\ref{app:pw}） \\
 $S_B$ & 偽の真空 $\phi=0$ の崩壊を決める bounce の作用（式~\eqref{eq:bounce}） \\
+$\mathcal D$ & 崩壊率の1ループの前因子を決める、繰り込んだ汎関数行列式の比（式~\eqref{eq:rate}） \\
 $\alpha,\ \alpha_{\mathrm{eff}}$ & $d=6$ のループの展開のパラメータ $\alpha\equiv g^2/(4\pi)^3$ と、90°散乱で測った有効結合（式~\eqref{eq:aeff}） \\
 $E,\ V,\ L,\ I$ & 図の外線、頂点、ループ、内線の数 \\
 \bottomrule
@@ -464,17 +465,18 @@ $d=6$：場の異常次元（1PI 関数の $\mu$ 依存）、文献との照合 
 $d=6$：高エネルギーの散乱と漸近自由 & \ref{app:af} & — & 解析式（30桁） & 数値 & — \\
 $d=4$：部分波、摂動的ユニタリー性と摂動論の限界 & \ref{app:pw} & — & — & — & — \\
 偽の真空の崩壊（bounce の作用） & \ref{app:bounce} & — & — & — & — \\
+$d=4$：崩壊率の1ループの前因子 & \ref{app:prefactor} & — & — & — & — \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点 $m=g=\mu=1$ で、Package-X の解析式・LoopTools の数値・Feynman パラメータ積分の数値積分が、倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。有限部分は規約に依存するので、すべて $\overline{\mathrm{MS}}$（第~\ref{sec:setup} 節の前提4）にそろえて比べる。LoopTools（$\Delta=0$）と COLLIER（$\Delta_{\mathrm{UV}}=0$）は、既定で $\overline{\mathrm{MS}}$ の値を返す。一方、FeynCalc の PaVe 関数は測度 $\dd^Dq/(i\pi^2)$ で規格化されているので、その $\epsilon^0$ の係数は $\overline{\mathrm{MS}}$ の値から $-(\gamma_E+\ln\pi)$ だけずれる~\cite{env}。そこで FeynCalc の振幅は、本ノートの $V_n$ に直し、$\overline{\mathrm{MS}}$ の対抗項を加えてから比べる。MadGraph の断面積は、式~\eqref{eq:Mtree} を自分で数値積分した値と、統計誤差の範囲で一致することを求める。
 
-\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。(5) $d=4$ の1ループの $\phi\phi\to\phi\phi$ を、FeynCalc と FormCalc の二つの経路で式~\eqref{eq:M1} と記号として比べ、Package-X・LoopTools・COLLIER の数値を互いに比べる。虚部は式~\eqref{eq:unit} で確かめる。(6) FeynRules の NLOCT で対抗項を含む UFO を作り、MadLoop の値を式~\eqref{eq:Mphys}（on-shell の対抗項）と式~\eqref{eq:M1}（$\overline{\mathrm{MS}}$ の対抗項）に比べる。(7) 式~\eqref{eq:sigmatot} の全断面積を求め、$\sigma^{(1)}$ を MadLoop の角度積分と、$\sigma_{2\to3}$ を MadGraph の木の計算と比べる。(8) $d=6$ の1ループの $\phi\phi\to\phi\phi$ を計算し、極が式~\eqref{eq:ct6} の対抗項で消えること、虚部がユニタリー性を満たすこと、S 行列要素の $\mu$ 依存から $\beta$ 関数が再現されることを確かめる。(9) 両方の次元で、$\phi\phi\to\phi\phi$ の S 行列要素が $\mu$ によらないことを使い、6点のツールの数値から質量の走りと $\beta$ 関数を同時に読み取って、式~\eqref{eq:beta6}、式~\eqref{eq:mrun4} などと比べる。その係数で、無次元のパラメータの空間での流れを描く。(10) $d=6$ の場の異常次元を1PI の2点・3点関数の $\mu$ 依存から読み取り、質量の走りと $\beta$ とともに文献の値と照合する。(11) $d=6$ の90°散乱を高エネルギーまで計算し、結合を固定した計算の対数と、繰り込み群で改良した有効結合を比べる。(12) $d=4$ の $\phi\phi\to\phi\phi$ の部分波を1ループまで求め、ユニタリー性と摂動論から $g/m$ の上限を出す。(13) 偽の真空 $\phi=0$ の崩壊を決める bounce の作用を求め、(12) の限界と比べる。
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{Phi3.fr} を \texttt{Src/} に作り、FeynRules で FeynArts の模型と UFO を書き出して、Feynman 則を確かめる。(2) 木の振幅を FeynCalc と MadGraph で確かめる。(3) $d=4$ の1ループ（極、対抗項、有限部分）を FeynCalc・Package-X・LoopTools で確かめる。(4) $d=6$ の1ループを FeynCalc で $D=6-2\epsilon$ として計算し、式~\eqref{eq:ct6} と式~\eqref{eq:beta6} を再現する。有限部分は Feynman パラメータ積分の数値と比べる。(5) $d=4$ の1ループの $\phi\phi\to\phi\phi$ を、FeynCalc と FormCalc の二つの経路で式~\eqref{eq:M1} と記号として比べ、Package-X・LoopTools・COLLIER の数値を互いに比べる。虚部は式~\eqref{eq:unit} で確かめる。(6) FeynRules の NLOCT で対抗項を含む UFO を作り、MadLoop の値を式~\eqref{eq:Mphys}（on-shell の対抗項）と式~\eqref{eq:M1}（$\overline{\mathrm{MS}}$ の対抗項）に比べる。(7) 式~\eqref{eq:sigmatot} の全断面積を求め、$\sigma^{(1)}$ を MadLoop の角度積分と、$\sigma_{2\to3}$ を MadGraph の木の計算と比べる。(8) $d=6$ の1ループの $\phi\phi\to\phi\phi$ を計算し、極が式~\eqref{eq:ct6} の対抗項で消えること、虚部がユニタリー性を満たすこと、S 行列要素の $\mu$ 依存から $\beta$ 関数が再現されることを確かめる。(9) 両方の次元で、$\phi\phi\to\phi\phi$ の S 行列要素が $\mu$ によらないことを使い、6点のツールの数値から質量の走りと $\beta$ 関数を同時に読み取って、式~\eqref{eq:beta6}、式~\eqref{eq:mrun4} などと比べる。その係数で、無次元のパラメータの空間での流れを描く。(10) $d=6$ の場の異常次元を1PI の2点・3点関数の $\mu$ 依存から読み取り、質量の走りと $\beta$ とともに文献の値と照合する。(11) $d=6$ の90°散乱を高エネルギーまで計算し、結合を固定した計算の対数と、繰り込み群で改良した有効結合を比べる。(12) $d=4$ の $\phi\phi\to\phi\phi$ の部分波を1ループまで求め、ユニタリー性と摂動論から $g/m$ の上限を出す。(13) 偽の真空 $\phi=0$ の崩壊を決める bounce の作用を求め、(12) の限界と比べる。(14) $d=4$ の崩壊率の1ループの前因子（汎関数行列式）を求め、(13) の結論を改める。
 
 \section{検算の結果}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順 (1)〜(13)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算、$d=4$ の1ループの $\phi\phi\to\phi\phi$ の検算、MadLoop との比較、全断面積の計算、$d=6$ の1ループの $\phi\phi\to\phi\phi$ の検算、繰り込み群の検算、$d=6$ の場の異常次元の検算、$d=6$ の漸近自由の散乱での確認、$d=4$ の摂動的ユニタリー性の検討、偽の真空の崩壊の検討をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で、$\phi\phi\to\phi\phi$ の検算は \texttt{run\_scat4\_check.sh} で、MadLoop との比較は \texttt{generate\_Phi3\_NLO.sh} と \texttt{run\_madloop\_check.sh} で、全断面積は \texttt{run\_xsec\_check.sh} で、$d=6$ の $\phi\phi\to\phi\phi$ は \texttt{run\_scat6\_check.sh} で、繰り込み群は \texttt{run\_rg4\_check.sh} で、場の異常次元は \texttt{run\_anom6\_check.sh} で、漸近自由は \texttt{run\_af6\_check.sh} で、摂動的ユニタリー性は \texttt{run\_pw4\_check.sh} で、偽の真空の崩壊は \texttt{run\_bounce\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順 (1)〜(14)、すなわち模型ファイルの作成、木の振幅の検算、$d=4$ と $d=6$ の1ループの検算、$d=4$ の1ループの $\phi\phi\to\phi\phi$ の検算、MadLoop との比較、全断面積の計算、$d=6$ の1ループの $\phi\phi\to\phi\phi$ の検算、繰り込み群の検算、$d=6$ の場の異常次元の検算、$d=6$ の漸近自由の散乱での確認、$d=4$ の摂動的ユニタリー性の検討、偽の真空の崩壊の検討、崩壊率の前因子の計算をすべて行った。使ったスクリプトはすべて \texttt{Src/} にある。模型ファイルからの書き出しは \texttt{generate\_Phi3.wl} で、木の検算は \texttt{run\_tree\_check.sh} で、1ループの検算は \texttt{run\_oneloop4\_check.sh} と \texttt{run\_oneloop6\_check.sh} で、$\phi\phi\to\phi\phi$ の検算は \texttt{run\_scat4\_check.sh} で、MadLoop との比較は \texttt{generate\_Phi3\_NLO.sh} と \texttt{run\_madloop\_check.sh} で、全断面積は \texttt{run\_xsec\_check.sh} で、$d=6$ の $\phi\phi\to\phi\phi$ は \texttt{run\_scat6\_check.sh} で、繰り込み群は \texttt{run\_rg4\_check.sh} で、場の異常次元は \texttt{run\_anom6\_check.sh} で、漸近自由は \texttt{run\_af6\_check.sh} で、摂動的ユニタリー性は \texttt{run\_pw4\_check.sh} で、偽の真空の崩壊は \texttt{run\_bounce\_check.sh} で、崩壊率の前因子は \texttt{run\_prefactor\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/Phi3.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項と線形項を除いた部分である。結合定数 $g$ はパラメータ \texttt{gphi}（TeX 表記は $g$）と書いた。\texttt{g} という名前にすると、FeynRules 2.3.49 の UFO 出力が \texttt{\$RecursionLimit} に達して止まるためである。名前だけを変えた比較で、原因がこの名前であることを確かめた。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通り、頂点は $-i\,\texttt{gphi}$ となって図~\ref{fig:rules} の $-ig$ と一致した。FeynArts 模型（\texttt{C[S[1],S[1],S[1]] == -I gphi}）と UFO も \texttt{Src/generated/} に書き出せた。MadGraph 3.8.1 はその UFO から $\phi\phi\to\phi\phi$ の図を $s,t,u$ の3つ生成した。なお、旧模型ファイルは運動項を \texttt{D[phi, mu]} と書いていた。これは Mathematica の記号 \texttt{mu} による微分なので 0 になり、旧ファイルのラグランジアンには運動項がなかった。実際に読み込んで評価すると、$-\frac12m^2\phi^2-\frac{\lambda}{6}\phi^3$ だけが残る。頂点は3次の項だけで決まるので、旧ファイルから書き出した FeynArts の頂点には影響しなかったと考えられる。新しいファイルでは FeynRules の偏微分 \texttt{del} を使っている。
 
@@ -896,7 +898,7 @@ a_\ell(s)\equiv\frac{\beta}{64\pi}\int_{-1}^{1}\dd c\,P_\ell(c)\,\mathcal{M}(s,c
 S_B=\Omega_{d-1}\int_0^\infty r^{d-1}\dd r\Bigl[\frac12\phi'^2+V(\phi)\Bigr]=C_d\,\frac{m^{6-d}}{g^2}
 \label{eq:bounce}
 \end{equation}
-ここで $\Omega_{d-1}$ は単位球面の面積である（\ref{app:bounce}）。$\phi=(m^2/g)f$、$r=x/m$ と置くと、$g$ と $m$ は方程式から消え、作用は $m^{6-d}/g^2$ に比例する。前因子 $A$ は1ループの汎関数行列式で決まるが、今回は求めず、$A\sim m^4$（$d=4$）とする。係数 $C_d$ は shooting 法で求めた。$f(0)$ について、軌道が0を行き過ぎる値と手前で戻る値を二分法で挟み込む方法である。結果は、境界値問題の緩和法（scipy の \texttt{solve\_bvp}）でも独立に確かめた。
+ここで $\Omega_{d-1}$ は単位球面の面積である（\ref{app:bounce}）。$\phi=(m^2/g)f$、$r=x/m$ と置くと、$g$ と $m$ は方程式から消え、作用は $m^{6-d}/g^2$ に比例する。前因子 $A$ は1ループの汎関数行列式で決まるが、ここでは求めず、$A\sim m^4$（$d=4$）とする。係数 $C_d$ は shooting 法で求めた。$f(0)$ について、軌道が0を行き過ぎる値と手前で戻る値を二分法で挟み込む方法である。結果は、境界値問題の緩和法（scipy の \texttt{solve\_bvp}）でも独立に確かめた。
 
 $d=4$ では $C_4=817.714$、すなわち $S_B=817.714\,m^2/g^2$ である。bounce の中心の値は $\phi(0)=-17.34\,m^2/g$ である。二つの解法は相対 $10^{-14}$ で一致した。運動項 $T$ とポテンシャル項 $U$ は、Derrick の関係 $(d-2)T+dU=0$ を相対 $3\times10^{-14}$ で満たした。同じプログラムで $d=3$ を解くと $C_3=174.641$ になる。電弱相転移の熱的なトンネル効果では、$V=\frac12M^2\phi^2-E\phi^3$ に対して $S_3=4.85\,M^3/E^2$ が使われている~\cite{dine92}。$E=g/6$ とすると、これは $C_3=36\times4.851$ にあたり、上の値と一致する。
 
@@ -930,6 +932,50 @@ $d=6$ & 有限の bounce なし & インスタントン $S_0g^2=768\pi^3/5$ \\
 \label{fig:bounce}
 \end{figure}
 
+\paragraph{手順 (14)：崩壊率の1ループの前因子。}手順 (13) の前因子 $A$ を、$d=4$ で1ループの汎関数行列式から求めた~\cite{callancoleman}。崩壊率は
+\begin{equation}
+\frac{\Gamma}{V}=\Bigl(\frac{S_B}{2\pi}\Bigr)^2\Bigl|\frac{\det'M}{\det M_0}\Bigr|_{\mathrm{ren}}^{-1/2}e^{-S_B}
+=m^4\Bigl(\frac{S_B}{2\pi}\Bigr)^2\mathcal D^{-1/2}e^{-S_B},\qquad
+\ln\mathcal D=1.52215\quad(\mu=m)
+\label{eq:rate}
+\end{equation}
+である。$M=-\partial^2+V''(\phi_B)=m^2[-\partial_x^2+1+f(x)]$ は bounce のまわりのゆらぎの演算子、$M_0$ は偽の真空でのそれである。$\det'$ は並進の4つの零モードを除いた行列式で、$(S_B/2\pi)^2$ は零モードを bounce の位置の積分に替えたときのヤコビアンである。$M$ は $g$ によらないので、1ループの補正は $g$ によらない一つの数 $\ln\mathcal D$ にまとまる。$m$ と $g$ は $\overline{\mathrm{MS}}$ の値で、タドポールはこれまでと同じく $Y$ で打ち消す。
+
+行列式は部分波 $l$（縮退度 $(l+1)^2$）に分け、Gel'fand--Yaglom の方法で求めた~\cite{gy,dunnemin}。各部分波の行列式の比は、常微分方程式の初期値問題の解の $x\to\infty$ での値 $T_l(\infty)$ で与えられる（\ref{app:prefactor}）。$l=0$ では $T_0(\infty)=-0.0369<0$ で、負のモードが一つある（固有値 $-3.954\,m^2$）。これは泡が膨らむか縮むかの方向で、崩壊を起こすモードである。$l=1$ では $T_1(\infty)=0$ で（数値では $4\times10^{-16}$）、これが並進の零モードである。零モードを除いた比は、bounce の漸近形 $f\to-AK_1(x)/x$ の係数 $A=27.998$ から閉じた形で求まる。これは、演算子を $M+\lambda$ とずらして $\lambda\to0$ の傾きをとった値と相対 $10^{-11}$ で一致した。$l$ についての和は、上限 $L$ に対して $L^2$ と $\ln L$ のように発散する。そこで各部分波から1次と2次の Born 項を引き、和を収束させた。引いた分のうち、1次の項はちょうど $Y$ で消え、2次の項は運動量空間で求めた $\overline{\mathrm{MS}}$ の値 $A_2(\mu)$ に置き換わる。残りの和は $(l+1)^{-3}$ のように収束する（図~\ref{fig:prefactor} 下）。結果を表~\ref{tab:prefactor} にまとめる。
+
+独立な検算として、Dunne と Min の局所的な公式~\cite{dunnemin} を使った。彼らのポテンシャル $\frac12\Phi^2-\frac12\Phi^3+\frac\alpha8\Phi^4$ は、$\alpha=0$ で $\Phi=-f/3$ とすると、本ノートの模型と同じゆらぎの演算子を与える。彼らは、部分波から大きい $l$ での漸近形を引き、有限部分を $f$ の局所的な積分で書く。Born 項と運動量空間の積分を使う上の方法とは、引き算も有限部分も違う。彼らの量を本ノートの処方に直すと、$\ln\mathcal D$ と $2\times10^{-9}$ で一致した。$\mu$ 依存も確かめた。$\ln\mathcal D$ は $-\frac{C_4}{16\pi^2}\ln(\mu^2/m^2)$ だけ変わる。これは、$S_B$ の中の $m^2(\mu)$ の走り（式~\eqref{eq:mrun4}）とちょうど打ち消し合う。
+
+この前因子で手順 (13) の結論を改める。宇宙論的な条件は $S_B-2\ln(S_B/2\pi)+\frac12\ln\mathcal D>4\ln(m_h/H_0)$ となり、$S_B>412.3$、すなわち $g/m<1.408$ を得る。手順 (13) で $A\sim m^4$ と置いた見積もり（$g/m<1.421$）からの変化は $1\%$ である。この点での前因子は $A=e^{7.6}m^4\approx2000\,m^4$ で、$m^4$ という見積もりより3桁大きい。それでも条件が $1\%$ しか変わらないのは、前因子が指数の中で対数としてしか効かないからである。ここでは $g^2/((4\pi)^2m^2)=0.013$ なので、2ループの補正は小さい。一方、ユニタリー性の限界 $g/m=7.9$〜$9.8$ では、前因子 $(S_B/2\pi)^2\mathcal D^{-1/2}$ は $0.85$〜$2.1$ である（表~\ref{tab:prefactor}）。ここでは $g^2/((4\pi)^2m^2)=0.4$〜$0.6$ なので、2ループの補正も小さくなく、値は目安にとどまる。
+
+1ループの前因子は、パラメータの定義と組で意味を持つ。例えば、$m$ を極質量 $m_{\mathrm p}$ に、$g$ を質量殻上の3点結合 $g_{\mathrm{os}}$（\ref{app:pw}）に替えると、$S_B=C_4m_{\mathrm p}^2/g_{\mathrm{os}}^2+5.81$ となる（\ref{app:prefactor}）。このずれは、宇宙論的な条件の点での前因子の対数 $7.6$ と同じ大きさである。この入力では、宇宙論的な条件は $g_{\mathrm{os}}/m_{\mathrm p}<1.418$ となる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{崩壊率の1ループの前因子（$d=4$、$\overline{\mathrm{MS}}$、$\mu=m$）。上：$\ln\mathcal D$ の内訳。$r_l$ は部分波 $l$ から1次と2次の Born 項を引いた残りで、$l=1$ では零モードを除いた値を使う。下：手順 (12) の限界と宇宙論的な条件での崩壊率。前因子は $(S_B/2\pi)^2\mathcal D^{-1/2}$ である。}
+\label{tab:prefactor}
+\begin{tabular}{lll}
+\toprule
+負のモード（$l=0$） & $T_0(\infty)=-0.036932$ & 固有値 $-3.9544\,m^2$ \\
+零モード（$l=1$、モードあたり） & $\det'M_1/\det M_1^{\mathrm{free}}=0.022239$ & $\lambda$ でずらした値と $9\times10^{-12}$ で一致 \\
+部分波の和 & $\sum_l(l+1)^2r_l=0.194946$ & $l=0$ が $3.5836$、$l=1$ が $-0.7436$ \\
+2次の項 & $A_2(m)=1.327206$ & $\ln(\mu^2/m^2)$ の係数は $-C_4/(16\pi^2)$ \\
+合計 & $\ln\mathcal D=1.522153$ & 文献~\cite{dunnemin} の公式との差 $2\times10^{-9}$ \\
+\midrule
+(A) 木のユニタリー性の限界 $g/m=9.81$ & $S_B=8.50$、前因子 $0.85$ & $\Gamma/(Vm^4)=1.7\times10^{-4}$ \\
+(B) 摂動論の限界 $g/m=8.73$ & $S_B=10.73$、前因子 $1.36$ & $\Gamma/(Vm^4)=3.0\times10^{-5}$ \\
+(C) 1ループのユニタリー性の限界 $g/m=7.87$ & $S_B=13.20$、前因子 $2.06$ & $\Gamma/(Vm^4)=3.8\times10^{-6}$ \\
+宇宙論的な条件 & $S_B>412.3$、$g/m<1.408$ & $A\sim m^4$ では $g/m<1.421$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.6\linewidth]{../figs/prefactor_d4.pdf}
+\caption{崩壊率の1ループの前因子（$d=4$）。上：Gel'fand--Yaglom の関数 $T_l(x)$（$l=0$〜$3$）。$x\to\infty$ の値は、$l=0$ で負（負のモード）、$l=1$ で0（並進の零モード）、$l\ge2$ で正である。下：部分波ごとの寄与。破線は引き算をしない $(l+1)^2|\ln T_l|$ で、$l$ に比例して増え、和は発散する。実線は1次と2次の Born 項を引いた残り $(l+1)^2|r_l|$ で、点線の $(l+1)^{-3}$ のように減る。}
+\label{fig:prefactor}
+\end{figure}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$\phi\phi\to\phi\phi$ については、on-shell の処方との関係を式~\eqref{eq:Mphys} と\ref{app:lsz} で求めた。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。
@@ -940,7 +986,7 @@ $d=6$ & 有限の bounce なし & インスタントン $S_0g^2=768\pi^3/5$ \\
 
 \paragraph{COLLIER の高エネルギーの箱図。}手順 (11) で、COLLIER の箱図は $s\gg m^2$ で精度を失った（表~\ref{tab:af6tools}）。既定の方式 COLI では虚部だけが徐々にずれ、DD は $\sqrt s\gtrsim10^3m$ で全く誤った値を返した。手順 (5)〜(10) の点は $\sqrt s\le10m$ で、そこでは COLLIER は正しい。COLLIER には精度の目安を返す関数（\texttt{GetAccFlag\_cll} など）があるが、今回は使っていない。高エネルギーや質量の比が大きい計算では、LoopTools か Package-X の高精度の値で確かめる必要がある。
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(13) はすべて終わった。偽の真空の崩壊で残っているのは二つである。一つは、$d=4$ の崩壊率の前因子（1ループの汎関数行列式）である。もう一つは $d=6$ の崩壊率で、大きさが0に縮む拘束インスタントンを、結合の走りとともに扱う必要がある。次の模型としては、4点結合を加えた $\phi^3+\phi^4$ の模型（実スカラー一重項）に進むと、二つの道が開ける。一つはヒッグスの自己結合の現象論である。もう一つは、有限温度での一次相転移で、重力波や原始ブラックホールにつながる。そのほかの候補は三つある。一つ目は、$d=4$ の2ループの自己エネルギーを計算し、1ループの対抗項の挿入だけで有限になることを確かめることである。これは、$d=4$ の繰り込み群の流れが全次数で正しいという\ref{app:rg} の主張を直接確かめる。二つ目は、手順 (7) で見つかった、$\sqrt s=10m$ の $2\to3$ での MadGraph の $0.8\%$ のずれの原因を調べることである。三つ目は2ループで、環境の記録で保留したツール（Kira、FIRE、pySecDec など）を入れる必要がある。
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (1)〜(14) はすべて終わった。偽の真空の崩壊で残っているのは $d=6$ の崩壊率である。大きさが0に縮む拘束インスタントンを、結合の走りとともに扱う必要がある。次の模型としては、4点結合を加えた $\phi^3+\phi^4$ の模型（実スカラー一重項）に進むと、二つの道が開ける。一つはヒッグスの自己結合の現象論である。もう一つは、有限温度での一次相転移で、重力波や原始ブラックホールにつながる。そのほかの候補は三つある。一つ目は、$d=4$ の2ループの自己エネルギーを計算し、1ループの対抗項の挿入だけで有限になることを確かめることである。これは、$d=4$ の繰り込み群の流れが全次数で正しいという\ref{app:rg} の主張を直接確かめる。二つ目は、手順 (7) で見つかった、$\sqrt s=10m$ の $2\to3$ での MadGraph の $0.8\%$ のずれの原因を調べることである。三つ目は2ループで、環境の記録で保留したツール（Kira、FIRE、pySecDec など）を入れる必要がある。
 
 \appendix
 
@@ -1536,6 +1582,59 @@ S_B=\frac{m^{6-d}}{g^2}\,\Omega_{d-1}\int_0^\infty x^{d-1}\dd x\Bigl[\frac12f'^2
 
 \paragraph{宇宙論的な条件。}単位体積・単位時間あたりの崩壊率を $\Gamma/V\sim m^4e^{-S_B}$ と見積もる。ハッブル体積 $H_0^{-3}$ と宇宙年齢 $H_0^{-1}$ の中で崩壊が起きない条件は、$m^4e^{-S_B}H_0^{-4}<1$、すなわち $S_B>4\ln(m/H_0)$ である。$H_0=67.4$~km\,s$^{-1}$\,Mpc$^{-1}=1.44\times10^{-42}$~GeV、$m=m_h=125.25$~GeV では、$4\ln(8.7\times10^{43})=404.7$ となる。前因子の不定性は、この値を対数の程度（数の程度）しか変えない。
 
+\section{崩壊率の前因子の導出}\label{app:prefactor}
+
+\paragraph{前因子の式。}Callan と Coleman~\cite{callancoleman} に従い、偽の真空のエネルギーの虚部から崩壊率を求める。bounce のまわりで $\phi=\phi_B+\eta$ と展開すると、作用は $S_B+\frac12\int\eta M\eta+O(\eta^3)$ である。$\eta$ のガウス積分は $(\det M)^{-1/2}$ を与え、それを偽の真空のまわりの $(\det M_0)^{-1/2}$ で割る。$M$ の固有値は、負のものが一つ、0のものが4つ（$\partial_\mu\phi_B$、並進）で、残りは正である。零モードの積分は、bounce の位置 $x_0^\mu$ の積分に替える。$\eta=\sum_\mu c_\mu\,\partial_\mu\phi_B/\|\partial_\mu\phi_B\|$ とすると $\dd c_\mu=\|\partial_\mu\phi_B\|\,\dd x_0^\mu$ で、ガウス積分の規格化 $(2\pi)^{-1/2}$ と合わせて、方向ごとに $(\|\partial_\mu\phi_B\|^2/2\pi)^{1/2}$ が付く。$O(4)$ 対称性から $\|\partial_\mu\phi_B\|^2=\int\dd^4x\,(\partial_\mu\phi_B)^2=\frac14\int\dd^4x\,(\partial\phi_B)^2=\frac T2$ で、Derrick の関係（\ref{app:bounce}）から $T/2=S_B$ である。よって4方向で $(S_B/2\pi)^2$ となる。$x_0$ の積分は時空の体積を与え、それで割ったものが $\Gamma/V$ である。負のモードは、積分路を解析接続して虚部を取ると $\frac12|\cdot|^{-1/2}$ を与え、その $\frac12$ は $\Gamma=2\,\mathrm{Im}\,E$ の2と打ち消し合う。こうして式~\eqref{eq:rate} の第1の形を得る。$M=m^2[-\partial_x^2+1+f]$ と $M_0=m^2[-\partial_x^2+1]$ の比では、$m^2$ の因子は零モードを除いた4つの分だけ残る。よって $|\det'M/\det M_0|^{-1/2}=m^4\mathcal D^{-1/2}$ で、$\mathcal D$ は $m=1$ の単位での比（繰り込み後）である。
+
+\paragraph{部分波と Gel'fand--Yaglom の方法。}$f$ は $x$ だけの関数なので、演算子は角運動量 $l$ の部分波に分かれる。4次元の球面調和関数の縮退度は $(l+1)^2$ で、動径の演算子は
+\begin{equation*}
+M_l=-\frac{\dd^2}{\dd x^2}-\frac3x\frac{\dd}{\dd x}+\frac{l(l+2)}{x^2}+1+f(x),\qquad M_l^{\mathrm{free}}=M_l\big|_{f=0}
+\end{equation*}
+である。Gel'fand--Yaglom の定理~\cite{gy,dunnemin} によれば、$\det M_l/\det M_l^{\mathrm{free}}=\lim_{x\to\infty}\psi_l(x)/\psi_l^{\mathrm{free}}(x)$ である。$\psi_l$ と $\psi_l^{\mathrm{free}}$ は、$M_l\psi=0$ と $M_l^{\mathrm{free}}\psi=0$ の原点で正則な解で、$x\to0$ で同じ $x^l$ に規格化する。自由な解は $\psi_l^{\mathrm{free}}\propto I_{l+1}(x)/x$ である。比 $T_l=\psi_l/\psi_l^{\mathrm{free}}$ は、$I_{l+1}'=I_{l+2}+\frac{l+1}{x}I_{l+1}$ を使うと
+\begin{equation*}
+T_l''+\Bigl[\frac{2l+3}{x}+2\,\frac{I_{l+2}(x)}{I_{l+1}(x)}\Bigr]T_l'=f\,T_l,\qquad T_l(0)=1,\quad T_l'(0)=0
+\end{equation*}
+を満たす。$\psi_l$ と $\psi_l^{\mathrm{free}}$ はどちらも $e^x$ のように増えるが、$T_l$ は有限の値に近づくので、数値的に安定である。$x=10^{-4}$ から級数 $T_l=1+\frac{f_0x^2}{4(l+2)}$ で始め、$x=34$（$|f|<10^{-12}$）まで DOP853（相対許容誤差 $10^{-12}$）で積分した。$l=0$〜$200$ を一つの連立方程式として解いた。Bessel 関数の比 $\rho_\nu=I_{\nu+1}/I_\nu$ は、安定な後ろ向きの漸化式 $\rho_\nu=x/(2(\nu+1)+x\rho_{\nu+1})$ で求めた。scipy の値とは相対 $10^{-14}$ で一致した。bounce は、原点からの前向きの積分と、$x=40$ から漸近形 $f=-AK_1(x)/x$ で始める後ろ向きの積分を $x=2$ でつなぐ方法（$f_0$ と $A$ についての Newton 法）で求め直した。$f_0$ と $C_4$ は、手順 (13) の値と相対 $10^{-14}$ 以内で一致した。$A=27.998300$ は、線形の演算子の Green 関数から得られる $A=\frac12\int x^2I_1(x)f^2\dd x$ と相対 $4\times10^{-13}$ で一致した。
+
+\paragraph{負のモード。}Sturm の振動定理により、各部分波の負の固有値の数は、正則な解 $\psi_l$（すなわち $T_l$）の $0<x<\infty$ での零点の数に等しい。$T_0(x)$ は $x=1.14$ で一度だけ0になり、$1\le l\le5$ の $T_l(x)$ は0にならない（$l=1$ では $x\to\infty$ でだけ0に近づく）。$l$ が大きいほど遠心力の項 $l(l+2)/x^2$ が大きいので、$l>5$ でも零点は現れない。よって負のモードは $l=0$ の一つだけである。その固有値 $e_-$ は、$M+\lambda$ の比 $T_0(\infty;\lambda)$ が0になる $\lambda=-e_-$ から求めた（自由な演算子の質量は $\sqrt{1+\lambda}$）。$e_-=-3.95437\,m^2$ で、$0\le\lambda\le16$ の範囲でほかに0になる点はない。
+
+\paragraph{零モード。}$l=1$ の正則な解は、bounce の微分 $\psi_1=f'(x)/f''(0)$ そのものである（$\partial_\mu\phi_B=\frac{x_\mu}{r}\phi_B'$、原点で $x$ に規格化）。これは無限遠で減衰するので、$T_1(\infty)=0$ となる。零固有値を除いた行列式を $\det'M_1=\lim_{\lambda\to0}\det(M_1+\lambda)/\lambda$ で定める。$M_1+\lambda$ の正則な解を $\psi_1+\lambda\chi+O(\lambda^2)$ と書くと、$M_1\chi=-\psi_1$ である。$\psi_1$ は無限遠で0になるので、$\det'M_1/\det M_1^{\mathrm{free}}=\lim_{x\to\infty}\chi/\psi_1^{\mathrm{free}}\equiv c$ となる（$\psi^{\mathrm{free}}$ の質量の変化は $\psi_1\to0$ に掛かるので効かない）。二つの方程式から
+\begin{equation*}
+\frac{\dd}{\dd x}\Bigl[x^3\bigl(\psi_1\chi'-\psi_1'\chi\bigr)\Bigr]=x^3\psi_1^2
+\end{equation*}
+を得る。$x\to\infty$ で $\psi_1\to D\,K_2(x)/x$、$\chi\to c\,\psi_1^{\mathrm{free}}=8c\,I_2(x)/x$（原点で $x$ に規格化）とすると、Wronskian $W[K_2,I_2]=1/x$ から、左辺の括弧は $8cD$ に近づく。よって $c=\frac{1}{8D}\int_0^\infty x^3\psi_1^2\dd x$ である。$f\to-AK_1(x)/x$ から $f'\to AK_2(x)/x$、すなわち $D=A/f''(0)$ である。また Derrick の関係から $\int x^3f'^2\dd x=T/\pi^2=2C_4/\pi^2$ である。これらを入れると
+\begin{equation*}
+\frac{\det'M_1}{\det M_1^{\mathrm{free}}}=\frac{C_4}{4\pi^2f''(0)\,A},\qquad f''(0)=\frac{V'(f_0)}{4}=\frac{f_0+f_0^2/2}{4}
+\end{equation*}
+を得る（モードあたり）。値は $0.0222392$ である。これは文献~\cite{dunnemin} の式 (3.13) を本ノートの変数に直したもの（$\Phi_\infty=A/3$、$\Phi_0=-f_0/3$）と同じである。独立な確認として、自由な演算子の質量を $\sqrt{1\pm\lambda}$ として $T_1(\infty;\pm\lambda)$ を求め、中心差分（$\lambda=10^{-3}$ と $5\times10^{-4}$ の Richardson 外挿）で傾きを取った。閉じた形の値と相対 $9\times10^{-12}$ で一致した。
+
+\paragraph{繰り込み。}$G_0=(-\partial_x^2+1)^{-1}$ として、$\ln\det(M/M_0)=\mathrm{Tr}\ln(1+G_0f)=\mathrm{Tr}[G_0f]-\frac12\mathrm{Tr}[G_0fG_0f]+O(f^3)$ と展開する。崩壊率の指数には $\frac12$ を掛けて入る。1次の項は、1点関数（タドポール）を $\int\phi_B$ に掛けたものである。$Y$ はタドポールを打ち消すように決めてあるので、この項は作用の中の $Y$ の項と、発散も有限部分も含めて打ち消し合う。2次の項は自己エネルギーの図で、対数発散する。この発散は、質量の対抗項 $\frac12\delta_m\int\phi_B^2$ で消える（$d=4$ の唯一の発散、式~\eqref{eq:ct4}）。$\overline{\mathrm{MS}}$ の値は、運動量空間で
+\begin{gather*}
+A_2(\mu)\equiv\Bigl[-\frac12\mathrm{Tr}(G_0fG_0f)\Bigr]_{\overline{\mathrm{MS}}}=-\frac12\int\frac{\dd^4p}{(2\pi)^4}\,|\tilde f(p)|^2\,\frac{B_0^E(p^2)}{(4\pi)^2},\\
+B_0^E=2-\beta\ln\frac{\beta+1}{\beta-1}+\ln\frac{\mu^2}{m^2},\qquad\beta=\sqrt{1+\frac{4m^2}{p^2}}
+\end{gather*}
+である。$B_0^E$ は、$B_0$ の閉じた式（\ref{app:b0}）をユークリッドの運動量 $p^2$ で評価したものである。$\tilde f(p)=\frac{4\pi^2}{p}\int_0^\infty x^2J_1(px)f(x)\dd x$ は4次元の動径関数のフーリエ変換で、$\int\dd^4p/(2\pi)^4=\frac1{8\pi^2}\int p^3\dd p$ である。$p\in[0,40]$ を Gauss--Legendre の400点で積分した（$|\tilde f(40)|=4\times10^{-15}$）。Parseval の等式 $\int\dd^4p\,|\tilde f|^2/(2\pi)^4=\int\dd^4x\,f^2$ は相対 $7\times10^{-16}$ で成り立った。右辺は $2C_4$ である。これは、$S_B$ を $m^2$ で微分すると停留点なので陽な依存だけが残り、$\partial S_B/\partial m^2=\frac12\int\dd^4r\,\phi_B^2=C_4/g^2$ となることから分かる。3次以上の項は有限である。
+
+\paragraph{Born 項の引き算。}$T_l=1+h_l^{(1)}+h_l^{(2)}+O(f^3)$ と展開すると、$h_l^{(1)}$ と $h_l^{(2)}$ は、$T_l$ の方程式の右辺をそれぞれ $f$ と $fh_l^{(1)}$ に替えた方程式の、初期値0の解である。$\ln T_l=h_l^{(1)}+h_l^{(2)}-\frac12(h_l^{(1)})^2+O(f^3)$ なので、
+\begin{equation*}
+r_l\equiv\ln|T_l|-h_l^{(1)}-h_l^{(2)}+\frac12\bigl(h_l^{(1)}\bigr)^2
+\end{equation*}
+は3次以上の図の部分波 $l$ の分で、$\sum_l(l+1)^2r_l$ は収束する。$\sum_l(l+1)^2h_l^{(1)}$ と $\sum_l(l+1)^2[h_l^{(2)}-\frac12(h_l^{(1)})^2]$ は、それぞれ $\mathrm{Tr}[G_0f]$ と $-\frac12\mathrm{Tr}[G_0fG_0f]$ の部分波展開で、形式的に発散する。これらを、それぞれ0（$Y$ で消える）と $A_2(\mu)$ に置き換えて
+\begin{equation*}
+\ln\mathcal D=\sum_{l=0}^\infty(l+1)^2r_l+A_2(\mu)
+\end{equation*}
+を得る。$l=1$ では、$\ln|T_1|$ を零モードを除いた比の対数に替える。この形は Baacke と Lavrelashvili~\cite{bl} による（文献~\cite{dunnemin} の式 (4.15)〜(4.17) で紹介されたもの）。ただし、本ノートの処方では1次の項が $Y$ で消えるので、その有限部分 $A^{(1)}$ を含まない。$h_l^{(1)}$ は、動径の Green 関数 $I_{l+1}(x)K_{l+1}(x)/x^2$ を使って $h_l^{(1)}=\int_0^\infty xf\,I_{l+1}K_{l+1}\dd x$ とも書ける。$l\le30$ で、微分方程式の値はこの積分と $5\times10^{-15}$ で一致した。大きい $l$ では、$h_l^{(1)}(l+1)\to\frac12\int xf\,\dd x$ と $[h_l^{(2)}-\frac12(h_l^{(1)})^2](l+1)^3\to-\frac18\int x^3f^2\dd x$ が、$O((l+1)^{-2})$ の差で成り立った~\cite{dunnemin}。$(l+1)^2r_l$ は $(l+1)^{-3}$ のように減る。そこで $l\le200$ は直接足し、$l=60$〜$200$ の値に $\sum_{k=3}^6c_k(l+1)^{-k}$ を当てはめて、残りを Hurwitz のゼータ関数で足した。当てはめの範囲と項数を変えても、また積分の許容誤差を $10^{-10}$ に緩めても、和の変化は $10^{-9}$ 以下だった。
+
+\paragraph{文献の局所的な公式との比較。}文献~\cite{dunnemin} の式 (4.12) は、$l\ge2$ の部分波から大きい $l$ での漸近形 $\frac{\frac12\int xf}{l+1}-\frac{\frac18\int x^3f(f+2)}{(l+1)^3}$ を引き、有限部分を局所的な積分 $-\frac34\int xf+\frac1{16}\int x^3f(f+2)(\frac12-\gamma_E-\ln\frac x2)$ で書く。$l=0$ と $l=1$ は、$\frac12\ln|T_0|$ と零モードの式で入れる。ここで $V=f$（$\alpha=0$）である。その結果 $\Gamma_{\overline{\mathrm{MS}}}=-1.992629$ は、$-\ln[(\bar S/2\pi)^2|\det'M/\det M_0|^{-1/2}]$ にあたる。ここで $\bar S=C_4/9$ は彼らの規格化での作用である。また、彼らの模型には $Y$ がないので、1次の項の $\overline{\mathrm{MS}}$ の有限部分 $A^{(1)}=[\mathrm{Tr}\,G_0f]_{\overline{\mathrm{MS}}}=-\frac{1}{16\pi^2}\int\dd^4x\,f=-\frac18\int x^3f\,\dd x$ を含む（$\mu=m$）。bounce の方程式に $x^3$ を掛けて積分すると $\int x^3f=-\frac12\int x^3f^2$ なので、$A^{(1)}=C_4/(16\pi^2)=5.178$ である。よって $2\Gamma_{\overline{\mathrm{MS}}}+4\ln(\bar S/2\pi)-A^{(1)}$ が $\ln\mathcal D$ に等しいはずで、実際に $2\times10^{-9}$ で一致した。
+
+\paragraph{$\mu$ 依存。}$A_2(\mu)$ の $\mu$ 依存は $-\frac{1}{2(4\pi)^2}\ln\frac{\mu^2}{m^2}\int\dd^4x\,f^2=-\frac{C_4}{16\pi^2}\ln\frac{\mu^2}{m^2}$ で、$-\frac12\ln\mathcal D$ は $\frac{C_4}{16\pi^2}\ln\frac{\mu}{m}$ だけ変わる。一方、$S_B=C_4m^2/g^2$ は、式~\eqref{eq:mrun4} の $\mu\,\dd m^2/\dd\mu=g^2/(4\pi)^2$ により $\dd(-S_B)/\dd\ln\mu=-C_4/(16\pi^2)$ だけ変わる（$g$ は走らない）。二つは打ち消し合うので、崩壊率はこの次数で $\mu$ によらない。
+
+\paragraph{宇宙論的な条件と入力の定義。}\ref{app:bounce} の条件 $\Gamma H_0^{-4}<1$ に式~\eqref{eq:rate} を入れると、$S_B-2\ln(S_B/2\pi)+\frac12\ln\mathcal D>4\ln(m/H_0)=404.70$ である。これを解いて $S_B>412.30$、$g/m<\sqrt{C_4/412.30}=1.4083$ を得る。極質量 $m_{\mathrm p}^2=m^2-\frac{g^2}{2(4\pi)^2}B_0(m^2)$（式~\eqref{eq:mpole}、$\mu=m$ で $B_0(m^2)=2-\pi/\sqrt3$）と、$g^2=g_{\mathrm{os}}^2[1-2\times0.5144\,g_{\mathrm{os}}^2/((4\pi)^2m^2)]$（\ref{app:pw}）を入れると、
+\begin{equation*}
+S_B=\frac{C_4m^2}{g^2}=\frac{C_4m_{\mathrm p}^2}{g_{\mathrm{os}}^2}+\frac{C_4}{(4\pi)^2}\Bigl[\frac{B_0(m^2)}{2}+2\times0.5144\Bigr]+O(g^2)=\frac{C_4m_{\mathrm p}^2}{g_{\mathrm{os}}^2}+0.482+5.327
+\end{equation*}
+となる。この入力では、条件は $g_{\mathrm{os}}/m_{\mathrm p}<1.418$ である。
+
 \begin{thebibliography}{9}
 \small
 \bibitem{srednicki} M. Srednicki, \textit{Quantum Field Theory} (Cambridge University Press, 2007)。$d=6$ の $\phi^3$ 理論の繰り込み（第9--28章）。$d=6-\epsilon_{\mathrm S}$ の規約を使う。本ノートの式~\eqref{eq:ct6} との照合は、同書の値を記憶から引いたもので、式番号は未照合である（同書は手元にない）。手順 (10) では、代わりに RG 関数を~\cite{bgks} と照合した。
@@ -1544,6 +1643,9 @@ S_B=\frac{m^{6-d}}{g^2}\,\Omega_{d-1}\int_0^\infty x^{d-1}\dd x\Bigl[\frac12f'^2
 \bibitem{callancoleman} C. G. Callan, S. Coleman, ``The fate of the false vacuum. 2. First quantum corrections,'' Phys. Rev. D \textbf{16}, 1762 (1977)。前因子 $A$。
 \bibitem{dine92} M. Dine, R. G. Leigh, P. Y. Huet, A. D. Linde, D. A. Linde, ``Towards the theory of the electroweak phase transition,'' Phys. Rev. D \textbf{46}, 550 (1992), hep-ph/9203203。3次元の bounce の作用 $S_3=4.85\,M^3/E^2$（式 (26)、(27) の4点結合のない極限）。
 \bibitem{affleck} I. Affleck, ``On constrained instantons,'' Nucl. Phys. B \textbf{191}, 429 (1981)。
+\bibitem{gy} I. M. Gel'fand, A. M. Yaglom, ``Integration in functional spaces and its applications in quantum physics,'' J. Math. Phys. \textbf{1}, 48 (1960)。動径の演算子の行列式を初期値問題の解で表す方法。
+\bibitem{dunnemin} G. V. Dunne, H. Min, ``Beyond the thin-wall approximation: precise numerical computation of prefactors in false vacuum decay,'' Phys. Rev. D \textbf{72}, 125004 (2005), hep-th/0511156。ポテンシャル $\frac12\Phi^2-\frac12\Phi^3+\frac\alpha8\Phi^4$ の $d=4$ の前因子。Gel'fand--Yaglom の方法（第III節）、零モードの式 (3.13)、局所的な繰り込みの式 (4.12)、Baacke--Lavrelashvili の形 (4.15)--(4.17)。
+\bibitem{bl} J. Baacke, G. Lavrelashvili, ``One-loop corrections to the metastable vacuum decay,'' Phys. Rev. D \textbf{69}, 025009 (2004), hep-th/0307202。Born 項の引き算と運動量空間の有限部分（原論文は未見、文献~\cite{dunnemin} の紹介による）。
 \bibitem{dgs} L. Di Luzio, R. Gr\"ober, M. Spannowsky, ``Maxi-sizing the trilinear Higgs self-coupling: how large could it be?,'' Eur. Phys. J. C \textbf{77}, 788 (2017), arXiv:1704.02311。$hh\to hh$ の部分波によるユニタリー性の限界（第2.3.1節、式 (28)、(29)）と、1ループの頂点の補正による限界（第2.3.2節）。
 \bibitem{peskin} M. E. Peskin, D. V. Schroeder, \textit{An Introduction to Quantum Field Theory} (Addison-Wesley, 1995)。Feynman パラメータと $D$ 次元の積分（第6章、付録A）。LSZ の簡約公式と、完全な伝播関数の極と留数（第7章）。
 \bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}、2026年10月9日）。
