@@ -1,6 +1,7 @@
 ! oneloop4_collier.f90 -- A0, B0 and C0 from COLLIER for the d = 4 one-loop check
-! (research note, step (3)).  m = 1, mu^2 = 1, Delta_UV = 0 (COLLIER defaults), i.e. the same
-! convention as LoopTools.  Writes results/oneloop4_collier.csv with the same points as
+! (research note, step (3)).  m = 1, mu^2 = 1, Delta_UV = 0 (COLLIER defaults).  At one loop this
+! gives the MS-bar finite parts (DeltaUV = 1/eps - gamma_E + ln 4 pi subtracted), the same as
+! LoopTools with Delta = 0.  Writes results/oneloop4_collier.csv with the same points as
 ! oneloop4_feyncalc.wl.
 !
 ! Build and run from Src/ (run_oneloop4_check.sh does this):

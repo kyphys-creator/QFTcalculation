@@ -7,14 +7,21 @@
          A_n = I Pi^2 (gphi^n / S) PaVe,   S = 2, 2, 1,
        where FeynCalc's PaVe functions are defined by Integrate[d^D q ...] = I Pi^2 PaVe.
        The note's V_n (measure d^D q/(2 Pi)^D) is V_n = A_n/(2 Pi)^D.
-   (b) UV poles with Package-X (FeynHelpers): coefficient of 1/Epsilon of V_n, and the MS
-       counterterms of Eq. (7): deltaZ = I d(V2pole)/d(p^2), deltam = -I V2pole(p^2 = 0).
-   (c) finite parts of A0, B0 and C0 in LoopTools' convention (Delta = 0, mu = 1) from Package-X
-       (PaXEvaluate) and LoopTools (LToolsEvaluate), written to Src/results/oneloop4_mathematica.csv.
+   (b) UV poles with Package-X (FeynHelpers): coefficient of 1/Epsilon of V_n, and the MS-bar
+       counterterms of Eq. (7), delta = (1/Epsilon coefficient) x DeltaUV with
+       DeltaUV = 1/Epsilon - EulerGamma + Log[4 Pi]:
+       deltaZ = I d(V2pole)/d(p^2) DeltaUV, deltam = -I V2pole(p^2 = 0) DeltaUV.
+   (c) MS-bar finite parts (m = mu = 1).  The renormalized V_n^R (loop + MS-bar counterterm,
+       Epsilon -> 0) is computed from the FeynCalc amplitudes, with the PaVe functions evaluated by
+       Package-X (PaXEvaluate) and by LoopTools (LToolsEvaluate).  Dividing by the factors of
+       Eq. (9) of the note, V_1^R = I g A0/(2 (4 Pi)^2), V_2^R = I g^2 B0/(2 (4 Pi)^2),
+       V_3^R = I g^3 C0/(4 Pi)^2, gives the MS-bar A0, B0 and C0 (the same as LoopTools' Delta = 0
+       values), written to Src/results/oneloop4_mathematica.csv.
+       FeynCalc's PaVe functions are normalized by d^D q/(I Pi^2), so their Epsilon^0 parts alone
+       are off by -EulerGamma - Log[Pi]: B0(FC) = 1/Epsilon - EulerGamma - Log[Pi] + B0(MS-bar).
+       The (2 Pi)^(2 Epsilon) of the measure d^D q/(2 Pi)^D and the MS-bar subtraction remove this.
        Note: LoopTools 2.16 built on this Mac returns wrong C0 below threshold with p^2 != 0
        (see oneloop4_numeric.py); its C0 values are kept in the CSV as a record.
-       FeynCalc's normalization is B0(FC) = 1/Epsilon - EulerGamma - Log[Pi] + B0(LoopTools), and
-       likewise A0(FC) = m^2 (1/Epsilon - EulerGamma - Log[Pi]) + A0(LoopTools); C0 is finite.
 
    Usage:  wolframscript -file oneloop4_feyncalc.wl      (run generate_Phi3.wl first) *)
 
@@ -61,7 +68,7 @@ Print["(a) A2 - I Pi^2 gphi^2/2 B0(p^2,m,m) = ",
   Simplify[ampSEOL$ - I Pi^2 gphi^2/2 B0[SPD[p], m^2, m^2]], "  (expect 0)"];
 Print["(a) A3 - I Pi^2 gphi^3 C0           = ", Simplify[ampVtxOL$ - I Pi^2 gphi^3 c0OL$], "  (expect 0)"];
 
-(* ---------- (b) UV poles and MS counterterms ---------- *)
+(* ---------- (b) UV poles and MS-bar counterterms ---------- *)
 poleOL$[amp_] := Simplify[SeriesCoefficient[PaXEvaluate[amp], {Epsilon, 0, -1}]/(2 Pi)^4];
 v1Pole$ = poleOL$[ampTadOL$];
 v2Pole$ = poleOL$[ampSEOL$ /. SPD[p] -> pp] /. pp -> psq;
@@ -71,21 +78,43 @@ Print["(b) 1/eps coefficient of V1 = ", InputForm[v1Pole$], "   note: I gphi m^2
 Print["(b) 1/eps coefficient of V2 = ", InputForm[v2Pole$], "   note: I gphi^2/(2 (4 Pi)^2) -> ",
   Simplify[v2Pole$ - I gphi^2/(2 (4 Pi)^2)] === 0];
 Print["(b) 1/eps coefficient of V3 = ", InputForm[v3Pole$], "   note: 0 -> ", v3Pole$ === 0];
-Print["(b) MS counterterms x eps: deltaZ = ", Simplify[I D[v2Pole$, psq]],
+Print["(b) MS-bar counterterms / DeltaUV: deltaZ = ", Simplify[I D[v2Pole$, psq]],
   ",  deltam = ", InputForm[Simplify[-I (v2Pole$ /. psq -> 0)]], "   note: 0 and gphi^2/(2 (4 Pi)^2)"];
 
-(* ---------- (c) finite parts in LoopTools' convention (m = mu = 1) ---------- *)
-toLTOL$[fcValue_, mass2_] := Chop[N[SeriesCoefficient[fcValue, {Epsilon, 0, 0}] + mass2 (EulerGamma + Log[Pi]), 20]];
-pxB0$[s_] := toLTOL$[PaXEvaluate[B0[s, 1, 1]] /. ScaleMu -> 1, 1];
-ltB0$[s_] := Chop[(LToolsEvaluate[B0[s, 1, 1]] /. Epsilon -> Infinity) + EulerGamma + Log[Pi]];
-(* For C0, FeynHelpers' PaXEvaluate[..., PaXC0Expand -> True] returns a ConditionalExpression that is
-   Undefined below threshold, so Package-X's own numerical ScalarC0 (loaded by FeynHelpers) is used. *)
+(* ---------- (c) MS-bar finite parts (m = mu = 1) ---------- *)
+(* PaXEvaluate and LToolsEvaluate return FeynCalc's PaVe functions (measure d^D q/(I Pi^2), scale
+   included), so the loop part of the note's V_n is (2 Pi)^(2 Epsilon) A_n/(2 Pi)^4.  The MS-bar
+   counterterm is -(1/Epsilon coefficient) DeltaUV, so V_n^R is the Epsilon^0 coefficient minus the
+   1/Epsilon coefficient times (Log[4 Pi] - EulerGamma). *)
+msbarOL$[ampValue_] := Module[{v = Series[(2 Pi)^(2 Epsilon) ampValue/(2 Pi)^4, {Epsilon, 0, 0}]},
+   SeriesCoefficient[v, 0] - SeriesCoefficient[v, -1] (Log[4 Pi] - EulerGamma)];
+normOL$ = {I gphi/(2 (4 Pi)^2), I gphi^2/(2 (4 Pi)^2), I gphi^3/(4 Pi)^2};   (* Eq. (9) of the note *)
+(* split the logs of 2 Pi and 4 Pi so that exact zeros (e.g. B0 at p^2 = 0 for m = mu) simplify to 0
+   before N[] is applied; PowerExpand is used only on logs of positive real quantities *)
+logRulesOL$ = {Log[4 Pi] -> 2 Log[2] + Log[Pi], Log[2 Pi] -> Log[2] + Log[Pi]};
+
+a0MSOL$ = Simplify[msbarOL$[PaXEvaluate[ampTadOL$]]/normOL$[[1]], m > 0 && ScaleMu > 0];
+b0MSOL$ = Simplify[msbarOL$[PaXEvaluate[ampSEOL$ /. SPD[p] -> pp]]/normOL$[[2]], m > 0 && ScaleMu > 0];
+Print["(c) MS-bar A0 from the tadpole = ", InputForm[a0MSOL$], "   note: m^2 (1 - Log[m^2/mu^2]) -> ",
+  Simplify[PowerExpand[a0MSOL$ - m^2 (1 - Log[m^2/ScaleMu^2])]] === 0];
+Print["(c) MS-bar B0 from the self-energy = ", InputForm[b0MSOL$]];
+b0MSZeroOL$ = Limit[b0MSOL$, pp -> 0, Assumptions -> m > 0 && ScaleMu > 0];
+Print["(c) MS-bar B0 at p^2 -> 0: ", InputForm[b0MSZeroOL$], "   note: -Log[m^2/mu^2] -> ",
+  Simplify[PowerExpand[b0MSZeroOL$ + Log[m^2/ScaleMu^2]]] === 0];
+Print["(c) V3^R - I gphi^3 C0/(4 Pi)^2 = ", Simplify[msbarOL$[ampVtxOL$] - normOL$[[3]] c0OL$], "  (expect 0; C0 is finite)"];
+
+pxA0$ = Chop[N[Simplify[msbarOL$[PaXEvaluate[ampTadOL$ /. m -> 1] /. ScaleMu -> 1]/normOL$[[1]] /. logRulesOL$], 20]];
+ltA0$ = Chop[msbarOL$[LToolsEvaluate[ampTadOL$ /. m -> 1]]/normOL$[[1]]];
+pxB0$[s_] := Chop[N[Simplify[msbarOL$[PaXEvaluate[ampSEOL$ /. {SPD[p] -> s, m -> 1}] /. ScaleMu -> 1]/normOL$[[2]] /. logRulesOL$], 20]];
+ltB0$[s_] := Chop[msbarOL$[LToolsEvaluate[ampSEOL$ /. {SPD[p] -> s, m -> 1}]]/normOL$[[2]]];
+(* C0 is finite, so its MS-bar value is C0 itself.  FeynHelpers' PaXEvaluate[..., PaXC0Expand -> True]
+   returns a ConditionalExpression that is Undefined below threshold, so Package-X's own numerical
+   ScalarC0 (loaded by FeynHelpers) is used. *)
 PaXEvaluate[B0[2, 1, 1]];   (* makes sure Package-X (context X`) is loaded *)
 pxC0$[a_, b_, c_] := Chop[N[X`ScalarC0[a, b, c, 1, 1, 1], 20], 10^-18];
 ltC0$[a_, b_, c_] := Chop[LToolsEvaluate[C0[a, b, c, 1, 1, 1]]];
 
-rowsOL$ = {{"A0", 1, 0, 0, toLTOL$[PaXEvaluate[A0[1]] /. ScaleMu -> 1, 1],
-    Chop[(LToolsEvaluate[A0[1]] /. Epsilon -> Infinity) + EulerGamma + Log[Pi]]}};
+rowsOL$ = {{"A0", 1, 0, 0, pxA0$, ltA0$}};
 Do[AppendTo[rowsOL$, {"B0", s, 1, 1, pxB0$[s], ltB0$[N[s]]}],
   {s, {-10, -5, -1, 0, 1, 2, 3, 39/10, 4, 41/10, 5, 8, 12, 20, 30}}];
 Do[AppendTo[rowsOL$, {"C0", Sequence @@ inv, pxC0$[Sequence @@ inv], ltC0$[Sequence @@ (N /@ inv)]}],

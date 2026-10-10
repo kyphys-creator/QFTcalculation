@@ -1,6 +1,7 @@
 """d = 4 one-loop check, finite parts (research note, step (3)).
 
-Reference values (m = mu = 1, LoopTools/COLLIER convention Delta = 0):
+Reference values: MS-bar finite parts at m = mu = 1 (DeltaUV = 1/eps - gamma_E + ln 4 pi subtracted;
+the same as LoopTools' Delta = 0 and COLLIER's Delta_UV = 0):
   A0 = m^2 (1 - ln m^2/mu^2) = 1
   B0(p^2) closed form (Appendix G of the note), cross-checked by the Feynman-parameter integral
       B0 = - int_0^1 dx ln(m^2 - x(1-x) p^2 - i0)
