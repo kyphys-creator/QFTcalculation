@@ -273,6 +273,16 @@ def jb(y):
     return np.where(y <= 120, _JB["spl"](np.minimum(y, 120)) + jb_nonanalytic(np.minimum(y, 120)), 0.0)
 
 
+def jb_prime(y):
+    """d Re J_B/dy from the spline of the analytic part and the derivative of the non-analytic part."""
+    jb(0.0)
+    y = np.asarray(y, dtype=float)
+    yc = np.minimum(y, 120)
+    ay = np.where(yc == 0, 1.0, np.abs(yc))
+    dna = -math.pi / 4 * np.sqrt(np.where(yc > 0, yc, 0.0)) - yc / 16 * np.log(ay) - yc / 32
+    return np.where(y <= 120, _JB["spl"](yc, 1) + dna, 0.0)
+
+
 def jb_hight(y):
     """High-temperature expansion through y^3 (note, App. E): -pi^4/45 + pi^2 y/12 - pi y^(3/2)/6 - (y^2/32) ln(y/a_b)
     + zeta(3) y^3/(384 pi^2)."""
@@ -327,6 +337,17 @@ class SingleField:
         dz = -tau * self.gm / (12 * math.pi) * (np.maximum(M2 + self.Pi(tau), 0.0) ** 1.5 - np.maximum(M2, 0.0) ** 1.5)
         return self.v_tree(x) + cw + th + dz
 
+    def dv_full(self, x, tau):
+        """d v_full/d chi."""
+        M2 = self.M2(x)
+        dM2 = self.alpha * x / 3
+        aM2 = np.where(M2 == 0, 1.0, np.abs(M2))
+        dcw = self.gm ** 2 / (64 * math.pi ** 2) * 2 * M2 * dM2 * (np.log(aM2) - 1.0)
+        dth = tau * tau / (2 * math.pi ** 2) * jb_prime(self.gm ** 2 * M2 / tau ** 2) * dM2
+        ddz = -tau * self.gm / (12 * math.pi) * 1.5 * (np.sqrt(np.maximum(M2 + self.Pi(tau), 0.0))
+                                                       - np.sqrt(np.maximum(M2, 0.0))) * dM2
+        return self.h + self.A0 * x + self.alpha * x ** 3 / 18 + dcw + dth + ddz
+
     def minima(self, tau, which="ht", n=4001):
         """Local minima (chi, v) sorted by v, from a grid and a bounded refinement."""
         from scipy.optimize import minimize_scalar
@@ -340,6 +361,35 @@ class SingleField:
                                     options={"xatol": 1e-12})
                 out.append((float(r.x), float(r.fun)))
         return sorted(out, key=lambda p: p[1])
+
+    def false_true(self, tau, which="ht"):
+        """(chi_false, chi_true) at tau, or None if there is only one minimum."""
+        mins = self.minima(tau, which)
+        return (mins[1][0], mins[0][0]) if len(mins) >= 2 else None
+
+    def s3T(self, tau, which="ht"):
+        """S_3/T of the thermal decay of the metastable minimum (S_3 = (m^3/g^2) S_hat, T = m^2 tau/g)."""
+        ft = self.false_true(tau, which)
+        V = (lambda x: self.v_ht(x, tau)) if which == "ht" else (lambda x: self.v_full(x, tau))
+        dV = (lambda x: float(self.dv_ht(x, tau))) if which == "ht" else (lambda x: float(self.dv_full(x, tau)))
+        b = bounce(lambda x: V(x) if np.ndim(x) else float(V(x)), dV, ft[0], ft[1], d=3)
+        return b["S"] / (self.gm * tau), b
+
+    def ln_gamma_over_H4(self, tau, which="ht", m=125.25, gstar=106.75):
+        """ln(Gamma/H^4), Gamma = T^4 (S_3/2 pi T)^(3/2) e^(-S_3/T), H = 1.66 g*^(1/2) T^2/M_Pl, T = tau m/(g/m) [GeV]."""
+        sT = self.s3T(tau, which)[0]
+        T = tau * m / self.gm
+        return 4 * math.log(T) + 1.5 * math.log(sT / (2 * math.pi)) - sT - 4 * math.log(1.66 * math.sqrt(gstar) * T ** 2 / MPL)
+
+    def tau_decay(self, which="ht", lo=None, frac=0.97, xtol=1e-7):
+        """Temperature (tau) above which the metastable minimum decays within a Hubble time (Gamma = H^4)."""
+        from scipy.optimize import brentq
+        tsp = self.tau_spinodal(which)
+        if lo is None:
+            lo = max(0.5, self.gm * math.sqrt(max(0.0, -self.A0) / 25)) if which == "full" else 0.3
+        f = lambda t: self.ln_gamma_over_H4(t, which)
+        assert f(lo) < 0 < f(frac * tsp)
+        return brentq(f, lo, frac * tsp, xtol=xtol), tsp
 
     def tau_spinodal(self, which="ht", lo=None, hi=20.0):
         """Highest tau at which a second local minimum (on the disfavoured side) exists (bisection)."""
@@ -359,3 +409,82 @@ class SingleField:
         asp = (1.5 * abs(self.h) * math.sqrt(self.alpha / 6)) ** (2 / 3)
         t2 = 72 / self.alpha * (-self.A0 - asp)
         return math.sqrt(max(t2, 0.0)) if t2 > -1e-12 else float("nan")
+
+
+# ---- generic O(d)-symmetric bounce by overshoot/undershoot (step (5); note, App. F) ----
+def bounce(V, dV, phi_f, phi_t, d=3, eps_lin=1e-3, rtol=1e-12):
+    """O(d) bounce of the scalar potential V (callables V, dV) from the false minimum phi_f towards the true one phi_t.
+    phi(0) = phi_t + (phi_z - phi_t) e^(-u) (phi_z: V(phi_z) = V(phi_f) on the true side); bisection in u between
+    undershoot and overshoot.  Near phi_t the start uses the linearised solution
+    phi - phi_t = delta Gamma(d/2) (2/(mu r))^(d/2 - 1) I_(d/2-1)(mu r), mu^2 = V''(phi_t).
+    Returns S = Omega_(d-1) int r^(d-1) [phi'^2/2 + V - V(phi_f)], the kinetic part T, phi(0) and the wall radius."""
+    from scipy.integrate import solve_ivp
+    from scipy.optimize import brentq, minimize_scalar
+    from scipy.special import iv, gamma
+    s = 1.0 if phi_f > phi_t else -1.0                          # direction from the true towards the false minimum
+    Vf = V(phi_f)
+    rb = minimize_scalar(lambda p: -V(p), bounds=sorted((phi_f, phi_t)), method="bounded", options={"xatol": 1e-14})
+    phi_b = rb.x
+    phi_z = brentq(lambda p: V(p) - Vf, phi_t + 1e-14 * (phi_b - phi_t), phi_b - 1e-12 * (phi_b - phi_t), xtol=1e-15)
+    Delta = phi_z - phi_t
+    hh = 1e-5 * abs(Delta)
+    mu2 = (dV(phi_t + hh) - dV(phi_t - hh)) / (2 * hh)
+    mu = math.sqrt(mu2)
+    nu = d / 2 - 1
+    lin = lambda x: gamma(d / 2) * (2 / x) ** nu * iv(nu, x) if x > 1e-8 else 1.0 + x * x / (2 * d)
+    dlin = lambda x: gamma(d / 2) * (2 / x) ** nu * iv(nu + 1, x) if x > 1e-8 else x / d     # d/dx of lin
+
+    def rhs(r, y):
+        return [y[1], dV(y[0]) - (d - 1) / r * y[1]]
+
+    def over(r, y):
+        return s * (y[0] - phi_f)
+    over.terminal, over.direction = True, 1
+
+    def under(r, y):
+        return s * y[1]
+    under.terminal, under.direction = True, -1
+
+    def shoot(u, dense=False):
+        delta = Delta * math.exp(-u)
+        if abs(delta) < eps_lin * abs(Delta):
+            x0 = brentq(lambda x: lin(x) - eps_lin * abs(Delta) / abs(delta), 1e-12, 800.0)
+            r0, y0 = x0 / mu, [phi_t + delta * lin(x0), delta * mu * dlin(x0)]
+        else:
+            p0 = phi_t + delta
+            r0 = 1e-6 / mu
+            y0 = [p0 + dV(p0) * r0 * r0 / (2 * d), dV(p0) * r0 / d]
+        sol = solve_ivp(rhs, (r0, r0 + 400.0 / mu), y0, method="DOP853", rtol=rtol, atol=1e-14 * abs(Delta),
+                        events=(over, under), dense_output=dense)
+        kind = "over" if sol.t_events[0].size else "under"
+        return kind, sol, r0
+
+    lo, hi = 0.0, 1.0
+    while shoot(hi)[0] == "under":
+        lo, hi = hi, hi + 2.0
+        if hi > 60:
+            raise RuntimeError("no overshoot")
+    for _ in range(200):
+        mid = 0.5 * (lo + hi)
+        if shoot(mid)[0] == "under":
+            lo = mid
+        else:
+            hi = mid
+        if hi - lo < 1e-14 * max(1.0, hi):
+            break
+    kind, sol, r0 = shoot(lo, dense=True)
+    r = np.linspace(r0, sol.t[-1], 40001)
+    y = sol.sol(r)
+    om = 2 * math.pi ** (d / 2) / gamma(d / 2)
+    T = om * np.trapezoid(r ** (d - 1) * 0.5 * y[1] ** 2, r)
+    try:
+        Vr = np.asarray(V(y[0]), dtype=float)
+        assert Vr.shape == y[0].shape
+    except Exception:
+        Vr = np.array([V(p) for p in y[0]])
+    U = om * np.trapezoid(r ** (d - 1) * (Vr - Vf), r)
+    if r0 > 1e-6 / mu:                                         # the core r < r0 sits at phi ~ phi_t (linear solution)
+        U += om * r0 ** d / d * (V(phi_t) - Vf)
+    Rw = r[np.argmin(np.abs(y[0] - 0.5 * (phi_t + phi_f)))]
+    return dict(S=T + U, T=T, U=U, S_derrick=2 * T / d, phi0=y[0][0], R=Rw, u=lo, r_end=sol.t[-1],
+                phi_end=y[0][-1], phi_b=phi_b, phi_z=phi_z)
