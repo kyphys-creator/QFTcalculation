@@ -299,8 +299,11 @@ def prefactor(a, verbose=True):
     I3uu2 = simpson(xg ** 3 * ug * (ug + 2), x=xg)
     A_green = simpson(xg ** 2 * ive(1, xg) * np.exp(xg) * (fg ** 2 / 2 + a * fg ** 3 / 18), x=xg)
     fpp0 = b.vp0 / 4                                         # f''(0) = v'(f(0))/4
+    I3f3 = simpson(xg ** 3 * fg ** 3, x=xg)
+    # integrated equation of motion int x^3 v'(f) = 0 (used by the scheme comparison of step (11))
+    eom = simpson(xg ** 3 * dpot(fg, a), x=xg) / simpson(xg ** 3 * np.abs(dpot(fg, a)), x=xg)
     out = dict(alpha=a, f0=b.f0, A=b.A, A_green=A_green, R=R, S4=S4, derrick=(Tk + 2 * (S4 - Tk)) / Tk, W=W,
-               I3f2=I3f2, I3f=I3f)
+               I3f2=I3f2, I3f=I3f, I3f3=I3f3, eom=eom)
     # partial waves
     lmax = int(max(200, 12 * R))
     ls = np.arange(lmax + 1)
@@ -401,7 +404,7 @@ for a in (0.0, 0.5, 0.9, 0.97, 0.99):
 with open(os.path.join(HERE, "results", "prefactor.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     keys = ["alpha", "R", "lmax", "f0", "A", "A_green", "S4", "W", "T0", "e_neg", "c_zero", "c_lam", "Sigma", "Sigma_alt",
-            "A2", "A1", "lnD", "lnD_dm", "Gamma_ms", "rg_lhs", "rg_rhs", "parseval"]
+            "A2", "A1", "lnD", "lnD_dm", "Gamma_ms", "rg_lhs", "rg_rhs", "parseval", "I3f", "I3f2", "I3f3", "eom"]
     w.writerow(keys)
     for a in al:
         w.writerow([results[a][k] for k in keys])
