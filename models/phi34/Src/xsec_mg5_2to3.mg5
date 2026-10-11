@@ -1,0 +1,51 @@
+# xsec_mg5_2to3.mg5 -- tree-level phi phi -> phi phi phi with the Phi34 UFO (research note models/phi34, step (6)).
+# Run from Src/:   mg5_aMC xsec_mg5_2to3.mg5 > work/xsec_mg5_2to3.log   (run_xsec_check.sh does this)
+# Imports a copy of generated/Phi34_UFO in work/ (MadGraph converts UFOs to Python 3 in place).
+# Fixed-energy phi beams (lpp = 0), m = gphi = lamphi = 1 (param_card defaults), no cuts on phi (25 diagrams).
+# Launches, in this order (xsec_numeric.py relies on it):
+#   1-3. sqrt(s) = 4, 5, 10 GeV, 10000 events;
+#   4-7. sqrt(s) = 10 GeV again, 50000 events, with iseed 777, 4242, 31 (sde_strategy 2) and
+#        32 (sde_strategy 1, hard_survey 2), to see the run-to-run spread at this energy.
+set automatic_html_opening False
+import model ./work/Phi34_UFO
+generate phi phi > phi phi phi
+output work/mg5_2to3 -f
+launch work/mg5_2to3
+0
+set lpp1 0
+set lpp2 0
+set ebeam1 2.0
+set ebeam2 2.0
+set nevents 10000
+0
+launch work/mg5_2to3
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_2to3
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+launch work/mg5_2to3
+0
+set nevents 50000
+set iseed 777
+0
+launch work/mg5_2to3
+0
+set iseed 4242
+0
+launch work/mg5_2to3
+0
+set iseed 31
+set sde_strategy 2
+0
+launch work/mg5_2to3
+0
+set iseed 32
+set sde_strategy 1
+set hard_survey 2
+0
+quit
