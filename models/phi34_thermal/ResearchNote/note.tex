@@ -1,0 +1,191 @@
+% note.tex — φ^3+φ^4 理論の有限温度の一次相転移と重力波
+% コンパイル: lualatex note.tex（目次と参照の解決のため2〜3回）
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={phi^3+phi^4 theory: first-order phase transition at finite temperature and gravitational waves},pdfauthor={}}
+
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+\newcommand{\dd}{\mathrm{d}}
+
+\title{$\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波}
+\author{}
+\date{2026年10月12日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+零温度の $\phi^3+\phi^4$ 理論のノート~\cite{phi34note} に続き、有限温度の一次相転移を調べる。零温度のノートで求めた3次元の bounce の作用 $S_3(\alpha)$ を使い、相転移の温度、強さ、速さと、それが作る重力波を求めることが目的である。温度の模型は二つ使う。一つは、Dine ら~\cite{dine92} の高温展開の一般形 $D(T^2-T_0^2)\phi^2-ET\phi^3+\lambda_T\phi^4/4$ で、もう一つは、場 $\phi$ 自身の熱ループだけで閉じた本模型の温度ポテンシャルである。手計算では、一般形が零温度の模型と $\alpha(T)=(\lambda_TD/E^2)(1-T_0^2/T^2)$ で対応することを示し、臨界温度、$S_3/T=(E/36)(2\alpha/\lambda_T)^{3/2}S_3(\alpha)$、核生成の条件、$\beta/H$ の閉じた式を導いた。手順 (1) では、今の質量を入れた SM 的な係数で、臨界温度が閉じた式と数値の極小で全桁一致し、核生成温度は $T_c$ の $0.017$~GeV 下、$S_3/T=148.8$、$\beta/H=2.5\times10^6$、$\phi_n/T_n=0.17$ の弱い一次相転移になった。$S_3/T$ は Dine らの近似式と $0.9\%$ で、$\beta/H$ の閉じた式は数値微分と相対 $4\times10^{-9}$ で一致した。導出はすべて付録に省略なく載せる。
+\end{abstract}
+
+\tableofcontents
+
+\section{目的と問い}\label{sec:intro}
+
+本ノートの問いは二つである。\textbf{第一に、零温度のノートで検算した3次元の bounce の作用を使うと、有限温度の一次相転移の温度、強さ、速さと、それが作る重力波はどう決まるか。第二に、$\phi^3+\phi^4$ 理論そのものの熱的な歴史では、高温の相からどちらの真空に移るか。そして、それは零温度のノートの真空の安定性の限界をどう変えるか。}
+
+第一の問いを立てる理由は、零温度のノートの手順 (9) で、$d=3$ の作用 $S_3(\alpha)$ を Dine ら~\cite{dine92} の近似式と $0.8\%$ 以内で一致させてあるからである。電弱相転移の高温展開のポテンシャル $D(T^2-T_0^2)\phi^2-ET\phi^3+\lambda_T\phi^4/4$ は、温度に依存する係数を持つ $\phi^3+\phi^4$ のポテンシャルそのものなので、$S_3(\alpha)$ をそのまま使える。第二の問いを立てる理由は、零温度のノートで $\alpha<1$ の $\phi=0$ を準安定な真空として扱ったが、宇宙が高温から冷えるとき、そもそも $\phi=0$ に落ち着くかは自明でないからである。
+
+求める量は四つである。(i) 一般形の臨界温度と、零温度の $\alpha$ との対応。(ii) 核生成温度 $T_n$、相転移の強さ $\alpha_{\mathrm{PT}}$、速さ $\beta/H$。(iii) 音波と乱流による重力波のスペクトルと、LISA の感度との比較。(iv) 場 $\phi$ 自身の熱ループによる温度ポテンシャルでの、相の移り変わりと $(\kappa_3,\kappa_4)$ の熱的な安定性。
+
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で手計算の結果を述べる。第~\ref{sec:plan} 節で検算と計算の計画を定める。第~\ref{sec:dine} 節で一般形の相転移を扱う（現在は手順 (1) まで）。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:map}〜\ref{app:nucl} にある。
+
+\section{設定}\label{sec:setup}
+
+零温度のノート~\cite{phi34note} の模型は、ポテンシャル $V=\frac12m^2\phi^2+\frac g{3!}\phi^3+\frac\lambda{4!}\phi^4$ を持つ実スカラー1つで、その形は $\alpha\equiv3\lambda m^2/g^2$ で決まる。有限温度では、高温展開の一般形
+\begin{equation}
+V(\phi,T)=D\,(T^2-T_0^2)\,\phi^2-ET\phi^3+\frac{\lambda_T}{4}\phi^4
+\label{eq:VT}
+\end{equation}
+を使う~\cite{dine92}。$D$、$E$、$T_0$、$\lambda_T$ は温度にほとんどよらない係数で、SM ではゲージ粒子とトップクォークの熱ループから決まる（\ref{app:map}）。場 $\phi$ 自身の熱ループによる温度ポテンシャルは、後の手順で導く。
+
+\paragraph{前提。}本ノートは次の前提に立つ。
+\begin{enumerate}
+\item $\hbar=c=k_B=1$ とし、エネルギーと温度の単位は GeV とする。
+\item 宇宙は放射優勢で、有効自由度は $g_*=106.75$、ハッブル率は $H=1.66\sqrt{g_*}\,T^2/M_{\mathrm{Pl}}$（$M_{\mathrm{Pl}}=1.22091\times10^{19}$~GeV）とする。
+\item 有限温度の崩壊率は $\Gamma(T)=T^4\bigl(S_3/(2\pi T)\bigr)^{3/2}e^{-S_3/T}$ とし~\cite{linde83}、核生成温度 $T_n$ を $\Gamma(T_n)=H(T_n)^4$ で定める。前因子は見積もりで、その不定性は $T_n$ の条件の対数にしか効かない。
+\item 一般形の係数は1ループの高温展開の値で、$\lambda_T$ の温度依存（対数）は $T_c$ での値で代表させる。Dine らによれば、$\lambda_T$ の $T_1$、$T_c$、$T_0$ での値の差は小さい。
+\item SM 的な係数には、$m_W=80.37$、$m_Z=91.19$、$m_t=172.6$、$m_h=125.25$、$v=246.22$（いずれも GeV）を使う。
+\end{enumerate}
+本文で使う記号を表~\ref{tab:notation} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{本ノートで使う記号。}
+\label{tab:notation}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.6cm}X}
+\toprule
+\textbf{記号} & \textbf{意味} \\
+\midrule
+$D,\ E,\ T_0,\ \lambda_T$ & 一般形 \eqref{eq:VT} の係数 \\
+$M^2(T)$ & $\phi=0$ のまわりの有効質量の2乗 $2D(T^2-T_0^2)$ \\
+$\alpha(T)$ & 零温度のノートの $\alpha$ を温度の関数として読んだもの（式~\eqref{eq:alphaT}） \\
+$R$ & $\lambda_TD/E^2$。$\alpha(T)=R(1-T_0^2/T^2)$ \\
+$T_1,\ T_c,\ T_0$ & 二つ目の極小が現れる温度、二つの極小が縮退する温度、$\phi=0$ が不安定になる温度 \\
+$S_3(\alpha)$ & 零温度のノートの3次元の bounce の作用（$S_3=S_3(\alpha)\,m^3/g^2$） \\
+$W(\alpha)$ & $\dd S_3(\alpha)/\dd\alpha$ \\
+$\Gamma,\ H,\ g_*,\ M_{\mathrm{Pl}}$ & 単位体積・単位時間あたりの核生成率、ハッブル率、有効自由度、Planck 質量 \\
+$T_n$ & 核生成温度（$\Gamma=H^4$） \\
+$\beta/H$ & 相転移の速さ $T\,\dd(S_3/T)/\dd T$（$T=T_n$） \\
+$\phi_c,\ \phi_n$ & $T_c$、$T_n$ での二つ目の極小の場の値 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{結果}\label{sec:results}
+
+\paragraph{零温度の模型との対応。}式~\eqref{eq:VT} は、$m^2=M^2(T)\equiv2D(T^2-T_0^2)$、$g=-6ET$、$\lambda=6\lambda_T$ とした零温度の模型のポテンシャルである。したがって
+\begin{equation}
+\alpha(T)=\frac{\lambda_TM^2}{2E^2T^2}=R\Bigl(1-\frac{T_0^2}{T^2}\Bigr),\qquad R\equiv\frac{\lambda_TD}{E^2}
+\label{eq:alphaT}
+\end{equation}
+で、これは Dine らの $\alpha$ と同じである（\ref{app:map}）。零温度のノートの真空の構造（$\alpha>9/8$ で極小は一つ、$\alpha=1$ で縮退、$\alpha<1$ で $\phi=0$ が準安定）が、そのまま温度の関数として読める。高温（$\alpha>9/8$）から冷えると、$\alpha=9/8$ で二つ目の極小が現れ、$\alpha=1$ で二つの極小が縮退し、$\alpha=0$ で $\phi=0$ が不安定になる。その温度と場の値は
+\begin{equation}
+T_1^2=\frac{T_0^2}{1-9E^2/(8\lambda_TD)},\quad\phi_1=\frac{3ET_1}{2\lambda_T};\qquad
+T_c^2=\frac{T_0^2}{1-E^2/(\lambda_TD)},\quad\phi_c=\frac{2ET_c}{\lambda_T};\qquad
+\phi_0=\frac{3ET_0}{\lambda_T}
+\label{eq:crit}
+\end{equation}
+で、Dine らの式 (12)〜(16) を再現する（\ref{app:map}）。
+
+\paragraph{3次元の作用。}零温度のノートの $S_3=(m^3/g^2)S_3(\alpha)$ に上の対応を入れると
+\begin{equation}
+\frac{S_3}{T}=\frac{M^3}{36E^2T^3}\,S_3(\alpha)=\frac{E}{36}\Bigl(\frac{2\alpha}{\lambda_T}\Bigr)^{3/2}S_3(\alpha)
+\label{eq:S3T}
+\end{equation}
+となる（\ref{app:map}）。温度は $\alpha(T)$ を通してだけ入る。Dine らの近似式 $S_3/T=4.85\,M^3/(E^2T^3)\,f(\alpha)$ は、$S_3(\alpha)=36\times4.85\,f(\alpha)$ にあたる。
+
+\paragraph{核生成と相転移の速さ。}$\Gamma=H^4$ は
+\begin{equation}
+\frac{S_3}{T}-\frac32\ln\frac{S_3}{2\pi T}=4\ln\frac{M_{\mathrm{Pl}}}{1.66\sqrt{g_*}\,T}
+\label{eq:nucl}
+\end{equation}
+と書ける（\ref{app:nucl}）。右辺は $T\approx160$~GeV で $144$ で、よく使われる $S_3/T\approx140$ の目安にあたる。相転移の速さは、$\lambda_T$ を一定とすると
+\begin{equation}
+\frac\beta H=T\frac{\dd}{\dd T}\frac{S_3}{T}=\frac{S_3}{T}\Bigl[\frac{3}{2\alpha}+\frac{W(\alpha)}{S_3(\alpha)}\Bigr]\cdot2(R-\alpha)
+\label{eq:betaH}
+\end{equation}
+である（\ref{app:nucl}）。$W=\dd S_3(\alpha)/\dd\alpha$ は零温度のノートの手順 (9) で求めてある。
+
+\section{検算と計算の計画}\label{sec:plan}
+
+零温度のノートと違い、ツールどうしの比較より、閉じた式と数値の突き合わせと、文献との照合が中心になる。
+
+\paragraph{手順。}次の順に進める。(1) 一般形の臨界温度、核生成温度、$\beta/H$ を求め、閉じた式を数値の極小と数値微分で、$S_3/T$ を Dine らの近似式で確かめる。SM 的な係数で試す。(2) $E$ などを変えて強い相転移を作り、相転移の強さ $\alpha_{\mathrm{PT}}$（定義は文献で確かめる）と $\beta/H$ を求める。(3) 音波と乱流による重力波のスペクトルの近似式を原論文で確かめ、LISA の感度と比べる。(4) 場 $\phi$ 自身の熱ループによる温度ポテンシャル（高温展開と daisy の和）を手で導き、相の移り変わりを追う。(5) 一般のポテンシャルの3次元の bounce を求める道具を作り、手順 (1) の $S_3$ を再現したうえで、単一場の模型の核生成と $(\kappa_3,\kappa_4)$ の熱的な安定性を調べる。(6) 単一場の模型の相転移の重力波を求める。(7) 独立な道具（CosmoTransitions）と照合する。
+
+\section{一般形の相転移}\label{sec:dine}
+
+\paragraph{手順 (1)：臨界温度と核生成温度。}Dine らの式 (4)、(8)〜(11) に今の質量を入れると、$D=0.166632$、$E=9.5778\times10^{-3}$、$B=-4.3903\times10^{-3}$、$T_0=163.4953$~GeV、$\lambda=m_h^2/(2v^2)=0.12938$、$\lambda_T(T_c)=0.11457$ となる（表~\ref{tab:dine}）。$R=\lambda_TD/E^2=208.1$ と大きいので、$\alpha$ は $T_0$ のすぐ上で0から $9/8$ まで変わる。式~\eqref{eq:crit} の $T_1=163.9390$~GeV と $T_c=163.8895$~GeV は、ポテンシャルの極小を数値で求めて決めた温度と全桁で一致し、$\phi_c/T_c=2E/\lambda_T=0.1672$ も数値の極小の位置と一致した。
+
+$S_3(\alpha)$ には零温度のノートの手順 (9) の31点を使い、$\alpha$ の間は $\dd S_3/\dd\alpha=W$ を使った3次の Hermite 補間でつないだ。$\alpha>0.99$ では、薄い壁の展開 $(1-\alpha)^2S_3/(32\pi/9)=1+c_1(1-\alpha)+c_2(1-\alpha)^2$ を $\alpha\ge0.94$ で当てはめて使った。その切片は $1.00008$ である。式~\eqref{eq:nucl} を解くと $T_n=163.8723$~GeV で、$T_c$ の $0.0172$~GeV 下である。このとき $\alpha(T_n)=0.9565$、$S_3/T=148.78$、$\phi_n/T_n=0.174$ である。$S_3/T$ は Dine らの近似式の値 $150.09$ と $0.9\%$ で一致した。これは零温度のノートで見た、$\alpha\approx0.96$ での近似式の精度と同じである。式~\eqref{eq:betaH} の $\beta/H=2.5215\times10^6$ は、$S_3/T$ の中心差分（Richardson 外挿）と相対 $4\times10^{-9}$ で一致した。
+
+この結果は、SM のヒッグスの質量では電弱相転移が非常に弱いという、よく知られた結論を再現する。$\phi_n/T_n\approx0.17$ は、電弱バリオン数生成に要る $\phi/T\gtrsim1$ よりずっと小さい。$T_c-T_n$ が $T_c$ の $10^{-4}$ しかなく、$\beta/H$ が $10^6$ もあるので、重力波も事実上作られない。なお、このパラメータでは1ループの高温展開そのものが信頼できず、格子計算によれば $m_h\gtrsim m_W$ では相転移はクロスオーバーになる~\cite{kajantie96}。ここでの数値は、強い相転移を調べる次の手順のための道具の検算と、その出発点である。スクリプトは \texttt{dine\_form.py} である。
+
+\begin{table}[tbp]
+\centering\small
+\caption{SM 的な係数での一般形の相転移（手順 (1)）。係数は Dine らの式 (4)、(8)〜(11) に今の質量を入れたもの、$\lambda_T$ は $T_c$ での値である。「確かめ」は独立な求め方との一致を表す。}
+\label{tab:dine}
+\begin{tabular}{lll}
+\toprule
+量 & 値 & 確かめ \\
+\midrule
+$D$、$E$、$B$ & $0.166632$、$9.5778\times10^{-3}$、$-4.3903\times10^{-3}$ & — \\
+$T_0$、$\lambda$、$\lambda_T(T_c)$ & $163.4953$~GeV、$0.12938$、$0.11457$ & — \\
+$T_1$ & $163.9390$~GeV & 数値の極小と全桁一致 \\
+$T_c$、$\phi_c/T_c$ & $163.8895$~GeV、$0.16719$ & 数値の極小と全桁一致 \\
+$T_n$、$T_c-T_n$ & $163.8723$~GeV、$0.0172$~GeV & $\ln(\Gamma/H^4)=5\times10^{-11}$ \\
+$\alpha(T_n)$、$\phi_n/T_n$ & $0.9565$、$0.174$ & — \\
+$S_3/T$（$T_n$） & $148.78$ & Dine らの近似式 $150.09$（$+0.9\%$） \\
+$\beta/H$ & $2.5215\times10^6$ & 数値微分と相対 $4\times10^{-9}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+\section{議論と今後}\label{sec:discussion}
+
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (2) から順に進める。手順 (2) 以降の手計算（相転移の強さ、重力波、単一場の温度ポテンシャル）は、進めるにつれて付録に加える。
+
+\appendix
+
+\section{一般形と零温度の模型の対応、臨界温度の導出}\label{app:map}
+
+\paragraph{係数の対応。}式~\eqref{eq:VT} を $V=\frac12m^2\phi^2+\frac g6\phi^3+\frac\lambda{24}\phi^4$ と比べると、$\frac12m^2=D(T^2-T_0^2)$、$\frac g6=-ET$、$\frac\lambda{24}=\frac{\lambda_T}4$ なので、$m^2=M^2=2D(T^2-T_0^2)$、$g=-6ET$、$\lambda=6\lambda_T$ である。よって $\alpha=3\lambda m^2/g^2=18\lambda_TM^2/(36E^2T^2)=\lambda_TM^2/(2E^2T^2)$ で、$M^2$ を入れると式~\eqref{eq:alphaT} を得る。逆に解くと $M^2=2\alpha E^2T^2/\lambda_T$ である。
+
+\paragraph{極小と臨界温度。}零温度のノートの付録~G より、$f=g\phi/m^2$ について、二つ目の極小は $\alpha\le9/8$ で $f_-=-\frac{9}{2\alpha}\bigl(1+\sqrt{1-8\alpha/9}\bigr)$ にあり、$\alpha=1$ で $\phi=0$ と縮退する。$\phi=0$ は $m^2=M^2<0$、すなわち $\alpha<0$ で不安定になる。$\phi=(m^2/g)f=-M^2f/(6ET)$ である。$\alpha=9/8$ は $1-T_0^2/T^2=9/(8R)$ を与え、$T_1^2=T_0^2/(1-9E^2/(8\lambda_TD))$ である。このとき $f_-=-4$ で、$\phi_1=4M^2/(6ET)=\frac23\cdot\frac{2\cdot\frac98E^2T^2}{\lambda_T}\cdot\frac{1}{ET}=\frac{3ET}{2\lambda_T}$ である。$\alpha=1$ は $T_c^2=T_0^2/(1-E^2/(\lambda_TD))$ を与え、$f_-=-6$ から $\phi_c=M^2/(ET)=2ET_c/\lambda_T$ である。$\alpha\to0$ では $f_-\simeq-9/\alpha$ なので、$\phi_0=\frac{9M^2}{6\alpha ET}=\frac{3ET}{\lambda_T}$ である。
+
+\paragraph{3次元の作用。}零温度のノートの $S_3=(m^3/g^2)S_3(\alpha)$ に $m=M$、$g^2=36E^2T^2$ を入れると $S_3/T=M^3S_3(\alpha)/(36E^2T^3)$ で、$M^3=(2\alpha/\lambda_T)^{3/2}E^3T^3$ から式~\eqref{eq:S3T} を得る。
+
+\paragraph{SM 的な係数。}Dine らの式 (4)、(8)〜(11) は
+\begin{equation*}
+D=\frac{2m_W^2+m_Z^2+2m_t^2}{8v^2},\quad E=\frac{2m_W^3+m_Z^3}{4\pi v^3},\quad B=\frac{3(2m_W^4+m_Z^4-4m_t^4)}{64\pi^2v^4},\quad
+T_0^2=\frac{m_h^2-8Bv^2}{4D}
+\end{equation*}
+と、$\lambda_T=\lambda-\frac{3}{16\pi^2v^4}\bigl[2m_W^4\ln\frac{m_W^2}{a_BT^2}+m_Z^4\ln\frac{m_Z^2}{a_BT^2}-4m_t^4\ln\frac{m_t^2}{a_FT^2}\bigr]$（$\ln a_B=2\ln4\pi-2\gamma_E$、$\ln a_F=2\ln\pi-2\gamma_E$、$\lambda=m_h^2/(2v^2)$）である。$T_c$ は、$\lambda_T(T_c)$ を使った式~\eqref{eq:crit} を反復で解いて求めた。
+
+\section{核生成の条件と相転移の速さの導出}\label{app:nucl}
+
+\paragraph{核生成の条件。}$\Gamma=T^4(S_3/(2\pi T))^{3/2}e^{-S_3/T}$ と $H=1.66\sqrt{g_*}T^2/M_{\mathrm{Pl}}$ を $\Gamma=H^4$ に入れて対数をとると、$4\ln T+\frac32\ln\frac{S_3}{2\pi T}-\frac{S_3}{T}=4\ln H$、すなわち式~\eqref{eq:nucl} を得る。$T=163.9$~GeV では $M_{\mathrm{Pl}}/(1.66\sqrt{g_*}T)=4.34\times10^{15}$ で、右辺は $144.0$ である。$S_3/T=148.8$ では左辺の対数の項が $4.7$ なので、両辺が釣り合う。$T_n$ は、$\ln(\Gamma/H^4)$ を $T$ の関数として Brent 法で解いて求めた。$\phi_n$ は $T_n$ での $f_-$ から $\phi=-M^2f_-/(6ET)$ で求めた。
+
+\paragraph{相転移の速さ。}$S_3/T=(E/36)(2/\lambda_T)^{3/2}\alpha^{3/2}S_3(\alpha)$ を $\alpha$ で微分すると $\frac{\dd}{\dd\alpha}\frac{S_3}{T}=\frac{S_3}{T}\bigl[\frac3{2\alpha}+\frac{W}{S_3(\alpha)}\bigr]$ である（$\lambda_T$ は一定とする）。式~\eqref{eq:alphaT} から $T\frac{\dd\alpha}{\dd T}=2R\frac{T_0^2}{T^2}=2(R-\alpha)$ なので、式~\eqref{eq:betaH} を得る。数値の確かめでは、$S_3/T$ の中心差分を刻み $h=10^{-6}T_n$ と $h/2$ で求めて Richardson 外挿した。
+
+\begin{thebibliography}{9}
+\small
+\bibitem{phi34note} $\phi^3+\phi^4$ 理論：1ループの構造、ユニタリー性、偽の真空の崩壊（$d=4$）（本リポジトリ \nolinkurl{models/phi34/ResearchNote/note.pdf}）。真空の構造（付録~G）、bounce の作用 $S_3(\alpha)$ と Dine らとの照合（手順 (9)、付録~L）。
+\bibitem{dine92} M. Dine, R. G. Leigh, P. Y. Huet, A. D. Linde, D. A. Linde, ``Towards the theory of the electroweak phase transition,'' Phys. Rev. D \textbf{46}, 550 (1992), hep-ph/9203203。高温展開の一般形（式 (4)、(7)〜(11)）、臨界温度（式 (12)〜(16)）、$S_3/T$ の近似式（式 (26)、(27)）。
+\bibitem{linde83} A. D. Linde, ``Decay of the false vacuum at finite temperature,'' Nucl. Phys. B \textbf{216}, 421 (1983); Erratum Nucl. Phys. B \textbf{223}, 544 (1983)。有限温度の崩壊率 $\Gamma\sim T^4e^{-S_3/T}$。
+\bibitem{kajantie96} K. Kajantie, M. Laine, K. Rummukainen, M. E. Shaposhnikov, ``Is there a hot electroweak phase transition at $m_H\gtrsim m_W$?,'' Phys. Rev. Lett. \textbf{77}, 2887 (1996), hep-ph/9605288。格子計算による電弱相転移の終点。
+\end{thebibliography}
+
+\end{document}
