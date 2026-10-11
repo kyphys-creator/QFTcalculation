@@ -547,7 +547,7 @@ $\sqrt s/m$ & $\sigma^{(0)}$ & $\sigma^{(1)}$ & $\sigma^{(1)}/\sigma^{(0)}$ & $\
 \FloatBarrier
 \section{繰り込み群}\label{sec:rg}
 
-この節では、S 行列要素の $\mu$ 依存から $\beta_\lambda$、$\beta_g$、$\gamma$ をツールの数値で読み取り、式~\eqref{eq:rge} と比べる（手順 (7)）。さらに、確かめた係数で、ポテンシャルの形を決める $\alpha$ の流れを調べる。結論を先に述べると、三つの係数は、二つの処方（$\overline{\mathrm{MS}}$ の質量と極質量）の四つのツールすべてで、手計算と相対 $6\times10^{-15}$ 以内で一致した。$\alpha$ は $\lambda$ とともに閉じた2次元の流れをつくり、紫外では $\alpha=3/2$ に近づく。スクリプトは \texttt{run\_rg\_check.sh} で再実行できる。
+この節では、S 行列要素の $\mu$ 依存から $\beta_\lambda$、$\beta_g$、$\gamma$ をツールの数値で読み取り、式~\eqref{eq:rge} と比べる（手順 (7)）。さらに、確かめた係数で、ポテンシャルの形を決める $\alpha$ の流れを調べる。結論を先に述べると、三つの係数は、二つの処方（$\overline{\mathrm{MS}}$ の質量と極質量）の四つのツールすべてで、手計算と相対 $6\times10^{-15}$ 以内で一致した。$\alpha$ は $\lambda$ とともに閉じた2次元の流れをつくり、紫外では、木のポテンシャルが凸になる境界 $\alpha=3/2$ に近づく。固定点は自由な理論だけである。スクリプトは \texttt{run\_rg\_check.sh} で再実行できる。
 
 \paragraph{手順 (7)：繰り込み群。}S 行列要素は物理量なので、それをどのパラメータで書いても $\mu$ によらない。質量のパラメータ $m$（$\overline{\mathrm{MS}}$ の $m(\mu)$ または極質量 $m_{\mathrm p}$）と $\overline{\mathrm{MS}}$ の結合 $g(\mu)$、$\lambda(\mu)$ で書いた S 行列要素を $\mathcal{M}^{(0)}(m,g,\lambda)+Y(\mu)$ とする。$Y$ は、$\mathcal{M}^{(1)}$ に S 行列要素への変換を足した1ループの部分である。式~\eqref{eq:Mtree} の $\mathcal{M}^{(0)}$ を $m^2$、$g$、$\lambda$ で微分すると、$-g^2A$、$-2gB$、$-1$ になる。ここで $A\equiv\sum_x(x-m^2)^{-2}$、$B\equiv\sum_x(x-m^2)^{-1}$ である。よって、$\mu$ によらない条件は
 \begin{equation}
@@ -567,7 +567,7 @@ $\sqrt s/m$ & $\sigma^{(0)}$ & $\sigma^{(1)}$ & $\sigma^{(1)}/\sigma^{(0)}$ & $\
 \frac{\dd\lambda}{\dd t}=\frac{3\lambda^2}{(4\pi)^2},\qquad
 \frac{\dd\alpha}{\dd t}=\frac{\lambda\,(3-2\alpha)}{(4\pi)^2}
 \end{equation*}
-となり、$(\lambda,\alpha)$ の中で閉じた流れになる（\ref{app:rgfit}）。軌道は $\alpha=\frac32+(\alpha_0-\frac32)(\lambda/\lambda_0)^{-2/3}$ である。紫外では $\lambda$ が大きくなり（Landau 極は $\ln(\mu/m)=(4\pi)^2/(3\lambda_0)$）、すべての軌道が直線 $\alpha=3/2$ に近づく。この直線は流れで保たれ、その上では $m^2=g^2/(2\lambda)$ である。赤外では $\lambda\to0$ とともに $\alpha$ は $3/2$ から離れ、$\alpha<3/2$ の軌道はやがて $\alpha<0$、すなわち $m^2<0$ に入る。したがって、$\alpha=1$（縮退した二つの極小）や $\alpha=9/8$ の境界は流れで保たれず、木のポテンシャルで決めた真空の構造は $\mu$ の選び方に依存する。ただしその依存は弱く、基準点（$\alpha=3$）でも $\alpha=1$ の点でも、$\mu$ を $m/4$ から $4m$ まで変えたときの $\alpha$ の変化は $0.9\%$ 程度である。$\phi^3$ 理論の $d=4$ の流れと違い、この流れは1ループのものである。2ループでは、$\beta_\lambda$ に高次の項が加わり、場の異常次元のために $g/\lambda$ も走る。
+となり、$(\lambda,\alpha)$ の中で閉じた流れになる（\ref{app:rgfit}）。軌道は $\alpha=\frac32+(\alpha_0-\frac32)(\lambda/\lambda_0)^{-2/3}$ である。固定点は $\lambda=0$ の直線だけで、無次元にしたパラメータ $(\lambda,\,g^2/\mu^2,\,m^2/\mu^2)$ の空間では原点（質量0の自由な理論）だけである。$\lambda\phi^4$ 理論と同じく、紫外の固定点はない。紫外では $\lambda$ が大きくなり（Landau 極は $\ln(\mu/m)=(4\pi)^2/(3\lambda_0)$）、すべての軌道が直線 $\alpha=3/2$ に近づく。この直線は流れで保たれ、その上では $m^2=g^2/(2\lambda)$ である。これは、場に依存する質量 $V''(\phi)=m^2+g\phi+\frac\lambda2\phi^2$ の判別式 $g^2-2\lambda m^2$ が0になる点で、そのとき $V''=(g+\lambda\phi)^2/(2\lambda)$ は $\phi=-g/\lambda$ で $V'''$ とともに0になる。$\alpha\ge3/2$ は、木のポテンシャルがすべての $\phi$ で凸（$V''\ge0$）であることと同じである。$\alpha<3/2$ では $V''<0$ の領域ができ、そこで1ループの有効ポテンシャルは虚部を持つ。式~\eqref{eq:rge} から $\dd V''/\dd t=[\lambda V''+(V''')^2]/(4\pi)^2$ なので、二重根では右辺が0になり、二重根は流れで保たれる（\ref{app:rgfit}）。紫外の流れは、ポテンシャルをこの凸の境界に寄せる。赤外では $\lambda\to0$ とともに $\alpha$ は $3/2$ から離れ、$\alpha<3/2$ の軌道はやがて $\alpha<0$、すなわち $m^2<0$ に入る。したがって、$\alpha=1$（縮退した二つの極小）や $\alpha=9/8$ の境界は流れで保たれず、木のポテンシャルで決めた真空の構造は $\mu$ の選び方に依存する。ただしその依存は弱く、基準点（$\alpha=3$）でも $\alpha=1$ の点でも、$\mu$ を $m/4$ から $4m$ まで変えたときの $\alpha$ の変化は $0.9\%$ 程度である。$\phi^3$ 理論の $d=4$ の流れと違い、この流れは1ループのものである。2ループでは、$\beta_\lambda$ に高次の項が加わり、場の異常次元のために $g/\lambda$ も走る。
 
 \begin{table}[tbp]
 \centering\small
@@ -776,6 +776,12 @@ m^2(t)=\Bigl(m^2-\frac{g^2}{2\lambda}\Bigr)\Bigl(\frac{\lambda(t)}{\lambda}\Bigr
 である。基準点では $\dot g=\dot\lambda=3/(4\pi)^2$、$\gamma=2/(4\pi)^2$、$\ddot g=3(\dot g\lambda+g\dot\lambda)/(4\pi)^2=18/(4\pi)^4$、$\ddot\lambda=6\lambda\dot\lambda/(4\pi)^2=18/(4\pi)^4$、$\dot\gamma=(2g\dot g+\dot\lambda m^2+\lambda\gamma)/(4\pi)^2=11/(4\pi)^4$ なので、$(4\pi)^4\ddot{\mathcal{M}}^{(0)}=-54B-35A-8C-18$ となる。$\sqrt s=5m$、$\cos\theta=0.3$ では $A=2.0738\times10^{-2}$、$B=-0.146353$、$C=-1.9634\times10^{-3}$ で $(4\pi)^4\ddot{\mathcal{M}}^{(0)}=-10.807$ である。$\mathcal{M}=-0.868301$、$t=\pm\ln4$ では、残りは相対 $4.80\times10^{-4}$ で、数値の結果と一致する。
 
 \paragraph{$\alpha$ の流れ。}\ref{app:rg} の $\dd\ln\alpha/\dd t=(g^2/m^2-2\lambda)/(4\pi)^2$ に $g^2/m^2=3\lambda/\alpha$ を入れると、$\dd\alpha/\dd t=\lambda(3-2\alpha)/(4\pi)^2$ を得る。四つの係数で書くと $\dd\alpha/\dd t=\alpha(\beta_\lambda/\lambda+\gamma/m^2-2\beta_g/g)=\lambda[3c_1-(2b_g-b_\lambda-c_2)\alpha]/(4\pi)^2$ で、図~\ref{fig:rgflow} はこの式で描いた。$\dd\lambda/\dd t=3\lambda^2/(4\pi)^2$ で割ると $\dd\alpha/\dd\ln\lambda=(3-2\alpha)/3$ で、これを積分すると軌道 $\alpha-\frac32=(\alpha_0-\frac32)(\lambda/\lambda_0)^{-2/3}$ を得る。上の $m^2(t)$ と $g/\lambda$ が一定であることからも、$\alpha-\frac32=3\lambda(m^2-g^2/(2\lambda))/g^2\propto\lambda^{1/3}\lambda/\lambda^2=\lambda^{-2/3}$ と同じ軌道が出る。$\lambda=0$ の直線上の点はすべて固定点である。赤外で $\lambda\to0$ に近づくとき、直線 $\alpha=3/2$ の上以外の軌道では $\alpha$ が発散する。
+
+\paragraph{凸の境界。}$V''=m^2+g\phi+\frac\lambda2\phi^2$ の係数を式~\eqref{eq:rge} で走らせると、$V'''=g+\lambda\phi$ として
+\begin{equation*}
+\frac{\dd V''}{\dd t}=\frac{(g^2+\lambda m^2)+3g\lambda\phi+\frac32\lambda^2\phi^2}{(4\pi)^2}=\frac{\lambda V''+(V''')^2}{(4\pi)^2}
+\end{equation*}
+である。$V''$ の二重根 $\phi_0$ では $V''=V'''=0$ なので $\dd V''/\dd t=0$ である。また $\dd V'''/\dd t=\beta_g+\beta_\lambda\phi_0=3\lambda V'''(\phi_0)/(4\pi)^2=0$ なので、二重根は保たれる。判別式 $D\equiv g^2-2\lambda m^2=\frac23g^2(\frac32-\alpha)$ で書くと $\dd D/\dd t=2g\beta_g-2\beta_\lambda m^2-2\lambda\gamma=4\lambda D/(4\pi)^2$ である。$D\propto\lambda^{4/3}$ と $g^2\propto\lambda^2$ から、再び $\alpha-\frac32\propto\lambda^{-2/3}$ を得る。式~\eqref{eq:vac} の変数では $V''=m^2(1+f+\alpha f^2/6)$ で、その判別式は $1-2\alpha/3$ なので、$\alpha\ge3/2$ は $V''\ge0$ と同じである。$V''<0$ では、\ref{app:rg} の $V_1$ の $\ln V''$ が虚部を持つ。
 
 \begin{thebibliography}{9}
 \small
