@@ -25,7 +25,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 MPL = 1.22091e19                                   # Planck mass [GeV]
 TW3 = 32 * math.pi / 9
 
-_rows = [r for r in csv.reader(open(os.path.join(HERE, "..", "..", "phi34", "Src", "results", "bounce.csv"))) if r and r[0] == "3"]
+with open(os.path.join(HERE, "..", "..", "phi34", "Src", "results", "bounce.csv")) as _fh:
+    _rows = [r for r in csv.reader(_fh) if r and r[0] == "3"]
 A3 = np.array([float(r[1]) for r in _rows])
 S3A = np.array([float(r[3]) for r in _rows])
 W3A = np.array([float(r[6]) for r in _rows])
@@ -225,3 +226,136 @@ def pls(fgrid=FGRID, snr_thr=10.0, betas=np.linspace(-8, 8, 321), fref=1e-3):
         om = snr_thr / math.sqrt(T_OBS * np.trapezoid((w / s) ** 2 * fgrid, np.log(fgrid)))
         out = np.maximum(out, om * w)
     return out
+
+
+# ---- the single-field thermal potential (step (4); note, App. E) ----
+# Units: chi = f + 3/alpha (f = g phi/m^2; chi = 0 is the inflection point phi = -g/lambda of the tree potential),
+# tau = g T/m^2, potentials in m^6/g^2, gm = g/m.  MS-bar at mu = m with the tadpole-cancelling linear term of the
+# zero-temperature note (t = m^2 g/(4 pi)^2/2 at one loop).
+LN_AB = 2 * math.log(4 * math.pi) + 1.5 - 2 * np.euler_gamma        # J_B high-T expansion: -(y^2/32) ln(y/a_b)
+ZETA3 = 1.2020569031595942
+
+
+def jb_quad(y):
+    """J_B(y) = int_0^inf dx x^2 ln(1 - exp(-sqrt(x^2 + y))); real part for -(2 pi)^2 < y < 0."""
+    from scipy.integrate import quad
+    if y >= 0:
+        return quad(lambda x: x * x * math.log1p(-math.exp(-math.sqrt(x * x + y))), 0, 60 + math.sqrt(y),
+                    epsabs=1e-14, epsrel=1e-11, limit=400)[0]
+    assert y > -(2 * math.pi) ** 2
+    r = math.sqrt(-y)
+    # x < r: E = i s, s = (r^2 - x^2)^(1/2), Re ln(1 - e^(-i s)) = ln(2 sin(s/2)); x > r: u = (x^2 - r^2)^(1/2)
+    a = quad(lambda t: t * math.sqrt(r * r - t * t) * math.log(2 * math.sin(t / 2)), 0, r,
+             epsabs=1e-14, epsrel=1e-11, limit=400)[0]
+    b = quad(lambda u: u * math.sqrt(u * u + r * r) * math.log1p(-math.exp(-u)), 0, 60, epsabs=1e-14, epsrel=1e-11, limit=400)[0]
+    return a + b
+
+
+def jb_nonanalytic(y):
+    """The non-analytic part -(pi/6) Re y^(3/2) - (y^2/32) ln|y| of J_B (vectorised)."""
+    y = np.asarray(y, dtype=float)
+    ay = np.where(y == 0, 1.0, np.abs(y))
+    return -math.pi / 6 * np.where(y > 0, y, 0.0) ** 1.5 - y * y / 32 * np.log(ay)
+
+
+_JB = {}
+
+
+def jb(y):
+    """Re J_B(y) from a cubic spline of the analytic part J_B - (non-analytic part) on -30 <= y <= 120 (0 beyond)."""
+    if "spl" not in _JB:
+        from scipy.interpolate import CubicSpline
+        ys = np.concatenate([np.linspace(-30, -2, 141)[:-1], np.linspace(-2, 2, 401)[:-1], np.linspace(2, 120, 591)])
+        S = np.array([jb_quad(t) for t in ys]) - jb_nonanalytic(ys)
+        _JB["spl"] = CubicSpline(ys, S)
+    y = np.asarray(y, dtype=float)
+    assert np.all(y >= -30)
+    return np.where(y <= 120, _JB["spl"](np.minimum(y, 120)) + jb_nonanalytic(np.minimum(y, 120)), 0.0)
+
+
+def jb_hight(y):
+    """High-temperature expansion through y^3 (note, App. E): -pi^4/45 + pi^2 y/12 - pi y^(3/2)/6 - (y^2/32) ln(y/a_b)
+    + zeta(3) y^3/(384 pi^2)."""
+    return (-math.pi ** 4 / 45 + math.pi ** 2 * y / 12 - math.pi / 6 * y ** 1.5 - y * y / 32 * math.log(y / math.exp(LN_AB))
+            + ZETA3 * y ** 3 / (384 * math.pi ** 2))
+
+
+class SingleField:
+    """phi^3 + phi^4 with its own thermal loops; V(chi) = h chi + (even in chi) at one loop (note, Sec. 3)."""
+
+    def __init__(self, alpha, gm, tadpole=True):
+        self.alpha, self.gm = alpha, gm
+        self.h = 3 * (1 - alpha) / alpha ** 2 + (gm ** 2 / (32 * math.pi ** 2) if tadpole else 0.0)
+        self.A0 = 1 - 1.5 / alpha                               # M^2/m^2 at chi = 0
+        self.fminus = -9 / (2 * alpha) * (1 + math.sqrt(max(0.0, 1 - 8 * alpha / 9)))
+
+    def M2(self, x):
+        return self.A0 + self.alpha * x * x / 6
+
+    def Pi(self, tau):
+        return self.alpha * tau * tau / 72                      # lambda T^2/24 in m^2
+
+    def v_tree(self, x):
+        return self.h * x + 0.5 * self.A0 * x * x + self.alpha * x ** 4 / 72
+
+    def v_lo(self, x, tau):
+        return self.v_tree(x) + tau * tau / 24 * self.M2(x)
+
+    def LT(self, tau):
+        return math.log((tau / self.gm) ** 2) + 2 * math.log(4 * math.pi) - 2 * np.euler_gamma
+
+    def v_ht(self, x, tau):
+        """High-T expansion with the daisy-resummed zero mode (Arnold-Espinosa)."""
+        M2 = self.M2(x)
+        return (self.v_lo(x, tau) - tau * self.gm / (12 * math.pi) * np.maximum(M2 + self.Pi(tau), 0.0) ** 1.5
+                + self.gm ** 2 / (64 * math.pi ** 2) * M2 * M2 * self.LT(tau))
+
+    def dv_ht(self, x, tau):
+        """d v_ht/d chi."""
+        M2 = self.M2(x)
+        dM2 = self.alpha * x / 3
+        return (self.h + self.A0 * x + self.alpha * x ** 3 / 18 + tau * tau / 24 * dM2
+                - tau * self.gm / (12 * math.pi) * 1.5 * np.sqrt(np.maximum(M2 + self.Pi(tau), 0.0)) * dM2
+                + self.gm ** 2 / (64 * math.pi ** 2) * 2 * M2 * dM2 * self.LT(tau))
+
+    def v_full(self, x, tau):
+        """Full one loop: tree + CW (mu = m) + (T^4/2 pi^2) Re J_B(M^2/T^2) + daisy correction of the zero mode."""
+        M2 = self.M2(x)
+        aM2 = np.where(M2 == 0, 1.0, np.abs(M2))
+        cw = self.gm ** 2 / (64 * math.pi ** 2) * M2 * M2 * (np.log(aM2) - 1.5)
+        th = tau ** 4 / (2 * math.pi ** 2 * self.gm ** 2) * jb(self.gm ** 2 * M2 / tau ** 2)
+        dz = -tau * self.gm / (12 * math.pi) * (np.maximum(M2 + self.Pi(tau), 0.0) ** 1.5 - np.maximum(M2, 0.0) ** 1.5)
+        return self.v_tree(x) + cw + th + dz
+
+    def minima(self, tau, which="ht", n=4001):
+        """Local minima (chi, v) sorted by v, from a grid and a bounded refinement."""
+        from scipy.optimize import minimize_scalar
+        fun = {"lo": self.v_lo, "ht": self.v_ht, "full": self.v_full}[which]
+        xs = np.linspace(self.fminus + 3 / self.alpha - 3, 3 / self.alpha + 3, n)
+        v = fun(xs, tau)
+        out = []
+        for i in range(1, n - 1):
+            if v[i] < v[i - 1] and v[i] <= v[i + 1]:
+                r = minimize_scalar(lambda x: float(fun(x, tau)), bounds=(xs[i - 1], xs[i + 1]), method="bounded",
+                                    options={"xatol": 1e-12})
+                out.append((float(r.x), float(r.fun)))
+        return sorted(out, key=lambda p: p[1])
+
+    def tau_spinodal(self, which="ht", lo=None, hi=20.0):
+        """Highest tau at which a second local minimum (on the disfavoured side) exists (bisection)."""
+        two = lambda t: len(self.minima(t, which, n=2001)) >= 2
+        if lo is None:                                  # full one loop: Re J_B needs y = g^2 M^2/(m^2 tau^2) > -30
+            lo = max(1.0, self.gm * math.sqrt(max(0.0, -self.A0) / 25)) if which == "full" else 0.2
+        if not two(lo):
+            return float("nan")
+        assert not two(hi)
+        while hi - lo > 1e-7:
+            mid = 0.5 * (lo + hi)
+            lo, hi = (mid, hi) if two(mid) else (lo, mid)
+        return 0.5 * (lo + hi)
+
+    def tau_spinodal_lo_closed(self):
+        """Leading order (tree + T^2 term): |h| = (2|a|/3) (6|a|/alpha)^(1/2) with a = A0 + alpha tau^2/72 (note, App. E)."""
+        asp = (1.5 * abs(self.h) * math.sqrt(self.alpha / 6)) ** (2 / 3)
+        t2 = 72 / self.alpha * (-self.A0 - asp)
+        return math.sqrt(max(t2, 0.0)) if t2 > -1e-12 else float("nan")
