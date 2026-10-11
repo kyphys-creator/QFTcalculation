@@ -38,7 +38,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論のノート~\cite{phi3note} に続き、4点の自己相互作用を加えた実スカラー1つの $\phi^3+\phi^4$ 理論を $d=4$ で調べる。目的は二つである。一つは、結合が二つになったときの1ループの繰り込みの構造を手で求め、$\phi^3$ 理論と同じ手順でツールと突き合わせることである。もう一つは、この模型の物理、とくに真空の構造と偽の真空の崩壊を調べることである。手計算では、Feynman 則と対称性因子、1ループの1PI 関数、$\overline{\mathrm{MS}}$ の対抗項 $\delta_m=(g^2+\lambda m^2)\Delta_{\mathrm{UV}}/(2(4\pi)^2)$、$\delta_g=3g\lambda\Delta_{\mathrm{UV}}/(2(4\pi)^2)$、$\delta_\lambda=3\lambda^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ を求めた。繰り込み群は $\beta_\lambda=3\lambda^2/(4\pi)^2$、$\beta_g=3g\lambda/(4\pi)^2$、$\mu\,\dd m^2/\dd\mu=(g^2+\lambda m^2)/(4\pi)^2$ で、有効ポテンシャルからも同じものが得られる。真空の構造は一つの数 $\alpha=3\lambda m^2/g^2$ で決まり、$\alpha<1$ では $\phi=0$ が偽の真空になる。ヒッグスの自己結合に読み替えると $\alpha=\kappa_4/\kappa_3^2$ で、標準模型はちょうど $\alpha=1$（縮退した二つの極小）にあたる。検算の手順 (1) として、FeynRules の模型ファイルから FeynArts 模型と UFO を書き出し、Feynman 則と MadGraph の図の数を確かめた。手順 (2) では、木の振幅が FeynCalc の結果と記号として一致し、MadGraph の断面積が数値積分と統計誤差の範囲で一致した。手順 (3) では、1PI 関数の図、極、対抗項が記号として一致し、有限部分が Package-X・LoopTools・COLLIER の間で相対 $10^{-11}$ 以内で一致した。手順 (4) では、1ループの $\phi\phi\to\phi\phi$ 振幅（42図）が FeynCalc と FormCalc の両方で手計算と記号として一致し、四つの経路の数値が相対 $4\times10^{-12}$ 以内で一致し、虚部がユニタリー性を満たした。手順 (5) では、極質量と留数で S 行列要素に直す式を導き、NLOCT の対抗項と MadLoop の値が on-shell と $\overline{\mathrm{MS}}$ の両方の処方で相対 $6\times10^{-15}$ 以内で一致した。手順 (6) では全断面積を1ループの次数まで求め、$\sigma^{(1)}$ が MadLoop と、$\sigma_{2\to3}$ が MadGraph と一致した（$\sqrt s=10m$ の MadGraph は $\phi^3$ と同じく少し低い）。接触項との打ち消し合いで $\sigma^{(0)}$ が極小になる $\sqrt s\approx2.3m$ の近くでは、1ループの補正が相対的に大きくなる。手順 (7) では、S 行列要素の $\mu$ 依存から読み取った $\beta_\lambda$、$\beta_g$、$\gamma$ が、二つの処方の四つのツールで手計算と相対 $10^{-14}$ の程度で一致した。比 $g/\lambda$ は1ループでは走らず、$\alpha$ は紫外で $3/2$ に近づくので、木のポテンシャルの真空の構造は $\mu$ に弱く依存する。手順 (8) では、部分波のユニタリー性から $(\kappa_3,\kappa_4)$ の限界を求めた。木のレベルでは $\kappa_4<64.7$ と、$\kappa_4=1$ での $\kappa_3\le6.46$ を得て、1ループでは $\kappa_3\le5.19$ になる。$\lambda$ の向きの限界は、$\lambda$ の走りのために、理論を使うエネルギーの範囲に依存する。導出はすべて付録に省略なく載せる。
+$\phi^3$ 理論のノート~\cite{phi3note} に続き、4点の自己相互作用を加えた実スカラー1つの $\phi^3+\phi^4$ 理論を $d=4$ で調べる。目的は二つである。一つは、結合が二つになったときの1ループの繰り込みの構造を手で求め、$\phi^3$ 理論と同じ手順でツールと突き合わせることである。もう一つは、この模型の物理、とくに真空の構造と偽の真空の崩壊を調べることである。手計算では、Feynman 則と対称性因子、1ループの1PI 関数、$\overline{\mathrm{MS}}$ の対抗項 $\delta_m=(g^2+\lambda m^2)\Delta_{\mathrm{UV}}/(2(4\pi)^2)$、$\delta_g=3g\lambda\Delta_{\mathrm{UV}}/(2(4\pi)^2)$、$\delta_\lambda=3\lambda^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ を求めた。繰り込み群は $\beta_\lambda=3\lambda^2/(4\pi)^2$、$\beta_g=3g\lambda/(4\pi)^2$、$\mu\,\dd m^2/\dd\mu=(g^2+\lambda m^2)/(4\pi)^2$ で、有効ポテンシャルからも同じものが得られる。真空の構造は一つの数 $\alpha=3\lambda m^2/g^2$ で決まり、$\alpha<1$ では $\phi=0$ が偽の真空になる。ヒッグスの自己結合に読み替えると $\alpha=\kappa_4/\kappa_3^2$ で、標準模型はちょうど $\alpha=1$（縮退した二つの極小）にあたる。検算の手順 (1) として、FeynRules の模型ファイルから FeynArts 模型と UFO を書き出し、Feynman 則と MadGraph の図の数を確かめた。手順 (2) では、木の振幅が FeynCalc の結果と記号として一致し、MadGraph の断面積が数値積分と統計誤差の範囲で一致した。手順 (3) では、1PI 関数の図、極、対抗項が記号として一致し、有限部分が Package-X・LoopTools・COLLIER の間で相対 $10^{-11}$ 以内で一致した。手順 (4) では、1ループの $\phi\phi\to\phi\phi$ 振幅（42図）が FeynCalc と FormCalc の両方で手計算と記号として一致し、四つの経路の数値が相対 $4\times10^{-12}$ 以内で一致し、虚部がユニタリー性を満たした。手順 (5) では、極質量と留数で S 行列要素に直す式を導き、NLOCT の対抗項と MadLoop の値が on-shell と $\overline{\mathrm{MS}}$ の両方の処方で相対 $6\times10^{-15}$ 以内で一致した。手順 (6) では全断面積を1ループの次数まで求め、$\sigma^{(1)}$ が MadLoop と、$\sigma_{2\to3}$ が MadGraph と一致した（$\sqrt s=10m$ の MadGraph は $\phi^3$ と同じく少し低い）。接触項との打ち消し合いで $\sigma^{(0)}$ が極小になる $\sqrt s\approx2.3m$ の近くでは、1ループの補正が相対的に大きくなる。手順 (7) では、S 行列要素の $\mu$ 依存から読み取った $\beta_\lambda$、$\beta_g$、$\gamma$ が、二つの処方の四つのツールで手計算と相対 $10^{-14}$ の程度で一致した。比 $g/\lambda$ は1ループでは走らず、$\alpha$ は紫外で $3/2$ に近づくので、木のポテンシャルの真空の構造は $\mu$ に弱く依存する。手順 (8) では、部分波のユニタリー性から $(\kappa_3,\kappa_4)$ の限界を求めた。木のレベルでは $\kappa_4<64.7$ と、$\kappa_4=1$ での $\kappa_3\le6.46$ を得て、1ループでは $\kappa_3\le5.19$ になる。$\lambda$ の向きの限界は、$\lambda$ の走りのために、理論を使うエネルギーの範囲に依存する。手順 (9) では、偽の真空の bounce の作用を $d=4$ と $d=3$ で $\alpha$ の関数として求めた。$\alpha=0$ では $\phi^3$ 理論の値に、$\alpha\to1$ では薄い壁の極限に一致し、$d=3$ は Dine らの近似式と $0.81\%$ 以内（$\alpha\le0.95$）で一致した。前因子を見積もりにとどめると、宇宙論的に安定な条件は $\kappa_4=1$ で $\kappa_3<1.49$ となり、ユニタリー性の限界よりはるかに強い。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -51,7 +51,7 @@ $\phi^3$ 理論のノート~\cite{phi3note} に続き、4点の自己相互作�
 
 求める量は五つである。(i) Feynman 則と対称性因子。(ii) 1ループの1PI 関数（1点〜4点）の紫外発散部分と、$\overline{\mathrm{MS}}$ の対抗項。(iii) 繰り込まれた1PI 関数と、繰り込み群の係数（$\beta_\lambda$、$\beta_g$、質量の走り）。(iv) $\phi\phi\to\phi\phi$ の木の振幅と1ループの振幅、およびその S 行列要素。(v) 応用として、部分波のユニタリー性の限界、真空の構造、偽の真空の崩壊率（bounce の作用は $d=4$ と $d=3$、前因子は $d=4$）。手計算とツールの間で求める一致は、$\phi^3$ 理論と同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の前提になる真空の構造を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、1ループの量と散乱の検算（手順 (1)〜(6)）の結果を示す。第~\ref{sec:rg} 節で、繰り込み群の検算と $\alpha$ の流れ（手順 (7)）を扱う。第~\ref{sec:pheno} 節で、(v) のうち摂動論の限界と真空の安定性（手順 (8)〜(10)）を調べる（現在は手順 (8) まで）。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:pw} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の前提になる真空の構造を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、1ループの量と散乱の検算（手順 (1)〜(6)）の結果を示す。第~\ref{sec:rg} 節で、繰り込み群の検算と $\alpha$ の流れ（手順 (7)）を扱う。第~\ref{sec:pheno} 節で、(v) のうち摂動論の限界と真空の安定性（手順 (8)〜(10)）を調べる（現在は手順 (9) まで）。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:bounce} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -375,6 +375,7 @@ Feynman 則・対称性因子 & \ref{app:rules} & 書き出した FeynArts 模�
 全断面積（$2\to3$ を含む）\eqref{eq:sigmatot} & \ref{app:sigma} & — & — & COLLIER & MadLoop、$2\to3$ \\
 繰り込み群 \eqref{eq:rge} & \ref{app:rg}、\ref{app:rgfit} & $\mu$ を変えて評価 & 数値 & 数値 & MadLoop の $\mu_R$ \\
 部分波とユニタリー性の限界 \eqref{eq:pw} & \ref{app:pw} & — & — & COLLIER & — \\
+bounce の作用 \eqref{eq:bounce} & \ref{app:bounce} & — & — & — & — \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -602,7 +603,7 @@ $\sqrt s/m$ & $\sigma^{(0)}$ & $\sigma^{(1)}$ & $\sigma^{(1)}/\sigma^{(0)}$ & $\
 \FloatBarrier
 \section{摂動論の限界と真空の安定性}\label{sec:pheno}
 
-この節では、この模型の物理の二つの限界を調べる。一つは、結合が大きくなると摂動論が破れることである。もう一つは、$\alpha<1$ で $\phi=0$ が偽の真空になることである。手順は次の三つである。(8) $\phi\phi\to\phi\phi$ の部分波を1ループまで求め、ユニタリー性と摂動論から $(g/m,\lambda)$、すなわち $(\kappa_3,\kappa_4)$ の限界を出す。(9) 偽の真空の bounce の作用を $d=4$ と $d=3$ で $\alpha$ の関数として求める。(10) $d=4$ の崩壊率の1ループの前因子を求め、$(\kappa_3,\kappa_4)$ の真空の安定性の限界を出す。現在は手順 (8) まで終わっている。結論を先に述べると、木のユニタリー性は $\kappa_4<64.7$ と、$\kappa_4=1$ での $\kappa_3\le6.46$ を与え、1ループでは $\kappa_3\le5.19$ になる。$\lambda$ の向きの限界は高エネルギーで決まり、$\lambda$ が走るので、どのエネルギーまで摂動論が使えることを求めるかに依存する。これらは主にツール同士の比較ではないので、検算はユニタリー性、閉じた式、$\phi^3$ のノートとの照合で行う。スクリプトは \texttt{run\_pw\_check.sh} である。
+この節では、この模型の物理の二つの限界を調べる。一つは、結合が大きくなると摂動論が破れることである。もう一つは、$\alpha<1$ で $\phi=0$ が偽の真空になることである。手順は次の三つである。(8) $\phi\phi\to\phi\phi$ の部分波を1ループまで求め、ユニタリー性と摂動論から $(g/m,\lambda)$、すなわち $(\kappa_3,\kappa_4)$ の限界を出す。(9) 偽の真空の bounce の作用を $d=4$ と $d=3$ で $\alpha$ の関数として求める。(10) $d=4$ の崩壊率の1ループの前因子を求め、$(\kappa_3,\kappa_4)$ の真空の安定性の限界を出す。現在は手順 (9) まで終わっている。結論を先に述べると、木のユニタリー性は $\kappa_4<64.7$ と、$\kappa_4=1$ での $\kappa_3\le6.46$ を与え、1ループでは $\kappa_3\le5.19$ になる。$\lambda$ の向きの限界は高エネルギーで決まり、$\lambda$ が走るので、どのエネルギーまで摂動論が使えることを求めるかに依存する。bounce の作用からは、前因子を見積もりにとどめると、真空の寿命の条件として $\kappa_4=1$ で $\kappa_3<1.49$ を得る。これはユニタリー性の限界よりはるかに強い。これらは主にツール同士の比較ではないので、検算はユニタリー性、閉じた式、独立な数値解法、$\phi^3$ のノートと文献との照合で行う。スクリプトは \texttt{run\_pw\_check.sh}（部分波）と \texttt{run\_bounce\_check.sh}（bounce）である。
 
 \paragraph{手順 (8)：摂動的ユニタリー性。}部分波を $\phi^3$ のノートと同じく
 \begin{equation}
@@ -661,6 +662,50 @@ F(s)=-\frac{1}{s-m^2}+\frac{2}{s-4m^2}\ln\frac{s-3m^2}{m^2}
 \label{fig:pw}
 \end{figure}
 
+\paragraph{手順 (9)：bounce の作用。}$\alpha<1$ では $\phi=0$ は偽の真空で、単位体積あたりの崩壊率は半古典近似で $\Gamma/V=A\,e^{-S_B}$ と書ける。$S_B$ は $O(d)$ 対称な解（bounce）の作用である（$\phi^3$ のノートの付録~Q）。式~\eqref{eq:vac} の変数 $f=g\phi/m^2$ と $x=mr$ を使うと
+\begin{equation}
+f''+\frac{d-1}{x}f'=f+\frac{f^2}{2}+\frac{\alpha f^3}{18},\qquad
+S_B=\frac{m^{6-d}}{g^2}\,S_d(\alpha),\qquad
+S_d(\alpha)=\Omega_{d-1}\int_0^\infty x^{d-1}\dd x\Bigl[\frac12f'^2+\frac{f^2}{2}+\frac{f^3}{6}+\frac{\alpha f^4}{72}\Bigr]
+\label{eq:bounce}
+\end{equation}
+で、境界条件は $f'(0)=0$、$f(\infty)=0$ である（\ref{app:bounce}）。$\Omega_{d-1}$ は単位球面の面積である。作用は一つの関数 $S_d(\alpha)$ で決まる。$d=4$ は零温度の崩壊を、$d=3$ は有限温度の核生成（$S_3/T$）を表す。
+
+数値は $\phi^3$ のノートと同じ shooting 法で、$\alpha=0$ から $0.99$ までの31点で求めた。$f(0)$ は、$v(f)\equiv\frac{f^2}2+\frac{f^3}6+\frac{\alpha f^4}{72}$ が0になる点 $f_z$（undershoot）と、真の真空 $f_-$（overshoot）の間にある。$\alpha\to1$ では $f(0)-f_-$ が $e^{-R}$（$R\sim1/(1-\alpha)$ は泡の半径）のように小さくなり、倍精度の $f$ では表せない。そこで $\alpha\ge0.5$ では、$h=f-f_-$ を、力を $h$ の多項式として厳密に書いて積分し、$\ln h(0)$ で二分法を行った（\ref{app:bounce}）。検算は五つ行った。(i) $\alpha=0$ では、$\phi^3$ のノートの $S_4=817.714$、$S_3=174.641$ を相対 $10^{-14}$ で再現した。(ii) Derrick の関係 $(d-2)T+dU=0$（$T$、$U$ は運動項とポテンシャル項）は、全点で相対 $3\times10^{-13}$ で成り立った。(iii) $\alpha=0.5$〜$0.9$ では、$h$ と $f$ の二つの shooting が相対 $2\times10^{-13}$ で一致した。許容誤差を $10^{-13}$ から $10^{-11}$ に緩めても、$S_d$ は相対 $1.3\times10^{-12}$ しか変わらなかった。$\alpha=0.3,\,0.6$ では、緩和法（scipy の \texttt{solve\_bvp}）と相対 $10^{-12}$ 以下で一致した。緩和法は $\alpha\gtrsim0.85$ では自明な解 $f=0$ に収束し、使えなかった。(iv) bounce は作用の停留点なので、$\dd S_d/\dd\alpha=\Omega_{d-1}\int x^{d-1}(f^4/72)\,\dd x$ である。$\alpha=0.3,\,0.9$ で、中心差分（刻み $10^{-4}$）とこの積分は相対 $3\times10^{-6}$ 以内で一致した。この差は差分の刻みから来る。(v) 薄い壁の極限 $\alpha\to1$ では、$S_4\to3\pi^2/(1-\alpha)^3$、$S_3\to(32\pi/9)/(1-\alpha)^2$ となる（\ref{app:bounce}）。$(1-\alpha)^{d-1}S_d$ をこの値で割った比を $\alpha=0.94$〜$0.99$ で2次式に当てはめると、$\alpha=1$ での値は $0.9999$（$d=4$）と $1.0001$（$d=3$）だった。
+
+$d=3$ の $S_3(\alpha)$ を、Dine ら~\cite{dine92} の式 (26)、(27) と比べた。彼らのポテンシャル $\frac12M^2\phi^2-ET\phi^3+\frac{\lambda_{\mathrm D}}4\phi^4$ は、$M=m$、$ET=-g/6$、$\lambda_{\mathrm D}=\lambda/6$ で本ノートのものになり、彼らの $\alpha=\lambda_{\mathrm D}M^2/(2E^2T^2)$ は本ノートの $\alpha$ と同じである。彼らの $S_3/T=4.85\,M^3/(E^2T^3)\,f(\alpha)$ は $S_3(\alpha)=36\times4.85\,f(\alpha)$ にあたる。彼らは、$f(\alpha)=1+\frac\alpha4[1+2.4/(1-\alpha)+0.26/(1-\alpha)^2]$ の精度を $0\le\alpha\le0.95$ で約 $1\%$ としている。本ノートの値との差はこの範囲で最大 $0.81\%$ で、述べられた精度に収まる（表~\ref{tab:bounce}、図~\ref{fig:bounce}）。$\alpha>0.95$ では差が広がり、$\alpha=0.99$ で $1.3\%$ になる。
+
+結果を表~\ref{tab:bounce} と図~\ref{fig:bounce} に示す。$S_4$ は、$\phi^3$ 理論の $817.7$（$\alpha=0$）から、$\alpha=0.9$ で $6.4\times10^4$、$\alpha=0.99$ で $3.3\times10^7$ と増える。$\alpha$ が1に近づくと、bounce は内側がほぼ真の真空 $f_-$ で、厚さ $m^{-1}$ の壁を持つ泡になる（図~\ref{fig:bounce} 上）。ただし、薄い壁の近似（主要項）が $10\%$ の精度になるのは $\alpha\approx0.99$ からで、$\alpha=0.9$ では作用を2.2倍、$\alpha=0.8$ では3.7倍過小評価する。$1-\alpha$ について傾き $10$ の補正があるからである。
+
+ヒッグスの結合に読み替えると、$d=4$ の作用は $S_B=S_4(\kappa_4/\kappa_3^2)/(1.526\,\kappa_3)^2$ である。前因子を $A\sim m_h^4$ と見積もると、$\phi^3$ のノートと同じく、偽の真空が宇宙年齢の間にハッブル体積の中で崩れない条件は $S_B>4\ln(m_h/H_0)=404.7$ である。$\kappa_4=1$ では、$\phi=0$ は $\kappa_3>1$ で準安定になり、この条件は $\kappa_3<1.49$（$\alpha>0.45$）を与える。$\kappa_4=0$（$\phi^3$ 理論）では $\kappa_3<0.93$、$\kappa_4=2,\,5$ では $\kappa_3<1.86,\,2.65$ である。これは、手順 (8) のユニタリー性の限界（$\kappa_4=1$ で $\kappa_3\le5.19$）よりはるかに強い。ただし前因子は見積もりにすぎない。スクリプトは \texttt{bounce\_numeric.py} である。
+
+\begin{table}[tbp]
+\centering\small
+\caption{bounce の作用 $S_d(\alpha)=S_B\,g^2/m^{6-d}$（式~\eqref{eq:bounce}）。「薄い壁の比」は $(1-\alpha)^{d-1}S_d$ を薄い壁の極限の主要項（$d=4$ で $3\pi^2$、$d=3$ で $32\pi/9$）で割ったもの、「Dine らとの差」は $S_3/(36\times4.85\,f(\alpha))-1$ である。}
+\label{tab:bounce}
+\begin{tabular}{rrrrrr}
+\toprule
+$\alpha$ & $S_4$ & 薄い壁の比（$d=4$） & $S_3$ & 薄い壁の比（$d=3$） & Dine らとの差 \\
+\midrule
+0 & $817.71$ & $27.6172$ & $174.64$ & $15.6347$ & $+0.02\%$ \\
+0.2 & $1137.09$ & $19.6627$ & $211.55$ & $12.1208$ & $-0.71\%$ \\
+0.4 & $1784.34$ & $13.0170$ & $272.99$ & $8.7980$ & $-0.56\%$ \\
+0.6 & $3555.71$ & $7.6857$ & $400.34$ & $5.7344$ & $-0.04\%$ \\
+0.8 & $1.3607\times10^{4}$ & $3.6765$ & $854.62$ & $3.0604$ & $-0.11\%$ \\
+0.9 & $6.4262\times10^{4}$ & $2.1704$ & $2167.21$ & $1.9402$ & $-0.50\%$ \\
+0.95 & $3.6545\times10^{5}$ & $1.5428$ & $6466.34$ & $1.4472$ & $-0.81\%$ \\
+0.99 & $3.2621\times10^{7}$ & $1.1017$ & $1.2129\times10^{5}$ & $1.0859$ & $-1.34\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.6\linewidth]{../figs/bounce_alpha.pdf}
+\caption{偽の真空 $\phi=0$ の bounce。上：$d=4$ の bounce の形 $-f=-g\phi/m^2$（$\alpha=0,\,0.5,\,0.8,\,0.95$）。$\alpha$ が1に近づくと、内側が真の真空の、薄い壁を持つ泡になる。下：作用 $S_d(\alpha)$（$d=4$ の実線、$d=3$ の破線）と、Dine らの $d=3$ の式（白丸、$\alpha\le0.95$）、薄い壁の極限の主要項（点線）。}
+\label{fig:bounce}
+\end{figure}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
@@ -668,7 +713,7 @@ F(s)=-\frac{1}{s-m^2}+\frac{2}{s-4m^2}\ln\frac{s-3m^2}{m^2}
 
 \paragraph{ツールの問題。}手順 (3) で、LoopTools の $C_0$ が、外運動量の2乗がすべて負で互いに異なる点 $(-1,-2,-3)$ で、FF のエラーとともに全く違う値を返すことが分かった。$\phi^3$ のノートでは、閾値より下で外運動量が0でない点（例えば $C_0(m^2,m^2,m^2)$）での誤りを見つけている。今回の点はそれとは別の領域である。当面、$C_0$ の基準には Package-X と COLLIER を使う。
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (9) から順に進める。手順 (9) 以降の手計算（bounce と前因子）は、進めるにつれて付録に加える。
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (10) に進む。手順 (10) の手計算（前因子）は、進めるにつれて付録に加える。
 
 \appendix
 
@@ -875,6 +920,32 @@ a_0=\frac{1}{32\pi}\Bigl[-\lambda+\frac{\lambda^2}{2(4\pi)^2}(8-3L+i\pi)\Bigr]
 \paragraph{(C) と $\mu$ の変化。}$\lambda$ を固定して $g$ を0から増やし、閾値の近くの $s$ の格子のどこかで $|\mathrm{Re}\,a_0|=\frac12$ となる最小の $g$ を、格子の走査と二分法で求めた。$\mu$ を変えるときは、$\mu=m$ の結合を\ref{app:rgfit} の解で $\mu$ まで走らせ（$g/\lambda$ は一定）、$a_0^{(1)}$ には第~\ref{sec:results} 節の $\mu\,\partial\mathcal{M}_{\mathrm{phys}}/\partial\mu=[6g^2\lambda\sum_x(x-m^2)^{-1}+3\lambda^2]/(4\pi)^2$ を射影した分を足した。$\frac12\int\sum_x(x-m^2)^{-1}\dd c=-F$ なので、$a_0^{(1)}(\mu)=a_0^{(1)}(m)+\ln(\mu/m)(-6g^2\lambda f_0+3\lambda^2e_0)/(4\pi)^2$ である。
 
 \paragraph{ヒッグスの結合との対応。}式~\eqref{eq:kappa} で $m=m_h=125.25$~GeV、$v=246.22$~GeV とすると、$g/m=(3m_h/v)\kappa_3=1.5261\,\kappa_3$、$\lambda=(3m_h^2/v^2)\kappa_4=0.7763\,\kappa_4$ である。
+
+\section{bounce の作用の導出}\label{app:bounce}
+
+\paragraph{スケーリング。}bounce の方程式 $\phi''+\frac{d-1}{r}\phi'=V'(\phi)$ と作用 $S_E=\Omega_{d-1}\int r^{d-1}\dd r[\frac12\phi'^2+V]$ は $\phi^3$ のノートの付録~Q と同じである。$\phi=(m^2/g)f$、$r=x/m$ とすると、式~\eqref{eq:vac} から $V=(m^6/g^2)v(f)$、$\frac12\phi'(r)^2=(m^6/g^2)\frac12f'(x)^2$、$r^{d-1}\dd r=x^{d-1}\dd x/m^d$ なので、式~\eqref{eq:bounce} を得る。$v'(f)=f+\frac{f^2}2+\frac{\alpha f^3}{18}$ である。
+
+\paragraph{shooting の範囲。}$v=0$ は $f=0$ と $36+12f+\alpha f^2=0$、すなわち $f=-6(1\pm\sqrt{1-\alpha})/\alpha$ で起こる。0に近いほうが $f_z=-6(1-\sqrt{1-\alpha})/\alpha$ で、$\alpha\to0$ で $\phi^3$ 理論の $-3$ になる。$v'=0$ は $f=0$ と $1+\frac f2+\frac{\alpha f^2}{18}=0$、すなわち $f=-\frac{9}{2\alpha}(1\mp\sqrt{1-8\alpha/9})$ で起こる。深いほうが真の真空 $f_-$、浅いほうが障壁の頂上である。粒子のたとえでは、粒子は $-v$ の中を摩擦 $(d-1)/x$ を受けて動く。$f(0)=f_z$ から出ると、エネルギーを失うので $f=0$ に届かない（undershoot）。$f(0)$ が $-v$ の頂上 $f_-$ に近いと、粒子はそこに長く留まり、摩擦が弱まってから転がり出て $f=0$ を越える（overshoot）。bounce の $f(0)$ はこの間にある。
+
+\paragraph{薄い壁の近くでの積分。}$f_-$ の近くでは、ずれ $h=f-f_-$ は $e^{\mu x}$（$\mu^2=v''(f_-)$）のように育つ。bounce が半径 $R$ まで $f_-$ に留まるには $h(0)\sim e^{-\mu R}$ が要る。$\alpha=0.99$、$d=4$ では $R\approx100$ で、$h(0)\sim e^{-100}$ は $f(0)$ の倍精度では表せない。そこで $h$ を変数とし、$v'(f_-)=0$ を厳密に除いた
+\begin{equation*}
+v'(f_-+h)=v''(f_-)h+\frac12v'''(f_-)h^2+\frac16v''''h^3,\qquad v''=1+f+\frac{\alpha f^2}6,\quad v'''=1+\frac{\alpha f}3,\quad v''''=\frac\alpha3
+\end{equation*}
+で積分した。$f\approx0$ の近くでは、この多項式は大きな項の打ち消し合いになり、積分の刻みが潰れる。そのため $h=0.1$ に達した点で $f$ を変数とする積分に切り替えた。二分法は $\ln h(0)$ について、$\ln(f_z-f_-)$ と $\ln10^{-280}$ の間で行った。積分の区間は、$f_-$ から転がり出るのに要る長さ $-\ln h(0)/\mu$ に余裕を加えてとった。$T$、$U$ と下の $W$ は方程式と同時に積分し、$\phi^3$ のノートと同じく、軌道が bounce から離れる直前（$|f|$ が最小）で打ち切った。
+
+\paragraph{$\alpha$ 微分。}$S_d[f;\alpha]$ は bounce $f_\alpha$ で $f$ について停留するので、$\frac{\dd}{\dd\alpha}S_d[f_\alpha;\alpha]=\frac{\partial S_d}{\partial\alpha}\big|_{f=f_\alpha}=\Omega_{d-1}\int x^{d-1}\frac{f_\alpha^4}{72}\dd x\equiv W$ である。$f_\alpha$ の変化は1次では効かない。
+
+\paragraph{薄い壁の極限。}$\alpha=1$ では $v=f^2(f+6)^2/72$ で、$f=0$ と $f=-6$ が縮退する。壁の張力は $\sigma=\int_{-6}^0\sqrt{2v}\,\dd f=\frac16\int_{-6}^0|f(f+6)|\dd f=6$ である。$\alpha=1-\delta$ とすると、$v$ に $-\delta f^4/72$ が加わり、真空のエネルギー差は $\epsilon=-v(f_-)=18\delta+O(\delta^2)$ となる（$f_-$ のずれは $O(\delta^2)$ にしか効かない）。半径 $R$ の泡の作用 $\Omega_{d-1}(\sigma R^{d-1}-\epsilon R^d/d)$ の極大は $R=(d-1)\sigma/\epsilon$ にあり
+\begin{equation*}
+S_d\to\Omega_{d-1}\frac{(d-1)^{d-1}\sigma^d}{d\,\epsilon^{d-1}}:\qquad
+S_4\to\frac{27\pi^2\sigma^4}{2\epsilon^3}=\frac{3\pi^2}{\delta^3},\qquad
+S_3\to\frac{16\pi\sigma^3}{3\epsilon^2}=\frac{32\pi}{9\delta^2}
+\end{equation*}
+を得る。$d=4$ では $R=1/\delta$、$d=3$ では $R=2/(3\delta)$ である。比 $(1-\alpha)^{d-1}S_d/(\text{主要項})$ を $1-\alpha$ の2次式で外挿し、切片を本文に示した。1次の係数は $d=4$ で $10.0$、$d=3$ で $8.5$ である。
+
+\paragraph{Dine らとの対応。}Dine らのポテンシャル $V=\frac12M^2\phi^2-ET\phi^3+\frac{\lambda_{\mathrm D}}4\phi^4$ を式~\eqref{eq:vac} の $V=\frac12m^2\phi^2+\frac g6\phi^3+\frac\lambda{24}\phi^4$ と比べると、$m=M$、$g=-6ET$、$\lambda=6\lambda_{\mathrm D}$ である。$\alpha=3\lambda m^2/g^2=18\lambda_{\mathrm D}M^2/(36E^2T^2)=\lambda_{\mathrm D}M^2/(2E^2T^2)$ は彼らの $\alpha$ に等しい。$S_3=(m^3/g^2)S_3(\alpha)=M^3S_3(\alpha)/(36E^2T^2)$ なので、彼らの式 (26) は $S_3(\alpha)=36\times4.85\,f(\alpha)$ にあたる。彼らの変数 $\Phi$（$\phi=M^2\Phi/(2ET)$）は $\Phi=-f/3$ である。
+
+\paragraph{宇宙論的な条件。}$\phi^3$ のノートと同じく、$\Gamma/V\sim m_h^4e^{-S_B}$ として、ハッブル体積と宇宙年齢の中で崩壊が起きない条件 $S_B>4\ln(m_h/H_0)=404.7$（$H_0=1.44\times10^{-42}$~GeV、$m_h=125.25$~GeV）を使った。$\kappa_4$ を固定し、$S_B(\kappa_3)=S_4(\kappa_4/\kappa_3^2)/(1.5261\,\kappa_3)^2$ が $404.7$ になる $\kappa_3$ を、$\ln S_4(\alpha)$ の3次のスプラインと Brent 法で求めた。$\kappa_3$ が $\sqrt{\kappa_4}$ に近づくと $\alpha\to1$ で $S_B\to\infty$ なので、根は $\kappa_3>\sqrt{\kappa_4}$ にただ一つある。
 
 \begin{thebibliography}{9}
 \small
