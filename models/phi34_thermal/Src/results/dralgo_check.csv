@@ -1,0 +1,12 @@
+quantity,value
+lambda3d,(lam - (3*lam^2*Lb)/(32*Pi^2))*T
+gamma3d,gg*Sqrt[T] - (3*gg*lam*Lb*Sqrt[T])/(32*Pi^2)
+msq3d_LO,msq + (lam*T^2)/24
+msq3d_NLO,(-24*gg^2*Lb + lam*(Lb*(-24*msq + lam*T^2) - 4*lam*T^2*(EulerGamma - 12*Log[Glaisher])) + 8*lam3d^2*Log[μ3/μ])/(768*Pi^2)
+tt3d_LO,(gg*T^(3/2))/24 + tt/Sqrt[T]
+tt3d_NLO,(gg*Lb*(-24*msq + lam*T^2) - 4*gg*lam*T^2*(EulerGamma - 12*Log[Glaisher]) + 8*gg3d*lam3d*Sqrt[T]*Log[μ3/μ])/(768*Pi^2*Sqrt[T])
+beta4D_equal_zeroT_note,True
+dV_difference_dphi,0
+twoloop_mass_over_Pi,(lam*(-4*EulerGamma + Lb + 48*Log[Glaisher]))/(32*Pi^2)
+tau_sp_LO_alpha0.9,4.917867784303224
+tau_sp_LO_with_twoloop_mass,4.896864359934246

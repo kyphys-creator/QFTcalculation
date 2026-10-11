@@ -1,7 +1,7 @@
 # %% [markdown]
 # # Step (4): the thermal potential of the phi^3 + phi^4 model from its own loops, and its phase history
 #
-# Research note models/phi34_thermal, step (4).  One loop at finite temperature (MS-bar at mu = m with the
+# Research note models/phi34_thermal, steps (4) and (6).  One loop at finite temperature (MS-bar at mu = m with the
 # tadpole-cancelling linear term of the zero-temperature note):
 #   V = V_tree + t phi + V_CW(M^2) + (T^4/2 pi^2) J_B(M^2/T^2),  M^2(phi) = V''(phi) = m^2 + g phi + lambda phi^2/2,
 # and its high-temperature expansion with the daisy-resummed zero mode (Pi = lambda T^2/24),
@@ -181,6 +181,15 @@ print(f"alpha_deg = {a_deg:.8f} (h = 0; alpha - 1 = {a_deg - 1:.3e} from the tad
       f"tau_c = {tau_c:.6f}, tau_b = {tau_b:.6f};  step chi_b/tau_c = phi/T = {xb / tau_c:.4f}")
 print(f"two minima on the favoured side only for |h| < {h_max:.3e}, i.e. |alpha - alpha_deg| < {h_max / abs(dh):.2e} "
       f"(dh/dalpha = {dh:.4f});  tau range of the structure {ext[0][0]:.6f}-{ext[-1][0]:.6f}")
+# step (6): strength of this step, Delta theta = Delta V - (T/4) dDelta V/dT at fixed fields (Delta V = 0 at tau_c),
+# alpha_theta = Delta theta/rho_rad = 30 (g/m)^2 Delta theta_hat/(pi^2 g* tau^4) in the units of this script
+dvf = lambda tau: float(sf0.v_ht(0.0, tau) - sf0.v_ht(xb, tau))
+dT = (dvf(tau_c + 1e-6) - dvf(tau_c - 1e-6)) / 2e-6
+dth_hat, de_hat = dvf(tau_c) - tau_c / 4 * dT, dvf(tau_c) - tau_c * dT
+a_theta = 30 * sf0.gm ** 2 * dth_hat / (math.pi ** 2 * 106.75 * tau_c ** 4)
+a_e = 30 * sf0.gm ** 2 * de_hat / (math.pi ** 2 * 106.75 * tau_c ** 4)
+print(f"strength of the step at b = 0 (T_c = {tau_c / sf0.gm:.4f} m): alpha_theta = {a_theta:.3e}, alpha_e = {a_e:.3e}")
+chk += [("alpha_theta_deg", a_theta, ""), ("alpha_e_deg", a_e, "")]
 chk += [("alpha_deg", a_deg, 1.0), ("tau0_deg", tau0, ""), ("tau_c_deg", tau_c, ""), ("tau_b_deg", tau_b, ""), ("step_phi_over_T_deg", xb / tau_c, ""),
         ("h_max", h_max, ""), ("alpha_window", h_max / abs(dh), "")]
 

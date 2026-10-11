@@ -312,7 +312,7 @@ class SingleField:
         return self.v_tree(x) + tau * tau / 24 * self.M2(x)
 
     def LT(self, tau):
-        return math.log((tau / self.gm) ** 2) + 2 * math.log(4 * math.pi) - 2 * np.euler_gamma
+        return np.log((tau / self.gm) ** 2) + 2 * math.log(4 * math.pi) - 2 * np.euler_gamma
 
     def v_ht(self, x, tau):
         """High-T expansion with the daisy-resummed zero mode (Arnold-Espinosa)."""

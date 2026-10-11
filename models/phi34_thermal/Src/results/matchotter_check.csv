@@ -1,0 +1,7 @@
+quantity,value
+V3_coefficient_phi0^1,(-3*gg*Lb*msq + 4*gg*Pi^2*T^2 + 96*Pi^2*tt)/(96*Pi^2*Sqrt[T])
+V3_coefficient_phi0^2,(-3*gg^2*Lb - 3*lam*Lb*msq + 96*msq*Pi^2 + 4*lam*Pi^2*T^2)/(192*Pi^2)
+V3_coefficient_phi0^3,(gg*(-3*lam*Lb + 32*Pi^2)*Sqrt[T])/(192*Pi^2)
+V3_coefficient_phi0^4,(lam*(32 - (3*lam*Lb)/Pi^2)*T)/768
+dV_difference_dphi,0
+minus_DRalgo,"{0, 0, 0, 0}"
