@@ -26,7 +26,7 @@
 \maketitle
 
 \begin{abstract}
-零温度の $\phi^3+\phi^4$ 理論のノート~\cite{phi34note} に続き、有限温度の一次相転移を調べる。零温度のノートで求めた3次元の bounce の作用 $S_3(\alpha)$ を使い、相転移の温度、強さ、速さと、それが作る重力波を求めることが目的である。温度の模型は二つ使う。一つは、Dine ら~\cite{dine92} の高温展開の一般形 $D(T^2-T_0^2)\phi^2-ET\phi^3+\lambda_T\phi^4/4$ で、もう一つは、場 $\phi$ 自身の熱ループだけで閉じた本模型の温度ポテンシャルである。手計算では、一般形が零温度の模型と $\alpha(T)=(\lambda_TD/E^2)(1-T_0^2/T^2)$ で対応することを示し、臨界温度、$S_3/T=(E/36)(2\alpha/\lambda_T)^{3/2}S_3(\alpha)$、核生成の条件、$\beta/H$ の閉じた式を導いた。手順 (1) では、今の質量を入れた SM 的な係数で、臨界温度が閉じた式と数値の極小で全桁一致し、核生成温度は $T_c$ の $0.017$~GeV 下、$S_3/T=148.8$、$\beta/H=2.5\times10^6$、$\phi_n/T_n=0.17$ の弱い一次相転移になった。$S_3/T$ は Dine らの近似式と $0.9\%$ で、$\beta/H$ の閉じた式は数値微分と相対 $4\times10^{-9}$ で一致した。導出はすべて付録に省略なく載せる。
+零温度の $\phi^3+\phi^4$ 理論のノート~\cite{phi34note} に続き、有限温度の一次相転移を調べる。零温度のノートで求めた3次元の bounce の作用 $S_3(\alpha)$ を使い、相転移の温度、強さ、速さと、それが作る重力波を求めることが目的である。温度の模型は二つ使う。一つは、Dine ら~\cite{dine92} の高温展開の一般形 $D(T^2-T_0^2)\phi^2-ET\phi^3+\lambda_T\phi^4/4$ で、もう一つは、場 $\phi$ 自身の熱ループだけで閉じた本模型の温度ポテンシャルである。手計算では、一般形が零温度の模型と $\alpha(T)=(\lambda_TD/E^2)(1-T_0^2/T^2)$ で対応することを示し、臨界温度、$S_3/T=(E/36)(2\alpha/\lambda_T)^{3/2}S_3(\alpha)$、核生成の条件、$\beta/H$ の閉じた式を導いた。手順 (1) では、今の質量を入れた SM 的な係数で、臨界温度が閉じた式と数値の極小で全桁一致し、核生成温度は $T_c$ の $0.017$~GeV 下、$S_3/T=148.8$、$\beta/H=2.5\times10^6$、$\phi_n/T_n=0.17$ の弱い一次相転移になった。$S_3/T$ は Dine らの近似式と $0.9\%$ で、$\beta/H$ の閉じた式は数値微分と相対 $4\times10^{-9}$ で一致した。手順 (2) では、相転移の強さを Caprini ら~\cite{caprini20} の $\alpha_\theta=4\Delta\theta/(3w_+)$ で測り、手計算で $\Delta\theta=DT_0^2\phi_n^2/2$、すなわち $\alpha_\theta=(15D/\pi^2g_*)(T_0/T_n)^2(\phi_n/T_n)^2$ を導いた。$T_0$ を含む項のほかは $T^4$ に比例してトレースを持たないので、強さは $\phi_n/T_n$ と過冷却の度合い $T_0/T_n$ だけで決まる。$E$ と $\lambda_T$ を変えた走査では、$\phi_n/T_n$ は最大 $7.2$、$\alpha_\theta$ は最大 $0.071$、$\beta/H$ は最小 $7.5\times10^2$ だった。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -39,7 +39,7 @@
 
 求める量は四つである。(i) 一般形の臨界温度と、零温度の $\alpha$ との対応。(ii) 核生成温度 $T_n$、相転移の強さ $\alpha_{\mathrm{PT}}$、速さ $\beta/H$。(iii) 音波と乱流による重力波のスペクトルと、LISA の感度との比較。(iv) 場 $\phi$ 自身の熱ループによる温度ポテンシャルでの、相の移り変わりと $(\kappa_3,\kappa_4)$ の熱的な安定性。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で手計算の結果を述べる。第~\ref{sec:plan} 節で検算と計算の計画を定める。第~\ref{sec:dine} 節で一般形の相転移を扱う（現在は手順 (1) まで）。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:map}〜\ref{app:nucl} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で手計算の結果を述べる。第~\ref{sec:plan} 節で検算と計算の計画を定める。第~\ref{sec:dine} 節で一般形の相転移を扱う（現在は手順 (2) まで）。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:map}〜\ref{app:strength} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -57,6 +57,7 @@ V(\phi,T)=D\,(T^2-T_0^2)\,\phi^2-ET\phi^3+\frac{\lambda_T}{4}\phi^4
 \item 有限温度の崩壊率は $\Gamma(T)=T^4\bigl(S_3/(2\pi T)\bigr)^{3/2}e^{-S_3/T}$ とし~\cite{linde83}、核生成温度 $T_n$ を $\Gamma(T_n)=H(T_n)^4$ で定める。前因子は見積もりで、その不定性は $T_n$ の条件の対数にしか効かない。
 \item 一般形の係数は1ループの高温展開の値で、$\lambda_T$ の温度依存（対数）は $T_c$ での値で代表させる。Dine らによれば、$\lambda_T$ の $T_1$、$T_c$、$T_0$ での値の差は小さい。
 \item SM 的な係数には、$m_W=80.37$、$m_Z=91.19$、$m_t=172.6$、$m_h=125.25$、$v=246.22$（いずれも GeV）を使う。
+\item 相転移の強さと速さは $T_n$ で評価する。式~\eqref{eq:VT} は、$\phi$ によらない放射の自由エネルギー $-\pi^2g_*T^4/90$ を除いた部分とし（$V(0,T)=0$）、対称相のエンタルピー密度は放射のもの $w_+=\frac43\rho_{\mathrm{rad}}$（$\rho_{\mathrm{rad}}=\pi^2g_*T^4/30$）とする。
 \end{enumerate}
 本文で使う記号を表~\ref{tab:notation} にまとめる。
 
@@ -78,7 +79,11 @@ $W(\alpha)$ & $\dd S_3(\alpha)/\dd\alpha$ \\
 $\Gamma,\ H,\ g_*,\ M_{\mathrm{Pl}}$ & 単位体積・単位時間あたりの核生成率、ハッブル率、有効自由度、Planck 質量 \\
 $T_n$ & 核生成温度（$\Gamma=H^4$） \\
 $\beta/H$ & 相転移の速さ $T\,\dd(S_3/T)/\dd T$（$T=T_n$） \\
-$\phi_c,\ \phi_n$ & $T_c$、$T_n$ での二つ目の極小の場の値 \\
+$\phi_-,\ \phi_c,\ \phi_n$ & 二つ目の極小の場の値と、その $T_c$、$T_n$ での値 \\
+$e,\ p,\ w,\ \theta$ & エネルギー密度、圧力、エンタルピー密度 $e+p$、トレースの $1/4$ にあたる $(e-3p)/4$ \\
+$\rho_{\mathrm{rad}}$ & 放射のエネルギー密度 $\pi^2g_*T^4/30$ \\
+$\Delta V,\ \Delta\theta,\ \Delta e$ & 対称相（$\phi=0$、添字 $+$）から破れた相（$\phi_-$、添字 $-$）を引いた差 \\
+$\alpha_\theta,\ \alpha_e$ & 相転移の強さ $4\Delta\theta/(3w_+)$、$4\Delta e/(3w_+)$（$T=T_n$） \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -118,6 +123,19 @@ T_c^2=\frac{T_0^2}{1-E^2/(\lambda_TD)},\quad\phi_c=\frac{2ET_c}{\lambda_T};\qqua
 \end{equation}
 である（\ref{app:nucl}）。$W=\dd S_3(\alpha)/\dd\alpha$ は零温度のノートの手順 (9) で求めてある。
 
+\paragraph{相転移の強さ。}Caprini ら~\cite{caprini20} の式 (12) に従い、相転移の強さを $\alpha_\theta=4\Delta\theta(T_n)/(3w_+(T_n))$ で測る。$\theta=(e-3p)/4$ はエネルギー運動量テンソルのトレースの $1/4$ で、bag 模型では $\Delta\theta$ が bag 定数そのものになる。ポテンシャルの差を圧力の差 $p_+-p_-=-(V(0,T)-V(\phi_-,T))$ と読み、極小の条件を使うと
+\begin{equation}
+\Delta\theta=\frac12DT_0^2\phi_-^2,\qquad
+\alpha_\theta=\frac{\Delta\theta}{\rho_{\mathrm{rad}}}=\frac{15D}{\pi^2g_*}\Bigl(\frac{T_0}{T_n}\Bigr)^2\Bigl(\frac{\phi_n}{T_n}\Bigr)^2
+\label{eq:alphatheta}
+\end{equation}
+となる（\ref{app:strength}）。式~\eqref{eq:VT} のうち $T_0$ を含む項のほかは $(\phi,T)$ について4次の斉次式で、$T^4$ に比例する自由エネルギーは放射と同じくトレースを持たない。そのため $\Delta\theta$ は $T_0$ という尺度だけから生じる。強さは $\phi_n/T_n$ と過冷却の度合い $T_0/T_n$ だけで決まり、$E$ と $\lambda_T$ には $\phi_n/T_n$ と $T_n$ を通してだけよる。$\alpha>0$ で核生成が起こるかぎり $T_n>T_0$ なので、$\alpha_\theta<(15D/\pi^2g_*)(\phi_n/T_n)^2$ が上限になる。$T_c$ では $4\Delta\theta$ は潜熱 $L=2DT_0^2\phi_c^2$ に等しい。Caprini らの式 (13) の、エネルギーの差による強さ $\alpha_e=4\Delta e(T_n)/(3w_+(T_n))$ は
+\begin{equation}
+\Delta e=4\Delta\theta-3\Delta V,\qquad \Delta V=V(0,T)-V(\phi_-,T)=\frac{\phi_-^2}{4}\bigl(ET\phi_--M^2\bigr)
+\label{eq:alphae}
+\end{equation}
+から求まる（\ref{app:strength}）。
+
 \section{検算と計算の計画}\label{sec:plan}
 
 零温度のノートと違い、ツールどうしの比較より、閉じた式と数値の突き合わせと、文献との照合が中心になる。
@@ -152,10 +170,52 @@ $\beta/H$ & $2.5215\times10^6$ & 数値微分と相対 $4\times10^{-9}$ \\
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (2)：強い相転移の強さと速さ。}強さの定義は Caprini ら~\cite{caprini20} の原文で確かめた。式 (12) の $\alpha_\theta\equiv4\Delta\theta(T_n)/(3w_+(T_n))$ は、bag 模型の $\alpha=\epsilon/(a_+T^4)$（式 (9)）をトレースで一般化したものである。彼らは、流体の解析に効くのは $\Delta\theta$ だとして、この定義を標準に採る。式 (13) の $\alpha_e$ については、弱い相転移では $\Delta e\approx4\Delta\theta$ なので運動エネルギーを過大に見積もる、と注意している。本ノートでも $\alpha_{\mathrm{PT}}=\alpha_\theta$ とし、$\alpha_e$ は比べるために載せる。
+
+検算は三つ行った。(a) 共通の関数（\texttt{tptlib.py}）は、手順 (1) の $T_n$、$\alpha(T_n)$、$S_3/T$、$\beta/H$、$\phi_n/T_n$ を相対 $10^{-14}$ 以内で再現した。(b) 式~\eqref{eq:alphae} の $\Delta V$ は、ポテンシャルの極小を数値で求めた値と相対 $2\times10^{-13}$ 以内で一致した。(c) $\Delta\theta=\Delta V-(T/4)\,\partial\Delta V/\partial T$ と $\Delta e=\Delta V-T\,\partial\Delta V/\partial T$ を、数値の極小から求めた $\Delta V$ の中心差分（Richardson 外挿）で求めた。式~\eqref{eq:alphatheta}、\eqref{eq:alphae} との差は、SM 的な係数で相対 $8\times10^{-9}$、$\lambda_T=0.05$、$E=0.04$ で相対 $1.5\times10^{-10}$ だった。SM 的な係数では $\alpha_\theta=7.14\times10^{-5}$、$\alpha_e/\alpha_\theta=3.999$ である。$T_n$ が $T_c$ に近く $\Delta V\approx0$ なので、$\Delta e$ は潜熱でほぼ決まり、$\alpha_e\approx4\alpha_\theta$ になる。
+
+走査では、$D$ と $T_0$ を SM 的な値に固めた。$\lambda_T=0.02$、$0.05$、$0.1146$（SM 的な値）のそれぞれで、$E$ を SM 的な値 $9.58\times10^{-3}$ から $0.995E_{\max}$ まで等比に60点動かした。$E_{\max}=(8\lambda_TD/9)^{1/2}$ は $R=9/8$ にあたり、$E<E_{\max}$ なら高温での極小は $\phi=0$ だけである。すべての点で核生成が起こり、$S_3/T$ は $146.4$〜$148.8$ にとどまった。結果を図~\ref{fig:strong} に示す。$\lambda_T=0.02$ では $\phi_n/T_n=1.11$〜$7.16$、$\alpha_\theta=2.9\times10^{-3}$〜$7.1\times10^{-2}$、$\beta/H=8.0\times10^4$〜$9.7\times10^2$ である。$\lambda_T=0.05$ では $\phi_n/T_n=0.41$〜$4.23$、$\alpha_\theta=4.0\times10^{-4}$〜$1.8\times10^{-2}$、$\beta/H=4.9\times10^5$〜$7.5\times10^2$ である。$\lambda_T=0.1146$ では $\phi_n/T_n=0.17$〜$2.63$、$\alpha_\theta=7.1\times10^{-5}$〜$5.0\times10^{-3}$（最大は $\phi_n/T_n=2.28$ での $5.6\times10^{-3}$）、$\beta/H=2.5\times10^6$〜$7.7\times10^2$ である。$E$ が最大の点での $T_n/T_c$ は、それぞれ $0.452$、$0.531$、$0.626$ である。
+
+図~\ref{fig:strong} の上の図は、式~\eqref{eq:alphatheta} の通りに読める。$\phi_n/T_n$ が小さいと $T_n\approx T_0$ なので、三つの $\lambda_T$ の曲線は、$T_n\to T_0$ の直線 $(15D/\pi^2g_*)(\phi_n/T_n)^2=2.37\times10^{-3}(\phi_n/T_n)^2$ に重なる。$E$ を大きくすると過冷却が進み、$(T_0/T_n)^2$ が小さくなって、曲線は直線から下に離れる。$\lambda_T=0.1146$ では、$E$ が最大に近づくと、$\phi_n/T_n$ の伸びより $(T_0/T_n)^2$ の減りが勝ち、$\alpha_\theta$ は減りに転じる。$\alpha_\theta\gtrsim0.1$ には $\phi_n/T_n\gtrsim6.5$ が要り、$\lambda_T$ を小さくしなければ届かない。下の図の $\beta/H$ は $\phi_n/T_n$ とともに減る。ただし、三つの $\lambda_T$ のどれでも最小は $7.5\times10^2$〜$9.7\times10^2$ で、$10^3$ 程度より下には届かなかった。
+
+手順 (3) で重力波を求めるため、表~\ref{tab:bench} の4点を選んだ。BP1〜BP3 は、$\lambda_T=0.05$ で $\phi_n/T_n=1$、$2$、$3$ となる点である（$E$ は $\phi_n/T_n$ の根を Brent 法で求めた）。BP4 は走査で最も強い点（$\lambda_T=0.02$、$E=0.995E_{\max}$）である。BP1〜BP3 の $\alpha_e/\alpha_\theta$ は $3.95$、$3.69$、$2.97$ で、過冷却が進むほど4から下がる。式~\eqref{eq:alphae} の $\Delta e=4\Delta\theta-3\Delta V$ は打ち消し合う二つの量の差で、$\Delta V$ が育つと小さくなるからである。BP4 では $\Delta V/\rho_{\mathrm{rad}}=0.091$ が $\alpha_\theta=0.071$ を上回り、$\alpha_e/\alpha_\theta=0.16$ になる。Caprini らが $\alpha_e\approx\alpha_\theta$ とするのは、温度によらない真空のエネルギーが $\Delta V$ を占める $\alpha\gtrsim1$ の場合で、ここには当たらない。
+
+ここでは一般形を、$D$、$E$、$T_0$、$\lambda_T$ を自由に選べる模型として扱った。$\phi_n/T_n\gtrsim1$ では、場に結合する粒子の質量が温度と同じ程度になり、高温展開そのものの精度が落ちる。また、BP4 のように $T_c/T_n\approx2$ まで過冷却すると、$\lambda_T$ の対数の温度依存も効きうる。本ノートでは、一般形の結果を、係数を与えたときの相転移の性質として読む。スクリプトは \texttt{strong\_pt.py}（共通の関数は \texttt{tptlib.py}）である。
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.5\linewidth]{../figs/strong_pt.pdf}
+\caption{一般形の相転移の強さ $\alpha_\theta$（上）と速さ $\beta/H$（下）を、$\phi_n/T_n$ の関数として示す（手順 (2)）。$D$、$T_0$ は SM 的な値に固め、各 $\lambda_T$ で $E$ を SM 的な値から $0.995E_{\max}$ まで動かした。点線は $T_n\to T_0$ での上限 $(15D/\pi^2g_*)(\phi_n/T_n)^2$、丸は表~\ref{tab:bench} の基準点である。}
+\label{fig:strong}
+\end{figure}
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (3) のための基準点。BP1〜BP3 は $\lambda_T=0.05$ で $\phi_n/T_n=1$、$2$、$3$ となる点、BP4 は走査で最も強い点（$\lambda_T=0.02$、$E=0.995E_{\max}$）である。$D=0.166632$、$T_0=163.4953$~GeV、$g_*=106.75$ は共通である。}
+\label{tab:bench}
+\begin{tabular}{lllll}
+\toprule
+ & BP1 & BP2 & BP3 & BP4 \\
+\midrule
+$\lambda_T$ & $0.05$ & $0.05$ & $0.05$ & $0.02$ \\
+$E$ & $0.022285$ & $0.042720$ & $0.062274$ & $0.054155$ \\
+$R$ & $16.776$ & $4.5652$ & $2.1484$ & $1.1363$ \\
+$T_c$ [GeV] & $168.597$ & $185.009$ & $223.623$ & $472.014$ \\
+$T_n$ [GeV] & $167.794$ & $179.351$ & $199.960$ & $213.388$ \\
+$\alpha(T_n)$ & $0.8485$ & $0.7715$ & $0.7121$ & $0.4693$ \\
+$S_3/T$ & $148.68$ & $148.41$ & $147.97$ & $147.71$ \\
+$\phi_n/T_n$ & $1$ & $2$ & $3$ & $7.163$ \\
+$\alpha_\theta$ & $2.252\times10^{-3}$ & $7.886\times10^{-3}$ & $1.427\times10^{-2}$ & $7.145\times10^{-2}$ \\
+$\alpha_e$ & $8.894\times10^{-3}$ & $2.906\times10^{-2}$ & $4.242\times10^{-2}$ & $1.160\times10^{-2}$ \\
+$\beta/H$ & $4.958\times10^4$ & $7.926\times10^3$ & $2.496\times10^3$ & $9.742\times10^2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (2) から順に進める。手順 (2) 以降の手計算（相転移の強さ、重力波、単一場の温度ポテンシャル）は、進めるにつれて付録に加える。
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (3) から順に進める。手順 (3) 以降の手計算（重力波、単一場の温度ポテンシャル）は、進めるにつれて付録に加える。
 
 \appendix
 
@@ -180,12 +240,42 @@ T_0^2=\frac{m_h^2-8Bv^2}{4D}
 
 \paragraph{相転移の速さ。}$S_3/T=(E/36)(2/\lambda_T)^{3/2}\alpha^{3/2}S_3(\alpha)$ を $\alpha$ で微分すると $\frac{\dd}{\dd\alpha}\frac{S_3}{T}=\frac{S_3}{T}\bigl[\frac3{2\alpha}+\frac{W}{S_3(\alpha)}\bigr]$ である（$\lambda_T$ は一定とする）。式~\eqref{eq:alphaT} から $T\frac{\dd\alpha}{\dd T}=2R\frac{T_0^2}{T^2}=2(R-\alpha)$ なので、式~\eqref{eq:betaH} を得る。数値の確かめでは、$S_3/T$ の中心差分を刻み $h=10^{-6}T_n$ と $h/2$ で求めて Richardson 外挿した。
 
+\section{相転移の強さの導出}\label{app:strength}
+
+\paragraph{熱力学の量。}各相の圧力は自由エネルギー密度の符号を変えたもので、前提 6 より $p_\pm=p_{\mathrm{rad}}-V_\pm$ である。ここで $p_{\mathrm{rad}}=\pi^2g_*T^4/90$、$V_+=V(0,T)=0$、$V_-=V(\phi_-(T),T)$ である。$e=T\,\dd p/\dd T-p$、$w=e+p=T\,\dd p/\dd T$ から
+\begin{equation*}
+e_\pm=\rho_{\mathrm{rad}}+V_\pm-T\frac{\dd V_\pm}{\dd T},\qquad
+\theta_\pm=\frac{e_\pm-3p_\pm}{4}=V_\pm-\frac T4\frac{\dd V_\pm}{\dd T},\qquad
+w_+=\frac43\rho_{\mathrm{rad}}
+\end{equation*}
+である。放射の部分は $e=3p$ なので $\theta$ に寄与しない。$\dd V_-/\dd T$ は $\phi_-$ の温度変化も含む全微分だが、$\partial V/\partial\phi=0$ が $\phi_-$ で成り立つので、$\dd V_-/\dd T=\partial V/\partial T|_{\phi=\phi_-}$ である。差を対称相から破れた相を引いたものとすると、$\Delta V=-V_-$、$\Delta\theta=-\theta_-=\Delta V-\frac T4\frac{\dd\Delta V}{\dd T}$、$\Delta e=-(e_--e_+)=\Delta V-T\frac{\dd\Delta V}{\dd T}$ である。Caprini らの式 (12)、(13) は $\alpha_\theta=4\Delta\theta/(3w_+)=\Delta\theta/\rho_{\mathrm{rad}}$、$\alpha_e=\Delta e/\rho_{\mathrm{rad}}$ になる。bag 模型（$V_+-V_-=\epsilon$ が温度によらない）では $\Delta\theta=\Delta e=\epsilon$ で、式 (9) の $\alpha$ に戻る。
+
+\paragraph{極小での値。}$M^2=2D(T^2-T_0^2)$ と書くと、$V=\frac12M^2\phi^2-ET\phi^3+\frac{\lambda_T}4\phi^4$ で、極小の条件 $\phi^{-1}\partial V/\partial\phi=M^2-3ET\phi+\lambda_T\phi^2=0$ から $\frac{\lambda_T}4\phi_-^4=-\frac14M^2\phi_-^2+\frac34ET\phi_-^3$ である。これを入れると
+\begin{equation*}
+V_-=\frac14M^2\phi_-^2-\frac14ET\phi_-^3,\qquad
+\frac T4\frac{\partial V}{\partial T}\Big|_{\phi_-}=\frac T4\bigl(2DT\phi_-^2-E\phi_-^3\bigr)=\frac12DT^2\phi_-^2-\frac14ET\phi_-^3
+\end{equation*}
+で、$\theta_-=\frac12D(T^2-T_0^2)\phi_-^2-\frac12DT^2\phi_-^2=-\frac12DT_0^2\phi_-^2$ を得る。よって $\Delta\theta=\frac12DT_0^2\phi_-^2$ で、$\rho_{\mathrm{rad}}=\pi^2g_*T^4/30$ で割ると式~\eqref{eq:alphatheta} になる。$\Delta V=-V_-=\frac{\phi_-^2}4(ET\phi_--M^2)$ も同時に得られる。$e_--\rho_{\mathrm{rad}}=V_--T\,\partial V/\partial T|_{\phi_-}=4\theta_--3V_-$、$e_+=\rho_{\mathrm{rad}}$ なので、$\Delta e=4\Delta\theta-3\Delta V$ で、式~\eqref{eq:alphae} を得る。
+
+\paragraph{トレースが $T_0$ だけから来る理由。}$T_0=0$ なら $V(\phi,T)=T^4U(\phi/T)$ の形で、$V_-=T^4U(u_-)$（$u_-$ は $U$ の極小で、温度によらない）なので、$\theta_-=V_--\frac T4\cdot4V_-=0$ である。$\theta_-$ は $T$ について4次でない項、すなわち $-DT_0^2\phi^2$ だけから生じる。
+
+\paragraph{$\alpha$ を通した別の導き方。}零温度のノートの変数で書くと、$\phi=(m^2/g)f$、$m^6/g^2=(2\alpha^3/9)E^4T^4/\lambda_T^3$ から $\Delta V=(E^4T^4/\lambda_T^3)h(\alpha)$、$h(\alpha)=-\frac{2\alpha^3}{9}v(f_-)$、$v(f)=\frac{f^2}2+\frac{f^3}6+\frac{\alpha f^4}{72}$ である。$T\,\dd\alpha/\dd T=2(R-\alpha)$ より $T\,\dd\Delta V/\dd T=4\Delta V+(E^4T^4/\lambda_T^3)h'(\alpha)\cdot2(R-\alpha)$ で、$\Delta\theta=-\frac{E^4T^4}{2\lambda_T^3}h'(\alpha)(R-\alpha)$ である。$v'(f_-)=0$ から $h'=-\frac29\bigl[3\alpha^2v(f_-)+\alpha^3f_-^4/72\bigr]$ で、極小の条件 $\alpha f_-^2/18=-f_-/2-1$ を使うと $v(f_-)=f_-^2(6+f_-)/24$、$\alpha f_-^4/72=-f_-^2(f_-+2)/8$ なので
+\begin{equation*}
+h'(\alpha)=-\frac29\cdot\frac{\alpha^2f_-^2}{8}\bigl[(6+f_-)-(f_-+2)\bigr]=-\frac{\alpha^2f_-^2}{9}=-\frac94\Bigl(1+\sqrt{1-\tfrac{8\alpha}9}\Bigr)^2
+\end{equation*}
+である。$\phi_-=-\alpha f_-ET/(3\lambda_T)$ より $-h'=(\lambda_T\phi_-/(ET))^2$ で、$R-\alpha=RT_0^2/T^2=\lambda_TDT_0^2/(E^2T^2)$ を入れると $\Delta\theta=\frac12DT_0^2\phi_-^2$ に戻る。
+
+\paragraph{臨界温度での確かめ。}$T_c$（$\alpha=1$、$\phi_c=2ET_c/\lambda_T$、$M^2=2E^2T_c^2/\lambda_T$）では $ET_c\phi_c=M^2$ なので $\Delta V=0$ で、$\Delta e=4\Delta\theta=2DT_0^2\phi_c^2$ は潜熱 $L$ である。一方、潜熱を直接求めると、$L=-T_c\,\dd\Delta V/\dd T=T_c\,\partial V/\partial T|_{\phi_c}=T_c(2DT_c\phi_c^2-E\phi_c^3)=2\phi_c^2T_c^2(D-E^2/\lambda_T)$ である。$T_0^2=T_c^2(1-E^2/(\lambda_TD))$ より両者は等しい。
+
+\paragraph{数値の確かめ。}$\Delta V$ は、$\phi_-$ の閉じた式の $0.5$〜$1.5$ 倍の区間で、$V(\phi,T)$ の極小を有界な Brent 法で求めた。$\dd\Delta V/\dd T$ は、刻み $h=10^{-5}(T_n-T_0)$ と $h/2$ の中心差分を Richardson 外挿して求めた。
+
 \begin{thebibliography}{9}
 \small
 \bibitem{phi34note} $\phi^3+\phi^4$ 理論：1ループの構造、ユニタリー性、偽の真空の崩壊（$d=4$）（本リポジトリ \nolinkurl{models/phi34/ResearchNote/note.pdf}）。真空の構造（付録~G）、bounce の作用 $S_3(\alpha)$ と Dine らとの照合（手順 (9)、付録~L）。
 \bibitem{dine92} M. Dine, R. G. Leigh, P. Y. Huet, A. D. Linde, D. A. Linde, ``Towards the theory of the electroweak phase transition,'' Phys. Rev. D \textbf{46}, 550 (1992), hep-ph/9203203。高温展開の一般形（式 (4)、(7)〜(11)）、臨界温度（式 (12)〜(16)）、$S_3/T$ の近似式（式 (26)、(27)）。
 \bibitem{linde83} A. D. Linde, ``Decay of the false vacuum at finite temperature,'' Nucl. Phys. B \textbf{216}, 421 (1983); Erratum Nucl. Phys. B \textbf{223}, 544 (1983)。有限温度の崩壊率 $\Gamma\sim T^4e^{-S_3/T}$。
 \bibitem{kajantie96} K. Kajantie, M. Laine, K. Rummukainen, M. E. Shaposhnikov, ``Is there a hot electroweak phase transition at $m_H\gtrsim m_W$?,'' Phys. Rev. Lett. \textbf{77}, 2887 (1996), hep-ph/9605288。格子計算による電弱相転移の終点。
+\bibitem{caprini20} C. Caprini \textit{et al.}, ``Detecting gravitational waves from cosmological phase transitions with LISA: an update,'' JCAP \textbf{03} (2020) 024, arXiv:1910.13125。相転移の強さの定義（bag 模型の式 (8)〜(11)、トレースによる $\alpha_\theta$ の式 (12)、エネルギーの差による $\alpha_e$ の式 (13)）。
 \end{thebibliography}
 
 \end{document}
