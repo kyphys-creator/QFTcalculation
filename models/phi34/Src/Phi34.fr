@@ -1,0 +1,87 @@
+(* ::Package:: *)
+
+(* Phi34.fr -- FeynRules model file for the phi^3 + phi^4 toy model
+   (models/phi34/ResearchNote/note.tex, Eq. (1)).
+
+   L = 1/2 (d phi)^2 - 1/2 m^2 phi^2 - g/3! phi^3 - lambda/4! phi^4
+       (g is called gphi, lambda is called lamphi here)
+
+   - phi: one real scalar of mass m.  As in Phi3.fr (models/phi3/Src), the cubic coupling is
+     gphi (TeX "g"); the name g makes FeynRules' UFO writer hit $RecursionLimit.  The quartic
+     coupling is lamphi (TeX "\lambda").
+   - Only the 4-dimensional tree-level Lagrangian is here.  The linear term Y phi (tadpole
+     cancellation), the counterterms and the factors mu^eps, mu^(2 eps) are added when the loop
+     calculation is set up (FeynCalc), as in the note.
+   - Feynman rules: propagator i/(p^2-m^2), vertices -I gphi and -I lamphi.
+   - Coupling orders (MadGraph): gphi counts PHI = 1 and lamphi counts PHI = 2, so that one
+     power of PHI^2 is one loop order (lambda ~ g^2/m^2).
+   - Load from this folder:
+       $FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}];
+       SetDirectory[$FeynRulesPath]; << FeynRules`
+       SetDirectory[".../models/phi34/Src"]; LoadModel["Phi34.fr"]
+*)
+
+M$ModelName = "Phi34";
+
+M$Information = {
+  Authors -> {"K. Yasuda"},
+  Date    -> "2026-10-10",
+  Version -> "1.0",
+  Comment -> "Real scalar phi^3 + phi^4 toy model (cross-check model for the loop stack)"
+};
+
+M$InteractionOrderHierarchy = {
+  {PHI, 1}
+};
+
+(* ************************** *)
+(* *****   Parameters   ***** *)
+(* ************************** *)
+
+M$Parameters = {
+  gphi == {
+    ParameterType    -> External,
+    BlockName        -> PHI34BLOCK,
+    OrderBlock       -> 1,
+    Value            -> 1.0,
+    InteractionOrder -> {PHI, 1},
+    TeX              -> "g",
+    Description      -> "Cubic coupling (mass dimension 1 in d = 4)"
+  },
+  lamphi == {
+    ParameterType    -> External,
+    BlockName        -> PHI34BLOCK,
+    OrderBlock       -> 2,
+    Value            -> 1.0,
+    InteractionOrder -> {PHI, 2},
+    TeX              -> "\\lambda",
+    Description      -> "Quartic coupling (dimensionless in d = 4)"
+  }
+};
+
+(* ************************** *)
+(* *****   Particles    ***** *)
+(* ************************** *)
+
+M$ClassesDescription = {
+  S[1] == {
+    ClassName       -> phi,
+    SelfConjugate   -> True,
+    Mass            -> {m, 1.0},
+    Width           -> {wphi, 0},
+    PDG             -> 9000001,
+    PropagatorLabel -> "phi",
+    PropagatorType  -> ScalarDash,
+    PropagatorArrow -> None,
+    ParticleName    -> "phi",
+    FullName        -> "phi",
+    Description     -> "Real scalar field"
+  }
+};
+
+(* ************************** *)
+(* *****   Lagrangian   ***** *)
+(* ************************** *)
+
+(* del[phi, mu] is the partial derivative (Mathematica's D[phi, mu] would give 0). *)
+LPhi34 := 1/2 del[phi, mu] del[phi, mu] - 1/2 m^2 phi^2 - gphi/6 phi^3 - lamphi/24 phi^4;

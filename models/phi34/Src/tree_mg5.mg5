@@ -1,0 +1,28 @@
+# tree_mg5.mg5 -- phi phi -> phi phi with the FeynRules UFO (research note models/phi34, step (2)).
+# Run from Src/:   mg5_aMC tree_mg5.mg5 > work/tree_mg5.log
+# Imports a copy of generated/Phi34_UFO in work/ (MadGraph converts UFOs to Python 3 in place).
+# Fixed-energy phi beams (lpp = 0), m = gphi = lamphi = 1 (param_card defaults), no cuts on phi.
+# sqrt(s) = 2.5, 5, 10 GeV, in this order (tree_sigma.py relies on it).
+set automatic_html_opening False
+import model ./work/Phi34_UFO
+generate phi phi > phi phi
+output work/mg5_tree -f
+launch work/mg5_tree
+0
+set lpp1 0
+set lpp2 0
+set ebeam1 1.25
+set ebeam2 1.25
+set nevents 10000
+0
+launch work/mg5_tree
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_tree
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+quit

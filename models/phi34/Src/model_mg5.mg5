@@ -1,0 +1,10 @@
+# model_mg5.mg5 -- diagrams of phi phi -> phi phi and phi phi -> phi phi phi from the Phi34 UFO
+# (research note models/phi34, step (1)).  Run via run_model_check.sh (imports a copy in work/,
+# because MadGraph converts UFOs to Python 3 in place).  Expected: 4 and 25 diagrams.
+set automatic_html_opening False
+import model ./work/Phi34_UFO
+generate phi phi > phi phi
+display diagrams_text
+generate phi phi > phi phi phi
+display diagrams_text
+quit
