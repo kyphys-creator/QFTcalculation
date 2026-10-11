@@ -38,7 +38,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論のノート~\cite{phi3note} に続き、4点の自己相互作用を加えた実スカラー1つの $\phi^3+\phi^4$ 理論を $d=4$ で調べる。目的は二つである。一つは、結合が二つになったときの1ループの繰り込みの構造を手で求め、$\phi^3$ 理論と同じ手順でツールと突き合わせることである。もう一つは、この模型の物理、とくに真空の構造と偽の真空の崩壊を調べることである。手計算では、Feynman 則と対称性因子、1ループの1PI 関数、$\overline{\mathrm{MS}}$ の対抗項 $\delta_m=(g^2+\lambda m^2)\Delta_{\mathrm{UV}}/(2(4\pi)^2)$、$\delta_g=3g\lambda\Delta_{\mathrm{UV}}/(2(4\pi)^2)$、$\delta_\lambda=3\lambda^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ を求めた。繰り込み群は $\beta_\lambda=3\lambda^2/(4\pi)^2$、$\beta_g=3g\lambda/(4\pi)^2$、$\mu\,\dd m^2/\dd\mu=(g^2+\lambda m^2)/(4\pi)^2$ で、有効ポテンシャルからも同じものが得られる。真空の構造は一つの数 $\alpha=3\lambda m^2/g^2$ で決まり、$\alpha<1$ では $\phi=0$ が偽の真空になる。ヒッグスの自己結合に読み替えると $\alpha=\kappa_4/\kappa_3^2$ で、標準模型はちょうど $\alpha=1$（縮退した二つの極小）にあたる。検算の手順 (1) として、FeynRules の模型ファイルから FeynArts 模型と UFO を書き出し、Feynman 則と MadGraph の図の数を確かめた。手順 (2) では、木の振幅が FeynCalc の結果と記号として一致し、MadGraph の断面積が数値積分と統計誤差の範囲で一致した。手順 (3) では、1PI 関数の図、極、対抗項が記号として一致し、有限部分が Package-X・LoopTools・COLLIER の間で相対 $10^{-11}$ 以内で一致した。手順 (4) では、1ループの $\phi\phi\to\phi\phi$ 振幅（42図）が FeynCalc と FormCalc の両方で手計算と記号として一致し、四つの経路の数値が相対 $4\times10^{-12}$ 以内で一致し、虚部がユニタリー性を満たした。手順 (5) では、極質量と留数で S 行列要素に直す式を導き、NLOCT の対抗項と MadLoop の値が on-shell と $\overline{\mathrm{MS}}$ の両方の処方で相対 $6\times10^{-15}$ 以内で一致した。手順 (6) では全断面積を1ループの次数まで求め、$\sigma^{(1)}$ が MadLoop と、$\sigma_{2\to3}$ が MadGraph と一致した（$\sqrt s=10m$ の MadGraph は $\phi^3$ と同じく少し低い）。接触項との打ち消し合いで $\sigma^{(0)}$ が極小になる $\sqrt s\approx2.3m$ の近くでは、1ループの補正が相対的に大きくなる。手順 (7) では、S 行列要素の $\mu$ 依存から読み取った $\beta_\lambda$、$\beta_g$、$\gamma$ が、二つの処方の四つのツールで手計算と相対 $10^{-14}$ の程度で一致した。比 $g/\lambda$ は1ループでは走らず、$\alpha$ は紫外で $3/2$ に近づくので、木のポテンシャルの真空の構造は $\mu$ に弱く依存する。導出はすべて付録に省略なく載せる。
+$\phi^3$ 理論のノート~\cite{phi3note} に続き、4点の自己相互作用を加えた実スカラー1つの $\phi^3+\phi^4$ 理論を $d=4$ で調べる。目的は二つである。一つは、結合が二つになったときの1ループの繰り込みの構造を手で求め、$\phi^3$ 理論と同じ手順でツールと突き合わせることである。もう一つは、この模型の物理、とくに真空の構造と偽の真空の崩壊を調べることである。手計算では、Feynman 則と対称性因子、1ループの1PI 関数、$\overline{\mathrm{MS}}$ の対抗項 $\delta_m=(g^2+\lambda m^2)\Delta_{\mathrm{UV}}/(2(4\pi)^2)$、$\delta_g=3g\lambda\Delta_{\mathrm{UV}}/(2(4\pi)^2)$、$\delta_\lambda=3\lambda^2\Delta_{\mathrm{UV}}/(2(4\pi)^2)$ を求めた。繰り込み群は $\beta_\lambda=3\lambda^2/(4\pi)^2$、$\beta_g=3g\lambda/(4\pi)^2$、$\mu\,\dd m^2/\dd\mu=(g^2+\lambda m^2)/(4\pi)^2$ で、有効ポテンシャルからも同じものが得られる。真空の構造は一つの数 $\alpha=3\lambda m^2/g^2$ で決まり、$\alpha<1$ では $\phi=0$ が偽の真空になる。ヒッグスの自己結合に読み替えると $\alpha=\kappa_4/\kappa_3^2$ で、標準模型はちょうど $\alpha=1$（縮退した二つの極小）にあたる。検算の手順 (1) として、FeynRules の模型ファイルから FeynArts 模型と UFO を書き出し、Feynman 則と MadGraph の図の数を確かめた。手順 (2) では、木の振幅が FeynCalc の結果と記号として一致し、MadGraph の断面積が数値積分と統計誤差の範囲で一致した。手順 (3) では、1PI 関数の図、極、対抗項が記号として一致し、有限部分が Package-X・LoopTools・COLLIER の間で相対 $10^{-11}$ 以内で一致した。手順 (4) では、1ループの $\phi\phi\to\phi\phi$ 振幅（42図）が FeynCalc と FormCalc の両方で手計算と記号として一致し、四つの経路の数値が相対 $4\times10^{-12}$ 以内で一致し、虚部がユニタリー性を満たした。手順 (5) では、極質量と留数で S 行列要素に直す式を導き、NLOCT の対抗項と MadLoop の値が on-shell と $\overline{\mathrm{MS}}$ の両方の処方で相対 $6\times10^{-15}$ 以内で一致した。手順 (6) では全断面積を1ループの次数まで求め、$\sigma^{(1)}$ が MadLoop と、$\sigma_{2\to3}$ が MadGraph と一致した（$\sqrt s=10m$ の MadGraph は $\phi^3$ と同じく少し低い）。接触項との打ち消し合いで $\sigma^{(0)}$ が極小になる $\sqrt s\approx2.3m$ の近くでは、1ループの補正が相対的に大きくなる。手順 (7) では、S 行列要素の $\mu$ 依存から読み取った $\beta_\lambda$、$\beta_g$、$\gamma$ が、二つの処方の四つのツールで手計算と相対 $10^{-14}$ の程度で一致した。比 $g/\lambda$ は1ループでは走らず、$\alpha$ は紫外で $3/2$ に近づくので、木のポテンシャルの真空の構造は $\mu$ に弱く依存する。手順 (8) では、部分波のユニタリー性から $(\kappa_3,\kappa_4)$ の限界を求めた。木のレベルでは $\kappa_4<64.7$ と、$\kappa_4=1$ での $\kappa_3\le6.46$ を得て、1ループでは $\kappa_3\le5.19$ になる。$\lambda$ の向きの限界は、$\lambda$ の走りのために、理論を使うエネルギーの範囲に依存する。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -51,7 +51,7 @@ $\phi^3$ 理論のノート~\cite{phi3note} に続き、4点の自己相互作�
 
 求める量は五つである。(i) Feynman 則と対称性因子。(ii) 1ループの1PI 関数（1点〜4点）の紫外発散部分と、$\overline{\mathrm{MS}}$ の対抗項。(iii) 繰り込まれた1PI 関数と、繰り込み群の係数（$\beta_\lambda$、$\beta_g$、質量の走り）。(iv) $\phi\phi\to\phi\phi$ の木の振幅と1ループの振幅、およびその S 行列要素。(v) 応用として、部分波のユニタリー性の限界、真空の構造、偽の真空の崩壊率（bounce の作用は $d=4$ と $d=3$、前因子は $d=4$）。手計算とツールの間で求める一致は、$\phi^3$ 理論と同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の前提になる真空の構造を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、1ループの量と散乱の検算（手順 (1)〜(6)）の結果を示す。第~\ref{sec:rg} 節で、繰り込み群の検算と $\alpha$ の流れ（手順 (7)）を扱う（現在は手順 (7) まで）。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:rgfit} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の前提になる真空の構造を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、1ループの量と散乱の検算（手順 (1)〜(6)）の結果を示す。第~\ref{sec:rg} 節で、繰り込み群の検算と $\alpha$ の流れ（手順 (7)）を扱う。第~\ref{sec:pheno} 節で、(v) のうち摂動論の限界と真空の安定性（手順 (8)〜(10)）を調べる（現在は手順 (8) まで）。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:pw} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -374,6 +374,7 @@ Feynman 則・対称性因子 & \ref{app:rules} & 書き出した FeynArts 模�
 1ループの $\phi\phi\to\phi\phi$ \eqref{eq:M1} と S 行列要素 \eqref{eq:Mphys} & \ref{app:scat}、\ref{app:lsz} & 記号として比べる（FormCalc でも） & 数値 & 数値 & MadLoop \\
 全断面積（$2\to3$ を含む）\eqref{eq:sigmatot} & \ref{app:sigma} & — & — & COLLIER & MadLoop、$2\to3$ \\
 繰り込み群 \eqref{eq:rge} & \ref{app:rg}、\ref{app:rgfit} & $\mu$ を変えて評価 & 数値 & 数値 & MadLoop の $\mu_R$ \\
+部分波とユニタリー性の限界 \eqref{eq:pw} & \ref{app:pw} & — & — & COLLIER & — \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -599,13 +600,75 @@ $\sqrt s/m$ & $\sigma^{(0)}$ & $\sigma^{(1)}$ & $\sigma^{(1)}/\sigma^{(0)}$ & $\
 \end{figure}
 
 \FloatBarrier
+\section{摂動論の限界と真空の安定性}\label{sec:pheno}
+
+この節では、この模型の物理の二つの限界を調べる。一つは、結合が大きくなると摂動論が破れることである。もう一つは、$\alpha<1$ で $\phi=0$ が偽の真空になることである。手順は次の三つである。(8) $\phi\phi\to\phi\phi$ の部分波を1ループまで求め、ユニタリー性と摂動論から $(g/m,\lambda)$、すなわち $(\kappa_3,\kappa_4)$ の限界を出す。(9) 偽の真空の bounce の作用を $d=4$ と $d=3$ で $\alpha$ の関数として求める。(10) $d=4$ の崩壊率の1ループの前因子を求め、$(\kappa_3,\kappa_4)$ の真空の安定性の限界を出す。現在は手順 (8) まで終わっている。結論を先に述べると、木のユニタリー性は $\kappa_4<64.7$ と、$\kappa_4=1$ での $\kappa_3\le6.46$ を与え、1ループでは $\kappa_3\le5.19$ になる。$\lambda$ の向きの限界は高エネルギーで決まり、$\lambda$ が走るので、どのエネルギーまで摂動論が使えることを求めるかに依存する。これらは主にツール同士の比較ではないので、検算はユニタリー性、閉じた式、$\phi^3$ のノートとの照合で行う。スクリプトは \texttt{run\_pw\_check.sh} である。
+
+\paragraph{手順 (8)：摂動的ユニタリー性。}部分波を $\phi^3$ のノートと同じく
+\begin{equation}
+a_\ell(s)\equiv\frac{\beta}{64\pi}\int_{-1}^{1}\dd c\,P_\ell(c)\,\mathcal{M}(s,c),\qquad
+\mathrm{Im}\,a_\ell=|a_\ell|^2\ \ (\text{弾性散乱}),\qquad |\mathrm{Re}\,a_\ell|\le\frac12
+\label{eq:pw}
+\end{equation}
+と定義する（$\beta=\sqrt{1-4m^2/s}$、$c=\cos\theta$、\ref{app:pw}）。$t\leftrightarrow u$ の対称性から、$\ell$ は偶数だけである。木のレベルでは
+\begin{equation*}
+a_0^{(0)}=\frac{\beta}{32\pi}\bigl[g^2F(s)-\lambda\bigr],\qquad
+F(s)=-\frac{1}{s-m^2}+\frac{2}{s-4m^2}\ln\frac{s-3m^2}{m^2}
+\end{equation*}
+で、接触項は $\ell=0$ にだけ寄与する。$F>0$ なので、交換と接触項は逆符号で打ち消し合う。閾値では $a_0^{(0)}\simeq\beta(5g^2/(3m^2)-\lambda)/(32\pi)$ で、これは $\alpha=5$ で0になる。高エネルギーでは $F\to0$ で、$a_0^{(0)}\to-\lambda/(32\pi)$ になる。
+
+1ループでは、式~\eqref{eq:Mphys} の S 行列要素（極質量 $m$、$\mu=m$ の $\overline{\mathrm{MS}}$ の $g$ と $\lambda$）を射影した。$\mathcal{M}_{\mathrm{phys}}-\mathcal{M}^{(0)}=g^4P+g^2\lambda Q+\lambda^2R$ と結合の構造に分け、$P$、$Q$、$R$ を COLLIER の $\overline{\mathrm{MS}}$ の振幅と変換の項から作った（\ref{app:pw}）。部分波を $a_0^{(0)}=g^2f_0-\lambda e_0$、$a_0^{(1)}=g^4p_0+g^2\lambda q_0+\lambda^2r_0$ と書く。射影は $\phi^3$ のノートと同じ Gauss--Legendre の64点で、重心系の運動量 $p=0.01m$ から $10m$ までとした。木の射影は閉じた式と相対 $4\times10^{-16}$ で一致し、手順 (4) の点の振幅も全桁で再現した。部分波ごとのユニタリー性は、構造ごとに $\mathrm{Im}\,p_0=f_0^2$、$\mathrm{Im}\,q_0=-2f_0e_0$、$\mathrm{Im}\,r_0=e_0^2$ となり、相対 $6\times10^{-8}$ 以内で成り立った（図~\ref{fig:pw} 下）。最大のずれは、$\phi^3$ のノートと同じく、閾値のすぐ近くの両辺がともに小さい点で生じる。$\ell=2$ でも $3\times10^{-11}$ 以内で成り立った。$\lambda^2$ の構造は $B_0$ だけからなるので、その閉じた式の数値積分とも比べ、相対 $5\times10^{-14}$ で一致した。$\lambda=0$ では、下の (A) と (C) の限界は $\phi^3$ のノートの値を全桁で再現した。
+
+限界は三つの基準で求めた（表~\ref{tab:pw}、図~\ref{fig:pw} 上）。
+\begin{itemize}
+\item (A) 木のユニタリー性：すべての $s$ で $|\mathrm{Re}\,a_0^{(0)}|\le\frac12$。
+\item (B) 高エネルギーの摂動論：$s\gg m^2$ で、1ループの補正が木を超えない（$|\mathrm{Re}\,a_0^{(1)}|\le|\mathrm{Re}\,a_0^{(0)}|$）。
+\item (C) 1ループまで含めたユニタリー性：閾値の近く（$\sqrt s\le4m$）で $|\mathrm{Re}(a_0^{(0)}+a_0^{(1)})|\le\frac12$。
+\end{itemize}
+
+(A) は閉じた形で解ける（\ref{app:pw}）。$s\to\infty$ の極限から $\lambda<16\pi=50.3$ を、各 $s$ の条件から $g^2\le\min_s(16\pi/\beta+\lambda)/F(s)$ を得る。$g$ の限界は $\sqrt s=2.2$〜$2.4m$ で決まり、$\lambda=0$ の $g/m\le9.81$（$\phi^3$ のノートの値）から、$\lambda\to16\pi$ の $g/m\le11.96$ まで緩む。閾値の近くで接触項が交換を打ち消すからである。
+
+(B) では、高エネルギーの $\lambda$ の部分波を $\mu=\sqrt s$ として評価する。$\mu$ を $m$ に固定すると、$a_0^{(1)}$ の $\lambda^2\ln(s/m^2)$ の項が大きくなり、限界は調べるエネルギーの範囲に依存してしまう。実際、$\mu=m$ の1ループのユニタリー性は、$\sqrt s\le5.4m$、$10.2m$、$20m$ で調べると、それぞれ $\lambda\le40$、$31$、$27$ を与え、範囲を広げるほど下がり続ける。$s\gg m^2$、$\mu=\sqrt s$ では
+\begin{equation*}
+\mathrm{Re}\,a_0=-\frac{\lambda}{32\pi}\Bigl(1-\frac{4\lambda}{(4\pi)^2}\Bigr),\qquad\lambda=\lambda(\sqrt s)
+\end{equation*}
+である（\ref{app:pw}）。1ループの補正は $\lambda(\sqrt s)=4\pi^2=39.5$ で木と等しくなる。それより手前では1ループの $|\mathrm{Re}\,a_0|$ は $0.098$ を超えないので、この向きの限界は摂動論で決まる。$\lambda$ は走るので、$\mu=m$ で定義した $\lambda$ に直すと、エネルギー $E$ まで摂動論が使える条件は $\lambda(m)\le4\pi^2/(1+\frac34\ln(E/m))$ になる。$E=10m$ では $\lambda(m)\le14.5$、$E=100m$ では $8.9$ である。これは $\lambda\phi^4$ 理論と同じ自明性（Landau 極）の表れで、$\lambda$ の限界は、どのエネルギーまで理論を使うかを決めて初めて定まる。
+
+(C) は $\mu=m$ で、$g$ の限界が決まる閾値の近く $\sqrt s\le4m$ で調べた。$g/m$ の限界は、$\lambda=0$ で $7.87$（$\phi^3$ のノートの値）、$\kappa_4=1$ で $7.92$、$\lambda=20$ で $9.18$、$\lambda=4\pi^2$ で $10.34$ で、いずれも $\sqrt s=2.13$〜$2.25m$ で決まる。$\mu$ を $m/2$ から $2m$ まで変えると（結合は\ref{app:rgfit} の1ループの解で走らせる）、限界は $\kappa_4=1$ では $7.88$〜$7.97$ と小さくしか変わらないが、$\lambda=20$ では $8.15$〜$10.37$ と大きく変わる。$\lambda$ が大きいところでは、1ループの限界の不定性が大きい。(A) の境界上でも、$|\mathrm{Re}\,a_0^{(0)}|$ が最大になるエネルギーでの $|\mathrm{Re}\,a_0^{(1)}/\mathrm{Re}\,a_0^{(0)}|$ は $0.55$〜$0.83$ で、木のユニタリー性の限界は、摂動論が破れるところとほぼ重なる。
+
+ヒッグスの結合に読み替えると、式~\eqref{eq:kappa} で $m=m_h$ として $g/m=1.526\,\kappa_3$、$\lambda=0.7763\,\kappa_4$ である。限界は、(A) が $\kappa_4<64.7$ と $\kappa_4=1$ での $\kappa_3\le6.46$、(B) が $\kappa_4(\sqrt s)\le50.9$（$\sqrt s=10m_h$ まで求めると $\kappa_4\le18.7$）、(C) が $\kappa_4=1$ での $\kappa_3\le5.19$ である。(A) の $\kappa_3\le6.46$ は、4点結合を SM の値に保った Di Luzio、Gröber、Spannowsky~\cite{dgs} の $hh\to hh$ の木の限界 $\kappa_\lambda\lesssim6.5$ とよく合う。ただし、この模型にはゴールドストーン粒子やゲージ粒子との結合がないので、SM の限界そのものではない。図~\ref{fig:pw} で $\alpha=1$ の曲線より右下は $\alpha<1$、すなわち $\phi=0$ が偽の真空になる領域で、(A) の領域のかなりの部分を占める。スクリプトは \texttt{pw\_collier.f90}（COLLIER）と \texttt{pw\_numeric.py}（射影と限界）である。
+
+\begin{table}[tbp]
+\centering\small
+\caption{$\phi\phi\to\phi\phi$ の $J=0$ 部分波から求めた限界（$m$ は極質量、$g$ と $\lambda$ は $\mu=m$ の $\overline{\mathrm{MS}}$ の値。ただし (B) の1行目は $\lambda(\sqrt s)$ の限界）。$\kappa_3=(g/m)/1.526$、$\kappa_4=\lambda/0.7763$ はヒッグスの3点・4点結合に読み替えた値である（$m=m_h$）。(C) の括弧は、$\mu$ を $m/2$ から $2m$ まで変えたときの範囲である。}
+\label{tab:pw}
+\begin{tabular}{llcccc}
+\toprule
+基準 & 条件 & $g/m$（$\lambda=0$） & $\kappa_3$（$\kappa_4=1$） & $\lambda$ の上限 & $\kappa_4$ の上限 \\
+\midrule
+(A) 木のユニタリー性 & $|\mathrm{Re}\,a_0^{(0)}|\le\frac12$ & 9.81 & 6.46 & $16\pi=50.3$ & 64.7 \\
+(B) 高エネルギーの摂動論 & $|\mathrm{Re}\,a_0^{(1)}|\le|\mathrm{Re}\,a_0^{(0)}|$ & — & — & $4\pi^2=39.5$ & 50.9 \\
+\quad $\sqrt s=10m$ まで & 同上（$\lambda$ の走りを含む） & — & — & 14.5 & 18.7 \\
+(C) 1ループのユニタリー性 & $|\mathrm{Re}(a_0^{(0)}+a_0^{(1)})|\le\frac12$ & 7.87 & 5.19（5.16〜5.22） & — & — \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.6\linewidth]{../figs/pw_d4.pdf}
+\caption{$\phi\phi\to\phi\phi$ の $J=0$ 部分波による限界。上：$(g/m,\lambda)$ の平面（上と右の軸は $\kappa_3$、$\kappa_4$）。黒の実線は (A) の境界（左下が許される）、青の破線は (B) の $\lambda(\sqrt s)\le4\pi^2$、青の点線は $\sqrt s=10m$ まで (B) を求めたときの $\lambda(m)$ の上限、橙の一点鎖線は (C) の $g$ の上限（$\mu=m$）である。帯は $\mu=m/2$ から $2m$ までの範囲で、$\mu=2m$ でも (B) を満たす $\lambda\le26$ でだけ示した。灰色の点線は $\alpha=1$ と $9/8$、赤丸は SM（$\kappa_3=\kappa_4=1$）である。下：部分波ごとのユニタリー性（$g=\lambda=m=1$）。線は $\mathrm{Im}\,a_0^{(1)}$ の $g^4$、$g^2\lambda$、$\lambda^2$ の部分、白丸は $f_0^2$、$-2f_0e_0$、$e_0^2$ である。横軸は重心系の運動量 $p$（$\sqrt s=2\sqrt{m^2+p^2}$）。}
+\label{fig:pw}
+\end{figure}
+
+\FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{処方についての注意。}本ノートは、$\phi^3$ のノートと同じく、タドポールを線形項 $Y$ で打ち消す処方をとる。この処方の $\beta_g$ と $\gamma$ は、対称な $\lambda\phi^4$ 理論を破れた真空のまわりで展開し、タドポールを打ち消さない処方とは異なる（\ref{app:rg}）。物理量はどちらの処方でも同じだが、文献の値とパラメータを比べるときは、処方の違いに注意が要る。
 
 \paragraph{ツールの問題。}手順 (3) で、LoopTools の $C_0$ が、外運動量の2乗がすべて負で互いに異なる点 $(-1,-2,-3)$ で、FF のエラーとともに全く違う値を返すことが分かった。$\phi^3$ のノートでは、閾値より下で外運動量が0でない点（例えば $C_0(m^2,m^2,m^2)$）での誤りを見つけている。今回の点はそれとは別の領域である。当面、$C_0$ の基準には Package-X と COLLIER を使う。
 
-\paragraph{今後。}第~\ref{sec:plan} 節の手順 (8) から順に進める。手順 (8) 以降の手計算（部分波、bounce と前因子）は、進めるにつれて付録に加える。
+\paragraph{今後。}第~\ref{sec:plan} 節の手順 (9) から順に進める。手順 (9) 以降の手計算（bounce と前因子）は、進めるにつれて付録に加える。
 
 \appendix
 
@@ -783,6 +846,36 @@ m^2(t)=\Bigl(m^2-\frac{g^2}{2\lambda}\Bigr)\Bigl(\frac{\lambda(t)}{\lambda}\Bigr
 \end{equation*}
 である。$V''$ の二重根 $\phi_0$ では $V''=V'''=0$ なので $\dd V''/\dd t=0$ である。また $\dd V'''/\dd t=\beta_g+\beta_\lambda\phi_0=3\lambda V'''(\phi_0)/(4\pi)^2=0$ なので、二重根は保たれる。判別式 $D\equiv g^2-2\lambda m^2=\frac23g^2(\frac32-\alpha)$ で書くと $\dd D/\dd t=2g\beta_g-2\beta_\lambda m^2-2\lambda\gamma=4\lambda D/(4\pi)^2$ である。$D\propto\lambda^{4/3}$ と $g^2\propto\lambda^2$ から、再び $\alpha-\frac32\propto\lambda^{-2/3}$ を得る。式~\eqref{eq:vac} の変数では $V''=m^2(1+f+\alpha f^2/6)$ で、その判別式は $1-2\alpha/3$ なので、$\alpha\ge3/2$ は $V''\ge0$ と同じである。$V''<0$ では、\ref{app:rg} の $V_1$ の $\ln V''$ が虚部を持つ。
 
+\section{部分波と摂動的ユニタリー性の導出}\label{app:pw}
+
+\paragraph{規格化。}$\phi^3$ のノートの付録~P と同じである。$\mathcal{M}(s,c)=\sum_\ell(2\ell+1)A_\ell(s)P_\ell(c)$ と展開すると $A_\ell=\frac12\int_{-1}^1\dd c\,P_\ell\mathcal{M}$ である。式~\eqref{eq:unit} に展開を入れ、球面調和関数の加法定理で角度積分を行うと $\mathrm{Im}\,A_\ell=\frac{\beta}{32\pi}|A_\ell|^2$ を得る。$a_\ell\equiv\frac{\beta}{32\pi}A_\ell$ とおけば $\mathrm{Im}\,a_\ell=|a_\ell|^2$ で、$a_\ell$ は円 $|a_\ell-\frac i2|=\frac12$ の上にあり、$|\mathrm{Re}\,a_\ell|\le\frac12$ である。非弾性の終状態（$\sqrt s>3m$ の $2\to3$）が開くと $a_\ell$ は円の内側に入るが、$|\mathrm{Re}\,a_\ell|\le\frac12$ は変わらない。1ループの次数では、式~\eqref{eq:unit} から $\mathrm{Im}\,a_\ell^{(1)}=|a_\ell^{(0)}|^2$ がちょうど成り立つ。
+
+\paragraph{木の部分波。}$\phi^3$ のノートと同じく、$\frac12\int_{-1}^1\dd c\,(t-m^2)^{-1}=-\frac{1}{s-4m^2}\ln\frac{s-3m^2}{m^2}$ で、$u$ の項も同じ値を与える。$s$ チャンネルは $-1/(s-m^2)$、接触項は $\frac12\int(-\lambda)\dd c=-\lambda$ なので、$A_0^{(0)}=g^2F(s)-\lambda$ で本文の $a_0^{(0)}$ を得る。$P_2$ の積分は定数に対して0なので、接触項は $\ell=2$ に寄与しない。$F(4m^2)=5/(3m^2)$、$s\to\infty$ で $F\simeq(2\ln(s/m^2)-1)/s$ で、$F$ は $s\ge4m^2$ で正である（数値でも確かめた）。$\ell=2$ の木の部分波の最大値は $\phi^3$ のノートと同じ $6.6\times10^{-4}g^2/m^2$ で、限界は $\ell=0$ で決まる。
+
+\paragraph{(A) の領域。}各 $s$ で $-\frac12\le\frac{\beta}{32\pi}(g^2F-\lambda)\le\frac12$、すなわち $\lambda-16\pi/\beta\le g^2F\le\lambda+16\pi/\beta$ である。左の不等式は、$\lambda<16\pi$ なら $\lambda-16\pi/\beta<0\le g^2F$ なので常に成り立つ。$\lambda>16\pi$ なら、$s\to\infty$（$\beta\to1$、$F\to0$）で破れる。よって $\lambda<16\pi$ である。右の不等式から $g^2\le G(\lambda)\equiv\min_s(\lambda+16\pi/\beta)/F$ を得る。$s\to4m^2$ では $1/\beta$ が、$s\to\infty$ では $1/F$ が発散するので、最小は途中の $s$ にある。数値で求めると、最小の位置は $\lambda=0$ の $\sqrt s=2.37m$ から $\lambda\to16\pi$ の $2.23m$ まで動く。
+
+\paragraph{1ループの構造。}$m=\mu=1$ とし、式~\eqref{eq:M1} と式~\eqref{eq:Mphys} の変換の項を結合のべきで分けると
+\begin{equation*}
+\begin{aligned}
+(4\pi)^2P&=\sum D_0+\sum_x\Bigl[\frac{2C_0(x)}{x-1}+\frac{B_0(x)}{2(x-1)^2}+\frac{B_0'}{x-1}-\frac{B_0(1)}{2(x-1)^2}\Bigr],\\
+(4\pi)^2Q&=\sum_x\Bigl[2C_0(x)+\frac{B_0(x)+2B_0(1)}{x-1}\Bigr]+B_0',\qquad
+(4\pi)^2R=\frac12\sum_xB_0(x)
+\end{aligned}
+\end{equation*}
+である。$Q$ では、$\mathcal{M}^{(1)}$ の $A_0/(2(x-1)^2)$ と変換の項の $-A_0/(2(x-1)^2)$ が打ち消し合う。$\lambda$ のタドポールによる質量のずれが、極質量に吸収されるからである。$a_0^{(0)}=g^2f_0-\lambda e_0$（$f_0=\beta F/(32\pi)$、$e_0=\beta/(32\pi)$）なので、$|a_0^{(0)}|^2=g^4f_0^2-2g^2\lambda f_0e_0+\lambda^2e_0^2$ で、$\mathrm{Im}\,a_0^{(1)}=|a_0^{(0)}|^2$ は構造ごとに $\mathrm{Im}\,p_0=f_0^2$、$\mathrm{Im}\,q_0=-2f_0e_0$、$\mathrm{Im}\,r_0=e_0^2$ となる。$\ell=2$ では接触項が寄与しないので、$\mathrm{Im}\,q_2=\mathrm{Im}\,r_2=0$ である。$R$ は $B_0$ だけからなるので、$B_0(x)=2-\beta_x\ln\frac{\beta_x+1}{\beta_x-1}$（$\beta_x=\sqrt{1-4/x}$、$x-i0$）の数値積分とも比べた。射影の積分は $\phi^3$ のノートと同じく $c\in[0,1]$ で行って2倍し、変数を $y=\ln((m^2-t)/m^2)$ に替えた。
+
+\paragraph{高エネルギーの $\lambda$ の部分波。}$s\gg m^2$ では $g^2$ の項は $m^2/s$ で小さくなるので、$\lambda$ の項だけが残る。$|x|\gg m^2$ では $B_0(x)\simeq2-\ln(-x/\mu^2)$（$x-i0$）である。$t\simeq-s(1-c)/2$ と $\frac12\int_{-1}^1\ln\frac{1-c}{2}\dd c=\int_0^1\ln z\,\dd z=-1$ から $\frac12\int B_0(t)\dd c=3-L$（$L\equiv\ln(s/\mu^2)$）で、$u$ も同じである。$B_0(s)=2-L+i\pi$ と合わせて $\frac12\int R\,\dd c=(8-3L+i\pi)/(2(4\pi)^2)$ となり
+\begin{equation*}
+a_0=\frac{1}{32\pi}\Bigl[-\lambda+\frac{\lambda^2}{2(4\pi)^2}(8-3L+i\pi)\Bigr]
+\end{equation*}
+を得る。$\mathrm{Im}\,a_0=\lambda^2/(64(4\pi)^2)=(\lambda/(32\pi))^2$ はユニタリー性のとおりである。$\mu=m$ のままだと $-3L$ の項が $s$ とともに大きくなるが、これは $\lambda(\sqrt s)\simeq\lambda[1+3\lambda L/(2(4\pi)^2)]$ の走りの1次の項にあたる。$\mu=\sqrt s$（$L=0$）とすると本文の式になる。グリッドの上端 $\sqrt s=20.1m$ で $\mu=\sqrt s$ とした $\mathrm{Re}\,r_0/e_0$ は $0.0247$ で、$4/(4\pi)^2=0.0253$ との差は $m^2/s$ の補正である。$\lambda(1-4\lambda/(4\pi)^2)$ は $\lambda=(4\pi)^2/8$ で最大値 $(4\pi)^2/16$ をとるので、$\lambda\le4\pi^2$ では $|\mathrm{Re}\,a_0|\le(4\pi)^2/(16\cdot32\pi)=0.098$ である。$|\mathrm{Re}\,a_0|=\frac12$ になるのは $\lambda=\frac{(4\pi)^2}{8}\bigl(1+\sqrt{1+64\pi/(4\pi)^2}\bigr)=49.5$ で、1ループの補正が木を超えたあとである。
+
+\paragraph{走りを含めた $\lambda$ の上限。}\ref{app:rgfit} の $\lambda(\mu)=\lambda/(1-3\lambda\ln(\mu/m)/(4\pi)^2)$ から、$\lambda(E)\le\lambda_{\max}$ は $\lambda\le\lambda_{\max}/(1+3\lambda_{\max}\ln(E/m)/(4\pi)^2)$ と同じである。$\lambda_{\max}=4\pi^2$ では $3\lambda_{\max}/(4\pi)^2=\frac34$ である。木の $\lambda_{\max}=16\pi$ では $3/\pi$ で、$E=10m$、$100m$ でそれぞれ $\lambda\le15.7$、$9.3$ になる。
+
+\paragraph{(C) と $\mu$ の変化。}$\lambda$ を固定して $g$ を0から増やし、閾値の近くの $s$ の格子のどこかで $|\mathrm{Re}\,a_0|=\frac12$ となる最小の $g$ を、格子の走査と二分法で求めた。$\mu$ を変えるときは、$\mu=m$ の結合を\ref{app:rgfit} の解で $\mu$ まで走らせ（$g/\lambda$ は一定）、$a_0^{(1)}$ には第~\ref{sec:results} 節の $\mu\,\partial\mathcal{M}_{\mathrm{phys}}/\partial\mu=[6g^2\lambda\sum_x(x-m^2)^{-1}+3\lambda^2]/(4\pi)^2$ を射影した分を足した。$\frac12\int\sum_x(x-m^2)^{-1}\dd c=-F$ なので、$a_0^{(1)}(\mu)=a_0^{(1)}(m)+\ln(\mu/m)(-6g^2\lambda f_0+3\lambda^2e_0)/(4\pi)^2$ である。
+
+\paragraph{ヒッグスの結合との対応。}式~\eqref{eq:kappa} で $m=m_h=125.25$~GeV、$v=246.22$~GeV とすると、$g/m=(3m_h/v)\kappa_3=1.5261\,\kappa_3$、$\lambda=(3m_h^2/v^2)\kappa_4=0.7763\,\kappa_4$ である。
+
 \begin{thebibliography}{9}
 \small
 \bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。Feynman 則、1ループ積分の一般式（付録~C）、$\overline{\mathrm{MS}}$ の有限部分（付録~G）、検算の手順と道具。
@@ -790,6 +883,7 @@ m^2(t)=\Bigl(m^2-\frac{g^2}{2\lambda}\Bigr)\Bigl(\frac{\lambda(t)}{\lambda}\Bigr
 \bibitem{cw} S. Coleman, E. Weinberg, ``Radiative corrections as the origin of spontaneous symmetry breaking,'' Phys. Rev. D \textbf{7}, 1888 (1973)。1ループの有効ポテンシャル。
 \bibitem{dine92} M. Dine, R. G. Leigh, P. Y. Huet, A. D. Linde, D. A. Linde, ``Towards the theory of the electroweak phase transition,'' Phys. Rev. D \textbf{46}, 550 (1992), hep-ph/9203203。ポテンシャル $\frac12M^2\varphi^2-ET\varphi^3+\frac\lambda4\varphi^4$ の3次元の bounce の作用（式 (22)〜(27)）。
 \bibitem{dunnemin} G. V. Dunne, H. Min, ``Beyond the thin-wall approximation: precise numerical computation of prefactors in false vacuum decay,'' Phys. Rev. D \textbf{72}, 125004 (2005), hep-th/0511156。ポテンシャル $\frac12\Phi^2-\frac12\Phi^3+\frac\alpha8\Phi^4$ の $d=4$ の前因子。
+\bibitem{dgs} L. Di Luzio, R. Gr\"ober, M. Spannowsky, ``Maxi-sizing the trilinear Higgs self-coupling: how large could it be?,'' Eur. Phys. J. C \textbf{77}, 788 (2017), arXiv:1704.02311。$hh\to hh$ の部分波によるユニタリー性の限界（第2.3.1節、式 (28)、(29)）。
 \end{thebibliography}
 
 \end{document}
