@@ -62,7 +62,7 @@ def im_unitarity(s, cth, dps=20):
 
 
 def sigma_tree(s, dps=20):
-    """Eq. (13) (eq:sigma) of the note: sigma = (1/2) int dOmega |M0|^2/(64 pi^2 s)."""
+    """Eq. (15) (eq:sigma) of the note: sigma = (1/2) int dOmega |M0|^2/(64 pi^2 s)."""
     with mp.workdps(dps):
         s = mp.mpf(s)
         p2 = s / 4 - M2
@@ -93,7 +93,7 @@ tools = ("packagex", "looptools", "formcalc", "collier")
 
 # %% [markdown]
 # ## The unitarity integral
-# In the forward direction it must reproduce the optical theorem with the tree cross section (Eq. (13)).
+# In the forward direction it must reproduce the optical theorem with the tree cross section (Eq. (15)).
 
 # %%
 for rs in (2.5, 5, 10):
