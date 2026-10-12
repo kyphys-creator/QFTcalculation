@@ -92,6 +92,33 @@ def predictions(rs, ct, mu):
 
 
 # %% [markdown]
+# ## Inspect: the diagrams that MadLoop evaluates
+#
+# MadGraph draws them when it writes the standalone code (work/ml_OS, work/ml_MSbar; run_madloop_check.sh):
+# born_matrix.ps (tree) and loop_matrix.ps (one loop; the UV counterterm diagrams are counted in the log but not
+# drawn). The OS and MS-bar outputs have the same diagrams; those of work/ml_OS are shown.
+# The label QCD=n is the coupling order PHI, renamed QCD for MadLoop's loop interface (run_madloop_check.sh).
+# Shown before any ./check run, only in the interactive window (needs Ghostscript, `gs`).
+
+# %%
+if INTERACTIVE:
+    import shutil
+    import tempfile
+    from IPython.display import Image, display
+    GS = shutil.which("gs") or "/opt/homebrew/bin/gs"
+    for scheme in ("OS", "MSbar"):
+        with open(os.path.join(HERE, "work", f"ml_{scheme}.log")) as fh:
+            print(f"ml_{scheme}:", next(line.strip() for line in fh if "Contributing diagrams" in line))
+    dML = os.path.join(HERE, "work", "ml_OS", "SubProcesses", "P0_phiphi_phiphi")
+    tmpML = tempfile.mkdtemp()
+    for ps in ("born_matrix.ps", "loop_matrix.ps"):
+        subprocess.run([GS, "-q", "-dSAFER", "-dBATCH", "-dNOPAUSE", "-sDEVICE=png16m", "-r70",
+                        "-sOutputFile=" + os.path.join(tmpML, ps[:-3] + "_%02d.png"), os.path.join(dML, ps)], check=True)
+        for png in sorted(f for f in os.listdir(tmpML) if f.startswith(ps[:-3] + "_")):
+            display(Image(filename=os.path.join(tmpML, png)))
+
+
+# %% [markdown]
 # ## MadLoop at the six points and at several mu_R
 
 # %%

@@ -33,6 +33,16 @@ srcDirDR$ = Which[
    True, Directory[]];
 
 
+(* ::Subsubsection:: *)
+(*Inspect: the diagrams that the dimensional reduction evaluates (hard modes in the loop): one loop for LO and the one-loop matching, two loops for the NLO mass and tadpole, drawn by diagrams_thermal.wl*)
+
+
+If[$Notebooks,
+  With[{f = FileNameJoin[{srcDirDR$, "..", "figs", "diagrams", #}] & /@ {"oneloop.png", "twoloop.png"}},
+    If[And @@ FileExistsQ /@ f, Column[Import /@ f, Spacings -> 2], "run diagrams_thermal.wl first (writes ../figs/diagrams/*.png)"]]
+]
+
+
 (* ::Section:: *)
 (*(a) the model and the dimensional reduction*)
 

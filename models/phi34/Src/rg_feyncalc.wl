@@ -43,12 +43,6 @@ modelRG$ = FileNameJoin[{modelTmpDirRG$, "Phi34_FA", "Phi34_FA"}];
 
 diagsRG$ = InsertFields[CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}],
    {S[1], S[1]} -> {S[1], S[1]}, InsertionLevel -> {Particles}, Model -> modelRG$, GenericModel -> modelRG$];
-FCClearScalarProducts[];
-SetMandelstam[s, t, u, p1, p2, -k1, -k2, m, m, m, m];
-ampRG$ = FCE[FeynAmpDenominatorExplicit[TID[FCFAConvert[CreateFeynAmp[diagsRG$, Truncated -> True, PreFactor -> 1],
-      IncomingMomenta -> {p1, p2}, OutgoingMomenta -> {k1, k2}, LoopMomenta -> {q}, ChangeDimension -> D,
-      List -> False, SMP -> False, DropSumOver -> True], q, ToPaVe -> True]]] /. (-3 m^2 + s + t + u) -> m^2;
-Print["(a) number of diagrams (expect 42): ", Length[CreateFeynAmp[diagsRG$]]];
 
 
 (* ::Subsubsection:: *)
@@ -58,6 +52,14 @@ Print["(a) number of diagrams (expect 42): ", Length[CreateFeynAmp[diagsRG$]]];
 If[$Notebooks,
   Show[#, ImageSize -> 560] & /@ Render[Paint[diagsRG$, ColumnsXRows -> {6, 7}, Numbering -> Simple, DisplayFunction -> Identity]]
 ]
+
+
+FCClearScalarProducts[];
+SetMandelstam[s, t, u, p1, p2, -k1, -k2, m, m, m, m];
+ampRG$ = FCE[FeynAmpDenominatorExplicit[TID[FCFAConvert[CreateFeynAmp[diagsRG$, Truncated -> True, PreFactor -> 1],
+      IncomingMomenta -> {p1, p2}, OutgoingMomenta -> {k1, k2}, LoopMomenta -> {q}, ChangeDimension -> D,
+      List -> False, SMP -> False, DropSumOver -> True], q, ToPaVe -> True]]] /. (-3 m^2 + s + t + u) -> m^2;
+Print["(a) number of diagrams (expect 42): ", Length[CreateFeynAmp[diagsRG$]]];
 
 
 (* M = -I A/(2 Pi)^D (D = 4 - 2 Epsilon) plus the MS-bar counterterms of Eq. (5) on the tree diagrams *)

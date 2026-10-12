@@ -39,6 +39,23 @@ chk = []
 
 
 # %% [markdown]
+# ## Inspect: the diagrams of the one-loop thermal potential, Eqs. (12), (13)
+#
+# The one-loop vacuum loop with M^2(phi) gives Eq. (12); the figure eight with one zero-mode and one hard loop is the first
+# ring term that the daisy sum in Eq. (13) resums; the one-loop 1PI diagrams are the field derivatives of Eq. (12).
+#
+# Drawn by diagrams_thermal.wl (FeynArts) into ../figs/diagrams/; shown before anything is evaluated, only in the
+# interactive window.
+
+# %%
+if INTERACTIVE:
+    from IPython.display import Image, display
+    for name in ("vacuum.png", "oneloop.png"):
+        fig = os.path.join(HERE, "..", "figs", "diagrams", name)
+        display(Image(filename=fig)) if os.path.exists(fig) else print("run diagrams_thermal.wl first:", fig, "is missing")
+
+
+# %% [markdown]
 # ## (a) J_B and its high-temperature expansion
 
 # %%

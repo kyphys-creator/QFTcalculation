@@ -28,6 +28,16 @@ srcDirMT$ = Which[
    True, Directory[]];
 
 
+(* ::Subsubsection:: *)
+(*Inspect: the one-loop diagrams of the matching (hard modes in the loop; DRMatch evaluates them by the functional method), drawn by diagrams_thermal.wl*)
+
+
+If[$Notebooks,
+  With[{f = FileNameJoin[{srcDirMT$, "..", "figs", "diagrams", #}] & /@ {"oneloop.png"}},
+    If[And @@ FileExistsQ /@ f, Column[Import /@ f, Spacings -> 2], "run diagrams_thermal.wl first (writes ../figs/diagrams/*.png)"]]
+]
+
+
 (* ::Section:: *)
 (*(a) the model and DRMatch*)
 

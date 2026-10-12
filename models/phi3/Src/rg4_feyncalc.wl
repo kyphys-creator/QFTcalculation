@@ -42,12 +42,6 @@ modelR4$ = FileNameJoin[{modelTmpDirR4$, "Phi3_FA", "Phi3_FA"}];
 
 diagsR4$ = InsertFields[CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}],
    {S[1], S[1]} -> {S[1], S[1]}, InsertionLevel -> {Particles}, Model -> modelR4$, GenericModel -> modelR4$];
-FCClearScalarProducts[];
-SetMandelstam[s, t, u, p1, p2, -k1, -k2, m, m, m, m];
-ampR4$ = FCE[FeynAmpDenominatorExplicit[TID[FCFAConvert[CreateFeynAmp[diagsR4$, Truncated -> True, PreFactor -> 1],
-      IncomingMomenta -> {p1, p2}, OutgoingMomenta -> {k1, k2}, LoopMomenta -> {q}, ChangeDimension -> D,
-      List -> False, SMP -> False, DropSumOver -> True], q, ToPaVe -> True]]] /. (-3 m^2 + s + t + u) -> m^2;
-Print["(a) number of diagrams (expect 12): ", Length[CreateFeynAmp[diagsR4$]]];
 
 
 (* ::Subsubsection:: *)
@@ -57,6 +51,14 @@ Print["(a) number of diagrams (expect 12): ", Length[CreateFeynAmp[diagsR4$]]];
 If[$Notebooks,
   Show[#, ImageSize -> 560] & /@ Render[Paint[diagsR4$, ColumnsXRows -> {4, 3}, Numbering -> Simple, DisplayFunction -> Identity]]
 ]
+
+
+FCClearScalarProducts[];
+SetMandelstam[s, t, u, p1, p2, -k1, -k2, m, m, m, m];
+ampR4$ = FCE[FeynAmpDenominatorExplicit[TID[FCFAConvert[CreateFeynAmp[diagsR4$, Truncated -> True, PreFactor -> 1],
+      IncomingMomenta -> {p1, p2}, OutgoingMomenta -> {k1, k2}, LoopMomenta -> {q}, ChangeDimension -> D,
+      List -> False, SMP -> False, DropSumOver -> True], q, ToPaVe -> True]]] /. (-3 m^2 + s + t + u) -> m^2;
+Print["(a) number of diagrams (expect 12): ", Length[CreateFeynAmp[diagsR4$]]];
 
 
 (* ::Section:: *)

@@ -27,6 +27,7 @@ try:
     HERE = os.path.dirname(os.path.abspath(__file__))
 except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
     HERE = os.getcwd()
+INTERACTIVE = "ipykernel" in sys.modules
 sys.path.insert(0, HERE)
 
 LOOP = 1 / (4 * math.pi) ** 2
@@ -81,6 +82,22 @@ class EFT3:
         """tau = g T/m^2 (g at mu = m) at which r = r* (+ drs lambda3^2)."""
         f = lambda T: self.params(T)["x"] - drs
         return self.g0 * brentq(f, 0.5, 20.0, xtol=1e-14)
+
+
+# %% [markdown]
+# ## Inspect: the diagrams behind the NLO matching relations (Gould 2021, Eqs. (2.20)-(2.26))
+#
+# One loop: the 3D couplings and the one-loop parts of the mass and tadpole; two loops: their NLO terms.
+#
+# Drawn by diagrams_thermal.wl (FeynArts) into ../figs/diagrams/; shown before anything is evaluated, only in the
+# interactive window.
+
+# %%
+if INTERACTIVE:
+    from IPython.display import Image, display
+    for name in ("oneloop.png", "twoloop.png"):
+        fig = os.path.join(HERE, "..", "figs", "diagrams", name)
+        display(Image(filename=fig)) if os.path.exists(fig) else print("run diagrams_thermal.wl first:", fig, "is missing")
 
 
 # %% [markdown]

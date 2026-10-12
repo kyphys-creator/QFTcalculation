@@ -1,5 +1,6 @@
 #!/bin/bash
 # Cross-checks with the thermal tools of the loop-tools review (research note models/phi34_thermal, step (8)):
+#   0. diagrams_thermal.wl : the diagrams that these checks evaluate (FeynArts)        -> ../figs/diagrams/*.png
 #   1. dralgo_check.wl     : DRalgo 1.5.0 (+ GroupMath 1.1.3), 3D EFT of the single-field model vs Eq. (13);
 #                            (d) the shifted basis at NLO (step (10))
 #   2. matchotter_check.wl : Matchete 0.6.0 / Matchotter, the same reduction                -> results/matchotter_check.csv
@@ -8,6 +9,7 @@
 # About 40 minutes in total.
 cd "$(dirname "$0")"
 mkdir -p results
+wolframscript -file diagrams_thermal.wl | grep -E "^\((a|b|c)\)"
 wolframscript -file dralgo_check.wl | grep -E "^\((a|b|c|d)\)"
 wolframscript -file matchotter_check.wl | grep -E "^\((a|b)\)"
 wolframscript -file pt2gw_check.wl | grep -E "^\((a|b|c|d|e|f)\)"

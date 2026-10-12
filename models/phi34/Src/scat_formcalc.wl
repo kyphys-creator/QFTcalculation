@@ -46,6 +46,17 @@ SetDirectory[workDirFC4$];   (* FormCalc writes its FORM files here *)
 
 diagsFC4$ = InsertFields[CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}],
    {S[1], S[1]} -> {S[1], S[1]}, InsertionLevel -> {Particles}, Model -> modelFC4$, GenericModel -> modelFC4$];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the 42 diagrams (unpatched FeynArts)*)
+
+
+If[$Notebooks,
+  Show[#, ImageSize -> 560] & /@ Render[Paint[diagsFC4$, ColumnsXRows -> {6, 7}, Numbering -> Simple, DisplayFunction -> Identity]]
+]
+
+
 ampFC4$ = CalcFeynAmp[CreateFeynAmp[diagsFC4$], Dimension -> D];
 exprFC4$ = Plus @@ ampFC4$;   (* Amp[process][part1, part2, ...] -> part1 + part2 + ... *)
 Print["(a) number of diagrams: ", Length[CreateFeynAmp[diagsFC4$]]];
@@ -59,15 +70,6 @@ handFC4$ = 1/(4 Pi)^2 (gphi^4 (d0[Sort[{S, T}]] + d0[Sort[{S, U}]] + d0[Sort[{T,
     gphi^2 lamphi Sum[2 c0[x] + (b0[x] + 2 b0[m^2])/(x - m^2) + a0/(2 (x - m^2)^2), {x, {S, T, U}}] +
     lamphi^2/2 Sum[b0[x], {x, {S, T, U}}]);
 Print["(a) M (FormCalc) - Eq. (9) (eq:M1) = ", Simplify[(exprFC4$ /. canonFC4$) - handFC4$], "  (expect 0)"];
-
-
-(* ::Subsubsection:: *)
-(*Inspect: the 42 diagrams (unpatched FeynArts)*)
-
-
-If[$Notebooks,
-  Show[#, ImageSize -> 560] & /@ Render[Paint[diagsFC4$, ColumnsXRows -> {6, 7}, Numbering -> Simple, DisplayFunction -> Identity]]
-]
 
 
 (* ::Subsubsection:: *)

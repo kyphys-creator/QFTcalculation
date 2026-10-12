@@ -45,13 +45,6 @@ insertA6$[tops_, proc_] := InsertFields[tops, proc, InsertionLevel -> {Particles
 
 diagSEA6$  = insertA6$[CreateTopologies[1, 1 -> 1, ExcludeTopologies -> {Tadpoles}], {S[1]} -> {S[1]}];
 diagVtxA6$ = insertA6$[CreateTopologies[1, 1 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}], {S[1]} -> {S[1], S[1]}];
-ampA6$[diags_, in_, out_] := FCE[TID[FCFAConvert[CreateFeynAmp[diags, Truncated -> True, PreFactor -> 1],
-     IncomingMomenta -> in, OutgoingMomenta -> out, LoopMomenta -> {q}, ChangeDimension -> D,
-     List -> False, SMP -> False, DropSumOver -> True], q, ToPaVe -> True]];
-ampSEA6$  = ampA6$[diagSEA6$, {p}, {p}];
-ampVtxA6$ = ampA6$[diagVtxA6$, {p}, {k1, k2}];
-Print["(a) self-energy and vertex amplitudes (expect I Pi^2 gphi^2/2 B0, I Pi^2 gphi^3 C0): ",
-  InputForm /@ {ampSEA6$, ampVtxA6$}];
 
 
 (* ::Subsubsection:: *)
@@ -61,6 +54,15 @@ Print["(a) self-energy and vertex amplitudes (expect I Pi^2 gphi^2/2 B0, I Pi^2 
 If[$Notebooks,
   Row[Flatten[Show[#, ImageSize -> 200] & /@ Render[Paint[#, ColumnsXRows -> 1, Numbering -> Simple, DisplayFunction -> Identity]] & /@ {diagSEA6$, diagVtxA6$}], "    "]
 ]
+
+
+ampA6$[diags_, in_, out_] := FCE[TID[FCFAConvert[CreateFeynAmp[diags, Truncated -> True, PreFactor -> 1],
+     IncomingMomenta -> in, OutgoingMomenta -> out, LoopMomenta -> {q}, ChangeDimension -> D,
+     List -> False, SMP -> False, DropSumOver -> True], q, ToPaVe -> True]];
+ampSEA6$  = ampA6$[diagSEA6$, {p}, {p}];
+ampVtxA6$ = ampA6$[diagVtxA6$, {p}, {k1, k2}];
+Print["(a) self-energy and vertex amplitudes (expect I Pi^2 gphi^2/2 B0, I Pi^2 gphi^3 C0): ",
+  InputForm /@ {ampSEA6$, ampVtxA6$}];
 
 
 (* ::Section:: *)

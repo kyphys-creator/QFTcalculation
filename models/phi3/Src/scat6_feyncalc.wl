@@ -55,6 +55,17 @@ modelS6$ = FileNameJoin[{modelTmpDirS6$, "Phi3_FA", "Phi3_FA"}];
 diagsS6$ = InsertFields[CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}],
    {S[1], S[1]} -> {S[1], S[1]}, InsertionLevel -> {Particles}, Model -> modelS6$, GenericModel -> modelS6$];
 Print["(a) number of diagrams (expect 12): ", Length[CreateFeynAmp[diagsS6$]]];
+
+
+(* ::Subsubsection:: *)
+(*Inspect: the 12 diagrams (the same as in d = 4)*)
+
+
+If[$Notebooks,
+  Show[#, ImageSize -> 560] & /@ Render[Paint[diagsS6$, ColumnsXRows -> {4, 3}, Numbering -> Simple, DisplayFunction -> Identity]]
+]
+
+
 FCClearScalarProducts[];
 SetMandelstam[s, t, u, p1, p2, -k1, -k2, m, m, m, m];
 ampS6$ = FCE[FeynAmpDenominatorExplicit[TID[FCFAConvert[CreateFeynAmp[diagsS6$, Truncated -> True, PreFactor -> 1],
@@ -66,15 +77,6 @@ canonS6$ = {D0[m^2, m^2, m^2, m^2, a_, b_, m^2, m^2, m^2, m^2] :> d0[Sort[{a, b}
 handS6$ = I Pi^2 gphi^4 (d0[Sort[{s, t}]] + d0[Sort[{s, u}]] + d0[Sort[{t, u}]] +
     Sum[2 c0[x]/(x - m^2) + b0[x]/(2 (x - m^2)^2), {x, {s, t, u}}]);
 Print["(a) A - I Pi^2 g^4 [same form as Eq. (17)] = ", Simplify[(ampS6$ /. canonS6$) - handS6$], "  (expect 0)"];
-
-
-(* ::Subsubsection:: *)
-(*Inspect: the 12 diagrams (the same as in d = 4)*)
-
-
-If[$Notebooks,
-  Show[#, ImageSize -> 560] & /@ Render[Paint[diagsS6$, ColumnsXRows -> {4, 3}, Numbering -> Simple, DisplayFunction -> Identity]]
-]
 
 
 (* ::Subsubsection:: *)
