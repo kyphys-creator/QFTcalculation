@@ -1,0 +1,70 @@
+# xsec_mg5.mg5 -- tree-level phi phi -> psi psibar and phi phi -> phi psi psibar with the PsYukawa UFO
+# (research note models/yukawa_ps, step (6)).  Run from Src/:  mg5_aMC xsec_mg5.mg5 > work/xsec_mg5.log  (run_xsec_check.sh)
+# Imports a copy of generated/PsYukawa_UFO in work/ (MadGraph converts UFOs to Python 3 in place).
+# Fixed-energy phi beams (lpp = 0), m = 1, M = 0.7, y = lambda = 1 (param_card defaults), no cuts.
+# Launches, in this order (xsec_numeric.py relies on it): phi phi > psi psi~ at sqrt(s) = 3, 5, 10, then
+# phi phi > phi psi psi~ at sqrt(s) = 3, 5, 10 (7 diagrams), 20000 events each; then, at sqrt(s) = 10, the same process with
+# only the lambda y diagram (/ psi, 20000 events) and with only the six y^3 diagrams (/ phi, 100000 events).
+set automatic_html_opening False
+import model ./work/PsYukawa_UFO
+generate phi phi > psi psi~
+output work/mg5_xsecBbar -f
+launch work/mg5_xsecBbar
+0
+set lpp1 0
+set lpp2 0
+set nevents 20000
+set ebeam1 1.5
+set ebeam2 1.5
+0
+launch work/mg5_xsecBbar
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_xsecBbar
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate phi phi > phi psi psi~
+output work/mg5_xsec3 -f
+launch work/mg5_xsec3
+0
+set lpp1 0
+set lpp2 0
+set nevents 20000
+set ebeam1 1.5
+set ebeam2 1.5
+0
+launch work/mg5_xsec3
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_xsec3
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate phi phi > phi psi psi~ / psi
+output work/mg5_xsec3lam -f
+launch work/mg5_xsec3lam
+0
+set lpp1 0
+set lpp2 0
+set nevents 20000
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate phi phi > phi psi psi~ / phi
+output work/mg5_xsec3y -f
+launch work/mg5_xsec3y
+0
+set lpp1 0
+set lpp2 0
+set nevents 100000
+set ebeam1 5.0
+set ebeam2 5.0
+0
+quit
