@@ -94,3 +94,33 @@ wolframscript -code "Print /@ {PacletInstall[File[\"$D/dralgo/DRalgo.paclet\"], 
 #   checks (not in tests/run_all.sh)
 ~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src/run_cosmotransitions_check.sh
 ~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src/run_thermal_tools_check.sh      # about 40 minutes
+
+## 9. PhaseTracer2, BSMPT, TransitionListener (added 2026-10-11, for models/phi34_thermal step (11))
+#   scripts and logs: ~/hep/src/build_{phasetracer,bsmpt,transitionlistener}.sh, ~/hep/src/logs/
+export SDKROOT="$(xcrun --show-sdk-path)"
+brew install nlopt                                                   # 2.11.0 (eigen, boost, gsl, nlohmann-json were present)
+#   ALGLIB 4.08.0 (not in Homebrew): static library from the C++ GPL source
+mkdir -p ~/hep/src/alglib-dl && cd ~/hep/src/alglib-dl
+curl -fL -o alglib-4.08.0.cpp.gpl.tgz https://www.alglib.net/translator/re/alglib-4.08.0.cpp.gpl.tgz
+mkdir -p ~/hep/src/alglib-4.08.0 && tar xzf alglib-4.08.0.cpp.gpl.tgz -C ~/hep/src/alglib-4.08.0 && cd ~/hep/src/alglib-4.08.0
+mkdir -p obj && for f in alglib-cpp/src/*.cpp; do clang++ -O2 -std=c++14 -fPIC -c $f -o obj/$(basename $f .cpp).o; done
+ar rcs libalglib.a obj/*.o && mkdir -p ~/hep/include/alglib && cp alglib-cpp/src/*.h ~/hep/include/alglib/ && cp libalglib.a ~/hep/lib/
+#   PhaseTracer 2.2.2
+cd ~/hep && git clone -q --branch 2.2.2 --depth 1 https://github.com/PhaseTracer/PhaseTracer PhaseTracer-2.2.2
+cd PhaseTracer-2.2.2 && mkdir -p build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Release -DALGLIB_INCLUDES=$HOME/hep/include/alglib -DALGLIB_LIBRARIES=$HOME/hep/lib/libalglib.a && make -j6
+cd .. && ./bin/run_1D_test_model && ./bin/unit_tests          # 11 of 13 test cases pass (2 off by 0.16%, 0.76%)
+#   BSMPT 3.2.0 with Homebrew dependencies (no conan, no libcmaes, no tests)
+cd ~/hep && git clone -q --branch 3.2.0 --depth 1 https://github.com/BSMPT/BSMPT BSMPT-3.2.0 && cd BSMPT-3.2.0
+mkdir -p cmake-shim && printf 'find_package(GSL MODULE REQUIRED)\n' > cmake-shim/GSLConfig.cmake   # brew's GSL has no CMake file
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DUseLibCMAES=OFF -DUseNLopt=ON -DBSMPTCompileBaryo=OFF -DBUILD_TESTING=OFF \
+  -DGSL_DIR=$HOME/hep/BSMPT-3.2.0/cmake-shim -DCMAKE_PREFIX_PATH=$(brew --prefix)
+cmake --build build -j6        # all executables; standalone/ examples fail (they need the test library TestCompares)
+#   TransitionListener 2.1.0 in its own conda env
+~/miniforge3/bin/conda create -y -n tl -c conda-forge python=3.12 numpy scipy matplotlib pandas h5py pyyaml pillow tqdm rich \
+  cycler mpi4py mpich getdist corner ultranest ipykernel
+cd ~/hep && git clone -q --branch v2.1.0 --depth 1 https://github.com/tasicarl/TransitionListener TransitionListener-2.1.0
+cd TransitionListener-2.1.0 && ~/miniforge3/envs/tl/bin/pip install --no-deps -e . && ~/miniforge3/envs/tl/bin/python tests/check_installation.py
+#   checks
+~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src/run_review_tools_check.sh            # about 5 minutes
+~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh --no-mg5 --thermal              # all thermal checks, about 50 minutes

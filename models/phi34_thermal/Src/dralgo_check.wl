@@ -12,11 +12,13 @@
 (*at one-loop accuracy (LO + one-loop matching + the 3D one-loop term -(1/12 Pi) m3^(3/2)) against Eq. (13) of the note,*)
 (*V + t phi + (T^2/24) M^2 - (T/12 Pi)(M^2 + Pi)^(3/2) - (M^4/64 Pi^2) L_b, L_b = 2 ln(mubar/T) + 2 gamma_E - 2 ln 4 Pi:*)
 (*the phi-derivative of the difference must vanish identically.  (c) the size of the two-loop (NLO) thermal mass and its*)
-(*effect on the leading-order spinodal temperature (alpha = 0.9, kappa_4 = 1).  Writes Src/results/dralgo_check.csv.*)
+(*effect on the leading-order spinodal temperature (alpha = 0.9, kappa_4 = 1).  (d) step (10): in the basis without the cubic term*)
+(*(Gould 2021, Eq. (3.3)) the NLO linear coefficient times sqrt(T) equals the T-independent b of the note, and r - r* (r* of the*)
+(*lattice, Gould Eq. (3.5)) does not depend on the 3D scale mu3.  Writes Src/results/dralgo_check.csv.*)
 
 
 (* ::Text:: *)
-(*How to run.  Batch:  wolframscript -file dralgo_check.wl ; only the lines starting with (a), (b), (c) are printed.  Interactive:  ~/hep/bin/wopen dralgo_check.wl, then "Run All Code"; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]).  DRalgo needs GroupMath (in ~/Library/Wolfram/Applications).  Run in a kernel of its own (not together with Matchete).*)
+(*How to run.  Batch:  wolframscript -file dralgo_check.wl ; only the lines starting with (a), (b), (c), (d) are printed.  Interactive:  ~/hep/bin/wopen dralgo_check.wl, then "Run All Code"; the cells under "Inspect" headings run only in the notebook (If[$Notebooks, ...]).  DRalgo needs GroupMath (in ~/Library/Wolfram/Applications).  Run in a kernel of its own (not together with Matchete).*)
 
 
 (* ::Section:: *)
@@ -105,6 +107,24 @@ Print["(c) leading-order tau_sp without and with the two-loop thermal mass: ", {
 
 
 (* ::Section:: *)
+(*(d) the shifted basis at NLO (step (10)): the linear coefficient is T-independent, r - r* is mu3-independent*)
+
+
+(* power counting of Gould (2021): lambda, g/T, m^2/T^2, t/T^3 all of order e; NLO = O(e^2).  Shift phi3 -> phi3 - g3/lambda3
+   (Gould Eq. (3.3)): sigma~3 = t3 + g3^3/(3 lambda3^2) - g3 m3^2/lambda3, r = m3^2 - g3^2/(2 lambda3). *)
+nlo$ = {lam3d -> cpl$[lam3d], gg3d -> cpl$[gg3d]};
+t3full$ = tLO$ + (tNLO$ /. nlo$); m3full$ = mLO$ + (mNLO$ /. nlo$); g3$ = cpl$[gg3d]; l3$ = cpl$[lam3d];
+sigT$ = (t3full$ + g3$^3/(3 l3$^2) - g3$ m3full$/l3$) Sqrt[T];
+bNote$ = tt + gg^3/(3 lam^2) - gg msq/lam;                                  (* b of the note, Eq. (14) *)
+scale$ = {lam -> ep lam, gg -> ep gg, msq -> ep msq, tt -> ep tt};
+dsig$ = Simplify[Normal[Series[(sigT$ - bNote$) /. scale$, {ep, 0, 2}]]];
+Print["(d) sigma~3 sqrt(T) - b at NLO (order e^2): ", dsig$];
+rr$ = m3full$ - g3$^2/(2 l3$); rstar$ = (rs0 + Log[3 \[Mu]3/l3$]/(6 (4 Pi)^2)) l3$^2;
+dmu3$ = Simplify[Normal[Series[D[rr$ - rstar$, \[Mu]3] /. scale$, {ep, 0, 2}]], \[Mu]3 > 0];
+Print["(d) d(r - r*)/d mu3 at NLO: ", dmu3$];
+
+
+(* ::Section:: *)
 (*Output*)
 
 
@@ -119,5 +139,6 @@ writeCSV$[FileNameJoin[{srcDirDR$, "results", "dralgo_check.csv"}],
    {"tt3d_LO", ToString[InputForm[Expand[tLO$]]]}, {"tt3d_NLO", ToString[InputForm[tNLO$]]},
    {"beta4D_equal_zeroT_note", betaOK$}, {"dV_difference_dphi", ToString[InputForm[diff$]]},
    {"twoloop_mass_over_Pi", ToString[InputForm[rel$]]},
-   {"tau_sp_LO_alpha0.9", tau0$}, {"tau_sp_LO_with_twoloop_mass", tau2$}}];
+   {"tau_sp_LO_alpha0.9", tau0$}, {"tau_sp_LO_with_twoloop_mass", tau2$},
+   {"shifted_linear_minus_b_NLO", ToString[InputForm[dsig$]]}, {"d_r_minus_rstar_d_mu3_NLO", ToString[InputForm[dmu3$]]}}];
 Print["(c) wrote results/dralgo_check.csv"];

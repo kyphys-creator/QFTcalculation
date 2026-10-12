@@ -1,9 +1,19 @@
 #!/bin/bash
 # Re-run every check of the loop-calculation stack (environment.pdf, Sec. 5).
-# Usage: ./run_all.sh [--no-mg5]      Output goes to ./out and ./out/log.txt
+# Usage: ./run_all.sh [--no-mg5] [--thermal]      Output goes to ./out and ./out/log.txt
+#   --thermal also re-runs the cross-checks of the thermal tools (environment.pdf, Sec. 7) in
+#   models/phi34_thermal/Src: CosmoTransitions, DRalgo, Matchotter, PT2GWFinder + FindBounce, PhaseTracer, BSMPT,
+#   TransitionListener (about 50 minutes; they rewrite the CSV files in Src/results).
 # Test files are named test_*: a file called formcalc.wl in the working directory would
 # shadow the FormCalc package (macOS file names are case-insensitive).
 cd "$(dirname "$0")"
+NO_MG5=0; THERMAL=0
+for a in "$@"; do
+  case "$a" in
+    --no-mg5) NO_MG5=1 ;;
+    --thermal) THERMAL=1 ;;
+  esac
+done
 export PATH="$HOME/hep/bin:$PATH"
 export SDKROOT="${SDKROOT:-$(xcrun --show-sdk-path)}"
 mkdir -p out
@@ -30,10 +40,19 @@ python3 compare_ufo.py out/feynrules/Standard_Model_UFO/vertices.py \
 step "e+e- -> mu+mu- analytic"
 python3 ee_mumu_analytic.py | tee -a "$log"
 
-if [ "$1" != "--no-mg5" ]; then
+if [ "$NO_MG5" = 0 ]; then
   step "MadGraph (e+e- -> mu+mu-, gg -> H loop-induced)"
   rm -rf out/mg5_ee_mumu out/mg5_ggh
   mg5_aMC mg5_test.mg5 > out/mg5.log 2>&1
   grep -E 'Cross-section' out/mg5.log | tee -a "$log"
+fi
+if [ "$THERMAL" = 1 ]; then
+  TH=../../models/phi34_thermal/Src
+  step "Thermal tools: CosmoTransitions (models/phi34_thermal, step (7))"
+  $TH/run_cosmotransitions_check.sh 2>&1 | tee -a "$log"
+  step "Thermal tools: DRalgo, Matchotter, PT2GWFinder + FindBounce (step (8))"
+  $TH/run_thermal_tools_check.sh 2>&1 | tee -a "$log"
+  step "Thermal tools: PhaseTracer, BSMPT, TransitionListener (step (11))"
+  $TH/run_review_tools_check.sh 2>&1 | grep -v -i warning | tee -a "$log"
 fi
 echo "done; full log in $log"

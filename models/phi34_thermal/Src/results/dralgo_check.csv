@@ -10,3 +10,5 @@ dV_difference_dphi,0
 twoloop_mass_over_Pi,(lam*(-4*EulerGamma + Lb + 48*Log[Glaisher]))/(32*Pi^2)
 tau_sp_LO_alpha0.9,4.917867784303224
 tau_sp_LO_with_twoloop_mass,4.896864359934246
+shifted_linear_minus_b_NLO,0
+d_r_minus_rstar_d_mu3_NLO,0
