@@ -35,13 +35,13 @@
 
 \title{$\phi^3$ 理論：模型の定義と1ループの構造（$d=4,\,6$）}
 \author{}
-\date{2026年10月10日}
+\date{2026年10月12日}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-新しく組んだループ計算の環境を検算し、その使い方を練習するために、質量 $m$ の実スカラー1つの $\phi^3$ 理論を時空次元 $d=4$ と $d=6$ で調べた。まず、Feynman 則、1ループの紫外発散、$\overline{\mathrm{MS}}$ の対抗項、繰り込み群の係数、$\phi\phi\to\phi\phi$ の1ループの振幅とその S 行列要素を手で求めた。$d=4$ では質量の対抗項だけが残り、$d=6$ では場・質量・結合のすべてが繰り込まれて $\beta(g)=-3g^3/(4(4\pi)^3)$（漸近自由）となる。次に、これらを FeynCalc、FormCalc、Package-X、LoopTools、COLLIER、FeynRules（NLOCT）、MadGraph（MadLoop）と突き合わせた。発散部分と対抗項は記号として一致し、有限部分は相対 $10^{-10}$ 以内（多くは $10^{-13}$ 以下）で一致した。散乱振幅の $\mu$ 依存から読み取った繰り込み群の係数も、手計算および5ループの文献の1ループの項と一致した。この過程で、LoopTools の閾値より下の $C_0$ の誤りと、高エネルギーでの COLLIER の箱図の精度の低下が見つかった。さらに、この模型の物理を三つ調べた。$d=6$ の90°散乱の有効結合は、繰り込み群で改良すると漸近自由のとおりに小さくなる。$d=4$ の部分波のユニタリー性からは $g/m\lesssim8$〜$10$ を得る。下に有界でないポテンシャルの偽の真空 $\phi=0$ については、$d=4$ の bounce の作用 $S_B=817.71\,m^2/g^2$ と1ループの前因子 $\ln\mathcal D=1.522$ を求め、前因子は文献の別の方法と $2\times10^{-9}$ で一致した。宇宙年齢の間に崩れない条件 $g/m<1.408$（$m=125$~GeV）は、ユニタリー性の限界より約6倍強い。$d=6$ では、インスタントンの大きさの積分が紫外で発散し、崩壊率は切断の尺度での結合で決まるので、連続極限では偽の真空は定義できない。導出はすべて付録に省略なく載せる。
+新しく組んだループ計算の環境を検算し、その使い方を練習するために、質量 $m$ の実スカラー1つの $\phi^3$ 理論を時空次元 $d=4$ と $d=6$ で調べた。まず、Feynman 則、1ループの紫外発散、$\overline{\mathrm{MS}}$ の対抗項、繰り込み群の係数、$\phi\phi\to\phi\phi$ の1ループの振幅とその S 行列要素を手で求めた。$d=4$ では質量の対抗項だけが残り、$d=6$ では場・質量・結合のすべてが繰り込まれて $\beta(g)=-3g^3/(4(4\pi)^3)$（漸近自由）となる。次に、これらを FeynCalc、FormCalc、Package-X、LoopTools、COLLIER、FeynRules（NLOCT）、MadGraph（MadLoop）と突き合わせた。発散部分と対抗項は記号として一致し、有限部分は相対 $10^{-10}$ 以内（多くは $10^{-13}$ 以下）で一致した。散乱振幅の $\mu$ 依存から読み取った繰り込み群の係数も、手計算および5ループの文献の1ループの項と一致した。この過程で、LoopTools の閾値より下の $C_0$ の誤りと、高エネルギーでの COLLIER の箱図の精度の低下が見つかった。さらに、この模型の物理を三つ調べた。$d=6$ の90°散乱の有効結合は、繰り込み群で改良すると漸近自由のとおりに小さくなる。$d=4$ の部分波のユニタリー性からは $g/m\lesssim8$〜$10$ を得る。下に有界でないポテンシャルの偽の真空 $\phi=0$ については、$d=4$ の bounce の作用 $S_B=817.71\,m^2/g^2$ と1ループの前因子 $\ln\mathcal D=1.522$ を求め、前因子は文献の別の方法と $2\times10^{-9}$ で一致した。宇宙年齢の間に崩れない条件 $g/m<1.408$（$m=125$~GeV）は、ユニタリー性の限界より約6倍強い。$d=6$ では、インスタントンの大きさの積分が紫外で発散し、崩壊率は切断の尺度での結合で決まるので、連続極限では偽の真空は定義できない。最後に、2ループの道具（Kira、FIRE、AMFlow、pySecDec、feyntrop、TSIL）を入れ、$d=4$ の2ループの自己エネルギーを求めた。IBP 簡約は Kira と FIRE で記号として一致し、8個のマスター積分は四つの数値法で一致した。1ループの $\overline{\mathrm{MS}}$ の質量の対抗項を挿入するだけで極は消え、有限部分は Martin と Robertson の結果と相対 $10^{-13}$ 以内で一致した。極質量は $m_{\mathrm p}^2/m^2=1-5.90\times10^{-4}(g/m)^2-1.23\times10^{-5}(g/m)^4$ で、2ループの項は $g/m\approx7$ で1ループの項に並ぶ。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -50,9 +50,9 @@
 
 本ノートの問いは二つである。\textbf{第一に、$\phi^3$ 理論の1ループの紫外発散と繰り込みの構造は、$d=4$ と $d=6$ でどう違うか。そして、どの量をどの手段で突き合わせれば、計算環境の各部品を独立に検算できるか。第二に、検算した道具を使うと、この模型の物理について何が言えるか。}とくに、繰り込み群、摂動論が使える結合の範囲、下に有界でないポテンシャルの偽の真空の寿命を調べる。この問いを立てる理由は、ループ計算の環境を組み直したばかりで、その各部品がこちらの意図どおりに動くことを、手計算で答えが分かる模型で確かめたいからである~\cite{env}。$\phi^3$ 理論は3点結合を持つ最も簡単な相互作用理論であり、1ループの量はすべて手で計算できる。しかも次元によって性格が大きく変わる。$d=4$ では結合定数が質量次元を持つ超繰り込み可能な理論で、Package-X と LoopTools がそのまま使える。$d=6$ では繰り込み可能で漸近自由な理論になり、場・質量・結合のすべてが繰り込まれる~\cite{srednicki}。$d=6$ の積分は Package-X と LoopTools の守備範囲（$D=4-2\epsilon$）の外にあるので、FeynCalc を $D\neq4$ で使う練習にもなる。ただし、次元をずらす関係を通せば、これらのツールも $d=6$ に使える（第~\ref{sec:checks} 節）。
 
-求める量は五つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、質量の走り、場の異常次元と、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) $\phi\phi\to\phi\phi$ の木の振幅と、$d=4$ での1ループの振幅、およびその S 行列要素。(v) 応用として、$d=6$ の散乱での漸近自由、$d=4$ の部分波のユニタリー性の限界、偽の真空の崩壊率（$d=4$ と $d=6$）。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
+求める量は六つである。(i) Feynman 則と対称性因子。(ii) 1ループのスカラー積分 $I_1,I_2,I_3$ の紫外発散部分。(iii) $\overline{\mathrm{MS}}$ の1ループ対抗項と、繰り込み群の係数（$d=6$ の $\beta$ 関数、質量の走り、場の異常次元と、$d=4$ の質量の走り）。両方の次元で、繰り込まれた1PI 関数も求める。(iv) $\phi\phi\to\phi\phi$ の木の振幅と、$d=4$ での1ループの振幅、およびその S 行列要素。(v) 応用として、$d=6$ の散乱での漸近自由、$d=4$ の部分波のユニタリー性の限界、偽の真空の崩壊率（$d=4$ と $d=6$）。(vi) $d=4$ の2ループの自己エネルギーとその有限性、極質量。手計算とツールの間で求める一致は、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、1ループの量と散乱の検算（手順 (1)〜(8)）の結果を示す。第~\ref{sec:rg} 節で、繰り込み群の検算と、(v) のうち $d=6$ の漸近自由（手順 (9)〜(11)）を扱う。第~\ref{sec:pheno} 節で、(v) のうち摂動論の限界と真空の安定性（手順 (12)〜(15)）を調べる。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:instanton6} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で、1ループの量と散乱の検算（手順 (1)〜(8)）の結果を示す。第~\ref{sec:rg} 節で、繰り込み群の検算と、(v) のうち $d=6$ の漸近自由（手順 (9)〜(11)）を扱う。第~\ref{sec:pheno} 節で、(v) のうち摂動論の限界と真空の安定性（手順 (12)〜(15)）を調べる。第~\ref{sec:twoloop} 節で、(vi) の2ループの自己エネルギーを2ループの道具で求める（手順 (16)）。第~\ref{sec:discussion} 節で未決の点と今後の手順をまとめる。導出は\ref{app:rules}〜\ref{app:twoloop} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -112,6 +112,9 @@ $S_B$ & 偽の真空 $\phi=0$ の崩壊を決める bounce の作用（式~\eqre
 $\mathcal D$ & 崩壊率の1ループの前因子を決める、繰り込んだ汎関数行列式の比（式~\eqref{eq:rate}） \\
 $n(\rho),\ \mathcal D_6$ & $d=6$ のインスタントンの大きさの分布と、その1ループの定数（式~\eqref{eq:inst6}） \\
 $\alpha,\ \alpha_{\mathrm{eff}}$ & $d=6$ のループの展開のパラメータ $\alpha\equiv g^2/(4\pi)^3$ と、90°散乱で測った有効結合（式~\eqref{eq:aeff}） \\
+$J[\nu_1,\ldots,\nu_5],\ J_1[\nu_1,\nu_2]$ & 2ループの積分族 se2 と1ループの族 se1 の積分（測度 $\dd^Dq/(i\pi^{D/2})$、式~\eqref{eq:sigma2}） \\
+$\hat\Sigma$ & 2ループの自己エネルギー $\Sigma^{(2)}(16\pi^2)^2/g^4$（式~\eqref{eq:sigma2}） \\
+$A,B,I,S,T,U,M$ & 2ループの自己エネルギーのマスター積分（手順 (16) だけで使う。記号は TSIL~\cite{tsil} のもの、\ref{app:twoloop}） \\
 $E,\ V,\ L,\ I$ & 図の外線、頂点、ループ、内線の数 \\
 \bottomrule
 \end{tabularx}
@@ -441,6 +444,19 @@ B_0^{(6)\prime}(m^2)=\frac{17}{18}-\frac{\pi}{2\sqrt3}-\frac L6,\qquad L\equiv\l
 \label{eq:rg6}
 \end{equation}
 なので、和が0になる条件は $\beta(g)=-3g^3/(4(4\pi)^3)$、すなわち式~\eqref{eq:beta6} である（\ref{app:scat6}）。逆に、1ループの振幅の $\mu$ 依存から $\beta$ 関数を読み取れる。虚部には $d=6$ のユニタリー性の関係（式~\eqref{eq:unit} の位相空間を $d=6$ のものに替えたもの）が成り立つ。
+
+\paragraph{2ループの自己エネルギー（$d=4$）。}$d=4$ の2ループの1PI の自己エネルギーの図は、タドポールを含むものを除くと二つある。kite と、1ループの自己エネルギーを内線に挿入した図（rainbow）で、どちらも対称性因子は $\frac12$ である。タドポールを含む図は、ループの内側に付くものも含めて、$Y$ の挿入と各次数で打ち消し合う（\ref{app:twoloop}）。これに、1ループの泡への質量の対抗項 $\delta_m$ の挿入を加える。前提4の $\overline{\mathrm{MS}}$ をそのまま2ループで使うと（$\bar\mu=m$）、
+\begin{equation}
+\Sigma^{(2)}=\frac{g^4}{(16\pi^2)^2}\,\hat\Sigma,\qquad
+\hat\Sigma=\frac{e^{2\epsilon\gamma_E}}2\bigl(J[1,1,1,1,1]+J[2,1,1,0,1]\bigr)-\frac{e^{\epsilon\gamma_E}}{2\epsilon}\,J_1[2,1]
+\label{eq:sigma2}
+\end{equation}
+となる（\ref{app:twoloop}）。$J[\nu_1,\ldots,\nu_5]$ は、伝播関数 $D_1=q_1^2-m^2$、$D_2=(q_1-p)^2-m^2$、$D_3=q_2^2-m^2$、$D_4=(q_2-p)^2-m^2$、$D_5=(q_1-q_2)^2-m^2$ の積分族 se2 の積分、$J_1[\nu_1,\nu_2]$ は $q^2-m^2$、$(q-p)^2-m^2$ の族 se1 の積分で、測度はループごとに $\dd^Dq/(i\pi^{D/2})$ である。kite は $J[1,1,1,1,1]$、rainbow は $J[2,1,1,0,1]$、対抗項の挿入は $J_1[2,1]$ にあたる。式~\eqref{eq:omega} によれば、2ループの2点関数は $\omega=-2$ で全体の発散を持たない。rainbow の内側の泡の発散は外運動量によらない定数で、$\delta_m$ の挿入とちょうど打ち消す。したがって $\hat\Sigma$ は有限で、2ループの対抗項は要らない。これは\ref{app:rg} の、$d=4$ では $\delta_m$ が1ループの値のままという主張の $O(g^4)$ の形である。極質量は、1ループの式~\eqref{eq:mpole} に $\Sigma^{(2)}$ と $\Sigma^{(1)}\Sigma^{(1)\prime}$ を加えて
+\begin{equation}
+m_{\mathrm p}^2=m^2+\Sigma^{(1)}(m^2)+\Sigma^{(2)}(m^2)+\Sigma^{(1)}(m^2)\,\Sigma^{(1)\prime}(m^2)+O(g^6)
+\label{eq:mpole2}
+\end{equation}
+となる。2ループの積分は手では閉じた形にならないので、$\hat\Sigma$ の値は道具を突き合わせて決める。
 
 \section{検算の計画}\label{sec:plan}
 
@@ -1033,15 +1049,81 @@ $\alpha(m)=0.1$、$\Lambda=10^3m$ & 切断に依存する部分/普遍的な部�
 \label{fig:inst6}
 \end{figure}
 
+\section{2ループの自己エネルギー}\label{sec:twoloop}
+
+この節では、$d=4$ の2ループの自己エネルギー（式~\eqref{eq:sigma2}）を求め、その有限性と極質量を確かめる。手計算で得られるのは、図の値の組み立てと有限性の議論までである。積分の値は、環境の記録~\cite{env}に新しく加えた2ループの道具を突き合わせて決める。IBP 簡約の Kira 3.1~\cite{kira3} と FIRE 7.1~\cite{fire7}、マスター積分を数値で求める AMFlow 2.0~\cite{amflow,amflow2}、pySecDec 1.6.6~\cite{pysecdec,pysecdec16}、feyntrop 1.1.0~\cite{feyntrop}、2ループの自己エネルギーの基底積分を計算する TSIL 1.46~\cite{tsil} である。手順は次の一つで、四つの部分からなる。(16) (a) FeynArts で図を作り、タドポールを含む図を数える。(b) 振幅を積分族に写し、Kira と FIRE で IBP 簡約して突き合わせる。(c) マスター積分を AMFlow、TSIL、pySecDec、feyntrop で求めて比べる。(d) $\hat\Sigma$ の極が消えることを確かめ、有限部分と極質量を Martin と Robertson（MR05）の結果~\cite{tsil}と比べる。
+
+\paragraph{手順 (16)：図と IBP 簡約。}FeynArts の2ループの自己エネルギーの図は10個だった。タドポールを含まないものは3個で、そのうち1粒子既約なものは2個（kite と rainbow、どちらも対称性因子 $\frac12$）である。残りの7個はタドポールを含み、$Y$ の挿入と打ち消し合う（\ref{app:twoloop}）。二つの振幅は、運動量のずらしで $J[1,1,1,1,1]$ と $J[2,1,1,0,1]$ に移った。ずらした被積分関数と族の伝播関数の積の差は、有理式として0だった。これらと対抗項の $J_1[2,1]$ を、FeynHelpers 2 を通して Kira と FIRE で簡約した。どちらにも、同じマスター積分を優先するよう指定した。FIRE は対称性で等しい積分（点の付く線だけが違う日没型など）を別々に残すので、FeynCalc の \texttt{FCLoopFindIntegralMappings} で一つにそろえてから比べた。三つの積分の簡約は、記号として完全に一致した。$m=\bar\mu=1$ の単位で（$s=p^2$）、
+\begin{equation}
+\begin{aligned}
+\hat\Sigma={}&e^{2\epsilon\gamma_E}\Bigl[\frac M2-\frac{(2-3\epsilon)(2-s)}{2s(4-s)}S+\frac{(1-s)(9-s)}{3s(4-s)}T+\frac{(1-\epsilon)(2-s)}{2s(4-s)}I+\frac{1-\epsilon}3AB
+-\frac{5+2\epsilon-(2-\epsilon)s}{6(4-s)}U\Bigr]\\
+&+\frac{e^{\epsilon\gamma_E}}{2\epsilon(4-s)}\bigl[(1-\epsilon)A-(1-2\epsilon)B\bigr]
+\end{aligned}
+\label{eq:shat}
+\end{equation}
+を得た。マスター積分は、$A=J_1[1,0]$、$B=J_1[1,1]$、$AB=J[1,1,1,0,0]$、$I=J[1,0,1,0,1]$（真空の日没型）、$S=J[0,1,1,0,1]$（日没型）、$T=J[0,1,1,0,2]$（点の付いた日没型）、$U=J[1,1,1,0,1]$（伝播関数4本）、$M=J[1,1,1,1,1]$（kite）である。優先した7個のうち $A^2=J[1,0,1,0,0]$ は、係数が0になって現れない。係数の極は $1/\epsilon$ の一つだけで、対抗項の項にしかない。
+
+\paragraph{マスター積分。}マスター積分を、$s=-1$、$1$、$5$、$12$ の4点で求めた。閾値の下、質量殻の上、2粒子と3粒子の閾値（$s=4$、$9$）の間、両方の上である。AMFlow は補助質量の流れの方法で、Kira の IBP 簡約と微分方程式から、各マスター積分を30桁で $\epsilon^2$ まで求めた。比べるときは、すべて TSIL の「太字」の積分の規格化（ユークリッドの測度 $e^{\epsilon\gamma_E}\dd^Dk/\pi^{D/2}$、\ref{app:twoloop}）にそろえた。結果を表~\ref{tab:twoloop} に示す。TSIL の倍精度の値は、8個のマスター積分のすべての $\epsilon$ の係数で、AMFlow と相対 $7.5\times10^{-14}$ 以内で一致した。pySecDec の扇形分解は、閾値の上では積分路を変形して、2ループのマスター積分5個を AMFlow と相対 $2\times10^{-9}$ 以内で再現した。差は pySecDec の誤差の見積もりの4倍以内である。feyntrop のトロピカル・モンテカルロは、有限な kite $M$ を4点とも誤差（相対 $10^{-4}$〜$7\times10^{-4}$）の範囲で再現した。四つの方法は互いに独立で、TSIL は $s$ についての微分方程式、AMFlow は補助質量についての微分方程式、pySecDec と feyntrop は Feynman パラメータの数値積分を使う。
+
+\begin{table}[tbp]
+\centering\small
+\caption{2ループのマスター積分と自己エネルギーの照合（手順 (16)、$m=\bar\mu=1$、$s=-1,1,5,12$）。上：基準の AMFlow（30桁）に対する各道具の最大の相対差（$\epsilon^{-2}$〜$\epsilon^0$ の係数、$A$、$B$ は $\epsilon^1$ まで）。括弧の中は、差を道具の誤差の見積もりで割った値の最大である。pySecDec と feyntrop の値は乱数を使う積分なので、実行ごとに少し変わる（ここでは2回の実行を丸めた上限）。下：$\hat\Sigma$ の有限部分と、MR05 の $-(M+V)/2$（TSIL）。}
+\label{tab:twoloop}
+\begin{tabular}{lll}
+\toprule
+道具 & マスター積分 & AMFlow との最大の相対差 \\
+\midrule
+TSIL 1.46 & $A$、$B$、$AB$、$I$、$S$、$T$、$U$、$M$ & $7.5\times10^{-14}$ \\
+pySecDec 1.6.6 & $I$、$S$、$T$、$U$、$M$ & $7\times10^{-14}$、$7\times10^{-13}$、$3\times10^{-11}$、$2\times10^{-9}$、$2\times10^{-9}$（4） \\
+feyntrop 1.1.0 & $M$ & $7\times10^{-4}$（1.3） \\
+\bottomrule
+\end{tabular}
+
+\vspace{2mm}
+\begin{tabular}{rlll}
+\toprule
+$s$ & $\hat\Sigma$（Kira/FIRE、AMFlow、対抗項の挿入） & MR05 $-(M+V)/2$（TSIL） & 相対差 \\
+\midrule
+$-1$ & $-0.205437322270473$ & $-0.205437322270473$ & $4\times10^{-16}$ \\
+$1$ & $-0.315426585153060$ & $-0.315426585153060$ & $8\times10^{-16}$ \\
+$5$ & $-0.256656896254338-1.454523904827652\,i$ & $-0.256656896254224-1.454523904827685\,i$ & $8\times10^{-14}$ \\
+$12$ & $0.477472802362202-0.134534340278554\,i$ & $0.477472802362205-0.134534340278578\,i$ & $5\times10^{-14}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{有限性、MR05 との照合、極質量。}式~\eqref{eq:shat} に AMFlow のマスター積分を入れると、4点すべてで $\hat\Sigma$ の $1/\epsilon^2$ と $1/\epsilon$ の係数は、AMFlow の30桁の値の上で29桁以上まで0になった。1ループの $\overline{\mathrm{MS}}$ の質量の対抗項の挿入だけで、2ループの自己エネルギーは有限になる。有限部分は、MR05 が3点と4点の結合を持つスカラーについて求めた $\overline{\mathrm{MS}}$ の2ループの自己エネルギーの、4点の結合を0とした $-(M+V)/2$~\cite{tsil}と、相対 $8\times10^{-14}$ 以内で一致した（表~\ref{tab:twoloop}、図~\ref{fig:twoloop}）。MR05 は、自分たちの基底積分で書いた式を与えているので、この一致は、図の組み立て、IBP 簡約、マスター積分、$\overline{\mathrm{MS}}$ の取り決めのすべてを独立に確かめる。$\hat\Sigma$ は $s=4$ で尖り、そこから虚部が生じる。3粒子の閾値 $s=9$ を越えるところは、図では目立たない。
+
+極質量は、式~\eqref{eq:mpole2} に $B(m^2)=2-\pi/\sqrt3$、$m^2B'(m^2)=0.209200$ と $\hat\Sigma(m^2)=-0.3154266$ を入れて
+\begin{equation}
+\begin{gathered}
+\frac{m_{\mathrm p}^2}{m^2}=1+a_1\frac{g^2}{m^2}+a_2\frac{g^4}{m^4},\\
+a_1=-\frac{2-\pi/\sqrt3}{32\pi^2}=-5.8956\times10^{-4},\qquad
+a_2=\frac{\hat\Sigma(m^2)+B(m^2)\,m^2B'(m^2)/4}{(16\pi^2)^2}=-1.2259\times10^{-5}
+\end{gathered}
+\label{eq:mpole2num}
+\end{equation}
+となる。$g=m$ では $m_{\mathrm p}^2/m^2=0.999398176791919$ で、TSIL に付属の MR05 の極質量の計算（4点の結合を0としたもの）と全桁で一致した。2ループの項と1ループの項の比は $(a_2/a_1)(g/m)^2=0.0208\,(g/m)^2$ である。手順 (14) の宇宙論的な上限 $g/m=1.408$ では4\%だが、$g/m\approx6.9$ で1になる。極質量の摂動展開は、手順 (12) のユニタリー性の限界（$g/m\lesssim8$〜$10$）とほぼ同じ結合で使えなくなる。
+
+\paragraph{道具について。}2ループの道具には、使ううえでの注意が四つあった。第一に、この Mac の Apple clang 16 で最適化を強くした（\texttt{-O3}）Kira は、すべての積分を0に簡約した。付属の試験も通らない。\texttt{-O2} で構築したものは正しい~\cite{env}。第二に、FeynHelpers が目標の積分から決める Kira の種（$r=5$、分子なし）では、日没型のマスター積分が一つ多く残った。分子を含む種（$s=2$）で、FIRE と同じ数に減った。第三に、FIRE は伝播関数2本の積分を正しく扱えないと警告する（FIRE の issue 40）。$J_1[2,1]$ では、対称性で等しい二つのタドポールを別々に残したが、そろえると Kira と一致した。第四に、AMFlow の \texttt{SolveIntegrals} の3番目の引数は、$L$ ループの族の $\epsilon^{-2L}$ から数えた次数である。2ループの族に2を与えると $1/\epsilon^2$ の項しか求めず、残りは警告なしに0になる。また、既定の C++ の微分方程式のソルバは3回の実行のうち2回途中で止まったので、Mathematica のソルバを使った。細部は\ref{app:details} にまとめる。スクリプトは \texttt{twoloop4\_feyncalc.wl}、\texttt{twoloop4\_amflow.wl}、\texttt{twoloop4\_tsil.c}、\texttt{twoloop4\_numeric.py}、実行スクリプトは \texttt{run\_twoloop4\_check.sh} である。
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.55\linewidth]{../figs/twoloop4_d4.pdf}
+\caption{2ループの自己エネルギー $\hat\Sigma=\Sigma^{(2)}(16\pi^2)^2/g^4$（$d=4$、$\overline{\mathrm{MS}}$、$\mu=m$）。線は MR05 の $-(M+V)/2$（TSIL）、点は Kira/FIRE の IBP 簡約と AMFlow のマスター積分から組み立てた値である。点線は2粒子と3粒子の閾値 $s=4m^2$、$9m^2$ である。}
+\label{fig:twoloop}
+\end{figure}
+
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$\phi\phi\to\phi\phi$ については、on-shell の処方との関係を式~\eqref{eq:Mphys} と\ref{app:lsz} で求めた。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。
+\paragraph{決まっていないこと。}有限部分の規約は $\overline{\mathrm{MS}}$ とした。物理的な質量や留数を直接与える on-shell 条件で繰り込む場合は、$\overline{\mathrm{MS}}$ との差が有限の対抗項になり、$d=4$ でも $\delta_Z$ に有限の寄与が生じる。$\phi\phi\to\phi\phi$ については、on-shell の処方との関係を式~\eqref{eq:Mphys} と\ref{app:lsz} で求めた。$d=6$ の有限部分は、次元をずらす関係を通して Package-X と COLLIER でも検算できた。ただし、この関係で扱えるのは1ループの PaVe 関数である。2ループ以上の $d=6$ の積分を数値で確かめるには、2ループ用に推奨された pySecDec などが要る~\cite{review}。これらは手順 (16) で入れた。
 
-\paragraph{タドポールの扱い。}本ノートでは、$Y$ でタドポールを打ち消す方法をとった。これは1ループでは、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除くことと同じである。2ループ以上では、ループの内側にタドポールが付いた図も $Y$ の高次の項で消えるので、同じ除き方で済むかどうかを確かめる必要がある。
+\paragraph{タドポールの扱い。}本ノートでは、$Y$ でタドポールを打ち消す方法をとった。これは1ループでは、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除くことと同じである。2ループでは、ループの内側にタドポールが付いた図も $Y$ の高次の項で消え、同じ除き方で済むことを手順 (16) で確かめた（\ref{app:twoloop}）。
 
-\paragraph{ツールの問題。}検算の途中で見つかったツールの問題は三つである。一つ目は LoopTools の $C_0$ である（手順 (3)）。誤りはコンパイラの版や最適化によらないので、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。この誤りは $C_{00}$ を通して $d=6$ の $C_0^{(6)}$ にも現れた。当面、$C_0$ と $C_{00}$ には Package-X と COLLIER を使い、LoopTools は $A_0$、$B_0$ と、それから作る $A_{00}$、$B_{00}$ にだけ使う。ただし、手順 (5) に現れた $C_0(m^2,m^2,x)$（$x<0$ または $x>4m^2$）と $D_0$（物理的な点）は LoopTools でも正しく、手順 (10) では誤った $C_0^{(6)}$ の $\mu$ 依存は正しかった。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。二つ目は COLLIER の高エネルギーの箱図である（手順 (11)、表~\ref{tab:af6tools}）。既定の方式 COLI では虚部だけが徐々にずれ、DD は $\sqrt s\gtrsim10^3m$ で全く誤った値を返した。手順 (5)〜(10) の点は $\sqrt s\le10m$ で、そこでは COLLIER は正しい。精度の目安を返す関数（\texttt{GetAccFlag\_cll} など）は今回は使っていない。高エネルギーや質量の比が大きい計算では、LoopTools か Package-X の高精度の値で確かめる必要がある。三つ目は MadGraph の $2\to3$ の断面積で、$\sqrt s=10m$ で自前の積分より $0.8\%$ 低く、走らせるたびのばらつきが示された誤差より大きい（手順 (7)）。行列要素は点ごとに一致するので、位相空間の積分の問題と考えられるが、原因は調べていない。
+\paragraph{ツールの問題。}検算の途中で見つかったツールの問題は三つである。一つ目は LoopTools の $C_0$ である（手順 (3)）。誤りはコンパイラの版や最適化によらないので、この Mac（Apple M3）上での LoopTools 2.16 の問題である可能性が高いが、原因は突き止めていない。この誤りは $C_{00}$ を通して $d=6$ の $C_0^{(6)}$ にも現れた。当面、$C_0$ と $C_{00}$ には Package-X と COLLIER を使い、LoopTools は $A_0$、$B_0$ と、それから作る $A_{00}$、$B_{00}$ にだけ使う。ただし、手順 (5) に現れた $C_0(m^2,m^2,x)$（$x<0$ または $x>4m^2$）と $D_0$（物理的な点）は LoopTools でも正しく、手順 (10) では誤った $C_0^{(6)}$ の $\mu$ 依存は正しかった。Fortran から \texttt{C0(1D0,1D0,1D0,1D0,1D0,1D0)} を呼ぶと止まるという最小の再現例があるので、開発者に報告できる。二つ目は COLLIER の高エネルギーの箱図である（手順 (11)、表~\ref{tab:af6tools}）。既定の方式 COLI では虚部だけが徐々にずれ、DD は $\sqrt s\gtrsim10^3m$ で全く誤った値を返した。手順 (5)〜(10) の点は $\sqrt s\le10m$ で、そこでは COLLIER は正しい。精度の目安を返す関数（\texttt{GetAccFlag\_cll} など）は今回は使っていない。高エネルギーや質量の比が大きい計算では、LoopTools か Package-X の高精度の値で確かめる必要がある。三つ目は MadGraph の $2\to3$ の断面積で、$\sqrt s=10m$ で自前の積分より $0.8\%$ 低く、走らせるたびのばらつきが示された誤差より大きい（手順 (7)）。行列要素は点ごとに一致するので、位相空間の積分の問題と考えられるが、原因は調べていない。手順 (16) で見つかった2ループの道具の注意は、第~\ref{sec:twoloop} 節にまとめた。
 
-\paragraph{今後。}手順 (1)〜(15) はすべて終わった。偽の真空の崩壊で残っているのは、$d=6$ のインスタントンの1ループの定数 $\mathcal D_6$ である。部分波の比と1次の Born 項は閉じた形で分かっているので（\ref{app:instanton6}）、残りは2次と3次の項の $\overline{\mathrm{MS}}$ の値である。3次の項には、6次元の三角形の図を運動量空間で積分する必要がある。次の模型としては、4点結合を加えた $\phi^3+\phi^4$ の模型（実スカラー一重項）に進むと、二つの道が開ける。一つはヒッグスの自己結合の現象論である。もう一つは、有限温度での一次相転移で、重力波や原始ブラックホールにつながる。そのほかの候補は三つある。一つ目は、$d=4$ の2ループの自己エネルギーを計算し、1ループの対抗項の挿入だけで有限になることを確かめることである。これは、$d=4$ の繰り込み群の流れが全次数で正しいという\ref{app:rg} の主張を直接確かめる。二つ目は、手順 (7) で見つかった、$\sqrt s=10m$ の $2\to3$ での MadGraph の $0.8\%$ のずれの原因を調べることである。三つ目は2ループで、環境の記録で保留したツール（Kira、FIRE、pySecDec など）を入れる必要がある。
+\paragraph{今後。}手順 (1)〜(16) はすべて終わった。偽の真空の崩壊で残っているのは、$d=6$ のインスタントンの1ループの定数 $\mathcal D_6$ である。部分波の比と1次の Born 項は閉じた形で分かっているので（\ref{app:instanton6}）、残りは2次と3次の項の $\overline{\mathrm{MS}}$ の値である。3次の項には、6次元の三角形の図を運動量空間で積分する必要がある。次の模型としては、4点結合を加えた $\phi^3+\phi^4$ の模型（実スカラー一重項）に進むと、二つの道が開ける。一つはヒッグスの自己結合の現象論である。もう一つは、有限温度での一次相転移で、重力波や原始ブラックホールにつながる。そのほかの候補は二つある。一つ目は、手順 (7) で見つかった、$\sqrt s=10m$ の $2\to3$ での MadGraph の $0.8\%$ のずれの原因を調べることである。二つ目は、手順 (16) でそろった2ループの道具で、$d=6$ の2ループの $\beta$ 関数と異常次元を5ループの文献~\cite{bgks}と照合することである。
 
 \appendix
 
@@ -1716,6 +1798,46 @@ S_B=\frac{C_4m^2}{g^2}=\frac{C_4m_{\mathrm p}^2}{g_{\mathrm{os}}^2}+\frac{C_4}{(
 
 \paragraph{拘束インスタントンの範囲。}質量のあるときには、$\rho$ を拘束して $m^2\rho^2$ について展開する（拘束インスタントン~\cite{affleck}）。作用は $S_0+3m^2\rho^2/\alpha+O(m^4\rho^4\ln(m\rho)/\alpha)$ で、本文はその最低次を使った。普遍的な部分を決める $\rho\sim\sqrt{\alpha/3}/m$ では $m^2\rho^2\sim\alpha/3$ なので、この展開は使える。ただし、積分全体は小さい $\rho$ で決まるので、拘束インスタントンの扱いは崩壊率の主要部分には効かない。
 
+\section{2ループの自己エネルギーの導出}\label{app:twoloop}
+
+\paragraph{図の値。}Feynman 則（頂点 $-ig\mu^\epsilon$、伝播関数 $i/(q^2-m^2)$、質量の対抗項 $-i\delta_m$）のとおりに、2ループの 1PI の図の値を書く。$D_1=q_1^2-m^2$、$D_2=(q_1-p)^2-m^2$、$D_3=q_2^2-m^2$、$D_4=(q_2-p)^2-m^2$、$D_5=(q_1-q_2)^2-m^2$ とする。kite（伝播関数5本）と自己エネルギーを挿入した図（rainbow）の対称性因子はどちらも $\frac12$ で、
+\begin{equation*}
+V_2^{\mathrm{kite}}=\frac12(-ig\mu^\epsilon)^4\int\!\!\int\frac{\dd^Dq_1\,\dd^Dq_2}{(2\pi)^{2D}}\frac{i^5}{D_1D_2D_3D_4D_5}
+=\frac{ig^4\mu^{4\epsilon}}2\int\!\!\int\frac{\dd^Dq_1\,\dd^Dq_2}{(2\pi)^{2D}}\frac{1}{D_1D_2D_3D_4D_5}
+\end{equation*}
+である。rainbow は $D_1D_2D_3D_4D_5$ を $D_1^2D_2D_3D_5$ に替えたものである。FeynArts の振幅（\texttt{PreFactor -> 1}）は、運動量のずらし（kite は $q_1\to-q_1$、rainbow は $q_1\to p-q_1$、$q_2\to-q_2$）でこの形に移る。1ループの泡の伝播関数の一方に $-i\delta_m$ を挿入すると、$\frac i{D_1}\to\frac i{D_1}(-i\delta_m)\frac i{D_1}$ で図は $\delta_m/D_1$ 倍になる。二本の線のどちらに挿入してもよいので、
+\begin{equation*}
+V_2^{\mathrm{ct}}=g^2\delta_m\,\mu^{2\epsilon}\int\frac{\dd^Dq}{(2\pi)^D}\frac1{D_1^2D_2}
+\end{equation*}
+である。
+
+\paragraph{測度の換算と $\overline{\mathrm{MS}}$。}前提4の $\overline{\mathrm{MS}}$ は、スケールを $\mu^2=\bar\mu^2e^{\gamma_E}/(4\pi)$ と取り直した MS である。2ループでは、1ループの書き方（対抗項を $\Delta_{\mathrm{UV}}$ に比例させる）ではなく、この定義をそのまま使う。両者は1ループでは一致するが、2ループでは、1ループの対抗項の $O(\epsilon)$ の部分が部分発散の $1/\epsilon$ に掛かるので、有限の差が出る。Wick 回転 $q^0=iq_E^0$ で $\int\dd^Dq/(i\pi^{D/2})\,(-q^2+m^2)^{-\nu}=\int\dd^Dq_E/\pi^{D/2}\,(q_E^2+m^2)^{-\nu}$ であり、ループ1つごとに
+\begin{equation*}
+\mu^{2\epsilon}\int\frac{\dd^Dq}{(2\pi)^D}=\frac{i}{16\pi^2}\,e^{\epsilon\gamma_E}\bar\mu^{2\epsilon}\int\frac{\dd^Dq}{i\pi^{D/2}}
+\end{equation*}
+となる。以下 $\bar\mu=m=1$ とし、$J[\nu_1,\ldots,\nu_5]\equiv\int\!\!\int\frac{\dd^Dq_1\dd^Dq_2}{(i\pi^{D/2})^2}\prod D_i^{-\nu_i}$（族 se2）、$J_1[\nu_1,\nu_2]\equiv\int\frac{\dd^Dq}{i\pi^{D/2}}D_1^{-\nu_1}D_2^{-\nu_2}$（族 se1）と書く。1ループの自己エネルギーは $\Sigma^{(1)}=iV_2^{(1)}=-\frac{g^2}{32\pi^2}e^{\epsilon\gamma_E}J_1[1,1]$ で、$J_1[1,1]=\Gamma(\epsilon)\int_0^1\dd x\,(1-x(1-x)p^2)^{-\epsilon}=1/\epsilon+O(1)$ だから、$\overline{\mathrm{MS}}$ の質量の対抗項は $\delta_m=g^2/(32\pi^2\epsilon)$ である（$\Sigma=\Sigma^{(1)}+\delta_m$）。これを $\Sigma=iV_2$ に入れると
+\begin{equation*}
+\Sigma^{(2)}=\frac{g^4}{(16\pi^2)^2}\hat\Sigma,\qquad
+\hat\Sigma=\frac12e^{2\epsilon\gamma_E}\bigl(J[1,1,1,1,1]+J[2,1,1,0,1]\bigr)-\frac{e^{\epsilon\gamma_E}}{2\epsilon}J_1[2,1]
+\end{equation*}
+を得る（式~\eqref{eq:sigma2}）。kite と rainbow では $i\cdot\frac{ig^4}{2}\cdot(\frac{i}{16\pi^2})^2=\frac{g^4}{2(16\pi^2)^2}$、対抗項では $i\cdot g^2\delta_m\cdot\frac{i}{16\pi^2}=-\frac{g^2\delta_m}{16\pi^2}$ が係数である。
+
+\paragraph{有限であること。}式~\eqref{eq:omega} の $d=4$ の形では、2点関数（$E=2$）の2ループの図は $V=4$ で $\omega=-2$ であり、全体の発散はない。部分の図を見ると、kite の1ループの部分は三角形（$\omega=-2$）で有限である。rainbow の内側の泡は $\omega=0$ で発散するが、その極は外運動量によらない定数 $-g^2/(32\pi^2\epsilon)=-\delta_m$ で、同じ線への $\delta_m$ の挿入とちょうど打ち消す。残る外側の積分は $\omega<0$ で収束する。したがって $\hat\Sigma$ の極は消え、2ループの対抗項 $\delta_m^{(2)}$、$\delta_Z^{(2)}$ は要らない。これは\ref{app:rg} の「$\delta_m$ は1ループの値のまま」の $O(g^4)$ での確認である。
+
+\paragraph{タドポールを含む図。}FeynArts の2ループの自己エネルギーの10個の図のうち7個は、1点の部分の図（タドポール）を含む。タドポール $T$ は零運動量の線1本と3点の頂点を通して残りの図につながる。同じ位置に線形項 $Y\phi$ の頂点 $iY$ を付けた図は、同じ線と頂点を通してつながる。$Y$ を各次数で1点関数が消えるように選ぶと、その次数で $T+iY=0$ なので、二つの図は打ち消し合う。1ループのタドポールを含む2ループの図は $Y^{(1)}$ の挿入と、2ループのタドポールを含む図は $Y^{(2)}$ と消える。ループの内側に付いた場合も、外線に付いた場合と同じ議論が成り立つ。したがって、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除けばよい。残る3個のうち1個は1粒子既約でない（1ループの泡を2つつないだもの）ので、1PI の図は2個である。
+
+\paragraph{マスター積分と TSIL の規格化。}IBP 簡約の後、$\hat\Sigma$ は八つのマスター積分 $J_1[1,0]$（$A$）、$J_1[1,1]$（$B$）、$J[1,1,1,0,0]$（$AB$）、$J[1,0,1,0,1]$（真空の日没型 $I$）、$J[0,1,1,0,1]$（日没型 $S$）、$J[0,1,1,0,2]$（$T$）、$J[1,1,1,0,1]$（伝播関数4本の $U$）、$J[1,1,1,1,1]$（kite $M$）で書ける（式~\eqref{eq:shat}）。TSIL の「太字」の積分は、ユークリッドの測度 $e^{\epsilon\gamma_E}\dd^Dk/\pi^{D/2}$ をループごとに持ち、伝播関数は $1/(k^2+m^2)$ である~\cite{tsil}。上の Wick 回転から、$L$ ループの積分について
+\begin{equation*}
+J_{\mathrm{TSIL}}[\nu]=(-1)^{\sum\nu}e^{L\epsilon\gamma_E}J[\nu]
+\end{equation*}
+である。たとえば $A$ は $e^{\epsilon\gamma_E}\Gamma(-1+\epsilon)=-1/\epsilon-1+O(\epsilon)$ で、TSIL の $-x/\epsilon+A(x)$（$A(x)=x(\ln x-1)$、$x=Q^2=1$）と一致する。MR05 の記法では、kite は $M$、rainbow は $V=-\partial U/\partial y$ の太字の形、対抗項の積分は $B(x',x)$ の太字の形である。MR05 が求めた $\overline{\mathrm{MS}}$ の2ループの自己エネルギーは、$\phi^4$ の結合を0とすると $\Pi^{(2)}=-\frac{g^4}2(M+V)/(16\pi^2)^2$ で（$M$、$V$ は繰り込まれた関数）、本ノートの $\Sigma^{(2)}$ にあたる。
+
+\paragraph{極質量。}完全な伝播関数の極 $s_{\mathrm p}=m_{\mathrm p}^2$ は $s_{\mathrm p}=m^2+\Sigma(s_{\mathrm p})$ を満たす。$\Sigma=\Sigma^{(1)}+\Sigma^{(2)}+O(g^6)$ を $s=m^2$ のまわりで展開すると
+\begin{equation*}
+m_{\mathrm p}^2=m^2+\Sigma^{(1)}(m^2)+\Sigma^{(2)}(m^2)+\Sigma^{(1)}(m^2)\,\Sigma^{(1)\prime}(m^2)+O(g^6)
+\end{equation*}
+である。$\Sigma^{(1)}=-g^2B/(32\pi^2)$、$B(m^2)=2-\pi/\sqrt3$、$B'(m^2)=\int_0^1\dd x\,x(1-x)/(1-x+x^2)$ を使う。
+
 \section{検算の細部}\label{app:details}
 
 本文の手順の段落から、数値の方法とツールの使い方の細部をここに移した。
@@ -1746,6 +1868,8 @@ S_B=\frac{C_4m^2}{g^2}=\frac{C_4m_{\mathrm p}^2}{g_{\mathrm{os}}^2}+\frac{C_4}{(
 
 \paragraph{手順 (13)。}運動項 $T$ とポテンシャル項 $U$ は、Derrick の関係 $(d-2)T+dU=0$ を相対 $3\times10^{-14}$ で満たした。
 
+\paragraph{手順 (16)。}Kira の job ファイルは、上位の扇形 $(1,1,1,1,1)$、$r=7$、$s=2$ と優先するマスター積分を、スクリプトが直接書いた。FeynHelpers の \texttt{KiraCreateJobFile} が目標の積分から決める $r=5$、$s=0$ では、$J[0,1,1,0,3]$ が3個目の日没型のマスター積分として残った。Kira は同じフォルダに前回のデータベースがあると「すでに簡約済み」として計算をやり直さないので、作業フォルダは毎回作り直した。FIRE の start ファイルは、FIRE の Mathematica の部分と LiteRed で作った（Mathematica 14.2.1）。FIRE 7.1 は zstd なしで構築したので、圧縮は lz4 にした。優先するマスター積分は \texttt{\#preferred} で与えた。AMFlow は Kira で簡約し、Mathematica の微分方程式のソルバを使った。既定の C++ のソルバ（WSTP でつなぐ）では、3回の実行のうち2回が、小さな1ループの部分系を解くところで止まった。AMFlow はキャッシュを実行中のファイルの隣に作るので、関数 \texttt{CacheDirectory} を定義し直して作業フォルダに向けた。\texttt{SolveIntegrals} の精度は30桁、次数は2ループの族で6、1ループの族で4（どちらも $\epsilon^2$ まで）とした。pySecDec は、マスター積分ごとに \texttt{LoopPackage} を作り、\texttt{additional\_prefactor} に $(-1)^{\sum\nu}e^{2\epsilon\gamma_E}$ を与えて TSIL の規格化の値を直接出させた。\texttt{I} は sympy の虚数単位なので、パッケージの名前に使えない。生成したパッケージの構築には GNU make 4 が要る。相対の目標精度は $10^{-8}$ とした。feyntrop は $10^8$ 点で、閾値の上（$s=5$、$12$）では変形の強さを $\Lambda=0.5$ とした。TSIL は倍精度で構築した（Apple silicon では long double は double と同じ）。太字の $I$ は TSIL が直接は返さないので、TSIL の \texttt{SetBoldS} の式を $s=0$ で使い、繰り込まれた $I(x,y,z)$ から組み立てた。極が消えることの確かめでは、係数を $\epsilon$ で展開した厳密な値と AMFlow の展開の積を、数として足し合わせた。
+
 \begin{thebibliography}{9}
 \small
 \bibitem{srednicki} M. Srednicki, \textit{Quantum Field Theory} (Cambridge University Press, 2007)。$d=6$ の $\phi^3$ 理論の繰り込み（第9--28章）。$d=6-\epsilon_{\mathrm S}$ の規約を使う。本ノートの式~\eqref{eq:ct6} との照合は、同書の値を記憶から引いたもので、式番号は未照合である（同書は手元にない）。手順 (10) では、代わりに RG 関数を~\cite{bgks} と照合した。
@@ -1762,6 +1886,14 @@ S_B=\frac{C_4m^2}{g^2}=\frac{C_4m_{\mathrm p}^2}{g_{\mathrm{os}}^2}+\frac{C_4}{(
 \bibitem{peskin} M. E. Peskin, D. V. Schroeder, \textit{An Introduction to Quantum Field Theory} (Addison-Wesley, 1995)。Feynman パラメータと $D$ 次元の積分（第6章、付録A）。LSZ の簡約公式と、完全な伝播関数の極と留数（第7章）。
 \bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}、2026年10月9日）。
 \bibitem{review} Feynman 図のループ計算支援ツールの比較レビュー（本リポジトリ \nolinkurl{loop_tools_review/loop_tools_review.pdf}）。
+\bibitem{kira3} F. Lange, J. Usovitsch, Z. Wu, ``Kira 3: integral reduction with efficient seeding and optimized equation selection,'' Comput. Phys. Commun. \textbf{322}, 109999 (2026), arXiv:2505.20197。
+\bibitem{fire7} A. V. Smirnov, M. Zeng, ``FIRE 7: Automatic Reduction with Modular Approach,'' Comput. Phys. Commun. \textbf{325}, 110200 (2026), arXiv:2510.07150。
+\bibitem{amflow} X. Liu, Y.-Q. Ma, ``AMFlow: a Mathematica package for Feynman integrals computation via auxiliary mass flow,'' Comput. Phys. Commun. \textbf{283}, 108565 (2023), arXiv:2201.11669。
+\bibitem{amflow2} R.-J. Huang, X. Liu, Y.-Q. Ma, ``AMFlow 2.0: significant algorithmic and software improvements for Feynman integral evaluation,'' arXiv:2607.08477。
+\bibitem{pysecdec} S. Borowka, G. Heinrich, S. Jahn, S. P. Jones, M. Kerner, J. Schlenk, T. Zirke, ``pySecDec: a toolbox for the numerical evaluation of multi-scale integrals,'' Comput. Phys. Commun. \textbf{222}, 313 (2018), arXiv:1703.09692。
+\bibitem{pysecdec16} G. Heinrich, S. P. Jones, M. Kerner, V. Magerya, A. Olsson, J. Schlenk, ``Numerical scattering amplitudes with pySecDec,'' Comput. Phys. Commun. \textbf{295}, 108956 (2024), arXiv:2305.19768。
+\bibitem{feyntrop} M. Borinsky, H. J. Munch, F. Tellander, ``Tropical Feynman integration in the Minkowski regime,'' Comput. Phys. Commun. \textbf{292}, 108874 (2023), arXiv:2302.08955。
+\bibitem{tsil} S. P. Martin, D. G. Robertson, ``TSIL: a program for the calculation of two-loop self-energy integrals,'' Comput. Phys. Commun. \textbf{174}, 133 (2006), hep-ph/0501132（MR05）。基底積分の太字の形と $\overline{\mathrm{MS}}$ で繰り込んだ形、3点と4点の結合を持つスカラーの2ループの極質量（配布物の \texttt{scalarpole.c}）。
 \end{thebibliography}
 
 \end{document}

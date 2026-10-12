@@ -132,3 +132,68 @@ mkdir -p ~/hep/src/wallgo-dl && ~/miniforge3/envs/qft/bin/pip download --no-deps
 ~/miniforge3/envs/qft/bin/pip install --no-deps ~/hep/src/wallgo-dl/wallgo-1.1.2-py3-none-any.whl
 #   checks
 ~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src/run_wallgo_check.sh                 # about 2 minutes
+
+## 11. Two-loop tools (added 2026-10-12, for models/phi3 step (16)): Kira 3.1 + Fermat, FIRE 7.1, AMFlow 2.0,
+##     pySecDec 1.6.6, feyntrop 1.1.0, TSIL 1.46
+#   logs: ~/hep/src/logs/{cln,ginac,kira,fire,mpsolve,yamlcpp,tsil,feyntrop,pysecdec}-*.log
+export SDKROOT="$(xcrun --show-sdk-path)"
+#   build tools without touching Homebrew's Python (brew's meson and ginac would install python@3.15/openssl@4 and
+#   upgrade python@3.14, readline, sqlite, xz, ca-certificates)
+~/miniforge3/envs/qft/bin/python -m venv ~/hep/opt/buildtools && ~/hep/opt/buildtools/bin/pip install meson ninja
+#   wrappers for Homebrew's LLVM: ~/hep/opt/llvmwrap/{clang,clang++,clang++-fire} (in environment.tex, App. C)
+#   CLN 1.3.7 and GiNaC 1.8.10, static, into ~/hep
+mkdir -p ~/hep/src/ginac-dl && cd ~/hep/src/ginac-dl && curl -fsSLO https://www.ginac.de/CLN/cln-1.3.7.tar.bz2 && curl -fsSLO https://www.ginac.de/ginac-1.8.10.tar.bz2
+tar xjf cln-1.3.7.tar.bz2 -C ~/hep/src && tar xjf ginac-1.8.10.tar.bz2 -C ~/hep/src
+cd ~/hep/src/cln-1.3.7 && ./configure --prefix=$HOME/hep --with-gmp=/opt/homebrew --disable-shared && make -j8 && make install
+cd ~/hep/src/ginac-1.8.10 && PKG_CONFIG_PATH=$HOME/hep/lib/pkgconfig ./configure --prefix=$HOME/hep --disable-shared PYTHON=/usr/bin/python3 && make -j8 && make install
+#   Fermat 7.9b for Apple M chips (freeware; institutions are asked to contribute US$75 per machine; no commercial use)
+mkdir -p ~/hep/src/fermat-dl && cd ~/hep/src/fermat-dl && curl -fsSLO http://home.bway.net/lewis/fermat64/Ferm7a.tar.gz
+tar xzf Ferm7a.tar.gz && mv Ferm7a ~/hep/fermat-7.9b
+#   Kira 3.1: meson buildtype=debugoptimized (-O2).  The release build (-O3, Apple clang 16) reduces every integral to 0.
+cd ~/hep/src && git clone -q --branch 3.1 --depth 1 https://gitlab.com/kira-pyred/kira.git kira-3.1 && cd kira-3.1
+PATH=$HOME/hep/opt/buildtools/bin:$PATH PKG_CONFIG_PATH=$HOME/hep/lib/pkgconfig LIBRARY_PATH=/opt/homebrew/lib CPATH=/opt/homebrew/include \
+  sh -c 'meson setup --prefix=$HOME/hep/Kira-3.1 --buildtype=debugoptimized builddir-o2 && ninja -C builddir-o2 && \
+         FERMATPATH=$HOME/hep/fermat-7.9b/fer64 meson test -C builddir-o2 && meson install -C builddir-o2'   # 7/7 tests
+#   ~/hep/bin/kira: wrapper that sets FERMATPATH (environment.tex, App. C)
+#   FIRE 7.1 (MSU GitLab); fuel's flint (commit 49b15d9, 3.1.0-dev) built with CMake without BLAS; the pari and
+#   symbolica submodules of fuel are not fetched (GIT=true); zstd, snappy not enabled
+cd ~/hep/src && git clone -q --branch 7.1 --depth 1 https://gitlab.srcc.msu.ru/feynmanintegrals/fire.git fire-7.1
+cd fire-7.1 && git submodule update --init FIRE7/extra/fuel && cd FIRE7/extra/fuel && git submodule update --init extra/flint
+git -C extra/flint checkout -q 49b15d9a8a4507210edf42bb637b940035c48dfd
+cmake -S extra/flint -B extra/flint/build-cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PWD/usr -DBUILD_SHARED_LIBS=OFF \
+  -DCMAKE_C_COMPILER=$HOME/hep/opt/llvmwrap/clang -DCMAKE_PREFIX_PATH=/opt/homebrew -DBUILD_TESTING=OFF -DCMAKE_DISABLE_FIND_PACKAGE_CBLAS=ON
+cmake --build extra/flint/build-cmake -j8 && cmake --install extra/flint/build-cmake
+cd ~/hep/src/fire-7.1/FIRE7 && ./configure --cpp=$HOME/hep/opt/llvmwrap/clang++-fire --cc=$HOME/hep/opt/llvmwrap/clang --prebuilt-gmp --prebuilt-mpfr
+mkdir -p ~/hep/opt/gmpinc && for h in gmp.h gmpxx.h mpfr.h mpf2mpfr.h; do ln -sf /opt/homebrew/include/$h ~/hep/opt/gmpinc/$h; done
+LIBRARY_PATH=/opt/homebrew/lib CPATH=$HOME/hep/opt/gmpinc make dep GIT=true DEP_HAS_FLINT=yes
+LIBRARY_PATH=/opt/homebrew/lib CPATH=$HOME/hep/opt/gmpinc make GIT=true -j8
+LIBRARY_PATH=/opt/homebrew/lib CPATH=$HOME/hep/opt/gmpinc make -k -f tests.makefile all calc=flint      # 17 comparisons pass
+ln -sfn ~/hep/src/fire-7.1 ~/hep/FIRE-7.1       # FIRE links its kyotocabinet by an absolute path in the source tree
+#   AMFlow 2.0; Kira and FIRE paths in ibp_interface/{Kira,FIRE+LiteRed}/install.m (originals kept as *.orig)
+cd ~/hep && git clone -q --branch 2.0 --depth 1 https://gitlab.com/multiloop-pku/amflow.git AMFlow-2.0
+#   its C++ differential equation solver: MPSolve 3.2.3 and yaml-cpp 0.8.0 into ~/hep (not auto_install.sh: sudo, ~/.zshrc)
+mkdir -p ~/hep/src/mpsolve-dl && cd ~/hep/src/mpsolve-dl && curl -fsSLO https://numpi.dm.unipi.it/wp-content/uploads/2025/08/mpsolve-3.2.3.tar.bz2
+tar xjf mpsolve-3.2.3.tar.bz2 -C ~/hep/src && cd ~/hep/src/mpsolve-3.2.3      # + the yyparse patch of auto_install.sh
+./configure --prefix=$HOME/hep --disable-shared --disable-graphical-debugger --disable-ui --disable-examples \
+  CPPFLAGS=-I/opt/homebrew/include LDFLAGS=-L/opt/homebrew/lib && make -j8 && make install
+mkdir -p ~/hep/src/yamlcpp-dl && cd ~/hep/src/yamlcpp-dl && curl -fsSL -o yaml-cpp-0.8.0.tar.gz https://github.com/jbeder/yaml-cpp/archive/refs/tags/0.8.0.tar.gz
+tar xzf yaml-cpp-0.8.0.tar.gz -C ~/hep/src && cd ~/hep/src/yaml-cpp-0.8.0 && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=$HOME/hep -DYAML_CPP_BUILD_TESTS=OFF -DYAML_CPP_BUILD_TOOLS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+  && cmake --build build -j8 && cmake --install build
+cd ~/hep/AMFlow-2.0/diffeq_solver && make      # config: WSTP of ~/hep/opt/Wolfram142, MPSolve, Homebrew GMP/MPFR/MPC/Boost
+#   pySecDec 1.6.6 into qft: sympy, nest-asyncio from conda-forge (pip would downgrade mpmath 1.4.1 to 1.3.0)
+~/miniforge3/bin/conda install -y -n qft -c conda-forge sympy nest-asyncio      # adds sympy 1.14.0, gmpy2, gmp, mpfr, mpc
+mkdir -p ~/hep/src/pysecdec-dl && cd ~/hep/src/pysecdec-dl && ~/miniforge3/envs/qft/bin/pip download --no-deps --no-binary :all: pySecDec==1.6.6
+~/miniforge3/envs/qft/bin/pip install --no-deps ~/hep/src/pysecdec-dl/pysecdec-1.6.6.tar.gz
+brew install make      # GNU make 4.4.1 as gmake: pySecDec's generated makefiles need make >= 4
+#   feyntrop 1.1.0 with Homebrew LLVM's OpenMP
+cd ~/hep && git clone -q --branch v1.1.0 --depth 1 https://github.com/michibo/feyntrop.git feyntrop-1.1.0 && cd feyntrop-1.1.0
+make CXX="/opt/homebrew/opt/llvm/bin/clang++ -isysroot $(xcrun --show-sdk-path)" LDFLAGS="-L/opt/homebrew/opt/llvm/lib -Wl,-rpath,/opt/homebrew/opt/llvm/lib"
+cd tests && ~/miniforge3/envs/qft/bin/python test_suite.py
+#   TSIL 1.46 in double precision (long double = double on Apple silicon)
+mkdir -p ~/hep/src/tsil-dl && cd ~/hep/src/tsil-dl && curl -fsSLO http://www.niu.edu/spmartin/TSIL/tsil-1.46.tar.gz && tar xzf tsil-1.46.tar.gz -C ~/hep/src
+cd ~/hep/src/tsil-1.46 && make CC=cc TSIL_SIZE=-DTSIL_SIZE_DOUBLE && ./tsil.tst TestData/* | tail -4
+make install CC=cc TSIL_SIZE=-DTSIL_SIZE_DOUBLE TSIL_LIBDIR=$HOME/hep/lib TSIL_INCDIR=$HOME/hep/include
+#   checks
+~/Documents/Claude/QFTcalculation/models/phi3/Src/run_twoloop4_check.sh      # about 12 minutes
+~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh --no-mg5 --twoloop                  # the same through run_all.sh

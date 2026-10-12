@@ -1,0 +1,3 @@
+#!/bin/sh
+# Homebrew LLVM with the macOS SDK (brew's clang does not find the SDK headers by itself)
+exec /opt/homebrew/opt/llvm/bin/clang -isysroot "$(xcrun --show-sdk-path)" -Wno-unknown-warning-option "$@"

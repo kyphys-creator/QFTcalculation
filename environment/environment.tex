@@ -50,7 +50,7 @@
 \maketitle
 
 \begin{abstract}
-本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。その後、$\phi^3$ 模型での検算で、この環境の LoopTools が閾値より下で外運動量がゼロでない $C_0$ を誤って返し、その誤りがテンソル係数 $C_{00}$ にも及ぶことが分かった。$C_0$ と $C_{00}$ には Package-X と COLLIER を使う。4点関数 $D_0$ は、外線と内線の質量がすべて等しいとき、ライブラリごとに異なる点で値を返さない。さらに MadLoop との比較で、NLOCT の不具合（FeynRules の \texttt{Core/Loop.m} に2つ目の局所パッチを当てた）と、MadGraph の1ループ計算が QCD と QED の摂動しか受け付けないことが分かった。全断面積の計算では、MadGraph の木の $2\to3$ の断面積が、高いエネルギーで誤差を小さく見積もり、自前の積分より $0.8\%$ 低く出た。$\phi\phi\to\phi\phi$ を高エネルギーまで計算すると、COLLIER の箱図が $\sqrt s\gg m$ で精度を失った。既定の方式 COLI では虚部が、もう一方の DD では $\sqrt s\gtrsim10^3m$ で値全体が誤る。LoopTools と、Package-X の解析式を30桁で評価した値は正しかった（第~\ref{sec:issues} 節）。計算のスクリプトは、まとめて実行できるうえ、Mathematica のノートブックや VS Code でセルごとにも実行できる形にした。これで途中の式や図を確かめられる。$\phi^3$ 模型の25本すべてをこの形にし、結果が変わらないことを確かめた。評価する Feynman 図は、評価の前のセルで表示する。そのための道具は \nolinkurl{environment/interactive/} にある（第~\ref{sec:usage} 節）。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。2026年10月11日には、有限温度の相転移の検算のために、熱的な道具を加えた。DRalgo 1.5.0（GroupMath 1.1.3 とともに）、Matchete 0.6.0 の Matchotter、PT2GWFinder 1.1.0 と FindBounce 1.1.0、CosmoTransitions 2.0.7 である。DRalgo と Matchotter は、$\phi^3+\phi^4$ 理論の有限温度のノートの温度ポテンシャルの係数と記号で一致した。CosmoTransitions は bounce の作用と転移の温度を、ノートの自前の計算と相対 $10^{-7}$ 以内で再現した。PT2GWFinder は、臨界温度と相転移の強さを相対 $10^{-6}$ 以内、核生成温度を $2.4\times10^{-4}$ 以内で再現した。さらに PhaseTracer2 2.2.2、BSMPT 3.2.0、TransitionListener 2.1.0 も加え、臨界温度、作用、強さ、$\beta/H$ が、核生成の条件や $g_*$ などの取り決めの違いを除いて再現されることを確かめた。FindBounce は、経路の端を深い真の極小に置くと、点を増やすほど正しい値から離れた。Matchotter の対数の尺度は通常の $\overline{\mathrm{MS}}$ の尺度と $e^{\gamma_E}$ 倍違い、これは論文の付録 B の規格化と一致した。最後に WallGo 1.1.2 を加え、局所熱平衡の壁の速さを求めた。TransitionListener の値との差は、TransitionListener が音速を場を固めた温度微分で求めることから生じると分かった（第~\ref{sec:thermal} 節）。
+本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。その後、$\phi^3$ 模型での検算で、この環境の LoopTools が閾値より下で外運動量がゼロでない $C_0$ を誤って返し、その誤りがテンソル係数 $C_{00}$ にも及ぶことが分かった。$C_0$ と $C_{00}$ には Package-X と COLLIER を使う。4点関数 $D_0$ は、外線と内線の質量がすべて等しいとき、ライブラリごとに異なる点で値を返さない。さらに MadLoop との比較で、NLOCT の不具合（FeynRules の \texttt{Core/Loop.m} に2つ目の局所パッチを当てた）と、MadGraph の1ループ計算が QCD と QED の摂動しか受け付けないことが分かった。全断面積の計算では、MadGraph の木の $2\to3$ の断面積が、高いエネルギーで誤差を小さく見積もり、自前の積分より $0.8\%$ 低く出た。$\phi\phi\to\phi\phi$ を高エネルギーまで計算すると、COLLIER の箱図が $\sqrt s\gg m$ で精度を失った。既定の方式 COLI では虚部が、もう一方の DD では $\sqrt s\gtrsim10^3m$ で値全体が誤る。LoopTools と、Package-X の解析式を30桁で評価した値は正しかった（第~\ref{sec:issues} 節）。計算のスクリプトは、まとめて実行できるうえ、Mathematica のノートブックや VS Code でセルごとにも実行できる形にした。これで途中の式や図を確かめられる。$\phi^3$ 模型の25本すべてをこの形にし、結果が変わらないことを確かめた。評価する Feynman 図は、評価の前のセルで表示する。そのための道具は \nolinkurl{environment/interactive/} にある（第~\ref{sec:usage} 節）。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。2026年10月11日には、有限温度の相転移の検算のために、熱的な道具を加えた。DRalgo 1.5.0（GroupMath 1.1.3 とともに）、Matchete 0.6.0 の Matchotter、PT2GWFinder 1.1.0 と FindBounce 1.1.0、CosmoTransitions 2.0.7 である。DRalgo と Matchotter は、$\phi^3+\phi^4$ 理論の有限温度のノートの温度ポテンシャルの係数と記号で一致した。CosmoTransitions は bounce の作用と転移の温度を、ノートの自前の計算と相対 $10^{-7}$ 以内で再現した。PT2GWFinder は、臨界温度と相転移の強さを相対 $10^{-6}$ 以内、核生成温度を $2.4\times10^{-4}$ 以内で再現した。さらに PhaseTracer2 2.2.2、BSMPT 3.2.0、TransitionListener 2.1.0 も加え、臨界温度、作用、強さ、$\beta/H$ が、核生成の条件や $g_*$ などの取り決めの違いを除いて再現されることを確かめた。FindBounce は、経路の端を深い真の極小に置くと、点を増やすほど正しい値から離れた。Matchotter の対数の尺度は通常の $\overline{\mathrm{MS}}$ の尺度と $e^{\gamma_E}$ 倍違い、これは論文の付録 B の規格化と一致した。最後に WallGo 1.1.2 を加え、局所熱平衡の壁の速さを求めた。TransitionListener の値との差は、TransitionListener が音速を場を固めた温度微分で求めることから生じると分かった（第~\ref{sec:thermal} 節）。10月12日には、2ループの道具として Kira 3.1（Fermat 7.9b とともに）、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を加えた。$\phi^3$ 理論の $d=4$ の2ループの自己エネルギーで、Kira と FIRE の IBP 簡約は記号として一致し、マスター積分は四つの数値法で一致し、有限部分は文献の式と相対 $8\times10^{-14}$ 以内で一致した。Apple clang 16 で \texttt{-O3} で構築した Kira は、すべての積分を0に簡約した（第~\ref{sec:twoloop} 節）。
 \end{abstract}
 
 \section{はじめに}\label{sec:intro}
@@ -79,7 +79,7 @@ Python & miniforge（conda 24.11.3）の環境 \texttt{qft}：Python 3.12.15、n
 
 \paragraph{前提。}本稿は次の前提に立つ。
 \begin{enumerate}
-\item 版と日付は2026年10月9日時点のものである。熱的な道具（第~\ref{sec:thermal} 節）は10月11日時点である。
+\item 版と日付は2026年10月9日時点のものである。熱的な道具（第~\ref{sec:thermal} 節）は10月11日、2ループの道具（第~\ref{sec:twoloop} 節）は10月12日時点である。
 \item ソフトウェアは公式の配布元から \texttt{curl} で取得した。ソースから構築できるものはこの Mac で構築した。
 \item 「正しく動く」かどうかは、既知の厳密値、独立な別実装、または独立な解析計算との数値の一致で判定する。
 \item パスの \texttt{\textasciitilde} はホームディレクトリ \nolinkurl{/Users/koichiro} を表す。
@@ -107,7 +107,7 @@ quarantine & macOS がダウンロードしたファイルに付ける拡張属�
 \end{tabularx}
 \end{table}
 
-本稿の構成は次の通りである。第~\ref{sec:migration} 節で旧環境の撤去と自作模型の退避を、第~\ref{sec:layout} 節で導入した構成を述べる。第~\ref{sec:issues} 節では、この Mac に固有の障害とその対処を、第~\ref{sec:tests} 節では検証の方法と結果を示す。第~\ref{sec:usage} 節に使い方を、第~\ref{sec:discussion} 節に検証していない点と今後の課題をまとめる。付録には、ファイル配置、検算に使った解析式の導出、変更・作成したファイルの全文を載せる。
+本稿の構成は次の通りである。第~\ref{sec:migration} 節で旧環境の撤去と自作模型の退避を、第~\ref{sec:layout} 節で導入した構成を述べる。第~\ref{sec:issues} 節では、この Mac に固有の障害とその対処を、第~\ref{sec:tests} 節では検証の方法と結果を示す。第~\ref{sec:usage} 節に使い方を、第~\ref{sec:thermal} 節と第~\ref{sec:twoloop} 節に後から加えた熱的な道具と2ループの道具を、第~\ref{sec:discussion} 節に検証していない点と今後の課題をまとめる。付録には、ファイル配置、検算に使った解析式の導出、変更・作成したファイルの全文を載せる。
 
 \section{旧環境の撤去と自作模型の退避}\label{sec:migration}
 
@@ -615,13 +615,100 @@ cd ~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src
 ~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh --no-mg5 --thermal   # everything
 \end{Verbatim}
 
+\section{2ループの道具の追加}\label{sec:twoloop}
+
+2026年10月12日に、$\phi^3$ 理論のノート~\cite{phi3note} の手順 (16)（$d=4$ の2ループの自己エネルギー）のために、レビューが推奨した2ループの道具を加えた。IBP 簡約の Kira 3.1~\cite{kira3}（代数のソルバ Fermat 7.9b~\cite{url:fermat} とともに）と FIRE 7.1~\cite{fire7}、マスター積分を数値で求める AMFlow 2.0~\cite{amflow,amflow2}、pySecDec 1.6.6~\cite{pysecdec}、feyntrop 1.1.0~\cite{feyntrop}、2ループの自己エネルギーの基底積分のライブラリ TSIL 1.46~\cite{tsil} である。FeynCalc の積分族は、FeynHelpers 2 を通して Kira と FIRE に渡した。版と配置を表~\ref{tab:twoloop} に示す。
+
+\begin{table}[hbp]
+\centering\small
+\caption{2ループの道具の版、配置、入手元。}
+\label{tab:twoloop}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{1.2cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.2cm}}
+\toprule
+\textbf{ツール} & \textbf{版} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+Kira & 3.1 & \texttt{\textasciitilde/hep/Kira-3.1}（FireFly、FLINT 2.8.4、yaml-cpp を同梱で構築）、起動スクリプト \texttt{\textasciitilde/hep/bin/kira} & GitLab（kira-pyred）のタグ~\cite{kira3,url:kira} \\
+Fermat（Kira 用） & 7.9b & \texttt{\textasciitilde/hep/fermat-7.9b}（Apple M 版） & 作者のサイト~\cite{url:fermat} \\
+CLN、GiNaC（Kira 用） & 1.3.7、1.8.10 & \texttt{\textasciitilde/hep/lib}（静的）、\texttt{\textasciitilde/hep/bin/ginsh} & ginac.de~\cite{url:ginac} \\
+FIRE & 7.1 & \texttt{\textasciitilde/hep/FIRE-7.1} $\to$ \texttt{\textasciitilde/hep/src/fire-7.1}（\texttt{FIRE7/bin}、\texttt{FIRE7.m}） & MSU の GitLab のタグ~\cite{fire7,url:fire} \\
+AMFlow & 2.0 & \texttt{\textasciitilde/hep/AMFlow-2.0}（C++ の微分方程式のソルバ \texttt{desolver}、\texttt{link}） & GitLab（multiloop-pku）のタグ~\cite{amflow2,url:amflow} \\
+MPSolve、yaml-cpp（AMFlow 用） & 3.2.3、0.8.0 & \texttt{\textasciitilde/hep/bin/mpsolve}、\texttt{\textasciitilde/hep/lib/libyaml-cpp.a} & 作者のサイト、GitHub \\
+pySecDec & 1.6.6 & \texttt{qft} の site-packages（ソースから構築） & PyPI~\cite{pysecdec,url:pysecdec} \\
+sympy、nest-asyncio（pySecDec 用） & 1.14.0、1.6.0 & \texttt{qft}（gmpy2 2.3.2、gmp、mpfr、mpc が加わった） & conda-forge \\
+GNU make（pySecDec 用） & 4.4.1 & Homebrew（\texttt{gmake}） & \texttt{brew install make} \\
+feyntrop & 1.1.0 & \texttt{\textasciitilde/hep/feyntrop-1.1.0} & GitHub（michibo）のタグ~\cite{feyntrop,url:feyntrop} \\
+TSIL & 1.46 & \texttt{\textasciitilde/hep/lib/libtsil.a}、\texttt{\textasciitilde/hep/include/tsil.h}（試験は \texttt{\textasciitilde/hep/src/tsil-1.46}） & 作者のサイト~\cite{tsil,url:tsil} \\
+meson、ninja（構築用） & 1.12.1、1.13.2 & 仮想環境 \texttt{\textasciitilde/hep/opt/buildtools} & PyPI \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{導入。}どれも \texttt{curl}、\texttt{git}、\texttt{pip} で取得した。Homebrew で新しく入れたのは GNU make だけである。Homebrew の GiNaC と meson は、python@3.15 と openssl@4 を入れ、python@3.14、readline、sqlite、xz、ca-certificates を更新しようとした。そこで CLN と GiNaC はソースから静的に \pth{hep} に構築し、meson と ninja は専用の仮想環境に入れた。Kira は meson で構築し、FireFly、FLINT、yaml-cpp を同梱の副計画として作った。FLINT の副計画は Homebrew の gmp の場所を知らないので、\texttt{LIBRARY\_PATH} を与えた。Fermat はフリーウェアで、機関や研究費のある利用者には1台あたり US\$75 の寄付が求められ、営利目的では使えない。寄付は利用者が判断する。FIRE は、README のとおり Homebrew の LLVM で構築した。Homebrew の clang は macOS の SDK を見つけないので、\texttt{-isysroot} を与える小さなスクリプトを置いた（\ref{app:files}）。その C++ の標準ライブラリのヘッダはシステムの libc++ にない記号を使うので、リンクでは Homebrew の libc++ をつないだ。FIRE の Makefile は \texttt{-Werror} で gcc 向けの警告を使うので、FIRE 用のスクリプトで \texttt{-Wno-error} を後ろに付けた。FIRE の式の簡約器 fuel が要る FLINT は、記録されたコミット（49b15d9、3.1.0-dev）を CMake で BLAS なしに構築した。Homebrew の FLINT 3.6 とは API が合わない。fuel の部分モジュールのうち、使わない pari と symbolica は取得しなかった（PARI の取得は非常に遅い）。zstd と snappy の圧縮は構築していない。FIRE は kyotocabinet を絶対パスでつなぐので、ソースのフォルダを動かさず、\pth{hep/FIRE-7.1} からリンクを張った。AMFlow は Mathematica のパッケージで、\texttt{ibp\_interface} の Kira と FIRE のパスを書き換えた（元のファイルは \texttt{.orig}）。C++ の微分方程式のソルバは、付属の \texttt{auto\_install.sh}（sudo を使い、\pth{.zshrc} を書き換える）を使わず、MPSolve と yaml-cpp を \pth{hep} に構築してから \texttt{make} で作った。pySecDec は PyPI のソースを \texttt{pip install --no-deps} で \texttt{qft} に入れた。依存の sympy を pip で入れると mpmath 1.4.1 が 1.3.0 に下げられるので、conda-forge から入れた。このとき gmpy2 が加わり、mpmath の下回りが gmpy に替わったので、mpmath を使う $\phi^3$ と $\phi^3+\phi^4$ のスクリプト8本を実行し直し、CSV が1バイト単位で、図が中身の文字で変わらないことを確かめた。pySecDec が生成する Makefile は GNU make 4 以上を要る（macOS の make は 3.81）。feyntrop は Homebrew の LLVM の OpenMP で構築した。TSIL は倍精度で構築した。Apple silicon では long double は double と同じなので、試験の基準も倍精度のものを使う。コマンドは \nolinkurl{files/build_commands.txt} の11番目の項目にある。
+
+\paragraph{検証。}各ツールの付属の試験と例を通し、$\phi^3$ のノートの手順 (16) で互いに突き合わせた。結果を表~\ref{tab:twolooptests} にまとめる。手順 (16) では、Kira と FIRE の簡約が記号として一致し、8個のマスター積分が四つの方法（AMFlow、TSIL、pySecDec、feyntrop）で一致し、自己エネルギーの有限部分が文献~\cite{tsil}の式と相対 $8\times10^{-14}$ 以内で一致した。細部はノートの第8節と付録~T、U にある。
+
+\begin{table}[hbp]
+\centering\small
+\caption{2ループの道具の検証の結果。}
+\label{tab:twolooptests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & Kira 3.1 & 付属の試験（FireFly 5件、Kira 2件を参照の結果と照合） & \texttt{-O2} の構築で7件とも通る。\texttt{-O3} では Kira の2件が落ち、すべての積分が0に簡約される & 一致（\texttt{-O2}） \\
+2 & Kira 3.1 & 1ループの質量のある泡と tadpole の簡約 & 係数が解析式と一致 & 一致 \\
+3 & FIRE 7.1 & 付属の試験（\texttt{tests.makefile}、FLINT） & 17件の照合がすべて一致（zlib、zstd、snappy は飛ばす） & 一致 \\
+4 & AMFlow 2.0 & ソルバの確認、付属の例を Kira と FIRE で解いた値と付属の結果 & すべての係数が10桁で一致 & 一致 \\
+5 & pySecDec 1.6.6 & $\int(x+y)^{-2+\epsilon}=1/\epsilon+1-\ln2+O(\epsilon)$ & 差 $5\times10^{-15}$ & 一致 \\
+6 & feyntrop 1.1.0 & 付属の試験（7例の参照値） & 比はすべて1 & 一致 \\
+7 & TSIL 1.46 & 付属の試験（320件） & 通過296、警告23、失敗1（作者の記録では倍精度で303、16、1） & 期待どおり \\
+8 & Kira と FIRE & $\phi^3$ の2ループの自己エネルギーの3つの積分の簡約 & 対称性で等しい積分をそろえると記号として一致 & 一致 \\
+9 & AMFlow、TSIL、pySecDec、feyntrop & 8個のマスター積分（4点） & TSIL $7.5\times10^{-14}$、pySecDec $2\times10^{-9}$、feyntrop は誤差の範囲 & 一致 \\
+10 & 自己エネルギー & 極が消える。有限部分は文献~\cite{tsil}の $-(M+V)/2$ & 極は AMFlow の30桁の値で29桁以上まで0、有限部分は $8\times10^{-14}$ 以内 & 一致 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}導入と照合の途中で、次のことが分かった。
+\begin{itemize}
+\item Kira 3.1 を meson の既定（\texttt{buildtype=release}、\texttt{-O3}）で Apple clang 16 で構築すると、すべての積分を0に簡約する。メッセージは出ず、付属の試験で分かる。デバッグの構築（\texttt{-O0}）と \texttt{-O2}（\texttt{debugoptimized}）は正しい。FLINT を外しても変わらない。
+\item Kira はマスター積分の候補を種の範囲で選ぶ。FeynHelpers の \texttt{KiraCreateJobFile} が目標の積分から決める種（$r=5$、$s=0$）では、日没型のマスター積分が一つ多く残った。分子を含む種（$s=2$）で FIRE と同じ数に減った。優先するマスター積分は job ファイルの \texttt{preferred\_masters} にファイルで与える。同じフォルダに前回のデータベースがあると、Kira は「すでに簡約済み」として計算をやり直さない。
+\item FIRE は対称性で等しい積分を別々のマスター積分として残すので、比べる前にそろえる（FeynCalc の \texttt{FCLoopFindIntegralMappings}）。伝播関数2本の積分は正しく扱えないと FIRE 自身が警告する（issue 40）。FeynHelpers の既定の圧縮 \texttt{zstd} は、zstd なしで構築した FIRE では使えないので \texttt{lz4} にする。優先するマスター積分は \texttt{\#preferred} で与える。
+\item AMFlow の \texttt{SolveIntegrals[ints, goal, order]} の \texttt{order} は、$L$ ループの族の $\epsilon^{-2L}$ から数えた次数である。2ループの族に2を与えると $1/\epsilon^2$ の項しか求めず、残りの係数は警告なしに0になる。同じ族の名前で運動学を変えて呼んでも、結果は正しかった。付属の \texttt{check\_install.sh} は古い Mathematica 14.1（\texttt{Wolfram.app}）を使い、計算が終わってもカーネルが終了しない。既定の C++ のソルバ（WSTP の \texttt{link}）では、$\phi^3$ の照合の3回の実行のうち2回が、小さな1ループの部分系で止まった。並列のサブカーネルの一つが CPU を使い続け、\texttt{link} は待ったままで、ほかの計算を走らせていなくても起きた。照合では Mathematica のソルバ（\texttt{SetAMFOptions["DESolver" -> "MMA"]}）を使う。AMFlow はキャッシュを実行中のファイルの隣に作る（バッチでは \texttt{\$InputFileName}、ノートブックでは \texttt{NotebookFileName[]} の場所）。セルをノートブックを通さずに評価すると後者が \texttt{\$Failed} になって止まるので、照合のスクリプトでは \texttt{CacheDirectory} を定義し直して作業フォルダに向けた。
+\item pySecDec のパッケージの名前に \texttt{I} は使えない（sympy の虚数単位）。生成したパッケージは \texttt{gmake} で構築する。積分は $\int\prod\mathrm{d}^Dk/(i\pi^{D/2})\prod(q^2-m^2+i0)^{-\nu}$ の規格化で返る。
+\item feyntrop の Python の部分は、作業フォルダの \texttt{./feyntrop} を呼ぶ。規格化はユークリッドの測度 $\mathrm{d}^Dk/\pi^{D/2}$ に $\Gamma$ の前因子を付けたもので、TSIL の太字の積分と同じである。
+\item TSIL の \texttt{tsil.h} は \texttt{complex.h} を読むので、利用者のプログラムで \texttt{I} を変数名に使えない。太字の真空の日没型 $I$ は直接は返らない。
+\item FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp につないでいる。Homebrew で LLVM を更新したら、構築し直して試験を通す。
+\end{itemize}
+
+\paragraph{使い方。}FeynCalc からの使い方は次のとおりである。照合はノートの \nolinkurl{Src/run_twoloop4_check.sh} で実行し直す（約12分）。\texttt{tests/run\_all.sh} に \texttt{--twoloop} を付けると、これも実行する。
+\begin{Verbatim}
+(* FeynHelpers 2 -> Kira 3.1 and FIRE 7.1 (see models/phi3/Src/twoloop4_feyncalc.wl) *)
+KiraCreateIntegralFile[ints, topo, dir];  KiraCreateConfigFiles[topo, ints, dir, KiraMassDimensions -> {m -> 1, pp -> 2}];
+(* write dir/<topo>/job.yaml with r, s and preferred_masters, then *)
+KiraRunReduction[FileNameJoin[{dir, "<topo>"}], KiraBinaryPath -> "~/hep/Kira-3.1/bin/kira",
+  KiraFermatPath -> "~/hep/fermat-7.9b/fer64"];  KiraImportResults["<topo>", dir]
+FIREPrepareStartFile[topo, dir, FIREPath -> "~/hep/FIRE-7.1/FIRE7/FIRE7.m"];
+FIRECreateStartFile[dir, topo, FIREMathematicaKernelPath -> "~/hep/opt/Wolfram142/Contents/MacOS/WolframKernel"];
+FIRECreateConfigFile[topo, dir, FIRECompressor -> "lz4"];
+FIRERunReduction[FileNameJoin[{dir, "<topo>"}], FIREBinaryPath -> "~/hep/FIRE-7.1/FIRE7/bin/FIRE7"]
+(* AMFlow 2.0, own kernel *)
+Get["~/hep/AMFlow-2.0/AMFlow.m"]; SetReductionOptions["IBPReducer" -> "Kira"];
+SolveIntegrals[{j[fam, ...]}, 30, 2 L + 2]          (* digits, orders counted from eps^(-2L) *)
+\end{Verbatim}
+\begin{Verbatim}
+cc -DTSIL_SIZE_DOUBLE -I$HOME/hep/include prog.c -L$HOME/hep/lib -ltsil -lm      # TSIL
+~/miniforge3/envs/qft/bin/python generate.py && gmake -C name disteval -j8       # pySecDec
+cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
+\end{Verbatim}
+
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FeynRules の NLOCT による1ループの対抗項と NLO 用 UFO、FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO QCD 計算（\texttt{[QCD]}）、Mathematica 14.1.0 での動作である。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。
+\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FeynRules の NLOCT による1ループの対抗項と NLO 用 UFO、FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO QCD 計算（\texttt{[QCD]}）、Mathematica 14.1.0 での動作である。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。
 
-\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。
+\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。
 
-\paragraph{今後。}レビューが推奨した構成のうち、2ループ用のツール（Kira 3.1、FIRE 7.1、pySecDec 1.6.6、AMFlow 2.0、TSIL 1.46、feyntrop）と、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。
+\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。
 
 \appendix
 
@@ -652,6 +739,10 @@ cd ~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src
 ~/hep/PhaseTracer-2.2.2/  ~/hep/BSMPT-3.2.0/  ~/hep/TransitionListener-2.1.0/   thermal tools (C++, C++, Python)
 ~/hep/lib/libalglib.a  ~/hep/include/alglib/                 ALGLIB 4.08.0 for PhaseTracer2
 ~/miniforge3/envs/tl/       Python 3.12 for TransitionListener (ultranest, mpi4py, getdist, ...)
+~/hep/Kira-3.1/  ~/hep/fermat-7.9b/  ~/hep/FIRE-7.1 -> src/fire-7.1/  ~/hep/AMFlow-2.0/  ~/hep/feyntrop-1.1.0/
+                            two-loop tools (2026-10-12); ~/hep/bin/kira sets FERMATPATH
+~/hep/lib/  libcln.a libginac.a libtsil.a libyaml-cpp.a   ~/hep/bin/  ginsh mpsolve kira
+~/hep/opt/buildtools/  (meson, ninja)   ~/hep/opt/llvmwrap/  (clang wrappers)   ~/hep/opt/gmpinc/
 ~/Documents/Claude/QFTcalculation/
   environment/  environment.tex  files/  tests/
   models/backup_20261009/   user models (README inside)
@@ -742,6 +833,14 @@ $\sqrt s=1$~TeV では $A_0=1.14522$ となる。$\pi\alpha^2/(2s)=8.9465\times1
 \paragraph{ノートブックを開くスクリプト（\texttt{\textasciitilde/hep/bin/wopen}）。}
 \VerbatimInput{files/wopen}
 
+\paragraph{Kira の起動スクリプト（\texttt{\textasciitilde/hep/bin/kira}）。}
+\VerbatimInput{files/kira}
+
+\paragraph{Homebrew の LLVM を使うためのスクリプト（\texttt{\textasciitilde/hep/opt/llvmwrap/}）。}\texttt{clang}、\texttt{clang++}、FIRE 用の \texttt{clang++-fire} の順に示す。
+\VerbatimInput{files/llvmwrap-clang}
+\VerbatimInput{files/llvmwrap-clang++}
+\VerbatimInput{files/llvmwrap-clang++-fire}
+
 \paragraph{Applications の入口ファイル。}
 \VerbatimInput{files/FeynArts.m}
 \VerbatimInput{files/FormCalc.m}
@@ -804,6 +903,22 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{url:tl} TransitionListener. \url{https://github.com/tasicarl/TransitionListener}
 \bibitem{wallgo} A. Ekstedt, O. Gould, J. Hirvonen, B. Laurent, L. Niemi, P. Schicho, J. van de Vis, ``How fast does the WallGo? A package for computing wall velocities in first-order phase transitions,'' JHEP \textbf{04} (2025) 101, \href{https://arxiv.org/abs/2411.04970}{arXiv:2411.04970}.
 \bibitem{url:wallgo} WallGo（PyPI）. \url{https://pypi.org/project/WallGo/}
+\bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループの構造（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。2ループの道具との照合は第8節と付録~T、U。
+\bibitem{kira3} F. Lange, J. Usovitsch, Z. Wu, ``Kira 3: integral reduction with efficient seeding and optimized equation selection,'' Comput.Phys.Commun. \textbf{322} (2026) 109999, \href{https://arxiv.org/abs/2505.20197}{arXiv:2505.20197}.
+\bibitem{fire7} A. V. Smirnov, M. Zeng, ``FIRE 7: Automatic Reduction with Modular Approach,'' Comput.Phys.Commun. \textbf{325} (2026) 110200, \href{https://arxiv.org/abs/2510.07150}{arXiv:2510.07150}.
+\bibitem{amflow} X. Liu, Y.-Q. Ma, ``AMFlow: a Mathematica package for Feynman integrals computation via auxiliary mass flow,'' Comput.Phys.Commun. \textbf{283} (2023) 108565, \href{https://arxiv.org/abs/2201.11669}{arXiv:2201.11669}.
+\bibitem{amflow2} R.-J. Huang, X. Liu, Y.-Q. Ma, ``AMFlow 2.0: significant algorithmic and software improvements for Feynman integral evaluation,'' \href{https://arxiv.org/abs/2607.08477}{arXiv:2607.08477}.
+\bibitem{pysecdec} S. Borowka \textit{et al.}, ``pySecDec: a toolbox for the numerical evaluation of multi-scale integrals,'' Comput.Phys.Commun. \textbf{222} (2018) 313, \href{https://arxiv.org/abs/1703.09692}{arXiv:1703.09692}.
+\bibitem{feyntrop} M. Borinsky, H. J. Munch, F. Tellander, ``Tropical Feynman integration in the Minkowski regime,'' Comput.Phys.Commun. \textbf{292} (2023) 108874, \href{https://arxiv.org/abs/2302.08955}{arXiv:2302.08955}.
+\bibitem{tsil} S. P. Martin, D. G. Robertson, ``TSIL: a program for the calculation of two-loop self-energy integrals,'' Comput.Phys.Commun. \textbf{174} (2006) 133, \href{https://arxiv.org/abs/hep-ph/0501132}{hep-ph/0501132}.
+\bibitem{url:kira} Kira. \url{https://gitlab.com/kira-pyred/kira}
+\bibitem{url:fermat} Fermat（R. H. Lewis）. \url{http://home.bway.net/lewis/}
+\bibitem{url:ginac} GiNaC、CLN. \url{https://www.ginac.de/}
+\bibitem{url:fire} FIRE. \url{https://gitlab.srcc.msu.ru/feynmanintegrals/fire}
+\bibitem{url:amflow} AMFlow. \url{https://gitlab.com/multiloop-pku/amflow}
+\bibitem{url:pysecdec} pySecDec（PyPI）. \url{https://pypi.org/project/pySecDec/}
+\bibitem{url:feyntrop} feyntrop. \url{https://github.com/michibo/feyntrop}
+\bibitem{url:tsil} TSIL. \url{https://www.niu.edu/spmartin/TSIL/}
 \end{thebibliography}
 
 \end{document}

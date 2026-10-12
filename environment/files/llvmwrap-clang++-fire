@@ -1,0 +1,6 @@
+#!/bin/sh
+# For FIRE 7.1, whose makefiles use -Werror with gcc-oriented warnings: -Wno-error after its flags keeps clang's
+# extra warnings (deprecated vfork in the macOS SDK, unused lambda captures) as warnings.  When linking, add -lmpfr
+# (fuel's static flint, built with CMake, needs it; FIRE's link lines do not list it).
+for a in "$@"; do case "$a" in -c|-E|-S|-M|-MM) exec "$HOME/hep/opt/llvmwrap/clang++" "$@" -Wno-error;; esac; done
+exec "$HOME/hep/opt/llvmwrap/clang++" "$@" -Wno-error -lmpfr

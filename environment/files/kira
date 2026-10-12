@@ -1,0 +1,4 @@
+#!/bin/sh
+# Kira 3.1 (meson buildtype=debugoptimized: the -O3 release build of Apple clang 16 reduces every integral to 0)
+export FERMATPATH="${FERMATPATH:-$HOME/hep/fermat-7.9b/fer64}"
+exec "$HOME/hep/Kira-3.1/bin/kira" "$@"

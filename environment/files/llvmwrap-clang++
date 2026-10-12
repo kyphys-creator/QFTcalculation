@@ -1,0 +1,6 @@
+#!/bin/sh
+# Homebrew LLVM with the macOS SDK (brew's clang does not find the SDK headers by itself).
+# When linking, use brew's libc++ (its headers need symbols that the system libc++ lacks, e.g. std::__hash_memory).
+SDK="$(xcrun --show-sdk-path)"
+for a in "$@"; do case "$a" in -c|-E|-S|-M|-MM) exec /opt/homebrew/opt/llvm/bin/clang++ -isysroot "$SDK" -Wno-unknown-warning-option "$@";; esac; done
+exec /opt/homebrew/opt/llvm/bin/clang++ -isysroot "$SDK" -Wno-unknown-warning-option "$@" -L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++
