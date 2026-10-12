@@ -41,7 +41,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論と $\phi^3+\phi^4$ 理論のノート~\cite{phi3note,phi34note} に続き、フェルミオンを含む模型を $d=4$ で調べる。模型は、実の擬スカラー場 $\phi$ と Dirac フェルミオン $\psi$ が、湯川結合 $-iy\phi\bar\psi\gamma^5\psi$ と自己相互作用 $\lambda\phi^4/4!$ を持つ理論である。パリティ（$\phi\to-\phi$）があるので $\phi$ の1次と3次の項は現れず、結合は $y$ と $\lambda$ の二つで閉じる。本ノートでは、まず Feynman 則、閉じたフェルミオンのループの符号、1ループの1PI 関数（$\phi$ と $\psi$ の自己エネルギー、湯川の頂点、$\phi$ の4点関数）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。$\beta_y=5y^3/(4\pi)^2$、$\beta_\lambda=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2$ で、フェルミオンのループが $\beta_\lambda$ に負の項 $-48y^4$ を与える。フェルミオンの箱の図は、トレースを伝播関数の分母で書き直すと、$B_0$、$C_0$、$D_0$ だけの短い式になる。1ループでは比 $\lambda/y^2$ の流れが解析的に解ける。その結果、$\lambda>r_+y^2$（$r_+=(1+\sqrt{145})/3\approx4.35$）なら $\lambda$ が、$\lambda<r_+y^2$ なら $\lambda$ が負になるのが、$y$ の Landau 極より先に起こる。基準点 $y=\lambda=1$（$\mu=m$）では、$\mu\approx19.5\,m$ で $\lambda=0$ となる。木のレベルでは、$\psi\bar\psi\to\phi\phi$ は $\psi\bar\psi$ の閾値で p 波から始まり、$\psi\bar\psi\to\psi\bar\psi$ のスピン和はフェルミオンの質量に陽によらない。$\phi\phi\to\phi\phi$ の1ループの S 行列要素の $\mu$ 依存は、$\beta_\lambda$ の三つの項をすべて含む。最後に検算の計画を定め、その最初の二つの手順を行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。同種のフェルミオンの散乱 $\psi\psi\to\psi\psi$ を加えた四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列とスピノルを陽に作った数値計算でも手計算と一致し、MadGraph の断面積は数値積分と統計誤差の1.4倍以内で一致した。1ループの1PI 関数では、極と六つの対抗項が FeynCalc の結果と記号として一致し、有限部分は Package-X、LoopTools、COLLIER と相対 $5\times10^{-12}$ 以内で一致した（LoopTools が誤った $C_0$ を返す一点を除く）。$\gamma^5$ を BMHV の処方で扱うと、四つの1PI 関数は NDR と有限の局所的な項だけ異なる。導出はすべて付録に省略なく載せる。
+$\phi^3$ 理論と $\phi^3+\phi^4$ 理論のノート~\cite{phi3note,phi34note} に続き、フェルミオンを含む模型を $d=4$ で調べる。模型は、実の擬スカラー場 $\phi$ と Dirac フェルミオン $\psi$ が、湯川結合 $-iy\phi\bar\psi\gamma^5\psi$ と自己相互作用 $\lambda\phi^4/4!$ を持つ理論である。パリティ（$\phi\to-\phi$）があるので $\phi$ の1次と3次の項は現れず、結合は $y$ と $\lambda$ の二つで閉じる。本ノートでは、まず Feynman 則、閉じたフェルミオンのループの符号、1ループの1PI 関数（$\phi$ と $\psi$ の自己エネルギー、湯川の頂点、$\phi$ の4点関数）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。$\beta_y=5y^3/(4\pi)^2$、$\beta_\lambda=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2$ で、フェルミオンのループが $\beta_\lambda$ に負の項 $-48y^4$ を与える。フェルミオンの箱の図は、トレースを伝播関数の分母で書き直すと、$B_0$、$C_0$、$D_0$ だけの短い式になる。1ループでは比 $\lambda/y^2$ の流れが解析的に解ける。その結果、$\lambda>r_+y^2$（$r_+=(1+\sqrt{145})/3\approx4.35$）なら $\lambda$ が、$\lambda<r_+y^2$ なら $\lambda$ が負になるのが、$y$ の Landau 極より先に起こる。基準点 $y=\lambda=1$（$\mu=m$）では、$\mu\approx19.5\,m$ で $\lambda=0$ となる。木のレベルでは、$\psi\bar\psi\to\phi\phi$ は $\psi\bar\psi$ の閾値で p 波から始まり、$\psi\bar\psi\to\psi\bar\psi$ のスピン和はフェルミオンの質量に陽によらない。$\phi\phi\to\phi\phi$ の1ループの S 行列要素の $\mu$ 依存は、$\beta_\lambda$ の三つの項をすべて含む。最後に検算の計画を定め、その最初の二つの手順を行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。同種のフェルミオンの散乱 $\psi\psi\to\psi\psi$ を加えた四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列とスピノルを陽に作った数値計算でも手計算と一致し、MadGraph の断面積は数値積分と統計誤差の1.4倍以内で一致した。1ループの1PI 関数では、極と六つの対抗項が FeynCalc の結果と記号として一致し、有限部分は Package-X、LoopTools、COLLIER と相対 $5\times10^{-12}$ 以内で一致した（LoopTools が誤った $C_0$ を返す一点を除く）。$\gamma^5$ を BMHV の処方で扱うと、四つの1PI 関数は NDR と有限の局所的な項だけ異なる。$\psi\bar\psi\to\phi\phi$ の1ループの振幅も二つのスピノルの構造の係数として閉じた形に書け、FeynCalc と FormCalc の結果、COLLIER での数値、外線のスピンを固定したユニタリー性と一致した。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -54,7 +54,7 @@ $\phi^3$ 理論と $\phi^3+\phi^4$ 理論のノート~\cite{phi3note,phi34note} 
 
 求める量は五つである。(i) Feynman 則と対称性因子、閉じたフェルミオンのループの符号。(ii) 1ループの1PI 関数（$\phi$ の2点・4点関数、$\psi$ の2点関数、湯川の頂点）の紫外発散部分と、$\MSbar$ の対抗項。(iii) 繰り込まれた1PI 関数と、繰り込み群の係数（$\beta_y$、$\beta_\lambda$、二つの質量の走り、二つの場の異常次元）。(iv) $\phi\phi\to\phi\phi$、$\psi\bar\psi\to\phi\phi$、$\psi\bar\psi\to\psi\bar\psi$ の木の振幅、$\phi\phi\to\phi\phi$ の1ループの振幅とその S 行列要素、フェルミオンの極質量と留数。(v) 応用として、部分波のユニタリー性の限界と、真空の安定性（繰り込み群で改良した有効ポテンシャル、$\lambda<0$ の bounce、フェルミオンの行列式を含む崩壊率）。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の出発点になる繰り込み群の流れと有効ポテンシャルを述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(3)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:bmhv} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の出発点になる繰り込み群の流れと有効ポテンシャルを述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(4)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:bmhv} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -455,7 +455,30 @@ M_{\mathrm p}=M\Bigl[1+\frac{y^2}{(4\pi)^2}\bigl(B_0^{Mm}+B_1^{Mm}\bigr)\Bigr],\
 R_\psi=1+\frac{y^2}{(4\pi)^2}\Bigl[B_1^{Mm}+2M^2\bigl(B_0^{Mm\prime}+B_1^{Mm\prime}\bigr)\Bigr]
 \label{eq:Mpole}
 \end{equation}
-である（\ref{app:scat}）。$B$ はすべて $p^2=M^2$ での値である。$M_{\mathrm p}$ は $\mu$ によらず（$\mu\,\partial(B_0+B_1)/\partial\mu=1$ と $\gamma_M$ が打ち消す）、外線のフェルミオン1本ごとに S 行列要素に $R_\psi^{1/2}$ が掛かる。これらは $\psi\bar\psi\to\phi\phi$ の1ループの S 行列要素（手順 (4)、(5)）で使う。
+である（\ref{app:scat}）。$B$ はすべて $p^2=M^2$ での値である。$M_{\mathrm p}$ は $\mu$ によらず（$\mu\,\partial(B_0+B_1)/\partial\mu=1$ と $\gamma_M$ が打ち消す）、外線のフェルミオン1本ごとに S 行列要素に $R_\psi^{1/2}$ が掛かる。これらは $\psi\bar\psi\to\phi\phi$ の1ループの S 行列要素（手順 (5)）で使う。
+
+\paragraph{1ループの $\psi\bar\psi\to\phi\phi$。}外線にフェルミオンを持つ過程の1ループの振幅も、手で閉じた形に書ける。外線の補正を除いた1ループの図は、内線のフェルミオンの自己エネルギー（$t$、$u$ チャンネルに1つずつ）、頂点の補正（4つ）、箱（2つ）、$\phi$ の2本の内線が4点頂点で終わる三角形（$\lambda$ の三角形、1つ）、$s$ チャンネルの $\phi$ にフェルミオンの三角形が付いた図（2つ）の11個である。最後の2つはトレースが $\gamma^5$ と3個以下の $\gamma$ 行列しか含まないので0になる。Dirac 方程式と $k_2=p_1+p_2-k_1$ を使うと、どの図も二つのスピノルの構造 $\bar v(p_2)u(p_1)$ と $\bar v(p_2)\slashed k_1u(p_1)$ だけで書ける（$\bar v(p_2)(\slashed p_1+\slashed p_2)u(p_1)=0$ なので $\bar v\slashed k_2u=-\bar v\slashed k_1u$）。木の振幅は $b^{(0)}\bar v\slashed k_1u$、$b^{(0)}=y^2[1/(t-M^2)-1/(u-M^2)]$ である。$\MSbar$ で繰り込んだ1ループの振幅は
+\begin{equation}
+\begin{aligned}
+(4\pi)^2\mathcal M_B^{(1)}={}&a\,\bar v(p_2)u(p_1)+b\,\bar v(p_2)\slashed k_1u(p_1),\\
+a={}&\lambda y^2M\,C^\lambda_1+y^4M\sum_{x=t,u}\Bigl\{\frac{B_0(x)+B_1(x)}{x-M^2}-\bigl[C^{(1)}_0+C^{(1)}_2+C^{(2)}_0+C^{(2)}_2\bigr](x)\\
+&\qquad-(x-M^2)\bigl[D_1+D_2+D_3\bigr](x)+C^s_1+C^s_2\Bigr\},\\
+b={}&y^4\sum_{x=t,u}\sigma_x\Bigl\{\frac{(x+M^2)B_1(x)+2M^2B_0(x)}{(x-M^2)^2}-\frac{B_0(x)+m^2C^{(1)}_1(x)+2M^2\bigl[C^{(1)}_0+C^{(1)}_2\bigr](x)}{x-M^2}\\
+&\qquad-\frac{B_0(M^2)+m^2C^{(2)}_1(x)+2M^2C^{(2)}_0(x)+(x+M^2)C^{(2)}_2(x)}{x-M^2}\\
+&\qquad+m^2D_0(x)+C_0^M(s)+(x-M^2)D_2(x)\Bigr\}
+\end{aligned}
+\label{eq:M1B}
+\end{equation}
+である（\ref{app:scatB}）。$\sigma_t=1$、$\sigma_u=-1$ で、積分は LoopTools の規約の $\MSbar$ の有限部分である。$B_n(x)\equiv B_n(x;M^2,m^2)$、頂点の積分は $C^{(1)}_n(x)\equiv C_n(m^2,x,M^2;M^2,M^2,m^2)$（$\psi(p_1)$ の側）と $C^{(2)}_n(x)\equiv C_n(m^2,M^2,x;M^2,M^2,m^2)$（$\bar\psi(p_2)$ の側）、箱は $D_n(x)\equiv D_n(M^2,m^2,m^2,M^2,x,s;m^2,M^2,M^2,M^2)$、箱から $\phi$ 以外の内線を1本除いた三角形は $C^s_n\equiv C_n(M^2,s,M^2;m^2,M^2,M^2)$ と $C_0^M(s)$、$\lambda$ の三角形は $C^\lambda_1\equiv C_1(M^2,M^2,s;m^2,M^2,m^2)$ である。$a$ の各項は順に、$\lambda$ の三角形、自己エネルギー、二つの頂点の補正、箱から来る。$\lambda$ の三角形は $\bar vu$ の構造だけを持つ。箱は、分子の $\slashed\ell$ を Dirac 方程式と伝播関数の分母で消すと、テンソル積分を経ずに $D_0$、$D_{1,2,3}$、三角形の積分で書ける（\ref{app:scatB}）。虚部は $s$ チャンネルのユニタリー性
+\begin{equation}
+\begin{aligned}
+\frac{\mathrm{Im}\,a\,\bar vu+\mathrm{Im}\,b\,\bar v\slashed k_1u}{(4\pi)^2}
+={}&\frac12\frac{p}{16\pi^2\sqrt s}\int\!\dd\Omega_q\sum_{\mathrm{spins}}\mathcal M_C(\psi\bar\psi\to\psi_q\bar\psi_q)\,\mathcal M^*(\phi\phi\to\psi_q\bar\psi_q)\\
+&+\frac14\frac{k}{16\pi^2\sqrt s}\int\!\dd\Omega_q\,\mathcal M_B^{(0)}(\psi\bar\psi\to\phi_q\phi_q)\,(-\lambda)
+\end{aligned}
+\label{eq:unitB}
+\end{equation}
+を満たす（\ref{app:scatB}）。右辺の第1項は $\psi\bar\psi$ の中間状態（$|\boldsymbol q|=p$）、第2項は $\phi\phi$ の中間状態（$|\boldsymbol q|=k$、同種粒子の $\frac12$）で、外線のスピンを固定した等式である。
 
 \section{検算の計画}\label{sec:plan}
 
@@ -489,7 +512,7 @@ Feynman 則・対称性因子 & \ref{app:rules} & 書き出した FeynArts 模�
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh} で、手順 (2) は \texttt{run\_tree\_check.sh} で、手順 (3) は \texttt{run\_oneloop\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh} で、手順 (2) は \texttt{run\_tree\_check.sh} で、手順 (3) は \texttt{run\_oneloop\_check.sh} で、手順 (4) は \texttt{run\_scat\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/PsYukawa.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項を除いた部分である。パラメータの名前と MadGraph の結合の次数の決め方は\ref{app:details} に示す。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通った。頂点は二つで、$\bar\psi\psi\phi$ の頂点は $\texttt{yps}\,\gamma^5$、4点頂点は $-i\,\texttt{lamphi}$ となり、図~\ref{fig:rules} の $y\gamma^5$、$-i\lambda$ と一致した。パリティで禁じられた $\phi^3$ の頂点やスカラーの湯川の頂点は現れない。FeynArts の模型では、湯川の頂点はカイラルな射影 $\omega_\pm=(1\pm\gamma^5)/2$ の係数の組 $\{c_L,c_R\}=\{-\texttt{yps},\texttt{yps}\}$ として書かれ、$c_L\omega_-+c_R\omega_+=\texttt{yps}\,\gamma^5$ である。UFO では、頂点の Lorentz 構造が \texttt{Gamma5}、結合が \texttt{yps} である。FeynArts の模型と UFO は \texttt{Src/generated/} に書き出した。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の図を生成し、すべて手で数えた数と一致した。スクリプトは \texttt{generate\_PsYukawa.wl}（FeynRules）と \texttt{model\_mg5.mg5}（MadGraph）である。
 
@@ -574,12 +597,37 @@ $V_4$ & $\sqrt s=2.5,5,10$、$\cos\theta=0.3,0.9$ & COLLIER & $5.4\times10^{-12}
 \end{equation*}
 である（$\Delta b\equiv b_{\mathrm{BMHV}}-b_{\mathrm{NDR}}$）。これらは、差が $\hat q^2$ の項から $(D-4)\times$極として生じることを使って、手でも導ける（\ref{app:bmhv}）。$V_\phi$、$V_\psi$、$V_y$ は FeynCalc の BMHV の処方でそのまま計算し、手で導いた値と一致した。$V_4$ では、$\gamma^5$ を4個含むトレースで FeynCalc の BMHV の計算が止まり、$\hat q$ を含む箱のテンソル積分の簡約も10分で終わらなかった。そこで、BMHV の規則 $\gamma^5(\slashed k+M)\gamma^5=-\bar{\slashed k}+\hat{\slashed k}+M$ で $\gamma^5$ を除いたトレースを FeynCalc で計算し、差のうち紫外で効く $q$ の4次の項だけを積分した。これは\ref{app:bmhv} の議論を FeynCalc で行ったもので、$V_y$ に使うと FeynCalc の BMHV の計算と同じ値を与え、$V_4$ では $-64y^4$ を与えた。差が局所的なので、BMHV で NDR と同じ繰り込まれた1PI 関数を得るには、有限の対抗項 $\delta_\phi'=-\frac{4y^2}{3(4\pi)^2}$、$\delta_m'=-\frac{8y^2M^2}{(4\pi)^2}$、$\delta_y'=\frac{y^3}{(4\pi)^2}$、$\delta_\lambda'=-\frac{64y^4}{(4\pi)^2}$ を加えればよい。極が同じなので1ループの $\beta$ 関数は処方によらず、物理量は、パラメータを物理的な入力で決めれば一致する。ただし、二つの処方の $\overline{\mathrm{MS}}$ のパラメータは有限の量だけ異なる。スクリプトは \texttt{oneloop\_bmhv.wl} である。
 
+\paragraph{手順 (4)：1ループの散乱振幅。}二つの過程の1ループの振幅（外線の補正を除き、$\MSbar$ で繰り込んだもの）を、FeynCalc と FormCalc の二つの経路で求めた。$\phi\phi\to\phi\phi$ の FeynArts の図は9個（$\phi$ の泡3個とフェルミオンの箱6個）で、3点結合がないので可約な図はない。振幅は FeynCalc でも FormCalc でも式~\eqref{eq:M1} と記号として一致した。$\psi\bar\psi\to\phi\phi$ の図は11個で、内訳は第~\ref{sec:results} 節で述べた通りである。FeynCalc で各図を基底 $\bar vu$、$\bar v\slashed k_1u$ に分け、自己エネルギー、頂点の補正、箱、$\lambda$ の三角形、フェルミオンの三角形の五つの組ごとに式~\eqref{eq:M1B} の対応する項と比べると、すべて記号として一致した。フェルミオンの三角形は0だった。紫外の極は、式~\eqref{eq:ct} から作った対抗項の図（頂点の $\delta_y$ と、内線の $\delta_\psi$、$\delta_M$）とちょうど打ち消し合った。FormCalc の経路では、FeynCalc の手を加えない FeynArts と、FormCalc 自身のテンソル積分の簡約を使った。振幅は二つのスピノルの鎖 $\langle1|1|2\rangle$、$\langle1|\slashed k_1|2\rangle$ だけで書かれ、$\gamma^5$ を含む鎖は現れなかった。FormCalc の鎖はフェルミオンの線の向きが逆なので、ベクトルの鎖の符号だけが変わる。木の振幅で全体の位相を合わせると、二つの係数はそれぞれ $-a$、$b$ にあたる（\ref{app:details}）。$\Delta$ を変えたときの FormCalc の振幅の変化は、対抗項から予想される量と倍精度で一致した。
+
+数値は、基準点の6点（$\sqrt s=2.5,5,10$、$\cos\theta=0.3,0.9$）で、FeynCalc と Package-X、FeynCalc と LoopTools、FormCalc と LoopTools の値を、式~\eqref{eq:M1}、\eqref{eq:M1B} を COLLIER で評価した値と比べた（表~\ref{tab:scat}）。すべて相対 $10^{-9}$ 以内で、Package-X 以外は $3\times10^{-13}$ 以内で一致した。Package-X の差がほかより大きいのは、質量の違う内線を持つ箱の $D_0$ の数値の精度による。虚部は、式~\eqref{eq:unit}、\eqref{eq:unitB} のユニタリー性と比べた。右辺の木の振幅は Dirac 表示の行列で作り、中間状態のスピンの和は完全性の関係でとり、中間状態の向きについて $240\times240$ 点の求積で積分した。$\phi\phi\to\phi\phi$ では $\psi\bar\psi$ の中間状態を含む虚部が、$\psi\bar\psi\to\phi\phi$ では外線の4つのスピンの組のそれぞれで、相対 $10^{-13}$ 以内で一致した。$\psi\bar\psi\to\phi\phi$ の虚部では、$\psi\bar\psi$ の中間状態と $\phi\phi$ の中間状態の寄与が同じ程度の大きさで逆の符号を持つ（例えば $\sqrt s=5$、$\cos\theta=0.3$ のあるスピンの組で $9.895\times10^{-3}$ と $-5.256\times10^{-3}$、和が $4.639\times10^{-3}$）。図~\ref{fig:scat} に、$\sqrt s=5m$ での角度依存性を示す。スクリプトは \texttt{scat\_feyncalc.wl}（FeynCalc、Package-X、LoopTools）、\texttt{scat\_formcalc.wl}（FormCalc、LoopTools）、\texttt{scat\_collier.f90}（COLLIER）、\texttt{scat\_numeric.py}（比較、ユニタリー性、図）である。
+
+\begin{table}[tbp]
+\centering\small
+\caption{1ループの散乱振幅の比較（$m=\mu=1$、$M=0.7$、$y=\lambda=1$、$\sqrt s=2.5,5,10$、$\cos\theta=0.3,0.9$ の6点の最大）。左の3列は、COLLIER で評価したノートの式（式~\eqref{eq:M1}、\eqref{eq:M1B}）からの相対的なずれで、$\phi\phi\to\phi\phi$ は $|\mathcal M^{(1)}|$、$\psi\bar\psi\to\phi\phi$ は $|a|+|b|$ で割った。右の列は、虚部とユニタリー性の積分（式~\eqref{eq:unit}、\eqref{eq:unitB}）の相対的なずれで、$\psi\bar\psi\to\phi\phi$ は4つのスピンの組の最大である。}
+\label{tab:scat}
+\begin{tabular}{llllll}
+\toprule
+過程 & 量 & FeynCalc+Package-X & FeynCalc+LoopTools & FormCalc+LoopTools & ユニタリー性 \\
+\midrule
+$\phi\phi\to\phi\phi$ & $(4\pi)^2\mathcal M^{(1)}$ & $5.4\times10^{-12}$ & $3.8\times10^{-15}$ & $1.6\times10^{-13}$ & $2.4\times10^{-14}$ \\
+$\psi\bar\psi\to\phi\phi$ & $a$、$b$ & $8.4\times10^{-10}$ & $1.7\times10^{-14}$ & $2.8\times10^{-13}$ & $9.4\times10^{-14}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{../figs/scat_d4.pdf}
+\caption{$\sqrt s=5m$ での1ループの振幅の角度依存性（$m=\mu=1$、$M=0.7$、$y=\lambda=1$）。左は $\phi\phi\to\phi\phi$ の $(4\pi)^2\mathcal M^{(1)}$、中と右は $\psi\bar\psi\to\phi\phi$ の係数 $a$、$b$（式~\eqref{eq:M1B}）。線は COLLIER で評価したノートの式（実線が実部、破線が虚部）、丸は FeynCalc と Package-X、バツは FormCalc と LoopTools、左の四角はユニタリー性の積分（式~\eqref{eq:unit}）による虚部である。$a$ は $\cos\theta$ について偶、$b$ は奇で、$t\leftrightarrow u$ の対称性を表す。}
+\label{fig:scat}
+\end{figure}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手計算で分かったこと。}フェルミオンを入れたことで、スカラー理論にはなかった三つの特徴が現れた。一つ目は、閉じたフェルミオンのループの符号 $-1$ で、これが $\delta_\phi<0$ と $\beta_\lambda$ の $-48y^4$ を与える。二つ目は、$\gamma^5$ がフェルミオンの伝播関数の質量の項の符号を変えることで、$\delta_M$ と $\gamma_M$ の符号がスカラーの湯川結合と逆になる。三つ目は、フェルミオンの箱の図の簡単さで、トレースを分母で書き直すと、テンソル積分を経ずに $B_0$、$C_0$、$D_0$ だけで書ける。物理としては、比 $\lambda/y^2$ の流れが1ループで解析的に解け、$\lambda$ が負になる尺度か、$\lambda$ が発散する尺度のどちらかが、$y$ の Landau 極より手前に必ず現れる。
 
-\paragraph{今後。}次は手順 (4) で、1ループの $\phi\phi\to\phi\phi$ と $\psi\bar\psi\to\phi\phi$ の振幅を FeynCalc と FormCalc の二つの経路で求め、数値をツールどうしで比べ、虚部をフェルミオンの中間状態を含むユニタリー性で確かめる。
+\paragraph{今後。}次は手順 (5) で、$\phi$ と $\psi$ の極質量と留数（式~\eqref{eq:mpole}、\eqref{eq:Mpole}）で二つの過程の S 行列要素に直し、NLOCT で作った UFO の MadLoop の値と比べる。
 
 \appendix
 
@@ -797,6 +845,28 @@ $\phi(k_1)\phi(k_2)\to\psi(q_1)\bar\psi(q_2)$ の振幅は、付録~\ref{app:tre
 
 \paragraph{フェルミオンの極質量と留数。}完全な伝播関数は $i/(\slashed p-M-\Sigma_\psi)$ で、$\Sigma_\psi=\slashed p\,\Sigma_V(p^2)+M\Sigma_S(p^2)$ は $\slashed p$ と可換なので、$\slashed p$ を数のように扱える。$p^2=\slashed p^2$ と見て $\Sigma_\psi$ を $\slashed p$ の関数とみなし、極 $\slashed p=M_{\mathrm p}$ のまわりで展開すると $\slashed p-M-\Sigma_\psi(\slashed p)\simeq(\slashed p-M_{\mathrm p})(1-\Sigma_\psi'(M))$ で、$M_{\mathrm p}=M+\Sigma_\psi(M)=M[1+\Sigma_V(M^2)+\Sigma_S(M^2)]$、$\Sigma_\psi'\equiv\dd\Sigma_\psi/\dd\slashed p|_{\slashed p=M}=\Sigma_V+2M^2(\Sigma_V'+\Sigma_S')$ である（$\dd f(\slashed p^2)/\dd\slashed p=2\slashed pf'$）。留数は $R_\psi=1/(1-\Sigma_\psi')\simeq1+\Sigma_\psi'$ である。式~\eqref{eq:VR} の後の $\Sigma_\psi$ から $\Sigma_V=y^2B_1^{Mm}/(4\pi)^2$、$\Sigma_S=y^2B_0^{Mm}/(4\pi)^2$ で、式~\eqref{eq:Mpole} を得る。$\mu\,\partial B_1/\partial\mu=-1$（$B_1=\int x\ln(\Delta_x/\mu^2)$ から $-2\int x\,\dd x$）と $\mu\,\partial B_0/\partial\mu=2$ から、$\mu\,\dd M_{\mathrm p}/\dd\mu=\gamma_M+My^2/(4\pi)^2=0$ である。
 
+\section{1ループの $\psi\bar\psi\to\phi\phi$ の導出}\label{app:scatB}
+
+\paragraph{規約。}$i\mathcal M$ は図の和で、$(4\pi)^2\mathcal M=a\,\bar vu+b\,\bar v\slashed k_1u$（$\bar v\equiv\bar v(p_2)$、$u\equiv u(p_1)$）と書く。使う関係は、Dirac 方程式 $\slashed p_1u=Mu$、$\bar v\slashed p_2=-M\bar v$、運動量の保存 $k_2=p_1+p_2-k_1$、$p_1\cdot k_1=\frac12(M^2+m^2-t)$、それに $\gamma^5(\slashed a+M)\gamma^5=M-\slashed a$ である。$P\equiv p_1-k_1$（$P^2=t$）とすると $\bar v\slashed Pu=M\bar vu-\bar v\slashed k_1u$、$(M-\slashed P)u=\slashed k_1u$ である。$u$ チャンネルの図は $k_1\leftrightarrow k_2$、$t\leftrightarrow u$ で得られ、$\bar v\slashed k_2u=-\bar v\slashed k_1u$ なので $b$ の寄与の符号が変わる（$\sigma_u=-1$）。
+
+\paragraph{自己エネルギー。}$i\mathcal M=\bar v(y\gamma^5)\frac{i(\slashed P+M)}{t-M^2}V_\psi(P)\frac{i(\slashed P+M)}{t-M^2}(y\gamma^5)u$ に式~\eqref{eq:VR} の $V_\psi=-\frac{iy^2}{(4\pi)^2}(\slashed PB_1+MB_0)$ を入れると、$(4\pi)^2\mathcal M=y^4\bar v\gamma^5(\slashed P+M)(\slashed PB_1+MB_0)(\slashed P+M)\gamma^5u/(t-M^2)^2$ である。$\slashed PB_1+MB_0$ は $\slashed P$ と可換なので、$(\slashed P+M)^2=t+M^2+2M\slashed P$ を使って $(\slashed P+M)(\slashed PB_1+MB_0)(\slashed P+M)=\slashed P\,X+M\,Z$、$X=(t+M^2)B_1+2M^2B_0$、$Z=(t+M^2)B_0+2tB_1$ となる。$\gamma^5$ で挟むと $-\slashed PX+MZ$ で、$\bar v(-\slashed PX+MZ)u=M(Z-X)\bar vu+X\bar v\slashed k_1u$、$Z-X=(t-M^2)(B_0+B_1)$ である。よって $a=y^4M(B_0+B_1)/(t-M^2)$、$b=y^4X/(t-M^2)^2$ を得る。
+
+\paragraph{$\psi(p_1)$ の側の頂点の補正。}$i\mathcal M=\bar v(y\gamma^5)\frac{i(\slashed P+M)}{t-M^2}V_y\,u$ で、$V_y$ は式~\eqref{eq:VR} で入ってくるフェルミオンを $p_1$、入ってくる $\phi$ を $-k_1$、出ていくフェルミオンを $P$ としたもの、$V_y=-\frac{y^3}{(4\pi)^2}[B_0(t)+m^2C_1-M\slashed k_1C_0+\slashed k_1\slashed p_1C_2]\gamma^5$（$C_n=C^{(1)}_n(t)$）である。$u$ に作用させると $\slashed k_1\slashed p_1\gamma^5u=-\slashed k_1\gamma^5\slashed p_1u=-M\slashed k_1\gamma^5u$ なので、$V_yu=-\frac{y^3}{(4\pi)^2}(\alpha-\beta\slashed k_1)\gamma^5u$、$\alpha=B_0(t)+m^2C_1$、$\beta=M(C_0+C_2)$ である。$\gamma^5(\slashed P+M)(\alpha-\beta\slashed k_1)\gamma^5=(M-\slashed P)(\alpha+\beta\slashed k_1)$ から、$(4\pi)^2\mathcal M=-\frac{y^4}{t-M^2}\bar v(M-\slashed P)(\alpha+\beta\slashed k_1)u$ である。$\bar v(M-\slashed P)u=\bar v\slashed k_1u$（$(M-\slashed p_1)u=0$）と、$\bar v(M-\slashed p_1+\slashed k_1)\slashed k_1u=M\bar v\slashed k_1u-\bar v\slashed p_1\slashed k_1u+m^2\bar vu=2M\bar v\slashed k_1u+(t-M^2)\bar vu$（$\slashed p_1\slashed k_1=2p_1\cdot k_1-\slashed k_1\slashed p_1$）から、$a=-y^4\beta$、$b=-y^4(\alpha+2M\beta)/(t-M^2)$ を得る。
+
+\paragraph{$\bar\psi(p_2)$ の側の頂点の補正。}$i\mathcal M=\bar vV_y\frac{i(\slashed P+M)}{t-M^2}(y\gamma^5)u$ で、$V_y$ は入ってくるフェルミオンを $P$、入ってくる $\phi$ を $-k_2$、出ていくフェルミオンを $-p_2$ としたもの、$V_y=-\frac{y^3}{(4\pi)^2}[B_0(M^2)+m^2C_1-M\slashed k_2C_0+\slashed k_2\slashed PC_2]\gamma^5$（$C_n=C^{(2)}_n(t)$）である。$\gamma^5(\slashed P+M)\gamma^5u=(M-\slashed P)u=\slashed k_1u$ なので、$(4\pi)^2\mathcal M=-\frac{y^4}{t-M^2}\bar v[\alpha'-M\slashed k_2C_0+\slashed k_2\slashed PC_2]\slashed k_1u$、$\alpha'=B_0(M^2)+m^2C_1$ である。$\slashed k_2=\slashed p_1+\slashed p_2-\slashed k_1$ と Dirac 方程式から $\bar v\slashed k_2\slashed k_1u=(M^2-t)\bar vu-2M\bar v\slashed k_1u$、$\bar v\slashed k_2\slashed P\slashed k_1u=(t+M^2)\bar v\slashed k_1u+M(t-M^2)\bar vu$ である（後者は $\slashed P\slashed k_1=\slashed p_1\slashed k_1-m^2$ と前者を使う）。よって $a=-y^4M(C_0+C_2)$、$b=-y^4[\alpha'+2M^2C_0+(t+M^2)C_2]/(t-M^2)$ を得る。
+
+\paragraph{箱。}フェルミオンの線に沿って $u(p_1)$ から、$\phi$ の内線（運動量 $\ell$）を出し、$\phi(k_1)$、$\phi(k_2)$ を出し、$\phi$ の内線を吸う図では、伝播関数は $D_0=\ell^2-m^2$、$D_1=(\ell-p_1)^2-M^2$、$D_3=(\ell-P)^2-M^2$、$D_4=(\ell+p_2)^2-M^2$ で、$i$ の因子は $i^4=1$ である。$\gamma^5$ を整理すると、分子は $\bar v(M+\slashed p_2+\slashed\ell)(M+\slashed P-\slashed\ell)(M-\slashed p_1+\slashed\ell)u=\bar v\slashed\ell(M+\slashed P-\slashed\ell)\slashed\ell u$ となる（両端は Dirac 方程式）。$\slashed\ell\slashed P\slashed\ell=2(\ell\cdot P)\slashed\ell-\ell^2\slashed P$、$\ell^2=D_0+m^2$、$2\ell\cdot P=D_0+m^2+t-M^2-D_3$ を使うと、
+\begin{equation*}
+\bar v\slashed\ell(M+\slashed P-\slashed\ell)\slashed\ell u=M(D_0+m^2)\bar vu+(t-M^2-D_3)\bar v\slashed\ell u-(D_0+m^2)\bar v\slashed Pu=(D_0+m^2)\bar v\slashed k_1u+(t-M^2-D_3)\bar v\slashed\ell u
+\end{equation*}
+となる（$(D_0+m^2)\slashed\ell$ の項は打ち消す）。よって $i\mathcal M=y^4\{\bar v\slashed k_1u[m^2I_4+I_3^{(134)}]+(t-M^2)\bar v\gamma_\mu uI_4^\mu-\bar v\gamma_\mu uI_3^{(014)\mu}\}$ で、$I_4$、$I_4^\mu$ は4本の伝播関数の積分、$I_3^{(134)}$ は $D_0$ を除いた（フェルミオンだけの）三角形、$I_3^{(014)\mu}$ は $D_3$ を除いた三角形である。LoopTools の規約で $(r_0,\dots,r_3)=(0,-p_1,-P,p_2)$ とすると、$I_4^\mu=\frac{i}{(4\pi)^2}(-p_1^\mu D_1-P^\mu D_2+p_2^\mu D_3)$（$-P=k_1-p_1$）なので $\bar v\gamma_\mu uI_4^\mu=\frac{i}{(4\pi)^2}[-M(D_1+D_2+D_3)\bar vu+D_2\bar v\slashed k_1u]$、$I_3^{(014)\mu}=\frac{i}{(4\pi)^2}(-p_1^\mu C^s_1+p_2^\mu C^s_2)$ なので $\bar v\gamma_\mu uI_3^{(014)\mu}=-\frac{i}{(4\pi)^2}M(C^s_1+C^s_2)\bar vu$、$I_3^{(134)}=\frac{i}{(4\pi)^2}C_0^M(s)$（$\ell\to\ell+p_1$ と移すと外線の不変量は $k_1^2$、$k_2^2$、$s$）である。まとめて $a=-y^4M[(t-M^2)(D_1+D_2+D_3)-(C^s_1+C^s_2)]$、$b=y^4[m^2D_0+C_0^M(s)+(t-M^2)D_2]$ を得る。箱は紫外有限で、対抗項を持たない。
+
+\paragraph{$\lambda$ の三角形。}$u(p_1)$ が $\phi(\ell)$ を、続いて $\phi(p_1+p_2-\ell)$ を出し、二つの $\phi$ が4点頂点で $\phi(k_1)\phi(k_2)$ になる。$i$ の因子は $(-i\lambda)i^3=-\lambda$ で、対称性因子は1である（4点頂点の4本の線の付け方 $4!$ と $1/4!$、二つの湯川の頂点の入れ替え $2$ と $1/2!$ が打ち消す）。分子は $\bar v\gamma^5(\slashed p_1-\slashed\ell+M)\gamma^5u=\bar v\slashed\ell u$ で、$\int\ell^\mu/(D_m(\ell)D_M(\ell-p_1)D_m(\ell-p_1-p_2))=-\frac{i}{(4\pi)^2}[p_1^\mu C^\lambda_1+(p_1+p_2)^\mu C^\lambda_2]$、$\bar v(\slashed p_1+\slashed p_2)u=0$ から $i\mathcal M=-\lambda y^2\cdot(-\frac{i}{(4\pi)^2})MC^\lambda_1\bar vu$、すなわち $a=\lambda y^2MC^\lambda_1$、$b=0$ である。
+
+\paragraph{対抗項。}内線の自己エネルギーの対抗項 $i(\delta_\psi\slashed P-\delta_M)$ は、上の自己エネルギーの計算で $V_\psi$ を置き換えたもの、すなわち $B_1\to-\frac{(4\pi)^2}{y^2}\delta_\psi=\frac12\Delta_{\mathrm{UV}}$、$B_0\to\frac{(4\pi)^2}{y^2M}\delta_M=-\Delta_{\mathrm{UV}}$ で、自己エネルギーの極（$B_1$ の $-\frac12\Delta_{\mathrm{UV}}$、$B_0$ の $\Delta_{\mathrm{UV}}$）をちょうど打ち消す。頂点の対抗項は二つの頂点で木の振幅の $2\delta_y/y=2y^2\Delta_{\mathrm{UV}}/(4\pi)^2$ 倍で、頂点の補正の極を打ち消す。こうして、式~\eqref{eq:M1B} の積分を $\MSbar$ の有限部分とした式が、繰り込まれた振幅になる。
+
+\paragraph{ユニタリー性。}付録~\ref{app:scat} と同じく $2\,\mathrm{Abs}\,\mathcal M(i\to f)=\sum_n\int\dd\Phi_n\,\mathcal M(i\to n)\mathcal M^*(f\to n)$ で、$y^4$、$y^2\lambda$ の次数では中間状態は $\psi\bar\psi$ と $\phi\phi$ である（$\mathrm{Abs}$ は係数の関数 $a$、$b$ の虚部をとったもの）。$\psi\bar\psi$ の中間状態は区別できる粒子なので因子 $\frac12$ を持たず、中間状態のスピンについて和をとる。$\mathcal M_C$ は付録~\ref{app:tree} と同じ符号の規約（$s$ チャンネルが $+$、$t$ チャンネルが $-$）で、$\mathcal M(\phi\phi\to\psi_q\bar\psi_q)=y^2\bar u(q_1)[\slashed k_1/((q_1-k_1)^2-M^2)+\slashed k_2/((q_1-k_2)^2-M^2)]v(q_2)$ である。二つの振幅の状態の規約はそろえてある（Wick の縮約で $\bar v(p_2)\cdots u(p_1)$、$\bar u(q_1)\cdots v(q_2)$ が正の符号になる）。$s$ チャンネルの項はトレース $\mathrm{tr}[(\slashed q_1+M)\gamma^5(\slashed q_2-M)\Gamma]$（$\Gamma$ はベクトル2つの線形結合）が0なので寄与しない。$\phi\phi$ の中間状態は $\mathcal M^*(\phi\phi\to\phi\phi)=-\lambda$ と同種粒子の $\frac12$ を持つ。$\dd\Phi_2=\frac{|\boldsymbol q|}{16\pi^2\sqrt s}\dd\Omega_q$ を入れると式~\eqref{eq:unitB} を得る。
+
 \section{$\gamma^5$ の処方の違いの導出}\label{app:bmhv}
 
 \paragraph{BMHV の処方。}$D$ 次元の $\gamma^\mu$ を4次元の部分と $D-4$ 次元の部分に $\gamma^\mu=\bar\gamma^\mu+\hat\gamma^\mu$ と分ける。BMHV の処方では、$\gamma^5$ は $\bar\gamma^\mu$ と反可換、$\hat\gamma^\mu$ と可換である。ループ運動量 $q=\bar q+\hat q$ について $\gamma^5\slashed q\gamma^5=-\bar{\slashed q}\gamma^5\gamma^5+\hat{\slashed q}\gamma^5\gamma^5=-\bar{\slashed q}+\hat{\slashed q}$ なので、$\gamma^5(\slashed a+M)\gamma^5=-\slashed a+M+2\hat{\slashed q}$（$a=q+$外線の運動量、外線の運動量は4次元）となる。NDR の $-\slashed a+M$ との違いは $2\hat{\slashed q}$ である。
@@ -825,6 +895,8 @@ $\phi(k_1)\phi(k_2)\to\psi(q_1)\bar\psi(q_2)$ の振幅は、付録~\ref{app:tre
 \paragraph{手順 (2)。}FeynRules が書いた FeynArts の模型では、湯川の頂点の係数は記号 \texttt{gc2L}、\texttt{gc2R} で書かれ、その値はモデルファイルの末尾の置き換えの表 \texttt{M\$FACouplings} $=\{\texttt{gc2L}\to-\texttt{yps},\ \texttt{gc2R}\to\texttt{yps}\}$ にある。FeynCalc はこの表を自動では使わないので、\texttt{CreateFeynAmp} の出力に手で適用した。適用しないと、スピン和に \texttt{gc2L}、\texttt{gc2R} が残る。$\phi^3$ と $\phi^3+\phi^4$ の模型では頂点の係数が $-i\,\texttt{gphi}$ のように直接書かれていたので、この問題は起きなかった。カイラルな射影 $\omega_\pm$ は、\texttt{FCFAConvert} のオプション \texttt{UndoChiralSplittings} で $\gamma^5$ にまとめた。MadGraph では、固定エネルギーの粒子どうしの衝突（\texttt{lpp}$=0$、ビームのエネルギーは $\sqrt s/2$）で、カットをかけずに全断面積を求めた。断面積は、ログには4桁、\texttt{results.dat} とバナーにも5桁しか書かれない。(A) では $|\mathcal M|^2$ が定数なので、積分の統計誤差は相対 $10^{-9}$ の程度しかなく、差を統計誤差で割ると桁の丸めのために $10^4$〜$10^5$ になる。そこで表~\ref{tab:tree} では、統計誤差と最後の桁の半分の大きい方を実効誤差とした。5桁の出力でも、(A) の値は解析式を丸めたものと一致する（例えば $\sqrt s=2.5$ で $619720$ と $619716.6$）。
 
 \paragraph{手順 (3)。}FeynCalc の \texttt{DiracSimplify} は、既定では $\gamma^5$ を奇数個含むフェルミオンの線をカイラルな射影 $\omega_\pm$ で書き直す（オプション \texttt{ToDiracGamma67 -> True}）。そのままだと $V_y$ の結果に $\omega_\pm$ が残り、Dirac 構造に分けられない。\texttt{ToDiracGamma67 -> False}、\texttt{DiracSubstitute67 -> True} として $\gamma^5$ のまま扱った。$V_4$ では、TID の結果に $s+t+u$ の組み合わせが現れるので、$u=4m^2-s-t$ を代入してから積分の名前をそろえた。LoopTools の値は FeynHelpers の \texttt{LToolsEvaluate} で求めた。これは各スカラー積分を「有限部分 $+$ 極$/\epsilon$」の形で返す。TID の係数は $D$ を含むので、$D=4-2\epsilon$ と置いてから $\epsilon^0$ の項をとった。$D\to4$ としてから評価すると、$(D-4)\times$極から来る有理数の項を落とす。また、係数を早く浮動小数点数にすると、$(D-2)/(D-2)$ のような因子が約分されずに残る。Package-X の \texttt{ScalarC0}、\texttt{ScalarD0} は、引数に質量の2乗ではなく質量をとる。COLLIER の3点のテンソル係数は \texttt{C\_cll} の \texttt{C(0,1,0)}、\texttt{C(0,0,1)} が $C_1$、$C_2$ である。LoopTools の $C_0$ の誤りについて、新しく分かったことがある。誤る点では、LoopTools 自身が ``Discrepancy in C0'' と表示し、版 a（主に FF）の正しい値と版 b の誤った値を並べ、誤った方を返す。版の選択（version key を \texttt{KeyC0} の0〜3倍）を変えても、返す値は変わらなかった。FF は ``lambda(p1,p2,p3) < 0'' と警告する。ただし、$\lambda<0$ の点がすべて誤るわけではない（$V_y$ の $(-1,-2,-3)$ の点は正しい）。$\gamma^5$ の処方の比較では、FeynCalc の \texttt{FCSetDiracGammaScheme} で BMHV の処方を選んで $V_\phi$、$V_\psi$、$V_y$ を計算した。外線の運動量の $D-4$ 次元の部分は、テンソル積分の簡約の後で0とした。箱のトレースは、BMHV の処方では ``Not all non-chiral traces were evaluated'' というエラーで止まった。
+
+\paragraph{手順 (4)。}FormCalc は、一つのセッションで別の過程を計算しようとすると止まる（\texttt{DeclareProcess::incomp}）。過程を替えるたびに \texttt{ClearProcess[]} を呼んだ。FormCalc のスピノルの鎖の名前（\texttt{F1}、\texttt{F2}）はセッションごとに入れ替わるので、名前ではなく中身で区別した。FormCalc の鎖は \texttt{DiracChain[Spinor[k[1],M,-1], ..., Spinor[k[2],M,1]]} の形で、フェルミオンの線が $k[1]$ から $k[2]$ へ向かう。$\bar v(p_2)\Gamma u(p_1)$ を逆向きに書くと、荷電共役で $\Gamma=1$ の鎖の符号は変わらず、$\Gamma=\gamma^\mu$ の鎖の符号は変わる。木の振幅で全体の位相を決めると、$\langle1|1|2\rangle$ の係数が $-a$、$\langle1|\slashed k_1|2\rangle$ の係数が $b$ になる。この対応が二つの係数の両方で、全ての点で成り立つことが検算になっている。FormCalc の \texttt{PaVeReduce -> True} の結果には \texttt{IGram[x]}（$=1/x$）と3引数の \texttt{Den[p, m, d]}（$=(p-m)^{-d}$）が現れるので、数値にする前に置き換えた。FeynCalc では、FeynHelpers の \texttt{LToolsEvaluate} は積分の引数が浮動小数点数でないと止まる（$\psi\bar\psi\to\phi\phi$ の $t$ は平方根を含む）。係数は厳密なままにして、積分の引数だけを数値にした。ユニタリー性の積分では、高いエネルギーで被積分関数が二つの方向（$\boldsymbol p_1$ と $\boldsymbol k_1$）の近くに山を持つ。$40\times40$ 点の求積では $\sqrt s=10$ で相対 $3\times10^{-3}$ しか合わなかったので、中間状態のスピンの和を完全性の関係 $\sum u\bar u=\slashed q+M$、$\sum v\bar v=\slashed q-M$ で行列にまとめ、$240\times240$ 点にした。
 
 \begin{thebibliography}{9}
 \small
