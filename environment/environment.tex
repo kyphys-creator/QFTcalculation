@@ -50,7 +50,7 @@
 \maketitle
 
 \begin{abstract}
-本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。その後、$\phi^3$ 模型での検算で、この環境の LoopTools が閾値より下で外運動量がゼロでない $C_0$ を誤って返し、その誤りがテンソル係数 $C_{00}$ にも及ぶことが分かった。$C_0$ と $C_{00}$ には Package-X と COLLIER を使う。4点関数 $D_0$ は、外線と内線の質量がすべて等しいとき、ライブラリごとに異なる点で値を返さない。さらに MadLoop との比較で、NLOCT の不具合（FeynRules の \texttt{Core/Loop.m} に2つ目の局所パッチを当てた）と、MadGraph の1ループ計算が QCD と QED の摂動しか受け付けないことが分かった。全断面積の計算では、MadGraph の木の $2\to3$ の断面積が、高いエネルギーで誤差を小さく見積もり、自前の積分より $0.8\%$ 低く出た。$\phi\phi\to\phi\phi$ を高エネルギーまで計算すると、COLLIER の箱図が $\sqrt s\gg m$ で精度を失った。既定の方式 COLI では虚部が、もう一方の DD では $\sqrt s\gtrsim10^3m$ で値全体が誤る。LoopTools と、Package-X の解析式を30桁で評価した値は正しかった（第~\ref{sec:issues} 節）。計算のスクリプトは、まとめて実行できるうえ、Mathematica のノートブックや VS Code でセルごとにも実行できる形にした。これで途中の式や図を確かめられる。$\phi^3$ 模型の25本すべてをこの形にし、結果が変わらないことを確かめた。そのための道具は \nolinkurl{environment/interactive/} にある（第~\ref{sec:usage} 節）。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。2026年10月11日には、有限温度の相転移の検算のために、熱的な道具を加えた。DRalgo 1.5.0（GroupMath 1.1.3 とともに）、Matchete 0.6.0 の Matchotter、PT2GWFinder 1.1.0 と FindBounce 1.1.0、CosmoTransitions 2.0.7 である。DRalgo と Matchotter は、$\phi^3+\phi^4$ 理論の有限温度のノートの温度ポテンシャルの係数と記号で一致した。CosmoTransitions は bounce の作用と転移の温度を、ノートの自前の計算と相対 $10^{-7}$ 以内で再現した。PT2GWFinder は、臨界温度と相転移の強さを相対 $10^{-6}$ 以内、核生成温度を $2.4\times10^{-4}$ 以内で再現した。さらに PhaseTracer2 2.2.2、BSMPT 3.2.0、TransitionListener 2.1.0 も加え、臨界温度、作用、強さ、$\beta/H$ が、核生成の条件や $g_*$ などの取り決めの違いを除いて再現されることを確かめた。FindBounce は、経路の端を深い真の極小に置くと、点を増やすほど正しい値から離れた。Matchotter の対数の尺度は通常の $\overline{\mathrm{MS}}$ の尺度と $e^{\gamma_E}$ 倍違い、これは論文の付録 B の規格化と一致した（第~\ref{sec:thermal} 節）。
+本稿は、Feynman 図の1ループ計算に使うソフトウェア環境を、この Mac（Apple M3、macOS 26.2、Mathematica 14.2.1）に組み直した記録である。旧環境には FeynCalc 10.1、FeynArts、Package-X、FeynRules、LieART、FormCalc、\MGaMC{} 3.6.2 があり、そのインストールとアーカイブは計22項目に散らばっていた。自作の模型ファイル570個を退避して元と照合したのち、これらをすべてゴミ箱へ移し、同じリポジトリのレビューが推奨した1ループの構成を導入した。すなわち FeynCalc 10.2.1 + FeynHelpers 2、Package-X 2.1.1、LoopTools 2.16、COLLIER 1.2.10、FORM 5.0.2、FormCalc 9.10、FeynRules 2.3.49、\MGaMC{} 3.8.1 である。導入の途中で、この Mac に固有の障害が四つ見つかった。gfortran が macOS の SDK を見つけられないこと、Mathematica 付属の MathLink コンパイラ \texttt{mcc} が Apple Silicon に対応していないこと、Mathematica 14.1 で入った組み込み記号 \texttt{MatrixSymbol} が FeynRules の同名記号を隠すこと、ブラウザで取得した実行ファイルが macOS に削除されることである。それぞれ、SDKROOT の設定、代替の \texttt{mcc}、FeynRules.m への局所パッチ、curl による取得で回避した。検証では三つの点を確かめた。第一に、$B_0(2;1,1)=2-\pi/2$ を LoopTools・COLLIER・Package-X・FeynHelpers の各経路で再現した（倍精度の全桁、COLLIER は出力した12桁）。第二に、MadGraph の $e^+e^-\to\mu^+\mu^-$ の断面積 $0.10437\pm0.00018$~pb が、$\gamma$ と $Z$ の交換を含む解析式の値 $0.10426$~pb と $0.6\sigma$ 以内で一致した。第三に、FeynRules が出力した標準模型の UFO が、MadGraph 同梱の標準模型の153頂点をすべて含むことを確かめた。その後、$\phi^3$ 模型での検算で、この環境の LoopTools が閾値より下で外運動量がゼロでない $C_0$ を誤って返し、その誤りがテンソル係数 $C_{00}$ にも及ぶことが分かった。$C_0$ と $C_{00}$ には Package-X と COLLIER を使う。4点関数 $D_0$ は、外線と内線の質量がすべて等しいとき、ライブラリごとに異なる点で値を返さない。さらに MadLoop との比較で、NLOCT の不具合（FeynRules の \texttt{Core/Loop.m} に2つ目の局所パッチを当てた）と、MadGraph の1ループ計算が QCD と QED の摂動しか受け付けないことが分かった。全断面積の計算では、MadGraph の木の $2\to3$ の断面積が、高いエネルギーで誤差を小さく見積もり、自前の積分より $0.8\%$ 低く出た。$\phi\phi\to\phi\phi$ を高エネルギーまで計算すると、COLLIER の箱図が $\sqrt s\gg m$ で精度を失った。既定の方式 COLI では虚部が、もう一方の DD では $\sqrt s\gtrsim10^3m$ で値全体が誤る。LoopTools と、Package-X の解析式を30桁で評価した値は正しかった（第~\ref{sec:issues} 節）。計算のスクリプトは、まとめて実行できるうえ、Mathematica のノートブックや VS Code でセルごとにも実行できる形にした。これで途中の式や図を確かめられる。$\phi^3$ 模型の25本すべてをこの形にし、結果が変わらないことを確かめた。評価する Feynman 図は、評価の前のセルで表示する。そのための道具は \nolinkurl{environment/interactive/} にある（第~\ref{sec:usage} 節）。全検証は \nolinkurl{environment/tests/run_all.sh} で再実行できる。2026年10月11日には、有限温度の相転移の検算のために、熱的な道具を加えた。DRalgo 1.5.0（GroupMath 1.1.3 とともに）、Matchete 0.6.0 の Matchotter、PT2GWFinder 1.1.0 と FindBounce 1.1.0、CosmoTransitions 2.0.7 である。DRalgo と Matchotter は、$\phi^3+\phi^4$ 理論の有限温度のノートの温度ポテンシャルの係数と記号で一致した。CosmoTransitions は bounce の作用と転移の温度を、ノートの自前の計算と相対 $10^{-7}$ 以内で再現した。PT2GWFinder は、臨界温度と相転移の強さを相対 $10^{-6}$ 以内、核生成温度を $2.4\times10^{-4}$ 以内で再現した。さらに PhaseTracer2 2.2.2、BSMPT 3.2.0、TransitionListener 2.1.0 も加え、臨界温度、作用、強さ、$\beta/H$ が、核生成の条件や $g_*$ などの取り決めの違いを除いて再現されることを確かめた。FindBounce は、経路の端を深い真の極小に置くと、点を増やすほど正しい値から離れた。Matchotter の対数の尺度は通常の $\overline{\mathrm{MS}}$ の尺度と $e^{\gamma_E}$ 倍違い、これは論文の付録 B の規格化と一致した。最後に WallGo 1.1.2 を加え、局所熱平衡の壁の速さを求めた。TransitionListener の値との差は、TransitionListener が音速を場を固めた温度微分で求めることから生じると分かった（第~\ref{sec:thermal} 節）。
 \end{abstract}
 
 \section{はじめに}\label{sec:intro}
@@ -459,6 +459,14 @@ wolframscript -file scat4_feyncalc.wl      # batch: Inspect cells skipped, (a)/(
 
 途中で踏んだ落とし穴は四つある。第一に、フロントエンドはパッケージの形式のファイルを、セルの印と2行以上の空行でだけセルに分け、1行の空行では分けない。そのため、一つのセルに複数の文が入ることがある。たとえば \texttt{Get["FeynCalc\bq"]} と、ファイルの場所を決める文が同じセルに入る。第二に、見えないフロントエンドで評価する道具は、\texttt{wolframscript -file} ではなく、\texttt{-code} で \texttt{ReadString} から読み込む。\texttt{-file} では \texttt{\$InputFileName} が道具自身を指し、ノートブックと同じ空の状態にならないからである。セルは、\texttt{\$InputFileName} をファイルの場所に置き換えたうえで丸ごと評価する。また、道具の変数名はスクリプトの記号と衝突しないようにする。今回はスクリプトが \texttt{res} という名前を使っていて衝突した。第三に、\texttt{Paint} に \texttt{SheetHeader -> None} を付けると、\texttt{Render} が失敗する。第四に、zsh は引用符のない変数の中身を空白で分けない。そのため、複数のファイル名を一つの変数で渡すと、コピーや比較が黙って失敗する。比較の結果は、比べたファイルが実際にあることも含めて確かめる。
 
+\paragraph{評価する前に図を見る。}2026年10月11日に、評価する Feynman 図を、評価する前に表示する取り決めを加えた。図を描く Inspect セルは、その図を評価するセルより前に置く。こうすると、Shift+Return で順に進めたとき、図を見たところで止められる。場合は三つある。
+\begin{itemize}
+\item FeynArts で振幅を作る Wolfram のスクリプトでは、\texttt{InsertFields} の文の直後に、図の Inspect セルを独立に置く。\texttt{CreateFeynAmp}、\texttt{TID}、\texttt{CalcFeynAmp} のセルより前である（図の数を数える \texttt{Length[CreateFeynAmp[...]]} は軽いので残してよい）。$\phi^3$ と $\phi^3+\phi^4$ の模型の13本がこの形である。
+\item Python のスクリプトのうち、MadLoop と MadGraph の木の計算を使うもの（\texttt{madloop\_numeric.py} と \texttt{xsec\_numeric.py}）では、最初の \texttt{./check} の実行より前のセルで、MadGraph が \texttt{output} で描いた図（\texttt{born\_matrix.ps}、\texttt{loop\_matrix.ps}）を Ghostscript で PNG に変えて表示する。このセルは \texttt{if INTERACTIVE:} の中に置くので、まとめて実行したときの出力は変わらない。
+\item 計算そのものが図を作らない場合（有限温度のノートの DRalgo、Matchotter、1ループの温度ポテンシャル）は、\nolinkurl{models/phi34_thermal/Src/diagrams_thermal.wl} が FeynArts で図を描き、\nolinkurl{figs/diagrams/} に PNG で書き出す。FeynArts は DRalgo や Matchete と同じカーネルで読み込まないので、別のスクリプトにした。評価するスクリプト（\texttt{dralgo\_check.wl}、\texttt{matchotter\_check.wl}、\texttt{nonpert\_single.py}、\texttt{thermal\_single.py}）は、最初の評価より前の Inspect セルでその PNG を表示する。
+\end{itemize}
+並べ替えたスクリプトをまとめて実行し、書き出したファイルがコミット済みの版と1バイト単位で一致することを確かめた。取り決めは \nolinkurl{environment/interactive/README.md} にもある。
+
 ツールを更新したときは、試験をすべて実行し直す。MadGraph の試験を除けば数分で終わる。
 
 \begin{Verbatim}
@@ -468,7 +476,7 @@ wolframscript -file scat4_feyncalc.wl      # batch: Inspect cells skipped, (a)/(
 
 \section{熱的な道具の追加}\label{sec:thermal}
 
-2026年10月11日に、$\phi^3+\phi^4$ 理論の有限温度のノート~\cite{phi34thermal} の検算のために、熱的ループと相転移の道具を加えた。まず、ノートの手順 (7) で、相の追跡と bounce の計算を自前の数値計算と照合するために、Python の CosmoTransitions~\cite{cosmotransitions} を入れた。次に手順 (8) で、レビューにある熱的な道具を入れた。レビューは有限温度の道具を二つの層に分けている。3次元の有効理論を作る層（DRalgo、Matchotter）と、相転移と重力波を求める層（PhaseTracer2、PT2GWFinder、BSMPT、TransitionListener）である。前者からは DRalgo~\cite{dralgo} と Matchotter~\cite{matchotter} を、後者からは PT2GWFinder~\cite{pt2gw} と、それが bounce に使う FindBounce~\cite{findbounce} を選んだ。どれも Mathematica で動き、ノートの式を直接確かめられる。同じ日のうちに、ノートの手順 (11) として、後者の残りの PhaseTracer2~\cite{phasetracer2}、BSMPT~\cite{bsmpt3}、TransitionListener~\cite{tl2} も入れた。全体像を図~\ref{fig:thermal} に、版と配置を表~\ref{tab:thermal} に示す。図の色は図~\ref{fig:arch} と同じである。
+2026年10月11日に、$\phi^3+\phi^4$ 理論の有限温度のノート~\cite{phi34thermal} の検算のために、熱的ループと相転移の道具を加えた。まず、ノートの手順 (7) で、相の追跡と bounce の計算を自前の数値計算と照合するために、Python の CosmoTransitions~\cite{cosmotransitions} を入れた。次に手順 (8) で、レビューにある熱的な道具を入れた。レビューは有限温度の道具を二つの層に分けている。3次元の有効理論を作る層（DRalgo、Matchotter）と、相転移と重力波を求める層（PhaseTracer2、PT2GWFinder、BSMPT、TransitionListener）である。前者からは DRalgo~\cite{dralgo} と Matchotter~\cite{matchotter} を、後者からは PT2GWFinder~\cite{pt2gw} と、それが bounce に使う FindBounce~\cite{findbounce} を選んだ。どれも Mathematica で動き、ノートの式を直接確かめられる。同じ日のうちに、ノートの手順 (11) として、後者の残りの PhaseTracer2~\cite{phasetracer2}、BSMPT~\cite{bsmpt3}、TransitionListener~\cite{tl2} も入れた。さらに手順 (12) で、泡の壁の速さを局所熱平衡で求めるために WallGo~\cite{wallgo} を入れた。全体像を図~\ref{fig:thermal} に、版と配置を表~\ref{tab:thermal} に示す。図の色は図~\ref{fig:arch} と同じである。
 
 \begin{figure}[hbp]
 \centering
@@ -496,15 +504,17 @@ wolframscript -file scat4_feyncalc.wl      # batch: Inspect cells skipped, (a)/(
 % CosmoTransitions
 \node[tO,text width=4.3cm] (CT) at (14.0,-0.95) {CosmoTransitions 2.0.7（pip）};
 \node[tN,text width=4.3cm] (NP) at (14.0,-1.6) {numpy 2.5.3（\texttt{np.product} を補う）};
-\node[tN,text width=4.3cm] (CTn) at (14.0,-2.5) {\texttt{tunneling1D}、\\\texttt{transitionFinder}};
+\node[tN,text width=4.3cm] (CTn) at (14.0,-2.35) {\texttt{tunneling1D}、\\\texttt{transitionFinder}};
+\node[tO,text width=2.45cm] (WG) at (15.35,-3.45) {WallGo 1.1.2（pip）};
 % target
 \node[draw=cGd,fill=cGf,rounded corners=2pt,text width=16.3cm,align=flush center,font=\footnotesize,inner sep=3pt] (NOTE)
   at (8.35,-5.5) {照合の相手：$\phi^3+\phi^4$ 理論の有限温度のノート（\texttt{models/phi34\_thermal}）の、手で導いた式と自前の数値計算};
 \draw[flow,cGd] (MT.south) -- node[right,font=\scriptsize,text=cGd,align=left] {温度ポテンシャルの係数\\（記号）} (MT.south |- NOTE.north);
 \draw[flow,cGd] (TL.south) -- node[right,font=\scriptsize,text=cGd,align=left] {$T_c$、強さ、$T_n$、$\beta/H$、\\重力波のスペクトル} (TL.south |- NOTE.north);
-\draw[flow,cGd] (CTn.south) -- node[right,font=\scriptsize,text=cGd,align=left] {bounce の作用、\\$T_c$、$T_n$、相の追跡} (CTn.south |- NOTE.north);
+\draw[flow,cGd] ([xshift=-1.45cm]CTn.south) -- node[right,font=\scriptsize,text=cGd,align=left,pos=0.62] {bounce の作用、\\$T_c$、$T_n$、相の追跡} ([xshift=-1.45cm]CTn.south |- NOTE.north);
+\draw[flow,cGd] (WG.south) -- node[right,font=\scriptsize,text=cGd,align=left] {局所熱平衡の\\壁の速さ} (WG.south |- NOTE.north);
 \end{tikzpicture}
-\caption{熱的な道具の全体像。左の二つの層はレビューの分類による。GroupMath と Matchete は Applications に置き、DRalgo、PT2GWFinder、FindBounce は paclet として入れた。DRalgo と Matchete は同じカーネルで読み込まない。FindBounce は PT2GWFinder が bounce の計算に使う。PhaseTracer2 と BSMPT は \texttt{\textasciitilde/hep} に構築した C++ のプログラム、TransitionListener は conda 環境 \texttt{tl} の Python のパッケージである。緑の矢印は、ノートの何と照合したかを示す。DRalgo と Matchotter は同じ量を独立に計算した。}
+\caption{熱的な道具の全体像。左の二つの層はレビューの分類による。GroupMath と Matchete は Applications に置き、DRalgo、PT2GWFinder、FindBounce は paclet として入れた。DRalgo と Matchete は同じカーネルで読み込まない。FindBounce は PT2GWFinder が bounce の計算に使う。PhaseTracer2 と BSMPT は \texttt{\textasciitilde/hep} に構築した C++ のプログラム、TransitionListener は conda 環境 \texttt{tl}、WallGo は \texttt{qft} の Python のパッケージである。緑の矢印は、ノートの何と照合したかを示す。DRalgo と Matchotter は同じ量を独立に計算した。}
 \label{fig:thermal}
 \end{figure}
 
@@ -527,13 +537,15 @@ ALGLIB（PhaseTracer2 用） & 4.08.0 & \texttt{\textasciitilde/hep/lib/libalgli
 NLopt（PhaseTracer2、BSMPT 用） & 2.11.0 & Homebrew & \texttt{brew install} \\
 BSMPT & 3.2.0 & \texttt{\textasciitilde/hep/BSMPT-3.2.0} & GitHub（BSMPT）のタグ~\cite{bsmpt3,url:bsmpt} \\
 TransitionListener & 2.1.0 & \texttt{\textasciitilde/hep/TransitionListener-2.1.0}、conda 環境 \texttt{tl} & GitHub（tasicarl）のタグ~\cite{tl2,url:tl} \\
+WallGo & 1.1.2 & \texttt{qft} の site-packages/WallGo & PyPI~\cite{wallgo,url:wallgo} \\
+h5py（WallGo 用） & 3.16.0 & \texttt{qft} & conda-forge \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\paragraph{導入。}どれも \texttt{curl}、\texttt{git}、\texttt{pip} で取得し、ブラウザは使わなかった（第~\ref{sec:issues} 節）。DRalgo、FindBounce、PT2GWFinder は、GitHub で配布されている paclet を \texttt{PacletInstall} で入れた。中身は Mathematica のパッケージと文書で、コンパイル済みのライブラリは含まない。GroupMath は作者のサイトの zip を Applications に展開した。DRalgo は読み込むときに GroupMath を Applications から読む。Matchete には版の付いた配布がない。そこで GitLab の master（2026年9月24日のコミット 742c31e、版の表示は 0.6.0）を取得し、\texttt{.git} を除いて Applications に写した。これは Matchete の \texttt{install.m} が行う操作と同じである。版の番号だけでは中身が決まらないので、入れ直すときはこのコミットを指定する。CosmoTransitions は PyPI の wheel を \texttt{pip install --no-deps} で \texttt{qft} に入れた。必要な numpy と scipy はすでに入っている。大きさは Matchete が 90 MB、PT2GWFinder が 16 MB で、ほかは 5 MB 以下である。コマンドは \nolinkurl{files/build_commands.txt} の8番目の項目にある。PhaseTracer2 が使う ALGLIB は Homebrew にないので、alglib.net の C++ のソースを静的ライブラリにして \pth{hep/lib} に置いた。NLopt は Homebrew で入れた。BSMPT は conan を使わず、Homebrew の Eigen、GSL、nlohmann-json、NLopt で構築した。Homebrew の GSL には CMake の設定ファイルがないので、CMake の \texttt{FindGSL} を呼ぶ1行のファイルを \nolinkurl{BSMPT-3.2.0/cmake-shim} に置いた。libcmaes、重粒子の生成の計算、テストは外した。TransitionListener は、多くの依存（ultranest、mpi4py、getdist など）を \texttt{qft} に入れないよう、別の conda 環境 \texttt{tl} を作って入れた。構築のスクリプトとログは \pth{hep/src} にあり、コマンドは \nolinkurl{files/build_commands.txt} の9番目の項目にある。
+\paragraph{導入。}どれも \texttt{curl}、\texttt{git}、\texttt{pip} で取得し、ブラウザは使わなかった（第~\ref{sec:issues} 節）。DRalgo、FindBounce、PT2GWFinder は、GitHub で配布されている paclet を \texttt{PacletInstall} で入れた。中身は Mathematica のパッケージと文書で、コンパイル済みのライブラリは含まない。GroupMath は作者のサイトの zip を Applications に展開した。DRalgo は読み込むときに GroupMath を Applications から読む。Matchete には版の付いた配布がない。そこで GitLab の master（2026年9月24日のコミット 742c31e、版の表示は 0.6.0）を取得し、\texttt{.git} を除いて Applications に写した。これは Matchete の \texttt{install.m} が行う操作と同じである。版の番号だけでは中身が決まらないので、入れ直すときはこのコミットを指定する。CosmoTransitions は PyPI の wheel を \texttt{pip install --no-deps} で \texttt{qft} に入れた。必要な numpy と scipy はすでに入っている。大きさは Matchete が 90 MB、PT2GWFinder が 16 MB で、ほかは 5 MB 以下である。コマンドは \nolinkurl{files/build_commands.txt} の8番目の項目にある。PhaseTracer2 が使う ALGLIB は Homebrew にないので、alglib.net の C++ のソースを静的ライブラリにして \pth{hep/lib} に置いた。NLopt は Homebrew で入れた。BSMPT は conan を使わず、Homebrew の Eigen、GSL、nlohmann-json、NLopt で構築した。Homebrew の GSL には CMake の設定ファイルがないので、CMake の \texttt{FindGSL} を呼ぶ1行のファイルを \nolinkurl{BSMPT-3.2.0/cmake-shim} に置いた。libcmaes、重粒子の生成の計算、テストは外した。TransitionListener は、多くの依存（ultranest、mpi4py、getdist など）を \texttt{qft} に入れないよう、別の conda 環境 \texttt{tl} を作って入れた。構築のスクリプトとログは \pth{hep/src} にあり、コマンドは \nolinkurl{files/build_commands.txt} の9番目の項目にある。WallGo は h5py、numpy、scipy を要る。\texttt{qft} になかった h5py（3.16.0）を conda-forge から入れ（試しの実行で、既存のパッケージは変わらず新しいものが加わるだけと確かめた）、PyPI の wheel（\pth{hep/src/wallgo-dl} に保存）を \texttt{pip install --no-deps} で入れた。平衡からずれた粒子の摩擦を求める補助のモジュール（WallGoMatrix、WallGoCollision）は入れていない。コマンドは \nolinkurl{files/build_commands.txt} の10番目の項目にある。
 
-\paragraph{検証。}照合はノートの手順 (7)、(8) として行った。結果を表~\ref{tab:thermaltests} にまとめる。基準は、ノートで手で導いた式と、ノートの自前の数値計算（bounce の撃ち込み法と相の追跡）である。DRalgo の2ループの熱質量は、単一場の模型（$\alpha=0.9$、$\kappa_4=1$）のスピノーダル温度で1ループの熱質量 $\lambda T^2/24$ の $0.86\%$ で、最低次のスピノーダル温度を $0.43\%$ 下げた。PhaseTracer2、BSMPT、TransitionListener との照合は、ノートの手順 (11) として、一般形の5点で行った（表の8〜12）。細部はノートの第7節と付録~H にある。
+\paragraph{検証。}照合はノートの手順 (7)、(8) として行った。結果を表~\ref{tab:thermaltests} にまとめる。基準は、ノートで手で導いた式と、ノートの自前の数値計算（bounce の撃ち込み法と相の追跡）である。DRalgo の2ループの熱質量は、単一場の模型（$\alpha=0.9$、$\kappa_4=1$）のスピノーダル温度で1ループの熱質量 $\lambda T^2/24$ の $0.86\%$ で、最低次のスピノーダル温度を $0.43\%$ 下げた。PhaseTracer2、BSMPT、TransitionListener との照合は、ノートの手順 (11) として、一般形の5点で行った（表の8〜12）。WallGo による局所熱平衡の壁の速さは、ノートの手順 (12) として求めた（表の13、14）。細部はノートの第7節と付録~H にある。
 
 \begin{table}[hbp]
 \centering\small
@@ -555,6 +567,8 @@ TransitionListener & 2.1.0 & \texttt{\textasciitilde/hep/TransitionListener-2.1.
 10 & BSMPT 3.2.0 & 一般形の $T_c$、$T_n$（BSMPT の $H$）、$\beta/H$ & 差は $3\times10^{-8}$、$3\times10^{-5}$、$3.5\times10^{-4}$ 以内 & 一致 \\
 11 & BSMPT の強さ & ノートの $\alpha_\theta$（$g_*=106.75$） & 5点とも $+1.5$〜$1.6\%$ & 説明できる（SM の $g_*(T)$ の表） \\
 12 & TransitionListener 2.1.0 & BP1〜BP4 の $T_c$、浸透温度での強さと $\beta/H$ & 差は $3\times10^{-13}$、$8\times10^{-7}$、$3\times10^{-4}$ 以内 & 一致 \\
+13 & WallGo 1.1.2 & 浸透温度での局所熱平衡の壁の速さ（音速一定の近似）が、TransitionListener の整合の式に相に沿った音速を入れた値と同じ & BP1〜BP3 で差は $10^{-6}$ 以内、BP4 はどちらも解なし。状態方程式の温度依存を含めると $3\times10^{-5}$〜$3\times10^{-3}$ 大きい & 一致 \\
+14 & TransitionListener の壁の速さ & 整合の式に場を固めた音速を入れた値 & 差は $2\times10^{-7}$ 以内。WallGo より $0.1$〜$0.5\%$ 遅く、BP4 では存在しない解 $0.797$ を返していた & 説明できる（音速の取り決め） \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -569,10 +583,11 @@ TransitionListener & 2.1.0 & \texttt{\textasciitilde/hep/TransitionListener-2.1.
 \item CosmoTransitions は numpy 2 で消えた \texttt{np.product} を使うので、読み込む前に \texttt{np.product = np.prod} とする。\texttt{SingleFieldInstanton.findProfile} の既定の許容誤差では、作用の相対誤差が $6\times10^{-4}$ ほどある。\texttt{xtol}$=$\texttt{phitol}$=10^{-10}$、\texttt{npoints}$=4000$ とすると $10^{-7}$ 以下になる。\texttt{fullTunneling} は、経路に沿ったポテンシャルを既定で100点のスプラインで近似する（\texttt{V\_spline\_samples=None} で直接評価する）。相の追跡の刻みは既定で温度の範囲の $10^{-3}$ 倍で、狭い温度の幅を飛び越えることがある（\texttt{dtstart} と \texttt{tjump} を小さくする）。自作の核生成の基準 \texttt{nuclCriterion} は、作用が0のとき負を返さなければならない。\texttt{findAllTransitions} は準安定な相が終わる温度で止まるので、その少し下から \texttt{tunnelFromPhase} を呼ぶ。
 \item PhaseTracer2 は核生成を $S_3/T=140$ で決める。$\beta/H$ は前後 $\pm0.1$~GeV の6点の作用に当てはめた直線から求めるので、非常に速い転移（$\beta/H\gtrsim10^4$）ではずれる。撃ち込み法の既定の許容誤差 $10^{-4}$ では作用に $10^{-3}$ 程度の誤差が出る（\texttt{PD\_xtol}、\texttt{PD\_phitol} を小さくする）。相の探索では、$V''(0)\to0$ となる温度より上に下限を置き、ヘッセ行列の特異性の判定を切り、場の範囲の既定の上限 $1600$~GeV を広げる。ALGLIB 4.08 では、付属の単体テスト13件のうち2件が $0.16\%$、$0.76\%$ のずれで通らない。
 \item BSMPT の模型は C++ のクラスで、任意のポテンシャルは \texttt{VEff} を書き換えて与える（\texttt{diff}$=-1$ は温度微分で、強さに使う）。破れた相は \texttt{vevTreeMin} から追うので、探索の下限の温度での最小をそこに入れる。重力波の段階は SM の粒子の質量（壁の圧力）を問い合わせるので、粒子を持たないポテンシャルでは質量の表を0で初期化し、重力波の値は使わない。$g_*(T)$ は SM の表（$160$〜$215$~GeV で $105.0$〜$105.2$）、換算 Planck 質量は $2.4\times10^{18}$~GeV である。付属の \nolinkurl{standalone/} の例はテスト用のライブラリを要るので、テストを切った構築では作られない。
-\item TransitionListener では、任意のポテンシャルを \texttt{generic\_potential} の派生クラスで与え、\texttt{Vtot}、エネルギー密度、放射のエネルギー密度と \texttt{V1T\_from\_X}（温度微分した勾配がこれを微分する）を書き換える。報告される $T_n$ は、泡の数の積分 $N(T)=1$（$v_w$ は局所熱平衡の模型から求める）で決まり、$\Gamma=H^4$ ではない。非常に速い転移（$\beta/H\sim10^6$）では、浸透の計算が止まる。
+\item TransitionListener では、任意のポテンシャルを \texttt{generic\_potential} の派生クラスで与え、\texttt{Vtot}、エネルギー密度、放射のエネルギー密度と \texttt{V1T\_from\_X}（温度微分した勾配がこれを微分する）を書き換える。報告される $T_n$ は、泡の数の積分 $N(T)=1$（$v_w$ は局所熱平衡の模型から求める）で決まり、$\Gamma=H^4$ ではない。非常に速い転移（$\beta/H\sim10^6$）では、浸透の計算が止まる。局所熱平衡の壁の速さ（\texttt{calcWallVelocityLTE}）は、音速の2乗の温度の2階微分を、場を固めて差分で求める。相に沿った2階微分は $\partial_T^2V-(\partial_\phi\partial_TV)^2/\partial_\phi^2V$ なので、第2項が落ちて音速が大きく出る（一般形の BP1 で $0.332$ と $0.309$、BP4 で $0.406$ と $0.362$）。
+\item WallGo では、任意のポテンシャルを \texttt{EffectivePotential} の派生クラスで与え、$\phi$ によらない放射の項 $-\pi^2g_*T^4/90$ を含める（状態方程式を作るため）。既定の数値の極小（Nelder--Mead）と差分では、音速一定の近似の $c_b^2$ が $10\%$ ほどずれることがあり（一般形の BP1 の浸透温度で $0.340$、厳密には $0.309$）、\texttt{epsilon} が負だとして計算が止まる。多項式なら、\texttt{findLocalMinimum}、\texttt{derivT}、\texttt{derivField}、\texttt{deriv2FieldT}、\texttt{deriv2Field2}、\texttt{allSecondDerivatives} を厳密な式で書き換える。\texttt{derivT} は1点ではスカラーを返すようにする（配列を返すと、相の追跡で配列の次元が合わずに止まる）。相を追う刻みは \texttt{temperatureVariationScale} の $10^{-6/4}$ 倍である。大きすぎると補間が粗くなり、小さすぎると、破れた相が終わる温度の近くで求めた Jouguet の速さが下がり、根を見落として $1$ を返す。尺度を2倍と半分にして値を確かめる。\texttt{wallSpeedLTE} はデトネーションを返さず、局所熱平衡のデフラグレーションも hybrid もなければ $1$ を返す。
 \end{itemize}
 
-\paragraph{使い方。}読み込みは次のとおりである。照合は、ノートの \nolinkurl{Src/} にある三つの実行スクリプトで実行し直す。Mathematica の3本は合わせて約40分、PhaseTracer2、BSMPT、TransitionListener は約5分かかる。\texttt{tests/run\_all.sh} に \texttt{--thermal} を付けると、これらもまとめて実行する。
+\paragraph{使い方。}読み込みは次のとおりである。照合は、ノートの \nolinkurl{Src/} にある四つの実行スクリプトで実行し直す。Mathematica の3本は合わせて約40分、PhaseTracer2、BSMPT、TransitionListener は約5分、WallGo は約2分かかる。\texttt{tests/run\_all.sh} に \texttt{--thermal} を付けると、これらもまとめて実行する。
 
 \begin{Verbatim}
 (* DRalgo; GroupMath is read from Applications *)
@@ -588,22 +603,25 @@ $PT2GWPrint = False;
 # CosmoTransitions (conda env qft)
 import numpy as np; np.product = np.prod      # numpy 2 removed np.product
 from cosmoTransitions import tunneling1D, generic_potential, transitionFinder
+# WallGo (conda env qft); the model as in models/phi34_thermal/Src/wallgo_check.py
+import WallGo
 \end{Verbatim}
 \begin{Verbatim}
 cd ~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src
 ./run_cosmotransitions_check.sh
 ./run_thermal_tools_check.sh        # DRalgo, Matchotter, PT2GWFinder (about 40 minutes)
 ./run_review_tools_check.sh         # PhaseTracer2, BSMPT (compiled here), TransitionListener (env tl)
+./run_wallgo_check.sh               # WallGo (env qft), TransitionListener's LTE matching (env tl)
 ~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh --no-mg5 --thermal   # everything
 \end{Verbatim}
 
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FeynRules の NLOCT による1ループの対抗項と NLO 用 UFO、FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO QCD 計算（\texttt{[QCD]}）、Mathematica 14.1.0 での動作である。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。
+\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FeynRules の NLOCT による1ループの対抗項と NLO 用 UFO、FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO QCD 計算（\texttt{[QCD]}）、Mathematica 14.1.0 での動作である。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。
 
 \paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。
 
-\paragraph{今後。}レビューが推奨した構成のうち、2ループ用のツール（Kira 3.1、FIRE 7.1、pySecDec 1.6.6、AMFlow 2.0、TSIL 1.46、feyntrop）と、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。熱的な道具は、レビューに挙がったものをすべて入れた（第~\ref{sec:thermal} 節）。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。
+\paragraph{今後。}レビューが推奨した構成のうち、2ループ用のツール（Kira 3.1、FIRE 7.1、pySecDec 1.6.6、AMFlow 2.0、TSIL 1.46、feyntrop）と、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。
 
 \appendix
 
@@ -630,7 +648,7 @@ cd ~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src
   GroupMath/  Matchete/   thermal tools (2026-10-11)
 ~/Library/Wolfram/Paclets/Repository/
   DRalgo__DRalgo-1.5.0/  FindBounce-1.1.0/  PT2GW-1.1.0/   thermal tools (paclets)
-~/miniforge3/envs/qft/      Python 3.12 for MadGraph; cosmoTransitions 2.0.7 (pip)
+~/miniforge3/envs/qft/      Python 3.12 for MadGraph; cosmoTransitions 2.0.7, WallGo 1.1.2 (pip), h5py
 ~/hep/PhaseTracer-2.2.2/  ~/hep/BSMPT-3.2.0/  ~/hep/TransitionListener-2.1.0/   thermal tools (C++, C++, Python)
 ~/hep/lib/libalglib.a  ~/hep/include/alglib/                 ALGLIB 4.08.0 for PhaseTracer2
 ~/miniforge3/envs/tl/       Python 3.12 for TransitionListener (ultranest, mpi4py, getdist, ...)
@@ -762,7 +780,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{url:fr} FeynRules. \url{https://feynrules.irmp.ucl.ac.be/}
 \bibitem{url:mg5} MadGraph5\_aMC@NLO. \url{https://launchpad.net/mg5amcnlo}
 \bibitem{url:feynmaster} D. Fontes, J. C. Rom\~ao, FeynMaster Manual v2（Mathematica 14 での FeynRules の \texttt{MatrixSymbol} の扱い）. \url{https://porthos.tecnico.ulisboa.pt/FeynMaster/Manual/Manual-v2.pdf}
-\bibitem{phi34thermal} $\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波（本リポジトリ \nolinkurl{models/phi34_thermal/ResearchNote/note.pdf}）。熱的な道具との照合は第7節と付録~G。
+\bibitem{phi34thermal} $\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波（本リポジトリ \nolinkurl{models/phi34_thermal/ResearchNote/note.pdf}）。熱的な道具との照合は第7節と付録~H。
 \bibitem{cosmotransitions} C. L. Wainwright, ``CosmoTransitions: computing cosmological phase transition temperatures and bubble profiles with multiple fields,'' Comput.Phys.Commun. \textbf{183} (2012) 2006, \href{https://arxiv.org/abs/1109.4189}{arXiv:1109.4189}.
 \bibitem{dralgo} A. Ekstedt, P. Schicho, T. V. I. Tenkanen, ``DRalgo: a package for effective field theory approach for thermal phase transitions,'' Comput.Phys.Commun. \textbf{288} (2023) 108725, \href{https://arxiv.org/abs/2205.08815}{arXiv:2205.08815}.
 \bibitem{groupmath} R. M. Fonseca, ``GroupMath: a Mathematica package for group theory calculations,'' Comput.Phys.Commun. \textbf{267} (2021) 108085, \href{https://arxiv.org/abs/2011.01764}{arXiv:2011.01764}.
@@ -784,6 +802,8 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{url:alglib} ALGLIB. \url{https://www.alglib.net/}
 \bibitem{url:bsmpt} BSMPT. \url{https://github.com/BSMPT/BSMPT}
 \bibitem{url:tl} TransitionListener. \url{https://github.com/tasicarl/TransitionListener}
+\bibitem{wallgo} A. Ekstedt, O. Gould, J. Hirvonen, B. Laurent, L. Niemi, P. Schicho, J. van de Vis, ``How fast does the WallGo? A package for computing wall velocities in first-order phase transitions,'' JHEP \textbf{04} (2025) 101, \href{https://arxiv.org/abs/2411.04970}{arXiv:2411.04970}.
+\bibitem{url:wallgo} WallGo（PyPI）. \url{https://pypi.org/project/WallGo/}
 \end{thebibliography}
 
 \end{document}

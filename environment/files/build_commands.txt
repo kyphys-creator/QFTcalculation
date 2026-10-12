@@ -124,3 +124,11 @@ cd TransitionListener-2.1.0 && ~/miniforge3/envs/tl/bin/pip install --no-deps -e
 #   checks
 ~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src/run_review_tools_check.sh            # about 5 minutes
 ~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh --no-mg5 --thermal              # all thermal checks, about 50 minutes
+
+## 10. WallGo (added 2026-10-11, for models/phi34_thermal step (12))
+#   WallGo needs h5py, numpy, scipy; h5py was missing in qft (the dry run only added packages)
+~/miniforge3/bin/conda install -y -n qft -c conda-forge h5py                    # 3.16.0
+mkdir -p ~/hep/src/wallgo-dl && ~/miniforge3/envs/qft/bin/pip download --no-deps -d ~/hep/src/wallgo-dl WallGo==1.1.2
+~/miniforge3/envs/qft/bin/pip install --no-deps ~/hep/src/wallgo-dl/wallgo-1.1.2-py3-none-any.whl
+#   checks
+~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src/run_wallgo_check.sh                 # about 2 minutes

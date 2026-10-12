@@ -3,7 +3,7 @@
 # Usage: ./run_all.sh [--no-mg5] [--thermal]      Output goes to ./out and ./out/log.txt
 #   --thermal also re-runs the cross-checks of the thermal tools (environment.pdf, Sec. 7) in
 #   models/phi34_thermal/Src: CosmoTransitions, DRalgo, Matchotter, PT2GWFinder + FindBounce, PhaseTracer, BSMPT,
-#   TransitionListener (about 50 minutes; they rewrite the CSV files in Src/results).
+#   TransitionListener, WallGo (about 50 minutes; they rewrite the CSV files in Src/results).
 # Test files are named test_*: a file called formcalc.wl in the working directory would
 # shadow the FormCalc package (macOS file names are case-insensitive).
 cd "$(dirname "$0")"
@@ -54,5 +54,7 @@ if [ "$THERMAL" = 1 ]; then
   $TH/run_thermal_tools_check.sh 2>&1 | tee -a "$log"
   step "Thermal tools: PhaseTracer, BSMPT, TransitionListener (step (11))"
   $TH/run_review_tools_check.sh 2>&1 | grep -v -i warning | tee -a "$log"
+  step "Thermal tools: WallGo, TransitionListener's LTE wall speed (step (12))"
+  $TH/run_wallgo_check.sh 2>&1 | grep -v -i warning | tee -a "$log"
 fi
 echo "done; full log in $log"
