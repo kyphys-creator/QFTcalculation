@@ -72,3 +72,25 @@ printf 'install ninja\ninstall collier\nquit\n' > /tmp/inst.mg5 && mg5_aMC /tmp/
 
 ## 7. Verification
 .../environment/tests/run_all.sh
+
+## 8. Thermal tools (added 2026-10-11, for models/phi34_thermal steps (7), (8))
+D=<empty download directory>; mkdir -p $D/{dralgo,groupmath,findbounce,pt2gw,matchete,ct} && cd $D
+curl -sL -o dralgo/DRalgo.paclet https://github.com/DR-algo/DRalgo/releases/download/v1.5.0/DRalgo.paclet
+curl -sL -o findbounce/FindBounce-1.1.0.paclet https://github.com/vguada/FindBounce/releases/download/v1.1.0/FindBounce-1.1.0.paclet
+curl -sL -o pt2gw/PT2GW-1.1.0.paclet https://github.com/finshky/PT2GW/releases/download/v1.1.0/PT2GW-1.1.0.paclet
+curl -sL -o groupmath/GroupMath-1.1.3.zip https://renatofonseca.net/groupmath/ProgramVersions/GroupMath-1.1.3.zip
+git clone -q --depth 1 https://gitlab.com/matchete/matchete.git matchete/matchete    # master, commit 742c31e (2026-09-24), version 0.6.0
+~/miniforge3/envs/qft/bin/pip download --no-deps -d ct cosmoTransitions             # cosmoTransitions-2.0.7-py3-none-any.whl
+#   GroupMath and Matchete into Applications (Matchete's install.m does the same copy)
+A=~/Library/Wolfram/Applications
+(cd groupmath && unzip -q -o GroupMath-1.1.3.zip -d x && cp -R x/GroupMath $A/GroupMath)
+rsync -a --exclude .git matchete/matchete/ $A/Matchete/
+#   paclets into ~/Library/Wolfram/Paclets/Repository
+wolframscript -code "Print /@ {PacletInstall[File[\"$D/dralgo/DRalgo.paclet\"], ForceVersionInstall -> True],
+  PacletInstall[File[\"$D/findbounce/FindBounce-1.1.0.paclet\"], ForceVersionInstall -> True],
+  PacletInstall[File[\"$D/pt2gw/PT2GW-1.1.0.paclet\"], ForceVersionInstall -> True]}"
+#   CosmoTransitions; numpy and scipy are already in qft. numpy 2 removed np.product: set np.product = np.prod before use
+~/miniforge3/envs/qft/bin/pip install --no-deps ct/cosmoTransitions-2.0.7-py3-none-any.whl
+#   checks (not in tests/run_all.sh)
+~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src/run_cosmotransitions_check.sh
+~/Documents/Claude/QFTcalculation/models/phi34_thermal/Src/run_thermal_tools_check.sh      # about 40 minutes
