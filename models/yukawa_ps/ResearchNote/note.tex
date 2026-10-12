@@ -41,7 +41,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論と $\phi^3+\phi^4$ 理論のノート~\cite{phi3note,phi34note} に続き、フェルミオンを含む模型を $d=4$ で調べる。模型は、実の擬スカラー場 $\phi$ と Dirac フェルミオン $\psi$ が、湯川結合 $-iy\phi\bar\psi\gamma^5\psi$ と自己相互作用 $\lambda\phi^4/4!$ を持つ理論である。パリティ（$\phi\to-\phi$）があるので $\phi$ の1次と3次の項は現れず、結合は $y$ と $\lambda$ の二つで閉じる。本ノートでは、まず Feynman 則、閉じたフェルミオンのループの符号、1ループの1PI 関数（$\phi$ と $\psi$ の自己エネルギー、湯川の頂点、$\phi$ の4点関数）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。$\beta_y=5y^3/(4\pi)^2$、$\beta_\lambda=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2$ で、フェルミオンのループが $\beta_\lambda$ に負の項 $-48y^4$ を与える。フェルミオンの箱の図は、トレースを伝播関数の分母で書き直すと、$B_0$、$C_0$、$D_0$ だけの短い式になる。1ループでは比 $\lambda/y^2$ の流れが解析的に解ける。その結果、$\lambda>r_+y^2$（$r_+=(1+\sqrt{145})/3\approx4.35$）なら $\lambda$ が、$\lambda<r_+y^2$ なら $\lambda$ が負になるのが、$y$ の Landau 極より先に起こる。基準点 $y=\lambda=1$（$\mu=m$）では、$\mu\approx19.5\,m$ で $\lambda=0$ となる。木のレベルでは、$\psi\bar\psi\to\phi\phi$ は $\psi\bar\psi$ の閾値で p 波から始まり、$\psi\bar\psi\to\psi\bar\psi$ のスピン和はフェルミオンの質量に陽によらない。$\phi\phi\to\phi\phi$ の1ループの S 行列要素の $\mu$ 依存は、$\beta_\lambda$ の三つの項をすべて含む。最後に検算の計画を定め、その最初の八つの手順を行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。同種のフェルミオンの散乱 $\psi\psi\to\psi\psi$ を加えた四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列とスピノルを陽に作った数値計算でも手計算と一致し、MadGraph の断面積は数値積分と統計誤差の1.4倍以内で一致した。1ループの1PI 関数では、極と六つの対抗項が FeynCalc の結果と記号として一致し、有限部分は Package-X、LoopTools、COLLIER と相対 $5\times10^{-12}$ 以内で一致した（LoopTools が誤った $C_0$ を返す一点を除く）。$\gamma^5$ を BMHV の処方で扱うと、四つの1PI 関数は NDR と有限の局所的な項だけ異なる。$\psi\bar\psi\to\phi\phi$ の1ループの振幅も二つのスピノルの構造の係数として閉じた形に書け、FeynCalc と FormCalc の結果、COLLIER での数値、外線のスピンを固定したユニタリー性と一致した。極質量と留数で直した S 行列要素は、NLOCT で作った UFO の MadLoop の値と相対 $2\times10^{-11}$ 以内で一致し、NLOCT の R2 の項は NDR の処方のものであることを手で確かめた。$\phi\phi$ 散乱の全断面積を $y^6$ の次数（$\lambda\sim y^2$）まで求めると、1ループの補正と $\phi\phi\to\phi\psi\bar\psi$ を合わせて、木の値より $\sqrt s=2.5m$ で $8\%$、$20m$ で $23\%$ 大きくなった。1ループの部分は同じ分点の MadLoop と相対 $2\times10^{-10}$ 以内で一致した。$\phi\phi\to\phi\psi\bar\psi$ の MadGraph の断面積は、行列要素は一致するのに、ビームの向きに出るフェルミオンの伝播関数の山を十分に積分できず、最大 $2.4\%$ 小さかった。S 行列要素と極質量の $\mu$ 依存から読み取った $\beta_\lambda$、$\beta_y$、$\gamma_M$、$\gamma_m$ は、$\MSbar$ の質量と極質量の二つの処方の四つのツールで手計算と相対 $4\times10^{-12}$ 以内で一致し、Machacek と Vaughn の一般の公式も六つの係数をすべて再現した。$\phi\phi$ と $\psi\bar\psi$ のヘリシティの部分波を合わせた木のユニタリー性は、結合を固定すると $y<\sqrt{8\pi/3}$、$|\lambda|<16\pi$ を与え（一般の湯川理論の文献の値と一致）、結合の走りを入れて $10m$ まで使うことを求めると $y(m)\le1.94$ になる。導出はすべて付録に省略なく載せる。
+$\phi^3$ 理論と $\phi^3+\phi^4$ 理論のノート~\cite{phi3note,phi34note} に続き、フェルミオンを含む模型を $d=4$ で調べる。模型は、実の擬スカラー場 $\phi$ と Dirac フェルミオン $\psi$ が、湯川結合 $-iy\phi\bar\psi\gamma^5\psi$ と自己相互作用 $\lambda\phi^4/4!$ を持つ理論である。パリティ（$\phi\to-\phi$）があるので $\phi$ の1次と3次の項は現れず、結合は $y$ と $\lambda$ の二つで閉じる。本ノートでは、まず Feynman 則、閉じたフェルミオンのループの符号、1ループの1PI 関数（$\phi$ と $\psi$ の自己エネルギー、湯川の頂点、$\phi$ の4点関数）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。$\beta_y=5y^3/(4\pi)^2$、$\beta_\lambda=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2$ で、フェルミオンのループが $\beta_\lambda$ に負の項 $-48y^4$ を与える。フェルミオンの箱の図は、トレースを伝播関数の分母で書き直すと、$B_0$、$C_0$、$D_0$ だけの短い式になる。1ループでは比 $\lambda/y^2$ の流れが解析的に解ける。その結果、$\lambda>r_+y^2$（$r_+=(1+\sqrt{145})/3\approx4.35$）なら $\lambda$ が、$\lambda<r_+y^2$ なら $\lambda$ が負になるのが、$y$ の Landau 極より先に起こる。基準点 $y=\lambda=1$（$\mu=m$）では、$\mu\approx19.5\,m$ で $\lambda=0$ となる。木のレベルでは、$\psi\bar\psi\to\phi\phi$ は $\psi\bar\psi$ の閾値で p 波から始まり、$\psi\bar\psi\to\psi\bar\psi$ のスピン和はフェルミオンの質量に陽によらない。$\phi\phi\to\phi\phi$ の1ループの S 行列要素の $\mu$ 依存は、$\beta_\lambda$ の三つの項をすべて含む。最後に検算の計画を定め、その最初の九つの手順を行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。同種のフェルミオンの散乱 $\psi\psi\to\psi\psi$ を加えた四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列とスピノルを陽に作った数値計算でも手計算と一致し、MadGraph の断面積は数値積分と統計誤差の1.4倍以内で一致した。1ループの1PI 関数では、極と六つの対抗項が FeynCalc の結果と記号として一致し、有限部分は Package-X、LoopTools、COLLIER と相対 $5\times10^{-12}$ 以内で一致した（LoopTools が誤った $C_0$ を返す一点を除く）。$\gamma^5$ を BMHV の処方で扱うと、四つの1PI 関数は NDR と有限の局所的な項だけ異なる。$\psi\bar\psi\to\phi\phi$ の1ループの振幅も二つのスピノルの構造の係数として閉じた形に書け、FeynCalc と FormCalc の結果、COLLIER での数値、外線のスピンを固定したユニタリー性と一致した。極質量と留数で直した S 行列要素は、NLOCT で作った UFO の MadLoop の値と相対 $2\times10^{-11}$ 以内で一致し、NLOCT の R2 の項は NDR の処方のものであることを手で確かめた。$\phi\phi$ 散乱の全断面積を $y^6$ の次数（$\lambda\sim y^2$）まで求めると、1ループの補正と $\phi\phi\to\phi\psi\bar\psi$ を合わせて、木の値より $\sqrt s=2.5m$ で $8\%$、$20m$ で $23\%$ 大きくなった。1ループの部分は同じ分点の MadLoop と相対 $2\times10^{-10}$ 以内で一致した。$\phi\phi\to\phi\psi\bar\psi$ の MadGraph の断面積は、行列要素は一致するのに、ビームの向きに出るフェルミオンの伝播関数の山を十分に積分できず、最大 $2.4\%$ 小さかった。S 行列要素と極質量の $\mu$ 依存から読み取った $\beta_\lambda$、$\beta_y$、$\gamma_M$、$\gamma_m$ は、$\MSbar$ の質量と極質量の二つの処方の四つのツールで手計算と相対 $4\times10^{-12}$ 以内で一致し、Machacek と Vaughn の一般の公式も六つの係数をすべて再現した。$\phi\phi$ と $\psi\bar\psi$ のヘリシティの部分波を合わせた木のユニタリー性は、結合を固定すると $y<\sqrt{8\pi/3}$、$|\lambda|<16\pi$ を与え（一般の湯川理論の文献の値と一致）、結合の走りを入れて $10m$ まで使うことを求めると $y(m)\le1.94$ になる。繰り込み群で改良した有効ポテンシャルは基準点で $\phi\approx39m$ から負になり、$\lambda<0$ の bounce の作用 $16\pi^2/|\lambda(1/R)|$ は小さな $R$ に向かって単調に減って極小を持たないので、真空の崩壊は理論の切断のスケールで決まる。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -54,7 +54,7 @@ $\phi^3$ 理論と $\phi^3+\phi^4$ 理論のノート~\cite{phi3note,phi34note} 
 
 求める量は五つである。(i) Feynman 則と対称性因子、閉じたフェルミオンのループの符号。(ii) 1ループの1PI 関数（$\phi$ の2点・4点関数、$\psi$ の2点関数、湯川の頂点）の紫外発散部分と、$\MSbar$ の対抗項。(iii) 繰り込まれた1PI 関数と、繰り込み群の係数（$\beta_y$、$\beta_\lambda$、二つの質量の走り、二つの場の異常次元）。(iv) $\phi\phi\to\phi\phi$、$\psi\bar\psi\to\phi\phi$、$\psi\bar\psi\to\psi\bar\psi$ の木の振幅、$\phi\phi\to\phi\phi$ の1ループの振幅とその S 行列要素、フェルミオンの極質量と留数、$\phi\phi$ 散乱の木の次の次数の全断面積。(v) 応用として、部分波のユニタリー性の限界と、真空の安定性（繰り込み群で改良した有効ポテンシャル、$\lambda<0$ の bounce、フェルミオンの行列式を含む崩壊率）。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の出発点になる繰り込み群の流れと有効ポテンシャルを述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で手順 (1)〜(6) の検算の結果を示す。第~\ref{sec:rg} 節で、繰り込み群の係数を S 行列要素からツールで読み取り、文献の公式と比べる（手順 (7)）。第~\ref{sec:pheno} 節で、部分波のユニタリー性と真空の安定性から結合の限界を調べる（手順 (8)〜(10)、現時点では (8) まで）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:pw} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の出発点になる繰り込み群の流れと有効ポテンシャルを述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で手順 (1)〜(6) の検算の結果を示す。第~\ref{sec:rg} 節で、繰り込み群の係数を S 行列要素からツールで読み取り、文献の公式と比べる（手順 (7)）。第~\ref{sec:pheno} 節で、部分波のユニタリー性と真空の安定性から結合の限界を調べる（手順 (8)〜(10)、現時点では (9) まで）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:bounce} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -532,7 +532,7 @@ Feynman 則・対称性因子 & \ref{app:rules} & 書き出した FeynArts 模�
 全断面積（$2\to3$ を含む）\eqref{eq:sigmatot} & \ref{app:sigmatot} & — & — & COLLIER & MadLoop、$2\to3$ \\
 繰り込み群 \eqref{eq:rge}、\eqref{eq:rflow} & \ref{app:rg}、\ref{app:rgfit} & $\mu$ を変えて評価 & 数値 & 数値 & MadLoop の $\mu_R$ \\
 部分波とユニタリー性の限界 \eqref{eq:pw} & \ref{app:pw} & — & — & COLLIER & — \\
-有効ポテンシャル \eqref{eq:cw} と $\lambda<0$ の bounce & \ref{app:rg}、後で & — & — & — & — \\
+有効ポテンシャル \eqref{eq:cw}、\eqref{eq:vrg} と $\lambda<0$ の bounce \eqref{eq:bounce} & \ref{app:rg}、\ref{app:bounce} & — & — & — & — \\
 フェルミオンの行列式を含む崩壊率 & 後で & — & — & — & — \\
 \bottomrule
 \end{tabularx}
@@ -769,7 +769,7 @@ $\sqrt s/m$ & $\sigma_A^{(0)}$ & $\sigma_{\bar B}^{(0)}$ & $\sigma_A^{(1)}$ & $\
 \FloatBarrier
 \section{摂動論の限界と真空の安定性}\label{sec:pheno}
 
-この節では、この模型の物理の二つの限界を調べる。一つは、結合が大きくなると摂動論とユニタリー性が破れることである。もう一つは、第~\ref{sec:rg} 節で見た $\lambda<0$ による真空の不安定性である。手順は次の三つである。(8) $\phi\phi$ と $\psi\bar\psi$ のヘリシティの状態を合わせた部分波のユニタリー性から、$(y,\lambda)$ の限界を出す。(9) 繰り込み群で改良した有効ポテンシャルで $\lambda<0$ の bounce の作用を求める。(10) フェルミオンの行列式を含む崩壊率の前因子を求め、真空の準安定性の限界を出す。現時点では手順 (8) まで終わっている。結論を先に述べると、木のユニタリー性は、結合を固定すると $y<\sqrt{8\pi/3}=2.89$ と $|\lambda|<16\pi$ を与え、許される領域はほぼこの長方形である。結合の走りを入れて理論を $\sqrt s=E$ まで使うことを求めると、$E=10m$ で $y(m)\le1.94$、$E=100m$ で $y(m)\le1.56$ になる。基準点はこれらを $10^6m$ まで満たすので、基準点を制限するのはユニタリー性ではなく、手順 (9)、(10) の真空の安定性である。スクリプトは \texttt{run\_pw\_check.sh} で再実行できる。
+この節では、この模型の物理の二つの限界を調べる。一つは、結合が大きくなると摂動論とユニタリー性が破れることである。もう一つは、第~\ref{sec:rg} 節で見た $\lambda<0$ による真空の不安定性である。手順は次の三つである。(8) $\phi\phi$ と $\psi\bar\psi$ のヘリシティの状態を合わせた部分波のユニタリー性から、$(y,\lambda)$ の限界を出す。(9) 繰り込み群で改良した有効ポテンシャルで $\lambda<0$ の bounce の作用を求める。(10) フェルミオンの行列式を含む崩壊率の前因子を求め、真空の準安定性の限界を出す。現時点では手順 (9) まで終わっている。結論を先に述べると、木のユニタリー性は、結合を固定すると $y<\sqrt{8\pi/3}=2.89$ と $|\lambda|<16\pi$ を与え、許される領域はほぼこの長方形である。結合の走りを入れて理論を $\sqrt s=E$ まで使うことを求めると、$E=10m$ で $y(m)\le1.94$、$E=100m$ で $y(m)\le1.56$ になる。基準点はこれらを $10^6m$ まで満たすので、基準点を制限するのはユニタリー性ではなく、真空の安定性である。繰り込み群で改良した有効ポテンシャルは $\phi\approx39m$ で負になり、bounce の作用 $16\pi^2/|\lambda(1/R)|$ は $1/R=30m$ の $757$ から $10^5m$ の $13$ まで単調に減る。$\lambda$ に極小がないので、崩壊は理論を使う最も短いスケールの bounce で決まる。スクリプトは \texttt{run\_pw\_check.sh} で再実行できる。
 
 \paragraph{手順 (8)：部分波のユニタリー性。}外線にフェルミオンがあるので、部分波はヘリシティの状態で定義する~\cite{jw}。重心系で $z$ 軸に沿う2体の状態 $|\lambda_1\lambda_2\rangle$（$\lambda=\lambda_1-\lambda_2$）とその回転を使い、
 \begin{equation}
@@ -823,12 +823,54 @@ $a^J=y^2P_J(s)+\lambda Q_J(s)$ は $(y^2,\lambda)$ の1次式なので、(A) の
 \label{fig:pw}
 \end{figure}
 
+\paragraph{手順 (9)：有効ポテンシャルと bounce。}式~\eqref{eq:cw} の有効ポテンシャルは、大きな場で $\ln(y^2\phi^2/\mu^2)$ が大きくなるので、$\mu=m$ に固定した値は信頼できない。$V$ は $[\mu\partial_\mu+\sum_i\beta_i\partial_{g_i}-\gamma_\phi\phi\partial_\phi]V=0$ を満たすので（\ref{app:rg}）、任意の $t$ について
+\begin{equation}
+V(\phi;g_i,m)=V_{\mathrm{CW}}\bigl(\xi(t)\phi;\,g_i(t),\,me^t\bigr),\qquad
+\xi(t)=\exp\Bigl(-\int_0^t\gamma_\phi\,\dd t'\Bigr)=\Bigl(\frac{y^2(t)}{y^2(0)}\Bigr)^{-1/5}
+\label{eq:vrg}
+\end{equation}
+が成り立つ（\ref{app:bounce}）。$V_{\mathrm{CW}}$ は式~\eqref{eq:cw}、$g_i(t)$ は1ループで走る $y^2$、$\lambda$、$m^2$、$M$ である。$me^t\approx\phi$ にとると対数が小さくなる（繰り込み群で改良した有効ポテンシャル~\cite{sher}）。真空のエネルギーと定数を除くため、$\Delta V(\phi)\equiv V(\phi)-V(0)$ を同じ $t$ で作り、$\lambda_{\mathrm{eff}}(\phi)\equiv24\Delta V/\phi^4$ と置く。$\lambda_{\mathrm{eff}}$ は $\mu=m$ で規格化した場に対する値で、大きな場では $\xi^4$ のために $\lambda(\mu=\phi)$ より絶対値が小さい（$\phi=10^4m$ で $\xi^4=0.50$）。
+
+結果を図~\ref{fig:bounce} 左に示す。走る結合は閉じた形（式~\eqref{eq:rflow}、$M\propto y^{-1/5}$）と $9\times10^{-12}$ で一致した。$\Delta V$ は、$me^t=\phi$ では $\phi_I=39.4m$ で負になる。$me^t=\phi/2$、$2\phi$、$M_\psi(\phi)$ としても $\phi_I=39.4$〜$40.7m$ で、$\lambda_{\mathrm{eff}}$ の選び方による違いは $\phi=5$〜$3000m$ で $0.03$ 以下である。これは1ループの項の大きさ（$0.19$〜$0.63$）より1桁以上小さく、2ループの次数の違いである。$\phi_I$ は $\lambda(\mu)=0$ のスケール $19.49m$ の約2倍である。差は1ループの項から来る。$\mu=\phi$ ではフェルミオンの項 $-4y^4(\ln(y^2\xi^2)-\frac32)$ の定数 $-\frac32$ が $\lambda_{\mathrm{eff}}$ を正に押し上げ、$\lambda(\mu)$ が少し負になるまで $V$ は負にならない。手順 (7) で述べたとおり、$\lambda(\mu)=0$ のスケールそのものは処方に依存するが、$V$ が負になる場の値は選び方によらず決まる。$\mu=m$ の固定した次数の $V$ は $\phi\gtrsim30m$ でずれ始め、$\phi=300m$ で $\lambda_{\mathrm{eff}}=-0.42$（改良したものは $-0.91$）である。
+
+$\lambda<0$ の質量のない理論の bounce は Fubini の解 $\phi=\sqrt{48/|\lambda|}\,R/(r^2+R^2)$ で~\cite{fubini}、作用 $16\pi^2/|\lambda|$ は大きさ $R$ によらない（\ref{app:rgfit}）。動径方向の方程式を $r=0$ から積分した解はこれと $9\times10^{-11}$ で、作用の数値積分は $2\times10^{-16}$ で一致した。質量の項があると、$d=4$ では有限の大きさの bounce は存在しない（Derrick のスケーリングの議論~\cite{derrick}、\ref{app:bounce}）。Fubini の形の配位では、質量の項が作用を $\delta S\simeq(24\pi^2m^2R^2/|\lambda|)[\ln(1/(m^2R^2))-1]$ だけ増やすので（$mR=0.01$ で $16\pi^2/|\lambda|$ の $0.12$〜$0.16\%$）、作用は $R\to0$ で小さくなる。量子補正は大きさの縮退を解き、作用の $\mu$ 依存が1ループの行列式と打ち消すことから
+\begin{equation}
+S(R)\simeq\frac{16\pi^2}{|\lambda(\mu\approx1/R)|}
+\label{eq:bounce}
+\end{equation}
+となる（Isidori らの標準模型の $8\pi^2/(3|\lambda(1/R)|)$~\cite{isidori} と同じ形で、係数の違いは $\lambda$ の規格化 $\lambda\phi^4/4!$ と $\lambda|H|^4$ による）。場の規格化の因子 $\xi$ は、運動項とポテンシャルで打ち消し合うので現れない（\ref{app:bounce}）。表~\ref{tab:bounce} と図~\ref{fig:bounce} 右に示すように、$S(R)$ は $1/R=30m$ の $757$ から、$10^3m$ で $56$、$10^5m$ で $13$ まで、$y$ の Landau 極に向かって単調に減る。標準模型では $\beta_\lambda$ が高いスケールで0になり $\lambda$ に極小があるので、その大きさの bounce が崩壊を決める。この模型では $\lambda$ は Landau 極まで下がり続け（$\lambda\to r_-y^2$）、極小がない。質量の効果も $R\to0$ を好むので、崩壊は理論を使う最も短いスケール（切断 $\Lambda$）の bounce で決まり、$\Gamma/V\sim\Lambda^4e^{-16\pi^2/|\lambda(\Lambda)|}$ は $\Lambda$ に強く依存する。$\mu=1/(2R)$ から $2/R$ の選び方による $S$ の幅（表~\ref{tab:bounce}）は、手順 (10) で前因子と1ループの補正を求めて詰める。スクリプトは \texttt{bounce\_numeric.py} で、\texttt{run\_bounce\_check.sh} で再実行できる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{繰り込み群で改良した bounce の作用 $S(R)=16\pi^2/|\lambda(\kappa/R)|$（$\mu=m$ で $y=\lambda=1$、$M=0.7$、1ループの走り）。$S$ は $\kappa=1$ の値、幅は $\kappa=1/2$ から $2$ までの範囲である。$1/R=30m$ の $\kappa=1/2$ では $\lambda(15m)>0$ で bounce がない。}
+\label{tab:bounce}
+\begin{tabular}{rrrrrr}
+\toprule
+$1/(mR)$ & $\lambda(1/R)$ & $y^2(1/R)$ & $|\lambda|/(4\pi)^2$ & $S$ & 幅（$\kappa=\frac12$〜$2$） \\
+\midrule
+$30$ & $-0.208$ & $1.275$ & $0.0013$ & $757$ & $269$〜$\infty$ \\
+$10^2$ & $-0.904$ & $1.412$ & $0.0057$ & $175$ & $113$〜$328$ \\
+$10^3$ & $-2.844$ & $1.778$ & $0.0180$ & $55.5$ & $43.4$〜$73.2$ \\
+$10^4$ & $-6.034$ & $2.400$ & $0.0382$ & $26.2$ & $21.4$〜$32.3$ \\
+$10^5$ & $-11.90$ & $3.691$ & $0.0754$ & $13.3$ & $10.6$〜$16.3$ \\
+$10^6$ & $-28.82$ & $7.992$ & $0.1825$ & $5.5$ & $3.5$〜$7.6$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{../figs/bounce_d4.pdf}
+\caption{左：繰り込み群で改良した有効ポテンシャルの $\lambda_{\mathrm{eff}}(\phi)=24\Delta V/\phi^4$（$me^t=\phi/2$、$\phi$、$2\phi$、$M_\psi(\phi)$ の4つの選び方はほぼ重なる）、$\mu=m$ の固定した次数のもの（灰色）、走る結合 $\lambda(\mu)$（黒、横軸は $\mu$）。$\phi$ が小さいところの立ち上がりは質量の項 $\frac12m^2\phi^2$ による。右：bounce の作用 $S(R)=16\pi^2/|\lambda(1/R)|$（帯は $\mu=1/(2R)$ から $2/R$）。}
+\label{fig:bounce}
+\end{figure}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手計算で分かったこと。}フェルミオンを入れたことで、スカラー理論にはなかった三つの特徴が現れた。一つ目は、閉じたフェルミオンのループの符号 $-1$ で、これが $\delta_\phi<0$ と $\beta_\lambda$ の $-48y^4$ を与える。二つ目は、$\gamma^5$ がフェルミオンの伝播関数の質量の項の符号を変えることで、$\delta_M$ と $\gamma_M$ の符号がスカラーの湯川結合と逆になる。三つ目は、フェルミオンの箱の図の簡単さで、トレースを分母で書き直すと、テンソル積分を経ずに $B_0$、$C_0$、$D_0$ だけで書ける。物理としては、比 $\lambda/y^2$ の流れが1ループで解析的に解け、$\lambda$ が負になる尺度か、$\lambda$ が発散する尺度のどちらかが、$y$ の Landau 極より手前に必ず現れる。
 
-\paragraph{今後。}次は手順 (9) で、繰り込み群で改良した有効ポテンシャルで $\lambda$ が負になる尺度を求め、$\lambda<0$ の bounce の作用を求める。
+\paragraph{今後。}次は手順 (10) で、フェルミオンの揺らぎの行列式を含む崩壊率の1ループの前因子を求め、$(y,\lambda)$ と切断のスケールに対する真空の準安定性の限界を出す。
 
 \appendix
 
@@ -1192,9 +1234,21 @@ H_{abcd}=\tfrac14\sum_{\mathrm{perm}}\mathrm{tr}(Y^aY^{b\dagger}Y^cY^{d\dagger})
 
 \paragraph{1ループの要素。}S 行列要素（式~\eqref{eq:Mphys}、\eqref{eq:MphysB}）を結合の構造に分ける。$(4\pi)^2(\mathcal M_{A,\mathrm{phys}}+\lambda)=\lambda^2\mathcal A_{\lambda\lambda}+y^4\mathcal A_{yy}+4\lambda y^2[B_0^{MM}+m^2B_0^{MM\prime}](m^2)$ で、$\mathcal A_{\lambda\lambda}$ は $\phi$ の泡、$\mathcal A_{yy}$ はフェルミオンの箱である。$\psi\bar\psi\to\phi\phi$ は $a_{\mathrm{phys}}=y^4[\hat a-M(B_0+B_1)(M^2)(1/X+1/W)]+\lambda y^2\hat a_\lambda$、$b_{\mathrm{phys}}=y^4[\hat b+(\hat r_\psi+\hat r_\phi)(1/X-1/W)-2M^2(B_0+B_1)(M^2)(1/X^2-1/W^2)]$ で、$\hat a_\lambda$ は $\lambda$ の三角形、$\hat r$ は $(4\pi)^2\delta R/y^2$ である。ヘリシティの振幅は $[a_{\mathrm{phys}}\bar vu+b_{\mathrm{phys}}\bar v\slashed k_1u]/(4\pi)^2$ に陽なスピノルを入れて作る。$\mathrm{Abs}\,a=aa^\dagger$ を結合で展開すると、1ループの次数で $\mathrm{Abs}\,a^{(1)}=a^{(0)}a^{(0)\dagger}$ である。$J=0$ で開いている2体の状態は $\phi\phi$ と $\psi\bar\psi(\pm\pm)$ だけで（$\psi\phi$ は半整数の $J$）、3体の状態の寄与は振幅が $y^3$ の次数なので $\mathrm{Abs}\,a$ の $y^6$ の次数である。$\mathrm{Abs}$ の側は $\hat a$ などの係数の虚部から作り、変換の項（$p^2=m^2$、$M^2$ の $B$ は実）は分散の側だけに入る。$\mu$ を変えるときは、結合を1ループの解で $\mu$ まで走らせ、ループの部分を $\mu$ で評価した。
 
+\section{有効ポテンシャルの改良と bounce の導出}\label{app:bounce}
+
+\paragraph{繰り込み群での改良。}式~\eqref{eq:cw} の $V_{\mathrm{CW}}(\phi;g_i,\mu)$ は $[\mu\partial_\mu+\sum_i\beta_i\partial_{g_i}-\gamma_\phi\phi\partial_\phi]V=0$ を満たす（\ref{app:rg}、$g_i$ は質量を含む）。この1階の偏微分方程式の特性曲線は $\dd\mu/\dd t=\mu$、$\dd g_i/\dd t=\beta_i$、$\dd\phi/\dd t=-\gamma_\phi\phi$ で、$V$ はその上で一定である。よって $\mu(t)=me^t$、$g_i(t)$、$\phi(t)=\xi(t)\phi$、$\xi(t)=\exp(-\int_0^t\gamma_\phi\dd t')$ として $V(\phi;g_i,m)=V(\xi(t)\phi;g_i(t),me^t)$ が任意の $t$ で成り立つ。右辺を1ループの $V_{\mathrm{CW}}$ と1ループの走りで評価したものが式~\eqref{eq:vrg} で、$t$ を対数が小さくなるようにとれば、$y^2t/(4\pi)^2$ の高い次数の項（leading log）が足し上がる。$\gamma_\phi=2y^2/(4\pi)^2$ と $\dd y^2/\dd t=10y^4/(4\pi)^2$ から $\int_0^t\gamma_\phi\dd t'=\frac{2}{(4\pi)^2}\int y^2\frac{(4\pi)^2\dd y^2}{10y^4}=\frac15\ln\frac{y^2(t)}{y^2(0)}$ で、$\xi=(y^2(t)/y^2(0))^{-1/5}$ である。同じく $\dd\ln M/\dd t=-y^2/(4\pi)^2$ から $M(t)=M(0)(y^2(t)/y^2(0))^{-1/10}$ である。$m^2(t)$ は数値で積分した。$\phi=0$ は特性曲線の上で動かないので、$V(0;g_i(t),me^t)$ は $t$ によらない。よって $\Delta V(\phi)=V_{\mathrm{CW}}(\xi\phi;g_i(t),me^t)-V_{\mathrm{CW}}(0;g_i(t),me^t)$ で、真空のエネルギーとその走りは消える。質量を無視できる大きな場では
+\begin{equation*}
+\lambda_{\mathrm{eff}}(\phi)=\xi^4\Bigl\{\lambda(t)+\frac{24}{64\pi^2}\Bigl[\frac{\lambda^2}{4}\Bigl(\ln\frac{|\lambda|\xi^2\phi^2}{2\mu_t^2}-\frac32\Bigr)-4y^4\Bigl(\ln\frac{y^2\xi^2\phi^2}{\mu_t^2}-\frac32\Bigr)\Bigr]\Bigr\},\qquad\mu_t=me^t
+\end{equation*}
+である。$\lambda<0$ では $m_\phi^2(\phi)<0$ となり $V$ は虚部を持つが、これは一様な場の配位が不安定であることを表し、実部をとる。
+
+\paragraph{bounce と場の規格化。}Euclid の作用 $S=\int\dd^4x[\frac12(\partial\phi)^2+\Delta V(\phi)]$ で、$\phi$ は $\mu=m$ で規格化した場である。大きさ $R$ の bounce の運動量は $1/R$ 程度なので、$\mu\approx1/R$ で規格化した場 $\varphi=\xi\phi$ に移ると、運動項は $\frac12(\partial\varphi)^2$（1ループの次数で）、ポテンシャルは $\lambda(1/R)\varphi^4/24$ になる。$\xi$ は運動項とポテンシャルの両方から消え、作用は\ref{app:rgfit} の $16\pi^2/|\lambda|$ で $\lambda=\lambda(1/R)$ としたものになる。この $\mu$ の選び方の不定性は、1ループの行列式（手順 (10)）が $\mu$ 依存 $16\pi^2\,\partial|\lambda|^{-1}/\partial\ln\mu$ を打ち消すことで取り除かれる。
+
+\paragraph{質量の項と Derrick のスケーリング。}作用を $S=T+V_2+V_4$（$T=\frac12\int(\partial\phi)^2$、$V_2=\frac12m^2\int\phi^2$、$V_4=-\frac{|\lambda|}{24}\int\phi^4$）と分ける。停留点 $\phi_*$ のまわりで $\phi_a(x)=\phi_*(x/a)$ と変えると $S(a)=a^2T+a^4(V_2+V_4)$、$\phi_b=b\phi_*$ と変えると $S(b)=b^2(T+V_2)+b^4V_4$ で、$a=b=1$ で停留することから $2T+4V_2+4V_4=0$ と $2T+2V_2+4V_4=0$ を得る。差から $V_2=0$ で、$m^2>0$ では $\phi_*\equiv0$ でなければならない。よって質量があると $d=4$ に有限の大きさの bounce はない。Fubini の形の配位 $\phi_R$ では $V_2=\frac12m^2\cdot2\pi^2\frac{48R^2}{|\lambda|}\int_0^Lr^3(r^2+R^2)^{-2}\dd r=\frac{24\pi^2m^2R^2}{|\lambda|}[\ln\frac{L^2+R^2}{R^2}+\frac{R^2}{L^2+R^2}-1]$ で、$\phi_R\propto r^{-2}$ の裾は質量のために $r\gtrsim1/m$ で指数関数的に減るので $L\sim1/m$ で切れる。$V_2>0$ は $R\to0$ で0になり、作用の下限 $16\pi^2/|\lambda|$ は $R\to0$ でだけ近づく。
+
 \section{検算の細部}\label{app:details}
 
-第~\ref{sec:checks} 節の手順のうち、結果の読み取りには要らない方法の細部をここにまとめる。
+第~\ref{sec:checks}〜\ref{sec:pheno} 節の手順のうち、結果の読み取りには要らない方法の細部をここにまとめる。
 
 \paragraph{手順 (1)。}パラメータは、湯川結合を \texttt{yps}、4点結合を \texttt{lamphi}、$\phi$ の質量を \texttt{mphi}、$\psi$ の質量を \texttt{Mpsi} と書いた。$\phi^3$ のノートで \texttt{g} という名前が FeynRules の UFO 出力を止めたので、一文字の名前は避けた。MadGraph の結合の次数は、\texttt{yps} を \texttt{YUK}$=1$、\texttt{lamphi} を \texttt{YUK}$=2$ と数える。$\lambda$ は $y^2$ と同じ次数なので、\texttt{YUK} が2増えるごとにループの次数が一つ上がる。模型ファイルを作るときに一つ落とし穴があった。Mathematica のパッケージファイルでは、行末で式が完結していると、そこで文が終わる。ラグランジアンを $\cdots-\texttt{Mpsi}\,\bar\psi\psi$ で改行して次の行を $+\frac12\cdots$ で始めたところ、1行目だけが代入され、FeynRules は $\phi$ の質量を見つけず、頂点も0個になった（エラーは出ない）。式全体を括弧で囲んで直した。FeynArts の模型の頂点は \texttt{C[S[1],S[1],S[1],S[1]]} と \texttt{C[-F[1],F[1],S[1]]} で、後者は $\{\{c_L,0\},\{c_R,0\}\}$ の形のカイラルな係数を持つ。
 
@@ -1212,6 +1266,8 @@ H_{abcd}=\tfrac14\sum_{\mathrm{perm}}\mathrm{tr}(Y^aY^{b\dagger}Y^cY^{d\dagger})
 
 \paragraph{手順 (8)。}\texttt{pw\_numeric.py} は、ヘリシティのスピノルと木の振幅を Python で陽に作り、$\cos\theta$ の区間の半分ずつで伝播関数の山を平らにする変換（\ref{app:sigmatot}）をして、Gauss--Legendre の48点ずつで射影した。変換の $A$ は、その $s$ で開いている過程の伝播関数の山のうち最も近いものからとった。Wigner の $d$ 関数は和の公式から作り、$J\le2$ の既知の形と比べた。(A) の走査は $\sqrt s=2M+10^{-4}m$ から $10^4m$ までの160点で、$(y^2,\lambda)$ の平面の181本の半直線に沿って境界を求めた。(B)、(C) の領域は、許される $y$ が $\lambda$ を固定したときに区間にならないところがあるので、$(y,\lambda)$ の格子（$55\times57$ 点）の上の破れの大きさの等高線として描いた。(C) の1ループの振幅は \texttt{pw\_collier.f90}（手順 (4)、(6)、(7) と同じ関数で、$\lambda$ の三角形と $\phi\phi\to\phi\phi$ の二つの構造を別に書き出す）で、$2m<\sqrt s\le4m$ の30点と $\sqrt s=5m$、$10m$ で求めた。
 
+\paragraph{手順 (9)。}\texttt{bounce\_numeric.py} は、4つの走る量 $(y^2,\lambda,m^2,M)$ を $t=0$ から $y$ の Landau 極の $98\%$ まで \texttt{solve\_ivp}（相対許容誤差 $10^{-12}$）で積分し、$\xi$ は閉じた形と $\gamma_\phi$ の数値積分の両方で求めて比べた（$10^{-13}$）。$\Delta V$ は $\phi=1$〜$10^5m$ の401点で求め、$me^t=M_\psi(\phi)$ の選び方では $t$ を方程式 $t=\frac12\ln[M^2(t)+y^2(t)\xi^2(t)\phi^2]$ の解として決めた。$me^t<m$ になるところは $t=0$ とした。Fubini の解の確認は、$|\lambda|$ と $R$ の3つの組で動径方向の方程式を $r=10^{-6}/\phi(0)$ から級数で始めて積分した。
+
 \begin{thebibliography}{99}
 \small
 \bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。Feynman 則、1ループ積分の一般式（付録~C）、$\MSbar$ の有限部分（付録~G）、検算の手順と道具。
@@ -1226,6 +1282,10 @@ H_{abcd}=\tfrac14\sum_{\mathrm{perm}}\mathrm{tr}(Y^aY^{b\dagger}Y^cY^{d\dagger})
 \bibitem{srednicki} M. Srednicki, \textit{Quantum Field Theory} (Cambridge University Press, 2007)。52章（スカラーの湯川結合の $\beta$ 関数）。
 \bibitem{jw} M. Jacob, G. C. Wick, ``On the general theory of collisions for particles with spin,'' Annals Phys. \textbf{7}, 404 (1959)。ヘリシティの部分波。
 \bibitem{allwicher} L. Allwicher, P. Arnan, D. Barducci, M. Nardecchia, ``Perturbative unitarity constraints on generic Yukawa interactions,'' JHEP \textbf{10}, 129 (2021)。4.1 節の模型1（$N=1$）。
+\bibitem{sher} M. Sher, ``Electroweak Higgs potentials and vacuum stability,'' Phys. Rept. \textbf{179}, 273 (1989)。繰り込み群で改良した有効ポテンシャル。
+\bibitem{fubini} S. Fubini, ``A new approach to conformal invariant field theories,'' Nuovo Cim. A \textbf{34}, 521 (1976)。
+\bibitem{derrick} G. H. Derrick, ``Comments on nonlinear wave equations as models for elementary particles,'' J. Math. Phys. \textbf{5}, 1252 (1964)。
+\bibitem{isidori} G. Isidori, G. Ridolfi, A. Strumia, ``On the metastability of the standard model vacuum,'' Nucl. Phys. B \textbf{609}, 387 (2001)。
 \end{thebibliography}
 
 \end{document}
