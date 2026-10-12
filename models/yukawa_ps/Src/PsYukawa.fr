@@ -1,0 +1,106 @@
+(* ::Package:: *)
+
+(* PsYukawa.fr -- FeynRules model file for the pseudoscalar Yukawa + phi^4 model
+   (models/yukawa_ps/ResearchNote/note.tex, Eq. (1)).
+
+   L = psibar (i dslash - M) psi + 1/2 (d phi)^2 - 1/2 m^2 phi^2
+       - i y phi psibar gamma5 psi - lambda/4! phi^4
+       (m is called mphi, M is called Mpsi, y is called yps, lambda is called lamphi here)
+
+   - phi: one real (pseudo)scalar of mass m;  psi: one Dirac fermion of mass M.
+   - Parity (phi -> -phi, psi -> gamma0 psi) forbids phi, phi^3, phi psibar psi and psibar i gamma5 psi,
+     so there is no linear term and no cubic coupling.
+   - Only the 4-dimensional tree-level Lagrangian is here.  The counterterms and the factors mu^eps,
+     mu^(2 eps) are added when the loop calculation is set up (FeynCalc), as in the note.
+   - Feynman rules: propagators i/(p^2-m^2), i(pslash+M)/(p^2-M^2); vertices yps gamma5 and -I lamphi.
+   - Coupling orders (MadGraph): yps counts YUK = 1 and lamphi counts YUK = 2, so that one power of
+     YUK^2 is one loop order (lambda ~ y^2).
+   - The names g, m, M are avoided for parameters (g makes WriteUFO hit $RecursionLimit, see Phi3.fr).
+   - Load from this folder:
+       $FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}];
+       SetDirectory[$FeynRulesPath]; << FeynRules`
+       SetDirectory[".../models/yukawa_ps/Src"]; LoadModel["PsYukawa.fr"]
+*)
+
+M$ModelName = "PsYukawa";
+
+M$Information = {
+  Authors -> {"K. Yasuda"},
+  Date    -> "2026-10-12",
+  Version -> "1.0",
+  Comment -> "Real pseudoscalar + Dirac fermion, pseudoscalar Yukawa + phi^4 (cross-check model for the loop stack)"
+};
+
+M$InteractionOrderHierarchy = {
+  {YUK, 1}
+};
+
+(* ************************** *)
+(* *****   Parameters   ***** *)
+(* ************************** *)
+
+M$Parameters = {
+  yps == {
+    ParameterType    -> External,
+    BlockName        -> PSYBLOCK,
+    OrderBlock       -> 1,
+    Value            -> 1.0,
+    InteractionOrder -> {YUK, 1},
+    TeX              -> "y",
+    Description      -> "Pseudoscalar Yukawa coupling (dimensionless in d = 4)"
+  },
+  lamphi == {
+    ParameterType    -> External,
+    BlockName        -> PSYBLOCK,
+    OrderBlock       -> 2,
+    Value            -> 1.0,
+    InteractionOrder -> {YUK, 2},
+    TeX              -> "\\lambda",
+    Description      -> "Quartic coupling (dimensionless in d = 4)"
+  }
+};
+
+(* ************************** *)
+(* *****   Particles    ***** *)
+(* ************************** *)
+
+M$ClassesDescription = {
+  S[1] == {
+    ClassName       -> phi,
+    SelfConjugate   -> True,
+    Mass            -> {mphi, 1.0},
+    Width           -> {wphi, 0},
+    PDG             -> 9000001,
+    PropagatorLabel -> "phi",
+    PropagatorType  -> ScalarDash,
+    PropagatorArrow -> None,
+    ParticleName    -> "phi",
+    FullName        -> "phi",
+    Description     -> "Real pseudoscalar field"
+  },
+  F[1] == {
+    ClassName        -> psi,
+    SelfConjugate    -> False,
+    Mass             -> {Mpsi, 0.7},
+    Width            -> {wpsi, 0},
+    PDG              -> 9000002,
+    PropagatorLabel  -> "psi",
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    ParticleName     -> "psi",
+    AntiParticleName -> "psi~",
+    FullName         -> "psi",
+    Description      -> "Dirac fermion"
+  }
+};
+
+(* ************************** *)
+(* *****   Lagrangian   ***** *)
+(* ************************** *)
+
+(* del[f, mu] is the partial derivative (Mathematica's D[f, mu] would give 0).
+   The parentheses are needed: in a package file a line that is a complete expression ends the
+   statement, so without them only the first line would be assigned. *)
+LPsYukawa := (I psibar.Ga[mu].del[psi, mu] - Mpsi psibar.psi
+  + 1/2 del[phi, mu] del[phi, mu] - 1/2 mphi^2 phi^2 - lamphi/24 phi^4
+  - I yps phi psibar.Ga[5].psi);

@@ -1,0 +1,19 @@
+# model_mg5.mg5 -- diagrams of the 2 -> 2 and 2 -> 3 processes from the PsYukawa UFO
+# (research note models/yukawa_ps, step (1)).  Run via run_model_check.sh (imports a copy in work/,
+# because MadGraph converts UFOs to Python 3 in place).
+# Expected: 1, 2, 2, 2 diagrams for the 2 -> 2 processes and 7, 7 for the 2 -> 3 processes.
+set automatic_html_opening False
+import model ./work/PsYukawa_UFO
+generate phi phi > phi phi
+display diagrams_text
+generate psi psi~ > phi phi
+display diagrams_text
+generate psi psi~ > psi psi~
+display diagrams_text
+generate psi psi > psi psi
+display diagrams_text
+generate psi psi~ > phi phi phi
+display diagrams_text
+generate phi phi > phi psi psi~
+display diagrams_text
+quit

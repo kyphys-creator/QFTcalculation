@@ -1,0 +1,737 @@
+% note.tex — 擬スカラー湯川理論：1ループの構造と検算（d = 4）
+% コンパイル: lualatex note.tex（目次と参照の解決のため2〜3回）
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}
+\usepackage{amsmath,amssymb,slashed}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={Pseudoscalar Yukawa theory: one-loop structure and tool checks},pdfauthor={}}
+
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\MSbar}{\overline{\mathrm{MS}}}
+
+\tikzset{
+  scalar/.style={thick,dashed},
+  fermion/.style={thick,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
+  vtx/.style={circle,fill=black,inner sep=1.3pt},
+  ctv/.style={circle,draw=black,fill=white,inner sep=0pt,minimum size=7pt,path picture={
+      \draw (path picture bounding box.north west) -- (path picture bounding box.south east)
+            (path picture bounding box.south west) -- (path picture bounding box.north east);}},
+  mom/.style={-{Stealth[length=1.6mm]},thin},
+  lab/.style={font=\small,align=center},
+}
+
+\title{擬スカラー湯川理論：1ループの構造と検算（$d=4$）}
+\author{}
+\date{2026年10月12日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+$\phi^3$ 理論と $\phi^3+\phi^4$ 理論のノート~\cite{phi3note,phi34note} に続き、フェルミオンを含む模型を $d=4$ で調べる。模型は、実の擬スカラー場 $\phi$ と Dirac フェルミオン $\psi$ が、湯川結合 $-iy\phi\bar\psi\gamma^5\psi$ と自己相互作用 $\lambda\phi^4/4!$ を持つ理論である。パリティ（$\phi\to-\phi$）があるので $\phi$ の1次と3次の項は現れず、結合は $y$ と $\lambda$ の二つで閉じる。本ノートでは、まず Feynman 則、閉じたフェルミオンのループの符号、1ループの1PI 関数（$\phi$ と $\psi$ の自己エネルギー、湯川の頂点、$\phi$ の4点関数）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。$\beta_y=5y^3/(4\pi)^2$、$\beta_\lambda=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2$ で、フェルミオンのループが $\beta_\lambda$ に負の項 $-48y^4$ を与える。フェルミオンの箱の図は、トレースを伝播関数の分母で書き直すと、$B_0$、$C_0$、$D_0$ だけの短い式になる。1ループでは比 $\lambda/y^2$ の流れが解析的に解ける。その結果、$\lambda>r_+y^2$（$r_+=(1+\sqrt{145})/3\approx4.35$）なら $\lambda$ が、$\lambda<r_+y^2$ なら $\lambda$ が負になるのが、$y$ の Landau 極より先に起こる。基準点 $y=\lambda=1$（$\mu=m$）では、$\mu\approx19.5\,m$ で $\lambda=0$ となる。木のレベルでは、$\psi\bar\psi\to\phi\phi$ は閾値で p 波から始まり、$\psi\bar\psi\to\psi\bar\psi$ のスピン和はフェルミオンの質量に陽によらない。$\phi\phi\to\phi\phi$ の1ループの S 行列要素の $\mu$ 依存は、$\beta_\lambda$ の三つの項をすべて含む。最後に検算の計画を定めた。その最初の手順として FeynRules の模型ファイルを作り、FeynArts と UFO の頂点、MadGraph の図の数が手計算と一致することを確かめた。導出はすべて付録に省略なく載せる。
+\end{abstract}
+
+\tableofcontents
+
+\section{目的と問い}\label{sec:intro}
+
+本ノートの問いは二つである。\textbf{第一に、フェルミオンを含む最も簡単な繰り込み可能な模型で、$d=4$ の1ループの紫外発散と繰り込みの構造はどうなるか。そして、その構造を $\phi^3$ 理論と同じ手順でツールと突き合わせられるか。第二に、この模型の物理について何が言えるか。}とくに、摂動論が使える結合の範囲と、フェルミオンのループによる真空の不安定化を調べる。
+
+第一の問いを立てる理由は、これまでの二つのノート~\cite{phi3note,phi34note} がスカラー場だけを扱い、フェルミオンに固有の計算をツールで確かめる機会がなかったからである。フェルミオンを入れると、閉じたループの符号 $-1$ とスピンのトレース、$\gamma^5$ の扱い、自己エネルギーの Lorentz 構造（$\slashed p$ の項と質量の項）、外線のスピン和、フェルミオンの LSZ の留数が新たに現れる。場の繰り込み $\delta_\phi$ も1ループで0でなくなる。擬スカラーの湯川結合を選ぶのは、パリティによって $\phi$ の1次と3次の項が禁じられ、繰り込みで閉じる結合が $y$ と $\lambda$ の二つだけになるからである。タドポールを打ち消す線形項も要らない。第二の問いを立てる理由は、この模型が、トップクォークのループが標準模型のヒッグスの4点結合を高エネルギーで負にする機構を、最も簡単な形で含むからである。$\phi^3+\phi^4$ 理論で作った bounce と前因子の道具を、フェルミオンの寄与を加えて使える。
+
+求める量は五つである。(i) Feynman 則と対称性因子、閉じたフェルミオンのループの符号。(ii) 1ループの1PI 関数（$\phi$ の2点・4点関数、$\psi$ の2点関数、湯川の頂点）の紫外発散部分と、$\MSbar$ の対抗項。(iii) 繰り込まれた1PI 関数と、繰り込み群の係数（$\beta_y$、$\beta_\lambda$、二つの質量の走り、二つの場の異常次元）。(iv) $\phi\phi\to\phi\phi$、$\psi\bar\psi\to\phi\phi$、$\psi\bar\psi\to\psi\bar\psi$ の木の振幅、$\phi\phi\to\phi\phi$ の1ループの振幅とその S 行列要素、フェルミオンの極質量と留数。(v) 応用として、部分波のユニタリー性の限界と、真空の安定性（繰り込み群で改良した有効ポテンシャル、$\lambda<0$ の bounce、フェルミオンの行列式を含む崩壊率）。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
+
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果と、(v) の出発点になる繰り込み群の流れと有効ポテンシャルを述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:scat} に、検算の細部は\ref{app:details} にある。
+
+\section{設定}\label{sec:setup}
+
+模型は、質量 $m$ の実の擬スカラー場 $\phi$ と、質量 $M$ の Dirac フェルミオン $\psi$ からなる理論である。ラグランジアン密度は
+\begin{equation}
+\begin{aligned}
+\mathcal{L}={}&\bar\psi\,(i\slashed\partial-M)\,\psi+\frac12\,\partial_\mu\phi\,\partial^\mu\phi-\frac12 m^2\phi^2
+-iy\mu^{\epsilon}\,\phi\,\bar\psi\gamma^5\psi-\frac{\lambda\mu^{2\epsilon}}{4!}\,\phi^4\\
+&+\delta_\psi\,\bar\psi\,i\slashed\partial\,\psi-\delta_M\bar\psi\psi+\frac12\,\delta_\phi\,\partial_\mu\phi\,\partial^\mu\phi-\frac12\,\delta_m\phi^2
+-i\delta_y\mu^{\epsilon}\,\phi\,\bar\psi\gamma^5\psi-\frac{\delta_\lambda\mu^{2\epsilon}}{4!}\,\phi^4
+\end{aligned}
+\label{eq:L}
+\end{equation}
+とする。1行目が繰り込まれた量で書いた模型、2行目が対抗項である。$\bar\psi i\gamma^5\psi$ はエルミートなので、湯川の項 $-y\phi\,\bar\psi i\gamma^5\psi$ は実の $y$ でエルミートである（\ref{app:gamma5}）。定数項（真空のエネルギー）とその対抗項は、有効ポテンシャルを扱うときにだけ加える。
+
+\paragraph{前提。}本ノートは次の前提に立つ。
+\begin{enumerate}
+\item 計量は $(+,-,-,-)$、$\hbar=c=1$ とする。$\slashed a\equiv\gamma^\mu a_\mu$、$\gamma^5\equiv i\gamma^0\gamma^1\gamma^2\gamma^3$、$(\gamma^5)^2=1$ である。
+\item 場は実スカラー $\phi$ と Dirac フェルミオン $\psi$ がそれぞれ1つで、相互作用は擬スカラーの湯川結合と $\phi^4$ だけとする。$y$ は実数で、物理量は $y^2$ だけによる（$\phi\to-\phi$ で $y\to-y$）。$\lambda\ge0$、$m^2>0$、$M>0$ とする。$\phi$ が $\psi\bar\psi$ に崩れないように $m<2M$ とする。
+\item 模型はパリティ $\phi(t,\boldsymbol x)\to-\phi(t,-\boldsymbol x)$、$\psi(t,\boldsymbol x)\to\gamma^0\psi(t,-\boldsymbol x)$ で不変とする。これは $\phi$、$\phi^3$、$\phi\bar\psi\psi$、$\bar\psi i\gamma^5\psi$ の項を禁じる（\ref{app:gamma5}）。そのため、タドポールを打ち消す線形項も、3点結合も置かない。
+\item 時空次元は $d=4$ とする。ループ積分は次元正則化で行い、$D=4-2\epsilon$ とする。$D$ 次元では $\phi$ の質量次元は $1-\epsilon$、$\psi$ の質量次元は $3/2-\epsilon$ なので、無次元の $y$ と $\lambda$ に $\mu^\epsilon$、$\mu^{2\epsilon}$ を掛けて書く（\ref{app:counting}）。
+\item $\gamma^5$ は $D$ 次元のすべての $\gamma^\mu$ と反可換とし（NDR）、スピンのトレースは $\mathrm{tr}\,1=4$ とする。1ループでは、この処方に曖昧さは生じない（\ref{app:gamma5}）。
+\item 紫外発散は $\MSbar$ で処理し、有限部分もこの規約で定める。すなわち、対抗項を $\Delta_{\mathrm{UV}}\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。
+\item 数値を比べるときの基準点は $m=\mu=1$、$M=0.7$、$y=\lambda=1$ とする（$M$ と $\mu$ は $m$ を単位とする）。$M\ne m$ とするのは、二つの質量の取り違えをツールの検算で見つけられるようにするためである。
+\end{enumerate}
+本文で使う記号を表~\ref{tab:notation} にまとめる。積分の記号はこれまでのノートと同じで、質量の違う内線を区別する添字を加えた。
+
+\begin{table}[tbp]
+\centering\small
+\caption{本ノートで使う記号。}
+\label{tab:notation}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.6cm}X}
+\toprule
+\textbf{記号} & \textbf{意味} \\
+\midrule
+$\phi$, $m$ & 実の擬スカラー場と、その（繰り込まれた）質量（模型ファイル \texttt{Src/PsYukawa.fr} の \texttt{phi}、\texttt{mphi}） \\
+$\psi$, $M$ & Dirac フェルミオンと、その質量（\texttt{psi}、\texttt{Mpsi}） \\
+$y$ & 擬スカラーの湯川結合（\texttt{yps}）。無次元 \\
+$\lambda$ & 4点結合（\texttt{lamphi}）。無次元 \\
+$D$, $\epsilon$ & 正則化した次元 $D=4-2\epsilon$ と、その4からのずれ \\
+$\mu$ & 繰り込みスケール（$\MSbar$ のスケール） \\
+$\Delta_{\mathrm{UV}}$ & $1/\epsilon-\gamma_E+\ln4\pi$。$\MSbar$ の対抗項はこれに比例する \\
+$\delta_\phi,\ \delta_m,\ \delta_\psi,\ \delta_M,\ \delta_y,\ \delta_\lambda$ & $\phi$ の場・$\phi$ の質量・$\psi$ の場・$\psi$ の質量・湯川結合・4点結合の対抗項（$\MSbar$） \\
+$Z_\phi,\ Z_\psi$ & 場の繰り込み定数 $Z_\phi=1+\delta_\phi$、$Z_\psi=1+\delta_\psi$ \\
+$D_a(k)$, $I_1^a$, $I_2^{ab}$ & 伝播関数の分母 $k^2-m_a^2+i0$ と、1点・2点のスカラー積分（式~\eqref{eq:IN}）。添字 $a,b$ は内線の質量 $m$ または $M$ \\
+$V_\phi,\ V_\psi,\ V_y,\ V_4$ & 1PI の $\phi$ の2点関数、$\psi$ の2点関数、$\phi\bar\psi\psi$ の3点関数、$\phi$ の4点関数。Feynman 則のとおり、$i$ の因子を含めた図の和 \\
+$A_0,\ B_0,\ B_1,\ C_0,\ C_i,\ D_0$ & 1ループ積分の $\MSbar$ の有限部分。LoopTools の規約（$\Delta=0$）の値と同じ。$B^{ab}_n(p^2)\equiv B_n(p^2;m_a^2,m_b^2)$ \\
+$\mathcal F(x,x')$ & フェルミオンの箱の図の和を $B_0$、$C_0$、$D_0$ で書いたもの（式~\eqref{eq:box}） \\
+$s,\ t,\ u$ & Mandelstam 変数 \\
+$\mathcal{M}_A,\ \mathcal{M}_B,\ \mathcal{M}_C$ & $\phi\phi\to\phi\phi$、$\psi\bar\psi\to\phi\phi$、$\psi\bar\psi\to\psi\bar\psi$ の振幅（式~\eqref{eq:Mtree}）。上付きの $(0)$、$(1)$ は木と1ループ \\
+$\sum|\mathcal{M}|^2$ & 外線のフェルミオンのスピンについての和（平均ではない） \\
+$\Sigma_\phi,\ \Sigma_\psi$ & 自己エネルギー $\Sigma_\phi\equiv iV_\phi$、$\Sigma_\psi\equiv iV_\psi$。完全な伝播関数は $i/(p^2-m^2-\Sigma_\phi)$、$i/(\slashed p-M-\Sigma_\psi)$ \\
+$m_{\mathrm p},\ R_\phi,\ M_{\mathrm p},\ R_\psi$ & $\phi$ と $\psi$ の極質量と留数（式~\eqref{eq:mpole}、\eqref{eq:Mpole}） \\
+$\beta_y,\ \beta_\lambda$ & $\beta_y\equiv\dd y/\dd\ln\mu$、$\beta_\lambda\equiv\dd\lambda/\dd\ln\mu$（$\epsilon\to0$ の値） \\
+$\gamma_m,\ \gamma_M$ & 質量の走り $\gamma_m\equiv\mu\,\dd m^2/\dd\mu$、$\gamma_M\equiv\mu\,\dd M/\dd\mu$ \\
+$\gamma_\phi,\ \gamma_\psi$ & 場の異常次元 $\gamma_\phi\equiv\frac12\,\dd\ln Z_\phi/\dd\ln\mu$、$\gamma_\psi\equiv\frac12\,\dd\ln Z_\psi/\dd\ln\mu$ \\
+$r,\ r_\pm$ & 比 $r\equiv\lambda/y^2$ と、その流れの固定点 $r_\pm=(1\pm\sqrt{145})/3$（式~\eqref{eq:rflow}） \\
+$V_{\mathrm{eff}},\ m_\phi^2(\phi),\ M_\psi^2(\phi)$ & 1ループの有効ポテンシャルと、場に依存する質量の2乗（式~\eqref{eq:cw}） \\
+$E_\phi,\ E_\psi,\ V_y,\ V_4,\ L$ & 図の外の $\phi$ 線、外のフェルミオン線、湯川の頂点、4点頂点、ループの数 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{結果}\label{sec:results}
+
+\paragraph{Feynman 則と対称性因子。}式~\eqref{eq:L} から読み取れる Feynman 則を図~\ref{fig:rules} に示す。$\phi$ の伝播関数は $i/(p^2-m^2+i0)$、$\psi$ の伝播関数は $i(\slashed p+M)/(p^2-M^2+i0)$、湯川の頂点は $y\mu^\epsilon\gamma^5$、4点頂点は $-i\lambda\mu^{2\epsilon}$ である。湯川の頂点に $i$ が付かないのは、相互作用 $-iy\phi\bar\psi\gamma^5\psi$ の $-i$ と、頂点の規則の $i$ が打ち消すからである。対抗項は、$\phi$ の2点の挿入 $i(\delta_\phi p^2-\delta_m)$、$\psi$ の2点の挿入 $i(\delta_\psi\slashed p-\delta_M)$、湯川の挿入 $\delta_y\mu^\epsilon\gamma^5$、4点の挿入 $-i\delta_\lambda\mu^{2\epsilon}$ になる。閉じたフェルミオンのループには、因子 $-1$ とスピンのトレースが付く。1ループの1PI 図は図~\ref{fig:oneloop} の (a)〜(f) である。対称性因子は、$\phi$ の線だけでできたループ（(b)、(e)）で $1/2$、フェルミオンの線を含むループで $1$ である。フェルミオンの線には向きがあるので、二つの内線が入れ替わる対称性がない。フェルミオンの箱 (f) は、4本の外線をループに付ける順序が6通りあり、互いに向きが逆の2つずつは同じ値を持つ。いずれも Wick の縮約を数えて導いた（\ref{app:rules}）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (0,0) -- (2,0);
+  \draw[mom] (0.7,0.22) -- (1.3,0.22) node[midway,above,font=\scriptsize] {$p$};
+  \node[lab] at (1,-0.75) {$\dfrac{i}{p^2-m^2+i0}$};
+\end{scope}
+\begin{scope}[shift={(3.0,0)}]
+  \draw[fermion] (0,0) -- (2,0);
+  \draw[mom] (0.7,0.22) -- (1.3,0.22) node[midway,above,font=\scriptsize] {$p$};
+  \node[lab] at (1,-0.75) {$\dfrac{i(\slashed p+M)}{p^2-M^2+i0}$};
+\end{scope}
+\begin{scope}[shift={(7.0,0)}]
+  \draw[fermion] (-0.85,-0.6) -- (0,0);
+  \draw[fermion] (0,0) -- (-0.85,0.6);
+  \draw[scalar] (0,0) -- (0.95,0);
+  \node[vtx] at (0,0) {};
+  \node[lab] at (0,-0.85) {$y\mu^{\epsilon}\gamma^5$};
+\end{scope}
+\begin{scope}[shift={(9.7,0)}]
+  \draw[scalar] (-0.7,0.55) -- (0.7,-0.55) (-0.7,-0.55) -- (0.7,0.55);
+  \node[vtx] at (0,0) {};
+  \node[lab] at (0,-0.85) {$-i\lambda\mu^{2\epsilon}$};
+\end{scope}
+\begin{scope}[shift={(0,-2.3)}]
+  \draw[scalar] (0,0) -- (2,0);
+  \node[ctv] at (1,0) {};
+  \node[lab] at (1,-0.75) {$i(\delta_\phi p^2-\delta_m)$};
+\end{scope}
+\begin{scope}[shift={(3.0,-2.3)}]
+  \draw[fermion] (0,0) -- (1,0);
+  \draw[fermion] (1,0) -- (2,0);
+  \node[ctv] at (1,0) {};
+  \node[lab] at (1,-0.75) {$i(\delta_\psi\slashed p-\delta_M)$};
+\end{scope}
+\begin{scope}[shift={(7.0,-2.3)}]
+  \draw[fermion] (-0.85,-0.6) -- (0,0);
+  \draw[fermion] (0,0) -- (-0.85,0.6);
+  \draw[scalar] (0,0) -- (0.95,0);
+  \node[ctv] at (0,0) {};
+  \node[lab] at (0,-0.85) {$\delta_y\mu^{\epsilon}\gamma^5$};
+\end{scope}
+\begin{scope}[shift={(9.7,-2.3)}]
+  \draw[scalar] (-0.7,0.55) -- (0.7,-0.55) (-0.7,-0.55) -- (0.7,0.55);
+  \node[ctv] at (0,0) {};
+  \node[lab] at (0,-0.85) {$-i\delta_\lambda\mu^{2\epsilon}$};
+\end{scope}
+\end{tikzpicture}
+\caption{式~\eqref{eq:L} から導いた Feynman 則（\ref{app:rules}）。破線は $\phi$、矢印の付いた実線は $\psi$ で、矢印はフェルミオン数の流れの向きである。上の段は左から $\phi$ と $\psi$ の伝播関数、湯川の頂点、4点頂点。下の段はそれぞれの対抗項で、$\otimes$ は対抗項の挿入を表す。ループ運動量 $k$ ごとに $\int\dd^Dk/(2\pi)^D$ を掛け、対称性因子で割る。閉じたフェルミオンのループには $-1$ とトレースが付く。}
+\label{fig:rules}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% row 1
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.5,0) -- (-0.55,0) (0.55,0) -- (1.5,0);
+  \draw[fermion] (0.55,0) arc (0:180:0.55);
+  \draw[fermion] (-0.55,0) arc (180:360:0.55);
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+  \node[lab] at (0,-0.95) {(a) $V_\phi$：$y^2$};
+  \node[lab,font=\footnotesize] at (0,-1.4) {$1$（$-1$ とトレース）};
+\end{scope}
+\begin{scope}[shift={(4.4,-0.3)}]
+  \draw[scalar] (-1.2,0) -- (1.2,0);
+  \draw[scalar] (0,0.5) circle (0.5);
+  \node[vtx] at (0,0) {};
+  \node[lab] at (0,-0.65) {(b) $V_\phi$：$\lambda$};
+  \node[lab,font=\footnotesize] at (0,-1.1) {$1/2$};
+\end{scope}
+\begin{scope}[shift={(8.8,-0.3)}]
+  \draw[fermion] (-1.5,0) -- (-0.7,0);
+  \draw[fermion] (-0.7,0) -- (0.7,0);
+  \draw[fermion] (0.7,0) -- (1.5,0);
+  \draw[scalar] (0.7,0) arc (0:180:0.7);
+  \node[vtx] at (-0.7,0) {}; \node[vtx] at (0.7,0) {};
+  \node[lab] at (0,-0.65) {(c) $V_\psi$：$y^2$};
+  \node[lab,font=\footnotesize] at (0,-1.1) {$1$};
+\end{scope}
+% row 2
+\begin{scope}[shift={(0,-3.4)}]
+  \draw[fermion] (-1.5,0) -- (-0.75,0);
+  \draw[fermion] (-0.75,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.75,0);
+  \draw[fermion] (0.75,0) -- (1.5,0);
+  \draw[scalar] (0.75,0) arc (0:180:0.75);
+  \draw[scalar] (0,0) -- (0,-0.8);
+  \node[vtx] at (-0.75,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0) {};
+  \node[lab] at (0,-1.2) {(d) $V_y$：$y^3$};
+  \node[lab,font=\footnotesize] at (0,-1.65) {$1$};
+\end{scope}
+\begin{scope}[shift={(4.4,-3.4)}]
+  \draw[scalar] (-0.55,0) -- (-1.2,0.6) (-0.55,0) -- (-1.2,-0.6) (0.55,0) -- (1.2,0.6) (0.55,0) -- (1.2,-0.6);
+  \draw[scalar] (0,0) circle (0.55);
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+  \node[lab] at (0,-1.2) {(e) $V_4$：$\lambda^2$（3通り）};
+  \node[lab,font=\footnotesize] at (0,-1.65) {$1/2$};
+\end{scope}
+\begin{scope}[shift={(8.8,-3.4)}]
+  \draw[fermion] (-0.55,-0.55) -- (0.55,-0.55);
+  \draw[fermion] (0.55,-0.55) -- (0.55,0.55);
+  \draw[fermion] (0.55,0.55) -- (-0.55,0.55);
+  \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55);
+  \draw[scalar] (-0.55,0.55) -- (-1.0,1.0) (0.55,0.55) -- (1.0,1.0) (-0.55,-0.55) -- (-1.0,-1.0) (0.55,-0.55) -- (1.0,-1.0);
+  \node[vtx] at (-0.55,0.55) {}; \node[vtx] at (0.55,0.55) {}; \node[vtx] at (-0.55,-0.55) {}; \node[vtx] at (0.55,-0.55) {};
+  \node[lab] at (0,-1.2) {(f) $V_4$：$y^4$（6通り）};
+  \node[lab,font=\footnotesize] at (0,-1.65) {$1$（$-1$ とトレース）};
+\end{scope}
+% row 3: vanishing
+\begin{scope}[shift={(2.2,-6.9)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) arc (-90:270:0.5);
+  \node[vtx] at (0,0) {};
+  \node[lab] at (0,-0.55) {(g) 1点：$y$};
+  \node[lab,font=\footnotesize] at (0,-1.0) {トレースで $0$};
+\end{scope}
+\begin{scope}[shift={(6.6,-6.9)}]
+  \coordinate (A) at (-0.6,0); \coordinate (B) at (0.45,0.6); \coordinate (C) at (0.45,-0.6);
+  \draw[fermion] (A) -- (B); \draw[fermion] (B) -- (C); \draw[fermion] (C) -- (A);
+  \draw[scalar] (A) -- (-1.35,0) (B) -- (1.0,1.05) (C) -- (1.0,-1.05);
+  \node[vtx] at (A) {}; \node[vtx] at (B) {}; \node[vtx] at (C) {};
+  \node[lab] at (0,-1.4) {(h) 3点：$y^3$};
+  \node[lab,font=\footnotesize] at (0,-1.85) {トレースで $0$};
+\end{scope}
+\end{tikzpicture}
+\caption{1ループの1PI 図と、その対称性因子（\ref{app:rules}）。括弧は外線の付け方の数である。(a) と (f) は閉じたフェルミオンのループで、$-1$ とトレースが付く。(f) の6通りは、4本の外線をループに付ける巡回の順序（向きを区別して $3!=6$）である。(g) と (h) は $\gamma^5$ を奇数個含むトレースで0になり、パリティで禁じられた $\phi$ と $\phi^3$ の項が生じないことを表す（\ref{app:gamma5}）。}
+\label{fig:oneloop}
+\end{figure}
+
+\paragraph{べき数え上げ。}外の $\phi$ 線 $E_\phi$ 本、外のフェルミオン線 $E_\psi$ 本の図の表面的な発散次数は、$d=4$ で
+\begin{equation}
+\omega=4-E_\phi-\frac32E_\psi
+\label{eq:omega}
+\end{equation}
+である（\ref{app:counting}）。湯川の頂点と4点頂点はどちらも無次元の結合なので、$\omega$ は頂点の数によらない。$\omega\ge0$ となるのは、$(E_\phi,E_\psi)=(1,0),(2,0),(3,0),(4,0),(0,2),(1,2)$ の6種類である。このうち $\phi$ の1点関数と3点関数はパリティで0になる。残りの4種類が図~\ref{fig:oneloop} の $V_\phi$（$\omega=2$）、$V_4$（$\omega=0$）、$V_\psi$（$\omega=1$）、$V_y$（$\omega=0$）で、式~\eqref{eq:L} の対抗項がちょうどそれらに対応する。$\phi\phi\psi\bar\psi$ の4点関数（$\omega=-1$）と、フェルミオン4本の関数（$\omega=-2$）は有限である。
+
+\paragraph{パリティと消える図。}1ループで $\phi$ の1点関数を作る図は、フェルミオンのループ (g) だけである。そのトレース $\mathrm{tr}[\gamma^5(\slashed k+M)]$ は0である。$\phi$ の3点関数を作る図はフェルミオンの三角形 (h) で、そのトレースは $\gamma^5$ を3つ含み、$\gamma^5$ を1つにまとめると、残りの $\gamma$ 行列は3個以下になる。$\gamma^5$ と3個以下の $\gamma$ 行列のトレースは0なので、(h) も0である（\ref{app:gamma5}）。これらが0になるのは、パリティが $\phi$ と $\phi^3$ の項を禁じることの1ループでの現れである。したがって、本模型には線形項 $Y\phi$ も3点結合も要らない。
+
+\paragraph{1ループの1PI 関数。}伝播関数の分母を $D_a(k)\equiv k^2-m_a^2+i0$（$m_a=m$ または $M$）と書き、1点と2点のスカラー積分を
+\begin{equation}
+I_1^a\equiv\int\frac{\dd^Dk}{(2\pi)^D}\frac{1}{D_a(k)},\qquad
+I_2^{ab}(p^2)\equiv\int\frac{\dd^Dk}{(2\pi)^D}\frac{1}{D_a(k)\,D_b(k+p)}
+\label{eq:IN}
+\end{equation}
+と定義する。図~\ref{fig:oneloop} の図を Feynman 則で書き、トレースと $\gamma^5$ を整理して対抗項を加えると
+\begin{equation}
+\begin{aligned}
+V_\phi(p^2)&=2y^2\mu^{2\epsilon}\bigl[p^2I_2^{MM}(p^2)-2I_1^M\bigr]+\frac{\lambda\mu^{2\epsilon}}{2}\,I_1^m+i\bigl(\delta_\phi p^2-\delta_m\bigr),\\
+V_\psi(p)&=y^2\mu^{2\epsilon}\int\frac{\dd^Dk}{(2\pi)^D}\frac{\slashed k-M}{D_M(k)\,D_m(k-p)}+i\bigl(\delta_\psi\slashed p-\delta_M\bigr),\\
+V_y&=-iy^3\mu^{3\epsilon}\int\frac{\dd^Dk}{(2\pi)^D}\frac{\bigl(M^2-k^2-M\slashed q-\slashed q\slashed k\bigr)\gamma^5}{D_M(k+q)\,D_M(k)\,D_m(k-p)}+\delta_y\mu^\epsilon\gamma^5,\\
+V_4&=\frac{\lambda^2\mu^{4\epsilon}}{2}\sum_{x=s,t,u}I_2^{mm}(x)-y^4\mu^{4\epsilon}\sum_{(6)}\int\frac{\dd^Dk}{(2\pi)^D}\frac{T}{D_M(k_1)D_M(k_2)D_M(k_3)D_M(k_4)}-i\,\delta_\lambda\mu^{2\epsilon}
+\end{aligned}
+\label{eq:V}
+\end{equation}
+となる（\ref{app:ren}）。$V_\psi$ の $p$ は入ってくるフェルミオンの運動量である。$V_y$ では、入ってくるフェルミオンの運動量を $p$、入ってくる $\phi$ の運動量を $q$、出ていくフェルミオンの運動量を $p'=p+q$ とした。$V_4$ の $k_1,\dots,k_4$ は箱の4本の伝播関数の運動量で、トレースは $T=\mathrm{tr}[(M-\slashed k_1)(M+\slashed k_2)(M-\slashed k_3)(M+\slashed k_4)]$ である。$\gamma^5(\slashed a+M)\gamma^5=-\slashed a+M$ を使って $\gamma^5$ を消した。$V_\phi$ の第1項の符号は、閉じたフェルミオンのループの $-1$ から来る。
+
+\paragraph{$\MSbar$ の対抗項。}$d=4$ で発散するのは、$I_1$、$I_2$、ベクトルの2点積分、および $V_y$ と $V_4$ の中で分子の運動量の2乗が分母の運動量の2乗を打ち消す項である。極を取り出すと（\ref{app:ren}）、式~\eqref{eq:V} の極を消す対抗項は
+\begin{equation}
+\begin{gathered}
+\delta_\phi=-\frac{2y^2}{(4\pi)^2}\Delta_{\mathrm{UV}},\qquad
+\delta_m=\frac{1}{(4\pi)^2}\Bigl(\frac{\lambda m^2}{2}-4y^2M^2\Bigr)\Delta_{\mathrm{UV}},\qquad
+\delta_\psi=-\frac{y^2}{2(4\pi)^2}\Delta_{\mathrm{UV}},\\
+\delta_M=-\frac{y^2M}{(4\pi)^2}\Delta_{\mathrm{UV}},\qquad
+\delta_y=\frac{y^3}{(4\pi)^2}\Delta_{\mathrm{UV}},\qquad
+\delta_\lambda=\frac{1}{(4\pi)^2}\Bigl(\frac{3\lambda^2}{2}-24y^4\Bigr)\Delta_{\mathrm{UV}}
+\end{gathered}
+\label{eq:ct}
+\end{equation}
+である。$\phi^3+\phi^4$ 理論と違って、$\phi$ の場の対抗項 $\delta_\phi$ が0でなくなる。これはフェルミオンのループ (a) の極が $p^2$ に比例する部分を持つからで、閉じたループの $-1$ のために $\delta_\phi<0$ である。$\delta_\lambda$ の $-24y^4$ はフェルミオンの箱 (f) の6つの図から来て、やはり $-1$ のために負である。$\delta_M$ の符号は、スカラーの湯川結合 $y\phi\bar\psi\psi$ の場合と逆になる。$\gamma^5$ がフェルミオンの伝播関数の質量の項の符号を反転させるからである。
+
+\paragraph{繰り込まれた1PI 関数。}式~\eqref{eq:ct} を式~\eqref{eq:V} に入れて $\epsilon\to0$ とすると
+\begin{equation}
+\begin{aligned}
+V_\phi(p^2)&=\frac{i}{(4\pi)^2}\Bigl[2y^2\bigl(p^2B_0^{MM}(p^2)-2A_0(M^2)\bigr)+\frac{\lambda}{2}A_0(m^2)\Bigr],\\
+V_\psi(p)&=-\frac{iy^2}{(4\pi)^2}\Bigl[\slashed p\,B_1^{Mm}(p^2)+M\,B_0^{Mm}(p^2)\Bigr],\\
+V_y&=-\frac{y^3}{(4\pi)^2}\Bigl[B_0^{Mm}(p'^2)+M\slashed q\,C_0+q^2C_1-\slashed q\slashed p\,C_2\Bigr]\gamma^5,\\
+V_4&=\frac{i}{(4\pi)^2}\Bigl[\frac{\lambda^2}{2}\sum_{x=s,t,u}B_0^{mm}(x)-2y^4\sum_{(x,x')}\mathcal F(x,x')\Bigr]
+\end{aligned}
+\label{eq:VR}
+\end{equation}
+となる（\ref{app:ren}）。$A_0$、$B_0$、$B_1$、$C_i$ は LoopTools の規約の $\MSbar$ の有限部分で、$B_1$ は $\int\dd^Dk\,k^\mu/(D_a(k)D_b(k+p))$ の $p^\mu$ の係数、$C_i\equiv C_i(q^2,p'^2,p^2;M^2,M^2,m^2)$ である。$V_4$ は外線の $\phi$ がすべて質量殻上（$p_i^2=m^2$）のときの値で、和は $(x,x')=(s,t),(t,u),(u,s)$ についてとる。フェルミオンの箱の図の和は
+\begin{equation}
+\mathcal F(x,x')=(2m^4-xx')\,D_0^{M}(x,x')+2\bigl[B_0^{MM}(x)+B_0^{MM}(x')\bigr]+2(x-2m^2)\,C_0^{M}(x)+2(x'-2m^2)\,C_0^{M}(x')
+\label{eq:box}
+\end{equation}
+となる。ここで $C_0^M(x)\equiv C_0(m^2,m^2,x;M^2,M^2,M^2)$、$D_0^M(x,x')$ は外線の質量の2乗がすべて $m^2$ で、二つのチャンネルの不変量が $x$、$x'$ の箱の積分（内線の質量はすべて $M$）である。この短い形は、トレース $T$ の中の内積 $k_i\cdot k_j$ を分母 $D_M(k_i)$、$D_M(k_j)$ と外線の不変量で書き直すと、$T$ が分母の2次式になることから得られる（\ref{app:ren}）。その際、$T$ の定数項からフェルミオンの質量 $M$ は消える。自己エネルギーは
+\begin{equation*}
+\Sigma_\phi=-\frac{1}{(4\pi)^2}\Bigl[2y^2\bigl(p^2B_0^{MM}(p^2)-2A_0(M^2)\bigr)+\frac{\lambda}{2}A_0(m^2)\Bigr],\qquad
+\Sigma_\psi=\frac{y^2}{(4\pi)^2}\Bigl[\slashed p\,B_1^{Mm}(p^2)+M\,B_0^{Mm}(p^2)\Bigr]
+\end{equation*}
+である。
+
+\paragraph{繰り込み群。}裸の量が $\mu$ によらないことから
+\begin{equation}
+\begin{gathered}
+\beta_y=\frac{5y^3}{(4\pi)^2},\qquad
+\beta_\lambda=\frac{3\lambda^2+8\lambda y^2-48y^4}{(4\pi)^2},\qquad
+\gamma_m=\frac{\lambda m^2+4y^2m^2-8y^2M^2}{(4\pi)^2},\\
+\gamma_M=-\frac{y^2M}{(4\pi)^2},\qquad
+\gamma_\phi=\frac{2y^2}{(4\pi)^2},\qquad
+\gamma_\psi=\frac{y^2}{2(4\pi)^2}
+\end{gathered}
+\label{eq:rge}
+\end{equation}
+を得る（\ref{app:rg}）。$\beta_y$ の係数5は、頂点 (d) の $2$ と、場の繰り込みからの $2\gamma_\psi+\gamma_\phi$ の $3$ の和である。$\beta_\lambda$ の三つの項は、$\phi$ の泡 (e)（$3\lambda^2$）、外線4本の場の繰り込み（$4\gamma_\phi\lambda=8\lambda y^2$）、フェルミオンの箱 (f)（$-48y^4$）から来る。$\gamma_M$ が負であることも、スカラーの湯川結合（$+3y^2M/(4\pi)^2$）と違う点である。$M=0$ では、カイラル回転 $\psi\to e^{i\pi\gamma^5/4}\psi$ で擬スカラーの湯川結合はスカラーの湯川結合に移るので、質量によらない $\beta_y$、$\beta_\lambda$、$\gamma_\phi$、$\gamma_\psi$ は両者で同じである（\ref{app:gamma5}）。
+
+1ループでは、比 $r\equiv\lambda/y^2$ の流れが解析的に解ける（\ref{app:rg}）。$\dd r/\dd\ln\mu=y^2(3r^2-2r-48)/(4\pi)^2$ で、その零点は $r_\pm=(1\pm\sqrt{145})/3$（$r_+=4.3472$、$r_-=-3.6805$）である。$\mu=\mu_0$ での値を $r_0$、$y_0$ とすると
+\begin{equation}
+\frac{r-r_+}{r-r_-}=\frac{r_0-r_+}{r_0-r_-}\Bigl(\frac{y^2}{y_0^2}\Bigr)^{\sqrt{145}/5},\qquad
+\frac{y^2}{y_0^2}=\frac{1}{1-10y_0^2\ln(\mu/\mu_0)/(4\pi)^2}
+\label{eq:rflow}
+\end{equation}
+となる。$y^2$ は $\mu$ とともに増え、$\ln(\mu_{\mathrm L}/\mu_0)=(4\pi)^2/(10y_0^2)$ で Landau 極に達する。$r_0<r_+$ なら $r$ は減り続けて0を横切り、Landau 極で $r_-$ に近づく。すなわち、$\lambda$ は $y$ の Landau 極より先に負になる。$r_0>r_+$ なら $r$ は増え続け、$\lambda$ のほうが先に発散する。$r=r_+$ は低エネルギーで引きつける固定点である。基準点 $y_0=\lambda_0=1$、$\mu_0=m$ では、$\lambda$ は $\mu=19.49\,m$ で0になり、$y$ の Landau 極は $\mu_{\mathrm L}=7.2\times10^6\,m$ にある。$\lambda$ が負になることは、次の有効ポテンシャルが大きな場で下に有界でなくなることを意味し、手順 (9)、(10) で調べる真空の不安定性の出発点になる。
+
+\paragraph{有効ポテンシャル。}$\MSbar$ の1ループの有効ポテンシャルは
+\begin{equation}
+\begin{gathered}
+V_{\mathrm{eff}}(\phi)=\Lambda+\frac12m^2\phi^2+\frac{\lambda}{24}\phi^4
++\frac{1}{64\pi^2}\Bigl[m_\phi^4\Bigl(\ln\frac{m_\phi^2}{\mu^2}-\frac32\Bigr)-4M_\psi^4\Bigl(\ln\frac{M_\psi^2}{\mu^2}-\frac32\Bigr)\Bigr],\\
+m_\phi^2(\phi)=m^2+\frac{\lambda}{2}\phi^2,\qquad M_\psi^2(\phi)=M^2+y^2\phi^2
+\end{gathered}
+\label{eq:cw}
+\end{equation}
+である（Coleman と Weinberg~\cite{cw}、導出は\ref{app:rg}）。$\Lambda$ は真空のエネルギーである。フェルミオンの項の係数 $-4$ は、Dirac フェルミオンの自由度4と、Grassmann 数の積分の符号から来る。擬スカラーの湯川結合では、場に依存する質量は $M_\psi^2=M^2+y^2\phi^2$ で、$\phi$ の1次の項を持たない（スカラーの湯川結合では $(M+y\phi)^2$）。$V_{\mathrm{eff}}$ の $\mu$ 依存が、係数の走りと場の異常次元で打ち消される条件から、式~\eqref{eq:rge} の $\beta_\lambda$ と $\gamma_m$ が再び得られ、真空のエネルギーの走り $\dd\Lambda/\dd\ln\mu=(m^4-4M^4)/(2(4\pi)^2)$ も決まる。木のポテンシャルの極小は $\phi=0$ だけだが、大きな $\phi$ ではフェルミオンの項 $-4y^4\phi^4\ln(y^2\phi^2/\mu^2)/(64\pi^2)$ が効き、$\mu\sim\phi$ での $\lambda$ が負なら $V_{\mathrm{eff}}$ は下に有界でなくなる。
+
+\paragraph{木の散乱振幅。}三つの過程を考える（図~\ref{fig:tree}、\ref{app:tree}）。$\phi(p_1)\phi(p_2)\to\phi(k_1)\phi(k_2)$ は、3点結合がないので接触項だけである。$\psi(p_1)\bar\psi(p_2)\to\phi(k_1)\phi(k_2)$ は $t$ と $u$ チャンネルのフェルミオンの交換で、$s$ チャンネルの図はない。$\psi(p_1)\bar\psi(p_2)\to\psi(p_3)\bar\psi(p_4)$ は $s$ と $t$ チャンネルの $\phi$ の交換で、二つの図の相対符号は $-1$ である。振幅とスピン和は
+\begin{equation}
+\begin{aligned}
+\mathcal M_A^{(0)}&=-\lambda,\\
+\mathcal M_B^{(0)}&=y^2\,\bar v(p_2)\Bigl[\frac{\slashed k_1}{t-M^2}+\frac{\slashed k_2}{u-M^2}\Bigr]u(p_1),\qquad
+\sum|\mathcal M_B^{(0)}|^2=\frac{2y^4\bigl[(t-M^2)(u-M^2)-m^4\bigr](t-u)^2}{(t-M^2)^2(u-M^2)^2},\\
+\sum|\mathcal M_C^{(0)}|^2&=4y^4\Bigl[\frac{s^2}{(s-m^2)^2}+\frac{t^2}{(t-m^2)^2}+\frac{st}{(s-m^2)(t-m^2)}\Bigr]
+\end{aligned}
+\label{eq:Mtree}
+\end{equation}
+である（\ref{app:tree}）。$\mathcal{M}_B$ では、質量殻上の $\bar v(p_2)$ と $u(p_1)$ に挟まれて、交換されるフェルミオンの運動量 $\slashed p_1$ と質量 $M$ の項が消えた。$\sum|\mathcal M_B|^2$ は $(t-u)^2$ に比例し、重心系では $t-u=4|\boldsymbol p||\boldsymbol k|\cos\theta$ なので、閾値の近くで $|\boldsymbol p|^2$ のように小さくなる。すなわち、$\psi\bar\psi\to\phi\phi$ は p 波から始まる。これは、S 波の $\psi\bar\psi$ のうち $J=0$ のもの（${}^1S_0$）のパリティが負で、同種の擬スカラー2つの $J=0$ の状態（パリティが正）に移れないことの現れである。$\sum|\mathcal M_C|^2$ には $M$ が陽に現れない。$\bar\psi\gamma^5\psi$ の型の双一次形式の2乗のスピン和が、$2s$、$-2t$、$-2st$ のように質量によらない形になるからで、$M$ は運動学（$s+t+u=4M^2$）を通してだけ入る。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-0.8,0.6) -- (0.8,-0.6) (-0.8,-0.6) -- (0.8,0.6);
+  \node[vtx] at (0,0) {};
+  \node[lab] at (0,-1.1) {(A) $\phi\phi\to\phi\phi$};
+\end{scope}
+\begin{scope}[shift={(3.3,0)}]
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.4);
+  \draw[fermion] (0,-0.4) -- (0,0.4);
+  \draw[fermion] (0,0.4) -- (-0.9,0.8);
+  \draw[scalar] (0,-0.4) -- (0.9,-0.8) (0,0.4) -- (0.9,0.8);
+  \node[vtx] at (0,-0.4) {}; \node[vtx] at (0,0.4) {};
+  \node[font=\scriptsize] at (-1.15,-0.85) {$p_1$}; \node[font=\scriptsize] at (-1.15,0.85) {$p_2$};
+  \node[font=\scriptsize] at (1.15,-0.85) {$k_1$}; \node[font=\scriptsize] at (1.15,0.85) {$k_2$};
+  \node[lab] at (0,-1.1) {(B) $t$};
+\end{scope}
+\begin{scope}[shift={(6.0,0)}]
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.4);
+  \draw[fermion] (0,-0.4) -- (0,0.4);
+  \draw[fermion] (0,0.4) -- (-0.9,0.8);
+  \draw[scalar] (0,-0.4) -- (0.9,0.8) (0,0.4) -- (0.9,-0.8);
+  \node[vtx] at (0,-0.4) {}; \node[vtx] at (0,0.4) {};
+  \node[lab] at (0,-1.1) {(B) $u$};
+\end{scope}
+\begin{scope}[shift={(9.1,0)}]
+  \draw[fermion] (-1.1,-0.6) -- (-0.45,0);
+  \draw[fermion] (-0.45,0) -- (-1.1,0.6);
+  \draw[fermion] (1.1,0.6) -- (0.45,0);
+  \draw[fermion] (0.45,0) -- (1.1,-0.6);
+  \draw[scalar] (-0.45,0) -- (0.45,0);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \node[lab] at (0,-1.1) {(C) $s$};
+\end{scope}
+\begin{scope}[shift={(12.0,0)}]
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.4);
+  \draw[fermion] (0,-0.4) -- (0.9,-0.8);
+  \draw[fermion] (0.9,0.8) -- (0,0.4);
+  \draw[fermion] (0,0.4) -- (-0.9,0.8);
+  \draw[scalar] (0,-0.4) -- (0,0.4);
+  \node[vtx] at (0,-0.4) {}; \node[vtx] at (0,0.4) {};
+  \node[lab] at (0,-1.1) {(C) $t$};
+\end{scope}
+\end{tikzpicture}
+\caption{木の図。(A) $\phi\phi\to\phi\phi$ の接触項。(B) $\psi(p_1)\bar\psi(p_2)\to\phi(k_1)\phi(k_2)$ の $t$、$u$ チャンネルのフェルミオンの交換。(C) $\psi\bar\psi\to\psi\bar\psi$ の $s$、$t$ チャンネルの $\phi$ の交換（相対符号 $-1$）。時間は左から右に流れる。}
+\label{fig:tree}
+\end{figure}
+
+全断面積は、重心系の始状態と終状態の運動量の大きさを $p$、$k$ として
+\begin{equation}
+\sigma_A=\frac{\lambda^2}{32\pi s},\qquad
+\sigma_B=\frac12\,\frac{k}{64\pi^2sp}\int\!\dd\Omega\,\frac14\sum|\mathcal M_B^{(0)}|^2,\qquad
+\sigma_C=\frac{1}{64\pi^2s}\int\!\dd\Omega\,\frac14\sum|\mathcal M_C^{(0)}|^2
+\label{eq:sigma}
+\end{equation}
+である（\ref{app:tree}）。$\frac14$ は始状態のスピンの平均、$\sigma_A$ と $\sigma_B$ の $\frac12$ は終状態の同種の $\phi$ の因子である。$\psi\bar\psi\to\psi\bar\psi$ の終状態の $\psi$ と $\bar\psi$ は区別できるので、$\frac12$ は付かない。
+
+\paragraph{1ループの $\phi\phi\to\phi\phi$ と S 行列要素。}3点結合がないので、$\phi\phi\to\phi\phi$ の1ループの振幅（外線の補正を除く）は1PI の4点関数だけで、$i\mathcal M_A^{(1)}=V_4$ である。式~\eqref{eq:VR} から
+\begin{equation}
+(4\pi)^2\,\mathcal M_A^{(1)}=\frac{\lambda^2}{2}\sum_{x=s,t,u}B_0^{mm}(x)-2y^4\sum_{(x,x')}\mathcal F(x,x')
+\label{eq:M1}
+\end{equation}
+を得る。虚部は $s$ チャンネルのユニタリー性
+\begin{equation}
+\mathrm{Im}\,\mathcal M_A^{(1)}(s,t)=\frac{\lambda^2p}{16\pi\sqrt s}
++\frac12\,\frac{p_\psi}{16\pi^2\sqrt s}\int\!\dd\Omega_q\sum_{\mathrm{spins}}\mathcal M(\phi_1\phi_2\to\psi\bar\psi)\,\mathcal M^*(\phi_3\phi_4\to\psi\bar\psi)
+\label{eq:unit}
+\end{equation}
+を満たす（\ref{app:scat}）。第1項は $\phi\phi$ の中間状態（同種粒子の $\frac12$ を含む）、第2項は $\psi\bar\psi$ の中間状態で、$p_\psi=\sqrt{s/4-M^2}$、$\phi_3\phi_4$ は終状態の $\phi(k_1)\phi(k_2)$ である。$m<2M$ でも $s\ge4m^2>4M^2$ なので、物理的な領域では $\psi\bar\psi$ の中間状態がいつも開いている。前方 $t=0$ では、これは光学定理 $\mathrm{Im}\,\mathcal M_A^{(1)}(s,0)=2p\sqrt s\,[\sigma_A+\sigma(\phi\phi\to\psi\bar\psi)]$ になる。$\sum|\mathcal M(\phi\phi\to\psi\bar\psi)|^2$ は式~\eqref{eq:Mtree} の $\sum|\mathcal M_B^{(0)}|^2$ と同じ関数である。
+
+$\MSbar$ の質量 $m$ は伝播関数の極ではなく、外線の留数も1ではない。$\phi$ の極質量と留数は
+\begin{equation}
+m_{\mathrm p}^2=m^2-\frac{1}{(4\pi)^2}\Bigl[2y^2\bigl(m^2B_0^{MM}(m^2)-2A_0(M^2)\bigr)+\frac\lambda2A_0(m^2)\Bigr],\qquad
+R_\phi=1-\frac{2y^2}{(4\pi)^2}\Bigl[B_0^{MM}(m^2)+m^2B_0^{MM\prime}(m^2)\Bigr]
+\label{eq:mpole}
+\end{equation}
+である（\ref{app:scat}）。$\phi^3+\phi^4$ 理論と違い、フェルミオンのループのために $R_\phi$ は $y^2$ の次数で1からずれ、$\mu$ にも依存する（$\mu\,\dd R_\phi/\dd\mu=-2\gamma_\phi$）。木の振幅 $-\lambda$ は質量によらないので、S 行列要素 $R_\phi^2(\mathcal M_A^{(0)}+\mathcal M_A^{(1)})$ は
+\begin{equation}
+\mathcal M_{A,\mathrm{phys}}=-\lambda+\frac{4\lambda y^2}{(4\pi)^2}\Bigl[B_0^{MM}(m_{\mathrm p}^2)+m_{\mathrm p}^2B_0^{MM\prime}(m_{\mathrm p}^2)\Bigr]+\mathcal M_A^{(1)}\big|_{m\to m_{\mathrm p}}
+\label{eq:Mphys}
+\end{equation}
+となる。結合を固定して $\mu$ を変えると $\mu\,\partial\mathcal M_{A,\mathrm{phys}}/\partial\mu=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2=\beta_\lambda$ で、これは木の振幅の $-\lambda(\mu)$ の走りとちょうど打ち消し合う（\ref{app:scat}）。$3\lambda^2$ は $\phi$ の泡、$-48y^4$ はフェルミオンの箱、$8\lambda y^2$ は外線の留数から来るので、$\phi\phi\to\phi\phi$ の S 行列要素の $\mu$ 依存だけで $\beta_\lambda$ の三つの項がすべて読み取れる。
+
+フェルミオンの極質量と留数は、$\Sigma_\psi=\slashed p\,\Sigma_V(p^2)+M\Sigma_S(p^2)$（$\Sigma_V=y^2B_1^{Mm}/(4\pi)^2$、$\Sigma_S=y^2B_0^{Mm}/(4\pi)^2$）から
+\begin{equation}
+M_{\mathrm p}=M\Bigl[1+\frac{y^2}{(4\pi)^2}\bigl(B_0^{Mm}+B_1^{Mm}\bigr)\Bigr],\qquad
+R_\psi=1+\frac{y^2}{(4\pi)^2}\Bigl[B_1^{Mm}+2M^2\bigl(B_0^{Mm\prime}+B_1^{Mm\prime}\bigr)\Bigr]
+\label{eq:Mpole}
+\end{equation}
+である（\ref{app:scat}）。$B$ はすべて $p^2=M^2$ での値である。$M_{\mathrm p}$ は $\mu$ によらず（$\mu\,\partial(B_0+B_1)/\partial\mu=1$ と $\gamma_M$ が打ち消す）、外線のフェルミオン1本ごとに S 行列要素に $R_\psi^{1/2}$ が掛かる。これらは $\psi\bar\psi\to\phi\phi$ の1ループの S 行列要素（手順 (4)、(5)）で使う。
+
+\section{検算の計画}\label{sec:plan}
+
+第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、式~\eqref{eq:V} のトレースと $\gamma^5$ の整理、式~\eqref{eq:ct} の極、式~\eqref{eq:VR} の $V_y$ の形、式~\eqref{eq:box} のもとになるトレースの書き直し、式~\eqref{eq:Mtree} のスピン和は、FeynCalc で予備的に確かめた。正式な検算は手順 (2)、(3) で行う。
+
+\begin{table}[tbp]
+\centering\small
+\caption{各量と、それを計算して突き合わせる手段。「—」はその手段を使わないことを表す。「後で」は、その手順で導出を付録に加えることを表す。}
+\label{tab:plan}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.8cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{2.0cm}}
+\toprule
+\textbf{量} & \textbf{手計算} & \textbf{FeynCalc（+ FeynArts）} & \textbf{Package-X} & \textbf{LoopTools、COLLIER} & \textbf{MadGraph} \\
+\midrule
+Feynman 則・対称性因子 & \ref{app:rules} & 書き出した FeynArts 模型の係数と、図の対称性因子 & — & — & UFO の頂点と図の数 \\
+木の振幅とスピン和 \eqref{eq:Mtree} & \ref{app:tree} & 記号として一致 & — & — & 断面積 \\
+1PI 関数の極と対抗項 \eqref{eq:ct} & \ref{app:ren} & PaVe 関数に簡約し、極を抽出。$\gamma^5$ の処方（NDR と BMHV）の比較 & 解析式 & — & — \\
+1PI 関数の有限部分 \eqref{eq:VR}、\eqref{eq:box} & \ref{app:ren} & 対抗項を加える & 解析式 & 数値 & — \\
+1ループの $\phi\phi\to\phi\phi$ \eqref{eq:M1}、S 行列要素 \eqref{eq:Mphys}、$\psi\bar\psi\to\phi\phi$ & \ref{app:scat}、後で & 記号として比べる（FormCalc でも） & 数値 & 数値 & MadLoop \\
+全断面積（$2\to3$ を含む） & 後で & — & — & COLLIER & MadLoop、$2\to3$ \\
+繰り込み群 \eqref{eq:rge}、\eqref{eq:rflow} & \ref{app:rg} & $\mu$ を変えて評価 & 数値 & 数値 & MadLoop の $\mu_R$ \\
+部分波とユニタリー性の限界 & 後で & — & — & COLLIER & — \\
+有効ポテンシャル \eqref{eq:cw} と $\lambda<0$ の bounce & \ref{app:rg}、後で & — & — & — & — \\
+フェルミオンの行列式を含む崩壊率 & 後で & — & — & — & — \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点で、ツールどうしと手計算の数値が倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。FeynCalc の PaVe 関数の $\epsilon^0$ の係数は $\MSbar$ の値から $-(\gamma_E+\ln\pi)$ だけずれるので、これまでのノートと同じく本ノートの $V$ に直してから比べる。MadGraph の断面積は、自分で数値積分した値と統計誤差の範囲で一致することを求める。
+
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{PsYukawa.fr} を作り、FeynArts の模型と UFO を書き出して、Feynman 則と MadGraph の図を確かめる。(2) 三つの過程の木の振幅とスピン和を FeynCalc で、断面積を MadGraph で確かめる。(3) 1ループの1PI 関数 $V_\phi$、$V_\psi$、$V_y$、$V_4$ の極と対抗項を FeynCalc・Package-X で確かめ、有限部分を Package-X・LoopTools・COLLIER で比べる。$\gamma^5$ を BMHV の処方で扱ったときの違いも調べる。(4) 1ループの $\phi\phi\to\phi\phi$ と $\psi\bar\psi\to\phi\phi$ を FeynCalc と FormCalc の二つの経路で求め、数値をツールどうしで比べ、虚部をフェルミオンの中間状態を含むユニタリー性で確かめる。(5) $\phi$ と $\psi$ の極質量と留数で S 行列要素に直し、NLOCT で作った UFO の MadLoop と比べる。(6) 全断面積を、1ループの補正と $2\to3$ の過程を含めて求める。(7) S 行列要素の $\mu$ 依存から $\beta_y$、$\beta_\lambda$、$\gamma_m$、$\gamma_M$ を読み取り、式~\eqref{eq:rge} と文献の値と比べ、比 $\lambda/y^2$ の流れ（式~\eqref{eq:rflow}）を描く。(8) $\phi\phi$ と $\psi\bar\psi$ のヘリシティの状態を合わせた部分波のユニタリー性から、$(y,\lambda)$ の限界を出す。(9) 繰り込み群で改良した有効ポテンシャルで $\lambda$ が負になる尺度を求め、$\lambda<0$ の bounce（大きさを決めない instanton）の作用を求める。(10) フェルミオンの揺らぎの行列式を含む崩壊率の1ループの前因子を求め、$(y,\lambda)$ の真空の準安定性の限界を出す。
+
+\section{検算}\label{sec:checks}
+
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh} で再実行できる。
+
+\paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/PsYukawa.fr} を作った。ラグランジアンは式~\eqref{eq:L} から対抗項を除いた部分である。パラメータの名前と MadGraph の結合の次数の決め方は\ref{app:details} に示す。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通った。頂点は二つで、$\bar\psi\psi\phi$ の頂点は $\texttt{yps}\,\gamma^5$、4点頂点は $-i\,\texttt{lamphi}$ となり、図~\ref{fig:rules} の $y\gamma^5$、$-i\lambda$ と一致した。パリティで禁じられた $\phi^3$ の頂点やスカラーの湯川の頂点は現れない。FeynArts の模型では、湯川の頂点はカイラルな射影 $\omega_\pm=(1\pm\gamma^5)/2$ の係数の組 $\{c_L,c_R\}=\{-\texttt{yps},\texttt{yps}\}$ として書かれ、$c_L\omega_-+c_R\omega_+=\texttt{yps}\,\gamma^5$ である。UFO では、頂点の Lorentz 構造が \texttt{Gamma5}、結合が \texttt{yps} である。FeynArts の模型と UFO は \texttt{Src/generated/} に書き出した。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の図を生成し、すべて手で数えた数と一致した。スクリプトは \texttt{generate\_PsYukawa.wl}（FeynRules）と \texttt{model\_mg5.mg5}（MadGraph）である。
+
+\begin{table}[tbp]
+\centering\small
+\caption{MadGraph が生成した木の図の数と、その内訳。}
+\label{tab:diagrams}
+\begin{tabular}{lrl}
+\toprule
+過程 & 図の数 & 内訳 \\
+\midrule
+$\phi\phi\to\phi\phi$ & 1 & 接触項（$\phi^3$ がないので交換の図はない） \\
+$\psi\bar\psi\to\phi\phi$ & 2 & $t$、$u$ チャンネルのフェルミオンの交換 \\
+$\psi\bar\psi\to\psi\bar\psi$ & 2 & $s$、$t$ チャンネルの $\phi$ の交換 \\
+$\psi\psi\to\psi\psi$ & 2 & $t$、$u$ チャンネルの $\phi$ の交換 \\
+$\psi\bar\psi\to\phi\phi\phi$ & 7 & フェルミオンの線から3つの $\phi$ を出す順序 $3!=6$、$\psi\bar\psi\to\phi^*\to\phi\phi\phi$（$\lambda$）1 \\
+$\phi\phi\to\phi\psi\bar\psi$ & 7 & 上の過程の交差（フェルミオンの線に3つの $\phi$ を付ける順序6、$\lambda$ を通る図1） \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\FloatBarrier
+\section{議論と今後}\label{sec:discussion}
+
+\paragraph{手計算で分かったこと。}フェルミオンを入れたことで、スカラー理論にはなかった三つの特徴が現れた。一つ目は、閉じたフェルミオンのループの符号 $-1$ で、これが $\delta_\phi<0$ と $\beta_\lambda$ の $-48y^4$ を与える。二つ目は、$\gamma^5$ がフェルミオンの伝播関数の質量の項の符号を変えることで、$\delta_M$ と $\gamma_M$ の符号がスカラーの湯川結合と逆になる。三つ目は、フェルミオンの箱の図の簡単さで、トレースを分母で書き直すと、テンソル積分を経ずに $B_0$、$C_0$、$D_0$ だけで書ける。物理としては、比 $\lambda/y^2$ の流れが1ループで解析的に解け、$\lambda$ が負になる尺度か、$\lambda$ が発散する尺度のどちらかが、$y$ の Landau 極より手前に必ず現れる。
+
+\paragraph{今後。}次は手順 (2) で、三つの過程の木の振幅とスピン和を FeynCalc で記号として確かめ、断面積を MadGraph と比べる。
+
+\appendix
+
+\section{Feynman 則と対称性因子の導出}\label{app:rules}
+
+\paragraph{伝播関数。}$\phi$ の伝播関数 $i/(p^2-m^2+i0)$ の導出は $\phi^3$ のノート~\cite{phi3note} の付録~A と同じである。$\psi$ の運動項 $\bar\psi(i\slashed\partial-M)\psi$ は、運動量空間（$\psi\propto e^{-ip\cdot x}$）で $\bar\psi(\slashed p-M)\psi$ となる。伝播関数はその逆行列の $i$ 倍で、$(\slashed p-M)(\slashed p+M)=\slashed p\slashed p-M^2=p^2-M^2$ から $i(\slashed p-M)^{-1}=i(\slashed p+M)/(p^2-M^2+i0)$ である。
+
+\paragraph{頂点と対抗項。}頂点の因子は「$i\times(\mathcal{L}_{\mathrm{int}}$ の係数$)\times($同種の場の付け方の数$)$」である。湯川の項 $-iy\mu^\epsilon\phi\bar\psi\gamma^5\psi$ では、$\phi$、$\bar\psi$、$\psi$ はどれも1つずつで付け方は1通りなので、頂点は $i\cdot(-iy\mu^\epsilon\gamma^5)=y\mu^\epsilon\gamma^5$ である。$\gamma^5$ はスピンの添字を持つ行列で、フェルミオンの線に沿って伝播関数と並べて掛ける。4点頂点 $-i\lambda\mu^{2\epsilon}$ の導出は $\phi^3+\phi^4$ のノート~\cite{phi34note} の付録~A と同じである。対抗項も同じ規則に従う。$\frac12\delta_\phi(\partial\phi)^2-\frac12\delta_m\phi^2$ は、2本の線の付け方2通りが $\frac12$ を打ち消して $i(\delta_\phi p^2-\delta_m)$ になる。$\delta_\psi\bar\psi i\slashed\partial\psi-\delta_M\bar\psi\psi$ は運動量空間で $\bar\psi(\delta_\psi\slashed p-\delta_M)\psi$ なので $i(\delta_\psi\slashed p-\delta_M)$、湯川の対抗項は $i\cdot(-i\delta_y\mu^\epsilon\gamma^5)=\delta_y\mu^\epsilon\gamma^5$、4点の対抗項は $-i\delta_\lambda\mu^{2\epsilon}$ である。
+
+\paragraph{閉じたフェルミオンのループ。}湯川の頂点2つを結ぶループを例にとる。$\langle(\bar\psi\Gamma\psi)_x(\bar\psi\Gamma\psi)_y\rangle$（$\Gamma=\gamma^5$）を成分で書くと $\bar\psi_a(x)\Gamma_{ab}\psi_b(x)\,\bar\psi_c(y)\Gamma_{cd}\psi_d(y)$ で、縮約 $\psi_b(x)\bar\psi_c(y)=S_{bc}(x-y)$ と $\psi_d(y)\bar\psi_a(x)=S_{da}(y-x)$ をとる。後者を作るには、$\psi_d(y)$ を $\bar\psi_a(x)$ の左まで動かす必要がある。$\psi_d$ は Grassmann 数の $\bar\psi_c$、$\psi_b$、$\bar\psi_a$ の3つを通り抜けるので、符号 $(-1)^3=-1$ が付く。こうして $-\Gamma_{ab}S_{bc}\Gamma_{cd}S_{da}=-\mathrm{tr}[\Gamma S(x-y)\Gamma S(y-x)]$ となる。頂点が $n$ 個のループでも、最後の $\psi$ を最初の $\bar\psi$ の左に動かすとき、奇数個（$2n-1$ 個）の Grassmann 数を通り抜けるので、符号はいつも $-1$ で、添字はトレースになる。
+
+\paragraph{対称性因子の数え方。}図の値は、$\langle\cdots\frac{1}{n!}(i\int\mathcal{L}_{\mathrm{int}})^n\rangle$ の Wick の縮約のうち、その図を与えるものの数を、頂点の係数とともに数えて決める。同じ種類の頂点が $n$ 個あると $1/n!$ が付くが、どの頂点をどこに置くかの入れ替え $n!$ と打ち消す。湯川の頂点の係数（$i$ と $\mu$ の因子を除く）は $-iy\gamma^5$ で、組み合わせの因子を持たない。
+
+(a) $\phi$ の自己エネルギーのフェルミオンのループ。湯川の頂点2つの $1/2!$ は、頂点の入れ替えの2と打ち消す。外の $\phi$ を頂点 $x$ と $y$ の $\phi$ に付ける方法は1通り、$\psi(x)\bar\psi(y)$ と $\psi(y)\bar\psi(x)$ の縮約も1通りである。よって対称性因子は1である。スカラーの泡（$\phi^3$ 理論の $1/2$）と違うのは、二つのフェルミオンの内線が、フェルミオン数の流れの向き（$x\to y$ と $y\to x$）で区別されるからである。(b) 4点頂点のタドポール型の図は $\phi^3+\phi^4$ のノートの (c) と同じで $1/2$ である。
+
+(c) $\psi$ の自己エネルギー。湯川の頂点2つの $1/2!$ は入れ替えと打ち消す。入ってくる $\psi$ を一方の頂点の $\bar\psi$ に、出ていく $\bar\psi$ を他方の頂点の $\psi$ に付ける方法は1通りで、残りの $\psi\bar\psi$ と $\phi\phi$ の縮約もそれぞれ1通りである。よって1である。(d) 湯川の頂点の補正も同様に、頂点3つの $1/3!$ が入れ替えの $3!$ と打ち消し、残りの縮約は1通りなので1である。(e) $\lambda^2$ の泡は $\phi^3+\phi^4$ のノートの (f) と同じで $1/2$ である。
+
+(f) フェルミオンの箱。湯川の頂点4つの $1/4!$ は、4本の外の $\phi$ を4つの頂点に割り当てる方法 $4!$ 通りと打ち消す。4つの頂点を1本の向きのあるフェルミオンのループで結ぶ縮約は、頂点1から出発して残り3つを訪れる順序の数 $3!=6$ 通りある。それぞれが一つの図で、対称性因子は1である。6つは、ループの向きだけが逆の2つずつ、すなわち外線の巡回の順序が同じ3組に分かれる。向きが逆の二つの図の値が等しいことは\ref{app:gamma5} で示す。
+
+\section{次元とべき数え上げ}\label{app:counting}
+
+\paragraph{次元。}$D$ 次元の作用は無次元なので、$\mathcal{L}$ の質量次元は $D$ である。運動項から $\phi$ の質量次元は $(D-2)/2=1-\epsilon$、$\psi$ の質量次元は $(D-1)/2=\frac32-\epsilon$ である。湯川の項の係数の質量次元は $D-(1-\epsilon)-2(\frac32-\epsilon)=(4-2\epsilon)-4+3\epsilon=\epsilon$、$\phi^4$ の係数の質量次元は $D-4(1-\epsilon)=2\epsilon$ である。そこで、無次元の $y$ と $\lambda$ を使って、係数を $y\mu^\epsilon$、$\lambda\mu^{2\epsilon}$ と書く。
+
+\paragraph{発散次数。}ループ $L$ 個、$\phi$ の内線 $I_\phi$ 本、フェルミオンの内線 $I_\psi$ 本の図では、ループ運動量の積分が $4L$、$\phi$ の伝播関数が $-2$、フェルミオンの伝播関数が $-1$（分子の $\slashed k$ のため）の次数を与えるので、$\omega=4L-2I_\phi-I_\psi$ である。湯川の頂点 $V_y$ 個、4点頂点 $V_4$ 個とすると $L=I_\phi+I_\psi-V_y-V_4+1$ である。線の端の数を場ごとに数えると、$\phi$ では $V_y+4V_4=E_\phi+2I_\phi$、フェルミオンでは $2V_y=E_\psi+2I_\psi$ である。よって
+\begin{equation*}
+\begin{aligned}
+\omega&=4(I_\phi+I_\psi-V_y-V_4+1)-2I_\phi-I_\psi=2I_\phi+3I_\psi-4V_y-4V_4+4\\
+&=(V_y+4V_4-E_\phi)+\Bigl(3V_y-\frac32E_\psi\Bigr)-4V_y-4V_4+4=4-E_\phi-\frac32E_\psi
+\end{aligned}
+\end{equation*}
+となり、式~\eqref{eq:omega} を得る。$E_\psi$ は偶数なので、$\omega\ge0$ となるのは $E_\psi=0$ で $E_\phi\le4$、$E_\psi=2$ で $E_\phi\le1$ の場合だけである。
+
+\section{$\gamma^5$、トレース、パリティ}\label{app:gamma5}
+
+\paragraph{$\gamma^5$ の処方。}NDR では、$D$ 次元で $\{\gamma^5,\gamma^\mu\}=0$、$(\gamma^5)^2=1$ とする。これから、任意のベクトル $a$ と数 $M$ について $\gamma^5(\slashed a+M)\gamma^5=-\slashed a\gamma^5\gamma^5+M=-\slashed a+M$ である。トレースは $\mathrm{tr}\,1=4$、奇数個の $\gamma^\mu$ のトレースは0、$\mathrm{tr}[\slashed a\slashed b]=4a\cdot b$、$\mathrm{tr}[\slashed a\slashed b\slashed c\slashed d]=4[(a\cdot b)(c\cdot d)-(a\cdot c)(b\cdot d)+(a\cdot d)(b\cdot c)]$ である。$\gamma^5$ を偶数個含むトレースは、反可換性で $\gamma^5$ を隣り合わせて $(\gamma^5)^2=1$ で消せるので、$\gamma^5$ を含まないトレースに帰着し、曖昧さはない。図 (a)、(c)、(d)、(f) はすべてこの型である（(c) と (d) はトレースではなく開いたフェルミオンの線だが、同じく反可換性だけで整理できる）。
+
+\paragraph{奇数個の $\gamma^5$ を含むトレース。}図 (g) のトレースは $-\mathrm{tr}[\gamma^5\,i(\slashed k+M)]$ で、$\mathrm{tr}[\gamma^5]=0$ と $\mathrm{tr}[\gamma^5\gamma^\mu]=0$ から0である。図 (h) では、$\gamma^5$ を3つ含むトレースを反可換性で $\pm\mathrm{tr}[\gamma^5(\slashed a+M)(\slashed b+M)(\slashed c+M)]$ の形にでき、展開すると $\gamma^5$ と3個以下の $\gamma^\mu$ のトレースだけが残る。4次元ではそれらはすべて0である（0でない最小のものは $\mathrm{tr}[\gamma^5\gamma^\mu\gamma^\nu\gamma^\rho\gamma^\sigma]\propto\epsilon^{\mu\nu\rho\sigma}$）。$D$ 次元の NDR では $\gamma^5$ を含むトレースの値は一般に曖昧だが、ループ積分の後に残る独立なベクトルは外線の運動量2つだけで、$\epsilon^{\mu\nu\rho\sigma}$ を4つの独立なベクトルで縮約した量は作れない。したがって (h) はどの処方でも0である。
+
+\paragraph{エルミート性。}$(\bar\psi i\gamma^5\psi)^\dagger=-i\psi^\dagger\gamma^{5\dagger}\gamma^{0\dagger}\psi=-i\psi^\dagger\gamma^5\gamma^0\psi=i\psi^\dagger\gamma^0\gamma^5\psi=\bar\psi i\gamma^5\psi$ である（$\gamma^{5\dagger}=\gamma^5$、$\gamma^{0\dagger}=\gamma^0$、$\gamma^5\gamma^0=-\gamma^0\gamma^5$ を使った）。
+
+\paragraph{パリティ。}$\psi\to\gamma^0\psi$ のとき $\bar\psi=\psi^\dagger\gamma^0\to\psi^\dagger\gamma^0\gamma^0=\bar\psi\gamma^0$ なので、$\bar\psi\psi\to\bar\psi\gamma^0\gamma^0\psi=\bar\psi\psi$、$\bar\psi i\gamma^5\psi\to\bar\psi\gamma^0i\gamma^5\gamma^0\psi=-\bar\psi i\gamma^5\psi$ である。運動項は $\boldsymbol x\to-\boldsymbol x$ とあわせて不変である。したがって、$\phi\to-\phi$ とあわせると $\phi\bar\psi i\gamma^5\psi$ と $\phi^2$、$\phi^4$ は不変で、$\phi$、$\phi^3$、$\phi\bar\psi\psi$、$\bar\psi i\gamma^5\psi$ は符号を変える。正則化（次元正則化と、1ループの NDR）がこの対称性を保つので、後者の項は対抗項としても要らない。
+
+\paragraph{ループの向きと荷電共役。}荷電共役の行列 $C$ は $C^{-1}\gamma^\mu C=-(\gamma^\mu)^T$、$C^{-1}\gamma^5C=(\gamma^5)^T$ を満たす。よって $(\slashed k+M)^T=C^{-1}(-\slashed k+M)C$ である。$n$ 個の湯川の頂点を持つループのトレースを転置すると
+\begin{equation*}
+\mathrm{tr}[\gamma^5(\slashed k_1+M)\gamma^5(\slashed k_2+M)\cdots\gamma^5(\slashed k_n+M)]
+=\mathrm{tr}[(-\slashed k_n+M)\gamma^5\cdots(-\slashed k_2+M)\gamma^5(-\slashed k_1+M)\gamma^5]
+\end{equation*}
+となる（$\mathrm{tr}X^T=\mathrm{tr}X$、$C$ と $C^{-1}$ はトレースの中で打ち消す）。右辺は、頂点を逆の順に回り、各伝播関数の運動量の符号を変えたもの、すなわち向きが逆のループのトレースである。分母 $D_M(k_i)$ は $k_i\to-k_i$ で不変なので、向きが逆の二つの図は等しい。ベクトルの頂点 $\gamma^\mu$ なら頂点ごとに $-1$ が付いて Furry の定理になるが、$\gamma^5$ には付かない。
+
+\paragraph{カイラル回転。}$\psi\to e^{i\theta\gamma^5}\psi$ のとき $\bar\psi\to\psi^\dagger e^{-i\theta\gamma^5}\gamma^0=\bar\psi e^{i\theta\gamma^5}$ である。運動項は $\bar\psi e^{i\theta\gamma^5}\gamma^\mu e^{i\theta\gamma^5}\psi=\bar\psi\gamma^\mu e^{-i\theta\gamma^5}e^{i\theta\gamma^5}\psi=\bar\psi\gamma^\mu\psi$ で不変で、$\bar\psi\psi\to\bar\psi e^{2i\theta\gamma^5}\psi=\cos2\theta\,\bar\psi\psi+\sin2\theta\,\bar\psi i\gamma^5\psi$ である。$\theta=\pi/4$ とすると $\bar\psi\psi\to\bar\psi i\gamma^5\psi$ となり、$M=0$ のスカラーの湯川理論 $-y\phi\bar\psi\psi$ は本模型の $M=0$ の場合に移る。したがって、質量によらない量（$\beta_y$、$\beta_\lambda$、$\gamma_\phi$、$\gamma_\psi$）は両者で等しい。質量の項 $-M\bar\psi\psi$ は回転で $-M\bar\psi i\gamma^5\psi$ に移るので、$\gamma_M$ と $\gamma_m$ の $M^2$ の項は両者で異なりうる。
+
+\section{1PI 関数と対抗項の導出}\label{app:ren}
+
+\paragraph{積分の規約。}$\phi^3$ のノートの付録~C と同じく、$\overline{\mathrm{MS}}$ では
+\begin{equation*}
+\mu^{2\epsilon}I_1^a=\frac{i}{(4\pi)^2}\bigl[m_a^2\Delta_{\mathrm{UV}}+A_0(m_a^2)\bigr],\qquad
+\mu^{2\epsilon}I_2^{ab}(p^2)=\frac{i}{(4\pi)^2}\bigl[\Delta_{\mathrm{UV}}+B_0^{ab}(p^2)\bigr]
+\end{equation*}
+で、$A_0(m^2)=m^2(1-\ln(m^2/\mu^2))$、$B_0^{ab}(p^2)=-\int_0^1\dd x\,\ln[\Delta_x/\mu^2]$、$\Delta_x=xm_b^2+(1-x)m_a^2-x(1-x)p^2-i0$ である。ベクトルの2点積分は、Feynman のパラメータで分母を $[(k+xp)^2-\Delta_x]^2$ とまとめ、$k=\ell-xp$ とずらすと、$\ell^\mu$ の奇関数の項が消えて
+\begin{equation*}
+\mu^{2\epsilon}\int\frac{\dd^Dk}{(2\pi)^D}\frac{k^\mu}{D_a(k)D_b(k+p)}=-p^\mu\int_0^1\dd x\,x\,\mu^{2\epsilon}\int\frac{\dd^D\ell}{(2\pi)^D}\frac{1}{(\ell^2-\Delta_x)^2}
+=\frac{i}{(4\pi)^2}\,p^\mu\Bigl[-\frac12\Delta_{\mathrm{UV}}+B_1^{ab}(p^2)\Bigr]
+\end{equation*}
+となる。$B_1^{ab}(p^2)=\int_0^1\dd x\,x\ln[\Delta_x/\mu^2]$ で、LoopTools の $B_1(p^2,m_a^2,m_b^2)$ の $\Delta=0$ の値である。3点と4点の積分は、LoopTools の規約で $\int\dd^Dk\,\{1,k^\mu\}/(D_{a}(k)D_{b}(k+r_1)D_{c}(k+r_2))=\frac{i}{(4\pi)^2}\{C_0,\ r_1^\mu C_1+r_2^\mu C_2\}$（$\mu^{2\epsilon}$ を含む、引数は $(r_1^2,(r_2-r_1)^2,r_2^2;m_a^2,m_b^2,m_c^2)$）と、同様の $D_0$ で表す。$C_0$、$C_i$、$D_0$ は有限である。
+
+\paragraph{$V_\phi$。}図 (a) は、ループの $-1$、頂点2つ、伝播関数2本から
+\begin{equation*}
+-\int\frac{\dd^Dk}{(2\pi)^D}\mathrm{tr}\Bigl[y\mu^\epsilon\gamma^5\,\frac{i(\slashed k+M)}{D_M(k)}\,y\mu^\epsilon\gamma^5\,\frac{i(\slashed k+\slashed p+M)}{D_M(k+p)}\Bigr]
+=y^2\mu^{2\epsilon}\int\frac{\dd^Dk}{(2\pi)^D}\frac{\mathrm{tr}[(-\slashed k+M)(\slashed k+\slashed p+M)]}{D_M(k)D_M(k+p)}
+\end{equation*}
+である（$-i^2=1$ と $\gamma^5(\slashed k+M)\gamma^5=-\slashed k+M$）。トレースは $-4k\cdot(k+p)+4M^2$ で、$k\cdot(k+p)=\frac12[D_M(k)+D_M(k+p)+2M^2-p^2]$ を使うと $2p^2-2D_M(k)-2D_M(k+p)$ になる。$D_M(k)$ と $D_M(k+p)$ はそれぞれ一方の伝播関数を消し、積分変数をずらすとどちらも $I_1^M$ を与える。よって (a) $=2y^2\mu^{2\epsilon}[p^2I_2^{MM}(p^2)-2I_1^M]$ である。図 (b) は $\phi^3+\phi^4$ のノートと同じく $\frac\lambda2\mu^{2\epsilon}I_1^m$ である。上の積分の展開を入れると
+\begin{equation*}
+V_\phi=\frac{i}{(4\pi)^2}\Bigl[2y^2\bigl(p^2(\Delta_{\mathrm{UV}}+B_0^{MM})-2(M^2\Delta_{\mathrm{UV}}+A_0(M^2))\bigr)+\frac\lambda2\bigl(m^2\Delta_{\mathrm{UV}}+A_0(m^2)\bigr)\Bigr]+i(\delta_\phi p^2-\delta_m)
+\end{equation*}
+で、$\Delta_{\mathrm{UV}}$ の係数が $p^2$ によらず0になる条件は $2y^2/(4\pi)^2+\delta_\phi/\Delta_{\mathrm{UV}}=0$ と $(-4y^2M^2+\frac\lambda2m^2)/(4\pi)^2-\delta_m/\Delta_{\mathrm{UV}}=0$ である。これが式~\eqref{eq:ct} の $\delta_\phi$、$\delta_m$ で、残りが式~\eqref{eq:VR} の $V_\phi$ である。
+
+\paragraph{$V_\psi$。}入ってくるフェルミオンの運動量を $p$、ループのフェルミオンの運動量を $k$ とすると、$\phi$ の内線の運動量は $p-k$ で、
+\begin{equation*}
+\int\frac{\dd^Dk}{(2\pi)^D}\,y\mu^\epsilon\gamma^5\,\frac{i(\slashed k+M)}{D_M(k)}\,y\mu^\epsilon\gamma^5\,\frac{i}{D_m(k-p)}
+=-y^2\mu^{2\epsilon}\int\frac{\dd^Dk}{(2\pi)^D}\frac{-\slashed k+M}{D_M(k)D_m(k-p)}
+\end{equation*}
+となり、式~\eqref{eq:V} の $V_\psi$ を得る。$k\to-k$ とすると分母は $D_M(k)D_m(k+p)$ になり、上のベクトルの積分の規約（$a=M$、$b=m$）が使えて、$\mu^{2\epsilon}\int k^\mu/(D_M(k)D_m(k-p))=-\frac{i}{(4\pi)^2}p^\mu[-\frac12\Delta_{\mathrm{UV}}+B_1^{Mm}]$ である。よって
+\begin{equation*}
+V_\psi=\frac{iy^2}{(4\pi)^2}\Bigl[-\slashed p\Bigl(-\frac12\Delta_{\mathrm{UV}}+B_1^{Mm}\Bigr)-M\bigl(\Delta_{\mathrm{UV}}+B_0^{Mm}\bigr)\Bigr]+i(\delta_\psi\slashed p-\delta_M)
+\end{equation*}
+で、極が消える条件 $y^2/(2(4\pi)^2)+\delta_\psi/\Delta_{\mathrm{UV}}=0$、$-y^2M/(4\pi)^2-\delta_M/\Delta_{\mathrm{UV}}=0$ から式~\eqref{eq:ct} の $\delta_\psi$、$\delta_M$ を得る。
+
+\paragraph{$V_y$。}フェルミオンの線に沿って、出ていく側から書く。入ってくるフェルミオン（運動量 $p$）が $\phi$ の内線（運動量 $p-k$）を出して運動量 $k$ になり、外の $\phi$（運動量 $q$）を吸って $k+q$ になり、$\phi$ の内線を吸って $p'=p+q$ で出ていく。値は
+\begin{equation*}
+\int\frac{\dd^Dk}{(2\pi)^D}\,y\gamma^5\frac{i(\slashed k+\slashed q+M)}{D_M(k+q)}\,y\gamma^5\frac{i(\slashed k+M)}{D_M(k)}\,y\gamma^5\,\frac{i}{D_m(k-p)}\,\mu^{3\epsilon}
+\end{equation*}
+で、$i^3=-i$ と $\gamma^5(\slashed k+\slashed q+M)\gamma^5=M-\slashed k-\slashed q$ から、分子は $-iy^3(M-\slashed k-\slashed q)(M+\slashed k)\gamma^5$ になる。積を展開すると $M^2+M\slashed k-M\slashed k-\slashed k\slashed k-M\slashed q-\slashed q\slashed k=M^2-k^2-M\slashed q-\slashed q\slashed k$ で、式~\eqref{eq:V} の $V_y$ を得る。$M^2-k^2=-D_M(k)$ は伝播関数 $D_M(k)$ を消し、残る $\int1/(D_M(k+q)D_m(k-p))$ は運動量の差 $(k+q)-(k-p)=p'$ の2点積分 $I_2^{Mm}(p'^2)$ である。残りの2項は3点積分で、上の規約で $r_1=q$、$r_2=-p$、$(a,b,c)=(M,M,m)$ とすると、$\mu^{2\epsilon}\int k^\mu/(\cdots)=\frac{i}{(4\pi)^2}(q^\mu C_1-p^\mu C_2)$ なので、$\slashed q\slashed k\to\frac{i}{(4\pi)^2}(q^2C_1-\slashed q\slashed pC_2)$ である。まとめると
+\begin{equation*}
+V_y=-iy^3\cdot\frac{i}{(4\pi)^2}\Bigl[-\bigl(\Delta_{\mathrm{UV}}+B_0^{Mm}(p'^2)\bigr)-M\slashed q\,C_0-q^2C_1+\slashed q\slashed p\,C_2\Bigr]\gamma^5+\delta_y\gamma^5
+\end{equation*}
+で、$\Delta_{\mathrm{UV}}$ の項は $-y^3\Delta_{\mathrm{UV}}\gamma^5/(4\pi)^2$ である。これを打ち消す $\delta_y=y^3\Delta_{\mathrm{UV}}/(4\pi)^2$ が式~\eqref{eq:ct} で、残りが式~\eqref{eq:VR} の $V_y$ である。$M^2-k^2$ の代わりに $M^2-(k+q)^2$ を作るように整理すると、$B_0^{Mm}(p^2)$ を含む別の形になる。二つは PaVe 関数の恒等式で移り合う。
+
+\paragraph{$V_4$ の泡。}$\lambda^2$ の泡は $\phi^3+\phi^4$ のノートと同じで $\frac{\lambda^2}{2}\sum_xI_2^{mm}(x)$、極は $\frac{3\lambda^2}{2}\frac{i}{(4\pi)^2}\Delta_{\mathrm{UV}}$ である。
+
+\paragraph{フェルミオンの箱。}一つの図は、ループの $-1$、頂点4つ、伝播関数4本の $i^4=1$ から $-y^4\mu^{4\epsilon}\int\mathrm{tr}[\gamma^5(\slashed k_1+M)\gamma^5(\slashed k_2+M)\gamma^5(\slashed k_3+M)\gamma^5(\slashed k_4+M)]/(D_1D_2D_3D_4)$ である（$D_i\equiv D_M(k_i)$）。1番目と3番目の伝播関数の $\gamma^5$ を挟む組を $\gamma^5(\slashed k+M)\gamma^5=M-\slashed k$ で整理すると、トレースは $T=\mathrm{tr}[(M-\slashed k_1)(M+\slashed k_2)(M-\slashed k_3)(M+\slashed k_4)]$ になる。展開すると、$\gamma$ 行列0個の項 $4M^4$、2個の項 $4M^2\sum_{i<j}\sigma_{ij}\,k_i\cdot k_j$（$\sigma_{ij}$ は $k_i$、$k_j$ の前の符号の積で、$\sigma_{12}=\sigma_{14}=\sigma_{23}=\sigma_{34}=-1$、$\sigma_{13}=\sigma_{24}=+1$）、4個の項 $4[(k_1\cdot k_2)(k_3\cdot k_4)-(k_1\cdot k_3)(k_2\cdot k_4)+(k_1\cdot k_4)(k_2\cdot k_3)]$ である。
+
+$s_{ij}\equiv(k_i-k_j)^2$ と置く。$s_{ij}$ は外線の運動量の和の2乗で、$k_i\cdot k_j=\frac12(D_i+D_j)+a_{ij}$、$a_{ij}\equiv M^2-\frac12s_{ij}$ である。これを入れて $D_i$ について整理する。2次の項は、4個の項から $\frac14[(D_1+D_2)(D_3+D_4)-(D_1+D_3)(D_2+D_4)+(D_1+D_4)(D_2+D_3)]=\frac12(D_1D_3+D_2D_4)$ だけが残る。1次の項は、2個の項から $M^2\sum\sigma_{ij}\frac12(D_i+D_j)=-\frac12M^2\sum_iD_i$、4個の項から $D_1$ の係数 $\frac12(a_{34}-a_{24}+a_{23})$（$D_2$、$D_3$、$D_4$ も同様）が来て、合わせると $D_1$ の係数は $\frac12(a_{34}-a_{24}+a_{23}-M^2)=\frac14(s_{24}-s_{23}-s_{34})$ となる。定数項は
+\begin{equation*}
+M^4+M^2\sum_{i<j}\sigma_{ij}a_{ij}+(a_{12}a_{34}-a_{13}a_{24}+a_{14}a_{23})
+\end{equation*}
+で、$\sum\sigma_{ij}a_{ij}=-2M^2+\frac12(s_{12}+s_{23}+s_{34}+s_{14}-s_{13}-s_{24})$、$a_{12}a_{34}-a_{13}a_{24}+a_{14}a_{23}=M^4-\frac12M^2(s_{12}+s_{34}+s_{14}+s_{23}-s_{13}-s_{24})+\frac14(s_{12}s_{34}-s_{13}s_{24}+s_{14}s_{23})$ を入れると、$M^4$ と $M^2$ の項はすべて打ち消し、$\frac14(s_{12}s_{34}+s_{23}s_{14}-s_{13}s_{24})$ だけが残る。4倍して
+\begin{equation*}
+\begin{aligned}
+T={}&(s_{12}s_{34}+s_{23}s_{14}-s_{13}s_{24})+2(D_1D_3+D_2D_4)\\
+&+(s_{24}-s_{23}-s_{34})D_1+(s_{13}-s_{34}-s_{14})D_2+(s_{24}-s_{14}-s_{12})D_3+(s_{13}-s_{12}-s_{23})D_4
+\end{aligned}
+\end{equation*}
+を得る。$D_1D_3/(D_1D_2D_3D_4)=1/(D_2D_4)$ は運動量の差 $k_4-k_2$ の2点積分で $I_2^{MM}(s_{24})$ を、$D_2D_4$ の項は $I_2^{MM}(s_{13})$ を与える。$D_i$ の1次の項はその伝播関数を消して3点積分を、定数項は4点積分を与える。外線が質量殻上（$s_{12}=s_{23}=s_{34}=s_{14}=m^2$）のとき、定数項は $2m^4-s_{13}s_{24}$、$D_1$ と $D_3$ の係数は $s_{24}-2m^2$、$D_2$ と $D_4$ の係数は $s_{13}-2m^2$ である。$D_1$ を消した三角形の外線の不変量は $(s_{23},s_{34},s_{24})=(m^2,m^2,s_{24})$ で $C_0^M(s_{24})$、$D_3$ を消したものも $(s_{12},s_{14},s_{24})$ で $C_0^M(s_{24})$、$D_2$ と $D_4$ を消したものは $C_0^M(s_{13})$ である。よって一つの図は
+\begin{equation*}
+-\frac{iy^4}{(4\pi)^2}\Bigl[(2m^4-s_{13}s_{24})D_0^M+2\bigl(B_0^{MM}(s_{13})+B_0^{MM}(s_{24})+2\Delta_{\mathrm{UV}}\bigr)+2(s_{24}-2m^2)C_0^M(s_{24})+2(s_{13}-2m^2)C_0^M(s_{13})\Bigr]
+\end{equation*}
+で、$\Delta_{\mathrm{UV}}$ を除いた括弧が式~\eqref{eq:box} の $\mathcal F(s_{13},s_{24})$ である。$(s_{13},s_{24})$ は、ループで隣り合う外線の対の二通りの和の2乗で、外線の巡回の順序が同じ二つの図（向きが逆）は同じ組を与える。3組の順序は $(s,t)$、$(t,u)$、$(u,s)$ を与えるので、6つの図の和は $-\frac{2iy^4}{(4\pi)^2}\sum_{(x,x')}[\mathcal F(x,x')+4\Delta_{\mathrm{UV}}]$ である。極は $-\frac{24iy^4}{(4\pi)^2}\Delta_{\mathrm{UV}}$ で、泡の極と合わせて $-i\delta_\lambda$ が打ち消す条件から、式~\eqref{eq:ct} の $\delta_\lambda=(\frac32\lambda^2-24y^4)\Delta_{\mathrm{UV}}/(4\pi)^2$ を得る。
+
+\section{繰り込み群と有効ポテンシャルの導出}\label{app:rg}
+
+\paragraph{裸の量。}裸の場を $\phi_0=Z_\phi^{1/2}\phi$、$\psi_0=Z_\psi^{1/2}\psi$ とし、式~\eqref{eq:L} が裸のラグランジアン $\bar\psi_0(i\slashed\partial-M_0)\psi_0+\frac12(\partial\phi_0)^2-\frac12m_0^2\phi_0^2-iy_0\phi_0\bar\psi_0\gamma^5\psi_0-\frac{\lambda_0}{4!}\phi_0^4$ に等しいとする。各項の係数を比べると
+\begin{equation*}
+M_0=\frac{M+\delta_M}{Z_\psi},\qquad m_0^2=\frac{m^2+\delta_m}{Z_\phi},\qquad
+y_0=\frac{\mu^\epsilon(y+\delta_y)}{Z_\psi Z_\phi^{1/2}},\qquad \lambda_0=\frac{\mu^{2\epsilon}(\lambda+\delta_\lambda)}{Z_\phi^2}
+\end{equation*}
+である。例えば湯川の項では $\mu^\epsilon(y+\delta_y)\phi\bar\psi\psi=y_0Z_\phi^{1/2}Z_\psi\,\phi\bar\psi\psi$ である。以下、$\Delta_{\mathrm{UV}}$ を $1/\epsilon$ と書く（定数部分は $\beta$ 関数に効かない）。式~\eqref{eq:ct} を入れて1ループの次数まで展開すると
+\begin{equation*}
+\begin{gathered}
+\mu^{-\epsilon}y_0=y+\frac{a_y}{\epsilon},\quad a_y=\frac{1}{(4\pi)^2}\Bigl(y^3+\frac{y^3}{2}+y^3\Bigr)=\frac{5y^3}{2(4\pi)^2},\\
+\mu^{-2\epsilon}\lambda_0=\lambda+\frac{a_\lambda}{\epsilon},\quad a_\lambda=\frac{1}{(4\pi)^2}\Bigl(\frac32\lambda^2-24y^4+4\lambda y^2\Bigr),\\
+m_0^2=m^2+\frac{a_m}{\epsilon},\quad a_m=\frac{1}{(4\pi)^2}\Bigl(\frac{\lambda m^2}{2}-4y^2M^2+2y^2m^2\Bigr),\\
+M_0=M+\frac{a_M}{\epsilon},\quad a_M=\frac{1}{(4\pi)^2}\Bigl(-y^2M+\frac{y^2M}{2}\Bigr)=-\frac{y^2M}{2(4\pi)^2}
+\end{gathered}
+\end{equation*}
+である。$a_y$ の三つの項は $\delta_y$、$-y\delta_\psi$、$-\frac12y\delta_\phi$ から、$a_\lambda$ の最後の項は $-2\lambda\delta_\phi$ から、$a_m$ の最後の項は $-m^2\delta_\phi$ から、$a_M$ の第2項は $-M\delta_\psi$ から来る。
+
+\paragraph{$\beta$ 関数と質量の走り。}結合 $g_i$ の裸の量を $g_{i,0}=\mu^{\rho_i\epsilon}[g_i+a_i(g)/\epsilon]$（$y$ は $\rho=1$、$\lambda$ は $\rho=2$、質量は $\rho=0$）と書く。$\ln\mu$ で微分して0と置くと $0=\rho_i\epsilon(g_i+a_i/\epsilon)+\beta_i+\sum_j(\partial_ja_i)\beta_j/\epsilon$ である。$\beta_j=-\rho_j\epsilon g_j+b_j$ と置いて $\epsilon^0$ の項を比べると、1ループの次数で
+\begin{equation*}
+b_i=\Bigl(\sum_j\rho_jg_j\frac{\partial}{\partial g_j}-\rho_i\Bigr)a_i
+\end{equation*}
+を得る（$\rho_i\epsilon g_i$ と $-\rho_i\epsilon g_i$ は打ち消す）。$a_y$ は $y$ の3次なので $b_y=(3-1)a_y=5y^3/(4\pi)^2$ である。$a_\lambda$ の各項に $2\lambda\partial_\lambda+y\partial_y-2$ を掛けると、$\lambda^2$ の項は $4-2=2$ 倍、$\lambda y^2$ の項は $2+2-2=2$ 倍、$y^4$ の項は $4-2=2$ 倍になり、$b_\lambda=2a_\lambda=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2$ である。質量では $\rho=0$ なので、$\gamma_m=(2\lambda\partial_\lambda+y\partial_y)a_m=(\lambda m^2+4y^2m^2-8y^2M^2)/(4\pi)^2$、$\gamma_M=y\partial_ya_M=-y^2M/(4\pi)^2$ である（質量自身の走りは $a/\epsilon$ の中では高次）。これが式~\eqref{eq:rge} である。
+
+\paragraph{場の異常次元。}$\ln Z_\phi=-2y^2/((4\pi)^2\epsilon)$ を $\ln\mu$ で微分し、$\dd y^2/\dd\ln\mu=2y\beta_y=-2\epsilon y^2+O(y^4)$ を使うと $\dd\ln Z_\phi/\dd\ln\mu=4y^2/(4\pi)^2$、すなわち $\gamma_\phi=2y^2/(4\pi)^2$ である。同様に $\ln Z_\psi=-y^2/(2(4\pi)^2\epsilon)$ から $\gamma_\psi=y^2/(2(4\pi)^2)$ である。$b_y$ は $2\cdot\frac{y^3}{(4\pi)^2}$（$\delta_y$ の寄与の2倍）$+(2\gamma_\psi+\gamma_\phi)y$ とも書け、本文の分解を得る。
+
+\paragraph{有効ポテンシャル。}定数の背景場 $\phi$ のまわりの1ループの有効ポテンシャルは、各場の揺らぎの演算子の行列式から決まる。$\phi$ の揺らぎの質量の2乗は $V_0''=m^2+\frac\lambda2\phi^2=m_\phi^2$ である。フェルミオンの演算子は運動量空間で $\slashed p-M-iy\phi\gamma^5$ である。$X\equiv\slashed p-iy\phi\gamma^5$ と置くと、$\slashed p$ と $\gamma^5$ の反可換性から $X^2=p^2-y^2\phi^2$ で、$\mathrm{tr}X=0$ なので $X$ の固有値は $\pm\sqrt{p^2-y^2\phi^2}$（それぞれ2重）である。よって $4\times4$ の行列式は $\det(X-M)=[(\sqrt{p^2-y^2\phi^2}-M)(-\sqrt{p^2-y^2\phi^2}-M)]^2=(p^2-M_\psi^2)^2$、$M_\psi^2=M^2+y^2\phi^2$ である。Euclid の運動量で書くと、スカラーの寄与は $+\frac12\int\frac{\dd^Dp_E}{(2\pi)^D}\ln(p_E^2+m_\phi^2)$、フェルミオンの寄与は Grassmann 数の積分が行列式を分母でなく分子に与えるので符号が逆で、$-\int\frac{\dd^Dp_E}{(2\pi)^D}\ln(p_E^2+M_\psi^2)^2=-4\cdot\frac12\int\frac{\dd^Dp_E}{(2\pi)^D}\ln(p_E^2+M_\psi^2)$ である。$\frac12\int\ln(p_E^2+X)$ を $X$ で微分すると $\frac12\int(p_E^2+X)^{-1}=-\frac{X}{2(4\pi)^2}(\Delta_{\mathrm{UV}}+1-\ln\frac{X}{\mu^2})$ で、極を $\MSbar$ の対抗項で除いてから $X$ で積分すると $\frac{X^2}{64\pi^2}(\ln\frac{X}{\mu^2}-\frac32)$ を得る（積分定数は $\Lambda$ に含める）。これで式~\eqref{eq:cw} を得る。
+
+\paragraph{有効ポテンシャルからの確認。}$V_{\mathrm{eff}}$ は繰り込まれた場 $\phi=Z_\phi^{-1/2}\phi_0$ の関数で、裸の場を固定して $\mu$ を変えると $\dd\phi/\dd\ln\mu=-\gamma_\phi\phi$ である。よって $[\mu\partial_\mu+\sum_i\beta_i\partial_{g_i}-\gamma_\phi\phi\partial_\phi]V_{\mathrm{eff}}=0$ が成り立つ。1ループの部分の陽な $\mu$ 依存は $\mu\partial_\mu V_1=-\frac{1}{32\pi^2}(m_\phi^4-4M_\psi^4)$ で、$m_\phi^4=m^4+\lambda m^2\phi^2+\frac{\lambda^2}{4}\phi^4$、$4M_\psi^4=4M^4+8y^2M^2\phi^2+4y^4\phi^4$ である。木の部分には
+\begin{equation*}
+\Bigl(\sum_i\beta_i\partial_{g_i}-\gamma_\phi\phi\partial_\phi\Bigr)V_0=\frac{\dd\Lambda}{\dd\ln\mu}+\frac12(\gamma_m-2\gamma_\phi m^2)\phi^2+\frac{1}{24}(\beta_\lambda-4\gamma_\phi\lambda)\phi^4
+\end{equation*}
+が働く。$\phi$ の各次数で和を0とすると、$\dd\Lambda/\dd\ln\mu=(m^4-4M^4)/(32\pi^2)$、$\gamma_m=2\gamma_\phi m^2+(\lambda m^2-8y^2M^2)/(16\pi^2)$、$\beta_\lambda=4\gamma_\phi\lambda+\frac{24}{32\pi^2}(\frac{\lambda^2}{4}-4y^4)$ を得る。$\gamma_\phi=2y^2/(16\pi^2)$ と $16\pi^2=(4\pi)^2$ を入れると、式~\eqref{eq:rge} の $\gamma_m$ と $\beta_\lambda$ に一致する。$\phi^3+\phi^4$ 理論と違い、ここでは場の異常次元の項 $-\gamma_\phi\phi\partial_\phi$ がないと一致しない。$\beta_y$ は1ループの有効ポテンシャルには $\gamma_\phi$ を通してしか現れず、この方法では確かめられない。
+
+\paragraph{比 $\lambda/y^2$ の流れ。}$t\equiv\ln(\mu/\mu_0)$ とする。$\dd y^2/\dd t=2y\beta_y=10y^4/(4\pi)^2$ を解くと $y^2=y_0^2/(1-10y_0^2t/(4\pi)^2)$ で、式~\eqref{eq:rflow} の第2式を得る。$r=\lambda/y^2$ について $\dd r/\dd t=\frac{1}{y^2}\frac{\dd\lambda}{\dd t}-\frac{\lambda}{y^4}\frac{\dd y^2}{\dd t}=\frac{y^2}{(4\pi)^2}(3r^2+8r-48-10r)=\frac{y^2}{(4\pi)^2}(3r^2-2r-48)$ である。$3r^2-2r-48=0$ の解は $r_\pm=(2\pm\sqrt{4+576})/6=(1\pm\sqrt{145})/3$ である。新しい変数 $\sigma\equiv\int_0^t y^2\,\dd t'/(4\pi)^2$ をとると、$\dd\ln y^2/\dd t=10y^2/(4\pi)^2$ から $\sigma=\frac{1}{10}\ln(y^2/y_0^2)$ で、$\dd r/\dd\sigma=3(r-r_+)(r-r_-)$ となる。部分分数で
+\begin{equation*}
+\frac{\dd}{\dd\sigma}\ln\frac{r-r_+}{r-r_-}=\Bigl(\frac{1}{r-r_+}-\frac{1}{r-r_-}\Bigr)3(r-r_+)(r-r_-)=3(r_+-r_-)=2\sqrt{145}
+\end{equation*}
+なので、$\ln\frac{r-r_+}{r-r_-}=\ln\frac{r_0-r_+}{r_0-r_-}+2\sqrt{145}\,\sigma=\ln\frac{r_0-r_+}{r_0-r_-}+\frac{\sqrt{145}}{5}\ln\frac{y^2}{y_0^2}$ となり、式~\eqref{eq:rflow} の第1式を得る。$r_-<r_0<r_+$ では左辺の比は負で、$y^2$ とともに絶対値が増え、$y^2\to\infty$（Landau 極）で $r\to r_-$ となる。$r=0$ での比は $r_+/r_-$ なので、$\lambda=0$ となるのは $(y^2/y_0^2)^{\sqrt{145}/5}=(r_+/r_-)(r_0-r_-)/(r_0-r_+)$ のときである。$r_0=y_0=1$ ではこれは $y^2/y_0^2=1.23164$、$t=(4\pi)^2(1-y_0^2/y^2)/(10y_0^2)=2.96994$、すなわち $\mu=19.4907\,\mu_0$ である（$\lambda$ と $y$ の方程式を数値で積分しても同じ値になる）。$r_0>r_+$ では比は正で増え、$1$ に達する（$r\to\infty$）のは $(y^2/y_0^2)^{\sqrt{145}/5}=(r_0-r_-)/(r_0-r_+)$ のとき、すなわち $y$ の Landau 極より手前である。$y^2\to0$（低エネルギー）では比は0に近づき、$r\to r_+$ となる。
+
+\section{木の振幅と断面積の導出}\label{app:tree}
+
+\paragraph{$\phi\phi\to\phi\phi$。}4点頂点1つで $i\mathcal M_A=-i\lambda$、すなわち $\mathcal M_A^{(0)}=-\lambda$ である。
+
+\paragraph{$\psi\bar\psi\to\phi\phi$ の振幅。}入ってくる $\psi(p_1)$ は $u(p_1)$、入ってくる $\bar\psi(p_2)$ は $\bar v(p_2)$ を与え、フェルミオンの線は $\bar v(p_2)\cdots u(p_1)$ である。$t$ チャンネルでは $\psi$ が $\phi(k_1)$ を出して運動量 $p_1-k_1$ になり、$\bar\psi$ と消えて $\phi(k_2)$ を出す。$u$ チャンネルは $k_1\leftrightarrow k_2$ である。よって
+\begin{equation*}
+i\mathcal M_B=\bar v(p_2)\Bigl[y\gamma^5\frac{i(\slashed p_1-\slashed k_1+M)}{t-M^2}y\gamma^5+y\gamma^5\frac{i(\slashed p_1-\slashed k_2+M)}{u-M^2}y\gamma^5\Bigr]u(p_1)
+\end{equation*}
+で、$\gamma^5(\slashed a+M)\gamma^5=-\slashed a+M$ から $\mathcal M_B=y^2\bar v(p_2)[(M-\slashed p_1+\slashed k_1)/(t-M^2)+(M-\slashed p_1+\slashed k_2)/(u-M^2)]u(p_1)$ である。Dirac 方程式 $\slashed p_1u(p_1)=Mu(p_1)$ から $(M-\slashed p_1)u(p_1)=0$ なので、式~\eqref{eq:Mtree} の $\mathcal M_B^{(0)}$ を得る。各図の対称性因子は1である。
+
+\paragraph{$\psi\bar\psi\to\phi\phi$ のスピン和。}$A\equiv a\slashed k_1+b\slashed k_2$（$a=1/(t-M^2)$、$b=1/(u-M^2)$）と置くと、$\bar A\equiv\gamma^0A^\dagger\gamma^0=A$ なので、$\sum_{\mathrm{spins}}|\mathcal M_B|^2=y^4\,\mathrm{tr}[(\slashed p_2-M)A(\slashed p_1+M)A]=y^4\{\mathrm{tr}[\slashed p_2A\slashed p_1A]-M^2\mathrm{tr}[AA]\}$ である（$\sum u\bar u=\slashed p+M$、$\sum v\bar v=\slashed p-M$、$\gamma$ 行列が奇数個の項は0）。運動学は $s+t+u=2M^2+2m^2$、$p_1\cdot p_2=\frac{s}{2}-M^2$、$k_1\cdot k_2=\frac s2-m^2$、$p_1\cdot k_1=p_2\cdot k_2=\frac12(M^2+m^2-t)\equiv\tau$、$p_1\cdot k_2=p_2\cdot k_1=\frac12(M^2+m^2-u)\equiv\upsilon$ である。トレースの公式から
+\begin{equation*}
+\begin{aligned}
+\mathrm{tr}[\slashed p_2A\slashed p_1A]&=4(a^2+b^2)\Bigl[2\tau\upsilon-m^2\Bigl(\frac s2-M^2\Bigr)\Bigr]+8ab\Bigl[\tau^2+\upsilon^2-\Bigl(\frac s2-M^2\Bigr)\Bigl(\frac s2-m^2\Bigr)\Bigr],\\
+M^2\,\mathrm{tr}[AA]&=4M^2\bigl[(a^2+b^2)m^2+2ab\,k_1\cdot k_2\bigr]
+\end{aligned}
+\end{equation*}
+である。$X\equiv t-M^2$、$W\equiv u-M^2$ とすると、$M^2+m^2-t=m^2-X$、$M^2+m^2-u=m^2-W$、$s=2m^2-X-W$ である。$a^2+b^2$ の係数は $2\tau\upsilon-\frac{m^2s}{2}=\frac12[(m^2-X)(m^2-W)-m^2(2m^2-X-W)]=\frac12(XW-m^4)$、$2ab$ の係数は $\tau^2+\upsilon^2-\frac{s}{2}\bigl(\frac s2-m^2\bigr)=\frac14[(m^2-X)^2+(m^2-W)^2-(X+W)^2+2m^2(X+W)]=\frac12(m^4-XW)$ になる。よって
+\begin{equation*}
+\sum|\mathcal M_B|^2=4y^4(XW-m^4)\Bigl[\frac12\Bigl(\frac1{X^2}+\frac1{W^2}\Bigr)-\frac{1}{XW}\Bigr]=2y^4(XW-m^4)\frac{(W-X)^2}{X^2W^2}
+\end{equation*}
+で、$W-X=u-t$ から式~\eqref{eq:Mtree} を得る。重心系では $p_1=(E,\boldsymbol p)$、$p_2=(E,-\boldsymbol p)$、$k_1=(E,\boldsymbol k)$、$k_2=(E,-\boldsymbol k)$ で、$t-u=-2p_1\cdot k_1+2p_1\cdot k_2=4\boldsymbol p\cdot\boldsymbol k=4|\boldsymbol p||\boldsymbol k|\cos\theta$ である。$XW-m^4$ は閾値（$|\boldsymbol p|\to0$）で $(s/2-m^2)^2-m^4>0$ に近づくので、$\sum|\mathcal M_B|^2\propto|\boldsymbol p|^2\cos^2\theta$ となる。
+
+\paragraph{$\psi\bar\psi\to\psi\bar\psi$。}$s$ チャンネルでは始状態の対が消えて $\phi$ になり、終状態の対を作る。$t$ チャンネルでは $\psi(p_1)\to\psi(p_3)$ と $\bar\psi(p_2)\to\bar\psi(p_4)$ の線が $\phi$ を交換する。フェルミオンの演算子の並べ替えから二つの図の相対符号は $-1$ で、
+\begin{equation*}
+\mathcal M_C=\frac{y^2}{s-m^2}[\bar v_2\gamma^5u_1][\bar u_3\gamma^5v_4]-\frac{y^2}{t-m^2}[\bar u_3\gamma^5u_1][\bar v_2\gamma^5v_4]
+\end{equation*}
+である（$u_1=u(p_1)$ など。$i\mathcal M$ は頂点2つの $y^2$ と伝播関数の $i$ の積）。複素共役は $(\bar a\gamma^5b)^*=\bar b\,\gamma^0\gamma^{5\dagger}\gamma^0a=-\bar b\gamma^5a$ である。$|s|^2$ の項では $\sum|\bar v_2\gamma^5u_1|^2=-\mathrm{tr}[(\slashed p_2-M)\gamma^5(\slashed p_1+M)\gamma^5]=-\mathrm{tr}[(\slashed p_2-M)(M-\slashed p_1)]=4(p_1\cdot p_2+M^2)=2s$、同様に $\sum|\bar u_3\gamma^5v_4|^2=2s$ で、$4y^4s^2/(s-m^2)^2$ となる。$|t|^2$ の項では $\sum|\bar u_3\gamma^5u_1|^2=-\mathrm{tr}[(\slashed p_3+M)(M-\slashed p_1)]=4(p_1\cdot p_3-M^2)=-2t$、$\sum|\bar v_2\gamma^5v_4|^2=-\mathrm{tr}[(\slashed p_2-M)(-M-\slashed p_4)]=4(p_2\cdot p_4-M^2)=-2t$ で、$4y^4t^2/(t-m^2)^2$ となる（$p_1\cdot p_3=p_2\cdot p_4=M^2-t/2$）。干渉項は
+\begin{equation*}
+2\,\mathrm{Re}\sum\mathcal M_s\mathcal M_t^*=-\frac{2y^4}{(s-m^2)(t-m^2)}\,\mathrm{tr}[(\slashed p_2-M)\gamma^5(\slashed p_1+M)\gamma^5(\slashed p_3+M)\gamma^5(\slashed p_4-M)\gamma^5]
+\end{equation*}
+で（二つの複素共役の $-1$ は打ち消す）、トレースは $\mathrm{tr}[(\slashed p_2-M)(\slashed p_1-M)(\slashed p_3+M)(\slashed p_4+M)]$ に等しい。4個の項は $(s-2M^2)^2-(2M^2-u)^2+(2M^2-t)^2$、2個の項は $4M^2[(p_1\cdot p_2)+(p_3\cdot p_4)-(p_1\cdot p_3)-(p_1\cdot p_4)-(p_2\cdot p_3)-(p_2\cdot p_4)]=4M^2(s+t+u-6M^2)=-8M^4$、0個の項は $4M^4$ である（$p_1\cdot p_4=p_2\cdot p_3=M^2-u/2$）。$u=4M^2-s-t$ を入れると、和は $-t(2s+t-4M^2)+t^2-4M^2t=-2st$ になる。よって干渉項は $4y^4st/((s-m^2)(t-m^2))$ で、式~\eqref{eq:Mtree} を得る。
+
+\paragraph{断面積。}重心系で、流束の因子は $4E_1E_2|v_1-v_2|=4p\sqrt s$、2体の位相空間は $\dd\Phi_2=\frac{k}{16\pi^2\sqrt s}\dd\Omega$ なので、$\sigma=\frac{k}{64\pi^2sp}\int\dd\Omega\,\overline{|\mathcal M|^2}\times S$（$S$ は終状態の同種粒子の因子）である。$\overline{|\mathcal M|^2}$ は始状態のスピンの平均で、フェルミオン2つでは $\frac14\sum$ である。$\phi\phi\to\phi\phi$ は $k=p$、$\overline{|\mathcal M|^2}=\lambda^2$、$S=\frac12$ で、$\sigma_A=\frac{1}{64\pi^2s}\cdot4\pi\lambda^2\cdot\frac12=\frac{\lambda^2}{32\pi s}$ である。$\psi\bar\psi\to\phi\phi$ は $p=\sqrt{s/4-M^2}$、$k=\sqrt{s/4-m^2}$、$S=\frac12$、$\psi\bar\psi\to\psi\bar\psi$ は $k=p$、$S=1$ で、式~\eqref{eq:sigma} を得る。
+
+\section{1ループの $\phi\phi\to\phi\phi$ と S 行列要素の導出}\label{app:scat}
+
+\paragraph{図の分類。}$\phi\phi\to\phi\phi$ の1ループの図で外線の補正を除いたものは、1PI の4点関数 $V_4$ と、木の図の内線や頂点に補正を付けた図である。3点結合がないので、木の図は接触項だけで内線を持たず、頂点の補正は $V_4$ そのものである。よって $i\mathcal M_A^{(1)}=V_4$ で、式~\eqref{eq:VR} から式~\eqref{eq:M1} を得る。
+
+\paragraph{ユニタリー性。}$\phi^3$ のノートの付録~I と同じく、S 行列のユニタリー性から $2\,\mathrm{Im}\,\mathcal M(i\to f)=\sum_n\int\dd\Phi_n\,\mathcal M(i\to n)\mathcal M^*(f\to n)$ を得る（$n$ に同種粒子があればその因子を含める）。$\lambda^2$、$y^4$ の次数では中間状態は2粒子だけで、右辺の振幅は木の振幅である。$\phi\phi$ の中間状態は同種粒子の因子 $\frac12$ を持ち、$\mathcal M^{(0)}=-\lambda$ なので $\frac12\cdot\frac12\frac{p}{16\pi^2\sqrt s}\cdot4\pi\lambda^2=\frac{\lambda^2p}{16\pi\sqrt s}$ を与える。これは $\frac{\lambda^2}{2(4\pi)^2}\mathrm{Im}B_0^{mm}(s)=\frac{\lambda^2}{32\pi^2}\pi\beta$（$\beta=2p/\sqrt s$）に等しい。$\psi\bar\psi$ の中間状態では $\psi$ と $\bar\psi$ が区別できるので因子 $\frac12$ はなく、スピンについて和をとる。$\dd\Phi_2=\frac{p_\psi}{16\pi^2\sqrt s}\dd\Omega_q$ なので、式~\eqref{eq:unit} を得る。前方（$k_1=p_1$、$k_2=p_2$）では右辺は $|\mathcal M|^2$ の積分になり、$\phi\phi$ の項は $2p\sqrt s\,\sigma_A$、$\psi\bar\psi$ の項は $2p\sqrt s\,\sigma(\phi\phi\to\psi\bar\psi)$（$\sigma(\phi\phi\to\psi\bar\psi)=\frac{p_\psi}{64\pi^2sp}\int\dd\Omega\sum|\mathcal M|^2$）になる。
+
+$\phi(k_1)\phi(k_2)\to\psi(q_1)\bar\psi(q_2)$ の振幅は、付録~\ref{app:tree} と同じ手順で $y^2\bar u(q_1)[\slashed k_1/(t-M^2)+\slashed k_2/(u-M^2)]v(q_2)$（$t=(q_1-k_1)^2$、$u=(q_1-k_2)^2$）である。ここでは $\bar u(q_1)(M-\slashed q_1)=0$ を使った。スピン和は $y^4\,\mathrm{tr}[(\slashed q_1+M)A(\slashed q_2-M)A]$ で、トレースの巡回性から $\mathrm{tr}[(\slashed q_2-M)A(\slashed q_1+M)A]$ と同じ形なので、$\sum|\mathcal M_B^{(0)}|^2$ と同じ関数である。
+
+\paragraph{$\phi$ の極質量と留数。}完全な伝播関数 $i/(p^2-m^2-\Sigma_\phi(p^2))$ の極は $m_{\mathrm p}^2=m^2+\Sigma_\phi(m_{\mathrm p}^2)$ で、1ループでは右辺の $\Sigma_\phi$ を $m^2$ で評価してよい。式~\eqref{eq:VR} の後の $\Sigma_\phi$ から式~\eqref{eq:mpole} の $m_{\mathrm p}^2$ を得る。極のまわりで $p^2-m^2-\Sigma_\phi\simeq(p^2-m_{\mathrm p}^2)(1-\Sigma_\phi')$ なので、留数は $R_\phi\simeq1+\Sigma_\phi'(m^2)$ で、$\Sigma_\phi'=-\frac{2y^2}{(4\pi)^2}(B_0^{MM}+p^2B_0^{MM\prime})$ から式~\eqref{eq:mpole} の $R_\phi$ を得る。$\mu\,\partial B_0/\partial\mu=2$、$\mu\,\partial A_0(M^2)/\partial\mu=2M^2$、$\mu\,\partial B_0'/\partial\mu=0$ と式~\eqref{eq:rge} の $\gamma_m$ から、$\mu\,\dd m_{\mathrm p}^2/\dd\mu=\gamma_m-\frac{1}{(4\pi)^2}[2y^2(2m^2-4M^2)+\lambda m^2]=0$ である。一方 $\mu\,\dd R_\phi/\dd\mu=-4y^2/(4\pi)^2=-2\gamma_\phi$ で、留数は $\MSbar$ の場の規格化に依存する。
+
+\paragraph{S 行列要素。}LSZ の簡約公式から、S 行列要素は、外線を切り落とした振幅に外線の数だけ $R_\phi^{1/2}$ を掛けたものである。$\mathcal M_A^{(0)}=-\lambda$ は質量によらないので、1ループの次数で $R_\phi^2(\mathcal M_A^{(0)}+\mathcal M_A^{(1)})=-\lambda-2\lambda\Sigma_\phi'(m^2)+\mathcal M_A^{(1)}$ となる。1ループの項の中の $m$ を $m_{\mathrm p}$ に替えても違いは高次なので、式~\eqref{eq:Mphys} を得る。結合を固定して $\mu$ で微分すると、式~\eqref{eq:M1} の $B_0$ の各項が $2$ を与え、$\frac{\lambda^2}{2}\cdot3\cdot2-2y^4\cdot(4\cdot3)\cdot2=3\lambda^2-48y^4$（$\mathcal F$ の和は $B_0^{MM}$ を各チャンネルにつき4つ含む）、留数の項が $4\lambda y^2\cdot2=8\lambda y^2$ を与える。和は $(4\pi)^2\beta_\lambda$ で、$\dd(-\lambda)/\dd\ln\mu=-\beta_\lambda$ と打ち消し合い、$\mathcal M_{A,\mathrm{phys}}$ は $\mu$ によらない。
+
+\paragraph{フェルミオンの極質量と留数。}完全な伝播関数は $i/(\slashed p-M-\Sigma_\psi)$ で、$\Sigma_\psi=\slashed p\,\Sigma_V(p^2)+M\Sigma_S(p^2)$ は $\slashed p$ と可換なので、$\slashed p$ を数のように扱える。$p^2=\slashed p^2$ と見て $\Sigma_\psi$ を $\slashed p$ の関数とみなし、極 $\slashed p=M_{\mathrm p}$ のまわりで展開すると $\slashed p-M-\Sigma_\psi(\slashed p)\simeq(\slashed p-M_{\mathrm p})(1-\Sigma_\psi'(M))$ で、$M_{\mathrm p}=M+\Sigma_\psi(M)=M[1+\Sigma_V(M^2)+\Sigma_S(M^2)]$、$\Sigma_\psi'\equiv\dd\Sigma_\psi/\dd\slashed p|_{\slashed p=M}=\Sigma_V+2M^2(\Sigma_V'+\Sigma_S')$ である（$\dd f(\slashed p^2)/\dd\slashed p=2\slashed pf'$）。留数は $R_\psi=1/(1-\Sigma_\psi')\simeq1+\Sigma_\psi'$ である。式~\eqref{eq:VR} の後の $\Sigma_\psi$ から $\Sigma_V=y^2B_1^{Mm}/(4\pi)^2$、$\Sigma_S=y^2B_0^{Mm}/(4\pi)^2$ で、式~\eqref{eq:Mpole} を得る。$\mu\,\partial B_1/\partial\mu=-1$（$B_1=\int x\ln(\Delta_x/\mu^2)$ から $-2\int x\,\dd x$）と $\mu\,\partial B_0/\partial\mu=2$ から、$\mu\,\dd M_{\mathrm p}/\dd\mu=\gamma_M+My^2/(4\pi)^2=0$ である。
+
+\section{検算の細部}\label{app:details}
+
+第~\ref{sec:checks} 節の手順のうち、結果の読み取りには要らない方法の細部をここにまとめる。
+
+\paragraph{手順 (1)。}パラメータは、湯川結合を \texttt{yps}、4点結合を \texttt{lamphi}、$\phi$ の質量を \texttt{mphi}、$\psi$ の質量を \texttt{Mpsi} と書いた。$\phi^3$ のノートで \texttt{g} という名前が FeynRules の UFO 出力を止めたので、一文字の名前は避けた。MadGraph の結合の次数は、\texttt{yps} を \texttt{YUK}$=1$、\texttt{lamphi} を \texttt{YUK}$=2$ と数える。$\lambda$ は $y^2$ と同じ次数なので、\texttt{YUK} が2増えるごとにループの次数が一つ上がる。模型ファイルを作るときに一つ落とし穴があった。Mathematica のパッケージファイルでは、行末で式が完結していると、そこで文が終わる。ラグランジアンを $\cdots-\texttt{Mpsi}\,\bar\psi\psi$ で改行して次の行を $+\frac12\cdots$ で始めたところ、1行目だけが代入され、FeynRules は $\phi$ の質量を見つけず、頂点も0個になった（エラーは出ない）。式全体を括弧で囲んで直した。FeynArts の模型の頂点は \texttt{C[S[1],S[1],S[1],S[1]]} と \texttt{C[-F[1],F[1],S[1]]} で、後者は $\{\{c_L,0\},\{c_R,0\}\}$ の形のカイラルな係数を持つ。
+
+\begin{thebibliography}{9}
+\small
+\bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。Feynman 則、1ループ積分の一般式（付録~C）、$\MSbar$ の有限部分（付録~G）、検算の手順と道具。
+\bibitem{phi34note} $\phi^3+\phi^4$ 理論：1ループの構造、ユニタリー性、偽の真空の崩壊（$d=4$）（本リポジトリ \nolinkurl{models/phi34/ResearchNote/note.pdf}）。4点頂点の Feynman 則と対称性因子（付録~A）、bounce と前因子の数値計算。
+\bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}）。
+\bibitem{cw} S. Coleman, E. Weinberg, ``Radiative corrections as the origin of spontaneous symmetry breaking,'' Phys. Rev. D \textbf{7}, 1888 (1973)。1ループの有効ポテンシャル。
+\end{thebibliography}
+
+\end{document}
