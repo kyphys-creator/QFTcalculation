@@ -1,0 +1,89 @@
+# tree_mg5.mg5 -- tree-level cross sections with the PsYukawa UFO (research note models/yukawa_ps, step (2)).
+# Run from Src/:   mg5_aMC tree_mg5.mg5 > work/tree_mg5.log   (run_tree_check.sh does this)
+# Imports a copy of generated/PsYukawa_UFO in work/ (MadGraph converts UFOs to Python 3 in place).
+# Fixed-energy beams (lpp = 0), param_card defaults m = 1, M = 0.7, y = lambda = 1, no cuts.
+# Processes (A) phi phi > phi phi, (B) psi psi~ > phi phi, (C) psi psi~ > psi psi~, (D) psi psi > psi psi,
+# each at sqrt(s) = 2.5, 5, 10 GeV, in this order (tree_sigma.py relies on it).
+set automatic_html_opening False
+import model ./work/PsYukawa_UFO
+generate phi phi > phi phi
+output work/mg5_treeA -f
+launch work/mg5_treeA
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set ebeam1 1.25
+set ebeam2 1.25
+0
+launch work/mg5_treeA
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_treeA
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate psi psi~ > phi phi
+output work/mg5_treeB -f
+launch work/mg5_treeB
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set ebeam1 1.25
+set ebeam2 1.25
+0
+launch work/mg5_treeB
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_treeB
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate psi psi~ > psi psi~
+output work/mg5_treeC -f
+launch work/mg5_treeC
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set ebeam1 1.25
+set ebeam2 1.25
+0
+launch work/mg5_treeC
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_treeC
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate psi psi > psi psi
+output work/mg5_treeD -f
+launch work/mg5_treeD
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set ebeam1 1.25
+set ebeam2 1.25
+0
+launch work/mg5_treeD
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_treeD
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+quit
