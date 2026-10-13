@@ -1,0 +1,125 @@
+(* ::Package:: *)
+
+(* SpinorQED.fr -- FeynRules model file for spinor QED with two flavours, the electron and the muon
+   (models/spinor_qed/ResearchNote/note.tex, Eq. (1)).
+
+   L = -1/4 F_{mu nu} F^{mu nu} + sum_{f = e, mu} psibar_f (i Dslash - m_f) psi_f,
+   D_mu = d_mu - i e Q_f A_mu,   Q_e = Q_mu = -1   (FeynRules' sign convention for DC)
+   (e is called ee, m_e is called Me and m_mu is called MMU here)
+
+   - A: the photon;  elec, muon: two Dirac fermions of charge -1 with masses m_e and m_mu.
+   - Feynman rules: photon propagator -i [g - (1 - xi) k k/k^2]/k^2 (the FeynArts output carries
+     GaugeXi[V[1]]; the UFO is used in Feynman gauge by MadGraph), fermion propagator i(pslash + m)/(p^2 - m^2),
+     vertex i e Q gamma^mu = -i ee gamma^mu for both flavours.
+   - The gauge-fixing term -(d.A)^2/(2 xi) and the counterterms are not written here; they are added when the
+     loop calculation is set up (FeynCalc), as in the note.  Ghosts decouple in QED and are not declared.
+   - Coupling order (MadGraph): ee counts QED = 1, so that QED^2 is one loop order.
+   - Standard PDG codes (11, 13, 22) and particle names (e-, mu-, a), so MadGraph process strings read as usual.
+   - The class names elec, muon avoid the Lorentz index mu and the parameter names avoid single letters
+     (g made WriteUFO hit $RecursionLimit in Phi3.fr).
+   - Load from this folder:
+       $FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}];
+       SetDirectory[$FeynRulesPath]; << FeynRules`
+       SetDirectory[".../models/spinor_qed/Src"]; LoadModel["SpinorQED.fr"]
+*)
+
+M$ModelName = "SpinorQED";
+
+M$Information = {
+  Authors -> {"K. Yasuda"},
+  Date    -> "2026-10-12",
+  Version -> "1.0",
+  Comment -> "Spinor QED with the electron and the muon (cross-check model for the loop stack)"
+};
+
+M$InteractionOrderHierarchy = {
+  {QED, 1}
+};
+
+(* ************************** *)
+(* *****  Gauge groups  ***** *)
+(* ************************** *)
+
+M$GaugeGroups = {
+  U1EM == {
+    Abelian          -> True,
+    CouplingConstant -> ee,
+    GaugeBoson       -> A,
+    Charge           -> Q
+  }
+};
+
+(* ************************** *)
+(* *****   Parameters   ***** *)
+(* ************************** *)
+
+M$Parameters = {
+  ee == {
+    ParameterType    -> External,
+    BlockName        -> QEDBLOCK,
+    OrderBlock       -> 1,
+    Value            -> 1.0,
+    InteractionOrder -> {QED, 1},
+    TeX              -> "e",
+    Description      -> "Electric charge unit (dimensionless in d = 4)"
+  }
+};
+
+(* ************************** *)
+(* *****   Particles    ***** *)
+(* ************************** *)
+
+M$ClassesDescription = {
+  V[1] == {
+    ClassName       -> A,
+    SelfConjugate   -> True,
+    Mass            -> 0,
+    Width           -> 0,
+    ParticleName    -> "a",
+    PDG             -> 22,
+    PropagatorLabel -> "a",
+    PropagatorType  -> Sine,
+    PropagatorArrow -> None,
+    FullName        -> "Photon"
+  },
+  F[1] == {
+    ClassName        -> elec,
+    SelfConjugate    -> False,
+    Mass             -> {Me, 1.0},
+    Width            -> {We, 0},
+    QuantumNumbers   -> {Q -> -1},
+    PDG              -> 11,
+    PropagatorLabel  -> "e",
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    ParticleName     -> "e-",
+    AntiParticleName -> "e+",
+    FullName         -> "Electron"
+  },
+  F[2] == {
+    ClassName        -> muon,
+    SelfConjugate    -> False,
+    Mass             -> {MMU, 1.7},
+    Width            -> {WMU, 0},
+    QuantumNumbers   -> {Q -> -1},
+    PDG              -> 13,
+    PropagatorLabel  -> "mu",
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    ParticleName     -> "mu-",
+    AntiParticleName -> "mu+",
+    FullName         -> "Muon"
+  }
+};
+
+GaugeXi[V[1]] = GaugeXi[A];
+
+(* ************************** *)
+(* *****   Lagrangian   ***** *)
+(* ************************** *)
+
+(* FS[A, mu, nu] is the field strength and DC the covariant derivative d - I ee Q A.  The parentheses are
+   needed: in a package file a line that is a complete expression ends the statement (see PsYukawa.fr). *)
+LSpinorQED := (-1/4 FS[A, mu, nu] FS[A, mu, nu]
+  + I elecbar.Ga[mu].DC[elec, mu] - Me elecbar.elec
+  + I muonbar.Ga[mu].DC[muon, mu] - MMU muonbar.muon);
