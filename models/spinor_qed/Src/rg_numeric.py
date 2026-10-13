@@ -102,7 +102,7 @@ len(ONEPI), len(AMP)                     # inspect
 
 
 # %% [markdown]
-# ## MadLoop (step (5) programs, mu_R = mu): finite = Re W/2, 1eps = Re P/(2K) (four-dimensional spin sums; Eq. (19), eq:scheme is a
+# ## MadLoop (step (5) programs, mu_R = mu): finite = Re W/2, 1eps = Re P/(2K) (four-dimensional spin sums; Eq. (17), eq:scheme is a
 # ## mu-independent shift, so the slopes are those of CDR)
 
 # %%
@@ -199,10 +199,10 @@ for tool in ("LoopTools", "MadLoop"):
         for mu in MUS:
             ref = AMP[(s, t, "COLLIER")][mu][2]
             x = AMP[(s, t, tool)][mu][2]
-            if tool == "MadLoop":        # four-dimensional spin sums: the mu-independent shift of Eq. (19), eq:scheme, from mu = 1
+            if tool == "MadLoop":        # four-dimensional spin sums: the mu-independent shift of Eq. (17), eq:scheme, from mu = 1
                 x = x - (AMP[(s, t, tool)][1.0][2] - AMP[(s, t, "COLLIER")][1.0][2])
             d = max(d, abs(x.real - ref.real) / abs(ref.real))
-    note = " (shifted by its mu = 1 difference, the mu-independent Eq. (19), eq:scheme)" if tool == "MadLoop" else ""
+    note = " (shifted by its mu = 1 difference, the mu-independent Eq. (17), eq:scheme)" if tool == "MadLoop" else ""
     print(f"{tool} against COLLIER{note}: max relative deviation {d:.1e}")
 
 with open(os.path.join(HERE, "results", "rg_comparison.csv"), "w", newline="") as fh:

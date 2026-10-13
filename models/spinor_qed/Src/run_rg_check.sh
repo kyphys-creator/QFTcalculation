@@ -9,6 +9,8 @@
 #   3. MadLoop of step (5) (MS-bar charge and alpha(0), mu_R = mu), slopes in ln mu, gamma_A, gamma_psi, gamma_m (1PI and pole
 #      mass), beta_e (S-matrix element); figure -> results/rg_collier_*.csv, results/rg_comparison.csv, ../figs/rg_running.pdf
 #                                                                                                       (rg_numeric.py)
+#   4. the one-loop RG flow of alpha, m_e, m_mu, xi: closed forms against a numerical integration -> ../figs/rgflow.pdf
+#                                                                                                       (rgflow.py)
 # Needs Src/generated/ (run_model_check.sh) and work/ml_<MS|a0> (run_madloop_check.sh).  wolframscript may print
 # "libc++abi: ... MathLink::MLException" when LoopTools is unloaded at the end; the results are written before that.
 cd "$(dirname "$0")"
@@ -26,3 +28,6 @@ gfortran -I"$HOME/hep/include" rg_collier.f90 -L"$HOME/hep/lib" -lcollier -o wor
 
 echo "=== MadLoop, slopes, fits, figure"
 "$PY" rg_numeric.py
+
+echo "=== RG flow"
+"$PY" rgflow.py
