@@ -1,0 +1,126 @@
+# tree_mg5.mg5 -- tree-level cross sections with the SpinorQED UFO (research note models/spinor_qed, step (2)).
+# Run from Src/:   mg5_aMC tree_mg5.mg5 > work/tree_mg5.log   (run_tree_check.sh does this)
+# Imports a copy of generated/SpinorQED_UFO in work/ (MadGraph converts UFOs to Python 3 in place).
+# Fixed-energy beams (lpp = 0) in the CM frame, param_card defaults m_e = 1, m_mu = 1.7, e = 1.
+# MadGraph applies default cuts to charged leptons (ptl = 10, etal = 2.5, drll = 0.4) and photons (pta = 10,
+# etaa = 2.5, draa = 0.4, dral = 0.4); they are all switched off, except that (B) Bhabha, whose total cross section
+# diverges at t = 0, is cut at |cos theta| < 0.9 through the rapidity of e+ and e-: etal = atanh(0.9 beta_e)
+# (MadGraph's etal is a cut on the true rapidity, see SubProcesses/cuts.f).
+# Processes (A) e+ e- > mu+ mu-, (B) e+ e- > e+ e-, (C) e- a > e- a, (D) e+ e- > a a, each at sqrt(s) = 4, 6, 10 GeV,
+# in this order (tree_sigma.py relies on it).  (C) has beam energies E_e = (s + m^2)/(2 sqrt s), E_a = (s - m^2)/(2 sqrt s).
+# Then (C) again at sqrt(s) = 4, 6 with |cos theta_e| < 0.98 (etal = atanh(0.98 beta_e), beta_e = |p|/E_e), which removes
+# the backward u-channel peak that MadGraph undersamples (note Sec. 5), and the standalone matrix element of (C)
+# (work/sa_treeC, evaluated at fixed points with tree_me_points.f).
+set automatic_html_opening False
+import model ./work/SpinorQED_UFO
+generate e+ e- > mu+ mu-
+output work/mg5_treeA -f
+launch work/mg5_treeA
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set ptl 0
+set etal -1
+set drll 0
+set ebeam1 2.0
+set ebeam2 2.0
+0
+launch work/mg5_treeA
+0
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_treeA
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate e+ e- > e+ e-
+output work/mg5_treeB -f
+launch work/mg5_treeB
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set ptl 0
+set drll 0
+set ebeam1 2.0
+set ebeam2 2.0
+set etal 1.04389844857
+0
+launch work/mg5_treeB
+0
+set ebeam1 3.0
+set ebeam2 3.0
+set etal 1.25087255895
+0
+launch work/mg5_treeB
+0
+set ebeam1 5.0
+set ebeam2 5.0
+set etal 1.38387628971
+0
+generate e- a > e- a
+output work/mg5_treeC -f
+launch work/mg5_treeC
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set ptl 0
+set etal -1
+set pta 0
+set etaa -1
+set dral 0
+set ebeam1 2.125000000000
+set ebeam2 1.875000000000
+0
+launch work/mg5_treeC
+0
+set ebeam1 3.083333333333
+set ebeam2 2.916666666667
+0
+launch work/mg5_treeC
+0
+set ebeam1 5.050000000000
+set ebeam2 4.950000000000
+0
+generate e+ e- > a a
+output work/mg5_treeD -f
+launch work/mg5_treeD
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set pta 0
+set etaa -1
+set draa 0
+set ebeam1 2.0
+set ebeam2 2.0
+0
+launch work/mg5_treeD
+0
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_treeD
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+launch work/mg5_treeC
+0
+set etal 1.31170377897
+set ebeam1 2.125000000000
+set ebeam2 1.875000000000
+0
+launch work/mg5_treeC
+0
+set etal 1.63682227720
+set ebeam1 3.083333333333
+set ebeam2 2.916666666667
+0
+generate e- a > e- a
+output standalone work/sa_treeC -f
+quit

@@ -44,7 +44,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノート~\cite{phi3note,phi34note,yukawanote} に続き、ゲージ場を含む最も簡単な模型として、電子 $e$ と $\mu$ 粒子の二つの Dirac フェルミオンが光子と結合するスピノル QED を $d=4$ で調べる。共変ゲージのゲージパラメータ $\xi$ を残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、Furry の定理、Ward--Takahashi 恒等式、1ループの1PI 関数（真空偏極、自己エネルギー、頂点）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。フェルミオンの自己エネルギーは、部分積分の恒等式を使うと $D$ 次元で $\Sigma=\frac{e^2}{(4\pi)^2}[\xi(D-2)\slashed pB_1+(D-1+\xi)mB_0]$ という閉じた形になり、$\slashed p$ の項は $\xi$ に比例する（Landau ゲージでは1ループの場の繰り込みが0）。極質量はゲージによらず $m_{\mathrm p}=m(\mu)[1+\frac{e^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ である。質量殻上の頂点は次元正則化では $\xi$ によらず、Feynman パラメータで二つの形状因子を閉じた形に書くと、$F_2(q^2)=\frac{2e^2m^2}{(4\pi)^2}\int_0^1\dd w/[m^2-q^2w(1-w)]$、とくに $F_2(0)=\alpha/2\pi$（Schwinger の値）となる。Ward 恒等式 $Z_1=Z_2$ により電荷の繰り込みは光子の場の繰り込みだけで決まり、二つのフレーバーで $\beta_e=8e^3/[3(4\pi)^2]$、$\mu\,\dd m/\dd\mu=-6e^2m/(4\pi)^2$ となる。$\MSbar$ の量を、極質量、留数、Thomson 極限の $\alpha(0)$ という on-shell の量に直す式も求めた。フェルミオンの留数は $\xi$ に依存する赤外の極を持ち、それを正しく得るには自己エネルギーの微分の $O(\epsilon)$ の項が要る。木のレベルでは、$e^+e^-\to\mu^+\mu^-$、Bhabha 散乱、Compton 散乱、$e^+e^-\to\gamma\gamma$ の振幅とスピン和を質量を残して求めた。1ループの $e^+e^-\to\mu^+\mu^-$ のうち $s$ チャンネルの部分（真空偏極、二つの頂点、外線の留数）は、$\MSbar$ で計算しても、$\alpha(0)$ と、処方によらない $F_1(q^2)-F_1(0)$、$\Pi(s)-\Pi(0)$、$F_2$ だけで書けることを示した。最後に、検算と応用（異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成）の十一の手順を定め、その最初の手順として FeynRules の模型ファイルを作った。FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。導出はすべて付録に省略なく載せる。
+$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノート~\cite{phi3note,phi34note,yukawanote} に続き、ゲージ場を含む最も簡単な模型として、電子 $e$ と $\mu$ 粒子の二つの Dirac フェルミオンが光子と結合するスピノル QED を $d=4$ で調べる。共変ゲージのゲージパラメータ $\xi$ を残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、Furry の定理、Ward--Takahashi 恒等式、1ループの1PI 関数（真空偏極、自己エネルギー、頂点）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。フェルミオンの自己エネルギーは、部分積分の恒等式を使うと $D$ 次元で $\Sigma=\frac{e^2}{(4\pi)^2}[\xi(D-2)\slashed pB_1+(D-1+\xi)mB_0]$ という閉じた形になり、$\slashed p$ の項は $\xi$ に比例する（Landau ゲージでは1ループの場の繰り込みが0）。極質量はゲージによらず $m_{\mathrm p}=m(\mu)[1+\frac{e^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ である。質量殻上の頂点は次元正則化では $\xi$ によらず、Feynman パラメータで二つの形状因子を閉じた形に書くと、$F_2(q^2)=\frac{2e^2m^2}{(4\pi)^2}\int_0^1\dd w/[m^2-q^2w(1-w)]$、とくに $F_2(0)=\alpha/2\pi$（Schwinger の値）となる。Ward 恒等式 $Z_1=Z_2$ により電荷の繰り込みは光子の場の繰り込みだけで決まり、二つのフレーバーで $\beta_e=8e^3/[3(4\pi)^2]$、$\mu\,\dd m/\dd\mu=-6e^2m/(4\pi)^2$ となる。$\MSbar$ の量を、極質量、留数、Thomson 極限の $\alpha(0)$ という on-shell の量に直す式も求めた。フェルミオンの留数は $\xi$ に依存する赤外の極を持ち、それを正しく得るには自己エネルギーの微分の $O(\epsilon)$ の項が要る。木のレベルでは、$e^+e^-\to\mu^+\mu^-$、Bhabha 散乱、Compton 散乱、$e^+e^-\to\gamma\gamma$ の振幅とスピン和を質量を残して求めた。1ループの $e^+e^-\to\mu^+\mu^-$ のうち $s$ チャンネルの部分（真空偏極、二つの頂点、外線の留数）は、$\MSbar$ で計算しても、$\alpha(0)$ と、処方によらない $F_1(q^2)-F_1(0)$、$\Pi(s)-\Pi(0)$、$F_2$ だけで書けることを示した。最後に、検算と応用（異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成）の十一の手順を定め、その最初の二つを行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列、スピノル、偏極ベクトルを陽に作った数値でも手計算と一致し、内線の光子のゲージパラメータに振幅がよらないこと、外線の光子についての Ward 恒等式も確かめた。MadGraph の断面積は三つの過程で統計誤差の1.5倍以内で一致したが、質量のある電子の Compton 散乱では $\sqrt s=4m_e$ で $1.5\%$ 小さかった。MadGraph の行列要素は正しく、後ろ向きの $u$ チャンネルの伝播関数の山を位相空間の積分で拾いきれないためで、その山を除くと一致する。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -57,7 +57,7 @@ $\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノー�
 
 求める量は五つである。(i) Feynman 則、Furry の定理、Ward--Takahashi 恒等式。(ii) 1ループの1PI 関数（光子とフェルミオンの2点関数、頂点）の紫外発散と $\MSbar$ の対抗項、光子3点・4点関数が発散しないこと。(iii) 繰り込まれた1PI 関数、繰り込み群の係数、$\MSbar$ から on-shell の量（極質量、留数、$\alpha(0)$）への換算。(iv) 四つの過程の木の振幅とスピン和、1ループの $e^+e^-\to\mu^+\mu^-$ とその S 行列要素、実の光子の放射を含む断面積。(v) 応用として、異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:scat} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)、(2)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:scat} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -412,7 +412,7 @@ Schwinger の対生成 & 後で & — & — & — & — \\
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1)、(2) はそれぞれ \texttt{run\_model\_check.sh}、\texttt{run\_tree\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/SpinorQED.fr} を作った。ラグランジアンは式~\eqref{eq:L} からゲージ固定の項と対抗項を除いた部分で、ゲージ群 $U(1)$ の電荷 $Q=-1$ を二つのフレーバーに与え、共変微分で結合を書いた。パラメータの名前と MadGraph の結合の次数の決め方は\ref{app:details} に示す。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通った。頂点は二つで、どちらも $-i\,\texttt{ee}\,\gamma^\mu$ となり、図~\ref{fig:rules} の $ieQ_f\gamma^\mu=-ie\gamma^\mu$ と一致した。光子の自己結合は現れない。FeynArts の模型では、頂点はカイラルな射影の係数の組 $\{c_L,c_R\}=\{i\,\texttt{gc1},i\,\texttt{gc1}\}$（$\texttt{gc1}=-\texttt{EL}$）として書かれ、$c_L\omega_-+c_R\omega_+=-i\,\texttt{EL}\,\gamma^\mu$ である。FeynRules は電荷の単位 \texttt{ee} を FeynArts の電荷 \texttt{EL} に置き換えた。光子の伝播関数は FeynArts の一般の模型の $-i[g_{\mu\nu}-(1-\xi)k_\mu k_\nu/k^2]/k^2$ で、\texttt{GaugeXi[V[1]]} が $\xi$ である。UFO では、頂点の Lorentz 構造が \texttt{FFV1}（$\gamma^\mu$）、結合が \texttt{GC\_1} $=-i\,\texttt{ee}$ で、次数は \texttt{QED}$=1$ である。FeynArts の模型と UFO は \texttt{Src/generated/} に書き出した。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の図を生成し、すべて手で数えた数と一致した。スクリプトは \texttt{generate\_SpinorQED.wl}（FeynRules）と \texttt{model\_mg5.mg5}（MadGraph）である。
 
@@ -437,12 +437,49 @@ $e^+e^-\to\gamma\gamma\gamma$ & 6 & 電子の線に3つの光子を付ける順�
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (2)：木の振幅とスピン和。}式~\eqref{eq:Mtree}、\eqref{eq:sumtree} を三つの独立な方法で確かめた。スクリプトは \texttt{tree\_feyncalc.wl}、\texttt{tree\_sigma.py}、\texttt{tree\_mg5.mg5}、\texttt{tree\_me\_points.f} である。
+
+一つ目は FeynArts と FeynCalc で、図の数は (A)〜(D) で 1、2、2、2 である。振幅そのものを、外線のスピンと偏極についての和 $\sum|\mathcal M_{\mathrm{FC}}\mp\mathcal M_{\mathrm{note}}|^2$（$\mathcal M_{\mathrm{note}}$ は式~\eqref{eq:Mtree}）で比べた。光子の偏極については、もう一方の光子の運動量を補助のベクトルとする横波だけの和をとった。この和は正定値なので、0 になれば、すべてのスピンと偏極で振幅が一致する。(B)、(C)、(D) は全体の符号も含めて一致し、(A) は全体の符号だけが逆だった。全体の符号は外線のフェルミオンの演算子を並べる順序の規約で決まり、物理量には現れない。二つの図の相対的な符号を持つ (B) が一致していることが、Fermi 統計の符号の確認になる。スピン和は、光子の偏極の和を $-g_{\mu\nu}$ としても、横波だけの和としても、式~\eqref{eq:sumtree} と記号として一致した。(D) と (C) の交差の関係も記号として確かめた。ゲージの構造も確かめた。(A)、(B) の内線の光子の伝播関数に $\xi$ を残すと、$\partial\mathcal M/\partial\xi$ は外線のスピノルの Dirac 方程式で0になる。(C)、(D) の外線の光子の偏極をその運動量に置き換えた振幅は、スピンともう一方の光子の偏極についての2乗の和が0になる（Ward 恒等式、\ref{app:tree}）。
+
+二つ目は、Dirac 行列、スピノル、実の横波の偏極ベクトルを陽に作った数値である。トレースを使わず、Feynman 則の振幅をスピンと偏極の組ごとに計算して2乗を足した。各過程24点（$\sqrt s$ が4通り、$\cos\theta$ が6通り）で、式~\eqref{eq:sumtree} との相対的なずれは $1\times10^{-15}$ 以下である。$\xi=0,3$ の振幅は $\xi=1$ の振幅と相対 $10^{-33}$ で等しく、偏極を運動量に置き換えた振幅は元の振幅の $4\times10^{-16}$ 倍以下だった。点 $\sqrt s=5$、$\cos\theta=0.3$ のスピン和は、FeynCalc と数値ですべての桁が一致した（\ref{app:details}）。(A) の断面積の数値積分は \ref{app:tree} の閉じた形と $2\times10^{-16}$ で一致した。(C) の断面積は閉じた形の Klein--Nishina の式と $10^{-7}$（表の丸め）で一致し、低エネルギーで Thomson の断面積に近づく。光子のエネルギー $\omega$（電子の静止系）の展開 $\sigma/\sigma_{\mathrm T}=1-2x+\frac{26}{5}x^2+O(x^3)$（$x=\omega/m$）とは、$x=10^{-4}$ ですべての桁、$x=10^{-3}$ で $1.3\times10^{-8}$（$x^3$ の項 $-\frac{133}{10}x^3$ の大きさ）まで一致した。
+
+三つ目は MadGraph の断面積で、結果を表~\ref{tab:tree} に示す。(B) は $t=0$ の Coulomb 極で全断面積が発散するので、$|\cos\theta|<0.9$ に制限した。(A)、(B)、(D) と $\sqrt s=10$ の (C) は、式~\eqref{eq:sumtree} の数値積分と統計誤差の1.5倍以内で一致した。ところが (C) は $\sqrt s=4$、$6$ で MadGraph の値が $1.5\%$、$0.6\%$ 小さく、統計誤差の14倍と6倍ずれた。原因を調べた。MadGraph の行列要素そのもの（standalone の出力）は、21点で式~\eqref{eq:sumtree} と相対 $10^{-15}$ で一致した。電子の散乱角を $|\cos\theta_e|<0.98$ に制限すると、MadGraph は数値積分と統計誤差の範囲で一致した（表~\ref{tab:tree}）。したがって、不足はすべて後ろ向き（$\cos\theta_e\to-1$）の領域にある。そこでは $u$ チャンネルの電子の伝播関数 $1/(u-m^2)$ が最も大きく、$u$ は運動学の端で正の値 $m^4/s$ に達する。MadGraph の重みなしの事象のうち $u>0$ のものは、$\sqrt s=4$ で期待される217個に対して128個しかなかった。$|\cos\theta_e|>0.98$ だけを積分させると、誤差が $21\%$ にもなる。積分の方式（\texttt{sde\_strategy} 1、2）、ビームの順序、事象を5倍にした精密な下調べ（\texttt{hard\_survey 2}）でも不足は変わらず（$-1.48\%$、表示の誤差は $0.05\%$）、表示された誤差はこの偏りを含まない。MadGraph の位相空間の写像が、質量のある粒子の $u$ チャンネルの伝播関数の山を運動学の端の近くで十分に拾えないのである。擬スカラー湯川のノート~\cite{yukawanote} の $\phi\phi\to\phi\psi\bar\psi$ で見たフェルミオンの伝播関数の山の不足と同じ型で、ここでは $2\to2$ の過程で明確に現れた。この問題は計算環境の手引き（\nolinkurl{~/hep/README.md} の既知の問題）に加えた。手順 (6) の $e^+e^-\to\mu^+\mu^-\gamma$ でも、光子が電子に沿う向きの山の積分に注意する。
+
+\begin{table}[tbp]
+\centering\small
+\caption{MadGraph の木の断面積と、式~\eqref{eq:sumtree} を角度で数値積分した値。単位は pb（$e=1$、$m_e=1$、$m_\mu=1.7$ を GeV と読む）。誤差は MadGraph の表示の統計誤差で、最後の列は（MadGraph $-$ 数値積分）/ 誤差である。表示の桁が誤差より粗いとき（(A) の $\sqrt s=10$）は、最後の桁の半分を誤差とした。(B) は $|\cos\theta|<0.9$ に制限した。下の2行は (C) を $|\cos\theta_e|<0.98$ に制限したもので、MadGraph が拾いきれない後ろ向きの山を除いている。}
+\label{tab:tree}
+\begin{tabular}{lrrrr}
+\toprule
+過程 & $\sqrt s$ & 数値積分 & MadGraph & ずれ / 誤差 \\
+\midrule
+(A) $e^+e^-\to\mu^+\mu^-$ & 4 & $6.0133\times10^{5}$ & $6.014\times10^{5}\pm61$ & $1.14$ \\
+ & 6 & $3.0716\times10^{5}$ & $3.071\times10^{5}\pm53$ & $-1.09$ \\
+ & 10 & $1.0696\times10^{5}$ & $1.069\times10^{5}\pm23$ & $-1.26$ \\
+(B) $e^+e^-\to e^+e^-$ & 4 & $3.9281\times10^{7}$ & $3.922\times10^{7}\pm4.4\times10^{4}$ & $-1.38$ \\
+ & 6 & $1.4587\times10^{7}$ & $1.458\times10^{7}\pm1.8\times10^{4}$ & $-0.42$ \\
+ & 10 & $4.8738\times10^{6}$ & $4.876\times10^{6}\pm5.8\times10^{3}$ & $0.39$ \\
+(C) $e^-\gamma\to e^-\gamma$ & 4 & $3.0635\times10^{6}$ & $3.018\times10^{6}\pm3.3\times10^{3}$ & $\mathbf{-13.63}$ \\
+ & 6 & $1.7170\times10^{6}$ & $1.707\times10^{6}\pm1.6\times10^{3}$ & $\mathbf{-6.39}$ \\
+ & 10 & $7.8186\times10^{5}$ & $7.816\times10^{5}\pm6.4\times10^{2}$ & $-0.41$ \\
+(D) $e^+e^-\to\gamma\gamma$ & 4 & $2.7468\times10^{6}$ & $2.749\times10^{6}\pm2.1\times10^{3}$ & $1.03$ \\
+ & 6 & $1.3788\times10^{6}$ & $1.378\times10^{6}\pm1.1\times10^{3}$ & $-0.71$ \\
+ & 10 & $6.0448\times10^{5}$ & $6.038\times10^{5}\pm4.8\times10^{2}$ & $-1.41$ \\
+\midrule
+(C) $|\cos\theta_e|<0.98$ & 4 & $2.9017\times10^{6}$ & $2.901\times10^{6}\pm1.8\times10^{3}$ & $-0.37$ \\
+ & 6 & $1.5774\times10^{6}$ & $1.578\times10^{6}\pm7.8\times10^{2}$ & $0.75$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手計算で分かったこと。}ゲージ場を入れたことで、これまでの模型になかった構造が三つ現れた。一つ目は Ward 恒等式による制約で、真空偏極の横波性、$Z_1=Z_2$、電荷の繰り込みの普遍性が、発散の構造を光子の場の繰り込み一つにまとめる。二つ目はゲージパラメータの役割で、$\xi$ は場の繰り込みと赤外の極の分け方にだけ現れ、極質量、$e_{\mathrm{OS}}$、形状因子 $F_2$、$\hat F_1$ には現れない。自己エネルギーの $\xi$ 依存の部分は部分積分の恒等式で $D$ 次元で厳密に閉じた形になり、質量殻上の頂点の $\xi$ 依存の部分はスケールのない積分になる。三つ目は赤外発散で、フェルミオンの留数と頂点の赤外の極がそれぞれ $\xi$ に依存しながら、組 $\hat F_1$ では打ち消して $f_{\mathrm{IR}}$ だけが残る。留数の赤外の極を正しく得るには、$D$ 次元の係数の $O(\epsilon)$ の部分まで残す必要があった。物理としては、$s$ チャンネルの1ループの補正が $\alpha(0)$ と処方によらない量だけで書けることが、$\MSbar$ で計算することと、QED の結果を on-shell の言葉で読むことを結びつける。
 
-\paragraph{今後。}次は手順 (2) で、四つの過程の木の振幅とスピン和を FeynCalc で記号として確かめ、偏極ベクトルを陽に作った数値でも確かめ、断面積を MadGraph と比べる。
+\paragraph{ツールについて分かったこと。}木のレベルでも、ツールの使い方に三つの注意点があった。FeynArts の \texttt{CreateFeynAmp} は既定でゲージパラメータを1にするので、$\xi$ 依存を調べるには明示的に外す必要がある。光子の偏極の和を $-g_{\mu\nu}$ とする置き換えは2乗の和には使えるが、正定値でないので振幅の差の比較には使えない。MadGraph は、質量のある電子の Compton 散乱の後ろ向きの $u$ チャンネルの山を拾いきれず、表示の誤差を大きく超えて断面積を小さく出した。行列要素は正しいので、MadGraph の断面積を基準に使うときは、伝播関数の山を含む領域を分けて確かめる必要がある。
+
+\paragraph{今後。}次は手順 (3) で、1ループの1PI 関数 $\Pi_f$、$\Sigma_f$、$\Lambda^\mu$ の極と対抗項を一般の $\xi$ で確かめ、Ward 恒等式、Furry の定理、光子4点関数の有限性を確かめ、有限部分と赤外の極を Package-X・LoopTools・COLLIER で比べる。
 
 \appendix
 
@@ -744,6 +781,8 @@ T_{ts}=\mathrm{tr}\bigl[(\slashed k_1+m)\gamma^\mu(\slashed p_1+m)\gamma_\nu(\sl
 第~\ref{sec:checks} 節の手順のうち、結果の読み取りには要らない方法の細部をここにまとめる。
 
 \paragraph{手順 (1)。}パラメータは、電荷の単位を \texttt{ee}、電子と $\mu$ 粒子の質量を \texttt{Me}、\texttt{MMU} と書いた。一文字の名前は避けた（$\phi^3$ のノートで \texttt{g} が FeynRules の UFO 出力を止めた）。フェルミオンのクラス名は、Lorentz の添字 \texttt{mu} とぶつからないように \texttt{elec}、\texttt{muon} とした。粒子の名前と PDG の番号は標準の \texttt{e-}（11）、\texttt{mu-}（13）、\texttt{a}（22）で、MadGraph の過程はいつもの書き方で指定できる。MadGraph の結合の次数は \texttt{ee} を \texttt{QED}$=1$ と数える。この次数の名前は、MadLoop のループの指定（\texttt{QCD} と \texttt{QED} だけを受け付ける）にそのまま使える。光子の伝播関数のゲージパラメータは、標準模型の模型ファイルと同じく \texttt{GaugeXi[V[1]] = GaugeXi[A]} とした。ゲージ群 \texttt{U1EM} の結合定数を \texttt{ee}、電荷を \texttt{Q} とし、共変微分 \texttt{DC} で結合を書いたので、頂点の符号は FeynRules の規約 $D_\mu=\partial_\mu-i\,\texttt{ee}\,Q A_\mu$ で決まる。FeynArts の模型では \texttt{ee} が \texttt{EL} に置き換えられ、頂点は \texttt{C[-F[1], F[1], V[1]]}、\texttt{C[-F[2], F[2], V[1]]} の二つである。
+
+\paragraph{手順 (2)。}FeynArts の \texttt{CreateFeynAmp} は既定で \texttt{GaugeRules -> \{\_GaugeXi -> 1\}} を使い、光子の伝播関数を Feynman ゲージにする。$\xi$ を残すには \texttt{GaugeRules -> \{\}} とする。FeynRules の書き出した \texttt{M\$FACouplings}（\texttt{gc1 -> -EL}）は手で適用し、\texttt{FCFAConvert} が \texttt{FCGV["EL"]} と書く電荷を \texttt{EL} に戻した。光子の横波だけの偏極の和は \texttt{DoPolarizationSums[x, k, n]} で、$\sum\varepsilon_\mu\varepsilon^*_\nu=-g_{\mu\nu}+(k_\mu n_\nu+n_\mu k_\nu)/(k\cdot n)$（$n^2=0$）である。$-g_{\mu\nu}$ の和は正定値でないので、振幅の差の比較には使えない。FeynCalc の \texttt{DiracSimplify} は Dirac の鎖の中の運動量を運動量保存で書き換えないので、偏極を運動量に置き換えた振幅を0まで整理しない。そこで Ward 恒等式は2乗の和で確かめた。数値の偏極ベクトルは、運動量の向き $(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$ に対して $\varepsilon_1=(0,\cos\theta\cos\phi,\cos\theta\sin\phi,-\sin\theta)$、$\varepsilon_2=(0,-\sin\phi,\cos\phi,0)$ である。運動学は重心系で、$\theta$ は $k_1$ と $p_1$ のなす角、(C) では電子と光子のエネルギーを $(s\pm m^2)/(2\sqrt s)$ とした。点 $\sqrt s=5$、$\cos\theta=0.3$ のスピン和は (A) $6.65217024$、(B) $89.01023720412791$、(C) $16.69971955291044$、(D) $23.19710466058796$ である。MadGraph は荷電レプトンと光子に既定のカット（\texttt{ptl}、\texttt{pta} $=10$、\texttt{etal}、\texttt{etaa} $=2.5$、\texttt{drll}、\texttt{draa}、\texttt{dral} $=0.4$）をかけるので、すべて外した。MadGraph の \texttt{etal} は擬ラピディティではなく真のラピディティ $y=\tanh^{-1}(p_z/E)$ のカットである（\texttt{SubProcesses/cuts.f}）。重心系で $p_z/E=\beta\cos\theta$（$\beta=|\boldsymbol p|/E$）なので、(B) の $|\cos\theta|<0.9$ は $|y|<\tanh^{-1}(0.9\beta_e)$、(C) の $|\cos\theta_e|<0.98$ は電子の $|y|<\tanh^{-1}(0.98\,|\boldsymbol p|/E_e)$ として与えた。(C) のビームのエネルギーは上の重心系の値を12桁で与えた。MadGraph の standalone の行列要素（始状態のヘリシティで平均）は、\texttt{tree\_me\_points.f} を standalone の出力と一緒にコンパイルして、固定した運動量で評価した。\texttt{output standalone} は作業ディレクトリとその親に \texttt{nsqso\_born.inc} を書くので、\texttt{run\_tree\_check.sh} で消す。
 
 \begin{thebibliography}{99}
 \small
