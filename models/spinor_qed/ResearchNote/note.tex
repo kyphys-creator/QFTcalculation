@@ -34,6 +34,9 @@
             (path picture bounding box.south west) -- (path picture bounding box.north east);}},
   mom/.style={-{Stealth[length=1.6mm]},thin},
   lab/.style={font=\small,align=center},
+  blob/.style={circle,draw=black,fill=black!15,inner sep=0pt,minimum size=9pt},
+  qdot/.style={rectangle,fill=black,inner sep=1.7pt},
+  ml/.style={font=\scriptsize},
 }
 
 \title{スピノル QED：1ループの構造と検算（電子と $\mu$ 粒子、$d=4$）}
@@ -44,7 +47,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノート~\cite{phi3note,phi34note,yukawanote} に続き、ゲージ場を含む最も簡単な模型として、電子 $e$ と $\mu$ 粒子の二つの Dirac フェルミオンが光子と結合するスピノル QED を $d=4$ で調べる。共変ゲージのゲージパラメータ $\xi$ を残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、Furry の定理、Ward--Takahashi 恒等式、1ループの1PI 関数（真空偏極、自己エネルギー、頂点）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。フェルミオンの自己エネルギーは、部分積分の恒等式を使うと $D$ 次元で $\Sigma=\frac{e^2}{(4\pi)^2}[\xi(D-2)\slashed pB_1+(D-1+\xi)mB_0]$ という閉じた形になり、$\slashed p$ の項は $\xi$ に比例する（Landau ゲージでは1ループの場の繰り込みが0）。極質量はゲージによらず $m_{\mathrm p}=m(\mu)[1+\frac{e^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ である。質量殻上の頂点は次元正則化では $\xi$ によらず、Feynman パラメータで二つの形状因子を閉じた形に書くと、$F_2(q^2)=\frac{2e^2m^2}{(4\pi)^2}\int_0^1\dd w/[m^2-q^2w(1-w)]$、とくに $F_2(0)=\alpha/2\pi$（Schwinger の値）となる。Ward 恒等式 $Z_1=Z_2$ により電荷の繰り込みは光子の場の繰り込みだけで決まり、二つのフレーバーで $\beta_e=8e^3/[3(4\pi)^2]$、$\mu\,\dd m/\dd\mu=-6e^2m/(4\pi)^2$ となる。$\MSbar$ の量を、極質量、留数、Thomson 極限の $\alpha(0)$ という on-shell の量に直す式も求めた。フェルミオンの留数は $\xi$ に依存する赤外の極を持ち、それを正しく得るには自己エネルギーの微分の $O(\epsilon)$ の項が要る。木のレベルでは、$e^+e^-\to\mu^+\mu^-$、Bhabha 散乱、Compton 散乱、$e^+e^-\to\gamma\gamma$ の振幅とスピン和を質量を残して求めた。1ループの $e^+e^-\to\mu^+\mu^-$ のうち $s$ チャンネルの部分（真空偏極、二つの頂点、外線の留数）は、$\MSbar$ で計算しても、$\alpha(0)$ と、処方によらない $F_1(q^2)-F_1(0)$、$\Pi(s)-\Pi(0)$、$F_2$ だけで書けることを示した。最後に、検算と応用（異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成）の十一の手順を定め、その最初の二つを行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列、スピノル、偏極ベクトルを陽に作った数値でも手計算と一致し、内線の光子のゲージパラメータに振幅がよらないこと、外線の光子についての Ward 恒等式も確かめた。MadGraph の断面積は三つの過程で統計誤差の1.5倍以内で一致したが、質量のある電子の Compton 散乱では $\sqrt s=4m_e$ で $1.5\%$ 小さかった。MadGraph の行列要素は正しく、後ろ向きの $u$ チャンネルの伝播関数の山を位相空間の積分で拾いきれないためで、その山を除くと一致する。導出はすべて付録に省略なく載せる。
+$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノート~\cite{phi3note,phi34note,yukawanote} に続き、ゲージ場を含む最も簡単な模型として、電子 $e$ と $\mu$ 粒子の二つの Dirac フェルミオンが光子と結合するスピノル QED を $d=4$ で調べる。共変ゲージのゲージパラメータ $\xi$ を残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、Furry の定理、Ward--Takahashi 恒等式、1ループの1PI 関数（真空偏極、自己エネルギー、頂点）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。フェルミオンの自己エネルギーは、部分積分の恒等式を使うと $D$ 次元で $\Sigma=\frac{e^2}{(4\pi)^2}[\xi(D-2)\slashed pB_1+(D-1+\xi)mB_0]$ という閉じた形になり、$\slashed p$ の項は $\xi$ に比例する（Landau ゲージでは1ループの場の繰り込みが0）。極質量はゲージによらず $m_{\mathrm p}=m(\mu)[1+\frac{e^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ である。質量殻上の頂点は次元正則化では $\xi$ によらず、Feynman パラメータで二つの形状因子を閉じた形に書くと、$F_2(q^2)=\frac{2e^2m^2}{(4\pi)^2}\int_0^1\dd w/[m^2-q^2w(1-w)]$、とくに $F_2(0)=\alpha/2\pi$（Schwinger の値）となる。Ward 恒等式 $Z_1=Z_2$ により電荷の繰り込みは光子の場の繰り込みだけで決まり、二つのフレーバーで $\beta_e=8e^3/[3(4\pi)^2]$、$\mu\,\dd m/\dd\mu=-6e^2m/(4\pi)^2$ となる。$\MSbar$ の量を、極質量、留数、Thomson 極限の $\alpha(0)$ という on-shell の量に直す式も求めた。フェルミオンの留数は $\xi$ に依存する赤外の極を持ち、それを正しく得るには自己エネルギーの微分の $O(\epsilon)$ の項が要る。木のレベルでは、$e^+e^-\to\mu^+\mu^-$、Bhabha 散乱、Compton 散乱、$e^+e^-\to\gamma\gamma$ の振幅とスピン和を質量を残して求めた。1ループの $e^+e^-\to\mu^+\mu^-$ のうち $s$ チャンネルの部分（真空偏極、二つの頂点、外線の留数）は、$\MSbar$ で計算しても、$\alpha(0)$ と、処方によらない $F_1(q^2)-F_1(0)$、$\Pi(s)-\Pi(0)$、$F_2$ だけで書けることを示した。最後に、検算と応用（異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成）の十一の手順を定め、その最初の二つを行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列、スピノル、偏極ベクトルを陽に作った数値でも手計算と一致し、内線の光子のゲージパラメータに振幅がよらないこと、外線の光子についての Ward 恒等式も確かめた。MadGraph の断面積は三つの過程で統計誤差の1.5倍以内で一致したが、質量のある電子の Compton 散乱では $\sqrt s=4m_e$ で $1.5\%$ 小さかった。MadGraph の行列要素は正しく、後ろ向きの $u$ チャンネルの伝播関数の山を位相空間の積分で拾いきれないためで、その山を除くと一致する。1ループの1PI 関数は、一般の $\xi$ で FeynCalc の結果と記号として一致し、Furry の定理、光子4点関数の紫外の極の打ち消し、Ward--Takahashi 恒等式、$Z_1=Z_2$ も確かめた。有限部分と赤外の極は Package-X、LoopTools、COLLIER と相対 $2\times10^{-14}$ 以内で一致し、留数の赤外の極と $R_fF_1(0)=1$ も $\xi=0,1,3$ で確かめた。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -57,7 +60,7 @@ $\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノー�
 
 求める量は五つである。(i) Feynman 則、Furry の定理、Ward--Takahashi 恒等式。(ii) 1ループの1PI 関数（光子とフェルミオンの2点関数、頂点）の紫外発散と $\MSbar$ の対抗項、光子3点・4点関数が発散しないこと。(iii) 繰り込まれた1PI 関数、繰り込み群の係数、$\MSbar$ から on-shell の量（極質量、留数、$\alpha(0)$）への換算。(iv) 四つの過程の木の振幅とスピン和、1ループの $e^+e^-\to\mu^+\mu^-$ とその S 行列要素、実の光子の放射を含む断面積。(v) 応用として、異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)、(2)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:scat} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(3)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:scat} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -169,8 +172,28 @@ $E_\gamma,\ E_\psi,\ L$ & 図の外の光子線、外のフェルミオン線の
   \node[ctv] at (0,0) {};
   \node[lab] at (0.1,-1.0) {$ieQ_f\mu^{\epsilon}\gamma^\mu\,\delta_1$};
 \end{scope}
+\begin{scope}[shift={(-1.3,-4.9)}]
+  \draw[fermion] (0,0) -- (1.2,0); \node[blob] at (1.35,0) {};
+  \draw[mom] (0.3,0.25) -- (0.85,0.25) node[midway,above,ml] {$p$};
+  \node[lab] at (0.7,-0.55) {$u(p)$};
+  \node[blob] at (2.35,0) {}; \draw[fermion] (2.5,0) -- (3.7,0);
+  \draw[mom] (2.85,0.25) -- (3.4,0.25) node[midway,above,ml] {$p$};
+  \node[lab] at (3.05,-0.55) {$\bar u(p)$};
+  \draw[fermion] (5.9,0) -- (4.7,0); \node[blob] at (6.05,0) {};
+  \draw[mom] (5.0,0.25) -- (5.55,0.25) node[midway,above,ml] {$p$};
+  \node[lab] at (5.4,-0.55) {$\bar v(p)$};
+  \node[blob] at (7.05,0) {}; \draw[fermion] (8.4,0) -- (7.2,0);
+  \draw[mom] (7.55,0.25) -- (8.1,0.25) node[midway,above,ml] {$p$};
+  \node[lab] at (7.75,-0.55) {$v(p)$};
+  \draw[photon] (9.4,0) -- (10.6,0); \node[blob] at (10.75,0) {};
+  \draw[mom] (9.7,0.3) -- (10.25,0.3) node[midway,above,ml] {$k$};
+  \node[lab] at (10.1,-0.55) {$\varepsilon_\mu(k)$};
+  \node[blob] at (11.75,0) {}; \draw[photon] (11.9,0) -- (13.1,0);
+  \draw[mom] (12.25,0.3) -- (12.8,0.3) node[midway,above,ml] {$k$};
+  \node[lab] at (12.45,-0.55) {$\varepsilon^*_\mu(k)$};
+\end{scope}
 \end{tikzpicture}
-\caption{式~\eqref{eq:L} から導いた Feynman 則（\ref{app:rules}）。波線は光子、矢印の付いた実線はフェルミオン $f=e,\mu$ で、矢印はフェルミオン数の流れの向きである。上の段は左から光子とフェルミオンの伝播関数、頂点。下の段はそれぞれの対抗項で、$\otimes$ は対抗項の挿入を表す。ループ運動量ごとに $\int\dd^Dk/(2\pi)^D$ を掛ける。閉じたフェルミオンのループには $-1$ とトレースが付く。}
+\caption{式~\eqref{eq:L} から導いた Feynman 則（\ref{app:rules}）。波線は光子、矢印の付いた実線はフェルミオン $f=e,\mu$ で、矢印はフェルミオン数の流れの向きである。上の段は左から光子とフェルミオンの伝播関数、頂点。中の段はそれぞれの対抗項で、$\otimes$ は対抗項の挿入を表す。下の段は外線の因子で、灰色の丸は図の残りの部分、細い矢印は運動量の向きである。左から、入ってくるフェルミオン $u(p)$、出ていくフェルミオン $\bar u(p)$、入ってくる反フェルミオン $\bar v(p)$、出ていく反フェルミオン $v(p)$、入ってくる光子 $\varepsilon_\mu(k)$、出ていく光子 $\varepsilon^*_\mu(k)$。反フェルミオンではフェルミオン数の矢印が運動量と逆を向く。ループ運動量ごとに $\int\dd^Dk/(2\pi)^D$ を掛ける。閉じたフェルミオンのループには $-1$ とトレースが付く。}
 \label{fig:rules}
 \end{figure}
 
@@ -184,8 +207,12 @@ $E_\gamma,\ E_\psi,\ L$ & 図の外の光子線、外のフェルミオン線の
   \draw[fermion] (0.55,0) arc (0:180:0.55);
   \draw[fermion] (-0.55,0) arc (180:360:0.55);
   \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
-  \node[lab] at (0,-1.0) {(a) $\Pi_f$：$e^2$（$f=e,\mu$）};
-  \node[lab,font=\footnotesize] at (0,-1.45) {$1$（$-1$ とトレース）};
+  \draw[mom] (-1.45,0.3) -- (-0.95,0.3) node[midway,above,ml] {$q$};
+  \draw[mom] (0.95,0.3) -- (1.45,0.3) node[midway,above,ml] {$q$};
+  \node[ml] at (0,0.78) {$k$}; \node[ml] at (0,-0.78) {$k+q$};
+  \node[ml] at (-0.62,-0.27) {$\mu$}; \node[ml] at (0.62,-0.27) {$\nu$};
+  \node[lab] at (0,-1.25) {(a) $\Pi_f$：$e^2$（$f=e,\mu$）};
+  \node[lab,font=\footnotesize] at (0,-1.7) {$1$（$-1$ とトレース）};
 \end{scope}
 % (b) self-energy
 \begin{scope}[shift={(4.6,-0.3)}]
@@ -194,18 +221,25 @@ $E_\gamma,\ E_\psi,\ L$ & 図の外の光子線、外のフェルミオン線の
   \draw[fermion] (0.7,0) -- (1.5,0);
   \draw[photon] (0.7,0) arc (0:180:0.7);
   \node[vtx] at (-0.7,0) {}; \node[vtx] at (0.7,0) {};
-  \node[lab] at (0,-0.7) {(b) $\Sigma_f$：$e^2$};
-  \node[lab,font=\footnotesize] at (0,-1.15) {$1$};
+  \draw[mom] (-1.45,-0.25) -- (-0.95,-0.25) node[midway,below,ml] {$p$};
+  \draw[mom] (0.95,-0.25) -- (1.45,-0.25) node[midway,below,ml] {$p$};
+  \node[ml] at (0,-0.22) {$k$}; \node[ml] at (0,0.95) {$q=p-k$};
+  \node[lab] at (0,-0.95) {(b) $\Sigma_f$：$e^2$};
+  \node[lab,font=\footnotesize] at (0,-1.4) {$1$};
 \end{scope}
 % (c) vertex
-\begin{scope}[shift={(9.2,-0.3)}]
-  \draw[fermion] (-1.5,0) -- (-0.75,0);
-  \draw[fermion] (-0.75,0) -- (0,0);
-  \draw[fermion] (0,0) -- (0.75,0);
-  \draw[fermion] (0.75,0) -- (1.5,0);
-  \draw[photon] (0.75,0) arc (0:180:0.75);
+\begin{scope}[shift={(9.4,-0.3)}]
+  \draw[fermion] (-1.75,0) -- (-0.9,0);
+  \draw[fermion] (-0.9,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.9,0);
+  \draw[fermion] (0.9,0) -- (1.75,0);
+  \draw[photon] (0.9,0) arc (0:180:0.9);
   \draw[photon] (0,0) -- (0,-0.85);
-  \node[vtx] at (-0.75,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0) {};
+  \node[vtx] at (-0.9,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.9,0) {};
+  \draw[mom] (-1.7,-0.25) -- (-1.2,-0.25) node[midway,below,ml] {$p$};
+  \draw[mom] (1.2,-0.25) -- (1.7,-0.25) node[midway,below,ml] {$p'$};
+  \node[ml] at (-0.47,-0.22) {$p-l$}; \node[ml] at (0.5,-0.22) {$p'-l$};
+  \node[ml] at (0,1.12) {$l$}; \node[ml] at (0.3,-0.68) {$q,\mu$};
   \node[lab] at (0,-1.25) {(c) $\Lambda^\mu$：$e^2$};
   \node[lab,font=\footnotesize] at (0,-1.7) {$1$};
 \end{scope}
@@ -238,7 +272,7 @@ $E_\gamma,\ E_\psi,\ L$ & 図の外の光子線、外のフェルミオン線の
   \node[lab,font=\footnotesize] at (0,-1.95) {和は紫外で有限};
 \end{scope}
 \end{tikzpicture}
-\caption{1ループの1PI 図（\ref{app:rules}）。(a) と (d)〜(f) は閉じたフェルミオンのループで、フレーバー $e$、$\mu$ のそれぞれについて現れ、$-1$ とトレースが付く。対称性因子はすべて1である。(d) は被積分関数が奇関数になって0である。(e) の2通りは向きの逆なループで、Furry の定理により打ち消す。(f) の6通りは4本の外線をループに付ける巡回の順序（$3!=6$）で、一つ一つは対数発散するが和は有限である。}
+\caption{1ループの1PI 図（\ref{app:rules}）。(a)〜(c) には、\ref{app:ward}、\ref{app:ren} の式で使う運動量の割り当てを書いた（$p'=p+q$）。(a) と (d)〜(f) は閉じたフェルミオンのループで、フレーバー $e$、$\mu$ のそれぞれについて現れ、$-1$ とトレースが付く。対称性因子はすべて1である。(d) は被積分関数が奇関数になって0である。(e) の2通りは向きの逆なループで、Furry の定理により打ち消す。(f) の6通りは4本の外線をループに付ける巡回の順序（$3!=6$）で、一つ一つは対数発散するが和は有限である。}
 \label{fig:oneloop}
 \end{figure}
 
@@ -251,6 +285,50 @@ $E_\gamma,\ E_\psi,\ L$ & 図の外の光子線、外のフェルミオン線の
 \end{equation}
 である（\ref{app:counting}）。$\omega\ge0$ となるのは $(E_\gamma,E_\psi)=(1,0),(2,0),(3,0),(4,0),(0,2),(1,2)$ の6種類である。$(1,0)$ と $(3,0)$ は上で述べたように0である。光子4点関数 $(4,0)$ は $\omega=0$ だが、ゲージ不変性により外線ごとに場の強さ $F_{\mu\nu}$、すなわち運動量が一つずつ付くので、実質の次数は $-4$ で有限である。光子2点関数 $(2,0)$ は $\omega=2$ だが、横波性（下の式~\eqref{eq:ward}）により $q^2$ が括り出されて対数発散になる。残りのフェルミオンの2点関数（$\omega=1$）と頂点（$\omega=0$）を合わせた三つが、式~\eqref{eq:L} の対抗項 $\delta_3$、$\delta_2$、$\delta_m$、$\delta_1$ に対応する。光子の質量項や $(A^2)^2$ の対抗項は要らない。
 
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (0,0) -- (1,0); \draw[fermion] (1,0) -- (2,0);
+  \draw[photon] (1,0) -- (1,-0.65); \node[qdot] at (1,-0.7) {};
+  \node[ml] at (1.32,-0.62) {$q$};
+  \node[ml] at (0.5,0.22) {$p$}; \node[ml] at (1.5,0.22) {$p+q$};
+  \node at (2.55,0) {$=$};
+  \draw[fermion] (3.1,0) -- (4.1,0); \node[ml] at (3.6,0.22) {$p$};
+  \node at (4.55,0) {$-$};
+  \draw[fermion] (5.0,0) -- (6.0,0); \node[ml] at (5.5,0.22) {$p+q$};
+  \node[lab] at (3.0,-1.1) {$S(p+q)\,\slashed q\,S(p)=S(p)-S(p+q)$};
+\end{scope}
+\begin{scope}[shift={(-0.8,-2.9)}]
+  \draw[fermion] (-1.3,0) -- (-0.6,0); \draw[fermion] (-0.6,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0); \draw[fermion] (0.6,0) -- (1.3,0);
+  \draw[photon] (0.6,0) arc (0:180:0.6);
+  \draw[photon] (0,0) -- (0,-0.6); \node[qdot] at (0,-0.65) {};
+  \node[vtx] at (-0.6,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0) {};
+  \node[ml] at (0.3,-0.6) {$q$}; \node[ml] at (-1.0,-0.22) {$p$}; \node[ml] at (1.0,-0.22) {$p+q$};
+  \node[lab] at (0,-1.2) {$q_\mu\Lambda^\mu(p+q,p)$};
+  \node at (1.85,0) {$=$};
+  \begin{scope}[shift={(3.55,0)}]
+    \draw[fermion] (-1.1,0) -- (-0.55,0); \draw[fermion] (-0.55,0) -- (0.55,0); \draw[fermion] (0.55,0) -- (1.1,0);
+    \draw[photon] (0.55,0) arc (0:180:0.55);
+    \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+    \node[ml] at (-0.85,-0.22) {$p$};
+    \node[lab] at (0,-1.2) {$\Sigma(p)$};
+  \end{scope}
+  \node at (5.2,0) {$-$};
+  \begin{scope}[shift={(6.85,0)}]
+    \draw[fermion] (-1.1,0) -- (-0.55,0); \draw[fermion] (-0.55,0) -- (0.55,0); \draw[fermion] (0.55,0) -- (1.1,0);
+    \draw[photon] (0.55,0) arc (0:180:0.55);
+    \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+    \node[ml] at (-0.8,-0.22) {$p+q$};
+    \node[lab] at (0,-1.2) {$\Sigma(p+q)$};
+  \end{scope}
+\end{scope}
+\end{tikzpicture}
+\caption{Ward--Takahashi 恒等式~\eqref{eq:ward} を図で表したもの（\ref{app:ward}）。黒い四角は、光子の線を外して運動量 $q$ で縮約すること（$\gamma^\mu\to\slashed q$）を表す。上の段：縮約した頂点は、その両側のフェルミオンの伝播関数の差になる（運動量 $p+q$ の線が消えたものから、運動量 $p$ の線が消えたものを引く）。下の段：これを頂点の補正の中の頂点に使うと、ループの中の伝播関数が一つずつ消え、頂点の補正は二つの自己エネルギーの差になる。光子の伝播関数（$\xi$ を含む）は関与しないので、任意の $\xi$ で成り立つ。光子の2点関数では、同じ縮約が積分変数をずらした二つの同じ積分の差になって0になる（横波性）。}
+\label{fig:ward}
+\end{figure}
+
 \paragraph{Ward--Takahashi 恒等式。}1ループで、任意の $\xi$ について
 \begin{equation}
 q_\mu\Pi^{\mu\nu}(q)=0,\qquad
@@ -258,7 +336,7 @@ q_\mu\Lambda^\mu(p+q,p)=\Sigma(p)-\Sigma(p+q),\qquad
 \Lambda^\mu(p,p)=-\frac{\partial\Sigma(p)}{\partial p_\mu}
 \label{eq:ward}
 \end{equation}
-が成り立つ（Ward~\cite{ward}、Takahashi~\cite{takahashi}、\ref{app:ward}）。一つ目から $\Pi^{\mu\nu}=(q^2g^{\mu\nu}-q^\mu q^\nu)\Pi(q^2)$ となり、光子は質量を得ない。二つ目と三つ目から、頂点の発散と自己エネルギーの $\slashed p$ の発散が結びつき、$\delta_1^f=\delta_2^f$、したがって $Z_e=Z_3^{-1/2}$ となる。電荷の繰り込みは光子の場の繰り込みだけで決まり、$e$ と $\mu$ で共通である。
+が成り立つ（Ward~\cite{ward}、Takahashi~\cite{takahashi}、\ref{app:ward}）。図~\ref{fig:ward} がその仕組みで、光子の線を運動量で縮約するとフェルミオンの伝播関数が一つ消える。一つ目から $\Pi^{\mu\nu}=(q^2g^{\mu\nu}-q^\mu q^\nu)\Pi(q^2)$ となり、光子は質量を得ない。二つ目と三つ目から、頂点の発散と自己エネルギーの $\slashed p$ の発散が結びつき、$\delta_1^f=\delta_2^f$、したがって $Z_e=Z_3^{-1/2}$ となる。電荷の繰り込みは光子の場の繰り込みだけで決まり、$e$ と $\mu$ で共通である。
 
 \paragraph{1ループの1PI 関数。}伝播関数の分母を $D_a(k)\equiv k^2-m_a^2+i0$ と書き、1点と2点のスカラー積分を
 \begin{equation}
@@ -271,14 +349,13 @@ I_2^{ab}(p^2)\equiv\mu^{2\epsilon}\int\frac{\dd^Dk}{(2\pi)^D}\frac{1}{D_a(k)\,D_
 \begin{aligned}
 \Pi_f(q^2)&=\frac{e^2}{K}\,\frac{2}{(D-1)q^2}\Bigl[2(D-2)A_0(m_f^2)-\bigl(4m_f^2+(D-2)q^2\bigr)B_0(q^2;m_f^2,m_f^2)\Bigr],\\
 \Sigma_f(p)&=\frac{e^2}{K}\Bigl[\xi(D-2)\,\slashed p\,B_1(p^2;m_f^2,0)+(D-1+\xi)\,m_f\,B_0(p^2;m_f^2,0)\Bigr],\\
-F_1^\Lambda(q^2)&=\frac{e^2}{K}\Bigl\{\xi\DUV+(1-\xi)\DIR-2-2\!\int\!\dd F\ln\frac{\Delta_F}{\mu^2}
-+(2m^2-q^2)\!\int_0^1\!\dd w\,\frac{\DIR-\ln(h(w)/\mu^2)}{h(w)}\\
-&\hspace{3.2em}+2\!\int\!\dd F\,\frac{\tilde N-(q^2-2m^2)}{\Delta_F}\Bigr\},\\
-F_2(q^2)&=\frac{e^2}{K}\int\!\dd F\,\frac{4m^2z(1-z)}{\Delta_F}=\frac{2e^2m^2}{K}\int_0^1\frac{\dd w}{m^2-q^2w(1-w)}
+F_1^\Lambda(q^2)&=\frac{e^2}{K}\Bigl\{\xi\DUV+(1-\xi)\DIR+(2m^2-q^2)\!\int_0^1\!\dd w\,\frac{\DIR-\ln(h(w)/\mu^2)}{h(w)}\\
+&\hspace{3.2em}-2-\int_0^1\!\dd w\ln\frac{h(w)}{\mu^2}+2(3m^2-q^2)\int_0^1\frac{\dd w}{h(w)}\Bigr\},\\
+F_2(q^2)&=\frac{2e^2m^2}{K}\int_0^1\frac{\dd w}{h(w)},\qquad h(w)\equiv m^2-q^2w(1-w)
 \end{aligned}
 \label{eq:V}
 \end{equation}
-となる（\ref{app:ren}）。$\Pi_f$ と $\Sigma_f$ は対抗項を含まない値で、$A_0$、$B_0$、$B_1$ は $D$ 次元の積分（極を含む）である。頂点は質量殻上（$p^2=p'^2=m^2$、$q=p'-p$）の値で、$\bar u(p')\Lambda^\mu u(p)=\bar u(p')[\gamma^\mu F_1^\Lambda+\frac{i\sigma^{\mu\nu}q_\nu}{2m}F_2]u(p)$ と書いた。$\dd F=\dd x\,\dd y\,\dd z\,\delta(x+y+z-1)$、$\Delta_F=(1-z)^2m^2-xyq^2$、$h(w)=m^2-q^2w(1-w)$、$\tilde N=(1-x)(1-y)q^2+(1-4z+z^2)m^2$ で、$q^2>0$ では $\Delta_F$、$h$ に $-i0$ を付ける。
+となる（\ref{app:ren}）。$\Pi_f$ と $\Sigma_f$ は対抗項を含まない値で、$A_0$、$B_0$、$B_1$ は $D$ 次元の積分（極を含む）である。頂点は質量殻上（$p^2=p'^2=m^2$、$q=p'-p$）の値で、$\bar u(p')\Lambda^\mu u(p)=\bar u(p')[\gamma^\mu F_1^\Lambda+\frac{i\sigma^{\mu\nu}q_\nu}{2m}F_2]u(p)$ と書いた。$F_1^\Lambda$ と $F_2$ は、三つの Feynman パラメータのうち二つの積分を実行した形で、残った $w$ は光子から見た二つのフェルミオンの線の分け方である（\ref{app:ren}）。$q^2>0$ では $h$ に $-i0$ を付ける。
 
 式~\eqref{eq:V} の要点は三つある。一つ目に、自己エネルギーのゲージ依存の部分は、$q=p-k$ として $\slashed q\,(\slashed k+m)\slashed q=(\slashed p-m)(\slashed k+m)(\slashed p-m)+(\text{伝播関数を消す項})$ と書き直すと、スケールのない積分を除いて $(\slashed p-m)X(\slashed p-m)$ の形になる。$X$ を部分積分の恒等式で $A_0$、$B_0$ に直すと、$D$ 次元で厳密に $-(1-\xi)[(D-2)\slashed pB_1+mB_0]$ となり、Feynman ゲージの部分と合わせて上の短い形になる。その結果、$\Sigma_V$ は $\xi$ に比例し、Landau ゲージ（$\xi=0$）では1ループの場の繰り込みが0である。二つ目に、質量殻上の頂点のゲージ依存の部分は、外線のスピノルの Dirac 方程式で伝播関数が消えて $\bar u\gamma^\mu u\int\dd^Dl/l^4$ になる。これはスケールのない積分で、次元正則化では0である。したがって、$F_1^\Lambda$ の $\xi$ 依存は $\xi\DUV+(1-\xi)\DIR$ という形でしか現れず、数値としては $\xi$ によらない。三つ目に、$F_1^\Lambda$ の赤外の極は Feynman パラメータの角 $z\to1$ から来て、係数は $(1-\xi)+(2m^2-q^2)\int\dd w/h$ である。$F_2$ は紫外でも赤外でも有限で、$\xi$ にも $\mu$ にもよらない。
 
@@ -337,7 +414,81 @@ e^2(\mu)=e_{\mathrm{OS}}^2\Bigl[1+\frac{4e^2}{3K}\sum_f\ln\frac{\mu^2}{m_f^2}\Bi
 \end{equation}
 である（\ref{app:os}）。極質量は $\xi$ によらない。$\Sigma_V$ と $\Sigma_S$ の $\xi$ 依存が $p^2=m^2$ で打ち消すからである。$\mu$ にもよらない（$\gamma_m^f$ と $\ln\mu^2$ の係数が打ち消す）。フェルミオンの留数 $R_f$ は $\xi$ に依存する赤外の極を持つ。これを正しく得るには、$\Sigma$ の微分を $D$ 次元で行い、$(D-2)B_1'$ と $(D-1+\xi)B_0'$ の $O(\epsilon)$ の部分が赤外の極に掛かる有限の項 $2(1-\xi)$ を残す必要がある（\ref{app:os}）。式~\eqref{eq:ward} から $R_fF_1^{\mathrm R}(0)=1$ が成り立つので、外線の光子の電荷は $e(\mu)R_A^{1/2}=e_{\mathrm{OS}}$ となり、$e_{\mathrm{OS}}$ は $\mu$ にも $\xi$ にもよらない。基準点では $m_{e,\mathrm p}=1.02533$、$m_{\mu,\mathrm p}=1.70879$、$e_{\mathrm{OS}}=1.00451$（$\alpha^{-1}(0)=12.454$、$\alpha^{-1}(\mu)=12.566$）である。
 
-\paragraph{木の振幅とスピン和。}四つの過程の木の振幅は
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-0.9,-0.75) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.75);
+  \draw[photon] (0,0) -- (1.3,0);
+  \draw[fermion] (1.3,0) -- (2.2,0.75); \draw[fermion] (2.2,-0.75) -- (1.3,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.3,0) {};
+  \node[ml,anchor=east] at (-0.9,-0.75) {$e^-(p_1)$}; \node[ml,anchor=east] at (-0.9,0.75) {$e^+(p_2)$};
+  \node[ml,anchor=west] at (2.2,0.75) {$\mu^-(k_1)$}; \node[ml,anchor=west] at (2.2,-0.75) {$\mu^+(k_2)$};
+  \node[ml] at (0.65,0.32) {$p_1+p_2$};
+  \node[lab] at (0.65,-1.35) {(A)\quad $1/s$};
+\end{scope}
+\begin{scope}[shift={(5.6,0)}]
+  \draw[fermion] (-0.9,-0.95) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0.9,-0.95);
+  \draw[fermion] (0,0.5) -- (-0.9,0.95); \draw[fermion] (0.9,0.95) -- (0,0.5);
+  \draw[photon] (0,-0.5) -- (0,0.5);
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {};
+  \node[ml,anchor=east] at (-0.9,-0.95) {$e^-(p_1)$}; \node[ml,anchor=west] at (0.9,-0.95) {$e^-(k_1)$};
+  \node[ml,anchor=east] at (-0.9,0.95) {$e^+(p_2)$}; \node[ml,anchor=west] at (0.9,0.95) {$e^+(k_2)$};
+  \node[ml,anchor=west] at (0.12,0) {$p_1-k_1$};
+  \node[lab] at (0,-1.35) {(B)\quad $+1/t$};
+\end{scope}
+\begin{scope}[shift={(9.9,0)}]
+  \draw[fermion] (-0.9,-0.75) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.75);
+  \draw[photon] (0,0) -- (1.3,0);
+  \draw[fermion] (1.3,0) -- (2.2,0.75); \draw[fermion] (2.2,-0.75) -- (1.3,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.3,0) {};
+  \node[ml,anchor=east] at (-0.9,-0.75) {$e^-(p_1)$}; \node[ml,anchor=east] at (-0.9,0.75) {$e^+(p_2)$};
+  \node[ml,anchor=west] at (2.2,0.75) {$e^-(k_1)$}; \node[ml,anchor=west] at (2.2,-0.75) {$e^+(k_2)$};
+  \node[ml] at (0.65,0.32) {$p_1+p_2$};
+  \node[lab] at (0.65,-1.35) {(B)\quad $-1/s$};
+\end{scope}
+\begin{scope}[shift={(0,-3.3)}]
+  \draw[fermion] (-1.3,0) -- (-0.5,0); \draw[fermion] (-0.5,0) -- (0.5,0); \draw[fermion] (0.5,0) -- (1.3,0);
+  \draw[photon] (-1.2,-0.85) -- (-0.5,0); \draw[photon] (0.5,0) -- (1.2,0.85);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[ml,anchor=east] at (-1.3,0) {$e^-(p)$}; \node[ml,anchor=west] at (1.3,0) {$e^-(p')$};
+  \node[ml,anchor=east] at (-1.2,-0.85) {$\gamma(k)$}; \node[ml,anchor=west] at (1.2,0.85) {$\gamma(k')$};
+  \node[ml] at (0,-0.22) {$p+k$};
+  \node[lab] at (0,-1.35) {(C)\quad $1/(s-m^2)$};
+\end{scope}
+\begin{scope}[shift={(4.6,-3.3)}]
+  \draw[fermion] (-1.3,0) -- (-0.5,0); \draw[fermion] (-0.5,0) -- (0.5,0); \draw[fermion] (0.5,0) -- (1.3,0);
+  \draw[photon] (-0.5,0) -- (-1.2,0.85); \draw[photon] (1.2,-0.85) -- (0.5,0);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[ml,anchor=east] at (-1.3,0) {$e^-(p)$}; \node[ml,anchor=west] at (1.3,0) {$e^-(p')$};
+  \node[ml,anchor=east] at (-1.2,0.85) {$\gamma(k')$}; \node[ml,anchor=west] at (1.2,-0.85) {$\gamma(k)$};
+  \node[ml] at (0,-0.22) {$p-k'$};
+  \node[lab] at (0,-1.35) {(C)\quad $1/(u-m^2)$};
+\end{scope}
+\begin{scope}[shift={(8.7,-3.3)}]
+  \draw[fermion] (-0.9,-1.0) -- (0,-0.45); \draw[fermion] (0,-0.45) -- (0,0.45); \draw[fermion] (0,0.45) -- (-0.9,1.0);
+  \draw[photon] (0,-0.45) -- (1.0,-0.9); \draw[photon] (0,0.45) -- (1.0,0.9);
+  \node[vtx] at (0,-0.45) {}; \node[vtx] at (0,0.45) {};
+  \node[ml,anchor=east] at (-0.9,-1.0) {$e^-(p_1)$}; \node[ml,anchor=east] at (-0.9,1.0) {$e^+(p_2)$};
+  \node[ml,anchor=west] at (1.0,-0.9) {$\gamma(k_1)$}; \node[ml,anchor=west] at (1.0,0.9) {$\gamma(k_2)$};
+  \node[ml,anchor=east] at (-0.1,0) {$p_1-k_1$};
+  \node[lab] at (0,-1.45) {(D)\quad $1/(t-m^2)$};
+\end{scope}
+\begin{scope}[shift={(12.75,-3.3)}]
+  \draw[fermion] (-0.9,-1.0) -- (0,-0.45); \draw[fermion] (0,-0.45) -- (0,0.45); \draw[fermion] (0,0.45) -- (-0.9,1.0);
+  \draw[photon] (0,-0.45) -- (1.0,-0.9); \draw[photon] (0,0.45) -- (1.0,0.9);
+  \node[vtx] at (0,-0.45) {}; \node[vtx] at (0,0.45) {};
+  \node[ml,anchor=east] at (-0.9,-1.0) {$e^-(p_1)$}; \node[ml,anchor=east] at (-0.9,1.0) {$e^+(p_2)$};
+  \node[ml,anchor=west] at (1.0,-0.9) {$\gamma(k_2)$}; \node[ml,anchor=west] at (1.0,0.9) {$\gamma(k_1)$};
+  \node[ml,anchor=east] at (-0.1,0) {$p_1-k_2$};
+  \node[lab] at (0,-1.45) {(D)\quad $1/(u-m^2)$};
+\end{scope}
+\end{tikzpicture}
+\caption{式~\eqref{eq:Mtree} の木の図。上の段は (A) $e^+e^-\to\mu^+\mu^-$ と (B) Bhabha 散乱、下の段は (C) Compton 散乱と (D) $e^+e^-\to\gamma\gamma$ である。内線の脇の運動量は伝播関数の運動量で、下の式はその伝播関数の分母（(B) は二つの図の相対的な符号も）を表す。(B) の $s$ チャンネルの $-1$ は Fermi 統計から来る。(C) の右の図は、電子がまず $k'$ を放出してから $k$ を吸収する $u$ チャンネルで、(D) の二つの図は二つの光子を入れ替えたものである。}
+\label{fig:tree}
+\end{figure}
+
+\paragraph{木の振幅とスピン和。}四つの過程の木の図（図~\ref{fig:tree}）を Feynman 則で書くと、振幅は
 \begin{equation}
 \begin{aligned}
 \mathcal M_A&=\frac{e^2}{s}\,\bigl[\bar v(p_2)\gamma^\nu u(p_1)\bigr]\bigl[\bar u(k_1)\gamma_\nu v(k_2)\bigr],\\
@@ -362,7 +513,141 @@ e^2(\mu)=e_{\mathrm{OS}}^2\Bigl[1+\frac{4e^2}{3K}\sum_f\ln\frac{\mu^2}{m_f^2}\Bi
 \end{equation}
 となる（\ref{app:tree}）。光子の偏極の和は $-g_{\mu\nu}$ で置き換えた。これが許されるのは、外線の光子の運動量で偏極を置き換えると振幅が0になる（Ward 恒等式）からである。(D) は (C) の交差 $s\to t$ に、フェルミオンを一つ交差させる符号 $-1$ を掛けたものである。(A) は閾値 $s\to4m_\mu^2$ で s 波から始まり、$\sigma\propto\beta_\mu(3-\beta_\mu^2)/2$（$\beta_\mu=\sqrt{1-4m_\mu^2/s}$）である。(C) は低エネルギーで Thomson の断面積 $8\pi\alpha^2/(3m^2)$ に近づく。
 
-\paragraph{1ループの $e^+e^-\to\mu^+\mu^-$。}$e^4$ の次数の補正は、$s$ チャンネルの光子の真空偏極、二つの頂点の補正、外線の留数、二つの光子の交換（直接と交差の箱）からなる。前の三つは
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% (i) vacuum polarization
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-0.95,-0.8) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \draw[photon] (0,0) -- (0.45,0); \draw[photon] (1.15,0) -- (1.6,0);
+  \draw[fermion] (1.15,0) arc (0:180:0.35); \draw[fermion] (0.45,0) arc (180:360:0.35);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {}; \node[vtx] at (0.45,0) {}; \node[vtx] at (1.15,0) {};
+  \node[ml,anchor=east] at (-0.95,-0.8) {$e^-$}; \node[ml,anchor=east] at (-0.95,0.8) {$e^+$};
+  \node[ml,anchor=west] at (2.55,0.8) {$\mu^-$}; \node[ml,anchor=west] at (2.55,-0.8) {$\mu^+$};
+  \node[ml] at (0.8,-0.55) {$f=e,\mu$};
+  \node[lab] at (0.8,-1.3) {(i) 真空偏極 $\Pi_f(s)$};
+\end{scope}
+% (ii) vertex at the electron side
+\begin{scope}[shift={(5.0,0)}]
+  \draw[fermion] (-0.95,-0.8) -- (-0.5,-0.42); \draw[fermion] (-0.5,-0.42) -- (0,0);
+  \draw[fermion] (0,0) -- (-0.5,0.42); \draw[fermion] (-0.5,0.42) -- (-0.95,0.8);
+  \draw[photon] (-0.5,-0.42) -- (-0.5,0.42);
+  \draw[photon] (0,0) -- (1.6,0);
+  \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {}; \node[vtx] at (-0.5,-0.42) {}; \node[vtx] at (-0.5,0.42) {};
+  \node[ml,anchor=east] at (-0.95,-0.8) {$e^-$}; \node[ml,anchor=east] at (-0.95,0.8) {$e^+$};
+  \node[ml,anchor=west] at (2.55,0.8) {$\mu^-$}; \node[ml,anchor=west] at (2.55,-0.8) {$\mu^+$};
+  \node[lab] at (0.8,-1.3) {(ii) 頂点の補正 $\Lambda_e$};
+\end{scope}
+% (iii) vertex at the muon side
+\begin{scope}[shift={(10.0,0)}]
+  \draw[fermion] (-0.95,-0.8) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[photon] (0,0) -- (1.6,0);
+  \draw[fermion] (1.6,0) -- (2.1,0.42); \draw[fermion] (2.1,0.42) -- (2.55,0.8);
+  \draw[fermion] (2.55,-0.8) -- (2.1,-0.42); \draw[fermion] (2.1,-0.42) -- (1.6,0);
+  \draw[photon] (2.1,-0.42) -- (2.1,0.42);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {}; \node[vtx] at (2.1,-0.42) {}; \node[vtx] at (2.1,0.42) {};
+  \node[ml,anchor=east] at (-0.95,-0.8) {$e^-$}; \node[ml,anchor=east] at (-0.95,0.8) {$e^+$};
+  \node[ml,anchor=west] at (2.55,0.8) {$\mu^-$}; \node[ml,anchor=west] at (2.55,-0.8) {$\mu^+$};
+  \node[lab] at (0.8,-1.3) {(iii) 頂点の補正 $\Lambda_\mu$};
+\end{scope}
+% (iv) direct box
+\begin{scope}[shift={(0.1,-3.2)}]
+  \draw[fermion] (-0.8,-1.0) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0,0.5); \draw[fermion] (0,0.5) -- (-0.8,1.0);
+  \draw[fermion] (2.2,-1.0) -- (1.4,-0.5); \draw[fermion] (1.4,-0.5) -- (1.4,0.5); \draw[fermion] (1.4,0.5) -- (2.2,1.0);
+  \draw[photon] (0,-0.5) -- (1.4,-0.5); \draw[photon] (0,0.5) -- (1.4,0.5);
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {}; \node[vtx] at (1.4,-0.5) {}; \node[vtx] at (1.4,0.5) {};
+  \node[ml,anchor=east] at (-0.8,-1.0) {$e^-$}; \node[ml,anchor=east] at (-0.8,1.0) {$e^+$};
+  \node[ml,anchor=west] at (2.2,1.0) {$\mu^-$}; \node[ml,anchor=west] at (2.2,-1.0) {$\mu^+$};
+  \node[lab] at (0.7,-1.45) {(iv) 直接の箱};
+\end{scope}
+% (v) crossed box
+\begin{scope}[shift={(5.1,-3.2)}]
+  \draw[fermion] (-0.8,-1.0) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0,0.5); \draw[fermion] (0,0.5) -- (-0.8,1.0);
+  \draw[fermion] (2.2,-1.0) -- (1.4,-0.5); \draw[fermion] (1.4,-0.5) -- (1.4,0.5); \draw[fermion] (1.4,0.5) -- (2.2,1.0);
+  \draw[photon] (0,-0.5) -- (1.4,0.5); \draw[photon] (0,0.5) -- (1.4,-0.5);
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {}; \node[vtx] at (1.4,-0.5) {}; \node[vtx] at (1.4,0.5) {};
+  \node[ml,anchor=east] at (-0.8,-1.0) {$e^-$}; \node[ml,anchor=east] at (-0.8,1.0) {$e^+$};
+  \node[ml,anchor=west] at (2.2,1.0) {$\mu^-$}; \node[ml,anchor=west] at (2.2,-1.0) {$\mu^+$};
+  \node[lab] at (0.7,-1.45) {(v) 交差した箱};
+\end{scope}
+% (vi) external leg
+\begin{scope}[shift={(10.0,-3.2)}]
+  \draw[fermion] (-1.3,-1.095) -- (-1.0,-0.842); \draw[fermion] (-1.0,-0.842) -- (-0.45,-0.379); \draw[fermion] (-0.45,-0.379) -- (0,0);
+  \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[photon] (-0.45,-0.379) arc (40:220:0.36);
+  \draw[photon] (0,0) -- (1.6,0);
+  \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {}; \node[vtx] at (-1.0,-0.842) {}; \node[vtx] at (-0.45,-0.379) {};
+  \node[ml,anchor=east] at (-1.3,-1.095) {$e^-$}; \node[ml,anchor=east] at (-0.95,0.8) {$e^+$};
+  \node[ml,anchor=west] at (2.55,0.8) {$\mu^-$}; \node[ml,anchor=west] at (2.55,-0.8) {$\mu^+$};
+  \node[lab] at (0.8,-1.55) {(vi) 外線の自己エネルギー};
+\end{scope}
+% (vii) counterterms
+\begin{scope}[shift={(0,-6.3)}]
+  \draw[fermion] (-0.95,-0.8) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \draw[photon] (0,0) -- (1.6,0); \node[ctv] at (0.8,0) {};
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {};
+  \node[ml,anchor=east] at (-0.95,-0.8) {$e^-$}; \node[ml,anchor=east] at (-0.95,0.8) {$e^+$};
+  \node[ml,anchor=west] at (2.55,0.8) {$\mu^-$}; \node[ml,anchor=west] at (2.55,-0.8) {$\mu^+$};
+  \node[lab] at (0.8,-1.3) {(vii) 対抗項 $\delta_3$};
+\end{scope}
+\begin{scope}[shift={(5.0,-6.3)}]
+  \draw[fermion] (-0.95,-0.8) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \draw[photon] (0,0) -- (1.6,0); \node[ctv] at (0,0) {}; \node[vtx] at (1.6,0) {};
+  \node[ml,anchor=east] at (-0.95,-0.8) {$e^-$}; \node[ml,anchor=east] at (-0.95,0.8) {$e^+$};
+  \node[ml,anchor=west] at (2.55,0.8) {$\mu^-$}; \node[ml,anchor=west] at (2.55,-0.8) {$\mu^+$};
+  \node[lab] at (0.8,-1.3) {対抗項 $\delta_1^e$};
+\end{scope}
+\begin{scope}[shift={(10.0,-6.3)}]
+  \draw[fermion] (-0.95,-0.8) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \draw[photon] (0,0) -- (1.6,0); \node[vtx] at (0,0) {}; \node[ctv] at (1.6,0) {};
+  \node[ml,anchor=east] at (-0.95,-0.8) {$e^-$}; \node[ml,anchor=east] at (-0.95,0.8) {$e^+$};
+  \node[ml,anchor=west] at (2.55,0.8) {$\mu^-$}; \node[ml,anchor=west] at (2.55,-0.8) {$\mu^+$};
+  \node[lab] at (0.8,-1.3) {対抗項 $\delta_1^\mu$};
+\end{scope}
+% (viii) real emission
+\begin{scope}[shift={(0.2,-9.3)},scale=0.85]
+  \draw[fermion] (-0.95,-0.8) -- (-0.5,-0.42); \draw[fermion] (-0.5,-0.42) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[photon] (-0.5,-0.42) -- (-0.25,-1.05);
+  \draw[photon] (0,0) -- (1.6,0); \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {}; \node[vtx] at (-0.5,-0.42) {};
+  \node[ml] at (0.0,-1.1) {$\gamma$};
+\end{scope}
+\begin{scope}[shift={(3.9,-9.3)},scale=0.85]
+  \draw[fermion] (-0.95,-0.8) -- (0,0); \draw[fermion] (0,0) -- (-0.5,0.42); \draw[fermion] (-0.5,0.42) -- (-0.95,0.8);
+  \draw[photon] (-0.5,0.42) -- (-0.25,1.05);
+  \draw[photon] (0,0) -- (1.6,0); \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {}; \node[vtx] at (-0.5,0.42) {};
+  \node[ml] at (0.0,1.1) {$\gamma$};
+\end{scope}
+\begin{scope}[shift={(7.6,-9.3)},scale=0.85]
+  \draw[fermion] (-0.95,-0.8) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[photon] (0,0) -- (1.6,0);
+  \draw[fermion] (1.6,0) -- (2.1,0.42); \draw[fermion] (2.1,0.42) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (1.6,0);
+  \draw[photon] (2.1,0.42) -- (1.85,1.05);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {}; \node[vtx] at (2.1,0.42) {};
+  \node[ml] at (1.6,1.1) {$\gamma$};
+\end{scope}
+\begin{scope}[shift={(11.3,-9.3)},scale=0.85]
+  \draw[fermion] (-0.95,-0.8) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.8);
+  \draw[photon] (0,0) -- (1.6,0);
+  \draw[fermion] (1.6,0) -- (2.55,0.8); \draw[fermion] (2.55,-0.8) -- (2.1,-0.42); \draw[fermion] (2.1,-0.42) -- (1.6,0);
+  \draw[photon] (2.1,-0.42) -- (1.85,-1.05);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.6,0) {}; \node[vtx] at (2.1,-0.42) {};
+  \node[ml] at (1.6,-1.1) {$\gamma$};
+\end{scope}
+\node[lab] at (6.6,-10.65) {(viii) 実の光子の放射 $e^+e^-\to\mu^+\mu^-\gamma$（$e^-$、$e^+$、$\mu^-$、$\mu^+$ からの放射）};
+\end{tikzpicture}
+\caption{$e^+e^-\to\mu^+\mu^-$ の $e^4$ の次数の補正（\ref{app:scat}）。(i) $s$ チャンネルの光子への真空偏極の挿入（ループは $e$ と $\mu$ の2通り）。(ii)、(iii) 電子側と $\mu$ 粒子側の頂点の補正。(iv)、(v) 二つの光子の交換（直接と交差の箱）。(vi) 外線の自己エネルギー。切断された振幅には入れず、LSZ の留数 $R_f$ として外線ごとに $R_f^{1/2}$ を掛ける（4本の外線のそれぞれ）。(vii) $\MSbar$ の対抗項の挿入。(i)〜(iii)、(vi)、(vii) を合わせたものが式~\eqref{eq:Ms} で、(iv)、(v) は手順 (4) で求める。(viii) 同じ次数の断面積に寄与する実の光子の放射（$\mathcal M_A$ に $e$ が一つ増えた図）。その軟光子の領域の赤外の極が、(ii)〜(v) の赤外の極と打ち消す。}
+\label{fig:eemumu}
+\end{figure}
+
+\paragraph{1ループの $e^+e^-\to\mu^+\mu^-$。}$e^4$ の次数の補正は、図~\ref{fig:eemumu} の (i)〜(v)、すなわち$s$ チャンネルの光子の真空偏極、二つの頂点の補正、外線の留数、二つの光子の交換（直接と交差の箱）からなる。前の三つは
 \begin{equation}
 \mathcal M_s^{(1)}+\mathcal M_A=\frac{e_{\mathrm{OS}}^2}{s}\bigl[1+\hat\Pi(s)\bigr]\,\bigl[\bar v(p_2)\Gamma_e^\nu u(p_1)\bigr]\bigl[\bar u(k_1)\Gamma_{\mu,\nu}v(k_2)\bigr],\qquad
 \Gamma_f^\nu=\gamma^\nu\hat F_1^f(s)+\frac{i\sigma^{\nu\rho}q_\rho}{2m_f}F_2^f(s)
@@ -412,7 +697,7 @@ Schwinger の対生成 & 後で & — & — & — & — \\
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1)、(2) はそれぞれ \texttt{run\_model\_check.sh}、\texttt{run\_tree\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1)〜(3) はそれぞれ \texttt{run\_model\_check.sh}、\texttt{run\_tree\_check.sh}、\texttt{run\_oneloop\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/SpinorQED.fr} を作った。ラグランジアンは式~\eqref{eq:L} からゲージ固定の項と対抗項を除いた部分で、ゲージ群 $U(1)$ の電荷 $Q=-1$ を二つのフレーバーに与え、共変微分で結合を書いた。パラメータの名前と MadGraph の結合の次数の決め方は\ref{app:details} に示す。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通った。頂点は二つで、どちらも $-i\,\texttt{ee}\,\gamma^\mu$ となり、図~\ref{fig:rules} の $ieQ_f\gamma^\mu=-ie\gamma^\mu$ と一致した。光子の自己結合は現れない。FeynArts の模型では、頂点はカイラルな射影の係数の組 $\{c_L,c_R\}=\{i\,\texttt{gc1},i\,\texttt{gc1}\}$（$\texttt{gc1}=-\texttt{EL}$）として書かれ、$c_L\omega_-+c_R\omega_+=-i\,\texttt{EL}\,\gamma^\mu$ である。FeynRules は電荷の単位 \texttt{ee} を FeynArts の電荷 \texttt{EL} に置き換えた。光子の伝播関数は FeynArts の一般の模型の $-i[g_{\mu\nu}-(1-\xi)k_\mu k_\nu/k^2]/k^2$ で、\texttt{GaugeXi[V[1]]} が $\xi$ である。UFO では、頂点の Lorentz 構造が \texttt{FFV1}（$\gamma^\mu$）、結合が \texttt{GC\_1} $=-i\,\texttt{ee}$ で、次数は \texttt{QED}$=1$ である。FeynArts の模型と UFO は \texttt{Src/generated/} に書き出した。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の図を生成し、すべて手で数えた数と一致した。スクリプトは \texttt{generate\_SpinorQED.wl}（FeynRules）と \texttt{model\_mg5.mg5}（MadGraph）である。
 
@@ -472,14 +757,38 @@ $e^+e^-\to\gamma\gamma\gamma$ & 6 & 電子の線に3つの光子を付ける順�
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (3)：1ループの1PI 関数。}式~\eqref{eq:V}、\eqref{eq:ct}、\eqref{eq:VR}、\eqref{eq:os} と、Ward 恒等式~\eqref{eq:ward} を確かめた。スクリプトは \texttt{oneloop\_feyncalc.wl}、\texttt{oneloop\_collier.f90}、\texttt{oneloop\_numeric.py} である。FeynArts の1PI 図は、光子の1点、2点、3点、4点関数で 2、2、4、12 個、電子と $\mu$ 粒子の自己エネルギーで1個ずつ、頂点で1個で、図~\ref{fig:oneloop} の数（フレーバーごと）と一致した。光子の伝播関数にはゲージパラメータ $\xi$ を残した。
+
+記号の検算の結果は次の通りである。光子の1点関数は0である。光子の2点関数は二つのフレーバーの和として式~\eqref{eq:V} の $\Pi_f$ と $D$ 次元で一致し、$q_\mu\Pi^{\mu\nu}=0$ を満たす。電子と $\mu$ 粒子の自己エネルギーは、一般の $\xi$ で式~\eqref{eq:V} の閉じた形 $\xi(D-2)\slashed pB_1+(D-1+\xi)mB_0$ と $D$ 次元で一致した。ただし FeynCalc の TID は、ゲージ依存の部分の2重の光子の伝播関数を $C_0(0,p^2,p^2;0,0,m^2)$ と書く。これを \ref{app:ren} の部分積分の関係で $A_0$、$B_0$ に直してから比べた。この関係そのものは、$p^2=\frac12,3,-2$ で Package-X と LoopTools の数値（極と有限部分）で確かめた。質量殻上の頂点は $\xi$ によらず、その形状因子は \ref{app:details} の PaVe 関数の形と記号として一致した。光子3点関数の4つの三角形の和は0になった（Furry の定理）。光子4点関数の12の箱は、それぞれ紫外の極 $\propto(g^{\mu\nu}g^{\rho\sigma}+g^{\mu\rho}g^{\nu\sigma}-2g^{\mu\sigma}g^{\nu\rho})$ を持つが、フレーバーごとの6つの和では0になった。極から読み取った $\delta_3$、$\delta_2$、$\delta_m$、$\delta_1$ は式~\eqref{eq:ct} と記号として一致し、$\delta_1=\delta_2$ である。Ward--Takahashi 恒等式は、被積分関数のレベルでは \ref{app:ward} の Dirac 行列の恒等式として任意の $\xi$ で成り立ち、積分した形でも Feynman ゲージの質量殻外の点で $q_\mu\Lambda^\mu=\Sigma(p)-\Sigma(p')$ が記号として成り立った。
+
+数値の検算の結果を表~\ref{tab:oneloop} に示す。基準は式~\eqref{eq:VR}、\eqref{eq:V}、\eqref{eq:os} を mpmath（30桁）で積分した値で、$B_0$、$B_1$ は Feynman パラメータの積分、$F_1^\Lambda$、$F_2$ は式~\eqref{eq:V} の $w$ の積分である（$q^2<4m^2$。それより上では COLLIER を基準にした）。$\Pi_f$ は $e$ と $\mu$ の両方、$\Sigma_V$、$\Sigma_S$ は $\xi=0,1,3$ の両方のフレーバー、$F_1^\Lambda$ は紫外と赤外を合わせた極の係数と有限部分を比べた。三つのツールはすべて、有限部分で相対 $2\times10^{-14}$ 以内、極の係数で $10^{-14}$ 以内で一致した。式~\eqref{eq:os} の留数は、$\Sigma$ の微分を $D$ 次元で行い、LoopTools と COLLIER の $B_0'$、$B_1'$ を入れて求めた。赤外の極 $-(3-\xi)$ と有限部分 $-4+3\ln m^2$ は $\xi=0,1,3$ と二つの質量で一致した。$\xi\ne1$ で一致するのは、$(D-2)B_1'$ と $(D-1+\xi)B_0'$ の $O(\epsilon)$ と赤外の極の積から来る有限の項 $2(1-\xi)$ を含めたときだけである。Package-X の $F_1^\Lambda(0)$ と合わせると、$R_fF_1^{\mathrm R}(0)=1$ が極と有限部分のそれぞれで $\xi=0,1,3$ について成り立った。極質量の $\Sigma_V+\Sigma_S$ は $\xi$ によらず、$4-3\ln m^2$ に等しかった。
+
+\begin{table}[tbp]
+\centering\small
+\caption{1ループの1PI 関数の数値の検算（$e=1$、$m_e=\mu=1$、$m_\mu=1.7$）。各ツールの値と基準（mpmath による式~\eqref{eq:VR}、\eqref{eq:V}、\eqref{eq:os} の積分。$q^2\ge4m^2$ の $F_1^\Lambda$、$F_2$ は COLLIER）との最大のずれで、有限部分は相対、極の係数は絶対のずれである。$10^{-16}$ 未満は「$<10^{-16}$」とした。点の数は $\Pi_f$ が $q^2$ 7点 × 2 フレーバー、$\Sigma_V$、$\Sigma_S$ が $p^2$ 5点 × $\xi$ 3通り × 2 フレーバー、$F_1^\Lambda$、$F_2$ が $q^2$ 8点、$R$ が $\xi$ 3通り × 2 フレーバーである。「—」はそのツールで計算できないもので、$q^2=0$ の $F_1^\Lambda$ は LoopTools と COLLIER が、$R$ は Package-X が評価できない（\ref{app:details}）。}
+\label{tab:oneloop}
+\begin{tabular}{lccc}
+\toprule
+関数 & Package-X & LoopTools & COLLIER \\
+\midrule
+$\Pi_f^{\mathrm R}(q^2)$ & $2\times10^{-16}$ & $1.2\times10^{-14}$ & $4.0\times10^{-15}$ \\
+$\Sigma_V^{\mathrm R}(p^2)$ & $<10^{-16}$ & $1.6\times10^{-14}$ & $2.0\times10^{-14}$ \\
+$\Sigma_S^{\mathrm R}(p^2)$ & $<10^{-16}$ & $6.6\times10^{-15}$ & $5.8\times10^{-15}$ \\
+$F_1^\Lambda(q^2)$ 有限部分 / 極 & $6.6\times10^{-16}$ / $7\times10^{-15}$ & $9.9\times10^{-16}$ / $4\times10^{-15}$ & $8.8\times10^{-16}$ / $7\times10^{-15}$ \\
+$F_2(q^2)$ & $5.9\times10^{-16}$ & $3.9\times10^{-16}$ & $3.9\times10^{-16}$ \\
+$R_f-1$ 有限部分 / 赤外の極 & — & $1.1\times10^{-15}$ / $4\times10^{-16}$ & $1.6\times10^{-15}$ / $1\times10^{-15}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手計算で分かったこと。}ゲージ場を入れたことで、これまでの模型になかった構造が三つ現れた。一つ目は Ward 恒等式による制約で、真空偏極の横波性、$Z_1=Z_2$、電荷の繰り込みの普遍性が、発散の構造を光子の場の繰り込み一つにまとめる。二つ目はゲージパラメータの役割で、$\xi$ は場の繰り込みと赤外の極の分け方にだけ現れ、極質量、$e_{\mathrm{OS}}$、形状因子 $F_2$、$\hat F_1$ には現れない。自己エネルギーの $\xi$ 依存の部分は部分積分の恒等式で $D$ 次元で厳密に閉じた形になり、質量殻上の頂点の $\xi$ 依存の部分はスケールのない積分になる。三つ目は赤外発散で、フェルミオンの留数と頂点の赤外の極がそれぞれ $\xi$ に依存しながら、組 $\hat F_1$ では打ち消して $f_{\mathrm{IR}}$ だけが残る。留数の赤外の極を正しく得るには、$D$ 次元の係数の $O(\epsilon)$ の部分まで残す必要があった。物理としては、$s$ チャンネルの1ループの補正が $\alpha(0)$ と処方によらない量だけで書けることが、$\MSbar$ で計算することと、QED の結果を on-shell の言葉で読むことを結びつける。
 
-\paragraph{ツールについて分かったこと。}木のレベルでも、ツールの使い方に三つの注意点があった。FeynArts の \texttt{CreateFeynAmp} は既定でゲージパラメータを1にするので、$\xi$ 依存を調べるには明示的に外す必要がある。光子の偏極の和を $-g_{\mu\nu}$ とする置き換えは2乗の和には使えるが、正定値でないので振幅の差の比較には使えない。MadGraph は、質量のある電子の Compton 散乱の後ろ向きの $u$ チャンネルの山を拾いきれず、表示の誤差を大きく超えて断面積を小さく出した。行列要素は正しいので、MadGraph の断面積を基準に使うときは、伝播関数の山を含む領域を分けて確かめる必要がある。
+\paragraph{ツールについて分かったこと。}木のレベルでも、ツールの使い方に三つの注意点があった。FeynArts の \texttt{CreateFeynAmp} は既定でゲージパラメータを1にするので、$\xi$ 依存を調べるには明示的に外す必要がある。光子の偏極の和を $-g_{\mu\nu}$ とする置き換えは2乗の和には使えるが、正定値でないので振幅の差の比較には使えない。MadGraph は、質量のある電子の Compton 散乱の後ろ向きの $u$ チャンネルの山を拾いきれず、表示の誤差を大きく超えて断面積を小さく出した。行列要素は正しいので、MadGraph の断面積を基準に使うときは、伝播関数の山を含む領域を分けて確かめる必要がある。1ループでは、赤外の発散が新たな注意点になった。FeynCalc の TID は2重の光子の伝播関数を赤外で発散する $C_0$ として残すので、極を取り出す前に部分積分で $A_0$、$B_0$ に直す必要がある。$q^2=0$ の頂点の $C_0$ は LoopTools と COLLIER が評価できず、留数に要る $B_0'$ は Package-X が評価しない。三つのツールを組み合わせて、どの量も二つ以上のツールで確かめた。
 
-\paragraph{今後。}次は手順 (3) で、1ループの1PI 関数 $\Pi_f$、$\Sigma_f$、$\Lambda^\mu$ の極と対抗項を一般の $\xi$ で確かめ、Ward 恒等式、Furry の定理、光子4点関数の有限性を確かめ、有限部分と赤外の極を Package-X・LoopTools・COLLIER で比べる。
+\paragraph{今後。}次は手順 (4) で、1ループの $e^+e^-\to\mu^+\mu^-$ を FeynCalc と FormCalc で求め、箱の図を含めて紫外と赤外の極、$\xi$ によらないこと、ユニタリー性を確かめる。箱の図の手計算の導出も付録に加える。
 
 \appendix
 
@@ -502,7 +811,72 @@ K^{\mu\nu}\Bigl(-\frac{1}{k^2}\Bigr)\Bigl[g_{\nu\rho}-(1-\xi)\frac{k_\nu k_\rho}
 
 \paragraph{対抗項。}$-\frac14\delta_3F^2$ は上と同じ計算で $\frac12\tilde A_\mu\,\delta_3(-k^2g^{\mu\nu}+k^\mu k^\nu)\tilde A_\nu$ になり、2点の頂点は $i\times2\times\frac12\delta_3(-k^2g^{\mu\nu}+k^\mu k^\nu)=-i\delta_3(k^2g^{\mu\nu}-k^\mu k^\nu)$ である（因子2は二つの $A$ の付け方）。フェルミオンの対抗項は $\bar\psi[\delta_2\slashed p-(\delta_2+\delta_m)m]\psi$ から $i[\delta_2\slashed p-(\delta_2+\delta_m)m]$、頂点の対抗項は $ieQ_f\mu^\epsilon\gamma^\mu\delta_1$ である。
 
-\paragraph{閉じたループの符号と対称性因子。}Wick の縮約で閉じたフェルミオンのループを作ると、Grassmann 数の並べ替えで因子 $-1$ が、スピンの添字の縮約でトレースが生じる。1ループの1PI 図の対称性因子はすべて1である。$\phi^3$ のノート~\cite{phi3note} の付録 A と同じく、対称性因子は図を保つ頂点と内線の入れ替えの数で、QED の頂点は $\bar\psi$、$\psi$、$A$ が一つずつの区別できる場からなる。フェルミオンの線には向きがあるので、(a) の二つのフェルミオンの内線は入れ替えられず、(b)、(c) の光子の内線は向きのあるフェルミオンの線の異なる二点を結ぶ。光子3点・4点関数の図の数は、$n$ 本の外の光子を向きのあるループに付ける巡回の順序の数 $(n-1)!$、すなわち $2$ と $6$ である。
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[shift={(0,0)}]
+  \coordinate (A) at (-0.6,0); \coordinate (B) at (0.45,0.6); \coordinate (C) at (0.45,-0.6);
+  \draw[fermion] (A) -- (B); \draw[fermion] (B) -- (C); \draw[fermion] (C) -- (A);
+  \draw[photon] (A) -- (-1.3,0) (B) -- (1.0,1.05) (C) -- (1.0,-1.05);
+  \node[vtx] at (A) {}; \node[vtx] at (B) {}; \node[vtx] at (C) {};
+  \node[ml] at (-1.5,0) {$\mu_1$}; \node[ml] at (1.2,1.2) {$\mu_2$}; \node[ml] at (1.2,-1.2) {$\mu_3$};
+  \node[lab] at (0,-1.6) {$T$};
+\end{scope}
+\begin{scope}[shift={(3.4,0)}]
+  \coordinate (A) at (-0.6,0); \coordinate (B) at (0.45,0.6); \coordinate (C) at (0.45,-0.6);
+  \draw[fermion] (A) -- (C); \draw[fermion] (C) -- (B); \draw[fermion] (B) -- (A);
+  \draw[photon] (A) -- (-1.3,0) (B) -- (1.0,1.05) (C) -- (1.0,-1.05);
+  \node[vtx] at (A) {}; \node[vtx] at (B) {}; \node[vtx] at (C) {};
+  \node[ml] at (-1.5,0) {$\mu_1$}; \node[ml] at (1.2,1.2) {$\mu_2$}; \node[ml] at (1.2,-1.2) {$\mu_3$};
+  \node[lab] at (0,-1.6) {$(-1)^3\,T$};
+\end{scope}
+\node[lab] at (1.7,-3.05) {(a) 光子3点関数};
+\begin{scope}[shift={(6.2,0.75)},scale=0.62]
+  \draw[fermion] (-0.55,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (0.55,0.55);
+  \draw[fermion] (0.55,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55);
+  \draw[photon] (-0.55,-0.55) -- (-1.0,-1.0) (0.55,-0.55) -- (1.0,-1.0) (0.55,0.55) -- (1.0,1.0) (-0.55,0.55) -- (-1.0,1.0);
+  \node[ml] at (-1.25,-1.2) {1}; \node[ml] at (1.25,-1.2) {2}; \node[ml] at (1.25,1.2) {3}; \node[ml] at (-1.25,1.2) {4};
+\end{scope}
+\begin{scope}[shift={(6.2,-1.6)},scale=0.62]
+  \draw[fermion] (-0.55,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (0.55,0.55);
+  \draw[fermion] (0.55,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55);
+  \draw[photon] (-0.55,-0.55) -- (-1.0,-1.0) (0.55,-0.55) -- (1.0,-1.0) (0.55,0.55) -- (1.0,1.0) (-0.55,0.55) -- (-1.0,1.0);
+  \node[ml] at (-1.25,-1.2) {1}; \node[ml] at (1.25,-1.2) {4}; \node[ml] at (1.25,1.2) {3}; \node[ml] at (-1.25,1.2) {2};
+\end{scope}
+\node[ml] at (6.2,-0.12) {(1234)}; \node[ml] at (6.2,-2.55) {(1432)};
+\begin{scope}[shift={(8.5,0.75)},scale=0.62]
+  \draw[fermion] (-0.55,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (0.55,0.55);
+  \draw[fermion] (0.55,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55);
+  \draw[photon] (-0.55,-0.55) -- (-1.0,-1.0) (0.55,-0.55) -- (1.0,-1.0) (0.55,0.55) -- (1.0,1.0) (-0.55,0.55) -- (-1.0,1.0);
+  \node[ml] at (-1.25,-1.2) {1}; \node[ml] at (1.25,-1.2) {2}; \node[ml] at (1.25,1.2) {4}; \node[ml] at (-1.25,1.2) {3};
+\end{scope}
+\begin{scope}[shift={(8.5,-1.6)},scale=0.62]
+  \draw[fermion] (-0.55,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (0.55,0.55);
+  \draw[fermion] (0.55,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55);
+  \draw[photon] (-0.55,-0.55) -- (-1.0,-1.0) (0.55,-0.55) -- (1.0,-1.0) (0.55,0.55) -- (1.0,1.0) (-0.55,0.55) -- (-1.0,1.0);
+  \node[ml] at (-1.25,-1.2) {1}; \node[ml] at (1.25,-1.2) {3}; \node[ml] at (1.25,1.2) {4}; \node[ml] at (-1.25,1.2) {2};
+\end{scope}
+\node[ml] at (8.5,-0.12) {(1243)}; \node[ml] at (8.5,-2.55) {(1342)};
+\begin{scope}[shift={(10.8,0.75)},scale=0.62]
+  \draw[fermion] (-0.55,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (0.55,0.55);
+  \draw[fermion] (0.55,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55);
+  \draw[photon] (-0.55,-0.55) -- (-1.0,-1.0) (0.55,-0.55) -- (1.0,-1.0) (0.55,0.55) -- (1.0,1.0) (-0.55,0.55) -- (-1.0,1.0);
+  \node[ml] at (-1.25,-1.2) {1}; \node[ml] at (1.25,-1.2) {3}; \node[ml] at (1.25,1.2) {2}; \node[ml] at (-1.25,1.2) {4};
+\end{scope}
+\begin{scope}[shift={(10.8,-1.6)},scale=0.62]
+  \draw[fermion] (-0.55,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (0.55,0.55);
+  \draw[fermion] (0.55,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55);
+  \draw[photon] (-0.55,-0.55) -- (-1.0,-1.0) (0.55,-0.55) -- (1.0,-1.0) (0.55,0.55) -- (1.0,1.0) (-0.55,0.55) -- (-1.0,1.0);
+  \node[ml] at (-1.25,-1.2) {1}; \node[ml] at (1.25,-1.2) {4}; \node[ml] at (1.25,1.2) {2}; \node[ml] at (-1.25,1.2) {3};
+\end{scope}
+\node[ml] at (10.8,-0.12) {(1324)}; \node[ml] at (10.8,-2.55) {(1423)};
+\node[lab] at (8.5,-3.05) {(b) 光子4点関数の6つの順序};
+\end{tikzpicture}
+\caption{閉じたフェルミオンのループに付く光子の順序（\ref{app:rules}）。(a) 光子3点関数の向きの逆な二つの図。荷電共役により、右の図のトレースは左の図のトレース $T$ の $(-1)^3$ 倍で、和は0である（Furry の定理）。(b) 光子4点関数の $3!=6$ 通りの図。数字はループの向き（矢印）に沿って光子を付ける順序で、同じ列の上下の図は向きが逆である。$n=4$ は偶数なので上下の図は等しい。一つ一つの図は紫外で対数発散するが、6つの和では極が打ち消す（\ref{app:counting}、手順 (3)）。}
+\label{fig:furry}
+\end{figure}
+
+\paragraph{閉じたループの符号と対称性因子。}Wick の縮約で閉じたフェルミオンのループを作ると、Grassmann 数の並べ替えで因子 $-1$ が、スピンの添字の縮約でトレースが生じる。1ループの1PI 図の対称性因子はすべて1である。$\phi^3$ のノート~\cite{phi3note} の付録 A と同じく、対称性因子は図を保つ頂点と内線の入れ替えの数で、QED の頂点は $\bar\psi$、$\psi$、$A$ が一つずつの区別できる場からなる。フェルミオンの線には向きがあるので、(a) の二つのフェルミオンの内線は入れ替えられず、(b)、(c) の光子の内線は向きのあるフェルミオンの線の異なる二点を結ぶ。光子3点・4点関数の図の数は、$n$ 本の外の光子を向きのあるループに付ける巡回の順序の数 $(n-1)!$、すなわち $2$ と $6$ である（図~\ref{fig:furry}）。
 
 \paragraph{光子の1点関数。}(d) は $-\int\dd^Dk\,\mathrm{tr}[ieQ\gamma^\mu\,iS(k)]/(2\pi)^D\propto\int\dd^Dk\,k^\mu/D(k)$ で、被積分関数が奇関数なので0である（$\mathrm{tr}[\gamma^\mu(\slashed k+m)]=4k^\mu$）。
 
@@ -511,7 +885,7 @@ K^{\mu\nu}\Bigl(-\frac{1}{k^2}\Bigr)\Bigl[g_{\nu\rho}-(1-\xi)\frac{k_\nu k_\rho}
 T=\mathrm{tr}\bigl[CS(k_n)^TC^{-1}\,C\gamma^{\mu_nT}C^{-1}\cdots CS(k_1)^TC^{-1}\,C\gamma^{\mu_1T}C^{-1}\bigr]
 =(-1)^n\,\mathrm{tr}\bigl[S(-k_n)\gamma^{\mu_n}\cdots S(-k_1)\gamma^{\mu_1}\bigr]
 \end{equation*}
-となる。右辺のトレースは、同じ外線を逆の順序でループに付けた図の被積分関数で、ループ運動量の符号を変えると運動量の割り当ても一致する。したがって、向きの逆な二つの図の和は $(1+(-1)^n)T$ で、$n$ が奇数なら0である。
+となる。右辺のトレースは、同じ外線を逆の順序でループに付けた図（図~\ref{fig:furry} の右と左）の被積分関数で、ループ運動量の符号を変えると運動量の割り当ても一致する。したがって、向きの逆な二つの図の和は $(1+(-1)^n)T$ で、$n$ が奇数なら0である。
 
 \section{次元とべき数え上げ}\label{app:counting}
 
@@ -678,7 +1052,18 @@ n_1+2mn_2=-2\bigl[(1-x)(1-y)q^2+(1-4z+z^2)m^2\bigr]+(4-D)\bigl[xyq^2+(1-z)^2m^2\
 2(q^2-2m^2)\,\Gamma(1+\epsilon)(4\pi\mu^2)^\epsilon\int_0^1\dd z(1-z)^{-1-2\epsilon}\int_0^1\dd w\,h^{-1-\epsilon}
 =2(q^2-2m^2)\Bigl(-\frac{1}{2\epsilon}\Bigr)\Gamma(1+\epsilon)(4\pi\mu^2)^\epsilon\int\dd w\,h^{-1-\epsilon}
 \end{equation*}
-で（$\epsilon<0$ として $\int_0^1(1-z)^{-1-2\epsilon}\dd z=-1/(2\epsilon)$）、展開すると $(2m^2-q^2)\int\dd w[\DIR-\ln(h/\mu^2)]/h$ である。以上と、前の段落のゲージ依存の部分 $-(1-\xi)(\DUV-\DIR)$ を合わせて、式~\eqref{eq:V} の3行目を得る。$q^2=0$ では $h=m^2$、$\int\dd F\ln(\Delta_F/\mu^2)=-\frac12+\frac12\ln\frac{m^2}{\mu^2}$、$2\int\dd F[\tilde N+2m^2]/\Delta_F=2\int_0^1(3-z)\dd z=5$ から
+で（$\epsilon<0$ として $\int_0^1(1-z)^{-1-2\epsilon}\dd z=-1/(2\epsilon)$）、展開すると $(2m^2-q^2)\int\dd w[\DIR-\ln(h/\mu^2)]/h$ である。残りの $z$ の積分は同じ変数で実行できる。$\Delta_F=(1-z)^2h$ と $\int_0^1(1-z)\ln(1-z)\dd z=-\frac14$ から
+\begin{equation*}
+\int\dd F\ln\frac{\Delta_F}{\mu^2}=\int_0^1\dd z\,(1-z)\int_0^1\dd w\Bigl[2\ln(1-z)+\ln\frac{h}{\mu^2}\Bigr]=-\frac12+\frac12\int_0^1\dd w\ln\frac{h}{\mu^2},
+\end{equation*}
+$\int_0^1(1-z)\dd z=\frac12$、$\int_0^1(3-z)\dd z=\frac52$ と $q^2w(1-w)=m^2-h$ から
+\begin{equation*}
+\begin{aligned}
+2\int\dd F\,\frac{\tilde N-(q^2-2m^2)}{\Delta_F}&=2\int_0^1\dd z\int_0^1\dd w\,\frac{-q^2+q^2(1-z)w(1-w)+m^2(3-z)}{h}\\
+&=\int_0^1\dd w\,\frac{5m^2-2q^2+q^2w(1-w)}{h}=2(3m^2-q^2)\int_0^1\frac{\dd w}{h}-1
+\end{aligned}
+\end{equation*}
+である。したがって有限の三つの項の和は $-2-2(-\frac12+\frac12\int\dd w\ln\frac h{\mu^2})+2(3m^2-q^2)\int\dd w/h-1=-2-\int\dd w\ln\frac h{\mu^2}+2(3m^2-q^2)\int\dd w/h$ になる。以上と、前の段落のゲージ依存の部分 $-(1-\xi)(\DUV-\DIR)$ を合わせて、式~\eqref{eq:V} の3行目を得る。$q^2=0$ では $h=m^2$ で、赤外の極の係数は $(1-\xi)+2=3-\xi$、有限部分は $-2-L-2L+6=4-3L$（$L=\ln(m^2/\mu^2)$）なので
 \begin{equation*}
 F_1^\Lambda(0)=\frac{e^2}{K}\Bigl[\xi\DUV+(3-\xi)\DIR+4+3\ln\frac{\mu^2}{m^2}\Bigr]
 \end{equation*}
@@ -783,6 +1168,15 @@ T_{ts}=\mathrm{tr}\bigl[(\slashed k_1+m)\gamma^\mu(\slashed p_1+m)\gamma_\nu(\sl
 \paragraph{手順 (1)。}パラメータは、電荷の単位を \texttt{ee}、電子と $\mu$ 粒子の質量を \texttt{Me}、\texttt{MMU} と書いた。一文字の名前は避けた（$\phi^3$ のノートで \texttt{g} が FeynRules の UFO 出力を止めた）。フェルミオンのクラス名は、Lorentz の添字 \texttt{mu} とぶつからないように \texttt{elec}、\texttt{muon} とした。粒子の名前と PDG の番号は標準の \texttt{e-}（11）、\texttt{mu-}（13）、\texttt{a}（22）で、MadGraph の過程はいつもの書き方で指定できる。MadGraph の結合の次数は \texttt{ee} を \texttt{QED}$=1$ と数える。この次数の名前は、MadLoop のループの指定（\texttt{QCD} と \texttt{QED} だけを受け付ける）にそのまま使える。光子の伝播関数のゲージパラメータは、標準模型の模型ファイルと同じく \texttt{GaugeXi[V[1]] = GaugeXi[A]} とした。ゲージ群 \texttt{U1EM} の結合定数を \texttt{ee}、電荷を \texttt{Q} とし、共変微分 \texttt{DC} で結合を書いたので、頂点の符号は FeynRules の規約 $D_\mu=\partial_\mu-i\,\texttt{ee}\,Q A_\mu$ で決まる。FeynArts の模型では \texttt{ee} が \texttt{EL} に置き換えられ、頂点は \texttt{C[-F[1], F[1], V[1]]}、\texttt{C[-F[2], F[2], V[1]]} の二つである。
 
 \paragraph{手順 (2)。}FeynArts の \texttt{CreateFeynAmp} は既定で \texttt{GaugeRules -> \{\_GaugeXi -> 1\}} を使い、光子の伝播関数を Feynman ゲージにする。$\xi$ を残すには \texttt{GaugeRules -> \{\}} とする。FeynRules の書き出した \texttt{M\$FACouplings}（\texttt{gc1 -> -EL}）は手で適用し、\texttt{FCFAConvert} が \texttt{FCGV["EL"]} と書く電荷を \texttt{EL} に戻した。光子の横波だけの偏極の和は \texttt{DoPolarizationSums[x, k, n]} で、$\sum\varepsilon_\mu\varepsilon^*_\nu=-g_{\mu\nu}+(k_\mu n_\nu+n_\mu k_\nu)/(k\cdot n)$（$n^2=0$）である。$-g_{\mu\nu}$ の和は正定値でないので、振幅の差の比較には使えない。FeynCalc の \texttt{DiracSimplify} は Dirac の鎖の中の運動量を運動量保存で書き換えないので、偏極を運動量に置き換えた振幅を0まで整理しない。そこで Ward 恒等式は2乗の和で確かめた。数値の偏極ベクトルは、運動量の向き $(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$ に対して $\varepsilon_1=(0,\cos\theta\cos\phi,\cos\theta\sin\phi,-\sin\theta)$、$\varepsilon_2=(0,-\sin\phi,\cos\phi,0)$ である。運動学は重心系で、$\theta$ は $k_1$ と $p_1$ のなす角、(C) では電子と光子のエネルギーを $(s\pm m^2)/(2\sqrt s)$ とした。点 $\sqrt s=5$、$\cos\theta=0.3$ のスピン和は (A) $6.65217024$、(B) $89.01023720412791$、(C) $16.69971955291044$、(D) $23.19710466058796$ である。MadGraph は荷電レプトンと光子に既定のカット（\texttt{ptl}、\texttt{pta} $=10$、\texttt{etal}、\texttt{etaa} $=2.5$、\texttt{drll}、\texttt{draa}、\texttt{dral} $=0.4$）をかけるので、すべて外した。MadGraph の \texttt{etal} は擬ラピディティではなく真のラピディティ $y=\tanh^{-1}(p_z/E)$ のカットである（\texttt{SubProcesses/cuts.f}）。重心系で $p_z/E=\beta\cos\theta$（$\beta=|\boldsymbol p|/E$）なので、(B) の $|\cos\theta|<0.9$ は $|y|<\tanh^{-1}(0.9\beta_e)$、(C) の $|\cos\theta_e|<0.98$ は電子の $|y|<\tanh^{-1}(0.98\,|\boldsymbol p|/E_e)$ として与えた。(C) のビームのエネルギーは上の重心系の値を12桁で与えた。MadGraph の standalone の行列要素（始状態のヘリシティで平均）は、\texttt{tree\_me\_points.f} を standalone の出力と一緒にコンパイルして、固定した運動量で評価した。\texttt{output standalone} は作業ディレクトリとその親に \texttt{nsqso\_born.inc} を書くので、\texttt{run\_tree\_check.sh} で消す。
+
+\paragraph{手順 (3)。}\texttt{FCFAConvert} の出力は FeynCalc の短い形（\texttt{FAD}、\texttt{GSD} など）なので、外の運動量を置き換える（頂点の $q\to p'-p$、光子4点関数の運動量を0）前に \texttt{FCI} と \texttt{MomentumExpand} で内部の形に直した。頂点の紫外の極は外の運動量によらないので、外の運動量を0にした真空の積分から取り出した（フェルミオンに質量があり、ゲージ依存の部分の $l_\nu l_\rho/l^4$ も分子の運動量と合わせて赤外で有限）。光子4点関数の紫外の極も同じく運動量0で求めた。\texttt{PaVeUVPart} は紫外の極だけを数えるので、赤外で発散する2重の光子の伝播関数の $C_0$ が残ったままでは自己エネルギーの極を正しく取り出せない。部分積分の関係で $A_0$、$B_0$ に直してからは正しい。数値の変換はこれまでのノート~\cite{yukawanote} と同じく、$(2\pi)^{2\epsilon}A/(2\pi)^4$ の $\epsilon^0$ の係数から $1/\epsilon$ の係数の $(\ln4\pi-\gamma_E)$ 倍を引いた。赤外の極にも同じ変換が当てはまり、LoopTools の赤外の有限部分もこの変換で Package-X と一致する。COLLIER には頂点の形状因子を PaVe 関数で与えた。FeynCalc の TID が与える形で、$D$ 次元で
+\begin{equation*}
+\begin{aligned}
+\frac{K}{e^2}F_1^\Lambda={}&\frac{1}{4m^2-q^2}\Bigl[2(D-2)A_0+4(2m^2-q^2)B_0(m^2;m^2,0)-\bigl(8m^2+(D-7)q^2\bigr)B_0(q^2;m^2,m^2)\\
+&+2(2m^2-q^2)(4m^2-q^2)C_0\Bigr]
+\end{aligned}
+\end{equation*}
+（$C_0=C_0(m^2,q^2,m^2;0,m^2,m^2)$）である。$D=4-2\epsilon$ として展開すると、紫外の極は1、有限の有理項は $-4m^2+2q^2$（分子）で、赤外の極は $C_0$ からだけ来る。$F_2$ は\ref{app:ren}の PaVe 関数の形を使った。留数は $\Sigma_V+2m^2(\Sigma_V'+\Sigma_S')$ を $D$ 次元で書き、$B_0'(m^2;m^2,0)$、$B_1'(m^2;m^2,0)$ を LoopTools（\texttt{DB0}、\texttt{DB1}）と COLLIER（\texttt{DB0\_cll}、\texttt{DB1\_cll}、赤外の極は \texttt{SetDeltaIR\_cll} を変えた差）で評価した。$q^2=0$ の $C_0(m^2,0,m^2;0,m^2,m^2)$ は LoopTools が Indeterminate、COLLIER が NaN を返し、Package-X は $B_0'$、$B_1'$（\texttt{DB0}、\texttt{DB1}）を評価しない。LoopTools のリンクは、カーネルの終了時に \texttt{MathLink::MLException} を出す（結果には影響しない）。これらは計算環境の手引きの既知の問題に加えた。
 
 \begin{thebibliography}{99}
 \small
