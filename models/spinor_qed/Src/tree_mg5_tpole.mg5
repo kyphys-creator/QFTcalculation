@@ -1,0 +1,83 @@
+# tree_mg5_tpole.mg5 -- the MadGraph runs of tree_mg5.mg5 again with the grid of mg5_tpole.py for massive t-channel invariants
+# (research note models/spinor_qed, steps (2) and (6)).  Run from Src/ after tree_mg5.mg5 and mg5_tpole.py:
+#   mg5_aMC tree_mg5_tpole.mg5 > work/tree_mg5_tpole.log   (run_tree_check.sh does this)
+# Processes (A)-(D) at sqrt(s) = 4, 6, 10 with the settings of the main runs of tree_mg5.mg5 (10000 events, cuts off,
+# (B) at |cos theta| < 0.9), in this order, then (C) at sqrt(s) = 4 with 100000 events (tree_sigma.py relies on the order).
+# The copied run_cards hold the last run of each directory, so every setting that differs is set again.  Only (C) (u-channel
+# electron) and (D) (t- and u-channel electron) have massive t-channel propagators; (A) (s channel) and (B) (massless photon in
+# the t channel) keep MadGraph's own grid and test that the patch changes nothing else.
+set automatic_html_opening False
+launch work/mg5_treeA_tpole
+0
+set nevents 10000
+set ebeam1 2.0
+set ebeam2 2.0
+0
+launch work/mg5_treeA_tpole
+0
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_treeA_tpole
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+launch work/mg5_treeB_tpole
+0
+set nevents 10000
+set ebeam1 2.0
+set ebeam2 2.0
+set etal 1.04389844857
+0
+launch work/mg5_treeB_tpole
+0
+set ebeam1 3.0
+set ebeam2 3.0
+set etal 1.25087255895
+0
+launch work/mg5_treeB_tpole
+0
+set ebeam1 5.0
+set ebeam2 5.0
+set etal 1.38387628971
+0
+launch work/mg5_treeC_tpole
+0
+set nevents 10000
+set etal -1
+set ebeam1 2.125000000000
+set ebeam2 1.875000000000
+0
+launch work/mg5_treeC_tpole
+0
+set ebeam1 3.083333333333
+set ebeam2 2.916666666667
+0
+launch work/mg5_treeC_tpole
+0
+set ebeam1 5.050000000000
+set ebeam2 4.950000000000
+0
+launch work/mg5_treeD_tpole
+0
+set nevents 10000
+set ebeam1 2.0
+set ebeam2 2.0
+0
+launch work/mg5_treeD_tpole
+0
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_treeD_tpole
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+launch work/mg5_treeC_tpole
+0
+set nevents 100000
+set ebeam1 2.125000000000
+set ebeam2 1.875000000000
+0

@@ -19,8 +19,10 @@
 # compared in order: (A), (B), (C), (D), each at SQRTS, then (C) with |cos theta_e| < 0.98 at sqrt(s) = 4, 6.
 # MadGraph's (C) is low at sqrt(s) = 4, 6: it undersamples the backward u-channel peak (cos theta_e -> -1, where
 # u -> m^4/s > 0), while its matrix element is right (work/sa_treeC + tree_me_points.f, compared at 21 points below)
-# and the cross section with |cos theta_e| < 0.98 agrees.  Interactive (VS Code, "Run Cell"): the log defaults to
-# work/tree_mg5.log.
+# and the cross section with |cos theta_e| < 0.98 agrees.  The cause, found in step (6): MadEvent starts the VEGAS grid of
+# a t-channel invariant as for a massless propagator and ignores the pole offset of the massive electron.  With the grid
+# of mg5_tpole.py (tree_mg5_tpole.mg5, work/tree_mg5_tpole.log) all four processes agree.  Interactive (VS Code, "Run
+# Cell"): the log defaults to work/tree_mg5.log.
 
 # %%
 import itertools
@@ -398,3 +400,32 @@ if os.path.exists(os.path.join(ME_DRIVER, "me_points")):
     vals = [float(x) for x in res.stdout.split() if x[0] in "0123456789-+."]
     dme = max(abs(v / (0.25 * note_at("C", rs, c)) - 1) for (rs, c), v in zip(pts, vals))
     print(f"MadGraph standalone (1/4) sum|M_C|^2 vs Eq. (12) at {len(vals)} points: max relative deviation {dme:.1e}")
+
+
+# %% [markdown]
+# ## MadGraph with the grid of mg5_tpole.py
+#
+# MadEvent samples a t-channel invariant as x = -t/s on a VEGAS grid that it starts logarithmic above a cut-dependent x_o, as
+# for a massless propagator; the pole offset -m^2/s of a massive one is not used (setgrid itype 1), so the region next to the
+# electron pole (u -> m^2 in (C)) starts in one wide bin.  mg5_tpole.py starts the grid logarithmic around the pole for
+# massive t-channel propagators: (C) (u-channel electron) and (D) (t- and u-channel electron); (A) and (B) keep MadGraph's grid.
+# tree_mg5_tpole.mg5 repeats the main runs with it, then (C) at sqrt(s) = 4 with 1e5 events.  The cross sections are read to
+# 6 digits from the run banners, the errors from work/tree_mg5_tpole.log.
+
+# %%
+TPOLE_LOG = "work/tree_mg5_tpole.log"
+
+
+def banner_sigma(proc, k):
+    run = f"run_{k:02d}"
+    text = open(f"work/mg5_tree{proc}_tpole/Events/{run}/{run}_tag_1_banner.txt").read()
+    return float(re.search(r"Integrated weight \(pb\)\s*:\s*(\S+)", text).group(1))
+
+
+if os.path.exists(TPOLE_LOG):
+    tp_err = [float(b) for b in re.findall(r"Cross-section :\s+[0-9.eE+-]+ \+- ([0-9.eE+-]+) pb", open(TPOLE_LOG).read())]
+    runs = [(proc, rs, k + 1) for proc in PROCS for k, rs in enumerate(SQRTS)] + [("C", 4.0, 4)]
+    print(f"{'proc':>4} {'sqrt(s)':>8} {'analytic [pb]':>15} {'MadGraph, pole grid [pb]':>27} {'(MG-an)/err':>12}")
+    for (proc, rs, k), e in zip(runs, tp_err):
+        an, x = sigma_pb(proc, rs), banner_sigma(proc, k)
+        print(f"{proc:>4} {rs:8.2f} {an:15.6e} {x:14.6e} +- {e:8.2e} {(x - an) / e:12.2f}" + ("   (1e5 events)" if k == 4 else ""))

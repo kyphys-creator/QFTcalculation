@@ -1,0 +1,60 @@
+# xsec_mg5.mg5 -- the hard-photon cross section e- e+ -> mu- mu+ gamma with the SpinorQED UFO (research note models/spinor_qed,
+# step (6)).  Run from Src/:   mg5_aMC xsec_mg5.mg5 > work/xsec_mg5.log   (run_xsec_check.sh does this)
+# Imports a copy of generated/SpinorQED_UFO in work/ (MadGraph converts UFOs to Python 3 in place).
+# Fixed-energy beams (lpp = 0) in the CM frame, e- along +z (beam 1), param_card defaults m_e = 1, m_mu = 1.7, e = 1.
+# All default cuts on leptons and photons are switched off (ptl, etal, drll, pta, etaa, draa, dral) and the photon energy is
+# cut at E_gamma > 0.1 (ea; the CM frame), the soft-hard boundary DeltaE of the note.  sqrt(s) = 4, 6, 10 in this order
+# (xsec_numeric.py relies on it), 50000 unweighted events each (the forward-backward asymmetry is counted from the LHE files).
+# Then two diagnostic runs (20000 events): sqrt(s) = 6 and 10 with the photon kept away from the beams, |cos theta_gamma| < 0.9
+# (etaa = atanh(0.9)), and sqrt(s) = 6 without that cut but with sde_strategy 2.  Then the standalone matrix element
+# (work/sa_xsec3, evaluated at fixed points with tree_me_points.f).
+set automatic_html_opening False
+import model ./work/SpinorQED_UFO
+generate e- e+ > mu- mu+ a
+output work/mg5_xsec3 -f
+launch work/mg5_xsec3
+0
+set lpp1 0
+set lpp2 0
+set nevents 50000
+set ptl 0
+set etal -1
+set drll 0
+set pta 0
+set etaa -1
+set draa 0
+set dral 0
+set ea 0.1
+set ebeam1 2.0
+set ebeam2 2.0
+0
+launch work/mg5_xsec3
+0
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_xsec3
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+launch work/mg5_xsec3
+0
+set nevents 20000
+set ebeam1 3.0
+set ebeam2 3.0
+set etaa 1.4722194895832204
+0
+launch work/mg5_xsec3
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+launch work/mg5_xsec3
+0
+set ebeam1 3.0
+set ebeam2 3.0
+set etaa -1
+set sde_strategy 2
+0
+output standalone work/sa_xsec3 -f

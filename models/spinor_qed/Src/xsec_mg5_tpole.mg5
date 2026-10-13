@@ -1,0 +1,26 @@
+# xsec_mg5_tpole.mg5 -- MadGraph runs with the grid of mg5_tpole.py for the massive t-channel invariant (research note
+# models/spinor_qed, step (6)).  Run from Src/ after xsec_mg5.mg5 and mg5_tpole.py:
+#   mg5_aMC xsec_mg5_tpole.mg5 > work/xsec_mg5_tpole.log   (run_xsec_check.sh does this)
+# work/mg5_xsec3_tpole: e- e+ > mu- mu+ a with E_gamma > 0.1 at sqrt(s) = 4, 6, 10, 50000 events each, the settings of the main
+# runs of xsec_mg5.mg5 (the copied run_card is that of its last diagnostic run, so etaa and sde_strategy are set back).
+# In this order (xsec_numeric.py relies on it).  The tree-level processes of step (2) with the same grid: tree_mg5_tpole.mg5.
+set automatic_html_opening False
+launch work/mg5_xsec3_tpole
+0
+set nevents 50000
+set etaa -1
+set sde_strategy 1
+set ea 0.1
+set ebeam1 2.0
+set ebeam2 2.0
+0
+launch work/mg5_xsec3_tpole
+0
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_xsec3_tpole
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
