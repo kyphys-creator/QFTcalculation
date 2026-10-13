@@ -47,7 +47,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノート~\cite{phi3note,phi34note,yukawanote} に続き、ゲージ場を含む最も簡単な模型として、電子 $e$ と $\mu$ 粒子の二つの Dirac フェルミオンが光子と結合するスピノル QED を $d=4$ で調べる。共変ゲージのゲージパラメータ $\xi$ を残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、Furry の定理、Ward--Takahashi 恒等式、1ループの1PI 関数（真空偏極、自己エネルギー、頂点）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。フェルミオンの自己エネルギーは、部分積分の恒等式を使うと $D$ 次元で $\Sigma=\frac{e^2}{(4\pi)^2}[\xi(D-2)\slashed pB_1+(D-1+\xi)mB_0]$ という閉じた形になり、$\slashed p$ の項は $\xi$ に比例する（Landau ゲージでは1ループの場の繰り込みが0）。極質量はゲージによらず $m_{\mathrm p}=m(\mu)[1+\frac{e^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ である。質量殻上の頂点は次元正則化では $\xi$ によらず、Feynman パラメータで二つの形状因子を閉じた形に書くと、$F_2(q^2)=\frac{2e^2m^2}{(4\pi)^2}\int_0^1\dd w/[m^2-q^2w(1-w)]$、とくに $F_2(0)=\alpha/2\pi$（Schwinger の値）となる。Ward 恒等式 $Z_1=Z_2$ により電荷の繰り込みは光子の場の繰り込みだけで決まり、二つのフレーバーで $\beta_e=8e^3/[3(4\pi)^2]$、$\mu\,\dd m/\dd\mu=-6e^2m/(4\pi)^2$ となる。$\MSbar$ の量を、極質量、留数、Thomson 極限の $\alpha(0)$ という on-shell の量に直す式も求めた。フェルミオンの留数は $\xi$ に依存する赤外の極を持ち、それを正しく得るには自己エネルギーの微分の $O(\epsilon)$ の項が要る。木のレベルでは、$e^+e^-\to\mu^+\mu^-$、Bhabha 散乱、Compton 散乱、$e^+e^-\to\gamma\gamma$ の振幅とスピン和を質量を残して求めた。1ループの $e^+e^-\to\mu^+\mu^-$ のうち $s$ チャンネルの部分（真空偏極、二つの頂点、外線の留数）は、$\MSbar$ で計算しても、$\alpha(0)$ と、処方によらない $F_1(q^2)-F_1(0)$、$\Pi(s)-\Pi(0)$、$F_2$ だけで書けることを示した。箱の図と木の干渉は、外線の Dirac 方程式で軟光子の項とそれ以外に分けて PaVe 関数の和に書いた。交差した箱は直接の箱の $t\leftrightarrow u$ の $-1$ 倍で、$\xi$ 依存は二つの箱の和で消え、干渉の赤外の極は外線の対ごとの軟光子の交換の和になる。この極は $D$ 次元の木のスピン和に掛かるので、$\MSbar$ の有限部分はスピン和の次元の規約により、4次元のスピン和との差は赤外の極の係数で閉じた形に書ける。分子を4次元で組み立てるツールに要る有理項（R2 の頂点）も、$D$ 次元の分子との差として手で導いた。実の光子の放射は、軟らかい領域を $D$ 次元で積分した因子を閉じた積分の形で導き、その赤外の極が仮想の補正の極と外線の対ごとに打ち消すこと、軟光子も同じ規約の木に掛かるので和がスピン和の規約によらないことを示した。最後に、検算と応用（異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成）の十一の手順を定め、その最初の七つを行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列、スピノル、偏極ベクトルを陽に作った数値でも手計算と一致し、内線の光子のゲージパラメータに振幅がよらないこと、外線の光子についての Ward 恒等式も確かめた。MadGraph の断面積は三つの過程で統計誤差の1.5倍以内で一致したが、質量のある電子の Compton 散乱では $\sqrt s=4m_e$ で $1.5\%$ 小さかった。MadGraph の行列要素は正しく、後ろ向きの $u$ チャンネルの伝播関数の山を位相空間の積分で拾いきれないためで、その山を除くと一致する。1ループの1PI 関数は、一般の $\xi$ で FeynCalc の結果と記号として一致し、Furry の定理、光子4点関数の紫外の極の打ち消し、Ward--Takahashi 恒等式、$Z_1=Z_2$ も確かめた。有限部分と赤外の極は Package-X、LoopTools、COLLIER と相対 $2\times10^{-14}$ 以内で一致し、留数の赤外の極と $R_fF_1(0)=1$ も $\xi=0,1,3$ で確かめた。1ループの $e^+e^-\to\mu^+\mu^-$ では、FeynCalc で六つの図の干渉がそれぞれ手計算の式と記号として一致し、$\xi$ によらないこと、紫外の極が対抗項で消えることも確かめた。九つの物理的な点で、FeynCalc + LoopTools の値と手計算の式を COLLIER で評価した値は相対 $2\times10^{-14}$ 以内で、赤外の極は軟光子の交換の式と $4\times10^{-15}$ 以内で一致した。スピン和を4次元でとる FormCalc の有限部分は CDR と最大 $59\%$ ずれたが、規約の差を除くと $5\times10^{-15}$ 以内で一致した。箱の虚部は、$e^+e^-\to\gamma\gamma$ と $\mu^+\mu^-\to\gamma\gamma$ の木の振幅から作った二光子の中間状態の寄与と $6\times10^{-14}$ 以内で一致した（ユニタリー性）。NLOCT が作った on-shell の対抗項と R2 の頂点は手計算と記号として一致し、それを入れた MadLoop の S 行列要素は、$\MSbar$ の電荷でも $\alpha(0)$ でも、9点と三つの繰り込みスケールで相対 $10^{-12}$ 以内で手計算と一致した。MadLoop の有限部分は CDR ではなく4次元のスピン和の値で、差は上の赤外の極の項に等しかった。途中で、MadGraph が UFO の小数の係数を有効数字7桁に切り詰めることを見つけた。実の光子の放射を加えた $\alpha^3$ の次数の断面積では、仮想の補正と軟光子の赤外の極が相対 $4\times10^{-14}$ 以内で打ち消し、軟と硬い光子の和は境のエネルギー $\Delta E\to0$ で一定の値に近づき、CDR と4次元のスピン和の全断面積は $2\times10^{-16}$ で一致した。前後の非対称度は箱の図と始状態と終状態の放射の干渉から生じ、$\alpha=1/(4\pi)$ で $+0.11$〜$+0.14$ である。硬い光子の部分は MadGraph と $\sqrt s=4m_e$ で一致したが、$6m_e$、$10m_e$ では MadGraph が約 $4\%$ 小さかった。原因は、MadGraph が $t$ チャンネルの不変量の格子を質量のない伝播関数の極に合わせて用意し、電子の質量による極のずれを使わず、極に近い始状態の放射の領域がまれにしか選ばれないことだった。格子を極のまわりにとりなおすと $0.2\%$ 以内で一致し、手順 (2) の Compton 散乱の不足も同じ原因で消えた。繰り込み群の係数 $\beta_e$、$\gamma_A$、$\gamma_\psi$、$\gamma_m$ は、1PI 関数、極質量、留数、S 行列要素の $\mu$ 依存から Package-X（記号としても）、LoopTools、COLLIER、MadLoop で読み取り、手計算と相対 $10^{-14}$ で一致した。$e(\mu)$ を走らせると S 行列要素の1ループの対数は消え、残る傾きは次の次数の項と一致した。1ループの流れでは、質量とゲージパラメータは Landau 極で0に近づき、$\xi$ は $\xi\alpha$ を一定に保って Landau ゲージに流れ込む。導出はすべて付録に省略なく載せる。
+$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノート~\cite{phi3note,phi34note,yukawanote} に続き、ゲージ場を含む最も簡単な模型として、電子 $e$ と $\mu$ 粒子の二つの Dirac フェルミオンが光子と結合するスピノル QED を $d=4$ で調べる。共変ゲージのゲージパラメータ $\xi$ を残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、Furry の定理、Ward--Takahashi 恒等式、1ループの1PI 関数（真空偏極、自己エネルギー、頂点）、$\MSbar$ の対抗項、繰り込み群の係数を手で求めた。フェルミオンの自己エネルギーは、部分積分の恒等式を使うと $D$ 次元で $\Sigma=\frac{e^2}{(4\pi)^2}[\xi(D-2)\slashed pB_1+(D-1+\xi)mB_0]$ という閉じた形になり、$\slashed p$ の項は $\xi$ に比例する（Landau ゲージでは1ループの場の繰り込みが0）。極質量はゲージによらず $m_{\mathrm p}=m(\mu)[1+\frac{e^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ である。質量殻上の頂点は次元正則化では $\xi$ によらず、Feynman パラメータで二つの形状因子を閉じた形に書くと、$F_2(q^2)=\frac{2e^2m^2}{(4\pi)^2}\int_0^1\dd w/[m^2-q^2w(1-w)]$、とくに $F_2(0)=\alpha/2\pi$（Schwinger の値）となる。Ward 恒等式 $Z_1=Z_2$ により電荷の繰り込みは光子の場の繰り込みだけで決まり、二つのフレーバーで $\beta_e=8e^3/[3(4\pi)^2]$、$\mu\,\dd m/\dd\mu=-6e^2m/(4\pi)^2$ となる。$\MSbar$ の量を、極質量、留数、Thomson 極限の $\alpha(0)$ という on-shell の量に直す式も求めた。フェルミオンの留数は $\xi$ に依存する赤外の極を持ち、それを正しく得るには自己エネルギーの微分の $O(\epsilon)$ の項が要る。木のレベルでは、$e^+e^-\to\mu^+\mu^-$、Bhabha 散乱、Compton 散乱、$e^+e^-\to\gamma\gamma$ の振幅とスピン和を質量を残して求めた。1ループの $e^+e^-\to\mu^+\mu^-$ のうち $s$ チャンネルの部分（真空偏極、二つの頂点、外線の留数）は、$\MSbar$ で計算しても、$\alpha(0)$ と、処方によらない $F_1(q^2)-F_1(0)$、$\Pi(s)-\Pi(0)$、$F_2$ だけで書けることを示した。箱の図と木の干渉は、外線の Dirac 方程式で軟光子の項とそれ以外に分けて PaVe 関数の和に書いた。交差した箱は直接の箱の $t\leftrightarrow u$ の $-1$ 倍で、$\xi$ 依存は二つの箱の和で消え、干渉の赤外の極は外線の対ごとの軟光子の交換の和になる。この極は $D$ 次元の木のスピン和に掛かるので、$\MSbar$ の有限部分はスピン和の次元の規約により、4次元のスピン和との差は赤外の極の係数で閉じた形に書ける。分子を4次元で組み立てるツールに要る有理項（R2 の頂点）も、$D$ 次元の分子との差として手で導いた。実の光子の放射は、軟らかい領域を $D$ 次元で積分した因子を閉じた積分の形で導き、その赤外の極が仮想の補正の極と外線の対ごとに打ち消すこと、軟光子も同じ規約の木に掛かるので和がスピン和の規約によらないことを示した。最後に、検算と応用（異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成）の十一の手順を定め、その最初の八つを行った。FeynRules の模型ファイルから書き出した FeynArts と UFO の頂点、MadGraph の図の数は手計算と一致した。四つの過程の木の振幅とスピン和は、FeynCalc でも、Dirac 行列、スピノル、偏極ベクトルを陽に作った数値でも手計算と一致し、内線の光子のゲージパラメータに振幅がよらないこと、外線の光子についての Ward 恒等式も確かめた。MadGraph の断面積は三つの過程で統計誤差の1.5倍以内で一致したが、質量のある電子の Compton 散乱では $\sqrt s=4m_e$ で $1.5\%$ 小さかった。MadGraph の行列要素は正しく、後ろ向きの $u$ チャンネルの伝播関数の山を位相空間の積分で拾いきれないためで、その山を除くと一致する。1ループの1PI 関数は、一般の $\xi$ で FeynCalc の結果と記号として一致し、Furry の定理、光子4点関数の紫外の極の打ち消し、Ward--Takahashi 恒等式、$Z_1=Z_2$ も確かめた。有限部分と赤外の極は Package-X、LoopTools、COLLIER と相対 $2\times10^{-14}$ 以内で一致し、留数の赤外の極と $R_fF_1(0)=1$ も $\xi=0,1,3$ で確かめた。1ループの $e^+e^-\to\mu^+\mu^-$ では、FeynCalc で六つの図の干渉がそれぞれ手計算の式と記号として一致し、$\xi$ によらないこと、紫外の極が対抗項で消えることも確かめた。九つの物理的な点で、FeynCalc + LoopTools の値と手計算の式を COLLIER で評価した値は相対 $2\times10^{-14}$ 以内で、赤外の極は軟光子の交換の式と $4\times10^{-15}$ 以内で一致した。スピン和を4次元でとる FormCalc の有限部分は CDR と最大 $59\%$ ずれたが、規約の差を除くと $5\times10^{-15}$ 以内で一致した。箱の虚部は、$e^+e^-\to\gamma\gamma$ と $\mu^+\mu^-\to\gamma\gamma$ の木の振幅から作った二光子の中間状態の寄与と $6\times10^{-14}$ 以内で一致した（ユニタリー性）。NLOCT が作った on-shell の対抗項と R2 の頂点は手計算と記号として一致し、それを入れた MadLoop の S 行列要素は、$\MSbar$ の電荷でも $\alpha(0)$ でも、9点と三つの繰り込みスケールで相対 $10^{-12}$ 以内で手計算と一致した。MadLoop の有限部分は CDR ではなく4次元のスピン和の値で、差は上の赤外の極の項に等しかった。途中で、MadGraph が UFO の小数の係数を有効数字7桁に切り詰めることを見つけた。実の光子の放射を加えた $\alpha^3$ の次数の断面積では、仮想の補正と軟光子の赤外の極が相対 $4\times10^{-14}$ 以内で打ち消し、軟と硬い光子の和は境のエネルギー $\Delta E\to0$ で一定の値に近づき、CDR と4次元のスピン和の全断面積は $2\times10^{-16}$ で一致した。前後の非対称度は箱の図と始状態と終状態の放射の干渉から生じ、$\alpha=1/(4\pi)$ で $+0.11$〜$+0.14$ である。硬い光子の部分は MadGraph と $\sqrt s=4m_e$ で一致したが、$6m_e$、$10m_e$ では MadGraph が約 $4\%$ 小さかった。原因は、MadGraph が $t$ チャンネルの不変量の格子を質量のない伝播関数の極に合わせて用意し、電子の質量による極のずれを使わず、極に近い始状態の放射の領域がまれにしか選ばれないことだった。格子を極のまわりにとりなおすと $0.2\%$ 以内で一致し、手順 (2) の Compton 散乱の不足も同じ原因で消えた。繰り込み群の係数 $\beta_e$、$\gamma_A$、$\gamma_\psi$、$\gamma_m$ は、1PI 関数、極質量、留数、S 行列要素の $\mu$ 依存から Package-X（記号としても）、LoopTools、COLLIER、MadLoop で読み取り、手計算と相対 $10^{-14}$ で一致した。$e(\mu)$ を走らせると S 行列要素の1ループの対数は消え、残る傾きは次の次数の項と一致した。1ループの流れでは、質量とゲージパラメータは Landau 極で0に近づき、$\xi$ は $\xi\alpha$ を一定に保って Landau ゲージに流れ込む。異常磁気モーメントは、頂点の図を二つのトレースで $F_1$、$F_2$ に射影して $F_2(0)=\alpha/(2\pi)$ を両フレーバーで確かめ、2ループの真空偏極の寄与を1ループの真空偏極の積分（$x$ 表示）として四つのツールの値で求めた。$\mu$ 粒子への電子のループの係数は $1.0942583111$ と文献の値に一致し、重いループは $(m/M)^2/45$ で切れることも確かめた。導出はすべて付録に省略なく載せる。
 \end{abstract}
 
 \tableofcontents
@@ -60,7 +60,7 @@ $\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論のノー�
 
 求める量は五つである。(i) Feynman 則、Furry の定理、Ward--Takahashi 恒等式。(ii) 1ループの1PI 関数（光子とフェルミオンの2点関数、頂点）の紫外発散と $\MSbar$ の対抗項、光子3点・4点関数が発散しないこと。(iii) 繰り込まれた1PI 関数、繰り込み群の係数、$\MSbar$ から on-shell の量（極質量、留数、$\alpha(0)$）への換算。(iv) 四つの過程の木の振幅とスピン和、1ループの $e^+e^-\to\mu^+\mu^-$ とその S 行列要素、実の光子の放射を含む断面積。(v) 応用として、異常磁気モーメント、走る結合と Landau 極、光子--光子散乱、Schwinger の対生成。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(7)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:scat} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(8)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:scat} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -801,6 +801,29 @@ A_{\mathrm{FB}}=\frac{\sigma_{\mathrm F}-\sigma_{\mathrm B}}{\sigma_{\mathrm F}+
 \end{equation}
 を満たす。$P_W$ は $W$ の赤外の極の係数で、軟光子の因子の $\ln(\mu^2/\Delta E^2)$ と打ち消す。$-(\beta_e/e)B(4)=-\frac83\frac{e^2}{K}B(4)$ は、木の $B(4)\propto e^4$ の電荷が走る分を打ち消す（$B(4)$ は $e^4$ を含む）。$\alpha(0)$ で書いた $W_{\mathrm{OS}}$（式~\eqref{eq:Wos}）では右辺は $P_W$ だけになる。
 
+\paragraph{異常磁気モーメント。}質量殻上の頂点を $\bar u(p')\Lambda^\mu u(p)$、$\Lambda^\mu=\gamma^\mu G_1+P^\mu G_2$（$P=p+p'$、$q=p'-p$）と書くと、Gordon 恒等式から $F_1=G_1+2mG_2$、$F_2=-2mG_2$ である。二つの射影は $D$ 次元で
+\begin{equation}
+\begin{pmatrix}\mathrm{tr}[(\slashed p'+m)\Lambda^\mu(\slashed p+m)\gamma_\mu]\\[2pt] \mathrm{tr}[(\slashed p'+m)\Lambda^\mu(\slashed p+m)P_\mu]\end{pmatrix}
+=\begin{pmatrix}8m^2+2(D-2)q^2 & 4m(4m^2-q^2)\\ 4m(4m^2-q^2) & 2(4m^2-q^2)^2\end{pmatrix}
+\begin{pmatrix}G_1\\ G_2\end{pmatrix}
+\label{eq:proj}
+\end{equation}
+を満たすので、頂点の図のトレースから $F_1$、$F_2$ が直接読める（\ref{app:g2}）。行列式 $4(D-2)q^2(4m^2-q^2)^2$ は $q^2=0$ で0になるので、$F_2(0)$ は $q^2\to0$ の極限として読む。式~\eqref{eq:V} から $F_2(0)=2e^2/K=\alpha/(2\pi)$（Schwinger~\cite{schwinger48}）で、電子と $\mu$ 粒子で同じであり、$\xi$ にも $\mu$ にもよらない。2ループでは、光子の伝播関数に質量 $m$ のフェルミオンの真空偏極が入った図が、質量 $M$ のレプトンの異常磁気モーメントに $(\alpha/\pi)^2A(M/m)$ を与える。$\alpha=\alpha(0)$ で書くと、真空偏極は $q^2=0$ で引いた $\bar\Pi(q^2)=\Pi^{\mathrm R}(q^2)-\Pi^{\mathrm R}(0)$ で入り、$r=M/m$ として
+\begin{equation}
+\begin{gathered}
+A(r)=\int_0^1\dd x\,(1-x)\,\frac{\pi}{\alpha}\bar\Pi\Bigl(-\frac{x^2M^2}{1-x}\Bigr)
+=\int_0^1\!\dd u\int_0^1\!\dd v\,\frac{u^2(1-u)\,v^2(1-v^2/3)}{u^2(1-v^2)+4(1-u)/r^2},\\
+\frac{\pi}{\alpha}\bar\Pi(q^2)=2\int_0^1\dd z\,z(1-z)\ln\Bigl[1-z(1-z)\frac{q^2}{m^2}\Bigr]
+\end{gathered}
+\label{eq:g2vp}
+\end{equation}
+となる（\ref{app:g2}）。1番目は、1ループの量 $\bar\Pi$ を空間的な運動量 $-x^2M^2/(1-x)$ で積分する形（$x$ 表示~\cite{lpr72}）である。2番目は $\bar\Pi$ を質量のある光子の重ね合わせ（スペクトル関数 $\rho(s)$ の積分、分散関係）で書いた形で、Elend~\cite{elend66} が閉じた形にした積分と同じである（Passera~\cite{passera05} の式 (4)）。極限は
+\begin{equation}
+A(r)\to\frac13\ln r-\frac{25}{36}\quad(r\gg1),\qquad A(r)\to\frac{r^2}{45}\quad(r\ll1)
+\label{eq:g2asym}
+\end{equation}
+で、軽い粒子のループは $\ln(M/m)$ で効き、重い粒子のループは $(M/m)^2$ で切れる（デカップリング）。$\mu$ 粒子の異常磁気モーメントへの電子の真空偏極の寄与は $A(m_\mu/m_e)$ で、$\mu$ 粒子自身のループ $A(1)$ は、質量によらない2ループの係数に含まれる真空偏極の部分である~\cite{passera05}。
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、式~\eqref{eq:V} の $\Pi_f$ と $\Sigma_f$（$D$ 次元で記号として）、頂点の紫外の極（一般の $\xi$）、質量殻上の頂点が $\xi$ によらないこと、$F_1^\Lambda$ と $F_2$ の Feynman パラメータの式（Package-X との数値の比較）、$\Sigma_V$ と $\Sigma_S$ の $\xi$ 依存の打ち消し（極質量）、式~\eqref{eq:sumtree} の四つのスピン和は、FeynCalc で予備的に確かめた。$\sum|\mathcal M_C|^2$ の途中のトレースは、Dirac 行列を陽に作った数値でも確かめた。正式な検算は手順 (2)、(3) で行う。
@@ -835,7 +858,7 @@ Schwinger の対生成 & 後で & — & — & — & — \\
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1)〜(7) はそれぞれ \texttt{run\_model\_check.sh}、\texttt{run\_tree\_check.sh}、\texttt{run\_oneloop\_check.sh}、\texttt{run\_scat\_check.sh}、\texttt{generate\_SpinorQED\_NLO.sh} と \texttt{run\_madloop\_check.sh}、\texttt{run\_xsec\_check.sh}、\texttt{run\_rg\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1)〜(8) はそれぞれ \texttt{run\_model\_check.sh}、\texttt{run\_tree\_check.sh}、\texttt{run\_oneloop\_check.sh}、\texttt{run\_scat\_check.sh}、\texttt{generate\_SpinorQED\_NLO.sh} と \texttt{run\_madloop\_check.sh}、\texttt{run\_xsec\_check.sh}、\texttt{run\_rg\_check.sh}、\texttt{run\_g2\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/SpinorQED.fr} を作った。ラグランジアンは式~\eqref{eq:L} からゲージ固定の項と対抗項を除いた部分で、ゲージ群 $U(1)$ の電荷 $Q=-1$ を二つのフレーバーに与え、共変微分で結合を書いた。パラメータの名前と MadGraph の結合の次数の決め方は\ref{app:details} に示す。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通った。頂点は二つで、どちらも $-i\,\texttt{ee}\,\gamma^\mu$ となり、図~\ref{fig:rules} の $ieQ_f\gamma^\mu=-ie\gamma^\mu$ と一致した。光子の自己結合は現れない。FeynArts の模型では、頂点はカイラルな射影の係数の組 $\{c_L,c_R\}=\{i\,\texttt{gc1},i\,\texttt{gc1}\}$（$\texttt{gc1}=-\texttt{EL}$）として書かれ、$c_L\omega_-+c_R\omega_+=-i\,\texttt{EL}\,\gamma^\mu$ である。FeynRules は電荷の単位 \texttt{ee} を FeynArts の電荷 \texttt{EL} に置き換えた。光子の伝播関数は FeynArts の一般の模型の $-i[g_{\mu\nu}-(1-\xi)k_\mu k_\nu/k^2]/k^2$ で、\texttt{GaugeXi[V[1]]} が $\xi$ である。UFO では、頂点の Lorentz 構造が \texttt{FFV1}（$\gamma^\mu$）、結合が \texttt{GC\_1} $=-i\,\texttt{ee}$ で、次数は \texttt{QED}$=1$ である。FeynArts の模型と UFO は \texttt{Src/generated/} に書き出した。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の図を生成し、すべて手で数えた数と一致した。スクリプトは \texttt{generate\_SpinorQED.wl}（FeynRules）と \texttt{model\_mg5.mg5}（MadGraph）である。
 
@@ -1091,14 +1114,47 @@ $\beta_e$（$KW$ の傾き） & $8/3$ & — & $4.2\times10^{-15}$ & $1.6\times10
 \label{fig:rgflow}
 \end{figure}
 
+\paragraph{手順 (8)：異常磁気モーメント。}式~\eqref{eq:proj}、\eqref{eq:g2vp}、\eqref{eq:g2asym} を確かめた。スクリプトは \texttt{g2\_feyncalc.wl}（FeynArts + FeynCalc、Package-X、LoopTools）、\texttt{g2\_collier.f90}（COLLIER）、\texttt{g2\_numeric.py}（mpmath、比較、図）である。FeynArts の頂点の図（電子と $\mu$ 粒子、一般の $\xi$）を、式~\eqref{eq:proj} の二つのトレースで射影した。射影の行列は、基底 $\gamma^\mu$、$P^\mu$ のトレースから $D$ 次元で計算し、式~\eqref{eq:proj} と記号として一致した。得られた $F_1$、$F_2$ は $\xi$ によらず、手順 (3)、(4) の PaVe の形（\ref{app:ren}）と二つのフレーバーで記号として一致した。Package-X の閉じた形で $q^2\to0$ の極限をとると、記号の質量 $m$ でも $KF_2(0)/e^2=2$、すなわち $F_2(0)=\alpha/(2\pi)$ だった。$KF_2(q^2)/e^2$ を $q^2=-5$ から $10$ の8点で求めると、Package-X、LoopTools、COLLIER は式~\eqref{eq:V} の Feynman パラメータの積分（閾値 $4m^2$ より下）と相対 $6\times10^{-16}$ 以内で一致した。
+
+2ループの係数 $A(r)$ は、式~\eqref{eq:g2vp} の $x$ 表示の積分を固定した節点（$x$ と $\sqrt{1-x}$ について対数の間隔の Gauss--Legendre、96点と64点）で求めた。節点での $\bar\Pi$ は、Feynman パラメータの式（mpmath、30桁）、Package-X の閉じた形（30桁）、LoopTools と COLLIER の四つで求めた。LoopTools と COLLIER は $|t|\ge0.05\,m^2$ の534点で使った。それより小さい $|t|$ では式~\eqref{eq:VR} の $1/q^2$ の項が打ち消して桁が落ちるので、級数を使った。節点の値は mpmath と、Package-X が $1.5\times10^{-17}$、LoopTools と COLLIER が $8\times10^{-12}$ 以内で一致した。結果を表~\ref{tab:g2} に示す。七つの質量比で、四つの $\bar\Pi$ による積分は、適応的な求積（30桁）と相対 $4\times10^{-13}$ 以内で一致した。分散関係の2重積分は30桁で一致し、Passera の閉じた形~\cite{passera05} も $6\times10^{-15}$ 以内で一致した（$r<1$ では閉じた形の項が大きく打ち消す）。文献の値とは三つの点で一致した。$r=206.7682838$ では $1.0942583111$（ここでは $1.094258311072$）、$\mu$ 粒子と $\tau$ 粒子の質量比 $r=0.05945918$ では $0.000078064$（$0.0000780644$）、等しい質量では $119/36-\pi^2/3$（30桁）である。極限 \eqref{eq:g2asym} とのずれは、$r=206.8$ で $-1.1\%$ と、閉じた形の次の項 $\pi^2/(4r)$（$1.1\%$）に合う。$r=1/206.8$ では $8\times10^{-5}$ である。
+
+$\alpha(0)^{-1}=137.035999084$、$m_\mu/m_e=206.768283$ では、$a_\mu$ は1ループの $\alpha/(2\pi)=1.1614097\times10^{-3}$ に、電子のループの $5.9040601\times10^{-6}$ と $\mu$ 粒子自身のループの $8.464133\times10^{-8}$ が加わる。$a_e$ では、電子自身のループが $8.464133\times10^{-8}$ で、$\mu$ 粒子のループは $(m_e/m_\mu)^2/45$ で抑えられて $2.804245\times10^{-12}$ である。図~\ref{fig:g2} の左は $A(r)$ と極限、右は $x$ 表示の被積分関数である。軽いループ（$r\gg1$）の寄与は $x\sim m/M$ から $1$ まで広く分布し、重いループ（$r\ll1$）の寄与は $x\to1$ に寄る。$x\to1$ は、ループに入る運動量 $-x^2M^2/(1-x)$ が大きい領域である。
+
+\begin{table}[tbp]
+\centering\small
+\caption{2ループの真空偏極の係数 $A(r)$（$r=M/m$、単位 $(\alpha/\pi)^2$）。$A$ は式~\eqref{eq:g2vp} の $x$ 表示の適応的な求積（mpmath、30桁）で、その右は相対的なずれである。「2重積分/閉じた形」は分散関係の2重積分と Passera の閉じた形~\cite{passera05} のずれの大きい方、「$x$ 表示の節点」は $\bar\Pi$ を mpmath、Package-X、LoopTools、COLLIER で求めた固定した節点の積分のずれの最大、「極限」は式~\eqref{eq:g2asym} との相対的なずれ（$r\approx1$ では意味がないので「—」）。文献の値は Passera の式 (6)、(7) と $A(1)=119/36-\pi^2/3$ である。}
+\label{tab:g2}
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrlllll}
+\toprule
+場合 & $r$ & $A(r)$ & 2重積分/閉じた形 & $x$ 表示の節点 & 文献 & 極限 \\
+\midrule
+$a_\mu$、電子のループ（基準点） & $1.7$ & $0.035307969372278$ & $1\times10^{-30}$ & $3.9\times10^{-15}$ & — & — \\
+$a_e$、$\mu$ のループ（基準点） & $1/1.7$ & $0.0063735503732733$ & $9\times10^{-29}$ & $3.7\times10^{-14}$ & — & — \\
+等しい質量 & $1$ & $0.015687421859103$ & $2\times10^{-29}$ & $4.2\times10^{-14}$ & $119/36-\pi^2/3$ & — \\
+Passera (6) & $206.7682838$ & $1.0942583110718$ & $2\times10^{-31}$ & $1.1\times10^{-14}$ & $1.0942583111(84)$ & $-0.011$ \\
+Passera (7)、$m_\mu/m_\tau$ & $0.05945918$ & $7.8064435189\times10^{-5}$ & $7\times10^{-22}$ & $4.1\times10^{-13}$ & $0.000078064(25)$ & $0.0064$ \\
+$a_\mu$、電子のループ（物理） & $206.768283$ & $1.0942583098253$ & $2\times10^{-31}$ & $1.1\times10^{-14}$ & — & $-0.011$ \\
+$a_e$、$\mu$ のループ（物理） & $1/206.768283$ & $5.1973867445\times10^{-7}$ & $6\times10^{-15}$ & $6.2\times10^{-15}$ & — & $8\times10^{-5}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{../figs/g2_vp.pdf}
+\caption{左：2ループの真空偏極の係数 $A(r)$（$r=M/m$、式~\eqref{eq:g2vp}）と、極限 \eqref{eq:g2asym}。黒い丸は文献の値~\cite{passera05}、緑の点は表~\ref{tab:g2} の値。右：$x$ 表示の被積分関数 $(1-x)\bar\Pi(t)\pi/\alpha$（$t=-x^2M^2/(1-x)$）を $A(r)$ で割ったもの。}
+\label{fig:g2}
+\end{figure}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{手計算で分かったこと。}ゲージ場を入れたことで、これまでの模型になかった構造が三つ現れた。一つ目は Ward 恒等式による制約で、真空偏極の横波性、$Z_1=Z_2$、電荷の繰り込みの普遍性が、発散の構造を光子の場の繰り込み一つにまとめる。二つ目はゲージパラメータの役割で、$\xi$ は場の繰り込みと赤外の極の分け方にだけ現れ、極質量、$e_{\mathrm{OS}}$、形状因子 $F_2$、$\hat F_1$ には現れない。自己エネルギーの $\xi$ 依存の部分は部分積分の恒等式で $D$ 次元で厳密に閉じた形になり、質量殻上の頂点の $\xi$ 依存の部分はスケールのない積分になる。三つ目は赤外発散で、フェルミオンの留数と頂点の赤外の極がそれぞれ $\xi$ に依存しながら、組 $\hat F_1$ では打ち消して $f_{\mathrm{IR}}$ だけが残る。留数の赤外の極を正しく得るには、$D$ 次元の係数の $O(\epsilon)$ の部分まで残す必要があった。物理としては、$s$ チャンネルの1ループの補正が $\alpha(0)$ と処方によらない量だけで書けることが、$\MSbar$ で計算することと、QED の結果を on-shell の言葉で読むことを結びつける。1ループの散乱では、箱の図が三つのことを加えた。箱の分子は、外線の Dirac 方程式で軟光子の部分（アイコナールの項）とそれ以外に分かれ、赤外の極は外線の対ごとの軟光子の交換の和になる。$\xi$ 依存は二つの箱の間で打ち消し、一つの図ではゲージによらない量にならない。二つの箱は $\mu$ の線の荷電共役で互いに移り、$t\leftrightarrow u$ で奇の部分を与える。もう一つの発見は、赤外の極が木のスピン和 $B(D)$ に掛かるため、$\MSbar$ の有限部分がスピン和の次元の規約によることである（式~\eqref{eq:scheme}）。この差は実の放射と合わせると消えるが、仮想の補正の数値をツールの間で比べるときは、規約をそろえるか、この差を明示的に除く必要がある。実際、MadLoop の有限部分は4次元のスピン和の値で、CDR の値とは符号まで違う点があった。実の光子の放射を加えると、軟光子の因子の赤外の極が仮想の補正の極と外線の対ごとに打ち消し、和はスピン和の規約にも境のエネルギー $\Delta E$ にもよらなくなった。前後の非対称度は、箱の図、軟光子の干渉、硬い光子の干渉のそれぞれが大きく、互いに打ち消した残りである。繰り込み群の係数は、$\MSbar$ の量の $\mu$ 依存からそのまま読めた。次元正則化ではすべての極が $\mu^{2\epsilon}$ を伴うので、赤外の極を持つ量（留数、S 行列要素）では赤外の極の2倍も傾きに加わる。S 行列要素の傾きは $\beta_e$ の項と赤外の極の和で、軟光子と合わせた量でだけ $\beta_e$ が残る。$e(\mu)$ を走らせると1ループの対数は消えるが、$e=1$ では補正が大きく、次の次数の傾きが目に見えて残る。
+\paragraph{手計算で分かったこと。}ゲージ場を入れたことで、これまでの模型になかった構造が三つ現れた。一つ目は Ward 恒等式による制約で、真空偏極の横波性、$Z_1=Z_2$、電荷の繰り込みの普遍性が、発散の構造を光子の場の繰り込み一つにまとめる。二つ目はゲージパラメータの役割で、$\xi$ は場の繰り込みと赤外の極の分け方にだけ現れ、極質量、$e_{\mathrm{OS}}$、形状因子 $F_2$、$\hat F_1$ には現れない。自己エネルギーの $\xi$ 依存の部分は部分積分の恒等式で $D$ 次元で厳密に閉じた形になり、質量殻上の頂点の $\xi$ 依存の部分はスケールのない積分になる。三つ目は赤外発散で、フェルミオンの留数と頂点の赤外の極がそれぞれ $\xi$ に依存しながら、組 $\hat F_1$ では打ち消して $f_{\mathrm{IR}}$ だけが残る。留数の赤外の極を正しく得るには、$D$ 次元の係数の $O(\epsilon)$ の部分まで残す必要があった。物理としては、$s$ チャンネルの1ループの補正が $\alpha(0)$ と処方によらない量だけで書けることが、$\MSbar$ で計算することと、QED の結果を on-shell の言葉で読むことを結びつける。1ループの散乱では、箱の図が三つのことを加えた。箱の分子は、外線の Dirac 方程式で軟光子の部分（アイコナールの項）とそれ以外に分かれ、赤外の極は外線の対ごとの軟光子の交換の和になる。$\xi$ 依存は二つの箱の間で打ち消し、一つの図ではゲージによらない量にならない。二つの箱は $\mu$ の線の荷電共役で互いに移り、$t\leftrightarrow u$ で奇の部分を与える。もう一つの発見は、赤外の極が木のスピン和 $B(D)$ に掛かるため、$\MSbar$ の有限部分がスピン和の次元の規約によることである（式~\eqref{eq:scheme}）。この差は実の放射と合わせると消えるが、仮想の補正の数値をツールの間で比べるときは、規約をそろえるか、この差を明示的に除く必要がある。実際、MadLoop の有限部分は4次元のスピン和の値で、CDR の値とは符号まで違う点があった。実の光子の放射を加えると、軟光子の因子の赤外の極が仮想の補正の極と外線の対ごとに打ち消し、和はスピン和の規約にも境のエネルギー $\Delta E$ にもよらなくなった。前後の非対称度は、箱の図、軟光子の干渉、硬い光子の干渉のそれぞれが大きく、互いに打ち消した残りである。繰り込み群の係数は、$\MSbar$ の量の $\mu$ 依存からそのまま読めた。次元正則化ではすべての極が $\mu^{2\epsilon}$ を伴うので、赤外の極を持つ量（留数、S 行列要素）では赤外の極の2倍も傾きに加わる。S 行列要素の傾きは $\beta_e$ の項と赤外の極の和で、軟光子と合わせた量でだけ $\beta_e$ が残る。$e(\mu)$ を走らせると1ループの対数は消えるが、$e=1$ では補正が大きく、次の次数の傾きが目に見えて残る。異常磁気モーメントでは、2ループの真空偏極の寄与が、1ループの真空偏極 $\bar\Pi$ を空間的な運動量で積分した量（$x$ 表示）になることを、質量のある光子の重ね合わせから導いた。この形では、軽いループの $\ln(M/m)$ と重いループの $(M/m)^2$ のデカップリングが、$\bar\Pi$ の大きい運動量と小さい運動量の振る舞いから直接読める。
 
-\paragraph{ツールについて分かったこと。}木のレベルでも、ツールの使い方に三つの注意点があった。FeynArts の \texttt{CreateFeynAmp} は既定でゲージパラメータを1にするので、$\xi$ 依存を調べるには明示的に外す必要がある。光子の偏極の和を $-g_{\mu\nu}$ とする置き換えは2乗の和には使えるが、正定値でないので振幅の差の比較には使えない。MadGraph は、質量のある電子の Compton 散乱の後ろ向きの $u$ チャンネルの山を拾いきれず、表示の誤差を大きく超えて断面積を小さく出した。行列要素は正しいので、MadGraph の断面積を基準に使うときは、伝播関数の山を含む領域を分けて確かめる必要がある。1ループでは、赤外の発散が新たな注意点になった。FeynCalc の TID は2重の光子の伝播関数を赤外で発散する $C_0$ として残すので、極を取り出す前に部分積分で $A_0$、$B_0$ に直す必要がある。$q^2=0$ の頂点の $C_0$ は LoopTools と COLLIER が評価できず、留数に要る $B_0'$ は Package-X が評価しない。三つのツールを組み合わせて、どの量も二つ以上のツールで確かめた。手順 (4) では、ツールの規約が三つ問題になった。FormCalc は外線のスピン和を4次元でとり、偏極を指定しない \texttt{HelicityME} はスピン和の $1/16$ を返し、\texttt{SquaredME[a, b]} は $a^*b$ である。LoopTools の $\lambda^2=-1$ の値は紫外と赤外を合わせた $1/\epsilon$ の係数で、赤外だけを得るには \texttt{SetUVDiv[0]} が要る。COLLIER のテンソル係数の配列は宣言の形を合わせないと、エラーなしに誤った値を返す（\ref{app:details}）。どれも、手計算の式と部分ごとに比べたことで見つかった。手順 (5) では、MadGraph が UFO の小数の係数を有効数字7桁に切り詰めることがわかった。打ち消し合う二つの対抗項の一方だけが小数で書かれていると、相対 $10^{-8}$ のずれが $\ln\mu_R$ の1次式として現れる。$\alpha(0)$ の UFO ではこのずれが打ち消し合って見えず、二つの電荷の規約で比べたことで見つかった。手順 (6) では、さらに二つがわかった。FeynCalc で光子の偏極を横波と指定すると $\varepsilon\cdot k$ の項が途中で落ち、偏極の和を $-g$ にする方法が使えなくなる（\ref{app:details}）。MadGraph は質量のあるレプトンの $e^-e^+\to\mu^-\mu^+\gamma$ の断面積を数\%小さく出し、その誤差の表示も当てにならなかった。どちらも、行列要素と位相空間の積分を別々に、独立な方法で確かめたことで切り分けられた。MadGraph の不足の原因は、$t$ チャンネルの不変量の格子を質量のない伝播関数の極に合わせて用意し、質量による極のずれを使わないことだった。手順 (2) の Compton 散乱の不足も同じ原因である。格子を極のまわりにとりなおすと両方とも一致したので、質量のある粒子が $t$（$u$）チャンネルを走る過程では、MadGraph の断面積をそのまま基準にせず、この修正（\texttt{mg5\_tpole.py}）か独立な積分で確かめる必要がある。手順 (7) では、LoopTools の $\mu$ は \texttt{LToolsEvaluate} のオプションで与えないと既定値に戻ること、Package-X の評価しない $B_0'$、$B_1'$ は次元正則化で $A_0$ に厳密に書き直せることがわかった。
+\paragraph{ツールについて分かったこと。}木のレベルでも、ツールの使い方に三つの注意点があった。FeynArts の \texttt{CreateFeynAmp} は既定でゲージパラメータを1にするので、$\xi$ 依存を調べるには明示的に外す必要がある。光子の偏極の和を $-g_{\mu\nu}$ とする置き換えは2乗の和には使えるが、正定値でないので振幅の差の比較には使えない。MadGraph は、質量のある電子の Compton 散乱の後ろ向きの $u$ チャンネルの山を拾いきれず、表示の誤差を大きく超えて断面積を小さく出した。行列要素は正しいので、MadGraph の断面積を基準に使うときは、伝播関数の山を含む領域を分けて確かめる必要がある。1ループでは、赤外の発散が新たな注意点になった。FeynCalc の TID は2重の光子の伝播関数を赤外で発散する $C_0$ として残すので、極を取り出す前に部分積分で $A_0$、$B_0$ に直す必要がある。$q^2=0$ の頂点の $C_0$ は LoopTools と COLLIER が評価できず、留数に要る $B_0'$ は Package-X が評価しない。三つのツールを組み合わせて、どの量も二つ以上のツールで確かめた。手順 (4) では、ツールの規約が三つ問題になった。FormCalc は外線のスピン和を4次元でとり、偏極を指定しない \texttt{HelicityME} はスピン和の $1/16$ を返し、\texttt{SquaredME[a, b]} は $a^*b$ である。LoopTools の $\lambda^2=-1$ の値は紫外と赤外を合わせた $1/\epsilon$ の係数で、赤外だけを得るには \texttt{SetUVDiv[0]} が要る。COLLIER のテンソル係数の配列は宣言の形を合わせないと、エラーなしに誤った値を返す（\ref{app:details}）。どれも、手計算の式と部分ごとに比べたことで見つかった。手順 (5) では、MadGraph が UFO の小数の係数を有効数字7桁に切り詰めることがわかった。打ち消し合う二つの対抗項の一方だけが小数で書かれていると、相対 $10^{-8}$ のずれが $\ln\mu_R$ の1次式として現れる。$\alpha(0)$ の UFO ではこのずれが打ち消し合って見えず、二つの電荷の規約で比べたことで見つかった。手順 (6) では、さらに二つがわかった。FeynCalc で光子の偏極を横波と指定すると $\varepsilon\cdot k$ の項が途中で落ち、偏極の和を $-g$ にする方法が使えなくなる（\ref{app:details}）。MadGraph は質量のあるレプトンの $e^-e^+\to\mu^-\mu^+\gamma$ の断面積を数\%小さく出し、その誤差の表示も当てにならなかった。どちらも、行列要素と位相空間の積分を別々に、独立な方法で確かめたことで切り分けられた。MadGraph の不足の原因は、$t$ チャンネルの不変量の格子を質量のない伝播関数の極に合わせて用意し、質量による極のずれを使わないことだった。手順 (2) の Compton 散乱の不足も同じ原因である。格子を極のまわりにとりなおすと両方とも一致したので、質量のある粒子が $t$（$u$）チャンネルを走る過程では、MadGraph の断面積をそのまま基準にせず、この修正（\texttt{mg5\_tpole.py}）か独立な積分で確かめる必要がある。手順 (7) では、LoopTools の $\mu$ は \texttt{LToolsEvaluate} のオプションで与えないと既定値に戻ること、Package-X の評価しない $B_0'$、$B_1'$ は次元正則化で $A_0$ に厳密に書き直せることがわかった。手順 (8) では、LoopTools と COLLIER の $\Pi_f$ は小さい $|q^2|$ で $1/q^2$ の項の打ち消しにより桁を落とすので、2ループの積分のように $q^2\to0$ まで使うときは級数か多倍長（Package-X）で補う必要があった。また、\texttt{LToolsEvaluate} に倍精度の数を渡すと FeynCalc の \texttt{Collect2} が失敗することがあり、有理数を渡す必要があった。
 
-\paragraph{今後。}次は手順 (8) の異常磁気モーメントで、$F_2(0)$ を $e$ と $\mu$ で確かめ、$\mu$ 粒子の $g-2$ への電子の真空偏極の寄与（2ループ）を1ループの量の積分として求め、文献の値と比べる。手順 (7) で確かめた $e(\mu)$ の走りと $\alpha(0)$ への換算は、手順 (9) の走る結合と Landau 極の基礎になる。
+\paragraph{今後。}次は手順 (9) の走る結合で、真空偏極の分散関係、有効結合 $\alpha(q^2)$、Uehling のポテンシャル~\cite{uehling}、$\MSbar$ と on-shell の Landau 極を求める。手順 (8) で使った $\bar\Pi$ の Feynman パラメータの表示と分散関係の表示が、その出発点になる。
 
 \appendix
 
@@ -1661,6 +1717,54 @@ Q^2=s-2\sqrt s\,\omega,\quad|\boldsymbol k^*|=\frac{\sqrt{Q^2}}{2}\sqrt{1-\frac{
 \end{equation*}
 である（$\dd\Phi_2=|\boldsymbol k^*|\dd\Omega^*/(16\pi^2\sqrt{Q^2})$）。光子の方位角は対称性で $2\pi$ を掛ける。始状態の共線の伝播関数 $1/(p_{1,2}\cdot k)\propto1/(1\mp\beta_e\cos\theta_\gamma)$ は、$\cos\theta_\gamma=\tanh(\eta)/\beta_e$ とすると $\dd\cos\theta_\gamma/[(1-\beta_e\cos\theta_\gamma)(1+\beta_e\cos\theta_\gamma)]=\dd\eta/\beta_e$ で平らになる。終状態の共線の伝播関数 $1/(k_{1,2}\cdot k)$ は $Q$ の静止系で $1/(1\mp\beta^*\cos\theta^*)$ なので、同じく $\cos\theta^*=\tanh(\eta^*)/\beta^*$ とする。軟らかい $1/\omega$ は $\omega=\Delta E\,(\omega_{\max}/\Delta E)^u$ で平らにし、$\mu$ の対の閾値 $\omega_{\max}=(s-4M^2)/(2\sqrt s)$ で $|\boldsymbol k^*|\propto\sqrt{\omega_{\max}-\omega}$ となる平方根の端は $u=1-(1-v)^2$ で滑らかにする。$\mu^-$ の重心系での $z$ 成分は $\phi^*$ について $A+B\cos\phi^*$ の形なので、$\phi^*$ の区間をその零点で分けると、前方と後方の断面積も滑らかな関数の積分になる。独立な確かめには、$\mu^-$ と光子のエネルギー $E_1$、$\omega$（Dalitz の変数）と $\mu^-$ の向き、$\mu^-$ のまわりの光子の方位角 $\chi$ による $\dd\Phi_3=\dd E_1\,\dd\omega\,\dd\cos\theta_1\,\dd\phi_1\,\dd\chi/[8(2\pi)^5]$ を使った。
 
+\section{異常磁気モーメントの導出}\label{app:g2}
+
+\paragraph{射影。}$\Lambda^\mu=\gamma^\mu G_1+P^\mu G_2$ を代入して式~\eqref{eq:proj} の行列を求める。$\gamma^\mu\slashed p\gamma_\mu=(2-D)\slashed p$、$\gamma^\mu\gamma_\mu=D$ と $p\cdot p'=m^2-q^2/2$ から
+\begin{equation*}
+\mathrm{tr}[(\slashed p'+m)\gamma^\mu(\slashed p+m)\gamma_\mu]=4[(2-D)p\cdot p'+Dm^2]=8m^2+2(D-2)q^2
+\end{equation*}
+である。$P^\mu$ の項は $\mathrm{tr}[(\slashed p'+m)(\slashed p+m)\slashed P]=4m(p'+p)\cdot P=4mP^2$、$P^2=4m^2-q^2$ で、$\mathrm{tr}[(\slashed p'+m)(\slashed p+m)]P^2=4(p\cdot p'+m^2)P^2=2(P^2)^2$ である。$\gamma^\mu$ の項を $P_\mu$ で射影したものは前者と同じ $4mP^2$ になる。Gordon 恒等式 $\bar u(p')\frac{i\sigma^{\mu\nu}q_\nu}{2m}u(p)=\bar u(p')[\gamma^\mu-P^\mu/(2m)]u(p)$ から、$\Lambda^\mu=\gamma^\mu F_1+\frac{i\sigma^{\mu\nu}q_\nu}{2m}F_2$ は $G_1=F_1+F_2$、$G_2=-F_2/(2m)$ に当たる。トレースは外線のスピノルを $\bar u(p')\ldots u(p)$ で挟む代わりに、$u(p)\bar u(p)\to\slashed p+m$ などのスピン和で閉じたものである。$q^\mu$ に比例する項は、$P\cdot q=0$ と $\mathrm{tr}[(\slashed p'+m)(\slashed p+m)\slashed q]=4m(p+p')\cdot q=0$ から、どちらのトレースにも入らない。
+
+\paragraph{質量のある光子の交換。}\ref{app:ren} の頂点の Feynman パラメータ表示で、光子の伝播関数を $-ig_{\mu\nu}/(l^2-\lambda^2)$ にすると、分母は $z(l^2-\lambda^2)+xD_1+yD_2$ で、$\Delta_F$ が $(1-z)^2m^2-xyq^2+z\lambda^2$ に変わる。分子は変わらないので、$F_2$ の式 $F_2=\frac{e^2}{K}\int\dd F\,4m^2z(1-z)/\Delta_F$ はそのまま使える。$q^2=0$ では被積分関数が $z$ だけによるので $\int\dd F\to\int_0^1\dd z\,(1-z)$ で、$u=1-z$ とすると
+\begin{equation*}
+a(\lambda)\equiv F_2(0)\big|_\lambda=\frac{4e^2}{K}\int_0^1\dd z\,\frac{z(1-z)^2m^2}{(1-z)^2m^2+z\lambda^2}
+=\frac{\alpha}{\pi}\int_0^1\dd u\,\frac{u^2(1-u)}{u^2+(1-u)\lambda^2/m^2}
+\end{equation*}
+である（$4e^2/K=\alpha/\pi$）。$\lambda=0$ で $\frac{\alpha}{\pi}\int(1-u)\dd u=\alpha/(2\pi)$ になる。
+
+\paragraph{真空偏極の Feynman パラメータ表示。}$y=q^2/m^2$、$a=z(1-z)$、$D(z)=1-ay$、$L=\ln D$、$J=\int_0^1L\,\dd z$ とすると、\ref{app:ren} の $B_0$ の表示から $B_0^{\mathrm f}(q^2)-B_0^{\mathrm f}(0)=-J$ で、式~\eqref{eq:VR} の $\Pi_f^{\mathrm R}$ と $\Pi_f^{\mathrm R}(0)=-\frac{4e^2}{3K}B_0^{\mathrm f}(0)$ から
+\begin{equation*}
+\bar\Pi=\frac{4e^2}{3K}\Bigl[\Bigl(1+\frac2y\Bigr)J+\frac13\Bigr]
+\end{equation*}
+である。これを $z$ の1重の積分に直す。$L$ は $z=0,1$ で0なので、$(z-\frac12)L$ と $(z-\frac12)^3L$ の微分の積分は0である。$(z-\frac12)^2=\frac14-a$ と $ay=1-D$ を使うと、一つ目は
+\begin{equation*}
+0=J+2\int_0^1\frac{y(\frac14-a)}{D}\dd z=J+2+\Bigl(\frac y2-2\Bigr)I_1,\qquad I_1=\int_0^1\frac{\dd z}{D}
+\end{equation*}
+を与える。二つ目は $0=\frac34J-3\int aL+2y\int(\frac14-a)^2/D$ で、$y(\frac14-a)=(\frac y4-1+D)$ と $\int D=1-\frac y6$ から $2y\int(\frac14-a)^2/D=\frac2y[(\frac y4-1)^2I_1+\frac y3-1]$ になる。一つ目で $I_1$ を消すと $3\int aL=\frac J2+\frac Jy+\frac16$、すなわち $6\int_0^1aL\,\dd z=(1+\frac2y)J+\frac13$ を得る。$\frac{4e^2}{3K}\cdot6=\frac{8e^2}{K}=\frac{2\alpha}{\pi}$ なので、式~\eqref{eq:g2vp} の2行目になる。$|y|\ll1$ では $\ln D\approx-ay$、$\int a^2=\frac1{30}$ から $\bar\Pi\approx-\frac{\alpha}{15\pi}\frac{q^2}{m^2}$、$-q^2\gg m^2$ では $\ln D\approx\ln(-y)+\ln a$、$\int a\ln a\,\dd z=-\frac5{18}$ から $\bar\Pi\approx\frac{\alpha}{3\pi}[\ln(-q^2/m^2)-\frac53]$ である。
+
+\paragraph{質量のある光子の重ね合わせ。}$\ln(1-ak^2/m^2)=-k^2\int_{m^2/a}^\infty\dd s/[s(s-k^2)]$（$k^2<m^2/a$）を代入して $z$ と $s$ の積分の順序を入れ替えると
+\begin{equation*}
+\bar\Pi(k^2)=-k^2\int_{4m^2}^\infty\dd s\,\frac{\rho(s)}{s(s-k^2)},\qquad
+\rho(s)=\frac{2\alpha}{\pi}\int_{a(z)\ge m^2/s}z(1-z)\,\dd z=\frac{\alpha}{3\pi}\Bigl(1+\frac{2m^2}{s}\Bigr)\sqrt{1-\frac{4m^2}{s}}
+\end{equation*}
+である（$a\ge m^2/s$ は $z$ が $\frac12(1\pm\beta)$、$\beta=\sqrt{1-4m^2/s}$ の間で、$\int z(1-z)=\frac\beta4-\frac{\beta^3}{12}$）。$\bar\Pi$ を含む光子の伝播関数は $-i[g_{\mu\nu}-k_\mu k_\nu/k^2]/[k^2(1-\bar\Pi)]$ で（$\Gamma_A\propto k^2(1-\Pi^{\mathrm R})$、\ref{app:rg}）、$\bar\Pi$ の1次は $-i[g_{\mu\nu}-k_\mu k_\nu/k^2]\bar\Pi/k^2$ である。$k_\mu k_\nu$ の部分は、\ref{app:ren} の頂点のゲージ依存の部分と同じく外線の Dirac 方程式で伝播関数を一つ消し、$\gamma^\mu$ に比例する項しか作らないので $F_2$ に効かない。残る $-ig_{\mu\nu}\bar\Pi(k^2)/k^2=\int\dd s\,\frac{\rho(s)}{s}\,\frac{-ig_{\mu\nu}}{k^2-s}$ は、質量の2乗 $s$ の光子の重み $\rho(s)/s$ の重ね合わせなので、2ループの寄与は
+\begin{equation*}
+a^{(4)}=\int_{4m^2}^\infty\dd s\,\frac{\rho(s)}{s}\,a(\sqrt s)
+\end{equation*}
+である。$k^2$ が $s$ を越える時間的な領域では $s-k^2-i0$ とする（$\ln$ の $-i0$ と同じ向き）。
+
+\paragraph{$x$ 表示と2重積分。}$a(\sqrt s)$ の分母は $u^2+(1-u)s/M^2=(1-u)(s-t_u)/M^2$、$t_u=-u^2M^2/(1-u)$ と書けるので、$s$ の積分を先にすると上の $\bar\Pi$ の表示から
+\begin{equation*}
+\int\dd s\,\frac{\rho(s)}{s}\,\frac{u^2(1-u)M^2}{(1-u)(s-t_u)}=u^2M^2\Bigl(-\frac{\bar\Pi(t_u)}{t_u}\Bigr)=(1-u)\,\bar\Pi(t_u)
+\end{equation*}
+で、$a^{(4)}=\frac\alpha\pi\int_0^1\dd u\,(1-u)\bar\Pi(t_u)$、すなわち式~\eqref{eq:g2vp} の $x$ 表示（$u\to x$）を得る。逆に $s=4m^2/(1-v^2)$ と置くと $\dd s/s=2v\,\dd v/(1-v^2)$、$1+2m^2/s=(3-v^2)/2$、$\sqrt{1-4m^2/s}=v$ から $\rho\,\dd s/s=\frac\alpha\pi\frac{v^2(1-v^2/3)}{1-v^2}\dd v$ で、$a(\sqrt s)$ の分母に $1-v^2$ を掛けると式~\eqref{eq:g2vp} の2重積分になる。
+
+\paragraph{極限。}$r\ll1$ では $|t_x|\le r^2x^2/(1-x)$ が $x\to1$ の近くを除いて小さく、$\bar\Pi\approx-\frac{\alpha}{15\pi}t/m^2$ から $A\approx\frac{r^2}{15}\int_0^1x^2\dd x=\frac{r^2}{45}$ である（$1-x\lesssim r^2$ の部分の寄与は $r^2$ より高次）。$r\gg1$ では $x\gtrsim1/r$ で $-t_x\gg m^2$ なので $\bar\Pi\approx\frac\alpha{3\pi}[\ln\frac{x^2r^2}{1-x}-\frac53]$ で、$\int_0^1(1-x)\,\dd x=\frac12$、$\int_0^1(1-x)\ln x\,\dd x=-\frac34$、$\int_0^1(1-x)\ln(1-x)\,\dd x=-\frac14$ から
+\begin{equation*}
+A\approx\frac13\Bigl[\ln r+2\Bigl(-\frac34\Bigr)+\frac14-\frac56\Bigr]=\frac13\ln r-\frac{25}{36}
+\end{equation*}
+を得る（$x\lesssim1/r$ の部分の補正は $1/r$ の次数）。
+
 \section{検算の細部}\label{app:details}
 
 第~\ref{sec:checks} 節の手順のうち、結果の読み取りには要らない方法の細部をここにまとめる。
@@ -1700,6 +1804,8 @@ MadGraph はこの模型の \texttt{QED} の次数をそのままループの指
 
 \paragraph{手順 (7)。}\texttt{rg\_feyncalc.wl} は、手順 (3) と (4) の振幅を同じ手順で作り直す（約2分）。記号的な $\mu$ 依存は、Package-X の評価で \texttt{ScaleMu} を記号のまま残し、$\MSbar$ の有限部分を \texttt{ScaleMu} で微分して求めた。$\Sigma$ の振幅は、$\xi$ の部分の2重の光子の伝播関数を部分積分の関係で書き直すと $(m^2-p^2)^{-2}$ を含む形になり、約分の前に $p^2=m^2$ を代入できない。そこで、FeynCalc の振幅が式~\eqref{eq:V} の $\xi(D-2)B_1+(D-1+\xi)B_0$ と一致することを確かめてから、その形で評価した。LoopTools の $\mu^2$ は \texttt{LToolsEvaluate} のオプション \texttt{LToolsSetMudim} で与える必要がある。関数 \texttt{LToolsSetMudim[]} で設定しても、\texttt{LToolsEvaluate} は呼ばれるたびにオプションの既定値1に戻すので、最初はすべての $\mu$ で同じ値が返った。LoopTools は、この $\mu$ を紫外と赤外の両方の極に使った（赤外の極の係数を含む傾きが COLLIER と一致した）。COLLIER（\texttt{rg\_collier.f90}、手順 (3)、(4)、(6) と同じ関数）では \texttt{SetMuUV2\_cll} と \texttt{SetMuIR2\_cll} で $\mu^2$ を与えた。MadLoop は手順 (5) の二つのプログラムを \texttt{MU\_R.input} で $\mu_R$ を与えて走らせた。MadLoop の \texttt{finite} は $\frac12\mathrm{Re}\,W$、\texttt{1eps} は $\mathrm{Re}\,P_W/(2K)$ で、4次元のスピン和と CDR の差（式~\eqref{eq:scheme}）は $\mu$ によらないので、傾きは CDR と同じになる。図~\ref{fig:rgrun} の $\mu$ の点は $1/4$ から $4$ の等比の33点で、左の線は COLLIER の値、右の線は式~\eqref{eq:os} である。走らせた $e(\mu)$、$m_e(\mu)$ は式~\eqref{eq:run} の閉じた形で、$e(1)=1$、$m_e(1)=1$ から求めた。図~\ref{fig:rgflow} の数値積分は SciPy の \texttt{solve\_ivp}（相対許容誤差 $10^{-12}$、絶対 $10^{-14}$）で、$t=\ln\mu$ について $\dd e^2/\dd t=b'e^4$、$\dd\ln m_f/\dd t=-6e^2/K$、$\dd\ln\xi/\dd t=-b'e^2$（$b'=16/(3K)$）を $t=0.98\ln(\mu_{\mathrm L}/m_e)$ まで解き、閉じた形と50点で比べた。
 
+\paragraph{手順 (8)。}\texttt{g2\_feyncalc.wl} は、頂点の図の積分の被積分関数に二つの射影を掛けて $D$ 次元でトレースをとり、TID で PaVe 関数にした（約15秒）。射影の行列も同じ関数で基底のトレースから作った。Package-X の $F_2$ の閉じた形は $q^2<0$ で $-4m^2\sqrt{q^2(q^2-4m^2)}\ln[(2m^2-q^2+\sqrt{q^2(q^2-4m^2)})/(2m^2)]/[(4m^2-q^2)q^2]$（$K/e^2$ の単位）で、\texttt{Limit} で $q^2\to0$ をとった。$x$ 表示の節点は、$x_0=10^{-7}/\max(r,1)$ から $\frac12$ までを $\ln x$ について96点、$\frac12$ から1までを $y=\sqrt{1-x}$、$y_0=10^{-7}\min(r,1)$ から $\sqrt{1/2}$ までを $\ln y$ について64点とした。$1-x=y^2$ は丸めずに使った（$1-x$ を倍精度の $x$ から作ると、$r\ll1$ で寄与の大きい $x\to1$ で $1-x$ の桁が落ちる）。$x<x_0$、$1-x<y_0^2$ の部分の寄与は $10^{-20}$ より小さい。Package-X の値は、節点の倍精度の $t$ を有理数に直して30桁で評価した。LoopTools に倍精度の数を渡すと FeynCalc の \texttt{Collect2} が失敗することがあるので、LoopTools にも有理数を渡した。$\bar\Pi$ の級数は $-2\sum_{n\ge1}t^nB(n+2,n+2)/n$（$|t|<4m^2$ で収束、$|t|<\frac12m^2$ で使用）で、$\ln(1-at/m^2)$ の展開から来る。Passera の閉じた形は $r=1$ で $0\cdot\infty$ の形になるので、$A(1)=119/36-\pi^2/3$ を直接使った。
+
 \begin{thebibliography}{99}
 \small
 \bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。Feynman 則（付録~A）、1ループ積分の一般式（付録~C）、検算の手順と道具。
@@ -1719,6 +1825,9 @@ MadGraph はこの模型の \texttt{QED} の次数をそのままループの指
 \bibitem{denner93} A. Denner, ``Techniques for calculation of electroweak radiative corrections at the one loop level and results for W physics at LEP-200,'' Fortsch. Phys. \textbf{41}, 307 (1993)（arXiv:0709.1075）。軟光子の因子の式。
 \bibitem{madevent} F. Maltoni, T. Stelzer, ``MadEvent: Automatic event generation with MadGraph,'' JHEP \textbf{02}, 027 (2003)（arXiv:hep-ph/0208156）。MadGraph の位相空間の写像とチャンネル。
 \bibitem{vegas} G. P. Lepage, ``A New Algorithm for Adaptive Multidimensional Integration,'' J. Comput. Phys. \textbf{27}, 192 (1978)。適応的な格子による重要度抽出。
+\bibitem{lpr72} B. E. Lautrup, A. Peterman, E. de Rafael, ``Recent developments in the comparison between theory and experiments in quantum electrodynamics,'' Phys. Rept. \textbf{3}, 193 (1972)。真空偏極の挿入の $x$ 表示と分散関係の表示。
+\bibitem{elend66} H. H. Elend, ``On the anomalous magnetic moment of the muon,'' Phys. Lett. \textbf{20}, 682 (1966); Erratum \textbf{21}, 720 (1966)。2ループの真空偏極の寄与の質量比による閉じた形。
+\bibitem{passera05} M. Passera, ``The standard model prediction of the muon anomalous magnetic moment,'' J. Phys. G \textbf{31}, R75 (2005)（arXiv:hep-ph/0411168）。式 (4) の2重積分、式 (5) の閉じた形、式 (6)、(7) の値。
 \end{thebibliography}
 
 \end{document}
