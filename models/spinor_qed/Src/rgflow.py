@@ -88,61 +88,59 @@ for tq in (5.0, 10.0, 20.0, 29.0):
 # ## Figure: alpha(mu), the masses and xi, and the flow in the (alpha, xi) plane
 
 # %%
-COLORS = {"bench": "#2a78d6", "phys": "#eb6834", "xi": "#1baf7a"}     # validated categorical slots 1-3 (dataviz palette)
-fig, axes = plt.subplots(1, 3, figsize=(11.0, 3.5))
+plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
+COLORS = {"bench": "C0", "phys": "C1", "xi": "C2"}     # colors of physrev.mplstyle
+fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.5))
 tl = t_landau(G_BENCH)
 tt = np.linspace(0, tl * (1 - 1e-4), 400)
 mus = np.exp(tt)
 
 ax = axes[0]
-ax.plot(mus, g_cf(tt, G_BENCH) / (4 * math.pi), color=COLORS["bench"], lw=2, label=r"$e(m_e)=1$")
+ax.plot(mus, g_cf(tt, G_BENCH) / (4 * math.pi), color=COLORS["bench"], lw=1, ls="-", label=r"$e(m_e)=1$")
 tp = np.linspace(0, tl, 400)
-ax.plot(np.exp(tp), g_cf(tp, G_PHYS) / (4 * math.pi), color=COLORS["phys"], lw=2, ls="--", label=r"$\alpha(m_e)=1/137$")
-ax.plot(np.exp(ts[::4]), num[0, ::4] / (4 * math.pi), ls="none", marker="o", ms=4, color=COLORS["bench"], label="numerical")
-ax.axvline(math.exp(tl), color="0.5", lw=1, ls=":")
-ax.text(math.exp(tl) * 0.6, 3e-3, "Landau pole", rotation=90, ha="right", va="bottom", fontsize=8, color="0.35")
+ax.plot(np.exp(tp), g_cf(tp, G_PHYS) / (4 * math.pi), color=COLORS["phys"], lw=1, ls="--", label=r"$\alpha(m_e)=1/137$")
+ax.plot(np.exp(ts[::4]), num[0, ::4] / (4 * math.pi), ls="none", marker="o", ms=2.4, color=COLORS["bench"], label="numerical")
+ax.axvline(math.exp(tl), color="0.5", lw=0.5, ls=":")
+ax.text(math.exp(tl) * 0.6, 3e-3, "Landau pole", rotation=90, ha="right", va="bottom", fontsize=7, color="0.35")
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_ylim(2e-3, 10)
 ax.set_xlabel(r"$\mu/m_e$")
 ax.set_ylabel(r"$\alpha(\mu)$")
-ax.legend(frameon=False, fontsize=8, loc="upper left")
+ax.legend(frameon=False, fontsize=6.5, loc="upper left")
 
 ax = axes[1]
-ax.plot(mus, m_cf(tt, G_BENCH, 1.0), color=COLORS["bench"], lw=2, label=r"$m_f(\mu)/m_f(m_e)$")
-ax.plot(mus, xi_cf(tt, G_BENCH, 1.0), color=COLORS["xi"], lw=2, ls="--", label=r"$\xi(\mu)/\xi(m_e)$")
-ax.plot(np.exp(ts[::4]), num[1, ::4] / ME, ls="none", marker="o", ms=4, color=COLORS["bench"])
-ax.plot(np.exp(ts[::4]), num[3, ::4], ls="none", marker="s", ms=4, color=COLORS["xi"])
-ax.axvline(math.exp(tl), color="0.5", lw=1, ls=":")
+ax.plot(mus, m_cf(tt, G_BENCH, 1.0), color=COLORS["bench"], lw=1, ls="-", label=r"$m_f(\mu)/m_f(m_e)$")
+ax.plot(mus, xi_cf(tt, G_BENCH, 1.0), color=COLORS["xi"], lw=1, ls="--", label=r"$\xi(\mu)/\xi(m_e)$")
+ax.plot(np.exp(ts[::4]), num[1, ::4] / ME, ls="none", marker="o", ms=2.4, color=COLORS["bench"])
+ax.plot(np.exp(ts[::4]), num[3, ::4], ls="none", marker="s", ms=2.4, color=COLORS["xi"])
+ax.axvline(math.exp(tl), color="0.5", lw=0.5, ls=":")
 ax.set_xscale("log")
 ax.set_ylim(0, 1.08)
 ax.set_xlabel(r"$\mu/m_e$")
 ax.set_ylabel(r"ratio to the value at $\mu=m_e$")
-ax.set_title(r"$e(m_e)=1$ (marks: numerical)", fontsize=9)
-ax.legend(frameon=False, fontsize=8, loc="lower left")
+ax.set_title(r"$e(m_e)=1$ (marks: numerical)", fontsize=8)
+ax.legend(frameon=False, fontsize=6.5, loc="lower left")
 
 ax = axes[2]
 al = np.linspace(0.02, 1.0, 300)
 a0 = G_BENCH / (4 * math.pi)
 for xi0 in (0.5, 1.0, 2.0, 3.0, 4.0):
     xs = a0 * xi0 / al                                  # xi alpha = const
-    ax.plot(al, xs, color="0.55", lw=1)
+    ax.plot(al, xs, color="0.55", lw=0.5, ls="-")
     i0 = np.searchsorted(al, 0.3)
     ax.annotate("", xy=(al[i0 + 8], xs[i0 + 8]), xytext=(al[i0], xs[i0]),
-                arrowprops=dict(arrowstyle="-|>", color="0.35", lw=1))
-ax.plot([a0] * 5, [0.5, 1.0, 2.0, 3.0, 4.0], ls="none", marker="o", ms=6, color=COLORS["bench"], label=r"$e(m_e)=1$")
-ax.axhline(0, color=COLORS["xi"], lw=2)
-ax.text(0.98, -0.12, r"Landau gauge $\xi=0$ (fixed)", ha="right", va="top", fontsize=8, color="0.25")
-ax.text(0.55, 2.2, r"$\xi\,\alpha=$ const" + "\n" + r"(arrows: $\mu\to\infty$)", fontsize=8, color="0.25")
+                arrowprops=dict(arrowstyle="-|>", color="0.35", lw=0.5))
+ax.plot([a0] * 5, [0.5, 1.0, 2.0, 3.0, 4.0], ls="none", marker="o", ms=3.6, color=COLORS["bench"], label=r"$e(m_e)=1$")
+ax.axhline(0, color=COLORS["xi"], lw=1)
+ax.text(0.98, -0.12, r"Landau gauge $\xi=0$ (fixed)", ha="right", va="top", fontsize=7, color="0.25")
+ax.text(0.55, 2.2, r"$\xi\,\alpha=$ const" + "\n" + r"(arrows: $\mu\to\infty$)", fontsize=7, color="0.25")
 ax.set_xlim(0, 1.0)
 ax.set_ylim(-0.5, 4.3)
 ax.set_xlabel(r"$\alpha(\mu)$")
 ax.set_ylabel(r"$\xi(\mu)$")
-ax.legend(frameon=False, fontsize=8, loc="upper right")
-for ax in axes:
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
-    ax.grid(alpha=0.3, lw=0.5)
+ax.legend(frameon=False, fontsize=6.5, loc="upper right")
 fig.tight_layout()
 os.makedirs(os.path.join(HERE, "..", "figs"), exist_ok=True)
 fig.savefig(os.path.join(HERE, "..", "figs", "rgflow.pdf"))

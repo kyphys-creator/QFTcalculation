@@ -288,55 +288,53 @@ print("wrote results/running.csv")
 # ## Figure
 
 # %%
-COLORS = {"eff": "#2a78d6", "ms": "#eb6834", "lim": "#1baf7a"}     # validated categorical slots 1-3 (dataviz palette)
-fig, axes = plt.subplots(1, 3, figsize=(12.0, 3.6))
+plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
+COLORS = {"eff": "C0", "ms": "C1", "lim": "C2"}     # colors of physrev.mplstyle
+fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.5))
 ax = axes[0]
 qs = np.geomspace(1e-2, 1e6, 241)
 aeff = np.array([float(1 / (inv_alpha_eff(mp.mpf(q), *PHYS) * ALPHA0)) for q in qs])
 ams = np.array([float(1 / (inv_alpha_ms(mp.mpf(q) * mp.exp(-mp.mpf(5) / 6), *PHYS) * ALPHA0)) for q in qs])
-ax.plot(qs, aeff, color=COLORS["eff"], lw=2, label=r"$\alpha(-Q^2)$ (on shell)")
-ax.plot(qs, ams, color=COLORS["ms"], lw=1.6, ls="--", label=r"$\alpha_{\overline{\rm MS}}(e^{-5/6}Q)$")
+ax.plot(qs, aeff, color=COLORS["eff"], lw=1, ls="-", label=r"$\alpha(-Q^2)$ (on shell)")
+ax.plot(qs, ams, color=COLORS["ms"], lw=0.8, ls="--", label=r"$\alpha_{\overline{\rm MS}}(e^{-5/6}Q)$")
 for m, lab in ((1, r"$m_e$"), (float(R_MUE), r"$m_\mu$")):
-    ax.axvline(m, color="0.6", lw=0.8, ls=":")
-    ax.text(m * 1.2, 1.036, lab, fontsize=8, color="0.35")
+    ax.axvline(m, color="0.6", lw=0.5, ls=":")
+    ax.text(m * 1.2, 1.036, lab, fontsize=7, color="0.35")
 ax.set_xscale("log")
 ax.set_ylim(0.99, 1.04)
 ax.set_xlabel(r"$Q/m_e$")
 ax.set_ylabel(r"$\alpha/\alpha(0)$  (physical $\alpha$, $e$ and $\mu$)")
-ax.legend(frameon=False, fontsize=8, loc="upper left")
+ax.legend(frameon=False, fontsize=6.5, loc="lower right")
 ax = axes[1]
 a0b, msb = BENCH
 L = np.linspace(0, float(LANDAU["benchmark"][1]) - 1e-3, 400)
-ax.plot(np.exp(L), [float(1 / inv_alpha_eff(mp.exp(x), a0b, msb)) for x in L], color=COLORS["eff"], lw=2, label="on shell")
+ax.plot(np.exp(L), [float(1 / inv_alpha_eff(mp.exp(x), a0b, msb)) for x in L], color=COLORS["eff"], lw=1, ls="-", label="on shell")
 Lm = np.linspace(0, float(LANDAU["benchmark"][0]) - 1e-3, 400)
-ax.plot(np.exp(Lm + 5 / 6), [float(1 / inv_alpha_ms(mp.exp(x), a0b, msb)) for x in Lm], color=COLORS["ms"], lw=1.6, ls="--",
+ax.plot(np.exp(Lm + 5 / 6), [float(1 / inv_alpha_ms(mp.exp(x), a0b, msb)) for x in Lm], color=COLORS["ms"], lw=0.8, ls="--",
         label=r"$\overline{\rm MS}$ at $\mu=e^{-5/6}Q$")
-ax.axvline(float(mp.exp(LANDAU["benchmark"][1])), color="0.5", lw=0.8, ls=":")
-ax.text(float(mp.exp(LANDAU["benchmark"][1])) * 0.4, 0.07, "Landau pole", rotation=90, ha="right", va="bottom", fontsize=8, color="0.35")
+ax.axvline(float(mp.exp(LANDAU["benchmark"][1])), color="0.5", lw=0.5, ls=":")
+ax.text(float(mp.exp(LANDAU["benchmark"][1])) * 0.4, 0.07, "Landau pole", rotation=90, ha="right", va="bottom", fontsize=7, color="0.35")
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_ylim(0.05, 20)
 ax.set_xlabel(r"$Q/m_e$")
 ax.set_ylabel(r"$\alpha$ (benchmark $e(m_e)=1$)")
-ax.legend(frameon=False, fontsize=8, loc="upper left")
+ax.legend(frameon=False, fontsize=6.5, loc="upper left")
 ax = axes[2]
 rr = np.geomspace(1e-4, 8, 160)
 dv = np.array([float(du_urep(mp.mpf(x))) for x in rr])
-ax.plot(rr, dv, color=COLORS["eff"], lw=2, label=r"$(\pi/\alpha)\,\delta V/V_C$")
+ax.plot(rr, dv, color=COLORS["eff"], lw=1, ls="-", label=r"$(\pi/\alpha)\,\delta V/V_C$")
 sm, lg = rr < 0.05, rr > 1.0
-ax.plot(rr[sm], [float(du_short(mp.mpf(x))) for x in rr[sm]], color=COLORS["lim"], lw=1.5, ls="--", label=r"$m r\ll1$")
-ax.plot(rr[lg], [float(du_long(mp.mpf(x))) for x in rr[lg]], color=COLORS["ms"], lw=1.5, ls=":", label=r"$m r\gg1$")
-ax.plot(R_PTS, [UE[r] for r in R_PTS], ls="none", marker="o", ms=4, color="0.3", label="tools (spectral)")
+ax.plot(rr[sm], [float(du_short(mp.mpf(x))) for x in rr[sm]], color=COLORS["lim"], lw=0.75, ls="--", label=r"$m r\ll1$")
+ax.plot(rr[lg], [float(du_long(mp.mpf(x))) for x in rr[lg]], color=COLORS["ms"], lw=0.75, ls=":", label=r"$m r\gg1$")
+ax.plot(R_PTS, [UE[r] for r in R_PTS], ls="none", marker="o", ms=2.4, color="0.3", label="tools (spectral)")
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_ylim(1e-6, 10)
 ax.set_xlabel(r"$m_e r$")
 ax.set_ylabel(r"Uehling: $(\pi/\alpha)\,\delta V/V_{\rm Coulomb}$")
-ax.legend(frameon=False, fontsize=8, loc="lower left")
-for ax in axes:
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
-    ax.grid(alpha=0.3, lw=0.5)
+ax.legend(frameon=False, fontsize=6.5, loc="lower left")
 fig.tight_layout()
 os.makedirs(os.path.join(HERE, "..", "figs"), exist_ok=True)
 fig.savefig(os.path.join(HERE, "..", "figs", "running.pdf"))

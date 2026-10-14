@@ -257,44 +257,42 @@ def a_np(r):
     return float(np.sum(w * omx * pibar_np(t)))
 
 
-COLORS = {"curve": "#2a78d6", "asym": "#eb6834", "pts": "#1baf7a"}     # validated categorical slots 1-3 (dataviz palette)
+plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
+COLORS = {"curve": "C0", "asym": "C1", "pts": "C2"}     # colors of physrev.mplstyle
 rs = np.geomspace(1e-3, 1e3, 145)
 av = np.array([a_np(r) for r in rs])
 print(f"figure curve: max relative deviation of the float GL curve from mpmath at the cases "
       f"{max(abs(a_np(r) / float(RES[l]) - 1) for l, r, _ in CASES):.1e}")
-fig, axes = plt.subplots(1, 2, figsize=(10.0, 3.6))
+fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.8))
 ax = axes[0]
-ax.plot(rs, av, color=COLORS["curve"], lw=2, label=r"$A(r)$")
+ax.plot(rs, av, color=COLORS["curve"], lw=1, ls="-", label=r"$A(r)$")
 big, small = rs > 20, rs < 0.6
-ax.plot(rs[big], np.log(rs[big]) / 3 - 25 / 36, color=COLORS["asym"], lw=1.5, ls="--", label=r"$\frac{1}{3}\ln r-\frac{25}{36}$")
-ax.plot(rs[small], rs[small] ** 2 / 45, color=COLORS["asym"], lw=1.5, ls=":", label=r"$r^2/45$")
+ax.plot(rs[big], np.log(rs[big]) / 3 - 25 / 36, color=COLORS["asym"], lw=0.75, ls="--", label=r"$\frac{1}{3}\ln r-\frac{25}{36}$")
+ax.plot(rs[small], rs[small] ** 2 / 45, color=COLORS["asym"], lw=0.75, ls=":", label=r"$r^2/45$")
 for label, r, lit in CASES:
     if lit is not None:
-        ax.plot(r, float(lit), ls="none", marker="o", ms=9, mfc="none", mec="0.25", mew=1.2)
-    ax.plot(r, float(RES[label]), ls="none", marker="o", ms=4, color=COLORS["pts"])
-ax.plot([], [], ls="none", marker="o", ms=9, mfc="none", mec="0.25", label="literature")
-ax.plot([], [], ls="none", marker="o", ms=4, color=COLORS["pts"], label="this note")
+        ax.plot(r, float(lit), ls="none", marker="o", ms=5.4, mfc="none", mec="0.25", mew=1.2)
+    ax.plot(r, float(RES[label]), ls="none", marker="o", ms=2.4, color=COLORS["pts"])
+ax.plot([], [], ls="none", marker="o", ms=5.4, mfc="none", mec="0.25", label="literature")
+ax.plot([], [], ls="none", marker="o", ms=2.4, color=COLORS["pts"], label="this note")
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_ylim(1e-8, 5)
 ax.set_xlabel(r"$r=M/m$ (lepton / loop)")
 ax.set_ylabel(r"$A(r)$  [units of $(\alpha/\pi)^2$]")
-ax.legend(frameon=False, fontsize=8, loc="upper left")
+ax.legend(frameon=False, fontsize=6.5, loc="upper left")
 ax = axes[1]
 xx = np.linspace(1e-5, 1 - 1e-7, 4000)
 for r, ls, col, lab in ((R_MUE, "-", COLORS["curve"], r"$r=206.8$ ($a_\mu$, e loop)"), (1.7, "--", COLORS["curve"], r"$r=1.7$"),
                         (1.0, ":", "0.35", r"$r=1$"), (1 / 1.7, "--", COLORS["asym"], r"$r=1/1.7$"),
                         (1 / R_MUE, "-", COLORS["asym"], r"$r=1/206.8$ ($a_e$, $\mu$ loop)")):
-    ax.plot(xx, (1 - xx) * pibar_np(-xx * xx * r * r / (1 - xx)) / a_np(r), lw=1.8, ls=ls, color=col, label=lab)
+    ax.plot(xx, (1 - xx) * pibar_np(-xx * xx * r * r / (1 - xx)) / a_np(r), lw=0.9, ls=ls, color=col, label=lab)
 ax.set_xlim(0, 1)
 ax.set_ylim(0, 3.6)
 ax.set_xlabel(r"$x$")
 ax.set_ylabel(r"$(1-x)\,\bar\Pi(t)\,(\pi/\alpha)\,/A(r)$")
-ax.legend(frameon=False, fontsize=8, loc="upper left")
-for ax in axes:
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
-    ax.grid(alpha=0.3, lw=0.5)
+ax.legend(frameon=False, fontsize=6.5, loc="upper left")
 fig.tight_layout()
 os.makedirs(os.path.join(HERE, "..", "figs"), exist_ok=True)
 fig.savefig(os.path.join(HERE, "..", "figs", "g2_vp.pdf"))

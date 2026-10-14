@@ -463,52 +463,50 @@ print("wrote results/lbl.csv")
 # ## Figure
 
 # %%
-COLORS = {"a": "#2a78d6", "b": "#eb6834", "c": "#1baf7a"}     # validated categorical slots 1-3 (dataviz palette)
-fig, axes = plt.subplots(1, 3, figsize=(12.0, 3.6))
+plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
+COLORS = {"a": "C0", "b": "C1", "c": "C2"}     # colors of physrev.mplstyle
+fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.5))
 ax = axes[0]
-ax.plot(RS_XS, SIG, color=COLORS["a"], lw=2, label="one loop (COLLIER)")
+ax.plot(RS_XS, SIG, color=COLORS["a"], lw=1, ls="-", label="one loop (COLLIER)")
 rlo, rhi = np.geomspace(0.1, 1.5, 20), np.geomspace(6, 600, 20)
-ax.plot(rlo, [sig_eh(x) for x in rlo], color=COLORS["c"], lw=1.6, ls="--", label="Euler–Heisenberg", zorder=3)
-ax.plot(rhi, [sig_ml(x) for x in rhi], color=COLORS["b"], lw=1.6, ls=":", label=r"massless, $J/(2\pi s)$", zorder=3)
-ax.axvline(rs_pk, color="0.6", lw=0.8, ls=":")
+ax.plot(rlo, [sig_eh(x) for x in rlo], color=COLORS["c"], lw=0.8, ls="--", label="Euler-Heisenberg", zorder=3)
+ax.plot(rhi, [sig_ml(x) for x in rhi], color=COLORS["b"], lw=0.8, ls=":", label=r"massless, $J/(2\pi s)$", zorder=3)
+ax.axvline(rs_pk, color="0.6", lw=0.5, ls=":")
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_ylim(1e-9, 1)
 ax.set_xlabel(r"$\sqrt{s}/m$")
 ax.set_ylabel(r"$\sigma\ [\alpha^4/m^2]$")
-ax.legend(frameon=False, fontsize=8, loc="lower center")
+ax.legend(frameon=False, fontsize=6.5, loc="lower center")
 ax = axes[1]
 lab = {(1, 1, 1, 1): r"$++\to++$", (1, 1, -1, -1): r"$++\to--$", (1, -1, -1, 1): r"$+-\to-+$", (1, 1, 1, -1): r"$++\to+-$"}
 cols = [COLORS["a"], COLORS["b"], COLORS["c"], "0.35"]
 for (lam, name), col in zip(lab.items(), cols):
-    ax.plot(S_SCAN, [abs(cl[key(s, 0.0)][lam][0]) for s in S_SCAN], color=col, lw=1.8, label=name)
+    ax.plot(S_SCAN, [abs(cl[key(s, 0.0)][lam][0]) for s in S_SCAN], color=col, lw=0.9, ls="-", label=name)
     sl = np.geomspace(1e-3, 0.3, 20)
-    ax.plot(sl, [abs(sum(x46(lam, s, 0.0))) for s in sl], color=col, lw=1, ls="--")
+    ax.plot(sl, [abs(sum(x46(lam, s, 0.0))) for s in sl], color=col, lw=0.5, ls="--")
     sh = S_SCAN[S_SCAN > 300]
-    ax.plot(sh, [abs(bern(lam, s, 0.0)) for s in sh], color=col, lw=1, ls=":")
+    ax.plot(sh, [abs(bern(lam, s, 0.0)) for s in sh], color=col, lw=0.5, ls=":")
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_xlim(1e-3, 2e5)
 ax.set_ylim(1e-12, 100)
 ax.set_xlabel(r"$s/m^2$  ($\theta=90^\circ$)")
 ax.set_ylabel(r"$|M|/\alpha^2$")
-ax.legend(frameon=False, fontsize=8, loc="lower right")
+ax.legend(frameon=False, fontsize=6.5, loc="lower right")
 ax = axes[2]
 fsc = [fwd(cl, key(s, cfwd_cl), 0) for s in S_FWD_SCAN]
-ax.plot(S_FWD_SCAN, [f.real / s for f, s in zip(fsc, S_FWD_SCAN)], color=COLORS["a"], lw=2, label=r"Re $f/s$")
-ax.plot(S_FWD_SCAN, [f.imag / s for f, s in zip(fsc, S_FWD_SCAN)], color=COLORS["b"], lw=2, label=r"Im $f/s$")
+ax.plot(S_FWD_SCAN, [f.real / s for f, s in zip(fsc, S_FWD_SCAN)], color=COLORS["a"], lw=1, ls="-", label=r"Re $f/s$")
+ax.plot(S_FWD_SCAN, [f.imag / s for f, s in zip(fsc, S_FWD_SCAN)], color=COLORS["b"], lw=1, ls="-", label=r"Im $f/s$")
 sd = S_FWD_SCAN[::4]
-ax.plot(sd, [float(re_f_disp(s)) / s for s in sd], ls="none", marker="o", ms=4, color="0.3", label="dispersion")
-ax.plot(sd, [float(4 * mp.pi * F_bw(s)) / s for s in sd], ls="none", marker="s", ms=4, mfc="none", color="0.3",
+ax.plot(sd, [float(re_f_disp(s)) / s for s in sd], ls="none", marker="o", ms=2.4, color="0.3", label="dispersion")
+ax.plot(sd, [float(4 * mp.pi * F_bw(s)) / s for s in sd], ls="none", marker="s", ms=2.4, mfc="none", color="0.3",
         label=r"$4\pi F$")
 ax.set_xscale("log")
 ax.set_xlabel(r"$s/m^2$")
 ax.set_ylabel(r"forward amplitude $f/s$")
-ax.legend(frameon=False, fontsize=8, loc="upper left")
-for ax in axes:
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
-    ax.grid(alpha=0.3, lw=0.5)
+ax.legend(frameon=False, fontsize=6.5, loc="upper left")
 fig.tight_layout()
 os.makedirs(os.path.join(HERE, "..", "figs"), exist_ok=True)
 fig.savefig(os.path.join(HERE, "..", "figs", "lbl.pdf"))

@@ -382,60 +382,58 @@ print("wrote results/schwinger.csv")
 # ## Figure
 
 # %%
-COLORS = ["#2a78d6", "#eb6834", "#1baf7a", "0.35"]     # validated categorical slots 1-3 (dataviz palette)
-fig, axes = plt.subplots(1, 3, figsize=(12.0, 3.7))
+plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
+COLORS = ["C0", "C1", "C2", "0.35"]     # colors of physrev.mplstyle
+fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.6))
 ax = axes[0]
 Fs = np.geomspace(0.05, 10, 60)
 eh = lambda x: x ** 4 / (360 * math.pi ** 2)
 reL = np.array([float(L_const(mp.mpf(x)).real) / eh(x) for x in Fs])
 imL = [float(im_const(x)) / eh(x) for x in Fs]
 pos = reL > 0
-ax.plot(Fs[pos], reL[pos], color=COLORS[0], lw=2, label=r"Re $\mathcal{L}$ / Euler–Heisenberg")
-ax.plot(Fs[~pos], -reL[~pos], color=COLORS[0], lw=2, ls="--", label=r"$-$Re $\mathcal{L}$ (after the sign change)")
-ax.plot(Fs, imL, color=COLORS[1], lw=2, label=r"Im $\mathcal{L}$ / Euler–Heisenberg")
-ax.plot(F_CONST, [abs(float(CONST[x][2])) / eh(x) for x in F_CONST], ls="none", marker="o", ms=4,
-        color="0.3", label="dispersion (|Re|)")
+ax.plot(Fs[pos], reL[pos], color=COLORS[0], lw=1, ls="-", label=r"Re $\mathcal{L}$ / Euler-Heisenberg")
+ax.plot(Fs[~pos], -reL[~pos], color=COLORS[0], lw=1, ls="--", label=r"$-$Re $\mathcal{L}$ (sign change)")
+ax.plot(Fs, imL, color=COLORS[1], lw=1, ls="-", label=r"Im $\mathcal{L}$ / Euler-Heisenberg")
+ax.plot(F_CONST, [abs(float(CONST[x][2])) / eh(x) for x in F_CONST], ls="none", marker="o", ms=2.4,
+        color="0.3", label=r"dispersion ($|\mathrm{Re}|$)")
 ax.set_xscale("log")
 ax.set_yscale("log")
 ax.set_ylim(1e-6, 30)
 ax.set_xlabel(r"$eE/m^2$ (constant field)")
 ax.set_ylabel(r"$\mathcal{L}\,/\,[(eE)^4/(360\pi^2m^4)]$")
-ax.legend(frameon=False, fontsize=8, loc="lower right")
+ax.legend(frameon=False, fontsize=6, loc="lower right")
 ax = axes[1]
 for gt, col in zip(GT_LOOP, COLORS):
     p = LOOPS[gt]          # F = 1/2: unit m/(eE) = 2; the loop starts at the left turning point, x4 is centred here
-    ax.plot(p[0] * 0.5, (p[1] - (p[1].max() + p[1].min()) / 2) * 0.5, color=col, lw=1.8, label=rf"$\tilde\gamma={gt}$")
+    ax.plot(p[0] * 0.5, (p[1] - (p[1].max() + p[1].min()) / 2) * 0.5, color=col, lw=0.9, ls="-", label=rf"$\tilde\gamma={gt}$")
     th = np.linspace(0, 2 * np.pi, 200)
     a = 1 / math.sqrt(1 - gt ** 2)
     x3 = np.arcsinh(gt * a * np.sin(th)) / gt
     x4 = a * np.arcsin(gt * np.cos(th)) / gt
     ax.plot(x3 * 1, x4 * 1, color="k", lw=0.6, ls=":")
 pg = GA[(4, 0.3)][2]
-ax.plot(pg[0] * 0.25, (pg[1] - (pg[1].max() + pg[1].min()) / 2) * 0.25, color="0.65", lw=1.4, ls="--",
+ax.plot(pg[0] * 0.25, (pg[1] - (pg[1].max() + pg[1].min()) / 2) * 0.25, color="0.65", lw=0.7, ls="--",
         label=r"Gaussian, $\tilde\gamma=0.3$")
 ax.plot([], [], color="k", lw=0.6, ls=":", label="closed form")
 ax.set_aspect("equal")
-ax.set_xlim(-4.6, 2.2)
+ax.set_xlim(-7.2, 2.2)
 ax.set_xlabel(r"$x_3\ [m/(eE)]$")
 ax.set_ylabel(r"$x_4\ [m/(eE)]$")
-ax.legend(frameon=False, fontsize=7, loc="upper left")
+ax.legend(frameon=False, fontsize=6, loc="upper left")
 ax = axes[2]
 for inv, col in zip(INV_FIG, COLORS):
     F = 1 / inv
     ex = [float(im_gamma_sauter(F, g)) / lcf(F, g) for g in GT_FIG]
-    ax.plot(GT_FIG, ex, color=col, lw=2, label=rf"exact, $m^2/eE={inv}$")
-    ax.plot(GT_FIG, [semiclassical(F, g) / lcf(F, g) for g in GT_FIG], color=col, lw=1, ls="--")
-ax.plot([], [], color="0.4", lw=1, ls="--", label="semiclassical")
+    ax.plot(GT_FIG, ex, color=col, lw=1, ls="-", label=rf"exact, $m^2/eE={inv}$")
+    ax.plot(GT_FIG, [semiclassical(F, g) / lcf(F, g) for g in GT_FIG], color=col, lw=0.5, ls="--")
+ax.plot([], [], color="0.4", lw=0.5, ls="--", label="semiclassical")
 ax.set_yscale("log")
 ax.set_ylim(1e-6, 2)
 ax.set_xlim(0, 1)
 ax.set_xlabel(r"$\tilde\gamma=mk/(eE)$")
 ax.set_ylabel(r"Im $\Gamma$ / locally constant field")
-ax.legend(frameon=False, fontsize=8, loc="lower left")
-for ax in axes:
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
-    ax.grid(alpha=0.3, lw=0.5)
+ax.legend(frameon=False, fontsize=6.5, loc="lower left")
 fig.tight_layout()
 os.makedirs(os.path.join(HERE, "..", "figs"), exist_ok=True)
 fig.savefig(os.path.join(HERE, "..", "figs", "schwinger.pdf"))

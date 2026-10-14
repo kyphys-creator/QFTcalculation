@@ -611,25 +611,25 @@ print("wrote results/xsec.csv")
 # ## Figure: soft and hard photons against DeltaE
 
 # %%
-COLORS = {"S": "#2a78d6", "H": "#eb6834", "SH": "#1baf7a"}     # validated categorical slots 1-3 (dataviz palette)
-fig, axes = plt.subplots(1, 3, figsize=(10.5, 3.2), sharey=False)
+plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
+COLORS = {"S": "C0", "H": "C1", "SH": "C2"}     # colors of physrev.mplstyle
+fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.4), sharey=False)
 for ax, rs in zip(axes, SQRTS):
     r = [x for x in rows if x["sqrts"] == rs]
     de = np.array([x["DeltaE"] for x in r])
     ds, dh = np.array([x["sigma_S4"] / x["sigma_B"] for x in r]), np.array([x["sigma_H"] / x["sigma_B"] for x in r])
-    ax.plot(de, ds, color=COLORS["S"], lw=1.5, ls="--", marker="o", ms=4, label="soft")
-    ax.plot(de, dh, color=COLORS["H"], lw=1.5, ls=":", marker="s", ms=4, label="hard")
-    ax.plot(de, ds + dh, color=COLORS["SH"], lw=2, marker="D", ms=4, label="soft + hard")
+    ax.plot(de, ds, color=COLORS["S"], lw=0.75, ls="--", marker="o", ms=2.4, label="soft")
+    ax.plot(de, dh, color=COLORS["H"], lw=0.75, ls=":", marker="s", ms=2.4, label="hard")
+    ax.plot(de, ds + dh, color=COLORS["SH"], lw=1, ls="-", marker="D", ms=2.4, label="soft + hard")
     ax.set_xscale("log")
     ax.set_xlabel(r"$\Delta E$")
-    ax.set_title(rf"$\sqrt{{s}}={rs:g}$", fontsize=10)
-    ax.grid(True, color="0.9", lw=0.6)
-    for spine in ("top", "right"):
-        ax.spines[spine].set_visible(False)
-    ax.annotate("soft + hard", (de[-1], (ds + dh)[-1]), textcoords="offset points", xytext=(4, 6), fontsize=8, color="0.25")
+    ax.set_title(rf"$\sqrt{{s}}={rs:g}$", fontsize=8)
+    ax.annotate("soft + hard", (de[-1], (ds + dh)[-1]), textcoords="offset points", xytext=(4, 6), fontsize=7, color="0.25")
 axes[0].set_ylabel(r"$\sigma/\sigma_B$ (four-dimensional spin sums)")
-axes[0].legend(frameon=False, fontsize=8)
-fig.tight_layout()
+fig.tight_layout(rect=(0, 0, 1, 0.93))
+fig.legend(*axes[0].get_legend_handles_labels(), loc="lower center", bbox_to_anchor=(0.5, 0.93), ncol=3,
+           frameon=False, fontsize=6.5)
 os.makedirs(os.path.join(HERE, "..", "figs"), exist_ok=True)
 fig.savefig(os.path.join(HERE, "..", "figs", "xsec_softhard.pdf"))
 if INTERACTIVE:

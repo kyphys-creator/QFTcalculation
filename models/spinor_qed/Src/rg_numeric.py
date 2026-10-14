@@ -248,31 +248,29 @@ c1, bp = 2 * w1 / (KK * b4), 2 * BETA_E
 print(f"running e: d ln Y/d ln mu at mu = 1 (finite difference) {(y_run[17] - y_run[15]) / (2 * math.log(FIG_MUS[17])):+.6f}, "
       f"next order 3 b' c1/(1 + c1) = {3 * bp * c1 / (1 + c1):+.6f}  (c1 = {c1:.6f}; fixed e: -2 b'/(1 + c1) = {-2 * bp / (1 + c1):+.6f})")
 
-COLORS = {"fix": "#2a78d6", "run": "#eb6834", "a0": "#1baf7a"}     # validated categorical slots 1-3 (dataviz palette)
-fig, axes = plt.subplots(1, 2, figsize=(9.0, 3.4))
+plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
+COLORS = {"fix": "C0", "run": "C1", "a0": "C2"}     # colors of physrev.mplstyle
+fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.8))
 ax = axes[0]
-ax.plot(mus, y_fix, color=COLORS["fix"], lw=2, label=r"$e=1$ fixed ($\overline{\rm MS}$)")
-ax.plot(mus, y_run, color=COLORS["run"], lw=2, ls="--", label=r"$e(\mu)$ running")
-ax.plot(mu_a0, y_a0, ls="none", marker="o", ms=8, color=COLORS["a0"], label=r"$\alpha(0)$ (MadLoop)")
+ax.plot(mus, y_fix, color=COLORS["fix"], lw=1, ls="-", label=r"$e=1$ fixed ($\overline{\rm MS}$)")
+ax.plot(mus, y_run, color=COLORS["run"], lw=1, ls="--", label=r"$e(\mu)$ running")
+ax.plot(mu_a0, y_a0, ls="none", marker="o", ms=4.8, color=COLORS["a0"], label=r"$\alpha(0)$ (MadLoop)")
 ax.set_xscale("log")
 ax.set_xlabel(r"$\mu/m_e$")
 ax.set_ylabel(r"$Y(\mu)/Y(m_e)$")
-ax.set_title(r"$e^+e^-\to\mu^+\mu^-$, $\sqrt{s}=6$, $t=-8$", fontsize=10)
-ax.grid(alpha=0.3, lw=0.5)
-ax.legend(frameon=False, fontsize=8)
+ax.set_title(r"$e^+e^-\to\mu^+\mu^-$, $\sqrt{s}=6$, $t=-8$", fontsize=8)
+ax.legend(frameon=False, fontsize=6.5)
 ax = axes[1]
-ax.plot(mus, mp_fix, color=COLORS["fix"], lw=2, label=r"$m_e=1$ fixed")
-ax.plot(mus, mp_run, color=COLORS["run"], lw=2, ls="--", label=r"$m_e(\mu)$, $e(\mu)$ running")
-ax.plot(list(mp_col), list(mp_col.values()), ls="none", marker="s", ms=7, color=COLORS["fix"], label="COLLIER")
+ax.plot(mus, mp_fix, color=COLORS["fix"], lw=1, ls="-", label=r"$m_e=1$ fixed")
+ax.plot(mus, mp_run, color=COLORS["run"], lw=1, ls="--", label=r"$m_e(\mu)$, $e(\mu)$ running")
+ax.plot(list(mp_col), list(mp_col.values()), ls="none", marker="s", ms=4.2, color=COLORS["fix"], label="COLLIER")
 ax.set_xscale("log")
 ax.set_xlabel(r"$\mu/m_e$")
 ax.set_ylabel(r"$m_{e,\mathrm{p}}$")
-ax.set_title("electron pole mass", fontsize=10)
-ax.grid(alpha=0.3, lw=0.5)
-ax.legend(frameon=False, fontsize=8)
+ax.set_title("electron pole mass", fontsize=8)
+ax.legend(frameon=False, fontsize=6.5)
 for ax in axes:
-    for side in ("top", "right"):
-        ax.spines[side].set_visible(False)
     ax.set_xticks([0.25, 0.5, 1, 2, 4], ["1/4", "1/2", "1", "2", "4"])
     ax.minorticks_off()
 fig.tight_layout()
