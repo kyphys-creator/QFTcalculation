@@ -79,7 +79,7 @@ Python & miniforge（conda 24.11.3）の環境 \texttt{qft}：Python 3.12.15、n
 
 \paragraph{前提。}本稿は次の前提に立つ。
 \begin{enumerate}
-\item 版と日付は2026年10月9日時点のものである。熱的な道具（第~\ref{sec:thermal} 節）は10月11日、2ループの道具（第~\ref{sec:twoloop} 節）は10月12日時点である。フェルミオンとゲージ場の模型で分かった問題（第~\ref{sec:issues} 節の表~\ref{tab:issues2}）は、10月12日から14日の検算によるもので、ツールの版は変えていない。
+\item 版と日付は2026年10月9日時点のものである。熱的な道具（第~\ref{sec:thermal} 節）は10月11日、2ループの道具（第~\ref{sec:twoloop} 節）は10月12日時点である。フェルミオンとゲージ場の模型で分かった問題（第~\ref{sec:issues} 節の表~\ref{tab:issues2}）は、10月12日から14日の検算（QCD のノートの分を含む）によるもので、ツールの版は変えていない。
 \item ソフトウェアは公式の配布元から \texttt{curl} で取得した。ソースから構築できるものはこの Mac で構築した。
 \item 「正しく動く」かどうかは、既知の厳密値、独立な別実装、または独立な解析計算との数値の一致で判定する。
 \item パスの \texttt{\textasciitilde} はホームディレクトリ \nolinkurl{/Users/koichiro} を表す。
@@ -354,11 +354,11 @@ FeynMaster のマニュアルは、FeynRules の3つのファイルで \texttt{M
 
 \paragraph{検証で踏んだ二つの落とし穴。}一つ目は、FeynRules の試験で Feynman 則の計算結果を変数 \texttt{v} に代入したことである。\texttt{v} は標準模型ファイルでヒッグス場の真空期待値を表すので、続く UFO 出力からフェルミオンとゲージ粒子の頂点がすべて消え、評価されないコードを粒子名に含む頂点が3000個以上できた。一時は FeynRules と Mathematica 14 の非互換だと判断しかけたが、代入をやめると出力は正常に戻った。模型の記号に値を代入してはならない。二つ目は、試験スクリプトに \texttt{formcalc.wl} という名前を付けたことである。macOS のファイル名は大文字と小文字を区別しないので、そのフォルダで \texttt{Get["FormCalc\bq"]} を実行すると、Mathematica は本物の FormCalc ではなくこのスクリプト（\texttt{FormCalc.wl} と同一視される）を読み、自分自身を呼んで再帰の上限に達した。試験スクリプトにはすべて \texttt{test\_} を付けた。
 
-\paragraph{フェルミオンとゲージ場の模型で分かった問題。}2026年10月12日から14日に、擬スカラー湯川理論のノート~\cite{yukawanote} とスピノル QED のノート~\cite{qednote} で、フェルミオンとゲージ場を含む模型の1ループの検算を行った。ツールの版は変えていない。その途中で分かった問題と注意を表~\ref{tab:issues2} にまとめる。MadGraph の木の断面積の不足とその原因は、上の段落で述べた。以下、残りを道具ごとに説明する。どれも \pth{hep/README.md} の既知の問題にも書いてある。
+\paragraph{フェルミオンとゲージ場の模型で分かった問題。}2026年10月12日から14日に、擬スカラー湯川理論のノート~\cite{yukawanote}、スピノル QED のノート~\cite{qednote}、QCD のノート~\cite{qcdnote}（手順 (1)〜(3)）で、フェルミオンとゲージ場を含む模型の1ループの検算を行った。ツールの版は変えていない。その途中で分かった問題と注意を表~\ref{tab:issues2} にまとめる。MadGraph の木の断面積の不足とその原因は、上の段落で述べた。以下、残りを道具ごとに説明する。どれも \pth{hep/README.md} の既知の問題にも書いてある。
 
 \begin{table}[p]
 \centering\footnotesize
-\caption{フェルミオンとゲージ場の模型の検算で分かった問題と対処。対象の後の括弧は、見つかったノートを表す（湯川：擬スカラー湯川のノート~\cite{yukawanote}、QED：スピノル QED のノート~\cite{qednote}）。}
+\caption{フェルミオンとゲージ場の模型の検算で分かった問題と対処。対象の後の括弧は、見つかったノートを表す（湯川：擬スカラー湯川のノート~\cite{yukawanote}、QED：スピノル QED のノート~\cite{qednote}、QCD：QCD のノート~\cite{qcdnote}）。}
 \label{tab:issues2}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
@@ -381,6 +381,10 @@ FeynArts と FeynCalc の既定（湯川、QED） & $\xi$ が消える。頂点�
 FormCalc 9.10（湯川、QED） & \texttt{HelicityME} が失敗する。2つ目の過程で止まる（\texttt{DeclareProcess::incomp}）。\texttt{\_Hel = 0} はスピン和の $1/2^n$ & 既定の \texttt{WeylChains}。1セッションで1過程。各フェルミオンに $(\gamma\cdot p+m)/2$ & \texttt{FermionChains -> VA}。\texttt{ClearProcess[]}。$2^n$ を掛ける。\texttt{SquaredME[a, b]} は $a^*b$ \\
 Package-X（QED、湯川） & \texttt{qq < 0} で簡約した式が時間的な $q^2$ で誤る。\texttt{ScalarC0}、\texttt{ScalarD0} は引数に質量をとる & 対数と平方根の枝が $+i0$ と合わない & 有理数の $q^2$ を代入してから \texttt{PaXEvaluate} \\
 小さい運動量での倍精度のツール（QED） & 真空偏極で約 $\log_{10}(m^2/|q^2|)$ 桁、光子--光子散乱で $s=0.01m^2$ で $10^{-5}$ ずれる & $O(1)$ の項の打ち消し & 有理数の運動学で Package-X を30〜80桁で評価する \\
+FeynCalc の TID と繰り返しの分母（QCD） & グルーオンのゲージ部分を含む頂点の紫外の極が誤る（$(C_F-\frac{C_A}2)(2-\xi)$、正しくは $(C_F-\frac{C_A}2)\xi$）。既定の分解では極が外の運動量に依存する & FeynArts が $1/k^4$ を同じ分母の繰り返しで書き、TID が運動量0の辺を持つ4点関数（Gram 行列式0）として分解する & 先に \texttt{FDS} で分母をまとめる。極は外の運動量の展開と赤外の組み替えでも求める \\
+FeynCalc の色の代数（QCD） & $K_{3,3}$ の形の6個の $f$ の縮約が評価されずに残る（\texttt{SUNFToTraces -> True} でも） & 非平面の添字のつながり（推論） & \texttt{SUNSimplify[x, Explicit -> True]}（値は0。数値の SU(3) でも0） \\
+FeynCalc と FeynArts の名前（QCD） & 結合を \texttt{GS} と書くと $\gamma$ 行列と混ざる。内線のグルーオンの \texttt{GaugeXi} が色の添字を持ち、\texttt{SUNSimplify} が止まる。二つの過程の図を \texttt{Join} すると描けない & \texttt{GS[p]} は $\gamma\cdot p$ の略記。\texttt{FCFAConvert} の書き方 & 別の記号（\texttt{gS}、\texttt{xi}）に置き換える。図は過程ごとに描く \\
+MadGraph の $\alpha_s$ と表示（QCD） & 模型の \texttt{aS} と違う $\alpha_s$ で計算される。ログの断面積が4桁で、$10^4$ 事象の統計誤差と同程度の丸め & \texttt{aS} を $M_Z$ での値として走らせる。表示の仕様 & \texttt{fixed\_ren\_scale = True}、\texttt{scale = 91.188}。値は \texttt{HTML/run\_0n/results.html}（5桁）から読む。グルーオンのビームも \texttt{lpp = 0} でよい \\
 mpmath と \texttt{NIntegrate}（QED） & Python がトレースバックなしで止まる（\texttt{gmp: overflow in mpz type}）。\texttt{NIntegrate::inumri} & 大きな複素数や指数で gmp の整数があふれる。記号の前処理 & 被積分関数が $e^{-180}$ より小さいところで切る。\texttt{\_?NumericQ} の関数にする \\
 \bottomrule
 \end{tabularx}
@@ -397,6 +401,8 @@ mpmath と \texttt{NIntegrate}（QED） & Python がトレースバックなし�
 \paragraph{FeynCalc と FeynArts。}FeynArts の \texttt{CreateFeynAmp} は既定で \texttt{GaugeRules -> \{\_GaugeXi -> 1\}} を使い、ゲージ場の伝播関数を Feynman ゲージにする。$\xi$ を残すには \texttt{GaugeRules -> \{\}} とする。FeynRules が書いた FeynArts の模型の頂点の係数（\texttt{gc1}、\texttt{gc2L} など）の値は、置き換えの表 \texttt{M\$FACouplings} にある。FeynCalc はこれを自動では使わないので、\texttt{CreateFeynAmp} の出力に手で適用する。FeynCalc の \texttt{DiracSimplify} は、既定では $\gamma^5$ を奇数個含むフェルミオンの線を射影 $\omega_\pm$ で書き直す（\texttt{ToDiracGamma67 -> True}）。$\gamma^5$ のまま扱うには \texttt{ToDiracGamma67 -> False}、\texttt{DiracSubstitute67 -> True} とする。BMHV の処方（\texttt{FCSetDiracGammaScheme}）では、湯川の箱のトレースが ``Not all non-chiral traces were evaluated'' で止まった。\texttt{FCFAConvert} に \texttt{TransversePolarizationVectors -> \{k\}} を与えると、FeynCalc は Dirac 代数の途中で $\varepsilon(k)\cdot k$ の項を落とし、振幅は $k\cdot\mathcal M=0$ を満たさなくなる。すると偏極の和を $-g_{\mu\nu}$ にした \texttt{DoPolarizationSums[x, k, 0]} が誤る（$e^+e^-\to\mu^+\mu^-\gamma$ の試験点で $15.10$、正しくは $12.79$）。横波だけの和は正しく、この指定を外すと二つの和は記号として一致した。横波の和の補助のベクトルは記号でなければならない（\texttt{p1 + p2} は受け付けられない）。\texttt{DiracSimplify} は Dirac の鎖の中の運動量を運動量保存で書き換えないので、偏極を運動量に置き換えた振幅は0まで整理されない。Ward 恒等式は2乗の和で確かめる。TID は、質量のない伝播関数の2乗を、赤外で発散する $C_0(0,p^2,p^2;0,0,m^2)$ で書く。\texttt{PaVeUVPart} は紫外の極だけを数えるので、これが残ったままでは自己エネルギーの紫外の極を正しく取り出せない。部分積分の関係で $A_0$、$B_0$ に直してから取り出す。記号の偏極ベクトルを4つ持つ階数4の箱を TID でスカラー積分まで簡約すると、箱1つに約10分かかり、式の葉が $3.7\times10^7$ になった。PaVe の基底（\texttt{UsePaVeBasis -> True}）に留めれば箱1つに6秒で、有限部分は $\sum_j[c_j(4)P_j^{(0)}-2c_j'(4)P_j^{(-1)}]$ で作る（$c_j(D)$ は係数、$c_j'$ はその $D$ についての微分、$P_j^{(n)}$ は関数の $\epsilon^n$ の係数）。$s$、$t$ を記号のまま TID と \texttt{Simplify} にかけると14分を超えても終わらなかったので、運動学は有理数の点に固定した。$t$ に平方根が入ると \texttt{FCLoopPakScalelessQ} と \texttt{FCApart} が失敗するので、$(s,t)$ を有理数に選んで角度をそこから決めた。
 
 \paragraph{FormCalc。}FormCalc 9.10 の \texttt{HelicityME} は、既定の \texttt{FermionChains -> WeylChains} では失敗するので、\texttt{CalcFeynAmp} に \texttt{FermionChains -> VA} を与える。偏極を指定しない \texttt{\_Hel = 0} では各フェルミオンに $(\gamma\cdot p+m)/2$ を使うので、結果はスピン和の $1/2^n$（$2\to2$ で $1/16$）になる。\texttt{SquaredME[a, b]} は $a^*b$ で、木とループの干渉は \texttt{SquaredME[}木\texttt{, }ループ\texttt{]} で得る（逆の順序では虚部の符号が逆になる）。紫外の極の $(D-4)$ 倍から来る有理項には記号 \texttt{Finite} が掛かるので、有限部分では1、極の係数では0とする。一つのセッションで別の過程を計算しようとすると止まる（\texttt{DeclareProcess::incomp}）ので、過程を替えるたびに \texttt{ClearProcess[]} を呼ぶ。スピノルの鎖の名前（\texttt{F1}、\texttt{F2}）はセッションごとに入れ替わるので、名前ではなく中身で区別する。\texttt{PaVeReduce -> True} の結果に現れる \texttt{IGram[x]}（$=1/x$）と3引数の \texttt{Den[p, m, d]}（$=(p-m)^{-d}$）は、数値にする前に置き換える。
+
+\paragraph{QCD のノートで分かった問題。}QCD のノートの手順 (3) で、頂点の紫外の極を二つの方法で求めた。一つは、FeynArts の振幅を TID で PaVe 関数に分解して \texttt{PaVeUVPart} で極を取る方法、もう一つは、外の運動量で展開してすべての分母に同じ質量を入れる赤外の組み替えで、$\int\mathrm{d}^Dl/l^4$ 型の積分の極を取る方法である。クォークとグルーオンの頂点の可換な図で、前者は $(C_F-\frac{C_A}2)(2-\xi)$、後者は手計算と同じ $(C_F-\frac{C_A}2)\xi$ を与えた。FeynArts は内線のグルーオンのゲージ部分 $(1-\xi)k_\mu k_\nu/k^4$ を、同じ分母を2回並べた形（\texttt{FAD[l, k1 + l, k1 + l - p2, k1 + l - p2]}）で書く。TID はこれを運動量0の辺を持つ4点関数（Gram 行列式が0）として分解し、\texttt{UsePaVeBasis -> True} では誤った極を、既定のスカラー積分への分解では外の運動量に依存する「極」を返した。現れる個々の PaVe 関数の \texttt{PaVeUVPart} は正しい。先に \texttt{FDS}（\texttt{FeynAmpDenominatorSimplify}）で同じ分母を2乗にまとめると正しい極になる。2点関数では TID が2重の伝播関数を $C_0(0,p^2,p^2;\dots)$ として扱い、部分積分で $B_0$ に直せたので問題は出なかった。4グルーオンの頂点の極を色の構造に射影すると、ゴーストとグルーオンの箱の色の因子と射影子の積に、6個の構造定数が $K_{3,3}$ の形につながった縮約 $f^{123}f^{145}f^{267}f^{389}f^{479}f^{568}$ が現れた。\texttt{SUNSimplify} はこれを \texttt{SUNFToTraces -> True} を付けても評価せずに残し、\texttt{Explicit -> True} を付けると0を返した（Gell-Mann 行列から作った数値の $f^{abc}$ でも $2\times10^{-16}$）。平面的なつながりは、オプションなしで評価される。
 
 \paragraph{Package-X。}Package-X の結果を \texttt{Simplify[..., qq < 0]} のように空間的な $q^2$ を仮定して簡約すると、対数と平方根の閾値より上の枝が $+i0$ の処方と合わないことがある。時間的な $q^2$ では、有理数の $q^2$ を代入した式に \texttt{PaXEvaluate} を呼び、枝の選び方を Package-X に任せる（スピノル QED のノートの手順 (9)）。Package-X の数値関数 \texttt{ScalarC0}、\texttt{ScalarD0} は、内線の質量の2乗ではなく質量を引数にとる（湯川のノートの手順 (3)）。
 
@@ -977,6 +983,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{url:tsil} TSIL. \url{https://www.niu.edu/spmartin/TSIL/}
 \bibitem{yukawanote} 擬スカラー湯川理論：1ループの構造と検算（本リポジトリ \nolinkurl{models/yukawa_ps/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~Q。
 \bibitem{qednote} スピノル QED：1ループの構造と検算（本リポジトリ \nolinkurl{models/spinor_qed/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
+\bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~J。
 \end{thebibliography}
 
 \end{document}
