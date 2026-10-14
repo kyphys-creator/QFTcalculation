@@ -536,6 +536,7 @@ print("wrote results/xsec.csv")
 
 # %%
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 from matplotlib.ticker import FixedLocator, NullFormatter, NullLocator
 arr = np.array(rows)
 rs = arr[:, 0]

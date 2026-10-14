@@ -219,6 +219,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 grid = list(csv.DictReader(subprocess.run([tsil_bin, "grid"], capture_output=True, text=True, check=True).stdout.splitlines()))
 sg = [float(r["s"]) for r in grid]
 fig, ax = plt.subplots(figsize=(3.4, 2.5))

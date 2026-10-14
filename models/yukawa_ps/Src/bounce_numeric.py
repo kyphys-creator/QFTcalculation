@@ -200,6 +200,7 @@ print("wrote results/bounce.csv")
 
 # %%
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.0, 2.9))
 mus = np.geomspace(1.0, 1e5, 400)
 ax.plot(mus, [couplings(math.log(x))[1] for x in mus], color="k", ls="-", lw=1.0, label=r"$\lambda(\mu)$")

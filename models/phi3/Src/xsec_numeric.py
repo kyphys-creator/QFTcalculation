@@ -406,6 +406,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 x = np.array(SQRTS_GRID)
 s0 = np.array([r[1] for r in rows])
 s1 = np.array([r[2] for r in rows])

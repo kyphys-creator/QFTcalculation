@@ -373,6 +373,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.25, 4.1), gridspec_kw={"height_ratios": [1, 1.2]})
 sd = radial([0, 1, 2, 3], born=False, xmax=12.0, dense=True)
 xx = np.linspace(1e-4, 12.0, 600)

@@ -348,6 +348,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.25, 4.1), gridspec_kw={"height_ratios": [1, 1.2]})
 for a, color, ls in ((0.0, "k", "-"), (0.5, "#5d81b4", "--"), (0.8, "#e09b24", "-."), (0.95, "#eb6235", ":")):
     r = res[(4, a)]

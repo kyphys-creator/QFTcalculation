@@ -378,6 +378,7 @@ for j, name in enumerate(("phi phi -> phi phi", "psi psibar -> phi phi")):
     print(f"{name}: (1/2) tree'' ln^2(4)/value = {pred:+.3e}; mean of the two ends {0.5 * (curves[True][0, j] + curves[True][-1, j]):+.3e}")
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, axes = plt.subplots(1, 2, figsize=(7.0, 2.8))
 for j, (ax, title) in enumerate(zip(axes, (r"$\phi\phi\to\phi\phi$: $\mathcal{M}_A$", r"$\psi\bar\psi\to\phi\phi$: $\sum|\mathcal{M}_B|^2$"))):
     ax.plot(SCAN, curves[False][:, j], color="C0", ls="--", label="fixed parameters")

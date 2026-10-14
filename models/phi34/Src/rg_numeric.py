@@ -250,6 +250,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 figdir = os.path.join(HERE, "..", "figs")
 os.makedirs(figdir, exist_ok=True)
 

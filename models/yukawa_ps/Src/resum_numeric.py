@@ -395,6 +395,7 @@ print("wrote results/resum.csv")
 
 # %%
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.0, 2.9))
 xs = np.geomspace(11.0, 2e4, 90)
 res = [[E_resum(RUN, TEND, 1 / x, r)[1] for r in (1.0, 0.5, 2.0)] for x in xs]
@@ -413,10 +414,10 @@ ax.text(MU0 * 1.08, 1.3e3, r"$\mu_0$", fontsize=7, color="0.4")
 ax.text(bm["nlo"] * 0.93, 1.3e3, r"$\Lambda_{\max}$", fontsize=7, color="C0", ha="right")
 ax.set_xscale("log")
 ax.set_yscale("log")
-ax.set_ylim(10, 3e3)
+ax.set_ylim(10, 2e4)
 ax.set_xlabel(r"$1/(mR)$")
 ax.set_ylabel(r"$-E(R)$")
-ax.legend(fontsize=6)
+ax.legend(fontsize=6, loc="upper right")
 for y0, st in ((0.7, ":"), (1.0, "-"), (1.4, "--")):
     sel = [r for r in scan if r[0] == y0]
     lam_ = [r[1] for r in sel]

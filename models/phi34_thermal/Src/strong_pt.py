@@ -160,6 +160,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.25, 4.1), sharex=True)
 for lam, col, ls in ((0.02, "#eb6235", "-"), (0.05, "#5d81b4", "--"), (LT_SM, "k", "-.")):
     sub = [s for s in scan if s["lam"] == lam and not math.isnan(s["Tn"])]

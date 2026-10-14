@@ -191,6 +191,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 rs_arr = np.array([r["rs"] for r in rows])
 pm = np.sqrt(rs_arr ** 2 / 4 - 1)                      # CM momentum p/m
 re0 = np.array([r["a00"] for r in rows])
@@ -202,14 +203,14 @@ ax1.plot(pm, gC_s, color="#e09b24", lw=0.9, ls="-.", label="(C) one-loop unitari
 ax1.axhline(gD, color="0.6", lw=0.7, ls="-", label="(D) vertex")
 ax1.set_ylim(0, 46)
 ax1.set_ylabel(r"largest $g/m$")
-ax1.legend(loc="upper center", fontsize=6.5, ncol=2)
+ax1.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), fontsize=6.5, ncol=2,
+           title=r"$d=4$, $\phi\phi\to\phi\phi$, $J=0$", title_fontsize=8)
 ax2.plot(pm, 1e5 * np.array([r["a01"].imag for r in rows]), color="k", lw=0.9, ls="-", label=r"$\mathrm{Im}\,a_0^{(1)}$")
 ax2.plot(pm[::5], 1e5 * re0[::5] ** 2, "o", ms=3.5, mfc="none", mec="#eb6235", label=r"$|a_0^{(0)}|^2$")
 ax2.set_ylabel(r"$10^5\times$ ($g=m$)")
 ax2.set_xlabel(r"$p/m$  ($\sqrt{s}=2\sqrt{m^2+p^2}$)")
 ax2.set_xscale("log")
 ax2.legend(loc="upper left")
-ax1.set_title(r"$d=4$, $\phi\phi\to\phi\phi$, $J=0$", fontsize=8)
 fig.tight_layout()
 fig.savefig(os.path.join(HERE, "..", "figs", "pw4_d4.pdf"))
 print("wrote results/pw4.csv and figs/pw4_d4.pdf")

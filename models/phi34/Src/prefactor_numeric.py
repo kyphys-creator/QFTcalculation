@@ -468,6 +468,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.25, 4.1))
 near = al >= 0.85
 ax1.plot(al[near], twr[near], "o", ms=3.0, mfc="none", mec="k", label=r"this note")

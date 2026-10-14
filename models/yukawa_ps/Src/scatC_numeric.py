@@ -651,6 +651,7 @@ with open(os.path.join(HERE, "results", "scatC.csv"), "w", newline="") as fh:
 print("wrote results/scatC.csv")
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.0, 3.0))
 pax = [math.sqrt(rs ** 2 / 4 - BM2) / MPSI for rs in RSP]
 for (b, a), col, lab in (((0, 0), "C0", r"$(++)\to(++)$"), ((1, 0), "C1", r"$(++)\to(--)$")):
@@ -679,7 +680,8 @@ ax2.plot([1.0], [1.0], marker="*", color="C3", ms=7, ls="none")
 hd = [plt.Line2D([], [], color="k", lw=0.8), plt.Line2D([], [], color="0.5", lw=0.8), plt.Line2D([], [], color="C1", ls="-.", lw=0.8),
       plt.Line2D([], [], color="C0", lw=1.2), plt.Line2D([], [], color="C0", ls="--", lw=0.6)]
 ax2.legend(hd, [r"(A) tree, $s\to\infty$", r"tree, $\sqrt{s}\leq 4m$", r"(C) step 8 ($\phi\phi$ elements)", r"(C) full $J=0$, $\mu=m$",
-                r"(C), $\mu=m/2,\ 2m$"], fontsize=5.8, loc="center left", bbox_to_anchor=(0.0, 0.42))
+                r"(C), $\mu=m/2,\ 2m$"], fontsize=5.8, loc="upper left", bbox_to_anchor=(0.01, 0.818),
+           labelspacing=0.2, borderpad=0, borderaxespad=0)     # between the top edge (lambda ~ 47) and the benchmark star
 ax2.set_xlim(0, 4.5)
 ax2.set_ylim(-84, 70)
 ax2.set_xlabel(r"$y$ ($\mu=m$)")

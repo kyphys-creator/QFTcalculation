@@ -290,6 +290,7 @@ print("wrote results/prefactor.csv")
 
 # %%
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax, ax2) = plt.subplots(1, 2, figsize=(7.0, 2.9))
 invs = np.geomspace(60.0, 2e4, 120)
 Es = [E_star(RUN, TEND, 1 / x, MU0) for x in invs]

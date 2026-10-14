@@ -328,6 +328,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.25, 5.0), gridspec_kw={"height_ratios": [1.7, 1]})
 gg = np.linspace(0, 16, 200)
 for alpha in (1.0, 9 / 8):                      # alpha = 3 lambda m^2/g^2 = 1, 9/8, inside lambda < 16 pi

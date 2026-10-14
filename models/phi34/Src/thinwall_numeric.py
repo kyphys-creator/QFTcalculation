@@ -189,6 +189,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.25, 4.1))
 ax1.plot(al, (1 - al) * rO, "o-", ms=2.5, lw=0.8, color="k", label=r"$(1-\alpha)\ln\mathcal{D}/(2S_4)$")
 ax1.plot(al, (1 - al) * rN, "s-", ms=2.5, lw=0.8, color="#5d81b4", label=r"$(1-\alpha)\ln\mathcal{D}_N/(2S_4)$")

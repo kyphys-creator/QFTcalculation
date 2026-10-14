@@ -602,6 +602,7 @@ with open(os.path.join(HERE, "results", "pw.csv"), "w", newline="") as fh:
 print("wrote results/pw.csv (metrics on the (y, lambda) grid; allowed where <= 1)")
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax, ax2) = plt.subplots(2, 1, figsize=(3.4, 6.4), gridspec_kw={"height_ratios": [1.4, 1], "hspace": 0.5})
 ya = math.sqrt(8 * math.pi / 3)
 ax.plot([0, ya, ya, 0], [16 * math.pi, 16 * math.pi, -16 * math.pi, -16 * math.pi], color="k", ls="-", lw=1.0)

@@ -70,6 +70,7 @@ for mu in (30.0, 100.0, 1000.0):
 
 # %%
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, ax = plt.subplots(figsize=(3.4, 2.9))
 y2 = np.linspace(1e-4, 4.0, 800)
 for c in (-40, -8, -2, -0.3, 0.05, 0.15, 0.4, 1.2):

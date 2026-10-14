@@ -148,6 +148,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.25, 4.1))
 cols = {0.5: "#5d81b4", 0.7: "#e09b24", 0.9: "#eb6235"}
 for al, (tsp, cv) in curves.items():
@@ -159,7 +160,7 @@ thr = [brentq(lambda S: S - 1.5 * math.log(S / (2 * math.pi)) - 4 * math.log(tl.
        for T in Ts]
 ax1.plot(Ts, thr, color="0.5", ls="--", lw=0.9, label=r"$\Gamma=H^4$")
 ax1.set_yscale("log")
-ax1.set_xlim(0.3, 4.0)
+ax1.set_xlim(0.3, 4.6)
 ax1.set_ylim(3, 3e3)
 ax1.set_xlabel(r"$T/m$")
 ax1.set_ylabel(r"$S_3/T$")

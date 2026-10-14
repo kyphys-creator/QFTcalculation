@@ -172,6 +172,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 x = np.concatenate([np.linspace(-10, 3.999, 400), np.linspace(4.0, 30, 400)])
 b0 = np.array([complex(b0_closed(v)) for v in x])
 pts = sorted(k for k in mma if k[0] == "B0")

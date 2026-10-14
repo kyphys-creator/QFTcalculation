@@ -146,6 +146,7 @@ sig = 2 * mp.sqrt(25 / 4 - M2) * 5 * sigma_tree(25)
 pts = sorted(k for k in fc if k[0] == 5.0)
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(3.25, 3.6), sharex=True)
 ax1.plot(cs, 1e3 * col.real, color="k", lw=0.9, label="COLLIER")
 ax2.plot(cs, 1e3 * col.imag, color="k", lw=0.9, label="COLLIER")

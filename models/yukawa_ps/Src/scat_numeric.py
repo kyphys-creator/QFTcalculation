@@ -276,6 +276,7 @@ print("wrote results/scat_comparison.csv")
 
 # %%
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 cs = np.array([float(r["costheta"]) for r in scan])
 fig, axes = plt.subplots(1, 3, figsize=(7.0, 2.4))
 series = {"mA": (axes[0], r"$(4\pi)^2\mathcal{M}^{(1)}_A$", r"$\phi\phi\to\phi\phi$"),

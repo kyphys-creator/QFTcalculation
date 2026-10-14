@@ -231,6 +231,7 @@ if not INTERACTIVE:
 import matplotlib.pyplot as plt
 
 plt.style.use(os.path.join(HERE, "..", "ResearchNote", "physrev.mplstyle"))
+plt.rcParams["legend.frameon"] = False     # legends without the white box of physrev.mplstyle
 fig, (ax1, ax3, ax2) = plt.subplots(3, 1, figsize=(3.25, 5.4), gridspec_kw=dict(height_ratios=[1, 1, 1.3]))
 for ax, al_, col in ((ax1, 0.9, "#5d81b4"), (ax3, 1.05, "#eb6235")):
     rows = traj[al_]
