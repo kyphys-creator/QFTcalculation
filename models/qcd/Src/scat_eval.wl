@@ -21,7 +21,7 @@
 (*    not depend on xi.  Colour: C_F -> (N^2 - 1)/(2N) before comparing (FeynCalc's SUNSimplify mixes C_A^3 and C_F forms).*)
 (*(c) Feynman gauge, diagram by diagram: IBP route ((b) at xi = 1), TID route (scat_feyncalc.wl (d)) and FormCalc*)
 (*    (scat_formcalc.wl), SU(3).*)
-(*(d) unitarity of (A): Im W of the diagram groups with the two-particle intermediate states n = d dbar (the d-quark loop),*)
+(*(d) unitarity of (A): Im W of the diagram groups with the two-particle intermediate states n = d dbar (the d-quark loop (10); loops 8-12 = u, c, d, s, b),*)
 (*    u ubar (u loop + abelian u vertex), t tbar (t loop + abelian t vertex), g g (the rest) against (1/2) S_eps^-1 int dPhi_2*)
 (*    sum M0^*(i->f) M0(i->n) M0(n->f) in D dims; the collinear (q1 || p1, p2) and Coulomb (q1 || k1) directions are*)
 (*    subtracted, their residues integrated in D dims (int dOmega_(D-2)/(1 - cos) = Omega_(D-3) 2^(D-4) Gamma((D-4)/2)*)
@@ -210,7 +210,7 @@ cutValEV$[key_, mn_, axis_, ident_] := Module[{f, qq, sing = {}, h, rem, ang, ps
    ps = (4 Pi)^(-ep) Exp[ep EulerGamma] (2 Pi)^(2 - dD) qq^(dD - 3)/(4 rs) If[ident, 1/2, 1];
    tot = (1/2) ps (Sum[s[[2]] /. D -> dD, {s, sing}] pintEV$ + rem) /. dD -> 4 - 2 ep;
    {Length[sing], Chop[N[KK CoefficientList[Normal[Series[tot ep^2, {ep, 0, 2}]], ep], 15], 10^-12]}];
-groupsEV$ = <|"dd" -> {8}, "uu" -> {3, 8}, "tt" -> {1, 13}, "gg" -> {2, 4, 5, 6, 7, 14, 15}|>;
+groupsEV$ = <|"dd" -> {10}, "uu" -> {3, 8}, "tt" -> {1, 13}, "gg" -> {2, 4, 5, 6, 7, 14, 15}|>;
 unitEV$ = Table[Module[{cv = cutValEV$[k, If[k === "tt", 1, 0], If[k === "tt", "k", "z"], k === "gg"], sg = If[k === "gg", 1, -1], im},
     im = Im[N[KK coefs[su3[Total[resEV$["A"]["wd"][[groupsEV$[k]]]]]]]];
     {k, cv[[1]], sg cv[[2]], im, sg cv[[2]] - im}], {k, Keys[groupsEV$]}];

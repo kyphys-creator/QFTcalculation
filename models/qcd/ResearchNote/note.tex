@@ -1074,7 +1074,7 @@ Feynman ゲージ（$\xi=1$）では、図ごとに二つの独立な経路と�
   \draw[heavy] (1.65,0.85) -- (1.15,0); \draw[heavy] (1.15,0) -- (1.65,-0.85);
   \node[vtx] at (-1.15,0) {}; \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {}; \node[vtx] at (1.15,0) {};
   \draw[cutl] (0,-0.85) -- (0,0.85);
-  \node[lab] at (0,-1.55) {(a) $n=d\bar d$\\（(8)〜(12) の1本）};
+  \node[lab] at (0,-1.55) {(a) $n=d\bar d$\\（(10)）};
 \end{scope}
 % n = u ubar
 \begin{scope}[shift={(3.9,0)}]
@@ -1085,7 +1085,7 @@ Feynman ゲージ（$\xi=1$）では、図ごとに二つの独立な経路と�
   \draw[heavy] (1.45,0.85) -- (0.8,0); \draw[heavy] (0.8,0) -- (1.45,-0.85);
   \node[vtx] at (-0.65,-0.45) {}; \node[vtx] at (-0.65,0.45) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.8,0) {};
   \draw[cutl] (-0.32,-0.85) -- (-0.32,0.85);
-  \node[lab] at (0,-1.55) {(b) $n=u\bar u$\\（(3) と $u$ のループ）};
+  \node[lab] at (0,-1.55) {(b) $n=u\bar u$\\（(3) と (8)）};
 \end{scope}
 % n = t tbar
 \begin{scope}[shift={(7.8,0)}]
@@ -1133,13 +1133,13 @@ $\xi=1$ の図ごとの差：TID、FormCalc & $2.4\times10^{-13}$、$2.7\times10
 
 \begin{table}[tbp]
 \centering\small
-\caption{(A) の虚部とユニタリー性（$K\,\mathrm{Im}\,W$、SU(3)、$\xi=1$）。切断は、中間状態 $n$ を通る $\frac12S_\epsilon^{-1}\int\mathrm d\Phi_2\sum\mathcal M_0^*(i\to f)\mathcal M_0(i\to n)\mathcal M_0(n\to f)$（クォーク対は閉じたフェルミオンの線の符号 $-1$ を掛ける）。図の番号は FeynArts の順で、1、2 が $t$ の頂点（可換、非可換）、3、4 が $u$ の頂点、5、6 が箱、7 が4グルーオンの頂点のループ、8〜12 が質量のないクォークのループ、13 が $t$ のループ、14、15 がゴーストとグルーオンのループ。}
+\caption{(A) の虚部とユニタリー性（$K\,\mathrm{Im}\,W$、SU(3)、$\xi=1$）。切断は、中間状態 $n$ を通る $\frac12S_\epsilon^{-1}\int\mathrm d\Phi_2\sum\mathcal M_0^*(i\to f)\mathcal M_0(i\to n)\mathcal M_0(n\to f)$（クォーク対は閉じたフェルミオンの線の符号 $-1$ を掛ける）。図の番号は FeynArts の順で、1、2 が $t$ の頂点（可換、非可換）、3、4 が $u$ の頂点、5、6 が箱、7 が4グルーオンの頂点のループ、8〜12 が $u$、$c$、$d$、$s$、$b$ のループ、13 が $t$ のループ、14、15 がゴーストとグルーオンのループ。}
 \label{tab:unit}
 \begin{tabular}{llll}
 \toprule
 $n$ & 図 & $1/\epsilon$：切断、ループ & 有限部分：切断、ループ \\
 \midrule
-$d\bar d$ & 8 & $0$、$0$ & $-24.127432$、$-24.127432$ \\
+$d\bar d$ & 10 & $0$、$0$ & $-24.127432$、$-24.127432$ \\
 $u\bar u$ & 3、8 & $12.063716$、$12.063716$ & $-50.564751$、$-50.564751$ \\
 $t\bar t$ & 1、13 & $12.459352$、$12.459352$ & $-49.250206$、$-49.250206$ \\
 $gg$ & 2、4〜7、14、15 & $0$、$0$ & $6.097982$、$6.097982$ \\
