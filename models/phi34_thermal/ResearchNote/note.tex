@@ -7,6 +7,8 @@
 \usepackage{amsmath,amssymb}
 \usepackage{booktabs,tabularx,array}
 \usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,shapes.misc}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{graphicx}
 \usepackage{placeins}
@@ -18,9 +20,18 @@
 \renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
 \newcommand{\dd}{\mathrm{d}}
 
+\tikzset{
+  prop/.style={thick},
+  soft/.style={thick,dashed},
+  hard/.style={thick,double,double distance=1.3pt},
+  vtx/.style={circle,fill=black,inner sep=1.3pt},
+  lab/.style={font=\small,align=center},
+  bgv/.style={cross out,draw=black,thick,minimum size=4.5pt,inner sep=0pt},
+}
+
 \title{$\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波}
 \author{}
-\date{2026年10月11日}
+\date{2026年10月14日}
 
 \begin{document}
 \maketitle
@@ -181,18 +192,91 @@ h^2\Omega_{\mathrm{sens}}(f)=\frac{2\pi^2}{3H_{100}^2}f^3S_h(f),\qquad
 \end{equation}
 とする~\cite{caprini20}（$H_{100}=100$~km/s/Mpc）。べき乗のスペクトルに対する感度（PLS）は、Thrane と Romano~\cite{thrane13} の作り方で、式~\eqref{eq:snr} の SNR から作る。$F_{\mathrm{gw},0}$、$H_{*,0}$、$f_p$ の係数、$R_*$、$\Omega_{\mathrm{sens}}$ と PLS は\ref{app:gw} で導く。
 
-\paragraph{単一場の温度ポテンシャル。}場 $\phi$ 自身の1ループの温度ポテンシャルは、場による質量の2乗 $\mathcal M^2(\phi)=V''(\phi)=m^2+g\phi+\lambda\phi^2/2$ を使って
+\paragraph{単一場の温度ポテンシャル。}場 $\phi$ 自身の1ループの温度ポテンシャルは、場による質量の2乗 $\mathcal M^2(\phi)=V''(\phi)=m^2+g\phi+\lambda\phi^2/2$ を使って（図~\ref{fig:loop}）
 \begin{equation}
 V(\phi,T)=V(\phi)+t\phi+\frac{\mathcal M^4}{64\pi^2}\Bigl(\ln\frac{\mathcal M^2}{\mu^2}-\frac32\Bigr)+\frac{T^4}{2\pi^2}J_B\Bigl(\frac{\mathcal M^2}{T^2}\Bigr),\qquad
 J_B(y)=\int_0^\infty\dd x\,x^2\ln\bigl(1-e^{-\sqrt{x^2+y}}\bigr)
 \label{eq:V1loop}
 \end{equation}
-である~\cite{dolanjackiw}。$t=m^2g/(32\pi^2)$ は、零温度のノートの $\phi=0$ のタドポールを打ち消す線形項である（$\mu=m$）。高温展開と、ゼロモードの daisy の和（熱質量 $\Pi=\lambda T^2/24$）を合わせると
+である~\cite{dolanjackiw}。$t=m^2g/(32\pi^2)$ は、零温度のノートの $\phi=0$ のタドポールを打ち消す線形項である（$\mu=m$）。高温展開と、ゼロモードの daisy の和（熱質量 $\Pi=\lambda T^2/24$、図~\ref{fig:daisy}）を合わせると
 \begin{equation}
 V(\phi,T)\simeq V(\phi)+t\phi+\frac{T^2}{24}\mathcal M^2-\frac{T}{12\pi}\bigl(\mathcal M^2+\Pi\bigr)^{3/2}+\frac{\mathcal M^4}{64\pi^2}\Bigl(\ln\frac{T^2}{\mu^2}+2\ln4\pi-2\gamma_E\Bigr)
 \label{eq:Vht}
 \end{equation}
 となる~\cite{arnoldespinosa}（\ref{app:single}）。$\mathcal M^4\ln\mathcal M^2$ は、零温度の部分と熱の部分で打ち消し合う。展開の次の項は $\zeta(3)\mathcal M^6/(768\pi^4T^2)$ である。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% row 1: the one-loop vacuum loop split into Matsubara modes
+\begin{scope}[shift={(0,0)}]
+  \draw[prop] (0,0) circle (0.55); \node[font=\scriptsize] at (0,0) {$\mathcal M^2(\phi)$};
+  \node at (1.3,0) {$=$};
+  \draw[soft] (2.6,0) circle (0.55); \node[font=\scriptsize] at (2.6,0) {$n=0$};
+  \node at (3.9,0) {$+$};
+  \draw[hard] (5.2,0) circle (0.55); \node[font=\scriptsize] at (5.2,0) {$n\neq0$};
+  \node[lab,font=\footnotesize] at (0,-1.0) {式~\eqref{eq:V1loop}};
+  \node[lab,font=\footnotesize] at (2.6,-1.0) {$-\dfrac{T}{12\pi}\mathcal M^3$};
+  \node[lab,font=\footnotesize] at (5.2,-1.0) {$-\dfrac{\pi^2T^4}{90}+\dfrac{T^2}{24}\mathcal M^2+\cdots$};
+\end{scope}
+% row 2: the same loop expanded in the field-dependent part of the mass
+\begin{scope}[shift={(0,-2.6)}]
+  \draw[prop] (0,0) circle (0.55); \node[font=\scriptsize] at (0,0) {$\mathcal M^2(\phi)$};
+  \node at (1.3,0) {$=$};
+  \begin{scope}[shift={(2.6,0)}]
+    \draw[prop] (0,0.15) circle (0.4) (0,-0.25) -- (0,-0.65);
+    \node[vtx] at (0,-0.25) {}; \node[bgv] at (0,-0.65) {};
+  \end{scope}
+  \node at (3.6,0) {$+$};
+  \begin{scope}[shift={(4.6,0)}]
+    \draw[prop] (0,0.15) circle (0.4) (0,-0.25) -- (-0.35,-0.65) (0,-0.25) -- (0.35,-0.65);
+    \node[vtx] at (0,-0.25) {}; \node[bgv] at (-0.35,-0.65) {}; \node[bgv] at (0.35,-0.65) {};
+  \end{scope}
+  \node at (5.6,0) {$+$};
+  \begin{scope}[shift={(6.9,0)}]
+    \draw[prop] (0,0) circle (0.4) (-0.4,0) -- (-0.8,0) (0.4,0) -- (0.8,0);
+    \node[vtx] at (-0.4,0) {}; \node[vtx] at (0.4,0) {}; \node[bgv] at (-0.8,0) {}; \node[bgv] at (0.8,0) {};
+  \end{scope}
+  \node at (8.55,0) {$+\ \cdots$};
+  \node[lab,font=\footnotesize] at (5.2,-1.15) {$\times$ は場 $\phi$ の値。3点頂点で1本、4点頂点で2本付く};
+\end{scope}
+\end{tikzpicture}
+\caption{単一場の1ループの温度ポテンシャル（式~\eqref{eq:V1loop}、\ref{app:single}）。上：場による質量 $\mathcal M^2(\phi)$ の真空の輪（実線はすべての松原のモード）を、ゼロモード（破線、$n=0$）と硬いモード（二重線、$n\neq0$）に分ける。高温展開では、ゼロモードが $-T\mathcal M^3/(12\pi)$ を、硬いモードが $T^4$、$T^2\mathcal M^2$、$\mathcal M^4\ln T$ などの項を与える（式~\eqref{eq:Vht}）。下：同じ輪を $\phi=0$ のまわりで $\mathcal M^2(\phi)-m^2=g\phi+\lambda\phi^2/2$ について展開すると、場の値（$\times$）を付けた輪の和になる。$\phi$ で $n$ 回微分したものは、外線の運動量が0の1PI の $n$ 点関数である。}
+\label{fig:loop}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% row 1: the thermal mass of the zero mode
+\begin{scope}[shift={(0,0)}]
+  \draw[soft] (-1.0,0) -- (1.0,0);
+  \draw[hard] (0,0.42) circle (0.42);
+  \node[vtx] at (0,0) {};
+  \node[lab,font=\footnotesize] at (0,-0.6) {$\Pi=\dfrac{\lambda T^2}{24}$};
+\end{scope}
+\begin{scope}[shift={(4.6,0)}]
+  \draw[soft] (-1.1,0) -- (-0.45,0) (0.45,0) -- (1.1,0);
+  \draw[hard] (0,0) circle (0.45);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \node[lab,font=\footnotesize] at (0,-0.85) {$T^2$ に比例せず、$\Pi$ に入らない};
+\end{scope}
+% row 2: the daisy (ring) diagrams
+\begin{scope}[shift={(0,-2.8)}]
+  \foreach \x/\angs in {0/{90}, 2.9/{90,270}, 5.8/{90,210,330}} {
+    \begin{scope}[shift={(\x,0)}]
+      \draw[soft] (0,0) circle (0.5);
+      \foreach \a in \angs {\draw[hard] (\a:0.76) circle (0.26); \node[vtx] at (\a:0.5) {};}
+    \end{scope}}
+  \node at (1.45,0) {$+$}; \node at (4.35,0) {$+$};
+  \node at (7.25,0) {$+\ \cdots$};
+  \node[anchor=west] at (7.9,0) {$=-\dfrac{T}{12\pi}\Bigl[(\mathcal M^2+\Pi)^{3/2}-\mathcal M^3\Bigr]$};
+  \node[lab,font=\footnotesize] at (0,-1.35) {最初のリングの項};
+\end{scope}
+\end{tikzpicture}
+\caption{ゼロモードの daisy の和（式~\eqref{eq:Vht}、\ref{app:single}）。破線はゼロモード、二重線は硬いモードである。上：ゼロモードの熱質量 $\Pi$ は、4点頂点に付いた硬いモードのループ（$T^2$ の項 $\frac{T^2}{24}\mathcal M^2$ を場で2回微分したもの）である。3点頂点の硬いモードの泡は $T^2$ に比例しないので入らない。$\mathcal M^2$ は $\phi$ の2次式なので、$\Pi$ は場によらない。下：ゼロモードの輪に $\Pi$ を $N$ 回挿入した図（$N$ 枚の花びら）を足し上げると、ゼロモードの項 $-T\mathcal M^3/(12\pi)$ が $-T(\mathcal M^2+\Pi)^{3/2}/(12\pi)$ に置き換わる。$N=1$ の図は、ゼロモードの輪と硬いモードの輪の8の字で、\texttt{diagrams\_thermal.wl} (c) の2ループの真空の図の一つである。}
+\label{fig:daisy}
+\end{figure}
 
 \paragraph{変曲点のまわりの構造。}木のポテンシャルの変曲点 $\phi_i=-g/\lambda$（$V'''=g+\lambda\phi=0$）からのずれ $\chi=\phi-\phi_i$ で書く。$\mathcal M^2=\mathcal M_i^2+\lambda\chi^2/2$（$\mathcal M_i^2=m^2(1-3/(2\alpha))$）は $\chi$ の偶関数で、木のポテンシャルには $\chi^3$ の項がなく、$\Pi$ は場によらない。したがって、式~\eqref{eq:V1loop}、\eqref{eq:Vht} のどちらでも
 \begin{equation}
@@ -457,7 +541,59 @@ $1.476$ & $0.459$ & $47.1$ & $0.376$ & $238.6$ & $0.198$ \\
 
 \paragraph{手順 (6)：単一場の模型の重力波。}手順 (4)、(5) から、単一場の模型の熱的な歴史は、重力波を出す一次の相転移を含まない。高温の相は、どの温度でも大域的な最小のまま、真の真空へなめらかに移る（クロスオーバー）。摂動論では、一次の跳びは $|\alpha-\alpha_{\mathrm{deg}}|<3.3\times10^{-7}$ でしか起きない。その中心の $b=0$ でも、跳びは $\phi/T=0.022$（$T_c=4.03\,m$）で、強さは $\alpha_\theta=7.2\times10^{-8}$（$\alpha_e=2.9\times10^{-7}$）にすぎない。音波の振幅は $K^2\propto\alpha_\theta^2$ に比例するので、手順 (3) の一般形の最も強い点（$\alpha_\theta=0.071$、SNR $=0.014$）よりさらに桁違いに小さい。選ばれない側の極小（$\alpha<1$ の $\phi=0$）の熱的な崩壊は一次の転移だが、宇宙がその極小にいるのは熱的でない理由による場合だけで、崩壊は温度が上がって $T_{\mathrm{dec}}$ を越えるときに起こる。その重力波は再加熱の速さという新しい仮定に依存するので、本ノートでは扱わない。以上から、単一場の模型の熱的な歴史からは、LISA で見える重力波は生じない。$\alpha_\theta$ はスクリプト \texttt{thermal\_single.py} で、$U$ の温度微分から求めた。
 
-\paragraph{手順 (10)：非摂動の相図との照合。}手順 (4) の一次の跳びは、ゆらぎの強い $b=0$ の近くで摂動論から出たものである。これを、3次元の有効理論の格子計算による相図（Gould~\cite{gould21}）と照合した。まず、手順 (4) の構造は1ループに限らない。変曲点のまわりにずらした4次元の理論は、線形項 $b\chi$ を除けば $\chi\to-\chi$ の対称性を持つ。木のポテンシャルは $\chi$ の4次式で、3乗の項がないからである。線形項は外から加えた源として働くので、有効作用は厳密に $\Gamma_{\mathrm{sym}}[\chi]+b\int\chi$ の形になる。有限温度でも、すべての次数で、奇関数の部分は温度によらない $b\chi$ だけである（\ref{app:nonpert}）。次元還元した3次元の理論でも、3乗の項を消すようにずらしたあとの線形項 $\tilde\sigma_3$（Gould の式 (3.3)）は $b$ に比例し、温度で符号を変えない。Gould によれば、相転移が起こりうるのは $\tilde\sigma_3=0$ のときだけである。そのとき、ずらしたあとの2次の係数 $r$ が $r^*$ より小さければ一次、$r=r^*$ なら2次の転移になる。$r^*$ は $Z_2$ 対称な理論の格子計算で決まる臨界値である（Gould の式 (3.5)）。
+\paragraph{手順 (10)：非摂動の相図との照合。}手順 (4) の一次の跳びは、ゆらぎの強い $b=0$ の近くで摂動論から出たものである。これを、3次元の有効理論の格子計算による相図（Gould~\cite{gould21}）と照合した。まず、手順 (4) の構造は1ループに限らない。変曲点のまわりにずらした4次元の理論は、線形項 $b\chi$ を除けば $\chi\to-\chi$ の対称性を持つ。木のポテンシャルは $\chi$ の4次式で、3乗の項がないからである。線形項は外から加えた源として働くので、有効作用は厳密に $\Gamma_{\mathrm{sym}}[\chi]+b\int\chi$ の形になる。有限温度でも、すべての次数で、奇関数の部分は温度によらない $b\chi$ だけである（\ref{app:nonpert}）。次元還元した3次元の理論（図~\ref{fig:dr}）でも、3乗の項を消すようにずらしたあとの線形項 $\tilde\sigma_3$（Gould の式 (3.3)）は $b$ に比例し、温度で符号を変えない。Gould によれば、相転移が起こりうるのは $\tilde\sigma_3=0$ のときだけである。そのとき、ずらしたあとの2次の係数 $r$ が $r^*$ より小さければ一次、$r=r^*$ なら2次の転移になる。$r^*$ は $Z_2$ 対称な理論の格子計算で決まる臨界値である（Gould の式 (3.5)）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% row 1: one-loop matching with hard loops
+\begin{scope}[shift={(0,0)}]
+  \draw[soft] (-0.9,0) -- (0,0);
+  \draw[hard] (0.42,0) circle (0.42);
+  \node[vtx] at (0,0) {};
+  \node[lab,font=\footnotesize,anchor=north] at (0,-0.62) {$\sigma_3\sqrt T$：\\[3pt] $\dfrac{gT^2}{24}-\dfrac{gm^2L_b}{32\pi^2}$};
+\end{scope}
+\begin{scope}[shift={(3.1,0)}]
+  \draw[soft] (-0.9,0) -- (0.9,0);
+  \draw[hard] (0,0.42) circle (0.42);
+  \node[vtx] at (0,0) {};
+  \node[lab,font=\footnotesize,anchor=north] at (0,-0.62) {$m_3^2$：\\[3pt] $\dfrac{\lambda T^2}{24}-\dfrac{\lambda m^2L_b}{32\pi^2}$};
+\end{scope}
+\begin{scope}[shift={(6.2,0)}]
+  \draw[soft] (-0.95,0) -- (-0.45,0) (0.45,0) -- (0.95,0);
+  \draw[hard] (0,0) circle (0.45);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \node[lab,font=\footnotesize,anchor=north] at (0,-0.62) {$m_3^2$：\\[3pt] $-\dfrac{g^2L_b}{32\pi^2}$};
+\end{scope}
+\begin{scope}[shift={(9.3,0)}]
+  \draw[soft] (-0.45,0) -- (-0.95,0.5) (-0.45,0) -- (-0.95,-0.5) (0.45,0) -- (0.95,0);
+  \draw[hard] (0,0) circle (0.45);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \node[lab,font=\footnotesize,anchor=north] at (0,-0.62) {$g_3/\sqrt T$：\\[3pt] $-\dfrac{3g\lambda L_b}{32\pi^2}$};
+\end{scope}
+\begin{scope}[shift={(12.4,0)}]
+  \draw[soft] (-0.45,0) -- (-0.95,0.5) (-0.45,0) -- (-0.95,-0.5) (0.45,0) -- (0.95,0.5) (0.45,0) -- (0.95,-0.5);
+  \draw[hard] (0,0) circle (0.45);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \node[lab,font=\footnotesize,anchor=north] at (0,-0.62) {$\lambda_3/T$：\\[3pt] $-\dfrac{3\lambda^2L_b}{32\pi^2}$};
+\end{scope}
+% row 2: two-loop (NLO) sunsets
+\begin{scope}[shift={(3.1,-3.0)}]
+  \draw[soft] (-1.1,0) -- (-0.5,0);
+  \draw[prop] (-0.5,0) -- (0.5,0) (-0.5,0) .. controls (-0.3,0.55) and (0.3,0.55) .. (0.5,0) (-0.5,0) .. controls (-0.3,-0.55) and (0.3,-0.55) .. (0.5,0);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[lab,font=\footnotesize] at (0,-0.85) {$\sigma_3$：$g_3\lambda_3\ell$};
+\end{scope}
+\begin{scope}[shift={(7.7,-3.0)}]
+  \draw[soft] (-1.1,0) -- (-0.5,0) (0.5,0) -- (1.1,0);
+  \draw[prop] (-0.5,0) -- (0.5,0) (-0.5,0) .. controls (-0.3,0.55) and (0.3,0.55) .. (0.5,0) (-0.5,0) .. controls (-0.3,-0.55) and (0.3,-0.55) .. (0.5,0);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[lab,font=\footnotesize] at (0,-0.85) {$m_3^2$：$\lambda_3^2\ell$};
+\end{scope}
+\end{tikzpicture}
+\caption{3次元の有効理論への次元還元の図（手順 (8)、(10)、\ref{app:nonpert}）。破線はゼロモード（3次元の場）、二重線は硬いモード、実線はすべてのモードである。上：1ループの整合。硬いモードのループが、3次元の線形項 $\sigma_3$、質量 $m_3^2$、結合 $g_3$、$\lambda_3$ に、図の下の項を加える（$L_b=2\ln(\mu/T)+2\gamma_E-2\ln4\pi$、DRalgo の値）。$g_3$ と $\lambda_3$ の泡は、外線の付け方でそれぞれ3通りある。下：2ループ（NLO）の sunset。4次元の値から3次元の理論の値を引いた部分が、$\ell=[\ln(\mu_3/3T)-c]/[6(4\pi)^2]$ に比例する項を与える（Gould の式 (2.20)〜(2.26)）。}
+\label{fig:dr}
+\end{figure}
 
 したがって、$b\ne0$ では転移そのものがなく、高温の相から真の真空へなめらかに移る。手順 (4) で摂動論が示した $|\alpha-\alpha_{\mathrm{deg}}|<3.3\times10^{-7}$ の一次の窓は、摂動論の産物である。$b=0$ では、温度とともに $r$ が $r^*$ を横切る2次の転移（3次元の Ising 模型と同じ普遍性の類）になり、潜熱も場の跳びもない。
 
@@ -512,7 +648,7 @@ $T_1$（一般形） & SM 的な係数、BP2、BP4 & $-8\times10^{-7}$〜$-1.4\t
 
 \paragraph{手順 (8)：レビューの熱的な道具との照合。}ループ計算ツールのレビュー~\cite{toolsreview} は、有限温度の計算の道具を、3次元の有効理論を作る層（DRalgo、Matchotter）と、相転移と重力波を求める層（PhaseTracer2、PT2GWFinder、BSMPT、TransitionListener）に分けている。このうち、本ノートの式を直接確かめられる DRalgo~\cite{dralgo}（1.5.0、GroupMath~\cite{groupmath} 1.1.3 とともに）、Matchete~\cite{matchete} 0.6.0 の Matchotter~\cite{matchotter}、PT2GWFinder~\cite{pt2gw} 1.1.0 と、それが使う FindBounce~\cite{findbounce} 1.1.0 を入れて照合した。結果を表~\ref{tab:tools} にまとめる。
 
-(a) 単一場の温度ポテンシャル。DRalgo の例の実スカラー1つの模型~\cite{gould21} は、本ノートの単一場の模型そのものである。DRalgo は3次元の有効理論の係数を、$\lambda_3=T(\lambda-3\lambda^2L_b/32\pi^2)$、$\gamma_3=\sqrt T(g-3g\lambda L_b/32\pi^2)$、質量の2乗 $m^2+\lambda T^2/24-(g^2+\lambda m^2)L_b/32\pi^2$、線形項 $(t+gT^2/24-gm^2L_b/32\pi^2)/\sqrt T$ と与えた。ここで $L_b=2\ln(\mu/T)+2\gamma_E-2\ln4\pi$ は、式~\eqref{eq:Vht} の対数の符号を変えたものである。4次元の $\beta$ 関数も零温度のノートと一致した。これらの1ループの部分と、3次元の1ループの項 $-(T/12\pi)(m_3^2(\phi))^{3/2}$ から作った4次元のポテンシャルは、式~\eqref{eq:Vht} と、$\phi$ 微分の差が記号で0になるまで一致した。熱質量 $\Pi=\lambda T^2/24$、線形項 $gT^2/24$、対数の項の係数を、独立に確かめたことになる。Matchotter の \texttt{DRMatch} も同じ係数を与えた。ただし、Matchotter の対数 $\ln(\bar\Lambda^2/\Lambda_T^2)$（$\Lambda_T=4\pi T$）を $L_b$ と読む必要があり、これは $\bar\Lambda=\mu e^{\gamma_E}$ にあたる。この関係は、Matchotter の論文の付録 B の和積分の規格化（式 (B.4)、(B.5)）と一致する（\ref{app:ct}）。DRalgo の NLO が加える2ループの熱質量は、$\alpha=0.9$（$\kappa_4=1$、$\mu=m$）のスピノーダル温度で $\Pi$ の $0.86\%$ で、最低次の $T_{\mathrm{sp}}$ を $0.43\%$ 下げる。これは、本ノートの1ループの結果に対する高次の補正の目安である。
+(a) 単一場の温度ポテンシャル。DRalgo の例の実スカラー1つの模型~\cite{gould21} は、本ノートの単一場の模型そのものである。DRalgo は3次元の有効理論の係数（図~\ref{fig:dr}）を、$\lambda_3=T(\lambda-3\lambda^2L_b/32\pi^2)$、$\gamma_3=\sqrt T(g-3g\lambda L_b/32\pi^2)$、質量の2乗 $m^2+\lambda T^2/24-(g^2+\lambda m^2)L_b/32\pi^2$、線形項 $(t+gT^2/24-gm^2L_b/32\pi^2)/\sqrt T$ と与えた。ここで $L_b=2\ln(\mu/T)+2\gamma_E-2\ln4\pi$ は、式~\eqref{eq:Vht} の対数の符号を変えたものである。4次元の $\beta$ 関数も零温度のノートと一致した。これらの1ループの部分と、3次元の1ループの項 $-(T/12\pi)(m_3^2(\phi))^{3/2}$ から作った4次元のポテンシャルは、式~\eqref{eq:Vht} と、$\phi$ 微分の差が記号で0になるまで一致した。熱質量 $\Pi=\lambda T^2/24$、線形項 $gT^2/24$、対数の項の係数を、独立に確かめたことになる。Matchotter の \texttt{DRMatch} も同じ係数を与えた。ただし、Matchotter の対数 $\ln(\bar\Lambda^2/\Lambda_T^2)$（$\Lambda_T=4\pi T$）を $L_b$ と読む必要があり、これは $\bar\Lambda=\mu e^{\gamma_E}$ にあたる。この関係は、Matchotter の論文の付録 B の和積分の規格化（式 (B.4)、(B.5)）と一致する（\ref{app:ct}）。DRalgo の NLO が加える2ループの熱質量は、$\alpha=0.9$（$\kappa_4=1$、$\mu=m$）のスピノーダル温度で $\Pi$ の $0.86\%$ で、最低次の $T_{\mathrm{sp}}$ を $0.43\%$ 下げる。これは、本ノートの1ループの結果に対する高次の補正の目安である。
 
 (b) 一般形の相転移。PT2GWFinder の相の追跡（\texttt{TracePhases}）と \texttt{FindCritical} は、$T_c$ を BP1〜BP4 で相対 $2\times10^{-12}$ 以内、SM 的な係数で $8\times10^{-7}$ で再現した。強さ（トレースの定義）は、5点すべてで式~\eqref{eq:alphatheta} と相対 $10^{-11}$ 以内で一致した。FindBounce による $S_3/T$ は、場の点の数を51から801に増やすと、本ノートの値との差が $5\times10^{-4}$〜$6\times10^{-3}$ から $5\times10^{-6}$〜$8\times10^{-5}$ に減った。$\Gamma=H^4$ で求めた $T_n$ の差は $-9\times10^{-7}$〜$-2.4\times10^{-4}$ だった。PT2GWFinder はハッブル率に $|\Delta V|$ を含めるので、BP4 では $T_n$ が $1.8\times10^{-4}$ だけ下がる。残りは FindBounce の作用の誤差で説明できる。$\beta/H$ は、7温度の $S_3/T$ に2次式を当てはめて求め、SM 的な係数と BP1〜BP3 で相対 $5\times10^{-4}$ 以内、BP4 で $+1.6\%$ だった。BP4 の差は、当てはめの残差（$S_3/T$ で $0.32$）が示す、FindBounce の作用のばらつきの大きさにあたる。
 
@@ -720,7 +856,7 @@ H_{*,0}=H_*\frac{a_*}{a_0}=1.66\sqrt{g_*}\,\frac{T_*^2}{M_{\mathrm{Pl}}}\Bigl(\f
 \begin{equation*}
 F=\frac T2\sum_{n=-\infty}^\infty\mu^{2\epsilon}\int\frac{\dd^dk}{(2\pi)^d}\ln\bigl(\omega_n^2+k^2+\mathcal M^2\bigr),\qquad d=3-2\epsilon
 \end{equation*}
-である。$E=(k^2+\mathcal M^2)^{1/2}$ として、$\sum_n1/(\omega_n^2+E^2)=\coth(E/2T)/(2ET)$ から $\frac{\dd}{\dd E}\frac T2\sum_n\ln(\omega_n^2+E^2)=\frac12\coth\frac E{2T}=\frac12+\frac1{e^{E/T}-1}$ である。これを積分すると $\frac T2\sum_n\ln(\omega_n^2+E^2)=\frac E2+T\ln(1-e^{-E/T})$（$E$ によらない定数を除く）となる。$E/2$ の項は零温度の1ループ（Coleman–Weinberg）で、$\overline{\mathrm{MS}}$ では $\frac{\mathcal M^4}{64\pi^2}(\ln\frac{\mathcal M^2}{\mu^2}-\frac32)$ である。残りは $x=k/T$ として $T\int\frac{\dd^3k}{(2\pi)^3}\ln(1-e^{-E/T})=\frac{T^4}{2\pi^2}J_B(\mathcal M^2/T^2)$ で、式~\eqref{eq:V1loop} を得る。ポテンシャルは場 $\phi$ でのこの値で、$\mathcal M^2=V''(\phi)$ である。$\mathcal M^2<0$ では $J_B$ の実部をとる。
+である。$E=(k^2+\mathcal M^2)^{1/2}$ として、$\sum_n1/(\omega_n^2+E^2)=\coth(E/2T)/(2ET)$ から $\frac{\dd}{\dd E}\frac T2\sum_n\ln(\omega_n^2+E^2)=\frac12\coth\frac E{2T}=\frac12+\frac1{e^{E/T}-1}$ である。これを積分すると $\frac T2\sum_n\ln(\omega_n^2+E^2)=\frac E2+T\ln(1-e^{-E/T})$（$E$ によらない定数を除く）となる。$E/2$ の項は零温度の1ループ（Coleman–Weinberg）で、$\overline{\mathrm{MS}}$ では $\frac{\mathcal M^4}{64\pi^2}(\ln\frac{\mathcal M^2}{\mu^2}-\frac32)$ である。残りは $x=k/T$ として $T\int\frac{\dd^3k}{(2\pi)^3}\ln(1-e^{-E/T})=\frac{T^4}{2\pi^2}J_B(\mathcal M^2/T^2)$ で、式~\eqref{eq:V1loop} を得る。ポテンシャルは場 $\phi$ でのこの値で、$\mathcal M^2=V''(\phi)$ である（図~\ref{fig:loop}）。$\mathcal M^2<0$ では $J_B$ の実部をとる。
 
 \paragraph{高温展開。}次元正則化の公式 $\mu^{2\epsilon}\int\frac{\dd^dk}{(2\pi)^d}\ln(k^2+A)=-\frac{\Gamma(-d/2)}{(4\pi)^{d/2}}A^{d/2}\mu^{2\epsilon}$ を、$A=\omega_n^2+\mathcal M^2$ に使う。$d=3$ で $\Gamma(-3/2)/(4\pi)^{3/2}=1/(6\pi)$ である。$n=0$ の項（ゼロモード）は $-\frac T2\cdot\frac1{6\pi}\mathcal M^3=-\frac{T\mathcal M^3}{12\pi}$ で、極を持たない。$n\ne0$ の項は $A^{d/2}=\sum_k\binom{d/2}{k}\mathcal M^{2k}|\omega_n|^{d-2k}$ と展開し、$\sum_{n\ne0}|\omega_n|^{d-2k}=2(2\pi T)^{d-2k}\zeta(2k-d)$ を使う。$k=0$ は $\zeta(-3)=1/120$ から $-\pi^2T^4/90$、$k=1$ は $\binom{3/2}{1}=3/2$、$\zeta(-1)=-1/12$ から $T^2\mathcal M^2/24$ を与える。$k=2$ は $\zeta(4-d)=\zeta(1+2\epsilon)=\frac1{2\epsilon}+\gamma_E$ の極を持つ。$\Gamma(-\frac32+\epsilon)=\Gamma(-\frac32)[1+\epsilon\psi(-\frac32)]$（$\psi(-\frac32)=-\gamma_E-2\ln2+\frac83$）、$\binom{d/2}{2}=\frac38(1-\frac83\epsilon)$、$(4\pi)^{-d/2}=(4\pi)^{-3/2}(1+\epsilon\ln4\pi)$、$\mu^{2\epsilon}=1+2\epsilon\ln\mu$、$(2\pi T)^{d-4}=(2\pi T)^{-1}(1-2\epsilon\ln2\pi T)$ を入れると、
 \begin{equation*}
@@ -732,7 +868,7 @@ J_B(y)=-\frac{\pi^4}{45}+\frac{\pi^2}{12}y-\frac\pi6y^{3/2}-\frac{y^2}{32}\ln\fr
 \end{equation*}
 を得る（$\frac{T^4}{2\pi^2}\cdot\frac{\pi^2}{12}y=\frac{T^2\mathcal M^2}{24}$ などと対応させた）。$\ln a_b=5.4076$ である。全体では $\mathcal M^4\ln\mathcal M^2$ が打ち消し合い、式~\eqref{eq:Vht} の対数の項が残る。
 
-\paragraph{daisy の和。}ゼロモードは、硬い（$n\ne0$）モードから熱質量を受け取る。熱質量は $T^2$ の項 $\frac{T^2}{24}\mathcal M^2(\phi)$ を場で2回微分したもので、$\Pi=\frac{T^2}{24}\frac{\dd^2\mathcal M^2}{\dd\phi^2}=\frac{\lambda T^2}{24}$ である。$\mathcal M^2$ は $\phi$ の2次式なので、$\Pi$ は場によらない。$\Pi$ を挿入したリングの図を足し上げると $\frac T2\int\frac{\dd^3k}{(2\pi)^3}\sum_{N\ge1}\frac{(-1)^{N+1}}N\bigl(\frac{\Pi}{k^2+\mathcal M^2}\bigr)^N=\frac T2\int\frac{\dd^3k}{(2\pi)^3}\ln\frac{k^2+\mathcal M^2+\Pi}{k^2+\mathcal M^2}$ で、ゼロモードの項は $-\frac{T}{12\pi}(\mathcal M^2+\Pi)^{3/2}$ に置き換わる~\cite{arnoldespinosa}。3点の結合 $V'''=g+\lambda\phi$ による硬いモードのループは $T^2$ に比例しないので、熱質量には入らない。完全な1ループの数値では、式~\eqref{eq:V1loop} に $-\frac T{12\pi}[(\mathcal M^2+\Pi)^{3/2}-(\mathcal M^2)^{3/2}]$（実部）を加えた。
+\paragraph{daisy の和。}ゼロモードは、硬い（$n\ne0$）モードから熱質量を受け取る。熱質量は $T^2$ の項 $\frac{T^2}{24}\mathcal M^2(\phi)$ を場で2回微分したもので、$\Pi=\frac{T^2}{24}\frac{\dd^2\mathcal M^2}{\dd\phi^2}=\frac{\lambda T^2}{24}$ である。$\mathcal M^2$ は $\phi$ の2次式なので、$\Pi$ は場によらない。$\Pi$ を挿入したリングの図（図~\ref{fig:daisy}）を足し上げると $\frac T2\int\frac{\dd^3k}{(2\pi)^3}\sum_{N\ge1}\frac{(-1)^{N+1}}N\bigl(\frac{\Pi}{k^2+\mathcal M^2}\bigr)^N=\frac T2\int\frac{\dd^3k}{(2\pi)^3}\ln\frac{k^2+\mathcal M^2+\Pi}{k^2+\mathcal M^2}$ で、ゼロモードの項は $-\frac{T}{12\pi}(\mathcal M^2+\Pi)^{3/2}$ に置き換わる~\cite{arnoldespinosa}。3点の結合 $V'''=g+\lambda\phi$ による硬いモードのループは $T^2$ に比例しないので、熱質量には入らない。完全な1ループの数値では、式~\eqref{eq:V1loop} に $-\frac T{12\pi}[(\mathcal M^2+\Pi)^{3/2}-(\mathcal M^2)^{3/2}]$（実部）を加えた。
 
 \paragraph{変曲点のまわりの構造。}$\phi=\phi_i+\chi$、$\phi_i=-g/\lambda$ とすると、$\mathcal M^2=m^2+g\phi_i+\frac\lambda2\phi_i^2+(g+\lambda\phi_i)\chi+\frac\lambda2\chi^2=m^2-\frac{g^2}{2\lambda}+\frac\lambda2\chi^2$ で、$\lambda=\alpha g^2/(3m^2)$ から $\mathcal M_i^2=m^2(1-\frac3{2\alpha})$ である。木のポテンシャルは4次式なので $V(\phi_i+\chi)=V(\phi_i)+V'(\phi_i)\chi+\frac12V''(\phi_i)\chi^2+\frac16V'''(\phi_i)\chi^3+\frac\lambda{24}\chi^4$ で、$V'''(\phi_i)=0$ である。$V'(\phi_i)=m^2\phi_i+\frac g2\phi_i^2+\frac\lambda6\phi_i^3=-\frac{m^2g}\lambda+\frac{g^3}{3\lambda^2}=\frac{3m^4}{g}\Bigl(\frac1{\alpha^2}-\frac1\alpha\Bigr)$ に線形項 $t$ を加えて、式~\eqref{eq:Ising} の $b$ を得る。$t\phi=t\chi+$定数である。1ループの項はすべて $\mathcal M^2$ と場によらない $\Pi$ の関数なので、$\chi$ の偶関数である。$\overline{\mathrm{MS}}$ の結合は $\mu$ とともに走るが、零温度のノートの1ループの結果では $g/\lambda$ は走らないので、変曲点 $\phi_i$ は $\mu$ によらない。
 
@@ -762,7 +898,7 @@ $V(\chi)=b\chi+U(\chi^2)$ なら、どの $\chi$ でも $V(-s|\chi|)-V(s|\chi|)=
 \end{equation*}
 で、$\Gamma_{\mathrm{sym}}$ は偶関数である。一定の $\bar\chi$ では、$V_{\mathrm{eff}}(\bar\chi,T)=U(\bar\chi^2,T)+b\bar\chi$ が、摂動の次数によらず成り立つ。温度は $U$ にだけ入る。$b$ は場とともに繰り込まれるが、繰り込みは温度によらないので、$b$ が温度で符号を変えることはない。
 
-\paragraph{3次元の有効理論でのずらし。}Gould の NLO の次元還元（式 (2.20)〜(2.26)、$g\sim\lambda T$ の数え方）は、$\ell=[\ln(\mu_3/3T)-c]/[6(4\pi)^2]$、$c=-0.348723$ として
+\paragraph{3次元の有効理論でのずらし。}Gould の NLO の次元還元（式 (2.20)〜(2.26)、$g\sim\lambda T$ の数え方、図~\ref{fig:dr}）は、$\ell=[\ln(\mu_3/3T)-c]/[6(4\pi)^2]$、$c=-0.348723$ として
 \begin{equation*}
 \sigma_3=\frac{\bar\sigma+\bar gT^2/24}{\sqrt T}+g_3\lambda_3\ell,\qquad
 m_3^2=\bar m^2+\frac{\bar\lambda T^2}{24}+\lambda_3^2\ell,\qquad g_3=\sqrt T\,\bar g,\qquad \lambda_3=T\bar\lambda

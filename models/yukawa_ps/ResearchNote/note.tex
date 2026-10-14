@@ -32,11 +32,13 @@
   mom/.style={-{Stealth[length=1.6mm]},thin},
   lab/.style={font=\small,align=center},
   bgx/.style={font=\small,inner sep=0pt},
+  blob/.style={circle,draw=black,thick,fill=black!12,minimum size=7mm,inner sep=0pt,font=\scriptsize},
+  cut/.style={red!75!black,thick},
 }
 
 \title{擬スカラー湯川理論：1ループの構造と検算（$d=4$）}
 \author{}
-\date{2026年10月12日}
+\date{2026年10月14日}
 
 \begin{document}
 \maketitle
@@ -351,7 +353,52 @@ m_\phi^2(\phi)=m^2+\frac{\lambda}{2}\phi^2,\qquad M_\psi^2(\phi)=M^2+y^2\phi^2
 \end{gathered}
 \label{eq:cw}
 \end{equation}
-である（Coleman と Weinberg~\cite{cw}、導出は\ref{app:rg}）。$\Lambda$ は真空のエネルギーである。フェルミオンの項の係数 $-4$ は、Dirac フェルミオンの自由度4と、Grassmann 数の積分の符号から来る。擬スカラーの湯川結合では、場に依存する質量は $M_\psi^2=M^2+y^2\phi^2$ で、$\phi$ の1次の項を持たない（スカラーの湯川結合では $(M+y\phi)^2$）。$V_{\mathrm{eff}}$ の $\mu$ 依存が、係数の走りと場の異常次元で打ち消される条件から、式~\eqref{eq:rge} の $\beta_\lambda$ と $\gamma_m$ が再び得られ、真空のエネルギーの走り $\dd\Lambda/\dd\ln\mu=(m^4-4M^4)/(2(4\pi)^2)$ も決まる。木のポテンシャルの極小は $\phi=0$ だけだが、大きな $\phi$ ではフェルミオンの項 $-4y^4\phi^4\ln(y^2\phi^2/\mu^2)/(64\pi^2)$ が効き、$\mu\sim\phi$ での $\lambda$ が負なら $V_{\mathrm{eff}}$ は下に有界でなくなる。
+である（Coleman と Weinberg~\cite{cw}、図~\ref{fig:cw}、導出は\ref{app:rg}）。$\Lambda$ は真空のエネルギーである。フェルミオンの項の係数 $-4$ は、Dirac フェルミオンの自由度4と、Grassmann 数の積分の符号から来る。擬スカラーの湯川結合では、場に依存する質量は $M_\psi^2=M^2+y^2\phi^2$ で、$\phi$ の1次の項を持たない（スカラーの湯川結合では $(M+y\phi)^2$）。$V_{\mathrm{eff}}$ の $\mu$ 依存が、係数の走りと場の異常次元で打ち消される条件から、式~\eqref{eq:rge} の $\beta_\lambda$ と $\gamma_m$ が再び得られ、真空のエネルギーの走り $\dd\Lambda/\dd\ln\mu=(m^4-4M^4)/(2(4\pi)^2)$ も決まる。木のポテンシャルの極小は $\phi=0$ だけだが、大きな $\phi$ ではフェルミオンの項 $-4y^4\phi^4\ln(y^2\phi^2/\mu^2)/(64\pi^2)$ が効き、$\mu\sim\phi$ での $\lambda$ が負なら $V_{\mathrm{eff}}$ は下に有界でなくなる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% the two loops with field-dependent masses
+\begin{scope}[shift={(0,0)}]
+  \node at (-0.3,0) {$V_{\mathrm{eff}}^{(1)}=$};
+  \draw[scalar] (1.8,0) circle (0.55); \node[font=\scriptsize] at (1.8,0) {$m_\phi^2(\phi)$};
+  \node at (3.7,0) {$+$};
+  \draw[fermion] (6.15,0) arc (0:180:0.55); \draw[fermion] (5.05,0) arc (180:360:0.55);
+  \node[font=\scriptsize] at (5.6,0) {$M_\psi(\phi)$};
+  \node[lab,font=\footnotesize,anchor=north] at (1.8,-0.7) {$\dfrac{m_\phi^4}{64\pi^2}\Bigl(\ln\dfrac{m_\phi^2}{\mu^2}-\dfrac32\Bigr)$};
+  \node[lab,font=\footnotesize,anchor=north] at (5.6,-0.7) {$-\dfrac{4M_\psi^4}{64\pi^2}\Bigl(\ln\dfrac{M_\psi^2}{\mu^2}-\dfrac32\Bigr)$};
+\end{scope}
+% expansion around phi = 0
+\begin{scope}[shift={(0,-3.2)}]
+  \draw[scalar] (0,0.15) circle (0.4) (0,-0.25) -- (-0.35,-0.65) (0,-0.25) -- (0.35,-0.65);
+  \node[vtx] at (0,-0.25) {}; \node[bgx] at (-0.38,-0.7) {$\times$}; \node[bgx] at (0.38,-0.7) {$\times$};
+  \node at (0.95,0) {$+$};
+  \begin{scope}[shift={(2.2,0)}]
+    \draw[scalar] (0,0) circle (0.4) (-0.4,0) -- (-0.75,0.35) (-0.4,0) -- (-0.75,-0.35) (0.4,0) -- (0.75,0.35) (0.4,0) -- (0.75,-0.35);
+    \node[vtx] at (-0.4,0) {}; \node[vtx] at (0.4,0) {};
+    \node[bgx] at (-0.8,0.4) {$\times$}; \node[bgx] at (-0.8,-0.4) {$\times$}; \node[bgx] at (0.8,0.4) {$\times$}; \node[bgx] at (0.8,-0.4) {$\times$};
+  \end{scope}
+  \node at (3.45,0) {$+\ \cdots$};
+  \node[lab,font=\footnotesize] at (1.4,-1.15) {$\phi$ のループ：$\frac\lambda2\phi^2$ の挿入};
+  \begin{scope}[shift={(6.0,0)}]
+    \draw[fermion] (0.4,0) arc (0:180:0.4); \draw[fermion] (-0.4,0) arc (180:360:0.4);
+    \draw[scalar] (-0.4,0) -- (-0.8,0) (0.4,0) -- (0.8,0);
+    \node[vtx] at (-0.4,0) {}; \node[vtx] at (0.4,0) {};
+    \node[bgx] at (-0.87,0) {$\times$}; \node[bgx] at (0.87,0) {$\times$};
+  \end{scope}
+  \node at (7.25,0) {$+$};
+  \begin{scope}[shift={(8.5,0)}]
+    \draw[fermion] (45:0.4) arc (45:135:0.4); \draw[fermion] (135:0.4) arc (135:225:0.4);
+    \draw[fermion] (225:0.4) arc (225:315:0.4); \draw[fermion] (315:0.4) arc (315:405:0.4);
+    \foreach \a in {45,135,225,315} {\draw[scalar] (\a:0.4) -- (\a:0.8); \node[vtx] at (\a:0.4) {}; \node[bgx] at (\a:0.87) {$\times$};}
+  \end{scope}
+  \node at (9.75,0) {$+\ \cdots$};
+  \node[lab,font=\footnotesize] at (7.9,-1.15) {$\psi$ のループ：$y\phi$ の挿入（偶数個）};
+\end{scope}
+\end{tikzpicture}
+\caption{$\MSbar$ の1ループの有効ポテンシャル（式~\eqref{eq:cw}、\ref{app:rg}）。上：場に依存する質量 $m_\phi^2(\phi)=m^2+\frac\lambda2\phi^2$ の $\phi$ のループと、$M_\psi^2(\phi)=M^2+y^2\phi^2$ の $\psi$ のループ。$\psi$ のループの係数 $-4$ は、閉じたフェルミオンのループの $-1$ と Dirac フェルミオンの自由度4から来る。下：同じループを $\phi=0$ のまわりで展開したもの。場の値（$\times$）は、$\phi$ のループには4点頂点で2本ずつ、$\psi$ のループには湯川の頂点で1本ずつ付く。$\psi$ のループの挿入が奇数個の図は、パリティで消える（\ref{app:gamma5}）ので、$M_\psi^2$ は $\phi$ の偶関数である。}
+\label{fig:cw}
+\end{figure}
 
 \paragraph{木の散乱振幅。}三つの過程を考える（図~\ref{fig:tree}、\ref{app:tree}）。$\phi(p_1)\phi(p_2)\to\phi(k_1)\phi(k_2)$ は、3点結合がないので接触項だけである。$\psi(p_1)\bar\psi(p_2)\to\phi(k_1)\phi(k_2)$ は $t$ と $u$ チャンネルのフェルミオンの交換で、$s$ チャンネルの図はない。$\psi(p_1)\bar\psi(p_2)\to\psi(p_3)\bar\psi(p_4)$ は $s$ と $t$ チャンネルの $\phi$ の交換で、二つの図の相対符号は $-1$ である。振幅とスピン和は
 \begin{equation}
@@ -438,9 +485,9 @@ m_\phi^2(\phi)=m^2+\frac{\lambda}{2}\phi^2,\qquad M_\psi^2(\phi)=M^2+y^2\phi^2
 +\frac12\,\frac{p_\psi}{16\pi^2\sqrt s}\int\!\dd\Omega_q\sum_{\mathrm{spins}}\mathcal M(\phi_1\phi_2\to\psi\bar\psi)\,\mathcal M^*(\phi_3\phi_4\to\psi\bar\psi)
 \label{eq:unit}
 \end{equation}
-を満たす（\ref{app:scat}）。第1項は $\phi\phi$ の中間状態（同種粒子の $\frac12$ を含む）、第2項は $\psi\bar\psi$ の中間状態で、$p_\psi=\sqrt{s/4-M^2}$、$\phi_3\phi_4$ は終状態の $\phi(k_1)\phi(k_2)$ である。$m<2M$ でも $s\ge4m^2>4M^2$ なので、物理的な領域では $\psi\bar\psi$ の中間状態がいつも開いている。前方 $t=0$ では、これは光学定理 $\mathrm{Im}\,\mathcal M_A^{(1)}(s,0)=2p\sqrt s\,[\sigma_A+\sigma(\phi\phi\to\psi\bar\psi)]$ になる。$\sum|\mathcal M(\phi\phi\to\psi\bar\psi)|^2$ は式~\eqref{eq:Mtree} の $\sum|\mathcal M_B^{(0)}|^2$ と同じ関数である。
+を満たす（図~\ref{fig:cutA}、\ref{app:scat}）。第1項は $\phi\phi$ の中間状態（同種粒子の $\frac12$ を含む）、第2項は $\psi\bar\psi$ の中間状態で、$p_\psi=\sqrt{s/4-M^2}$、$\phi_3\phi_4$ は終状態の $\phi(k_1)\phi(k_2)$ である。$m<2M$ でも $s\ge4m^2>4M^2$ なので、物理的な領域では $\psi\bar\psi$ の中間状態がいつも開いている。前方 $t=0$ では、これは光学定理 $\mathrm{Im}\,\mathcal M_A^{(1)}(s,0)=2p\sqrt s\,[\sigma_A+\sigma(\phi\phi\to\psi\bar\psi)]$ になる。$\sum|\mathcal M(\phi\phi\to\psi\bar\psi)|^2$ は式~\eqref{eq:Mtree} の $\sum|\mathcal M_B^{(0)}|^2$ と同じ関数である。
 
-$\MSbar$ の質量 $m$ は伝播関数の極ではなく、外線の留数も1ではない。$\phi$ の極質量と留数は
+$\MSbar$ の質量 $m$ は伝播関数の極ではなく、外線の留数も1ではない（図~\ref{fig:dyson}）。$\phi$ の極質量と留数は
 \begin{equation}
 m_{\mathrm p}^2=m^2-\frac{1}{(4\pi)^2}\Bigl[2y^2\bigl(m^2B_0^{MM}(m^2)-2A_0(M^2)\bigr)+\frac\lambda2A_0(m^2)\Bigr],\qquad
 R_\phi=1-\frac{2y^2}{(4\pi)^2}\Bigl[B_0^{MM}(m^2)+m^2B_0^{MM\prime}(m^2)\Bigr]
@@ -451,7 +498,7 @@ R_\phi=1-\frac{2y^2}{(4\pi)^2}\Bigl[B_0^{MM}(m^2)+m^2B_0^{MM\prime}(m^2)\Bigr]
 \mathcal M_{A,\mathrm{phys}}=-\lambda+\frac{4\lambda y^2}{(4\pi)^2}\Bigl[B_0^{MM}(m_{\mathrm p}^2)+m_{\mathrm p}^2B_0^{MM\prime}(m_{\mathrm p}^2)\Bigr]+\mathcal M_A^{(1)}\big|_{m\to m_{\mathrm p}}
 \label{eq:Mphys}
 \end{equation}
-となる。結合を固定して $\mu$ を変えると $\mu\,\partial\mathcal M_{A,\mathrm{phys}}/\partial\mu=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2=\beta_\lambda$ で、これは木の振幅の $-\lambda(\mu)$ の走りとちょうど打ち消し合う（\ref{app:scat}）。$3\lambda^2$ は $\phi$ の泡、$-48y^4$ はフェルミオンの箱、$8\lambda y^2$ は外線の留数から来るので、$\phi\phi\to\phi\phi$ の S 行列要素の $\mu$ 依存だけで $\beta_\lambda$ の三つの項がすべて読み取れる。
+となる。結合を固定して $\mu$ を変えると $\mu\,\partial\mathcal M_{A,\mathrm{phys}}/\partial\mu=(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2=\beta_\lambda$ で、これは木の振幅の $-\lambda(\mu)$ の走りとちょうど打ち消し合う（\ref{app:scat}）。$3\lambda^2$ は $\phi$ の泡、$-48y^4$ はフェルミオンの箱、$8\lambda y^2$ は外線の留数から来るので、$\phi\phi\to\phi\phi$ の S 行列要素の $\mu$ 依存だけで $\beta_\lambda$ の三つの項がすべて読み取れる（図~\ref{fig:betalam}）。
 
 フェルミオンの極質量と留数は、$\Sigma_\psi=\slashed p\,\Sigma_V(p^2)+M\Sigma_S(p^2)$（$\Sigma_V=y^2B_1^{Mm}/(4\pi)^2$、$\Sigma_S=y^2B_0^{Mm}/(4\pi)^2$）から
 \begin{equation}
@@ -460,6 +507,151 @@ R_\psi=1+\frac{y^2}{(4\pi)^2}\Bigl[B_1^{Mm}+2M^2\bigl(B_0^{Mm\prime}+B_1^{Mm\pri
 \label{eq:Mpole}
 \end{equation}
 である（\ref{app:scat}）。$B$ はすべて $p^2=M^2$ での値である。$M_{\mathrm p}$ は $\mu$ によらず（$\mu\,\partial(B_0+B_1)/\partial\mu=1$ と $\gamma_M$ が打ち消す）、外線のフェルミオン1本ごとに S 行列要素に $R_\psi^{1/2}$ が掛かる。これらは $\psi\bar\psi\to\phi\phi$ の1ループの S 行列要素（手順 (5)）で使う。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% the lambda^2 bubble with an s-channel cut
+\begin{scope}[shift={(0,0)}]
+  \coordinate (L) at (-0.5,0); \coordinate (R) at (0.5,0);
+  \draw[scalar] (0,0) circle (0.5) (L) -- (-1.1,0.6) (L) -- (-1.1,-0.6) (R) -- (1.1,0.6) (R) -- (1.1,-0.6);
+  \foreach \v in {L,R} \node[vtx] at (\v) {};
+  \draw[cut] (0,0.85) -- (0,-0.85);
+  \node[font=\scriptsize] at (-1.3,0.7) {1}; \node[font=\scriptsize] at (-1.3,-0.7) {2};
+  \node[font=\scriptsize] at (1.3,0.7) {3}; \node[font=\scriptsize] at (1.3,-0.7) {4};
+  \node[lab,font=\footnotesize] at (0,-1.3) {$\phi\phi$ の中間状態（$\lambda^2$）};
+\end{scope}
+% the fermion box with an s-channel cut
+\begin{scope}[shift={(4.6,0)}]
+  \coordinate (A) at (-0.5,0.5); \coordinate (B) at (0.5,0.5); \coordinate (C) at (0.5,-0.5); \coordinate (E) at (-0.5,-0.5);
+  \draw[fermion] (A) -- (B); \draw[fermion] (B) -- (C); \draw[fermion] (C) -- (E); \draw[fermion] (E) -- (A);
+  \draw[scalar] (A) -- (-1.0,0.95) (E) -- (-1.0,-0.95) (B) -- (1.0,0.95) (C) -- (1.0,-0.95);
+  \foreach \v in {A,B,C,E} \node[vtx] at (\v) {};
+  \draw[cut] (0,0.9) -- (0,-0.9);
+  \node[font=\scriptsize] at (-1.2,1.05) {1}; \node[font=\scriptsize] at (-1.2,-1.05) {2};
+  \node[font=\scriptsize] at (1.2,1.05) {3}; \node[font=\scriptsize] at (1.2,-1.05) {4};
+  \node[lab,font=\footnotesize] at (0,-1.5) {$\psi\bar\psi$ の中間状態（$y^4$）};
+\end{scope}
+% the unitarity relation
+\begin{scope}[shift={(0.4,-3.1)}]
+  \node at (-0.95,0) {$\mathrm{Im}$};
+  \draw[scalar] (0,0) -- (-0.55,0.55) (0,0) -- (-0.55,-0.55) (0,0) -- (0.55,0.55) (0,0) -- (0.55,-0.55);
+  \node[blob,minimum size=8.5mm] at (0,0) {$\mathcal M_A^{(1)}$};
+  \node at (1.55,0) {$=\dfrac12\displaystyle\int\!\dd\Phi_2$};
+  \coordinate (P) at (3.3,0); \coordinate (Q) at (5.3,0);
+  \draw[scalar] (P) -- ++(-0.55,0.55) (P) -- ++(-0.55,-0.55) (Q) -- ++(0.55,0.55) (Q) -- ++(0.55,-0.55);
+  \draw[scalar] (P) .. controls (3.9,0.65) and (4.7,0.65) .. (Q);
+  \draw[scalar] (P) .. controls (3.9,-0.65) and (4.7,-0.65) .. (Q);
+  \node[blob,minimum size=8.5mm] at (P) {$\mathcal M_A^{(0)}$};
+  \node[blob,minimum size=8.5mm] at (Q) {$\mathcal M_A^{(0)}$};
+  \draw[cut] (4.3,0.85) -- (4.3,-0.85);
+  \node at (6.35,0) {$+$};
+  \node at (7.45,0) {$\displaystyle\int\!\dd\Phi_2\sum_{\mathrm{spins}}$};
+  \coordinate (P) at (9.1,0); \coordinate (Q) at (11.1,0);
+  \draw[scalar] (P) -- ++(-0.55,0.55) (P) -- ++(-0.55,-0.55) (Q) -- ++(0.55,0.55) (Q) -- ++(0.55,-0.55);
+  \draw[fermion] (P) .. controls (9.7,0.65) and (10.5,0.65) .. (Q);
+  \draw[fermion] (Q) .. controls (10.5,-0.65) and (9.7,-0.65) .. (P);
+  \node[blob,minimum size=8.5mm] at (P) {$\mathcal M_{\bar B}^{(0)}$};
+  \node[blob,minimum size=8.5mm] at (Q) {$\mathcal M_{\bar B}^{(0)*}$};
+  \draw[cut] (10.1,0.85) -- (10.1,-0.85);
+  \node[font=\scriptsize] at (9.75,0.68) {$\psi$}; \node[font=\scriptsize] at (9.75,-0.7) {$\bar\psi$};
+\end{scope}
+\end{tikzpicture}
+\caption{$\phi\phi\to\phi\phi$ の1ループの振幅の虚部（式~\eqref{eq:unit}、\ref{app:scat}）。赤の線は $s$ チャンネルの切断である。上：切断を持つ図。$\lambda^2$ の泡は $\phi\phi$ の中間状態を、フェルミオンの箱（外線 1、2 が隣り合う順の図）は $\psi\bar\psi$ の中間状態を通る。下：ユニタリー性の関係。第1項の $\frac12$ は同種粒子の因子で、両側は接触項 $\mathcal M_A^{(0)}=-\lambda$ である。第2項の両側は $\phi\phi\to\psi\bar\psi$（$\bar B$）の木の振幅で、フェルミオンの交換の $t$、$u$ チャンネルの図である。$s\ge4m^2>4M^2$ なので、物理的な領域ではどちらの中間状態も開いている。}
+\label{fig:cutA}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% phi: the full propagator
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (0,0) -- (1.4,0);
+  \node[circle,draw=black,thick,fill=black!45,minimum size=3.6mm,inner sep=0pt] at (0.7,0) {};
+  \node at (1.8,0) {$=$};
+  \draw[scalar] (2.2,0) -- (3.2,0);
+  \node at (3.6,0) {$+$};
+  \draw[scalar] (4.0,0) -- (5.8,0);
+  \node[blob] at (4.9,0) {1PI};
+  \node at (6.4,0) {$+\ \cdots$};
+  \node[anchor=west] at (7.0,0) {$=\dfrac{i}{p^2-m^2-\Sigma_\phi(p^2)}$};
+\end{scope}
+\begin{scope}[shift={(0,-1.6)}]
+  \draw[scalar] (0,0) -- (1.4,0);
+  \node[blob] at (0.7,0) {1PI};
+  \node at (1.8,0) {$=$};
+  \draw[scalar] (2.2,0) -- (2.6,0) (3.6,0) -- (4.0,0);
+  \draw[fermion] (3.6,0) arc (0:180:0.5); \draw[fermion] (2.6,0) arc (180:360:0.5);
+  \node[vtx] at (2.6,0) {}; \node[vtx] at (3.6,0) {};
+  \node[lab,font=\footnotesize] at (3.1,-0.85) {$y^2$（$-1$、トレース）};
+  \node at (4.45,0) {$+$};
+  \draw[scalar] (4.9,0) -- (6.1,0) (5.5,0.4) circle (0.4);
+  \node[vtx] at (5.5,0) {};
+  \node[lab,font=\footnotesize] at (5.5,-0.85) {$\lambda$（$\frac12$）};
+  \node at (6.55,0) {$+$};
+  \draw[scalar] (7.0,0) -- (8.2,0);
+  \node[ctv] at (7.6,0) {};
+  \node[lab,font=\footnotesize] at (7.6,-0.85) {$i(\delta_\phi p^2-\delta_m)$};
+  \node[anchor=west] at (8.7,0) {$=V_\phi=-i\,\Sigma_\phi$};
+\end{scope}
+% psi: the full propagator
+\begin{scope}[shift={(0,-3.6)}]
+  \draw[fermion] (0,0) -- (0.7,0); \draw[fermion] (0.7,0) -- (1.4,0);
+  \node[circle,draw=black,thick,fill=black!45,minimum size=3.6mm,inner sep=0pt] at (0.7,0) {};
+  \node at (1.8,0) {$=$};
+  \draw[fermion] (2.2,0) -- (3.2,0);
+  \node at (3.6,0) {$+$};
+  \draw[fermion] (4.0,0) -- (4.9,0); \draw[fermion] (4.9,0) -- (5.8,0);
+  \node[blob] at (4.9,0) {1PI};
+  \node at (6.4,0) {$+\ \cdots$};
+  \node[anchor=west] at (7.0,0) {$=\dfrac{i}{\slashed p-M-\Sigma_\psi(p)}$};
+\end{scope}
+\begin{scope}[shift={(0,-5.2)}]
+  \draw[fermion] (0,0) -- (0.7,0); \draw[fermion] (0.7,0) -- (1.4,0);
+  \node[blob] at (0.7,0) {1PI};
+  \node at (1.8,0) {$=$};
+  \draw[fermion] (2.2,0) -- (2.6,0); \draw[fermion] (2.6,0) -- (3.6,0); \draw[fermion] (3.6,0) -- (4.0,0);
+  \draw[scalar] (3.6,0) arc (0:180:0.5);
+  \node[vtx] at (2.6,0) {}; \node[vtx] at (3.6,0) {};
+  \node[lab,font=\footnotesize] at (3.1,-0.5) {$y^2$};
+  \node at (4.45,0) {$+$};
+  \draw[fermion] (4.9,0) -- (5.5,0); \draw[fermion] (5.5,0) -- (6.1,0);
+  \node[ctv] at (5.5,0) {};
+  \node[lab,font=\footnotesize] at (5.5,-0.5) {$i(\delta_\psi\slashed p-\delta_M)$};
+  \node[anchor=west] at (6.6,0) {$=V_\psi=-i\,\Sigma_\psi$};
+\end{scope}
+\end{tikzpicture}
+\caption{$\phi$ と $\psi$ の完全な伝播関数（灰色の点）は、1PI の2点関数を繰り返し挿入した和である（\ref{app:scat}）。その極が極質量 $m_{\mathrm p}$、$M_{\mathrm p}$、そこでの留数が $R_\phi$、$R_\psi$ である（式~\eqref{eq:mpole}、\eqref{eq:Mpole}）。1ループの $V_\phi$ は、フェルミオンのループ、$\lambda$ のループ、対抗項の和で、$V_\psi$ は $\phi$ を出して吸う図と対抗項の和である。$\lambda$ のループは運動量によらず質量だけをずらすが、フェルミオンのループは $p^2$ に依存するので、$\phi^3+\phi^4$ 理論と違って $R_\phi$ は $y^2$ の次数で1からずれる。}
+\label{fig:dyson}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% the terms of the mu dependence of the S-matrix element
+\begin{scope}[shift={(0,0)}]
+  \coordinate (L) at (-0.5,0); \coordinate (R) at (0.5,0);
+  \draw[scalar] (0,0) circle (0.5) (L) -- (-1.1,0.6) (L) -- (-1.1,-0.6) (R) -- (1.1,0.6) (R) -- (1.1,-0.6);
+  \foreach \v in {L,R} \node[vtx] at (\v) {};
+  \node[lab,font=\footnotesize] at (0,-1.15) {$\phi$ の泡（3通り）\\ $3\lambda^2$};
+\end{scope}
+\begin{scope}[shift={(4.2,0)}]
+  \coordinate (A) at (-0.5,0.5); \coordinate (B) at (0.5,0.5); \coordinate (C) at (0.5,-0.5); \coordinate (E) at (-0.5,-0.5);
+  \draw[fermion] (A) -- (B); \draw[fermion] (B) -- (C); \draw[fermion] (C) -- (E); \draw[fermion] (E) -- (A);
+  \draw[scalar] (A) -- (-1.0,0.95) (E) -- (-1.0,-0.95) (B) -- (1.0,0.95) (C) -- (1.0,-0.95);
+  \foreach \v in {A,B,C,E} \node[vtx] at (\v) {};
+  \node[lab,font=\footnotesize] at (0,-1.3) {フェルミオンの箱（6通り）\\ $-48y^4$};
+\end{scope}
+\begin{scope}[shift={(8.6,0)}]
+  \draw[scalar] (0,0) -- (-0.7,0.6) (0,0) -- (-0.7,-0.6) (0,0) -- (0.7,-0.6) (0,0) -- (0.45,0.39) (1.05,0.9) -- (1.4,1.2);
+  \draw[fermion] (1.05,0.9) arc (40.6:220.6:0.395); \draw[fermion] (0.45,0.39) arc (220.6:400.6:0.395);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.45,0.39) {}; \node[vtx] at (1.05,0.9) {};
+  \node[lab,font=\footnotesize] at (0.2,-1.3) {外線のフェルミオンのループ（$R_\phi^2$）\\ $8\lambda y^2$};
+\end{scope}
+\end{tikzpicture}
+\caption{$\phi\phi\to\phi\phi$ の S 行列要素（式~\eqref{eq:Mphys}）の $\mu$ 依存の三つの源。結合を固定したときの $(4\pi)^2\mu\,\partial\mathcal M_{A,\mathrm{phys}}/\partial\mu$ への寄与を図の下に書いた。和 $(3\lambda^2+8\lambda y^2-48y^4)/(4\pi)^2$ は $\beta_\lambda$ で、木の振幅 $-\lambda(\mu)$ の走りと打ち消し合う。右の図は、外線の $\phi$ の自己エネルギーのフェルミオンのループで、留数 $R_\phi$ を通して入る（外線4本）。}
+\label{fig:betalam}
+\end{figure}
 
 \paragraph{1ループの $\psi\bar\psi\to\phi\phi$。}外線にフェルミオンを持つ過程の1ループの振幅も、手で閉じた形に書ける。外線の補正を除いた1ループの図は、内線のフェルミオンの自己エネルギー（$t$、$u$ チャンネルに1つずつ）、頂点の補正（4つ）、箱（2つ）、$\phi$ の2本の内線が4点頂点で終わる三角形（$\lambda$ の三角形、1つ）、$s$ チャンネルの $\phi$ にフェルミオンの三角形が付いた図（2つ）の11個である（図~\ref{fig:loopB}）。最後の2つはトレースが $\gamma^5$ と3個以下の $\gamma$ 行列しか含まないので0になる。Dirac 方程式と $k_2=p_1+p_2-k_1$ を使うと、どの図も二つのスピノルの構造 $\bar v(p_2)u(p_1)$ と $\bar v(p_2)\slashed k_1u(p_1)$ だけで書ける（$\bar v(p_2)(\slashed p_1+\slashed p_2)u(p_1)=0$ なので $\bar v\slashed k_2u=-\bar v\slashed k_1u$）。木の振幅は $b^{(0)}\bar v\slashed k_1u$、$b^{(0)}=y^2[1/(t-M^2)-1/(u-M^2)]$ である。$\MSbar$ で繰り込んだ1ループの振幅は
 \begin{equation}
@@ -1551,7 +1743,7 @@ M^2\,\mathrm{tr}[AA]&=4M^2\bigl[(a^2+b^2)m^2+2ab\,k_1\cdot k_2\bigr]
 
 $\phi(k_1)\phi(k_2)\to\psi(q_1)\bar\psi(q_2)$ の振幅は、\ref{app:tree} と同じ手順で $y^2\bar u(q_1)[\slashed k_1/(t-M^2)+\slashed k_2/(u-M^2)]v(q_2)$（$t=(q_1-k_1)^2$、$u=(q_1-k_2)^2$）である。ここでは $\bar u(q_1)(M-\slashed q_1)=0$ を使った。スピン和は $y^4\,\mathrm{tr}[(\slashed q_1+M)A(\slashed q_2-M)A]$ で、トレースの巡回性から $\mathrm{tr}[(\slashed q_2-M)A(\slashed q_1+M)A]$ と同じ形なので、$\sum|\mathcal M_B^{(0)}|^2$ と同じ関数である。
 
-\paragraph{$\phi$ の極質量と留数。}完全な伝播関数 $i/(p^2-m^2-\Sigma_\phi(p^2))$ の極は $m_{\mathrm p}^2=m^2+\Sigma_\phi(m_{\mathrm p}^2)$ で、1ループでは右辺の $\Sigma_\phi$ を $m^2$ で評価してよい。式~\eqref{eq:VR} の後の $\Sigma_\phi$ から式~\eqref{eq:mpole} の $m_{\mathrm p}^2$ を得る。極のまわりで $p^2-m^2-\Sigma_\phi\simeq(p^2-m_{\mathrm p}^2)(1-\Sigma_\phi')$ なので、留数は $R_\phi\simeq1+\Sigma_\phi'(m^2)$ で、$\Sigma_\phi'=-\frac{2y^2}{(4\pi)^2}(B_0^{MM}+p^2B_0^{MM\prime})$ から式~\eqref{eq:mpole} の $R_\phi$ を得る。$\mu\,\partial B_0/\partial\mu=2$、$\mu\,\partial A_0(M^2)/\partial\mu=2M^2$、$\mu\,\partial B_0'/\partial\mu=0$ と式~\eqref{eq:rge} の $\gamma_m$ から、$\mu\,\dd m_{\mathrm p}^2/\dd\mu=\gamma_m-\frac{1}{(4\pi)^2}[2y^2(2m^2-4M^2)+\lambda m^2]=0$ である。一方 $\mu\,\dd R_\phi/\dd\mu=-4y^2/(4\pi)^2=-2\gamma_\phi$ で、留数は $\MSbar$ の場の規格化に依存する。
+\paragraph{$\phi$ の極質量と留数。}完全な伝播関数 $i/(p^2-m^2-\Sigma_\phi(p^2))$（図~\ref{fig:dyson}）の極は $m_{\mathrm p}^2=m^2+\Sigma_\phi(m_{\mathrm p}^2)$ で、1ループでは右辺の $\Sigma_\phi$ を $m^2$ で評価してよい。式~\eqref{eq:VR} の後の $\Sigma_\phi$ から式~\eqref{eq:mpole} の $m_{\mathrm p}^2$ を得る。極のまわりで $p^2-m^2-\Sigma_\phi\simeq(p^2-m_{\mathrm p}^2)(1-\Sigma_\phi')$ なので、留数は $R_\phi\simeq1+\Sigma_\phi'(m^2)$ で、$\Sigma_\phi'=-\frac{2y^2}{(4\pi)^2}(B_0^{MM}+p^2B_0^{MM\prime})$ から式~\eqref{eq:mpole} の $R_\phi$ を得る。$\mu\,\partial B_0/\partial\mu=2$、$\mu\,\partial A_0(M^2)/\partial\mu=2M^2$、$\mu\,\partial B_0'/\partial\mu=0$ と式~\eqref{eq:rge} の $\gamma_m$ から、$\mu\,\dd m_{\mathrm p}^2/\dd\mu=\gamma_m-\frac{1}{(4\pi)^2}[2y^2(2m^2-4M^2)+\lambda m^2]=0$ である。一方 $\mu\,\dd R_\phi/\dd\mu=-4y^2/(4\pi)^2=-2\gamma_\phi$ で、留数は $\MSbar$ の場の規格化に依存する。
 
 \paragraph{S 行列要素。}LSZ の簡約公式から、S 行列要素は、外線を切り落とした振幅に外線の数だけ $R_\phi^{1/2}$ を掛けたものである。$\mathcal M_A^{(0)}=-\lambda$ は質量によらないので、1ループの次数で $R_\phi^2(\mathcal M_A^{(0)}+\mathcal M_A^{(1)})=-\lambda-2\lambda\Sigma_\phi'(m^2)+\mathcal M_A^{(1)}$ となる。1ループの項の中の $m$ を $m_{\mathrm p}$ に替えても違いは高次なので、式~\eqref{eq:Mphys} を得る。結合を固定して $\mu$ で微分すると、式~\eqref{eq:M1} の $B_0$ の各項が $2$ を与え、$\frac{\lambda^2}{2}\cdot3\cdot2-2y^4\cdot(4\cdot3)\cdot2=3\lambda^2-48y^4$（$\mathcal F$ の和は $B_0^{MM}$ を各チャンネルにつき4つ含む）、留数の項が $4\lambda y^2\cdot2=8\lambda y^2$ を与える。和は $(4\pi)^2\beta_\lambda$ で、$\dd(-\lambda)/\dd\ln\mu=-\beta_\lambda$ と打ち消し合い、$\mathcal M_{A,\mathrm{phys}}$ は $\mu$ によらない。
 
@@ -1826,7 +2018,7 @@ J_0=-\frac43\varepsilon,\quad J_1=-4\varepsilon,\quad J_{n\ge2}=\frac{16(-1)^n}{
 
 \begin{thebibliography}{99}
 \small
-\bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。Feynman 則、1ループ積分の一般式（付録~C）、$\MSbar$ の有限部分（付録~G）、検算の手順と道具。
+\bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループ・2ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。Feynman 則、1ループ積分の一般式（付録~C）、$\MSbar$ の有限部分（付録~G）、検算の手順と道具。
 \bibitem{phi34note} $\phi^3+\phi^4$ 理論：1ループの構造、ユニタリー性、偽の真空の崩壊（$d=4$）（本リポジトリ \nolinkurl{models/phi34/ResearchNote/note.pdf}）。4点頂点の Feynman 則と対称性因子（付録~A）、bounce と前因子の数値計算。
 \bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}）。
 \bibitem{cw} S. Coleman, E. Weinberg, ``Radiative corrections as the origin of spontaneous symmetry breaking,'' Phys. Rev. D \textbf{7}, 1888 (1973)。1ループの有効ポテンシャル。

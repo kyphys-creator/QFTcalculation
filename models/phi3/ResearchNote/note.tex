@@ -1,4 +1,4 @@
-% note.tex — φ^3 理論：模型の定義と1ループの構造（d = 4, 6）
+% note.tex — φ^3 理論：模型の定義と1ループ・2ループの構造（d = 4, 6）
 % コンパイル: lualatex note.tex（参照解決のため2回）
 \documentclass[a4paper,10pt]{ltjsarticle}
 \usepackage[margin=20mm]{geometry}
@@ -8,13 +8,13 @@
 \usepackage{booktabs,tabularx,array}
 \usepackage[table]{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,calc,positioning}
+\usetikzlibrary{arrows.meta,calc,positioning,shapes.misc}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{graphicx}
 \usepackage{xurl}
 \usepackage{hyperref}
 \hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
-  pdftitle={phi^3 theory: model and one-loop structure},pdfauthor={}}
+  pdftitle={phi^3 theory: model and one- and two-loop structure},pdfauthor={}}
 
 \definecolor{divc}{RGB}{190,30,30}
 \definecolor{finc}{RGB}{52,128,72}
@@ -31,11 +31,14 @@
             (path picture bounding box.south west) -- (path picture bounding box.north east);}},
   mom/.style={-{Stealth[length=1.6mm]},thin},
   lab/.style={font=\small,align=center},
+  blob/.style={circle,draw=black,thick,fill=black!12,minimum size=7mm,inner sep=0pt,font=\scriptsize},
+  cut/.style={divc,dashed,thick},
+  bgv/.style={cross out,draw=black,thick,minimum size=4.5pt,inner sep=0pt},
 }
 
-\title{$\phi^3$ 理論：模型の定義と1ループの構造（$d=4,\,6$）}
+\title{$\phi^3$ 理論：模型の定義と1ループ・2ループの構造（$d=4,\,6$）}
 \author{}
-\date{2026年10月12日}
+\date{2026年10月14日}
 
 \begin{document}
 \maketitle
@@ -342,14 +345,14 @@ d=4:\qquad \mu\frac{\dd m^2}{\dd\mu}=\frac{g^2}{(4\pi)^2}
 \label{fig:tree}
 \end{figure}
 
-\paragraph{1ループの $\phi\phi\to\phi\phi$ 振幅（$d=4$）。}式~\eqref{eq:Mtree} の木の振幅を $\mathcal{M}^{(0)}$ と書く。その1ループの補正には、箱図3つ、頂点補正の三角形6つ（各チャンネルに2つ）、内線の自己エネルギー3つの計12個の図が寄与する（図~\ref{fig:scat}）。タドポールは $Y$ で打ち消し、外線の自己エネルギーは含めない（外線を切り離した振幅）。内線に式~\eqref{eq:ct4} の質量の対抗項を入れて $\overline{\mathrm{MS}}$ で繰り込むと、
+\paragraph{1ループの $\phi\phi\to\phi\phi$ 振幅（$d=4$）。}式~\eqref{eq:Mtree} の木の振幅を $\mathcal{M}^{(0)}$ と書く。その1ループの補正には、箱図3つ、頂点補正の三角形6つ（各チャンネルに2つ）、内線の自己エネルギー3つの計12個の図が寄与する（図~\ref{fig:scat}）。タドポールは $Y$ で打ち消し、外線の自己エネルギーは含めない（外線を切り離した振幅）。内線に式~\eqref{eq:ct4} の質量の対抗項を入れて（図~\ref{fig:scatct}）$\overline{\mathrm{MS}}$ で繰り込むと、
 \begin{equation}
 \mathcal{M}^{(1)}=\frac{g^4}{(4\pi)^2}\Bigl[D_0(s,t)+D_0(s,u)+D_0(t,u)+\sum_{x=s,t,u}\Bigl(\frac{2\,C_0(x)}{x-m^2}+\frac{B_0(x)}{2(x-m^2)^2}\Bigr)\Bigr]
 \label{eq:M1}
 \end{equation}
 となる（\ref{app:scat}）。ここで $C_0(x)\equiv C_0(m^2,m^2,x;m,m,m)$、$B_0(x)\equiv B_0(x;m,m)$ は式~\eqref{eq:B0C0} の有限部分である。$D_0(x,y)$ は、外線の $p_i^2$ と内線の質量がすべて $m$ で、二つの対角の不変量が $x$、$y$ の箱図の積分で、$D_0=\int\dd F\,\Delta^{-2}$ と書ける（$\Delta$ は式~\eqref{eq:IN-general} で $N=4$ としたもの）。$D_0$ と $C_0$ は有限で、発散は $B_0$ からだけ生じ、それは対抗項で消えている。
 
-物理的な散乱（$s>4m^2$、$t,u<0$）では、虚部は $s$ チャンネルの $B_0(s)$、$C_0(s)$、$D_0(s,t)$、$D_0(s,u)$ からだけ生じる。ユニタリー性から、それは木の振幅二つの位相空間積分に等しい（\ref{app:scat}）。
+物理的な散乱（$s>4m^2$、$t,u<0$）では、虚部は $s$ チャンネルの $B_0(s)$、$C_0(s)$、$D_0(s,t)$、$D_0(s,u)$ からだけ生じる。ユニタリー性から、それは木の振幅二つの位相空間積分に等しい（図~\ref{fig:cut}、\ref{app:scat}）。
 \begin{equation}
 \mathrm{Im}\,\mathcal{M}^{(1)}(s,t)=\frac{p}{64\pi^2\sqrt s}\int\!\dd\Omega_k\,\mathcal{M}^{(0)}(s,t_1)\,\mathcal{M}^{(0)}(s,t_2),\qquad
 t_1=(p_1-k)^2,\quad t_2=(p_3-k)^2 .
@@ -400,7 +403,108 @@ $p=\sqrt{s/4-m^2}$ は重心系の運動量の大きさ、$k$ は中間状態の
 \label{fig:scat}
 \end{figure}
 
-\paragraph{S 行列要素と繰り込みの処方（$d=4$）。}式~\eqref{eq:M1} の $\mathcal{M}^{(1)}$ は、外線の自己エネルギーを除き、外線を $\overline{\mathrm{MS}}$ の質量 $m$ の上に置いた振幅である。これを S 行列要素にするには二つの補正が要る。一つは外線の質量である。粒子の物理的な質量は、完全な伝播関数 $i/(p^2-m^2-\Sigma(p^2))$ の極の位置 $m_{\mathrm p}$ で、$\overline{\mathrm{MS}}$ の $m$ とは一致しない。もう一つは極での留数 $R$ で、これも1ではない。1ループでは、$\Sigma=-g^2B_0/(2(4\pi)^2)$（式~\eqref{eq:VR4}）から
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% two-point counterterm on the internal line
+\begin{scope}[shift={(0,0)}]
+  \coordinate (L) at (-0.9,0); \coordinate (R) at (0.9,0);
+  \draw[prop] (L) -- (R) (L) -- (-1.5,0.7) (L) -- (-1.5,-0.7) (R) -- (1.5,0.7) (R) -- (1.5,-0.7);
+  \node[vtx] at (L) {}; \node[vtx] at (R) {};
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-1.7,0.8) {1}; \node[font=\scriptsize] at (-1.7,-0.8) {2};
+  \node[font=\scriptsize] at (1.7,0.8) {3}; \node[font=\scriptsize] at (1.7,-0.8) {4};
+  \node[lab] at (0,-1.3) {内線の2点の対抗項 $i(\delta_Zs-\delta_m)$};
+  \node[lab,font=\footnotesize] at (0,-1.8) {$d=4$（$\delta_m$ だけ）と $d=6$};
+\end{scope}
+% three-point counterterm at the left vertex
+\begin{scope}[shift={(5.0,0)}]
+  \coordinate (L) at (-0.9,0); \coordinate (R) at (0.9,0);
+  \draw[prop] (L) -- (R) (L) -- (-1.5,0.7) (L) -- (-1.5,-0.7) (R) -- (1.5,0.7) (R) -- (1.5,-0.7);
+  \node[ctv] at (L) {}; \node[vtx] at (R) {};
+  \node[font=\scriptsize] at (-1.7,0.8) {1}; \node[font=\scriptsize] at (-1.7,-0.8) {2};
+  \node[font=\scriptsize] at (1.7,0.8) {3}; \node[font=\scriptsize] at (1.7,-0.8) {4};
+  \node[lab] at (0,-1.3) {3点の対抗項 $-i\delta_g\mu^\epsilon$};
+  \node[lab,font=\footnotesize] at (0,-1.8) {$d=6$};
+\end{scope}
+% three-point counterterm at the right vertex
+\begin{scope}[shift={(10.0,0)}]
+  \coordinate (L) at (-0.9,0); \coordinate (R) at (0.9,0);
+  \draw[prop] (L) -- (R) (L) -- (-1.5,0.7) (L) -- (-1.5,-0.7) (R) -- (1.5,0.7) (R) -- (1.5,-0.7);
+  \node[vtx] at (L) {}; \node[ctv] at (R) {};
+  \node[font=\scriptsize] at (-1.7,0.8) {1}; \node[font=\scriptsize] at (-1.7,-0.8) {2};
+  \node[font=\scriptsize] at (1.7,0.8) {3}; \node[font=\scriptsize] at (1.7,-0.8) {4};
+  \node[lab] at (0,-1.3) {3点の対抗項 $-i\delta_g\mu^\epsilon$};
+  \node[lab,font=\footnotesize] at (0,-1.8) {$d=6$};
+\end{scope}
+\end{tikzpicture}
+\caption{$\phi\phi\to\phi\phi$ の1ループの次数の対抗項の図（$s$ チャンネル、\ref{app:scat}、\ref{app:scat6}）。$t$、$u$ チャンネルも同じ形である。$d=4$ の $\overline{\mathrm{MS}}$ では $\delta_Z=\delta_g=0$ なので左の図の質量の対抗項だけが残り、内線の自己エネルギーの $B_0$ の極を消す。$d=6$ では三つとも要り、内線の自己エネルギーと三角形の極を消す。on-shell の処方（\ref{app:lsz}）でも同じ形の図が現れ、そこでの3点の挿入は $-\frac32ig\mu^\epsilon\delta_Z^{\mathrm{os}}$ である。}
+\label{fig:scatct}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% box with an s-channel cut
+\begin{scope}[shift={(0,0)}]
+  \coordinate (A) at (-0.5,0.5); \coordinate (B) at (0.5,0.5); \coordinate (C) at (0.5,-0.5); \coordinate (E) at (-0.5,-0.5);
+  \draw[prop] (A) -- (B) -- (C) -- (E) -- cycle;
+  \draw[prop] (A) -- (-1.1,1.0) (E) -- (-1.1,-1.0) (B) -- (1.1,1.0) (C) -- (1.1,-1.0);
+  \foreach \v in {A,B,C,E} \node[vtx] at (\v) {};
+  \draw[cut] (0,0.9) -- (0,-0.9);
+  \node[font=\scriptsize] at (-1.3,1.1) {1}; \node[font=\scriptsize] at (-1.3,-1.1) {2};
+  \node[font=\scriptsize] at (1.3,1.1) {3}; \node[font=\scriptsize] at (1.3,-1.1) {4};
+  \node[lab] at (0,-1.5) {箱図：$D_0(s,t)$、$D_0(s,u)$};
+\end{scope}
+% s-channel triangle with a cut
+\begin{scope}[shift={(4.6,0)}]
+  \coordinate (A) at (-1.0,0.55); \coordinate (E) at (-1.0,-0.55); \coordinate (T) at (-0.2,0); \coordinate (R) at (0.8,0);
+  \draw[prop] (A) -- (E) -- (T) -- cycle;
+  \draw[prop] (A) -- (-1.6,1.0) (E) -- (-1.6,-1.0) (T) -- (R) (R) -- (1.4,0.7) (R) -- (1.4,-0.7);
+  \foreach \v in {A,E,T,R} \node[vtx] at (\v) {};
+  \draw[cut] (-0.55,0.9) -- (-0.55,-0.9);
+  \node[font=\scriptsize] at (-1.8,1.1) {1}; \node[font=\scriptsize] at (-1.8,-1.1) {2};
+  \node[font=\scriptsize] at (1.6,0.8) {3}; \node[font=\scriptsize] at (1.6,-0.8) {4};
+  \node[lab] at (0,-1.5) {三角形：$C_0(s)$（2つ）};
+\end{scope}
+% s-channel bubble with a cut
+\begin{scope}[shift={(9.6,0)}]
+  \coordinate (L) at (-1.2,0); \coordinate (R) at (1.2,0);
+  \draw[prop] (L) -- (-0.45,0) (0.45,0) -- (R);
+  \draw[prop] (0,0) circle (0.45);
+  \draw[prop] (L) -- (-1.8,0.7) (L) -- (-1.8,-0.7) (R) -- (1.8,0.7) (R) -- (1.8,-0.7);
+  \foreach \v in {L,R} \node[vtx] at (\v) {};
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \draw[cut] (0,0.9) -- (0,-0.9);
+  \node[font=\scriptsize] at (-2.0,0.8) {1}; \node[font=\scriptsize] at (-2.0,-0.8) {2};
+  \node[font=\scriptsize] at (2.0,0.8) {3}; \node[font=\scriptsize] at (2.0,-0.8) {4};
+  \node[lab] at (0,-1.5) {内線の自己エネルギー：$B_0(s)$};
+\end{scope}
+% the unitarity relation
+\begin{scope}[shift={(1.5,-3.3)}]
+  \node at (-1.15,0) {$\mathrm{Im}$};
+  \draw[prop] (0,0) -- (-0.6,0.6) (0,0) -- (-0.6,-0.6) (0,0) -- (0.6,0.6) (0,0) -- (0.6,-0.6);
+  \node[blob,minimum size=9mm] at (0,0) {$\mathcal{M}^{(1)}$};
+  \node[font=\scriptsize] at (-0.8,0.75) {1}; \node[font=\scriptsize] at (-0.8,-0.75) {2};
+  \node[font=\scriptsize] at (0.8,0.75) {3}; \node[font=\scriptsize] at (0.8,-0.75) {4};
+  \node at (2.05,0) {$=\dfrac14\displaystyle\int\!\dd\Phi_2(k,k')$};
+  \coordinate (P) at (4.4,0); \coordinate (Q) at (6.8,0);
+  \draw[prop] (P) -- ++(-0.6,0.6) (P) -- ++(-0.6,-0.6) (Q) -- ++(0.6,0.6) (Q) -- ++(0.6,-0.6);
+  \draw[prop] (P) .. controls (5.1,0.75) and (6.1,0.75) .. (Q);
+  \draw[prop] (P) .. controls (5.1,-0.75) and (6.1,-0.75) .. (Q);
+  \node[blob,minimum size=9mm] at (P) {$\mathcal{M}^{(0)}$};
+  \node[blob,minimum size=9mm] at (Q) {$\mathcal{M}^{(0)}$};
+  \draw[cut] (5.6,0.95) -- (5.6,-0.95);
+  \node[font=\scriptsize] at (5.25,0.78) {$k$}; \node[font=\scriptsize] at (5.25,-0.8) {$k'$};
+  \node[font=\scriptsize] at (3.6,0.75) {1}; \node[font=\scriptsize] at (3.6,-0.75) {2};
+  \node[font=\scriptsize] at (7.6,0.75) {3}; \node[font=\scriptsize] at (7.6,-0.75) {4};
+\end{scope}
+\end{tikzpicture}
+\caption{$\phi\phi\to\phi\phi$ の1ループの振幅の虚部（$s>4m^2$、$t,u<0$、\ref{app:scat}）。上：$s$ チャンネルの切断（赤の破線）を持つ図。切断した2本の内線が同時に質量殻に乗れるので、虚部が生じる。箱図は $D_0(s,t)$ と $D_0(s,u)$ の二つ（図は $D_0(s,t)$）、三角形は $s$ チャンネルの二つ（図はループが始状態の側にあるもの）、内線の自己エネルギーは $s$ チャンネルの一つである。$D_0(t,u)$ と $t$、$u$ チャンネルの図は、どこで切っても内線が質量殻に乗れないので実である。下：これらの虚部の和は、木の振幅二つの2体の位相空間積分に等しい（式~\eqref{eq:unit}）。$\frac14$ は $2\,\mathrm{Im}$ の $\frac12$ と、中間状態の同種粒子の因子 $\frac12$ である。}
+\label{fig:cut}
+\end{figure}
+
+\paragraph{S 行列要素と繰り込みの処方（$d=4$）。}式~\eqref{eq:M1} の $\mathcal{M}^{(1)}$ は、外線の自己エネルギーを除き、外線を $\overline{\mathrm{MS}}$ の質量 $m$ の上に置いた振幅である。これを S 行列要素にするには二つの補正が要る。一つは外線の質量である。粒子の物理的な質量は、完全な伝播関数 $i/(p^2-m^2-\Sigma(p^2))$（図~\ref{fig:dyson}）の極の位置 $m_{\mathrm p}$ で、$\overline{\mathrm{MS}}$ の $m$ とは一致しない。もう一つは極での留数 $R$ で、これも1ではない。1ループでは、$\Sigma=-g^2B_0/(2(4\pi)^2)$（式~\eqref{eq:VR4}）から
 \begin{equation}
 m_{\mathrm p}^2=m^2+\Sigma(m_{\mathrm p}^2)=m^2-\frac{g^2}{2(4\pi)^2}\,B_0(m^2)+O(g^4),\qquad
 R=\frac{1}{1-\Sigma'(m_{\mathrm p}^2)}=1-\frac{g^2}{2(4\pi)^2}\,B_0'(m^2)+O(g^4)
@@ -418,20 +522,80 @@ R=\frac{1}{1-\Sigma'(m_{\mathrm p}^2)}=1-\frac{g^2}{2(4\pi)^2}\,B_0'(m^2)+O(g^4)
 
 大きさの目安として、$\mu=m$ では $B_0(m^2)=2-\pi/\sqrt3\approx0.186$、$m^2B_0'(m^2)=2\pi/(3\sqrt3)-1\approx0.209$ である。したがって $g=m$ では、$m_{\mathrm p}^2=m^2(1-5.9\times10^{-4})$、$R=1-6.6\times10^{-4}$ となる。どちらも小さいが、式~\eqref{eq:Mphys} の最後の項は $\mathcal{M}^{(1)}$ と同じ $g^4$ の次数である。例えば $\sqrt s=5m$、$\cos\theta=0.3$、$m_{\mathrm p}=g=1$ では、式~\eqref{eq:Mphys} の自己エネルギーの寄与（3つのチャンネルの合計）の実部は $-2.6\times10^{-4}$ で、$\mathrm{Re}\,\mathcal{M}^{(1)}=7.4\times10^{-4}$ と比べて無視できない。
 
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% the full propagator as the sum of 1PI insertions
+\begin{scope}[shift={(0,0)}]
+  \draw[prop] (0,0) -- (1.4,0);
+  \node[circle,draw=black,thick,fill=black!45,minimum size=3.6mm,inner sep=0pt] at (0.7,0) {};
+  \draw[mom] (0.15,0.25) -- (0.5,0.25) node[midway,above,font=\scriptsize] {$p$};
+  \node at (1.8,0) {$=$};
+  \draw[prop] (2.2,0) -- (3.2,0);
+  \node at (3.6,0) {$+$};
+  \draw[prop] (4.0,0) -- (5.8,0);
+  \node[blob] at (4.9,0) {1PI};
+  \node at (6.2,0) {$+$};
+  \draw[prop] (6.6,0) -- (9.6,0);
+  \node[blob] at (7.5,0) {1PI}; \node[blob] at (8.7,0) {1PI};
+  \node at (10.25,0) {$+\ \cdots$};
+  \node[anchor=west] at (10.8,0) {$=\dfrac{i}{p^2-m^2-\Sigma(p^2)}$};
+\end{scope}
+% the one-loop 1PI two-point function
+\begin{scope}[shift={(0,-1.7)}]
+  \draw[prop] (0,0) -- (1.4,0);
+  \node[blob] at (0.7,0) {1PI};
+  \node at (1.8,0) {$=$};
+  \draw[prop] (2.2,0) -- (2.6,0) (3.6,0) -- (4.0,0);
+  \draw[prop] (3.1,0) circle (0.5);
+  \node[vtx] at (2.6,0) {}; \node[vtx] at (3.6,0) {};
+  \node[lab,font=\footnotesize] at (3.1,-0.8) {$\frac12$};
+  \node at (4.4,0) {$+$};
+  \draw[prop] (4.8,0) -- (6.0,0);
+  \node[ctv] at (5.4,0) {};
+  \node[lab,font=\footnotesize] at (5.4,-0.8) {$i(\delta_Zp^2-\delta_m)$};
+  \node at (6.95,0) {$+\ O(g^4)$};
+  \node[anchor=west] at (8.0,0) {$=V_2(p^2)=-i\,\Sigma(p^2)$};
+\end{scope}
+\end{tikzpicture}
+\caption{完全な伝播関数（灰色の点）は、1PI の2点関数 $V_2=-i\Sigma$ を繰り返し挿入した和である（\ref{app:lsz}）。その極の位置が極質量 $m_{\mathrm p}$ で、極の近くでは $iR/(p^2-m_{\mathrm p}^2)$ となる（式~\eqref{eq:mpole}）。下：$d=4$ の1ループの $V_2$ は、自己エネルギーの泡（対称性因子 $\frac12$）と2点の対抗項の和である（式~\eqref{eq:V}）。}
+\label{fig:dyson}
+\end{figure}
+
 \paragraph{全断面積（$d=4$、$g^6$ まで）。}$\phi\phi$ 散乱の全断面積を、木の次数（$g^4$）の次まで求める。$|\mathcal{M}|^2$ を展開すると、1ループの補正 $2\,\mathrm{Re}(\mathcal{M}^{(0)*}\mathcal{M}^{(1)}_{\mathrm{phys}})$ は $g^6$ の次数である。同じ $g^6$ の次数で、終状態が三つの $\phi$ になる $\phi\phi\to\phi\phi\phi$ も寄与する（振幅は $g^3$）。よって、終状態を問わない全断面積は
 \begin{equation}
 \sigma_{\mathrm{tot}}=\sigma^{(0)}+\sigma^{(1)}+\sigma_{2\to3}+O(g^8),\qquad
 \sigma^{(1)}=\int\!\dd\Omega\,\frac{\mathcal{M}^{(0)}\,\mathrm{Re}\,\mathcal{M}^{(1)}_{\mathrm{phys}}}{64\pi^2s}
 \label{eq:sigmatot}
 \end{equation}
-となる（\ref{app:sigma}）。$\sigma^{(0)}$ は木の断面積（\ref{app:xsec}）、$\sigma^{(1)}$ には同種粒子の因子 $\frac12$ と $2\,\mathrm{Re}$ の $2$ が打ち消し合って入っている。入力は極質量 $m_{\mathrm p}$ と $g$ である。粒子はすべて質量を持つので赤外発散はなく、三つの項はそれぞれ有限である。$2\to3$ は $\sqrt s>3m$ で開く。$\phi\phi\to\phi\phi\phi$ の振幅は、外線5本の3次の木の図15個の和で、各図は二つの伝播関数の積に比例する。
+となる（\ref{app:sigma}）。$\sigma^{(0)}$ は木の断面積（\ref{app:xsec}）、$\sigma^{(1)}$ には同種粒子の因子 $\frac12$ と $2\,\mathrm{Re}$ の $2$ が打ち消し合って入っている。入力は極質量 $m_{\mathrm p}$ と $g$ である。粒子はすべて質量を持つので赤外発散はなく、三つの項はそれぞれ有限である。$2\to3$ は $\sqrt s>3m$ で開く。$\phi\phi\to\phi\phi\phi$ の振幅は、外線5本の3次の木の図15個（図~\ref{fig:twothree}）の和で、各図は二つの伝播関数の積に比例する。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\foreach \x/\la/\lb/\lm/\lc/\ld/\txt in {
+    0/a/b/e/c/d/{$\dfrac{1}{[(q_a+q_b)^2-m^2]\,[(q_c+q_d)^2-m^2]}$},
+    5.0/p_1/p_2/k_1/k_2/k_3/{$s-m^2$ と $(k_2+k_3)^2-m^2\ge3m^2$},
+    10.0/p_1/k_1/k_3/p_2/k_2/{$(p_1-k_1)^2-m^2$ と $(p_2-k_2)^2-m^2$\\（どちらも $\le-m^2$）}} {
+  \begin{scope}[shift={(\x,0)}]
+    \draw[prop] (-0.8,0) -- (0.8,0) (-0.8,0) -- (-1.4,0.6) (-0.8,0) -- (-1.4,-0.6) (0,0) -- (0,0.75) (0.8,0) -- (1.4,0.6) (0.8,0) -- (1.4,-0.6);
+    \foreach \v in {-0.8,0,0.8} \node[vtx] at (\v,0) {};
+    \node[font=\scriptsize] at (-1.65,0.7) {$\la$}; \node[font=\scriptsize] at (-1.65,-0.7) {$\lb$};
+    \node[font=\scriptsize] at (0,1.0) {$\lm$};
+    \node[font=\scriptsize] at (1.65,0.7) {$\lc$}; \node[font=\scriptsize] at (1.65,-0.7) {$\ld$};
+    \node[lab,font=\footnotesize] at (0,-1.25) {\txt};
+  \end{scope}}
+\end{tikzpicture}
+\caption{$\phi\phi\to\phi\phi\phi$ の木の図（\ref{app:sigma}）。15個とも左の形で、真ん中の頂点に付く外線 $e$ の選び方（5通り）と、残る4本の組 $\{a,b\}$、$\{c,d\}$ への分け方（3通り）で区別される。運動量はすべて外向きに $q_i$ と書き、各図は下の伝播関数の積に比例する。中と右は例で、中は始状態の二つが一つの頂点に付く図、右は $t$ 型の伝播関数を二つ持つ図である。右の型は、$\sqrt s$ が大きいとき二つの終状態の粒子がそれぞれ始状態の粒子とほぼ同じ運動量を持つ狭い領域で大きくなり、$\sigma_{2\to3}$ の積分の大部分を担う。}
+\label{fig:twothree}
+\end{figure}
 
 \paragraph{$d=6$ の1ループの $\phi\phi\to\phi\phi$ 振幅と繰り込み群。}$d=6$ でも図は図~\ref{fig:scat} の12個で、$\overline{\mathrm{MS}}$ で繰り込んだ振幅は式~\eqref{eq:M1} と同じ形になる（\ref{app:scat6}）。
 \begin{equation}
 \mathcal{M}^{(1)}_{d=6}=\frac{g^4}{(4\pi)^3}\Bigl[D_0^{(6)}(s,t)+D_0^{(6)}(s,u)+D_0^{(6)}(t,u)+\sum_{x=s,t,u}\Bigl(\frac{2\,C_0^{(6)}(x)}{x-m^2}+\frac{B_0^{(6)}(x)}{2(x-m^2)^2}\Bigr)\Bigr]
 \label{eq:M6}
 \end{equation}
-ここで $C_0^{(6)}(x)$ と $B_0^{(6)}(x)$ は式~\eqref{eq:X6} の有限部分（外線は $p_i^2=m^2$）で、$D_0^{(6)}=\int\dd F\,\Delta^{-1}$ は有限な箱図の積分である。$d=4$ と違い、三角形と内線の自己エネルギーは発散する。その極は、内線の2点の対抗項 $i(\delta_Zp^2-\delta_m)$ と、木の図の頂点の対抗項 $-i\delta_g$（各チャンネルに2つ）で消える。S 行列要素は式~\eqref{eq:Mphys} と同じ手順で作れて、$(4\pi)^2$ を $(4\pi)^3$ に、$B_0$ を $B_0^{(6)}$ に替えた形になる。必要な値は
+ここで $C_0^{(6)}(x)$ と $B_0^{(6)}(x)$ は式~\eqref{eq:X6} の有限部分（外線は $p_i^2=m^2$）で、$D_0^{(6)}=\int\dd F\,\Delta^{-1}$ は有限な箱図の積分である。$d=4$ と違い、三角形と内線の自己エネルギーは発散する。その極は、内線の2点の対抗項 $i(\delta_Zp^2-\delta_m)$ と、木の図の頂点の対抗項 $-i\delta_g$（各チャンネルに2つ）で消える（図~\ref{fig:scatct}）。S 行列要素は式~\eqref{eq:Mphys} と同じ手順で作れて、$(4\pi)^2$ を $(4\pi)^3$ に、$B_0$ を $B_0^{(6)}$ に替えた形になる。必要な値は
 \begin{equation}
 B_0^{(6)}(m^2)=m^2\Bigl(-\frac{17}{9}+\frac{\pi}{2\sqrt3}+\frac56L\Bigr),\qquad
 B_0^{(6)\prime}(m^2)=\frac{17}{18}-\frac{\pi}{2\sqrt3}-\frac L6,\qquad L\equiv\ln\frac{m^2}{\mu^2}
@@ -445,7 +609,7 @@ B_0^{(6)\prime}(m^2)=\frac{17}{18}-\frac{\pi}{2\sqrt3}-\frac L6,\qquad L\equiv\l
 \end{equation}
 なので、和が0になる条件は $\beta(g)=-3g^3/(4(4\pi)^3)$、すなわち式~\eqref{eq:beta6} である（\ref{app:scat6}）。逆に、1ループの振幅の $\mu$ 依存から $\beta$ 関数を読み取れる。虚部には $d=6$ のユニタリー性の関係（式~\eqref{eq:unit} の位相空間を $d=6$ のものに替えたもの）が成り立つ。
 
-\paragraph{2ループの自己エネルギー（$d=4$）。}$d=4$ の2ループの1PI の自己エネルギーの図は、タドポールを含むものを除くと二つある。kite と、1ループの自己エネルギーを内線に挿入した図（rainbow）で、どちらも対称性因子は $\frac12$ である。タドポールを含む図は、ループの内側に付くものも含めて、$Y$ の挿入と各次数で打ち消し合う（\ref{app:twoloop}）。これに、1ループの泡への質量の対抗項 $\delta_m$ の挿入を加える。前提4の $\overline{\mathrm{MS}}$ をそのまま2ループで使うと（$\bar\mu=m$）、
+\paragraph{2ループの自己エネルギー（$d=4$）。}$d=4$ の2ループの1PI の自己エネルギーの図は、タドポールを含むものを除くと二つある。kite と、1ループの自己エネルギーを内線に挿入した図（rainbow）で、どちらも対称性因子は $\frac12$ である（図~\ref{fig:twoloopdiag}）。タドポールを含む図は、ループの内側に付くものも含めて、$Y$ の挿入と各次数で打ち消し合う（\ref{app:twoloop}）。これに、1ループの泡への質量の対抗項 $\delta_m$ の挿入を加える。前提4の $\overline{\mathrm{MS}}$ をそのまま2ループで使うと（$\bar\mu=m$）、
 \begin{equation}
 \Sigma^{(2)}=\frac{g^4}{(16\pi^2)^2}\,\hat\Sigma,\qquad
 \hat\Sigma=\frac{e^{2\epsilon\gamma_E}}2\bigl(J[1,1,1,1,1]+J[2,1,1,0,1]\bigr)-\frac{e^{\epsilon\gamma_E}}{2\epsilon}\,J_1[2,1]
@@ -457,6 +621,48 @@ m_{\mathrm p}^2=m^2+\Sigma^{(1)}(m^2)+\Sigma^{(2)}(m^2)+\Sigma^{(1)}(m^2)\,\Sigm
 \label{eq:mpole2}
 \end{equation}
 となる。2ループの積分は手では閉じた形にならないので、$\hat\Sigma$ の値は道具を突き合わせて決める。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% kite
+\begin{scope}[shift={(0,0)}]
+  \draw[prop] (-1.6,0) -- (-0.8,0) (0.8,0) -- (1.6,0);
+  \draw[prop] (0,0) circle (0.8);
+  \draw[prop] (0,0.8) -- (0,-0.8);
+  \foreach \a in {0,90,180,270} \node[vtx] at (\a:0.8) {};
+  \draw[mom] (-1.5,0.22) -- (-1.05,0.22) node[midway,above,font=\scriptsize] {$p$};
+  \node[font=\scriptsize] at (135:1.08) {$D_1$}; \node[font=\scriptsize] at (225:1.08) {$D_2$};
+  \node[font=\scriptsize] at (45:1.08) {$D_3$}; \node[font=\scriptsize] at (315:1.08) {$D_4$};
+  \node[font=\scriptsize,anchor=west] at (0.06,0.05) {$D_5$};
+  \node[lab] at (0,-1.6) {kite（$\frac12$）\\ $J[1,1,1,1,1]$};
+\end{scope}
+% rainbow
+\begin{scope}[shift={(4.6,0)}]
+  \draw[prop] (-1.6,0) -- (-0.8,0) (0.8,0) -- (1.6,0);
+  \draw[prop] (180:0.8) arc (180:45:0.8) (45:0.8) arc (45:-180:0.8);
+  \draw[prop] (135:0.8) .. controls (-0.25,0.2) and (0.25,0.2) .. (45:0.8);
+  \foreach \a in {0,45,135,180} \node[vtx] at (\a:0.8) {};
+  \node[font=\scriptsize] at (160:1.08) {$D_1$}; \node[font=\scriptsize] at (20:1.08) {$D_1$};
+  \node[font=\scriptsize] at (90:1.02) {$D_3$}; \node[font=\scriptsize] at (0,0.12) {$D_5$};
+  \node[font=\scriptsize] at (270:1.02) {$D_2$};
+  \node[lab] at (0,-1.6) {rainbow（$\frac12$）\\ $J[2,1,1,0,1]$};
+\end{scope}
+% mass counterterm inserted into the one-loop bubble
+\begin{scope}[shift={(9.2,0)}]
+  \draw[prop] (-1.5,0) -- (-0.7,0) (0.7,0) -- (1.5,0);
+  \draw[prop] (0,0) circle (0.7);
+  \node[vtx] at (-0.7,0) {}; \node[vtx] at (0.7,0) {};
+  \node[ctv] at (0,0.7) {};
+  \node[font=\scriptsize] at (140:0.98) {$D_1$}; \node[font=\scriptsize] at (40:0.98) {$D_1$};
+  \node[font=\scriptsize] at (270:0.95) {$D_2$};
+  \node[font=\scriptsize] at (0,1.05) {$-i\delta_m$};
+  \node[lab] at (0,-1.6) {$\delta_m$ の挿入（2通り）\\ $J_1[2,1]$};
+\end{scope}
+\end{tikzpicture}
+\caption{$d=4$ の2ループの1PI の自己エネルギーの図（式~\eqref{eq:sigma2}、\ref{app:twoloop}）。左から kite、rainbow、1ループの泡への質量の対抗項の挿入で、括弧の中は対称性因子、下は図が写る積分である。運動量 $p$ が左から右へ流れるとき、線 $D_1,\ldots,D_5$ の運動量は $q_1$、$p-q_1$、$q_2$、$p-q_2$、$q_1-q_2$ で、それぞれ伝播関数 $D_1=q_1^2-m^2$、$D_2=(q_1-p)^2-m^2$、$D_3=q_2^2-m^2$、$D_4=(q_2-p)^2-m^2$、$D_5=(q_1-q_2)^2-m^2$ を与える。rainbow の上の線は運動量 $q_1$ の2本に分かれ、$D_1^2$ を与える。右の図では1ループの族の $D_1=q^2-m^2$、$D_2=(q-p)^2-m^2$ を使い、対抗項はどちらの線に挿入してもよい。}
+\label{fig:twoloopdiag}
+\end{figure}
 
 \section{検算の計画}\label{sec:plan}
 
@@ -965,7 +1171,50 @@ $d=6$ & 有限の bounce なし & インスタントン $S_0g^2=768\pi^3/5$ \\
 \end{equation}
 である。$M=-\partial^2+V''(\phi_B)=m^2[-\partial_x^2+1+f(x)]$ は bounce のまわりのゆらぎの演算子、$M_0$ は偽の真空でのそれである。$\det'$ は並進の4つの零モードを除いた行列式で、$(S_B/2\pi)^2$ は零モードを bounce の位置の積分に替えたときのヤコビアンである。$M$ は $g$ によらないので、1ループの補正は $g$ によらない一つの数 $\ln\mathcal D$ にまとまる。$m$ と $g$ は $\overline{\mathrm{MS}}$ の値で、タドポールはこれまでと同じく $Y$ で打ち消す。
 
-行列式は部分波 $l$（縮退度 $(l+1)^2$）に分け、Gel'fand--Yaglom の方法で求めた~\cite{gy,dunnemin}。各部分波の行列式の比は、常微分方程式の初期値問題の解の $x\to\infty$ での値 $T_l(\infty)$ で与えられる（\ref{app:prefactor}）。$l=0$ では $T_0(\infty)=-0.0369<0$ で、負のモードが一つある（固有値 $-3.954\,m^2$）。これは泡が膨らむか縮むかの方向で、崩壊を起こすモードである。$l=1$ では $T_1(\infty)=0$ で（数値では $4\times10^{-16}$）、これが並進の零モードである。零モードを除いた比は、bounce の漸近形 $f\to-AK_1(x)/x$ の係数 $A=27.998$ から閉じた形で求まる。$l$ についての和は、上限 $L$ に対して $L^2$ と $\ln L$ のように発散する。そこで各部分波から1次と2次の Born 項を引き、和を収束させた。引いた分のうち、1次の項はちょうど $Y$ で消え、2次の項は運動量空間で求めた $\overline{\mathrm{MS}}$ の値 $A_2(\mu)$ に置き換わる。残りの和は $(l+1)^{-3}$ のように収束する（図~\ref{fig:prefactor} 下）。結果を表~\ref{tab:prefactor} にまとめる。
+行列式は部分波 $l$（縮退度 $(l+1)^2$）に分け、Gel'fand--Yaglom の方法で求めた~\cite{gy,dunnemin}。各部分波の行列式の比は、常微分方程式の初期値問題の解の $x\to\infty$ での値 $T_l(\infty)$ で与えられる（\ref{app:prefactor}）。$l=0$ では $T_0(\infty)=-0.0369<0$ で、負のモードが一つある（固有値 $-3.954\,m^2$）。これは泡が膨らむか縮むかの方向で、崩壊を起こすモードである。$l=1$ では $T_1(\infty)=0$ で（数値では $4\times10^{-16}$）、これが並進の零モードである。零モードを除いた比は、bounce の漸近形 $f\to-AK_1(x)/x$ の係数 $A=27.998$ から閉じた形で求まる。$l$ についての和は、上限 $L$ に対して $L^2$ と $\ln L$ のように発散する。そこで各部分波から1次と2次の Born 項を引き、和を収束させた（図~\ref{fig:ring}）。引いた分のうち、1次の項はちょうど $Y$ で消え、2次の項は運動量空間で求めた $\overline{\mathrm{MS}}$ の値 $A_2(\mu)$ に置き換わる。残りの和は $(l+1)^{-3}$ のように収束する（図~\ref{fig:prefactor} 下）。結果を表~\ref{tab:prefactor} にまとめる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% order 1: ring with one insertion, and the linear term
+\begin{scope}[shift={(0,0)}]
+  \draw[prop] (0,0.15) circle (0.4);
+  \draw[prop] (0,-0.25) -- (0,-0.65);
+  \node[vtx] at (0,-0.25) {}; \node[bgv] at (0,-0.65) {};
+  \node at (0.85,0) {$+$};
+  \draw[prop] (1.6,0.15) -- (1.6,-0.65);
+  \node[ctv] at (1.6,0.15) {}; \node[bgv] at (1.6,-0.65) {};
+  \node at (2.35,0) {$=0$};
+  \node[lab,font=\footnotesize] at (1.0,-1.25) {1次：$Y\!\int\!\phi_B$ と消える};
+\end{scope}
+% order 2: ring with two insertions, and the mass counterterm
+\begin{scope}[shift={(4.6,0)}]
+  \draw[prop] (0,0) circle (0.4);
+  \draw[prop] (-0.4,0) -- (-0.8,0) (0.4,0) -- (0.8,0);
+  \node[vtx] at (-0.4,0) {}; \node[vtx] at (0.4,0) {};
+  \node[bgv] at (-0.8,0) {}; \node[bgv] at (0.8,0) {};
+  \node at (1.25,0) {$+$};
+  \draw[prop] (1.75,0) -- (2.75,0);
+  \node[ctv] at (2.25,0) {}; \node[bgv] at (1.75,0) {}; \node[bgv] at (2.75,0) {};
+  \node[anchor=west] at (3.0,0) {$=A_2(\mu)$};
+  \node[lab,font=\footnotesize] at (1.3,-1.25) {2次：対数発散を $\frac12\delta_m\!\int\!\phi_B^2$ で消す};
+\end{scope}
+% orders 3, 4, ...: finite rings
+\begin{scope}[shift={(10.3,0)}]
+  \draw[prop] (0,0) circle (0.4);
+  \foreach \a in {90,210,330} {\draw[prop] (\a:0.4) -- (\a:0.8); \node[vtx] at (\a:0.4) {}; \node[bgv] at (\a:0.8) {};}
+  \node at (1.1,0) {$+$};
+  \begin{scope}[shift={(2.2,0)}]
+    \draw[prop] (0,0) circle (0.4);
+    \foreach \a in {45,135,225,315} {\draw[prop] (\a:0.4) -- (\a:0.8); \node[vtx] at (\a:0.4) {}; \node[bgv] at (\a:0.8) {};}
+  \end{scope}
+  \node at (3.4,0) {$+\ \cdots$};
+  \node[lab,font=\footnotesize] at (1.4,-1.25) {3次以上：有限（$\sum_l(l+1)^2r_l$）};
+\end{scope}
+\end{tikzpicture}
+\caption{崩壊率の前因子の行列式 $\ln(\det M/\det M_0)=\mathrm{Tr}\ln(1+G_0f)=\sum_{n\ge1}\frac{(-1)^{n+1}}{n}\mathrm{Tr}[(G_0f)^n]$ の図（\ref{app:prefactor}）。$n$ 次の項は、bounce の場 $\phi_B$（$\times$）を3点の頂点で $n$ 回挿入した1ループの輪である（$f=g\phi_B/m^2$）。$\otimes$ は作用の中の線形項と質量の対抗項である。1次と2次の Born 項は部分波の和を発散させるので、各部分波から引き、それぞれ0と運動量空間の $\overline{\mathrm{MS}}$ の値 $A_2(\mu)$ に置き換える。}
+\label{fig:ring}
+\end{figure}
 
 独立な検算として、Dunne と Min の局所的な公式~\cite{dunnemin} を使った。彼らのポテンシャル $\frac12\Phi^2-\frac12\Phi^3+\frac\alpha8\Phi^4$ は、$\alpha=0$ で $\Phi=-f/3$ とすると、本ノートの模型と同じゆらぎの演算子を与える。彼らは、部分波から大きい $l$ での漸近形を引き、有限部分を $f$ の局所的な積分で書く。Born 項と運動量空間の積分を使う上の方法とは、引き算も有限部分も違う。彼らの量を本ノートの処方に直すと、$\ln\mathcal D$ と $2\times10^{-9}$ で一致した。$\mu$ 依存も確かめた。$\ln\mathcal D$ は $-\frac{C_4}{16\pi^2}\ln(\mu^2/m^2)$ だけ変わる。これは、$S_B$ の中の $m^2(\mu)$ の走り（式~\eqref{eq:mrun4}）とちょうど打ち消し合う。
 
@@ -1053,7 +1302,7 @@ $\alpha(m)=0.1$、$\Lambda=10^3m$ & 切断に依存する部分/普遍的な部�
 
 この節では、$d=4$ の2ループの自己エネルギー（式~\eqref{eq:sigma2}）を求め、その有限性と極質量を確かめる。手計算で得られるのは、図の値の組み立てと有限性の議論までである。積分の値は、環境の記録~\cite{env}に新しく加えた2ループの道具を突き合わせて決める。IBP 簡約の Kira 3.1~\cite{kira3} と FIRE 7.1~\cite{fire7}、マスター積分を数値で求める AMFlow 2.0~\cite{amflow,amflow2}、pySecDec 1.6.6~\cite{pysecdec,pysecdec16}、feyntrop 1.1.0~\cite{feyntrop}、2ループの自己エネルギーの基底積分を計算する TSIL 1.46~\cite{tsil} である。手順は次の一つで、四つの部分からなる。(16) (a) FeynArts で図を作り、タドポールを含む図を数える。(b) 振幅を積分族に写し、Kira と FIRE で IBP 簡約して突き合わせる。(c) マスター積分を AMFlow、TSIL、pySecDec、feyntrop で求めて比べる。(d) $\hat\Sigma$ の極が消えることを確かめ、有限部分と極質量を Martin と Robertson（MR05）の結果~\cite{tsil}と比べる。
 
-\paragraph{手順 (16)：図と IBP 簡約。}FeynArts の2ループの自己エネルギーの図は10個だった。タドポールを含まないものは3個で、そのうち1粒子既約なものは2個（kite と rainbow、どちらも対称性因子 $\frac12$）である。残りの7個はタドポールを含み、$Y$ の挿入と打ち消し合う（\ref{app:twoloop}）。二つの振幅は、運動量のずらしで $J[1,1,1,1,1]$ と $J[2,1,1,0,1]$ に移った。ずらした被積分関数と族の伝播関数の積の差は、有理式として0だった。これらと対抗項の $J_1[2,1]$ を、FeynHelpers 2 を通して Kira と FIRE で簡約した。どちらにも、同じマスター積分を優先するよう指定した。FIRE は対称性で等しい積分（点の付く線だけが違う日没型など）を別々に残すので、FeynCalc の \texttt{FCLoopFindIntegralMappings} で一つにそろえてから比べた。三つの積分の簡約は、記号として完全に一致した。$m=\bar\mu=1$ の単位で（$s=p^2$）、
+\paragraph{手順 (16)：図と IBP 簡約。}FeynArts の2ループの自己エネルギーの図は10個だった（図~\ref{fig:twoloopall}）。タドポールを含まないものは3個で、そのうち1粒子既約なものは2個（kite と rainbow、どちらも対称性因子 $\frac12$）である。残りの7個はタドポールを含み、$Y$ の挿入と打ち消し合う（\ref{app:twoloop}）。二つの振幅は、運動量のずらしで $J[1,1,1,1,1]$ と $J[2,1,1,0,1]$ に移った。ずらした被積分関数と族の伝播関数の積の差は、有理式として0だった。これらと対抗項の $J_1[2,1]$ を、FeynHelpers 2 を通して Kira と FIRE で簡約した。どちらにも、同じマスター積分を優先するよう指定した。FIRE は対称性で等しい積分（点の付く線だけが違う日没型など）を別々に残すので、FeynCalc の \texttt{FCLoopFindIntegralMappings} で一つにそろえてから比べた。三つの積分の簡約は、記号として完全に一致した。$m=\bar\mu=1$ の単位で（$s=p^2$）、
 \begin{equation}
 \begin{aligned}
 \hat\Sigma={}&e^{2\epsilon\gamma_E}\Bigl[\frac M2-\frac{(2-3\epsilon)(2-s)}{2s(4-s)}S+\frac{(1-s)(9-s)}{3s(4-s)}T+\frac{(1-\epsilon)(2-s)}{2s(4-s)}I+\frac{1-\epsilon}3AB
@@ -1063,6 +1312,120 @@ $\alpha(m)=0.1$、$\Lambda=10^3m$ & 切断に依存する部分/普遍的な部�
 \label{eq:shat}
 \end{equation}
 を得た。マスター積分は、$A=J_1[1,0]$、$B=J_1[1,1]$、$AB=J[1,1,1,0,0]$、$I=J[1,0,1,0,1]$（真空の日没型）、$S=J[0,1,1,0,1]$（日没型）、$T=J[0,1,1,0,2]$（点の付いた日没型）、$U=J[1,1,1,0,1]$（伝播関数4本）、$M=J[1,1,1,1,1]$（kite）である。優先した7個のうち $A^2=J[1,0,1,0,0]$ は、係数が0になって現れない。係数の極は $1/\epsilon$ の一つだけで、対抗項の項にしかない。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+% 1: bubble with a tadpole on an internal line
+\begin{scope}[shift={(0,0)}]
+  \draw[prop] (-1.2,0) -- (-0.55,0) (0.55,0) -- (1.2,0);
+  \draw[prop] (0,0) circle (0.55);
+  \draw[prop] (0,-0.55) -- (0,-0.9);
+  \draw[prop] (0,-1.18) circle (0.28);
+  \foreach \p in {(-0.55,0),(0.55,0),(0,-0.55),(0,-0.9)} \node[vtx] at \p {};
+  \node[lab,font=\footnotesize] at (0,-1.8) {1};
+\end{scope}
+% 2: kite
+\begin{scope}[shift={(3.3,0)}]
+  \draw[prop] (-1.2,0) -- (-0.6,0) (0.6,0) -- (1.2,0);
+  \draw[prop] (0,0) circle (0.6);
+  \draw[prop] (0,0.6) -- (0,-0.6);
+  \foreach \a in {0,90,180,270} \node[vtx] at (\a:0.6) {};
+  \node[lab,font=\footnotesize] at (0,-1.8) {2（kite）};
+\end{scope}
+% 3: rainbow
+\begin{scope}[shift={(6.6,0)}]
+  \draw[prop] (-1.2,0) -- (-0.6,0) (0.6,0) -- (1.2,0);
+  \draw[prop] (0,0) circle (0.6);
+  \draw[prop] (135:0.6) .. controls (-0.2,0.15) and (0.2,0.15) .. (45:0.6);
+  \foreach \a in {0,45,135,180} \node[vtx] at (\a:0.6) {};
+  \node[lab,font=\footnotesize] at (0,-1.8) {3（rainbow）};
+\end{scope}
+% 4: two-loop tadpole (bubble, then a tadpole) on the external vertex
+\begin{scope}[shift={(9.9,0)}]
+  \draw[prop] (-1.2,0) -- (1.2,0) (0,0) -- (0,-0.3) (0,-0.8) -- (0,-1.0);
+  \draw[prop] (0,-0.55) circle (0.25);
+  \draw[prop] (0,-1.25) circle (0.25);
+  \foreach \p in {(0,0),(0,-0.3),(0,-0.8),(0,-1.0)} \node[vtx] at \p {};
+  \node[lab,font=\footnotesize] at (0,-1.8) {4};
+\end{scope}
+% 5: two-loop tadpole (loop with a chord) on the external vertex
+\begin{scope}[shift={(13.2,0)}]
+  \draw[prop] (-1.2,0) -- (1.2,0) (0,0) -- (0,-0.35);
+  \draw[prop] (0,-0.8) circle (0.45);
+  \draw[prop] ($(0,-0.8)+(205:0.45)$) -- ($(0,-0.8)+(335:0.45)$);
+  \foreach \p in {(0,0),(0,-0.35),($(0,-0.8)+(205:0.45)$),($(0,-0.8)+(335:0.45)$)} \node[vtx] at \p {};
+  \node[lab,font=\footnotesize] at (0,-1.8) {5};
+\end{scope}
+% 6: chain of two bubbles
+\begin{scope}[shift={(0,-2.9)}]
+  \draw[prop] (-1.35,0) -- (-0.98,0) (-0.22,0) -- (0.22,0) (0.98,0) -- (1.35,0);
+  \draw[prop] (-0.6,0) circle (0.38) (0.6,0) circle (0.38);
+  \foreach \v in {-0.98,-0.22,0.22,0.98} \node[vtx] at (\v,0) {};
+  \node[lab,font=\footnotesize] at (0,-1.45) {6（1粒子可約）};
+\end{scope}
+% 7: tadpole, then a bubble
+\begin{scope}[shift={(3.3,-2.9)}]
+  \draw[prop] (-1.3,0) -- (0.05,0) (0.85,0) -- (1.3,0) (-0.7,0) -- (-0.7,-0.35);
+  \draw[prop] (-0.7,-0.63) circle (0.28);
+  \draw[prop] (0.45,0) circle (0.4);
+  \foreach \p in {(-0.7,0),(-0.7,-0.35),(0.05,0),(0.85,0)} \node[vtx] at \p {};
+  \node[lab,font=\footnotesize] at (0,-1.45) {7};
+\end{scope}
+% 8: bubble, then a tadpole
+\begin{scope}[shift={(6.6,-2.9)}]
+  \draw[prop] (-1.3,0) -- (-0.85,0) (-0.05,0) -- (1.3,0) (0.7,0) -- (0.7,-0.35);
+  \draw[prop] (0.7,-0.63) circle (0.28);
+  \draw[prop] (-0.45,0) circle (0.4);
+  \foreach \p in {(0.7,0),(0.7,-0.35),(-0.05,0),(-0.85,0)} \node[vtx] at \p {};
+  \node[lab,font=\footnotesize] at (0,-1.45) {8};
+\end{scope}
+% 9: two tadpoles
+\begin{scope}[shift={(9.9,-2.9)}]
+  \draw[prop] (-1.3,0) -- (1.3,0) (-0.5,0) -- (-0.5,-0.35) (0.5,0) -- (0.5,-0.35);
+  \draw[prop] (-0.5,-0.63) circle (0.28) (0.5,-0.63) circle (0.28);
+  \foreach \p in {(-0.5,0),(-0.5,-0.35),(0.5,0),(0.5,-0.35)} \node[vtx] at \p {};
+  \node[lab,font=\footnotesize] at (0,-1.45) {9};
+\end{scope}
+% 10: a tadpole of two tadpoles on the external vertex
+\begin{scope}[shift={(13.2,-2.9)}]
+  \draw[prop] (-1.2,0) -- (1.2,0) (0,0) -- (0,-0.35) (0,-0.35) -- (-0.42,-0.62) (0,-0.35) -- (0.42,-0.62);
+  \draw[prop] (-0.42,-0.88) circle (0.26) (0.42,-0.88) circle (0.26);
+  \foreach \p in {(0,0),(0,-0.35),(-0.42,-0.62),(0.42,-0.62)} \node[vtx] at \p {};
+  \node[lab,font=\footnotesize] at (0,-1.45) {10};
+\end{scope}
+% cancellation of a tadpole against the linear term
+\begin{scope}[shift={(-0.6,-5.75)}]
+  \draw[prop] (0,0) -- (0.7,0);
+  \draw[prop] (0.98,0) circle (0.28);
+  \node[vtx] at (0.7,0) {};
+  \node at (1.6,0) {$+$};
+  \draw[prop] (1.95,0) -- (2.7,0);
+  \node[ctv] at (2.7,0) {};
+  \node at (3.3,0) {$=0$};
+  \node[lab,font=\footnotesize] at (1.6,-0.75) {$T^{(1)}+iY^{(1)}=0$};
+  \node at (4.3,0) {$\Longrightarrow$};
+  \begin{scope}[shift={(6.0,0.25)}]
+    \draw[prop] (-1.1,0) -- (-0.5,0) (0.5,0) -- (1.1,0);
+    \draw[prop] (0,0) circle (0.5);
+    \draw[prop] (0,-0.5) -- (0,-0.8);
+    \draw[prop] (0,-1.06) circle (0.26);
+    \foreach \p in {(-0.5,0),(0.5,0),(0,-0.5),(0,-0.8)} \node[vtx] at \p {};
+  \end{scope}
+  \node at (7.55,0) {$+$};
+  \begin{scope}[shift={(9.1,0.25)}]
+    \draw[prop] (-1.1,0) -- (-0.5,0) (0.5,0) -- (1.1,0);
+    \draw[prop] (0,0) circle (0.5);
+    \draw[prop] (0,-0.5) -- (0,-0.95);
+    \foreach \p in {(-0.5,0),(0.5,0),(0,-0.5)} \node[vtx] at \p {};
+    \node[ctv] at (0,-0.95) {};
+  \end{scope}
+  \node at (10.65,0) {$=0$};
+\end{scope}
+\end{tikzpicture}
+\caption{FeynArts が作った $d=4$ の2ループの自己エネルギーの図10個（手順 (16) (a)、番号は FeynArts の順で、\texttt{twoloop4\_feyncalc.wl} の表示と同じ）。2 と 3 が1PI の kite と rainbow、6 は1ループの泡を2つつないだ1粒子既約でない図で、残りの7個はタドポールを含む。下：打ち消しの例。1ループの1点関数（タドポール）$T^{(1)}$ と線形項の頂点 $iY^{(1)}$ の和が0になるように $Y^{(1)}$ を選ぶと、図1は、そのタドポールを $iY^{(1)}$ に替えた図と打ち消し合う。どの位置のタドポールも、同じ位置に線形項の頂点を付けた図と同じように消える（\ref{app:twoloop}）。}
+\label{fig:twoloopall}
+\end{figure}
 
 \paragraph{マスター積分。}マスター積分を、$s=-1$、$1$、$5$、$12$ の4点で求めた。閾値の下、質量殻の上、2粒子と3粒子の閾値（$s=4$、$9$）の間、両方の上である。AMFlow は補助質量の流れの方法で、Kira の IBP 簡約と微分方程式から、各マスター積分を30桁で $\epsilon^2$ まで求めた。比べるときは、すべて TSIL の「太字」の積分の規格化（ユークリッドの測度 $e^{\epsilon\gamma_E}\dd^Dk/\pi^{D/2}$、\ref{app:twoloop}）にそろえた。結果を表~\ref{tab:twoloop} に示す。TSIL の倍精度の値は、8個のマスター積分のすべての $\epsilon$ の係数で、AMFlow と相対 $7.5\times10^{-14}$ 以内で一致した。pySecDec の扇形分解は、閾値の上では積分路を変形して、2ループのマスター積分5個を AMFlow と相対 $2\times10^{-9}$ 以内で再現した。差は pySecDec の誤差の見積もりの4倍以内である。feyntrop のトロピカル・モンテカルロは、有限な kite $M$ を4点とも誤差（相対 $10^{-4}$〜$7\times10^{-4}$）の範囲で再現した。四つの方法は互いに独立で、TSIL は $s$ についての微分方程式、AMFlow は補助質量についての微分方程式、pySecDec と feyntrop は Feynman パラメータの数値積分を使う。
 
@@ -1745,7 +2108,7 @@ T_l''+\Bigl[\frac{2l+3}{x}+2\,\frac{I_{l+2}(x)}{I_{l+1}(x)}\Bigr]T_l'=f\,T_l,\qq
 \end{equation*}
 を得る（モードあたり）。値は $0.0222392$ である。これは文献~\cite{dunnemin} の式 (3.13) を本ノートの変数に直したもの（$\Phi_\infty=A/3$、$\Phi_0=-f_0/3$）と同じである。独立な確認として、自由な演算子の質量を $\sqrt{1\pm\lambda}$ として $T_1(\infty;\pm\lambda)$ を求め、中心差分（$\lambda=10^{-3}$ と $5\times10^{-4}$ の Richardson 外挿）で傾きを取った。閉じた形の値と相対 $9\times10^{-12}$ で一致した。
 
-\paragraph{繰り込み。}$G_0=(-\partial_x^2+1)^{-1}$ として、$\ln\det(M/M_0)=\mathrm{Tr}\ln(1+G_0f)=\mathrm{Tr}[G_0f]-\frac12\mathrm{Tr}[G_0fG_0f]+O(f^3)$ と展開する。崩壊率の指数には $\frac12$ を掛けて入る。1次の項は、1点関数（タドポール）を $\int\phi_B$ に掛けたものである。$Y$ はタドポールを打ち消すように決めてあるので、この項は作用の中の $Y$ の項と、発散も有限部分も含めて打ち消し合う。2次の項は自己エネルギーの図で、対数発散する。この発散は、質量の対抗項 $\frac12\delta_m\int\phi_B^2$ で消える（$d=4$ の唯一の発散、式~\eqref{eq:ct4}）。$\overline{\mathrm{MS}}$ の値は、運動量空間で
+\paragraph{繰り込み。}$G_0=(-\partial_x^2+1)^{-1}$ として、$\ln\det(M/M_0)=\mathrm{Tr}\ln(1+G_0f)=\mathrm{Tr}[G_0f]-\frac12\mathrm{Tr}[G_0fG_0f]+O(f^3)$ と展開する（図~\ref{fig:ring}）。崩壊率の指数には $\frac12$ を掛けて入る。1次の項は、1点関数（タドポール）を $\int\phi_B$ に掛けたものである。$Y$ はタドポールを打ち消すように決めてあるので、この項は作用の中の $Y$ の項と、発散も有限部分も含めて打ち消し合う。2次の項は自己エネルギーの図で、対数発散する。この発散は、質量の対抗項 $\frac12\delta_m\int\phi_B^2$ で消える（$d=4$ の唯一の発散、式~\eqref{eq:ct4}）。$\overline{\mathrm{MS}}$ の値は、運動量空間で
 \begin{gather*}
 A_2(\mu)\equiv\Bigl[-\frac12\mathrm{Tr}(G_0fG_0f)\Bigr]_{\overline{\mathrm{MS}}}=-\frac12\int\frac{\dd^4p}{(2\pi)^4}\,|\tilde f(p)|^2\,\frac{B_0^E(p^2)}{(4\pi)^2},\\
 B_0^E=2-\beta\ln\frac{\beta+1}{\beta-1}+\ln\frac{\mu^2}{m^2},\qquad\beta=\sqrt{1+\frac{4m^2}{p^2}}
@@ -1800,7 +2163,7 @@ S_B=\frac{C_4m^2}{g^2}=\frac{C_4m_{\mathrm p}^2}{g_{\mathrm{os}}^2}+\frac{C_4}{(
 
 \section{2ループの自己エネルギーの導出}\label{app:twoloop}
 
-\paragraph{図の値。}Feynman 則（頂点 $-ig\mu^\epsilon$、伝播関数 $i/(q^2-m^2)$、質量の対抗項 $-i\delta_m$）のとおりに、2ループの 1PI の図の値を書く。$D_1=q_1^2-m^2$、$D_2=(q_1-p)^2-m^2$、$D_3=q_2^2-m^2$、$D_4=(q_2-p)^2-m^2$、$D_5=(q_1-q_2)^2-m^2$ とする。kite（伝播関数5本）と自己エネルギーを挿入した図（rainbow）の対称性因子はどちらも $\frac12$ で、
+\paragraph{図の値。}Feynman 則（頂点 $-ig\mu^\epsilon$、伝播関数 $i/(q^2-m^2)$、質量の対抗項 $-i\delta_m$）のとおりに、2ループの 1PI の図の値を書く。$D_1=q_1^2-m^2$、$D_2=(q_1-p)^2-m^2$、$D_3=q_2^2-m^2$、$D_4=(q_2-p)^2-m^2$、$D_5=(q_1-q_2)^2-m^2$ とする。kite（伝播関数5本）と自己エネルギーを挿入した図（rainbow、図~\ref{fig:twoloopdiag}）の対称性因子はどちらも $\frac12$ で、
 \begin{equation*}
 V_2^{\mathrm{kite}}=\frac12(-ig\mu^\epsilon)^4\int\!\!\int\frac{\dd^Dq_1\,\dd^Dq_2}{(2\pi)^{2D}}\frac{i^5}{D_1D_2D_3D_4D_5}
 =\frac{ig^4\mu^{4\epsilon}}2\int\!\!\int\frac{\dd^Dq_1\,\dd^Dq_2}{(2\pi)^{2D}}\frac{1}{D_1D_2D_3D_4D_5}
@@ -1824,7 +2187,7 @@ V_2^{\mathrm{ct}}=g^2\delta_m\,\mu^{2\epsilon}\int\frac{\dd^Dq}{(2\pi)^D}\frac1{
 
 \paragraph{有限であること。}式~\eqref{eq:omega} の $d=4$ の形では、2点関数（$E=2$）の2ループの図は $V=4$ で $\omega=-2$ であり、全体の発散はない。部分の図を見ると、kite の1ループの部分は三角形（$\omega=-2$）で有限である。rainbow の内側の泡は $\omega=0$ で発散するが、その極は外運動量によらない定数 $-g^2/(32\pi^2\epsilon)=-\delta_m$ で、同じ線への $\delta_m$ の挿入とちょうど打ち消す。残る外側の積分は $\omega<0$ で収束する。したがって $\hat\Sigma$ の極は消え、2ループの対抗項 $\delta_m^{(2)}$、$\delta_Z^{(2)}$ は要らない。これは\ref{app:rg} の「$\delta_m$ は1ループの値のまま」の $O(g^4)$ での確認である。
 
-\paragraph{タドポールを含む図。}FeynArts の2ループの自己エネルギーの10個の図のうち7個は、1点の部分の図（タドポール）を含む。タドポール $T$ は零運動量の線1本と3点の頂点を通して残りの図につながる。同じ位置に線形項 $Y\phi$ の頂点 $iY$ を付けた図は、同じ線と頂点を通してつながる。$Y$ を各次数で1点関数が消えるように選ぶと、その次数で $T+iY=0$ なので、二つの図は打ち消し合う。1ループのタドポールを含む2ループの図は $Y^{(1)}$ の挿入と、2ループのタドポールを含む図は $Y^{(2)}$ と消える。ループの内側に付いた場合も、外線に付いた場合と同じ議論が成り立つ。したがって、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除けばよい。残る3個のうち1個は1粒子既約でない（1ループの泡を2つつないだもの）ので、1PI の図は2個である。
+\paragraph{タドポールを含む図。}FeynArts の2ループの自己エネルギーの10個の図（図~\ref{fig:twoloopall}）のうち7個は、1点の部分の図（タドポール）を含む。タドポール $T$ は零運動量の線1本と3点の頂点を通して残りの図につながる。同じ位置に線形項 $Y\phi$ の頂点 $iY$ を付けた図は、同じ線と頂点を通してつながる。$Y$ を各次数で1点関数が消えるように選ぶと、その次数で $T+iY=0$ なので、二つの図は打ち消し合う。1ループのタドポールを含む2ループの図は $Y^{(1)}$ の挿入と、2ループのタドポールを含む図は $Y^{(2)}$ と消える。ループの内側に付いた場合も、外線に付いた場合と同じ議論が成り立つ。したがって、FeynArts でタドポールの位相（\texttt{Tadpoles}）を除けばよい。残る3個のうち1個は1粒子既約でない（1ループの泡を2つつないだもの）ので、1PI の図は2個である。
 
 \paragraph{マスター積分と TSIL の規格化。}IBP 簡約の後、$\hat\Sigma$ は八つのマスター積分 $J_1[1,0]$（$A$）、$J_1[1,1]$（$B$）、$J[1,1,1,0,0]$（$AB$）、$J[1,0,1,0,1]$（真空の日没型 $I$）、$J[0,1,1,0,1]$（日没型 $S$）、$J[0,1,1,0,2]$（$T$）、$J[1,1,1,0,1]$（伝播関数4本の $U$）、$J[1,1,1,1,1]$（kite $M$）で書ける（式~\eqref{eq:shat}）。TSIL の「太字」の積分は、ユークリッドの測度 $e^{\epsilon\gamma_E}\dd^Dk/\pi^{D/2}$ をループごとに持ち、伝播関数は $1/(k^2+m^2)$ である~\cite{tsil}。上の Wick 回転から、$L$ ループの積分について
 \begin{equation*}
