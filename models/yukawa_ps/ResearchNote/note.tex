@@ -31,6 +31,7 @@
             (path picture bounding box.south west) -- (path picture bounding box.north east);}},
   mom/.style={-{Stealth[length=1.6mm]},thin},
   lab/.style={font=\small,align=center},
+  bgx/.style={font=\small,inner sep=0pt},
 }
 
 \title{擬スカラー湯川理論：1ループの構造と検算（$d=4$）}
@@ -460,7 +461,7 @@ R_\psi=1+\frac{y^2}{(4\pi)^2}\Bigl[B_1^{Mm}+2M^2\bigl(B_0^{Mm\prime}+B_1^{Mm\pri
 \end{equation}
 である（\ref{app:scat}）。$B$ はすべて $p^2=M^2$ での値である。$M_{\mathrm p}$ は $\mu$ によらず（$\mu\,\partial(B_0+B_1)/\partial\mu=1$ と $\gamma_M$ が打ち消す）、外線のフェルミオン1本ごとに S 行列要素に $R_\psi^{1/2}$ が掛かる。これらは $\psi\bar\psi\to\phi\phi$ の1ループの S 行列要素（手順 (5)）で使う。
 
-\paragraph{1ループの $\psi\bar\psi\to\phi\phi$。}外線にフェルミオンを持つ過程の1ループの振幅も、手で閉じた形に書ける。外線の補正を除いた1ループの図は、内線のフェルミオンの自己エネルギー（$t$、$u$ チャンネルに1つずつ）、頂点の補正（4つ）、箱（2つ）、$\phi$ の2本の内線が4点頂点で終わる三角形（$\lambda$ の三角形、1つ）、$s$ チャンネルの $\phi$ にフェルミオンの三角形が付いた図（2つ）の11個である。最後の2つはトレースが $\gamma^5$ と3個以下の $\gamma$ 行列しか含まないので0になる。Dirac 方程式と $k_2=p_1+p_2-k_1$ を使うと、どの図も二つのスピノルの構造 $\bar v(p_2)u(p_1)$ と $\bar v(p_2)\slashed k_1u(p_1)$ だけで書ける（$\bar v(p_2)(\slashed p_1+\slashed p_2)u(p_1)=0$ なので $\bar v\slashed k_2u=-\bar v\slashed k_1u$）。木の振幅は $b^{(0)}\bar v\slashed k_1u$、$b^{(0)}=y^2[1/(t-M^2)-1/(u-M^2)]$ である。$\MSbar$ で繰り込んだ1ループの振幅は
+\paragraph{1ループの $\psi\bar\psi\to\phi\phi$。}外線にフェルミオンを持つ過程の1ループの振幅も、手で閉じた形に書ける。外線の補正を除いた1ループの図は、内線のフェルミオンの自己エネルギー（$t$、$u$ チャンネルに1つずつ）、頂点の補正（4つ）、箱（2つ）、$\phi$ の2本の内線が4点頂点で終わる三角形（$\lambda$ の三角形、1つ）、$s$ チャンネルの $\phi$ にフェルミオンの三角形が付いた図（2つ）の11個である（図~\ref{fig:loopB}）。最後の2つはトレースが $\gamma^5$ と3個以下の $\gamma$ 行列しか含まないので0になる。Dirac 方程式と $k_2=p_1+p_2-k_1$ を使うと、どの図も二つのスピノルの構造 $\bar v(p_2)u(p_1)$ と $\bar v(p_2)\slashed k_1u(p_1)$ だけで書ける（$\bar v(p_2)(\slashed p_1+\slashed p_2)u(p_1)=0$ なので $\bar v\slashed k_2u=-\bar v\slashed k_1u$）。木の振幅は $b^{(0)}\bar v\slashed k_1u$、$b^{(0)}=y^2[1/(t-M^2)-1/(u-M^2)]$ である。$\MSbar$ で繰り込んだ1ループの振幅は
 \begin{equation}
 \begin{aligned}
 (4\pi)^2\mathcal M_B^{(1)}={}&a\,\bar v(p_2)u(p_1)+b\,\bar v(p_2)\slashed k_1u(p_1),\\
@@ -482,6 +483,76 @@ b={}&y^4\sum_{x=t,u}\sigma_x\Bigl\{\frac{(x+M^2)B_1(x)+2M^2B_0(x)}{(x-M^2)^2}-\f
 \label{eq:unitB}
 \end{equation}
 を満たす（\ref{app:scatB}）。右辺の第1項は $\psi\bar\psi$ の中間状態（$|\boldsymbol q|=p$）、第2項は $\phi\phi$ の中間状態（$|\boldsymbol q|=k$、同種粒子の $\frac12$）で、外線のスピンを固定した等式である。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-0.9,-1.0) -- (0,-0.6);
+  \draw[fermion] (0,-0.6) -- (0,0.6);
+  \draw[fermion] (0,0.6) -- (-0.9,1.0);
+  \draw[scalar] (0,-0.6) -- (0.8,0) (0,0.6) -- (0.8,0) (0.8,0) -- (1.5,-0.6) (0.8,0) -- (1.5,0.6);
+  \node[vtx] at (0,-0.6) {}; \node[vtx] at (0,0.6) {}; \node[vtx] at (0.8,0) {};
+  \node[lab] at (0.3,-1.6) {(a) $\lambda$ の三角形（1）};
+\end{scope}
+\begin{scope}[shift={(4.6,0)}]
+  \draw[fermion] (-1.0,-0.6) -- (-0.45,0);
+  \draw[fermion] (-0.45,0) -- (-1.0,0.6);
+  \draw[scalar] (-0.45,0) -- (0.2,0);
+  \coordinate (A) at (0.2,0); \coordinate (B) at (0.85,0.5); \coordinate (C) at (0.85,-0.5);
+  \draw[fermion] (A) -- (B); \draw[fermion] (B) -- (C); \draw[fermion] (C) -- (A);
+  \draw[scalar] (B) -- (1.45,0.85) (C) -- (1.45,-0.85);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (A) {}; \node[vtx] at (B) {}; \node[vtx] at (C) {};
+  \node[lab] at (0.2,-1.6) {(b) $s$ チャンネルの三角形（2、0になる）};
+\end{scope}
+\begin{scope}[shift={(9.4,0)}]
+  \draw[fermion] (-0.9,-1.15) -- (0,-0.8);
+  \draw[fermion] (0,-0.8) -- (0,-0.35);
+  \draw[fermion] (0,-0.35) -- (0,0.35);
+  \draw[fermion] (0,0.35) -- (0,0.8);
+  \draw[fermion] (0,0.8) -- (-0.9,1.15);
+  \draw[scalar] (0,0.35) arc (90:270:0.35);
+  \draw[scalar] (0,-0.8) -- (0.9,-1.15) (0,0.8) -- (0.9,1.15);
+  \node[vtx] at (0,-0.8) {}; \node[vtx] at (0,-0.35) {}; \node[vtx] at (0,0.35) {}; \node[vtx] at (0,0.8) {};
+  \node[lab] at (0,-1.6) {(c) 自己エネルギー（2）};
+\end{scope}
+\begin{scope}[shift={(0,-3.6)}]
+  \draw[fermion] (-0.9,-1.25) -- (0,-0.9);
+  \draw[fermion] (0,-0.9) -- (0,-0.35);
+  \draw[fermion] (0,-0.35) -- (0,0.2);
+  \draw[fermion] (0,0.2) -- (0,0.8);
+  \draw[fermion] (0,0.8) -- (-0.9,1.15);
+  \draw[scalar] (0,0.2) arc (90:270:0.55);
+  \draw[scalar] (0,-0.35) -- (0.9,-0.75) (0,0.8) -- (0.9,1.15);
+  \node[vtx] at (0,-0.9) {}; \node[vtx] at (0,-0.35) {}; \node[vtx] at (0,0.2) {}; \node[vtx] at (0,0.8) {};
+  \node[lab] at (0,-1.65) {(d) 頂点の補正、$\psi(p_1)$ の側（2）};
+\end{scope}
+\begin{scope}[shift={(4.6,-3.6)}]
+  \draw[fermion] (-0.9,-1.15) -- (0,-0.8);
+  \draw[fermion] (0,-0.8) -- (0,-0.2);
+  \draw[fermion] (0,-0.2) -- (0,0.35);
+  \draw[fermion] (0,0.35) -- (0,0.9);
+  \draw[fermion] (0,0.9) -- (-0.9,1.25);
+  \draw[scalar] (0,0.9) arc (90:270:0.55);
+  \draw[scalar] (0,-0.8) -- (0.9,-1.15) (0,0.35) -- (0.9,0.75);
+  \node[vtx] at (0,-0.8) {}; \node[vtx] at (0,-0.2) {}; \node[vtx] at (0,0.35) {}; \node[vtx] at (0,0.9) {};
+  \node[lab] at (0,-1.65) {(e) 頂点の補正、$\bar\psi(p_2)$ の側（2）};
+\end{scope}
+\begin{scope}[shift={(9.4,-3.6)}]
+  \draw[fermion] (-0.9,-1.25) -- (0,-0.9);
+  \draw[fermion] (0,-0.9) -- (0,-0.3);
+  \draw[fermion] (0,-0.3) -- (0,0.3);
+  \draw[fermion] (0,0.3) -- (0,0.9);
+  \draw[fermion] (0,0.9) -- (-0.9,1.25);
+  \draw[scalar] (0,0.9) arc (90:270:0.9);
+  \draw[scalar] (0,-0.3) -- (0.9,-0.7) (0,0.3) -- (0.9,0.7);
+  \node[vtx] at (0,-0.9) {}; \node[vtx] at (0,-0.3) {}; \node[vtx] at (0,0.3) {}; \node[vtx] at (0,0.9) {};
+  \node[lab] at (0,-1.65) {(f) 箱（2）};
+\end{scope}
+\end{tikzpicture}
+\caption{1ループの $\psi(p_1)\bar\psi(p_2)\to\phi(k_1)\phi(k_2)$ の図（式~\eqref{eq:M1B}、\ref{app:scatB}）。時間は左から右に流れ、左下から $\psi(p_1)$、左上から $\bar\psi(p_2)$ が入る。各図は $\phi(k_1)$ を下に、$\phi(k_2)$ を上に付けた $t$ チャンネルのもので、$k_1$ と $k_2$ を入れ替えた $u$ チャンネルの図がもう1つずつある（括弧は数）。(b) は $s$ チャンネルの $\phi$ にフェルミオンの三角形が付いた図で、トレースが $\gamma^5$ と3個以下の $\gamma$ 行列しか含まないので0になる。合わせて11個である。}
+\label{fig:loopB}
+\end{figure}
 
 S 行列要素は、外線の運動量とスピノルを極質量で定め、LSZ の簡約公式で外線ごとに留数の平方根 $R_\psi^{1/2}$、$R_\phi^{1/2}$ を掛けて得る。$\phi\phi\to\phi\phi$ では木の振幅が質量によらないので式~\eqref{eq:Mphys} になったが、$\psi\bar\psi\to\phi\phi$ では木の振幅の中のフェルミオンの質量が二か所で効く。交換されるフェルミオンの伝播関数の分母と、Dirac 方程式で消した項 $(M-\slashed p_1)u$ である。後者は外線のスピノルが極質量 $M_{\mathrm p}$ を持つので $(M-M_{\mathrm p})u$ として残り、新しい構造 $\bar vu$ を作る。式~\eqref{eq:Mpole} を使ってまとめると（\ref{app:scatB}）
 \begin{equation}
@@ -505,12 +576,40 @@ b_{\mathrm{phys}}={}&b+y^2\Bigl\{\bigl[B_1+2M^2(B_0'+B_1')\bigr](M^2)-2\bigl[B_0
 \end{aligned}
 \label{eq:sigmatot}
 \end{equation}
-である（\ref{app:sigmatot}）。$p=\sqrt{s/4-m^2}$ と $p_\psi=\sqrt{s/4-M^2}$ は重心系の $\phi$ と $\psi$ の運動量の大きさ、$\sigma_A^{(0)}=\lambda^2/(32\pi s)$ と $\sigma_{\bar B}^{(0)}$ は木の断面積、$\mathcal M_{A,\mathrm{phys}}^{(1)}$ は式~\eqref{eq:Mphys} の1ループの部分（$\mathcal M_{A,\mathrm{phys}}+\lambda$）、$\mathcal M_{B,\mathrm{phys}}^{(1)}$ は式~\eqref{eq:MphysB} の1ループの部分である。$\sigma_A^{(1)}$ では、同種粒子の因子 $\frac12$ と $2\,\mathrm{Re}$ の2が打ち消し合い、$\mathcal M_A^{(0)}=-\lambda$ が掛かっている。$\phi\phi\to\psi\bar\psi$ のスピン和は、時間反転の不変性から、同じ運動量の $\psi\bar\psi\to\phi\phi$ のスピン和に等しい（$t$ は $\psi$ と1番目の $\phi$ の運動量の差の2乗）。$\phi(p_1)\phi(p_2)\to\phi(k)\psi(q_1)\bar\psi(q_2)$ の木の図は、フェルミオンの線に三つの $\phi$ が付く6個（付く順番の数 $3!$）と、4点頂点から出た $\phi$ が $\psi\bar\psi$ になる1個で、振幅は
+である（\ref{app:sigmatot}）。$p=\sqrt{s/4-m^2}$ と $p_\psi=\sqrt{s/4-M^2}$ は重心系の $\phi$ と $\psi$ の運動量の大きさ、$\sigma_A^{(0)}=\lambda^2/(32\pi s)$ と $\sigma_{\bar B}^{(0)}$ は木の断面積、$\mathcal M_{A,\mathrm{phys}}^{(1)}$ は式~\eqref{eq:Mphys} の1ループの部分（$\mathcal M_{A,\mathrm{phys}}+\lambda$）、$\mathcal M_{B,\mathrm{phys}}^{(1)}$ は式~\eqref{eq:MphysB} の1ループの部分である。$\sigma_A^{(1)}$ では、同種粒子の因子 $\frac12$ と $2\,\mathrm{Re}$ の2が打ち消し合い、$\mathcal M_A^{(0)}=-\lambda$ が掛かっている。$\phi\phi\to\psi\bar\psi$ のスピン和は、時間反転の不変性から、同じ運動量の $\psi\bar\psi\to\phi\phi$ のスピン和に等しい（$t$ は $\psi$ と1番目の $\phi$ の運動量の差の2乗）。$\phi(p_1)\phi(p_2)\to\phi(k)\psi(q_1)\bar\psi(q_2)$ の木の図は、フェルミオンの線に三つの $\phi$ が付く6個（付く順番の数 $3!$）と、4点頂点から出た $\phi$ が $\psi\bar\psi$ になる1個で（図~\ref{fig:M3}）、振幅は
 \begin{equation}
 i\mathcal M_3=-\bar u(q_1)\Bigl[y^3\sum_{\sigma\in S_3}\frac{(M-\slashed r_1)(\slashed r_2+M)}{(r_1^2-M^2)(r_2^2-M^2)}-\frac{\lambda y}{(q_1+q_2)^2-m^2}\Bigr]\gamma^5v(q_2)
 \label{eq:M3}
 \end{equation}
 である（\ref{app:sigmatot}）。$(a_1,a_2,a_3)=(k,-p_1,-p_2)$ は三つの $\phi$ の出ていく運動量、$\sigma$ は $\phi$ がフェルミオンの線に付く順番の置換で、$r_1=q_1+a_{\sigma(1)}$、$r_2=r_1+a_{\sigma(2)}$ は伝播関数の運動量である。スピン和は $\sum|\mathcal M_3|^2=\mathrm{tr}[(\slashed q_1+M)\Gamma(\slashed q_2-M)\bar\Gamma]$（$\Gamma$ は $\bar u(q_1)$ と $v(q_2)$ に挟まれた行列、$\bar\Gamma=\gamma^0\Gamma^\dagger\gamma^0$）である。粒子はすべて質量を持ち、$m<2M$ なので伝播関数の分母は物理的な領域で0にならない。よって各項は別々に有限である。ただし、$\psi$ または $\bar\psi$ がビームの向きに出るところで $\sum|\mathcal M_3|^2$ はフェルミオンの伝播関数による高い山を持ち、その幅はエネルギーとともに狭くなる。基準点では、全断面積は木の値より $\sqrt s=2.5m$ で $8\%$、$20m$ で $23\%$ 大きい（手順 (6)）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (1.4,-1.15) -- (0.6,-0.7);
+  \draw[fermion] (0.6,-0.7) -- (0.6,0);
+  \draw[fermion] (0.6,0) -- (0.6,0.7);
+  \draw[fermion] (0.6,0.7) -- (1.4,1.15);
+  \draw[scalar] (-0.5,-1.0) -- (0.6,-0.7) (-0.5,1.0) -- (0.6,0.7) (0.6,0) -- (1.5,0);
+  \node[vtx] at (0.6,-0.7) {}; \node[vtx] at (0.6,0) {}; \node[vtx] at (0.6,0.7) {};
+  \node[font=\scriptsize] at (-0.75,-1.05) {$p_1$}; \node[font=\scriptsize] at (-0.75,1.05) {$p_2$};
+  \node[font=\scriptsize] at (1.75,0) {$k$}; \node[font=\scriptsize] at (1.7,1.2) {$q_1$}; \node[font=\scriptsize] at (1.7,-1.2) {$q_2$};
+  \node[lab] at (0.5,-1.75) {(a) $y^3$（付く順番が $3!=6$ 通り）};
+\end{scope}
+\begin{scope}[shift={(6.0,0)}]
+  \draw[scalar] (-0.8,-0.7) -- (0,0) (-0.8,0.7) -- (0,0) (0,0) -- (0.85,0.75) (0,0) -- (0.75,-0.35);
+  \draw[fermion] (1.45,-0.95) -- (0.75,-0.35);
+  \draw[fermion] (0.75,-0.35) -- (1.5,0.1);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.75,-0.35) {};
+  \node[font=\scriptsize] at (-1.05,-0.75) {$p_1$}; \node[font=\scriptsize] at (-1.05,0.75) {$p_2$};
+  \node[font=\scriptsize] at (1.1,0.85) {$k$}; \node[font=\scriptsize] at (1.75,0.15) {$q_1$}; \node[font=\scriptsize] at (1.7,-1.0) {$q_2$};
+  \node[lab] at (0.3,-1.75) {(b) $\lambda y$（1）};
+\end{scope}
+\end{tikzpicture}
+\caption{$\phi(p_1)\phi(p_2)\to\phi(k)\psi(q_1)\bar\psi(q_2)$ の木の図（式~\eqref{eq:M3}）。(a) フェルミオンの線に三つの $\phi$ が付く図で、付く順番が $3!=6$ 通りある。(b) 4点頂点から出た $\phi$ が $\psi\bar\psi$ になる図。時間は左から右に流れる。}
+\label{fig:M3}
+\end{figure}
 
 \section{検算の計画}\label{sec:plan}
 
@@ -876,11 +975,56 @@ E&=-S+\frac52\ln\frac{S}{\pi}-\frac54+6\zeta'(-1)+3\ln\frac{R\mu}{2}+\frac12S^\p
 \end{aligned}
 \label{eq:rate}
 \end{equation}
-である（\ref{app:prefactor}）。$(S/\pi)^{5/2}$ は並進の4つと大きさの1つの零モードの Jacobian、$-\frac54+6\zeta'(-1)+3\ln(R\mu/2)$ は $\phi$ の行列式、残りはフェルミオンの行列式で、$S^\psi_{\mathrm{fin}}$ は部分波の和の有限部分である。$\phi$ の負のモードは $\mathrm{Im}$ をとって $|\,\cdot\,|$ にした。陽な $\mu$ 依存 $3+\frac23w-\frac13w^2$ は $(4\pi)^2\beta_\lambda/\lambda^2$ にちょうど等しく（$2\times10^{-16}$）、$E$ は1ループで $\mu$ によらない。AFS の閉じた形は、本ノートで独立に確かめた。$\phi$ の部分波の行列式の比を Gel'fand--Yaglom の方法（動径方向の方程式）で数値的に求めると、AFS の $\Gamma$ 関数の比と $6\times10^{-11}$ で一致した。フェルミオンの $2\times2$ の動径方向の方程式でも $1\times10^{-9}$ で一致した（比は $\Gamma$ 関数の比の2乗である）。$\phi$ の有限部分の和は厳密な固有値の直接の和と、$\MSbar$ のループの項は Bessel 関数の運動量積分と $8\times10^{-12}$ で一致した。$S^\psi_{\mathrm{fin}}$ は確かめた部分波を引き算して足し上げて求めた（$j\le300$、$10^{-7}$）。
+である（\ref{app:prefactor}）。$(S/\pi)^{5/2}$ は並進の4つと大きさの1つの零モードの Jacobian、$-\frac54+6\zeta'(-1)+3\ln(R\mu/2)$ は $\phi$ の行列式、残りはフェルミオンの行列式で、$S^\psi_{\mathrm{fin}}$ は部分波の和の有限部分である。$\ln(R\mu/2)$ を含む項と $w$、$w^2$ の項は、bounce を外場とする紫外発散する図（図~\ref{fig:bgfield} (a)〜(c)）を部分波の和から引き、$\MSbar$ で足し戻したものである。$\phi$ の負のモードは $\mathrm{Im}$ をとって $|\,\cdot\,|$ にした。陽な $\mu$ 依存 $3+\frac23w-\frac13w^2$ は $(4\pi)^2\beta_\lambda/\lambda^2$ にちょうど等しく（$2\times10^{-16}$）、$E$ は1ループで $\mu$ によらない。AFS の閉じた形は、本ノートで独立に確かめた。$\phi$ の部分波の行列式の比を Gel'fand--Yaglom の方法（動径方向の方程式）で数値的に求めると、AFS の $\Gamma$ 関数の比と $6\times10^{-11}$ で一致した。フェルミオンの $2\times2$ の動径方向の方程式でも $1\times10^{-9}$ で一致した（比は $\Gamma$ 関数の比の2乗である）。$\phi$ の有限部分の和は厳密な固有値の直接の和と、$\MSbar$ のループの項は Bessel 関数の運動量積分と $8\times10^{-12}$ で一致した。$S^\psi_{\mathrm{fin}}$ は確かめた部分波を引き算して足し上げて求めた（$j\le300$、$10^{-7}$）。
 
 $w$ は $\lambda\to0^-$ で $-\infty$ になり、フェルミオンの項は $w^2\sim144y^4/\lambda^2$ のように大きくなる。$\mu=1/R$ では対数も大きい。bounce の中心のフェルミオンの質量は $y\phi_b(0)=2\sqrt{|w|}/R$ と $1/R$ より大きいからである。そこで、$E$ を $\mu$ について停留させる $\mu^*$（$E$ の極小）を中心の値とし、$\mu^*/2$ と $2\mu^*$ の値を幅とした。表~\ref{tab:prefactor} と図~\ref{fig:prefactor} 左に基準点の結果を示す。$\mu^*\approx(1.6$〜$2.4)/R$ で、そこではループの項の和も小さい。1ループの指数は木の評価 $-16\pi^2/|\lambda(1/R)|$ より大きく（崩壊が速く）、その差は $1/R=10^4m$ では $0.3\%$ だが、$10^3m$ で $10\%$、$10^2m$ で $28\%$ になる。主にフェルミオンの行列式の寄与である。幅の $|E|$ に対する比は、$1/R=10^4m$ で $0.02$、$10^3m$ で $0.06$、$300m$ で $0.11$ だが、$100m$ で $0.26$、$40m$ で $0.85$ と大きくなる。$\lambda$ の零点 $\mu_0=19.49m$ に近づくと、1ループの展開は制御できなくなる。
 
 宇宙論的な条件として、$\phi^3+\phi^4$ のノートと同じくヒッグスに読み替え（$m=m_h$）、$\Gamma/V<H_0^4$、すなわち $\ln(\Gamma/(Vm^4))<-4\ln(m_h/H_0)=-404.7$ を求めた。崩壊は理論の切断 $\Lambda$ の近くの bounce で決まるので（手順 (9)）、条件は $\Lambda$ の上限 $\Lambda_{\max}$ を与える。木の評価では基準点で $\Lambda_{\max}=41.8m=2.14\mu_0$ で、そこでは $S=413$、$w=-41$ である。結合を変えると、$\Lambda_{\max}/\mu_0$ は $1.2$〜$32$ で、$y$ が小さく $\lambda$ が小さいほど大きい（表~\ref{tab:lmax}、図~\ref{fig:prefactor} 右）。$\lambda(m)/y(m)^2>r_+$ の点では $\lambda$ は負にならず、この限界はない。どの点でも $\Lambda_{\max}$ での $|w|$ は20以上で、1ループの補正はそこで木と同じ程度になる。フェルミオンの行列式は崩壊を速めるので、$\Lambda_{\max}$ を下げる向きに働くが、その大きさはこの次数では決まらない。したがって、確かな結論は、真空を保つには新しい物理が $\lambda$ の零点の数倍以内に現れなければならない、ということである。$\Lambda_{\max}$ の精密な値には、$\lambda\approx0$ の近くでフェルミオンの寄与 $y^4/\lambda^2$ を足し上げる必要がある（手順 (11)）。スクリプトは \texttt{prefactor\_numeric.py} で、\texttt{run\_prefactor\_check.sh} で再実行できる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (0,0) circle (0.55);
+  \draw[scalar] (-0.55,0) -- (-1.05,0.45) (-0.55,0) -- (-1.05,-0.45) (0.55,0) -- (1.05,0.45) (0.55,0) -- (1.05,-0.45);
+  \node[bgx] at (-1.1,0.5) {$\times$}; \node[bgx] at (-1.1,-0.5) {$\times$}; \node[bgx] at (1.1,0.5) {$\times$}; \node[bgx] at (1.1,-0.5) {$\times$};
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+  \node[lab] at (0,-1.55) {(a) $\phi$ のループ、\\$\frac\lambda2\phi_b^2$ の挿入2つ};
+\end{scope}
+\begin{scope}[shift={(3.9,0)}]
+  \draw[fermion] (0.55,0) arc (0:180:0.55);
+  \draw[fermion] (-0.55,0) arc (180:360:0.55);
+  \draw[scalar] (-0.55,0) -- (-1.1,0) (0.55,0) -- (1.1,0);
+  \node[bgx] at (-1.17,0) {$\times$}; \node[bgx] at (1.17,0) {$\times$};
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+  \node[lab] at (0,-1.55) {(b) $\psi$ のループ、\\$y\phi_b$ の挿入2つ（$w$）};
+\end{scope}
+\begin{scope}[shift={(7.8,0)}]
+  \draw[fermion] (0.389,0.389) arc (45:135:0.55);
+  \draw[fermion] (-0.389,0.389) arc (135:225:0.55);
+  \draw[fermion] (-0.389,-0.389) arc (225:315:0.55);
+  \draw[fermion] (0.389,-0.389) arc (315:405:0.55);
+  \foreach \a in {45,135,225,315} {
+    \draw[scalar] (\a:0.55) -- (\a:1.0);
+    \node[bgx] at (\a:1.07) {$\times$};
+    \node[vtx] at (\a:0.55) {};
+  }
+  \node[lab] at (0,-1.55) {(c) $\psi$ のループ、\\挿入4つ（$w^2$）};
+\end{scope}
+\begin{scope}[shift={(11.7,0)}]
+  \foreach \a in {0,60,120,180,240,300} \draw[fermion] (\a:0.55) arc ({\a}:{\a+60}:0.55);
+  \foreach \a in {0,60,120,180,240,300} {
+    \draw[scalar] (\a:0.55) -- (\a:1.0);
+    \node[bgx] at (\a:1.07) {$\times$};
+    \node[vtx] at (\a:0.55) {};
+  }
+  \node[font=\small] at (1.55,0.75) {$+\cdots$};
+  \node[lab] at (0,-1.55) {(d) 運動量0の挿入\\の和 $=V_\psi(\phi_b)$};
+\end{scope}
+\end{tikzpicture}
+\caption{bounce $\phi_b$ を外場（$\times$）とする1ループの図。(a) $\phi$ のゆらぎのループに $V''(\phi_b)=\frac\lambda2\phi_b^2$ を2回挿入した図で、$\phi$ の行列式の $3\ln(R\mu/2)$ を含む項を与える。(b)、(c) フェルミオンのループに $y\phi_b$ を2回、4回挿入した図で、式~\eqref{eq:rate} の $w$ と $w^2$ の項を与える（$y^2\phi_b^2\propto w$）。手順 (10) では、これらの紫外発散する図を部分波の和から引き、$\MSbar$ で計算して足し戻した（\ref{app:prefactor}）。(d) 運動量0の $y\phi_b$ を偶数個付けたフェルミオンのループの和は、有効ポテンシャル~\eqref{eq:cw} のフェルミオンの項である。}
+\label{fig:bgfield}
+\end{figure}
 
 \begin{table}[tbp]
 \centering\small
@@ -941,7 +1085,7 @@ Z_\psi=-\frac{2y^2}{(4\pi)^2}\Bigl(\ln\frac{y^2\phi^2}{\mu^2}+\frac23\Bigr)
 \end{gathered}
 \label{eq:derexp}
 \end{equation}
-となる（\ref{app:resum}）。$V_\psi$ は式~\eqref{eq:cw} の有効ポテンシャルのフェルミオンの項~\cite{cw} である。Fubini の解の上で積分すると、式~\eqref{eq:rate} のフェルミオンの部分について
+となる（\ref{app:resum}）。$V_\psi$ は式~\eqref{eq:cw} の有効ポテンシャルのフェルミオンの項~\cite{cw} で、運動量0の外場を偶数個付けたフェルミオンのループの和である（図~\ref{fig:bgfield} (d)）。Fubini の解の上で積分すると、式~\eqref{eq:rate} のフェルミオンの部分について
 \begin{equation*}
 \frac12S^\psi_{\mathrm{fin}}(w)=\frac{w^2}{6}\ln|w|+\Bigl(\frac{\gamma_E}{3}-\frac14\Bigr)w^2-\frac w3\ln|w|+\Bigl(\frac{5}{18}-\frac{2\gamma_E}{3}\Bigr)w+O(\ln|w|)
 \end{equation*}
@@ -1027,7 +1171,7 @@ $1.4$ & $3$ & $1.18$ & $0.339$ & $0.347$ & $+5.0$, $+5.5$ & $-1.7$, $+6.4$ & $1.
 \label{fig:resum}
 \end{figure}
 
-\paragraph{手順 (12)：$\psi\bar\psi\to\psi\bar\psi$ の1ループと (C) の完成。}手順 (8) の (C) は、$\psi\bar\psi\to\psi\bar\psi$ の1ループを持たなかったので、$\phi\phi$ を含む要素だけを使った。木の $y$ の限界は $\psi\bar\psi$ の ${}^1S_0$ の固有値で決まるので、(C) はその向きで完成していなかった。$\psi(p_1)\bar\psi(p_2)\to\psi(p_3)\bar\psi(p_4)$ の1ループの図は、$s$、$t$ チャンネルの $\phi$ の自己エネルギー（フェルミオンのループと4点結合のループ、4つ）、頂点の補正（4つ）、箱（4つ）の12個で、MadGraph の数と一致する。極質量と留数で作った S 行列要素は
+\paragraph{手順 (12)：$\psi\bar\psi\to\psi\bar\psi$ の1ループと (C) の完成。}手順 (8) の (C) は、$\psi\bar\psi\to\psi\bar\psi$ の1ループを持たなかったので、$\phi\phi$ を含む要素だけを使った。木の $y$ の限界は $\psi\bar\psi$ の ${}^1S_0$ の固有値で決まるので、(C) はその向きで完成していなかった。$\psi(p_1)\bar\psi(p_2)\to\psi(p_3)\bar\psi(p_4)$ の1ループの図は、$s$、$t$ チャンネルの $\phi$ の自己エネルギー（フェルミオンのループと4点結合のループ、4つ）、頂点の補正（4つ）、箱（4つ）の12個で（図~\ref{fig:loopC}）、MadGraph の数と一致する。極質量と留数で作った S 行列要素は
 \begin{equation}
 \begin{aligned}
 \mathcal M_C&=y^2\sum_{x=s,t}\sigma_x\frac{X_x}{x-m^2}\Bigl[1+2\delta R_\psi-\frac{2y^2}{(4\pi)^2}G(x)+\frac{\hat\Sigma_\phi(x)}{x-m^2}\Bigr]+\mathcal M_{\mathrm{box}},\\
@@ -1040,6 +1184,126 @@ $1.4$ & $3$ & $1.18$ & $0.339$ & $0.347$ & $+5.0$, $+5.5$ & $-1.7$, $+6.4$ & $1.
 式~\eqref{eq:MC1} は、ヘリシティのスピノルと COLLIER のテンソル係数で数値的に評価した。頂点をその被積分関数から作ると（$C$ のテンソルと4次元の $\gamma$ 行列で）、$G(x)$ との差は木の振幅の $-1/(4\pi)^2$ 倍になる。これは紫外発散する $C_{00}$（極 $\Delta/4$）と $\gamma_\mu\gamma^\mu=D$ の積から頂点1つあたり $\frac12y^3\gamma^5/(4\pi)^2$ 出る有理項で、MadLoop の R2 の頂点と同じである。これを加えると $G(x)$ と $2\times10^{-15}$ で一致した。結合を固定した $\mu$ 依存 $\partial\mathcal M_C^{(1)}/\partial\ln\mu=-10y^2\mathcal M_C^{(0)}/(4\pi)^2$ は、木の $y^2$ の走りと打ち消し、$2\times10^{-14}$ で成り立った。FeynArts と FeynCalc で12個の図を作り、各クラス（自己エネルギー、頂点、$t$ 型と $s$ 型の箱）を4つのスピノルの構造（$S$、$T$ と $\gamma^5$ を1に換えたもの）に射影したスピン和（トレース）を LoopTools で評価すると、手計算と $1\times10^{-12}$ で一致した。木のスピン和は式~\eqref{eq:Mtree} と、頂点の極は対抗項 $\delta_y$ と一致し、箱は有限である。MadLoop（手順 (5) の UFO、極質量と $\MSbar$ の二つの処方、5点と $\mu_R=m/2$、$2m$）とは、木は $10^{-12}$、1ループの有限部分は相対 $1.4\times10^{-7}$ で一致した。残る差（絶対値 $3\times10^{-9}$ 以下、木の $10^{-9}$ 程度）は $\mu_R$ と処方によらず、MadLoop 自身の倍精度と4倍精度の計算の差（相対 $2\times10^{-8}$）と同じ程度で、FeynCalc とは図のクラスごとに $10^{-12}$ で一致しているので、MadLoop の数値精度によるものと考えられる。 部分波のユニタリー性 $\mathrm{Abs}\,a^{(1)}=a^{(0)}a^{(0)\dagger}$ は、$J=0$ の $\psi\bar\psi$ の要素（$\phi\phi$ の中間状態を含む）で $1\times10^{-11}$、ヘリシティを反転させる状態を含む $J=1$ で $4\times10^{-8}$（$p\ge0.1M$）成り立ち、手順 (8) の $\phi\phi$ の要素と合わせた $J=0$ の $3\times3$ の行列全体でも $4\times10^{-12}$ で成り立った（図~\ref{fig:scatC} 左）。
 
 (C) を、$J=0$ の行列全体（$\phi\phi$、$\psi\bar\psi(++)$、$\psi\bar\psi(--)$）の $\mathrm{Re}\,a^0=\mathrm{Re}(a^{(0)}+a^{(1)})$ の固有値が $|\cdot|\le\frac12$ という条件に置き換え、$2M<\sqrt s\le4m$ で求めた（$\sqrt s<2m$ では $\psi\bar\psi$ の二つの状態だけ。表~\ref{tab:scatC}、図~\ref{fig:scatC} 右）。$\mu=m$、$\lambda=0$ では $y\le2.856$ である。同じ範囲の木では $3.021$、手順 (8) の $\phi\phi$ の要素だけでは $3.79$ だった。限界は $\sqrt s=4m$ で、${}^1S_0$ の組み合わせ $(|{++}\rangle+|{--}\rangle)/\sqrt2$ の固有値 $-\frac12$ で決まる。1ループの補正は、同じ範囲の木の限界を $5.5\%$ 強める。$\mu$ を $m/2$ から $2m$ まで変えると（結合は1ループで走らせる）$3.044$ から $2.767$ で、手順 (8) の幅 $2.78$〜$4.91$ より狭い。$y$ の向きでも、(C) は (A) の $\sqrt{8\pi/3}=2.894$ に近い意味のある限界になった。範囲を $\sqrt s\le10m$ に広げると $y\le2.48$（木は $2.92$）で、$\mu=m$ に固定すると高いエネルギーで $\ln(s/m^2)$ の項が効く。$\lambda$ の向きの限界（$y=1$ で $-71.1\le\lambda\le48.6$）は $\phi\phi$ の要素で決まり、手順 (8) と変わらない。スクリプトは \texttt{scatC\_collier.f90}、\texttt{scatC\_feyncalc.wl}、\texttt{scatC\_numeric.py} で、\texttt{run\_scatC\_check.sh} で再実行できる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+% row 1: s channel
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-1.3,-0.6) -- (-0.75,0);
+  \draw[fermion] (-0.75,0) -- (-1.3,0.6);
+  \draw[fermion] (1.3,0.6) -- (0.75,0);
+  \draw[fermion] (0.75,0) -- (1.3,-0.6);
+  \draw[scalar] (-0.75,0) -- (-0.3,0) (0.3,0) -- (0.75,0);
+  \draw[fermion] (0.3,0) arc (0:180:0.3);
+  \draw[fermion] (-0.3,0) arc (180:360:0.3);
+  \foreach \x in {-0.75,-0.3,0.3,0.75} \node[vtx] at (\x,0) {};
+  \node[lab] at (0,-1.0) {(a) $s$：フェルミオンの\\ループ（1）};
+\end{scope}
+\begin{scope}[shift={(4.6,0)}]
+  \draw[fermion] (-1.3,-0.6) -- (-0.75,0);
+  \draw[fermion] (-0.75,0) -- (-1.3,0.6);
+  \draw[fermion] (1.3,0.6) -- (0.75,0);
+  \draw[fermion] (0.75,0) -- (1.3,-0.6);
+  \draw[scalar] (-0.75,0) -- (0.75,0);
+  \draw[scalar] (0,0.3) circle (0.3);
+  \foreach \x in {-0.75,0,0.75} \node[vtx] at (\x,0) {};
+  \node[lab] at (0,-1.0) {(b) $s$：4点結合の\\ループ（1）};
+\end{scope}
+\begin{scope}[shift={(9.2,0)}]
+  \draw[fermion] (-1.5,-0.8) -- (-1.125,-0.4);
+  \draw[fermion] (-1.125,-0.4) -- (-0.75,0);
+  \draw[fermion] (-0.75,0) -- (-1.125,0.4);
+  \draw[fermion] (-1.125,0.4) -- (-1.5,0.8);
+  \draw[fermion] (1.3,0.6) -- (0.75,0);
+  \draw[fermion] (0.75,0) -- (1.3,-0.6);
+  \draw[scalar] (-0.75,0) -- (0.75,0) (-1.125,-0.4) -- (-1.125,0.4);
+  \foreach \p in {(-1.125,-0.4),(-0.75,0),(-1.125,0.4),(0.75,0)} \node[vtx] at \p {};
+  \node[lab] at (0,-1.0) {(c) $s$：頂点の補正（2）};
+\end{scope}
+% row 2: t channel
+\begin{scope}[shift={(0,-3.2)}]
+  \draw[fermion] (-0.9,-1.0) -- (0,-0.6);
+  \draw[fermion] (0,-0.6) -- (0.9,-1.0);
+  \draw[fermion] (0.9,1.0) -- (0,0.6);
+  \draw[fermion] (0,0.6) -- (-0.9,1.0);
+  \draw[scalar] (0,-0.6) -- (0,-0.28) (0,0.28) -- (0,0.6);
+  \draw[fermion] (0,0.28) arc (90:270:0.28);
+  \draw[fermion] (0,-0.28) arc (-90:90:0.28);
+  \foreach \y in {-0.6,-0.28,0.28,0.6} \node[vtx] at (0,\y) {};
+  \node[lab] at (0,-1.45) {(d) $t$：フェルミオンの\\ループ（1）};
+\end{scope}
+\begin{scope}[shift={(4.6,-3.2)}]
+  \draw[fermion] (-0.9,-1.0) -- (0,-0.6);
+  \draw[fermion] (0,-0.6) -- (0.9,-1.0);
+  \draw[fermion] (0.9,1.0) -- (0,0.6);
+  \draw[fermion] (0,0.6) -- (-0.9,1.0);
+  \draw[scalar] (0,-0.6) -- (0,0.6);
+  \draw[scalar] (0.28,0) circle (0.28);
+  \foreach \y in {-0.6,0,0.6} \node[vtx] at (0,\y) {};
+  \node[lab] at (0,-1.45) {(e) $t$：4点結合の\\ループ（1）};
+\end{scope}
+\begin{scope}[shift={(9.2,-3.2)}]
+  \draw[fermion] (-1.0,-1.0) -- (-0.5,-0.8);
+  \draw[fermion] (-0.5,-0.8) -- (0,-0.6);
+  \draw[fermion] (0,-0.6) -- (0.5,-0.8);
+  \draw[fermion] (0.5,-0.8) -- (1.0,-1.0);
+  \draw[fermion] (0.9,1.0) -- (0,0.6);
+  \draw[fermion] (0,0.6) -- (-0.9,1.0);
+  \draw[scalar] (0,-0.6) -- (0,0.6);
+  \draw[scalar] (-0.5,-0.8) .. controls (-0.3,-1.3) and (0.3,-1.3) .. (0.5,-0.8);
+  \foreach \p in {(-0.5,-0.8),(0,-0.6),(0.5,-0.8),(0,0.6)} \node[vtx] at \p {};
+  \node[lab] at (0,-1.6) {(f) $t$：頂点の補正（2）};
+\end{scope}
+% row 3: boxes
+\begin{scope}[shift={(-0.4,-6.4)}]
+  \draw[fermion] (-1.1,-0.5) -- (-0.45,-0.5);
+  \draw[fermion] (-0.45,-0.5) -- (0.45,-0.5);
+  \draw[fermion] (0.45,-0.5) -- (1.1,-0.5);
+  \draw[fermion] (1.1,0.5) -- (0.45,0.5);
+  \draw[fermion] (0.45,0.5) -- (-0.45,0.5);
+  \draw[fermion] (-0.45,0.5) -- (-1.1,0.5);
+  \draw[scalar] (-0.45,-0.5) -- (-0.45,0.5) (0.45,-0.5) -- (0.45,0.5);
+  \foreach \p in {(-0.45,-0.5),(0.45,-0.5),(-0.45,0.5),(0.45,0.5)} \node[vtx] at \p {};
+  \node[lab] at (0,-1.1) {(g) $t$ 型、直接};
+\end{scope}
+\begin{scope}[shift={(3.0,-6.4)}]
+  \draw[fermion] (-1.1,-0.5) -- (-0.45,-0.5);
+  \draw[fermion] (-0.45,-0.5) -- (0.45,-0.5);
+  \draw[fermion] (0.45,-0.5) -- (1.1,-0.5);
+  \draw[fermion] (1.1,0.5) -- (0.45,0.5);
+  \draw[fermion] (0.45,0.5) -- (-0.45,0.5);
+  \draw[fermion] (-0.45,0.5) -- (-1.1,0.5);
+  \draw[scalar] (-0.45,-0.5) -- (0.45,0.5) (0.45,-0.5) -- (-0.45,0.5);
+  \foreach \p in {(-0.45,-0.5),(0.45,-0.5),(-0.45,0.5),(0.45,0.5)} \node[vtx] at \p {};
+  \node[lab] at (0,-1.1) {(h) $t$ 型、交差};
+\end{scope}
+\begin{scope}[shift={(6.4,-6.4)}]
+  \draw[fermion] (-1.2,-0.75) -- (-0.5,-0.45);
+  \draw[fermion] (-0.5,-0.45) -- (-0.5,0.45);
+  \draw[fermion] (-0.5,0.45) -- (-1.2,0.75);
+  \draw[fermion] (1.2,0.75) -- (0.5,0.45);
+  \draw[fermion] (0.5,0.45) -- (0.5,-0.45);
+  \draw[fermion] (0.5,-0.45) -- (1.2,-0.75);
+  \draw[scalar] (-0.5,-0.45) -- (0.5,-0.45) (-0.5,0.45) -- (0.5,0.45);
+  \foreach \p in {(-0.5,-0.45),(0.5,-0.45),(-0.5,0.45),(0.5,0.45)} \node[vtx] at \p {};
+  \node[lab] at (0,-1.1) {(i) $s$ 型、直接};
+\end{scope}
+\begin{scope}[shift={(9.8,-6.4)}]
+  \draw[fermion] (-1.2,-0.75) -- (-0.5,-0.45);
+  \draw[fermion] (-0.5,-0.45) -- (-0.5,0.45);
+  \draw[fermion] (-0.5,0.45) -- (-1.2,0.75);
+  \draw[fermion] (1.2,0.75) -- (0.5,0.45);
+  \draw[fermion] (0.5,0.45) -- (0.5,-0.45);
+  \draw[fermion] (0.5,-0.45) -- (1.2,-0.75);
+  \draw[scalar] (-0.5,-0.45) -- (0.5,0.45) (-0.5,0.45) -- (0.5,-0.45);
+  \foreach \p in {(-0.5,-0.45),(0.5,-0.45),(-0.5,0.45),(0.5,0.45)} \node[vtx] at \p {};
+  \node[lab] at (0,-1.1) {(j) $s$ 型、交差};
+\end{scope}
+\end{tikzpicture}
+\caption{1ループの $\psi(p_1)\bar\psi(p_2)\to\psi(p_3)\bar\psi(p_4)$ の図（式~\eqref{eq:MC1}、\ref{app:scatC}）。時間は左から右に流れ、左下から $\psi(p_1)$、左上から $\bar\psi(p_2)$ が入る。上の段は $s$ チャンネル、中の段は $t$ チャンネルの $\phi$ への補正で、頂点の補正はもう一方の頂点にも1つずつある（括弧は数）。4点結合のループ (b)、(e) は $\phi$ の質量の対抗項と打ち消し、極質量の処方では残らない。下の段は4つの箱で、(g)、(h) は二つのフェルミオンの線 $\bar u_3\cdots u_1$（下）と $\bar v_2\cdots v_4$（上）の間で、(i)、(j) は $\bar v_2\cdots u_1$（左）と $\bar u_3\cdots v_4$（右）の間で二つの $\phi$ を交換する（式~\eqref{eq:MC1} の $D_{td}$、$D_{tx}$、$D_{sd}$、$D_{sx}$）。合わせて12個である。}
+\label{fig:loopC}
+\end{figure}
 
 \begin{table}[tbp]
 \centering\small
