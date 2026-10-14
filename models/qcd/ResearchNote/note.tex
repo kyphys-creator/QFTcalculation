@@ -36,6 +36,12 @@
       \draw (path picture bounding box.north west) -- (path picture bounding box.south east)
             (path picture bounding box.south west) -- (path picture bounding box.north east);}},
   mom/.style={-{Stealth[length=1.6mm]},thin},
+  heavy/.style={line width=1.35pt,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=2.2mm]}}}},
+  cutl/.style={thick,dashed,red!70!black},
+  pz/.style={line width=0.6pt},
+  pm/.style={line width=1.8pt},
+  blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
   lab/.style={font=\small,align=center},
 }
 
@@ -609,7 +615,7 @@ F(y)=(3-6y)\ln\frac{y}{1-2y}+2\ln^2\frac{y}{1-y}+\frac52-6y-\frac92y^2+4\,\mathr
 W\equiv\sum\mathcal M_0^*\mathcal M_1,\qquad
 \mathcal M_1=\mathcal M_{\mathrm{1PI}}+\mathcal M_{\mathrm{ct}}+\frac12\sum_{i=1}^4\bigl(R_i-1\bigr)\mathcal M_0
 \end{equation*}
-で表す（和は外線のスピン、偏極、色について。$\mathcal M_{\mathrm{1PI}}$ は外線の自己エネルギーを除く1ループの図、$\mathcal M_{\mathrm{ct}}$ は $\MSbar$ の対抗項、$R_i$ は式~\eqref{eq:os} の留数）。Dirac 代数と外線の和は $D$ 次元でとる（CDR）。紫外の極は対抗項で消え、残る赤外の極は、一般の定理~\cite{catani98,bn09,bn09m} から Born の色の相関だけで決まる。$\overline{\mathrm{MS}}$ の因子 $S_\epsilon=(4\pi)^\epsilon e^{-\epsilon\gamma_E}$ を除いた $1/\epsilon$ の展開で
+で表す（和は外線のスピン、偏極、色について。$\mathcal M_{\mathrm{1PI}}$ は外線の自己エネルギーを除く1ループの図、$\mathcal M_{\mathrm{ct}}$ は $\MSbar$ の対抗項、$R_i$ は式~\eqref{eq:os} の留数）。(A) と (B) の1ループの図を図~\ref{fig:scatA}、\ref{fig:scatB} に示す。Dirac 代数と外線の和は $D$ 次元でとる（CDR）。紫外の極は対抗項で消え、残る赤外の極は、一般の定理~\cite{catani98,bn09,bn09m} から Born の色の相関だけで決まる（三つの源を図~\ref{fig:irreg} に示す）。$\overline{\mathrm{MS}}$ の因子 $S_\epsilon=(4\pi)^\epsilon e^{-\epsilon\gamma_E}$ を除いた $1/\epsilon$ の展開で
 \begin{equation}
 \begin{gathered}
 W\big|_{\mathrm{poles}}=\frac{g^2}{K}\Bigl[-\frac{1}{\epsilon^2}\sum_{i\in\{q,g\}}C_i\,\langle\mathcal M_0|\mathcal M_0\rangle+\frac{1}{2\epsilon}\langle\mathcal M_0|\Gamma_0|\mathcal M_0\rangle\Bigr],\\
@@ -628,6 +634,237 @@ W\big|_{\mathrm{poles}}=\frac{g^2}{K}\Bigl[-\frac{1}{\epsilon^2}\sum_{i\in\{q,g\
 \label{eq:colcorr}
 \end{equation}
 で、$\langle\boldsymbol T_2\!\cdot\!\boldsymbol T_4\rangle=\langle\boldsymbol T_1\!\cdot\!\boldsymbol T_3\rangle$、$\langle\boldsymbol T_2\!\cdot\!\boldsymbol T_3\rangle=\langle\boldsymbol T_1\!\cdot\!\boldsymbol T_4\rangle$ である。(B) では、色で分けた振幅 $\mathcal M_0=(T^aT^b)\mathcal A_1+(T^bT^a)\mathcal A_2$ のスピン和 $S_{kl}=\sum\mathcal A_k^*\mathcal A_l$ と、色の行列 $\boldsymbol C^{ij}_{kl}=\langle c_k|\boldsymbol T_i\!\cdot\!\boldsymbol T_j|c_l\rangle$（$c_1=T^aT^b$、$c_2=T^bT^a$）の積の和 $\langle\boldsymbol T_i\!\cdot\!\boldsymbol T_j\rangle=\sum_{kl}S_{kl}\boldsymbol C^{ij}_{kl}$ で、$\boldsymbol C^{ij}$ と、4次元での $S_{kl}=8g^4F\begin{pmatrix}\tau_2/\tau_1&1\\1&\tau_1/\tau_2\end{pmatrix}$（$F=\tau_1^2+\tau_2^2+\rho-\frac{\rho^2}{4\tau_1\tau_2}$）を\ref{app:ir} に示す。式~\eqref{eq:irpole} を $e^+e^-\to Q\bar Q$（$\boldsymbol T_3\!\cdot\!\boldsymbol T_4=-C_F$）に使うと $\frac{2C_Fg^2}{K\epsilon}(\beta_{34}\coth\beta_{34}-1)$ で、QED のノートの $f_{\mathrm{IR}}$ の $C_F$ 倍に、$e^+e^-\to q\bar q$ に使うと $\frac{C_Fg^2}{K}[-\frac2{\epsilon^2}-\frac2\epsilon\ln\frac{\mu^2}{-s}-\frac3\epsilon]$ で、質量のないクォークの形状因子の既知の極になる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% (1) heavy-quark vertex, abelian
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-1.45,-0.85) -- (-0.8,0); \draw[fermion] (-0.8,0) -- (-1.45,0.85);
+  \draw[gluon] (-0.8,0) -- (0,0);
+  \draw[heavy] (0,0) -- (0.65,-0.45); \draw[heavy] (0.65,-0.45) -- (1.35,-0.9);
+  \draw[heavy] (1.35,0.9) -- (0.65,0.45); \draw[heavy] (0.65,0.45) -- (0,0);
+  \draw[gluon] (0.65,-0.45) -- (0.65,0.45);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.65,-0.45) {}; \node[vtx] at (0.65,0.45) {};
+  \node[font=\scriptsize] at (-1.6,-1.0) {$q$}; \node[font=\scriptsize] at (-1.6,1.0) {$\bar q$};
+  \node[font=\scriptsize] at (1.55,-1.0) {$Q$}; \node[font=\scriptsize] at (1.55,1.0) {$\bar Q$};
+  \node[lab] at (0,-1.45) {(1) $Q$ の頂点（可換）};
+\end{scope}
+% (2) heavy-quark vertex, non-abelian
+\begin{scope}[shift={(3.9,0)}]
+  \draw[fermion] (-1.45,-0.85) -- (-0.8,0); \draw[fermion] (-0.8,0) -- (-1.45,0.85);
+  \draw[gluon] (-0.8,0) -- (0,0);
+  \draw[gluon] (0,0) -- (0.7,-0.45); \draw[gluon] (0,0) -- (0.7,0.45);
+  \draw[heavy] (1.35,0.9) -- (0.7,0.45); \draw[heavy] (0.7,0.45) -- (0.7,-0.45); \draw[heavy] (0.7,-0.45) -- (1.35,-0.9);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.7,-0.45) {}; \node[vtx] at (0.7,0.45) {};
+  \node[lab] at (0,-1.45) {(2) $Q$ の頂点（非可換）};
+\end{scope}
+% (3) light-quark vertex, abelian
+\begin{scope}[shift={(7.8,0)}]
+  \draw[fermion] (-1.35,-0.9) -- (-0.65,-0.45); \draw[fermion] (-0.65,-0.45) -- (0,0);
+  \draw[fermion] (0,0) -- (-0.65,0.45); \draw[fermion] (-0.65,0.45) -- (-1.35,0.9);
+  \draw[gluon] (-0.65,-0.45) -- (-0.65,0.45);
+  \draw[gluon] (0,0) -- (0.8,0);
+  \draw[heavy] (1.45,0.85) -- (0.8,0); \draw[heavy] (0.8,0) -- (1.45,-0.85);
+  \node[vtx] at (-0.65,-0.45) {}; \node[vtx] at (-0.65,0.45) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.8,0) {};
+  \node[lab] at (0,-1.45) {(3) $q$ の頂点（可換）};
+\end{scope}
+% (4) light-quark vertex, non-abelian
+\begin{scope}[shift={(11.7,0)}]
+  \draw[fermion] (-1.35,-0.9) -- (-0.7,-0.45); \draw[fermion] (-0.7,-0.45) -- (-0.7,0.45); \draw[fermion] (-0.7,0.45) -- (-1.35,0.9);
+  \draw[gluon] (-0.7,-0.45) -- (0,0); \draw[gluon] (-0.7,0.45) -- (0,0);
+  \draw[gluon] (0,0) -- (0.8,0);
+  \draw[heavy] (1.45,0.85) -- (0.8,0); \draw[heavy] (0.8,0) -- (1.45,-0.85);
+  \node[vtx] at (-0.7,-0.45) {}; \node[vtx] at (-0.7,0.45) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.8,0) {};
+  \node[lab] at (0,-1.45) {(4) $q$ の頂点（非可換）};
+\end{scope}
+% (5) direct box
+\begin{scope}[shift={(0,-3.4)}]
+  \draw[fermion] (-1.3,-1.05) -- (-0.6,-0.6); \draw[fermion] (-0.6,-0.6) -- (-0.6,0.6); \draw[fermion] (-0.6,0.6) -- (-1.3,1.05);
+  \draw[gluon] (-0.6,0.6) -- (0.6,0.6); \draw[gluon] (-0.6,-0.6) -- (0.6,-0.6);
+  \draw[heavy] (1.3,1.05) -- (0.6,0.6); \draw[heavy] (0.6,0.6) -- (0.6,-0.6); \draw[heavy] (0.6,-0.6) -- (1.3,-1.05);
+  \node[vtx] at (-0.6,-0.6) {}; \node[vtx] at (-0.6,0.6) {}; \node[vtx] at (0.6,0.6) {}; \node[vtx] at (0.6,-0.6) {};
+  \node[font=\scriptsize] at (-1.45,-1.2) {$q$}; \node[font=\scriptsize] at (-1.45,1.2) {$\bar q$};
+  \node[font=\scriptsize] at (1.45,-1.2) {$Q$}; \node[font=\scriptsize] at (1.45,1.2) {$\bar Q$};
+  \node[lab] at (0,-1.75) {(5)(6)\\直の箱};
+\end{scope}
+% (6) crossed box
+\begin{scope}[shift={(3.9,-3.4)}]
+  \draw[fermion] (-1.3,-1.05) -- (-0.6,-0.6); \draw[fermion] (-0.6,-0.6) -- (-0.6,0.6); \draw[fermion] (-0.6,0.6) -- (-1.3,1.05);
+  \draw[gluon] (-0.6,0.6) -- (0.6,-0.6); \draw[gluon] (-0.6,-0.6) -- (0.6,0.6);
+  \draw[heavy] (1.3,1.05) -- (0.6,0.6); \draw[heavy] (0.6,0.6) -- (0.6,-0.6); \draw[heavy] (0.6,-0.6) -- (1.3,-1.05);
+  \node[vtx] at (-0.6,-0.6) {}; \node[vtx] at (-0.6,0.6) {}; \node[vtx] at (0.6,0.6) {}; \node[vtx] at (0.6,-0.6) {};
+  \node[lab] at (0,-1.75) {(5)(6)\\交差した箱};
+\end{scope}
+% (7)-(15) self-energy insertions
+\begin{scope}[shift={(7.8,-3.4)}]
+  \draw[fermion] (-1.55,-0.85) -- (-1.05,0); \draw[fermion] (-1.05,0) -- (-1.55,0.85);
+  \draw[gluon] (-1.05,0) -- (-0.4,0); \draw[gluon] (0.4,0) -- (1.05,0);
+  \draw[fermion] (-0.4,0) arc (180:0:0.4); \draw[fermion] (0.4,0) arc (360:180:0.4);
+  \draw[heavy] (1.55,0.85) -- (1.05,0); \draw[heavy] (1.05,0) -- (1.55,-0.85);
+  \node[vtx] at (-1.05,0) {}; \node[vtx] at (-0.4,0) {}; \node[vtx] at (0.4,0) {}; \node[vtx] at (1.05,0) {};
+  \node[lab] at (0,-1.75) {(7)〜(15)\\自己エネルギー};
+\end{scope}
+% counterterms
+\begin{scope}[shift={(11.7,-3.4)}]
+  \draw[fermion] (-1.45,-0.85) -- (-0.85,0); \draw[fermion] (-0.85,0) -- (-1.45,0.85);
+  \draw[gluon] (-0.85,0) -- (0,0); \draw[gluon] (0,0) -- (0.85,0);
+  \draw[heavy] (1.45,0.85) -- (0.85,0); \draw[heavy] (0.85,0) -- (1.45,-0.85);
+  \node[ctv] at (-0.85,0) {}; \node[ctv] at (0,0) {}; \node[ctv] at (0.85,0) {};
+  \node[lab] at (0,-1.75) {対抗項\\$(2\delta_{1F}-\delta_3)\mathcal M_0$};
+\end{scope}
+\end{tikzpicture}
+\caption{(A) $q\bar q\to Q\bar Q$（$u\bar u\to t\bar t$）の1ループの図。番号は FeynArts の順（手順 (4)、表~\ref{tab:unit}）。太い線は重いクォーク $Q$ で、時間は左から右へ流れる。(5) と (6) は直の箱と交差した箱で、グルーオンが $q$ と $Q$、$q$ と $\bar Q$ を結ぶ。(7)〜(15) は $s$ チャンネルのグルーオンの自己エネルギーの挿入で、ループは4グルーオンの頂点（(7)、0）、質量のないクォーク5本（(8)〜(12)）、$Q$（(13)）、ゴースト（(14)）、グルーオン（(15)）である。外線の自己エネルギーの代わりに留数 $R_q$、$R_Q$ を掛ける。}
+\label{fig:scatA}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% t-channel vertex, abelian
+\begin{scope}[shift={(0,0)}]
+  \draw[gluon] (-1.25,-0.7) -- (0,-0.7); \draw[gluon] (-1.25,0.7) -- (0,0.7);
+  \draw[heavy] (1.25,0.7) -- (0,0.7); \draw[heavy] (0,0.7) -- (0,-0.15); \draw[heavy] (0,-0.15) -- (0,-0.7);
+  \draw[heavy] (0,-0.7) -- (0.6,-0.7); \draw[heavy] (0.6,-0.7) -- (1.25,-0.7);
+  \draw[gluon] (0,-0.15) .. controls (0.45,-0.15) and (0.6,-0.35) .. (0.6,-0.7);
+  \node[vtx] at (0,0.7) {}; \node[vtx] at (0,-0.15) {}; \node[vtx] at (0,-0.7) {}; \node[vtx] at (0.6,-0.7) {};
+  \node[font=\scriptsize] at (-1.45,-0.7) {$1$}; \node[font=\scriptsize] at (-1.45,0.7) {$2$};
+  \node[font=\scriptsize] at (1.45,-0.7) {$Q$}; \node[font=\scriptsize] at (1.45,0.7) {$\bar Q$};
+  \node[lab] at (0,-1.6) {(4)〜(11)\\頂点（可換）};
+\end{scope}
+% t-channel vertex, non-abelian
+\begin{scope}[shift={(3.9,0)}]
+  \draw[gluon] (-1.25,-0.7) -- (-0.6,-0.7);
+  \draw[gluon] (-0.6,-0.7) -- (0,-0.25); \draw[gluon] (-0.6,-0.7) -- (0,-1.0);
+  \draw[gluon] (-1.25,0.7) -- (0,0.7);
+  \draw[heavy] (1.25,0.7) -- (0,0.7); \draw[heavy] (0,0.7) -- (0,-0.25); \draw[heavy] (0,-0.25) -- (0,-1.0); \draw[heavy] (0,-1.0) -- (1.25,-1.0);
+  \node[vtx] at (-0.6,-0.7) {}; \node[vtx] at (0,0.7) {}; \node[vtx] at (0,-0.25) {}; \node[vtx] at (0,-1.0) {};
+  \node[lab] at (0,-1.6) {(4)〜(11)\\頂点（非可換）};
+\end{scope}
+% self-energy on the internal top line
+\begin{scope}[shift={(7.8,0)}]
+  \draw[gluon] (-1.25,-0.7) -- (0,-0.7); \draw[gluon] (-1.25,0.7) -- (0,0.7);
+  \draw[heavy] (1.25,0.7) -- (0,0.7); \draw[heavy] (0,0.7) -- (0,0.35); \draw[heavy] (0,0.35) -- (0,-0.35); \draw[heavy] (0,-0.35) -- (0,-0.7);
+  \draw[heavy] (0,-0.7) -- (1.25,-0.7);
+  \draw[gluon] (0,0.35) arc (90:-90:0.35);
+  \node[vtx] at (0,0.7) {}; \node[vtx] at (0,0.35) {}; \node[vtx] at (0,-0.35) {}; \node[vtx] at (0,-0.7) {};
+  \node[lab] at (0,-1.6) {(45)(46)\\内線の自己エネルギー};
+\end{scope}
+% s-channel QQg* vertex
+\begin{scope}[shift={(11.7,0)}]
+  \draw[gluon] (-1.45,-0.85) -- (-0.8,0); \draw[gluon] (-1.45,0.85) -- (-0.8,0);
+  \draw[gluon] (-0.8,0) -- (0,0);
+  \draw[heavy] (0,0) -- (0.65,-0.45); \draw[heavy] (0.65,-0.45) -- (1.35,-0.9);
+  \draw[heavy] (1.35,0.9) -- (0.65,0.45); \draw[heavy] (0.65,0.45) -- (0,0);
+  \draw[gluon] (0.65,-0.45) -- (0.65,0.45);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.65,-0.45) {}; \node[vtx] at (0.65,0.45) {};
+  \node[lab] at (0,-1.6) {(1)(2)\\$Q\bar Qg^*$ の頂点};
+\end{scope}
+% four-gluon triangle
+\begin{scope}[shift={(0,-3.55)}]
+  \draw[gluon] (-1.3,-0.85) -- (-0.5,0); \draw[gluon] (-1.3,0.85) -- (-0.5,0);
+  \draw[gluon] (-0.5,0) -- (0.45,-0.5); \draw[gluon] (-0.5,0) -- (0.45,0.5);
+  \draw[heavy] (1.2,0.95) -- (0.45,0.5); \draw[heavy] (0.45,0.5) -- (0.45,-0.5); \draw[heavy] (0.45,-0.5) -- (1.2,-0.95);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.45,0.5) {}; \node[vtx] at (0.45,-0.5) {};
+  \node[lab] at (0,-1.6) {(3)\\4グルーオンの頂点};
+\end{scope}
+% g g -> g* triangle
+\begin{scope}[shift={(3.9,-3.55)}]
+  \draw[gluon] (-1.4,-0.9) -- (-0.75,-0.45); \draw[gluon] (-1.4,0.9) -- (-0.75,0.45);
+  \draw[fermion] (-0.75,-0.45) -- (0,0); \draw[fermion] (0,0) -- (-0.75,0.45); \draw[fermion] (-0.75,0.45) -- (-0.75,-0.45);
+  \draw[gluon] (0,0) -- (0.75,0);
+  \draw[heavy] (1.4,0.85) -- (0.75,0); \draw[heavy] (0.75,0) -- (1.4,-0.85);
+  \node[vtx] at (-0.75,-0.45) {}; \node[vtx] at (-0.75,0.45) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0) {};
+  \node[lab] at (0,-1.6) {(12)〜(26)\\$gg\to g^*$ の三角形};
+\end{scope}
+% s-channel self-energy insertion
+\begin{scope}[shift={(7.8,-3.55)}]
+  \draw[gluon] (-1.55,-0.85) -- (-1.05,0); \draw[gluon] (-1.55,0.85) -- (-1.05,0);
+  \draw[gluon] (-1.05,0) -- (-0.35,0); \draw[gluon] (0.35,0) -- (1.05,0);
+  \node[blob,minimum size=0.7cm] at (0,0) {};
+  \draw[heavy] (1.55,0.85) -- (1.05,0); \draw[heavy] (1.05,0) -- (1.55,-0.85);
+  \node[vtx] at (-1.05,0) {}; \node[vtx] at (1.05,0) {};
+  \node[lab] at (0,-1.6) {(36)〜(44)\\自己エネルギー};
+\end{scope}
+% counterterms incl. the mass insertion
+\begin{scope}[shift={(11.7,-3.55)}]
+  \draw[gluon] (-1.25,-0.7) -- (0,-0.7); \draw[gluon] (-1.25,0.7) -- (0,0.7);
+  \draw[heavy] (1.25,0.7) -- (0,0.7); \draw[heavy] (0,0.7) -- (0,0); \draw[heavy] (0,0) -- (0,-0.7); \draw[heavy] (0,-0.7) -- (1.25,-0.7);
+  \node[ctv] at (0,0.7) {}; \node[ctv] at (0,0) {}; \node[ctv] at (0,-0.7) {};
+  \node[font=\scriptsize] at (0.62,0) {$\delta_2,\,\delta_m$};
+  \node[lab] at (0,-1.6) {対抗項\\（$\delta_m$ を含む）};
+\end{scope}
+% box QQQg
+\begin{scope}[shift={(1.95,-7.25)}]
+  \draw[gluon] (-1.2,-1.05) -- (-0.6,-0.6); \draw[gluon] (-1.2,1.05) -- (-0.6,0.6);
+  \draw[heavy] (1.2,1.05) -- (0.6,0.6); \draw[heavy] (0.6,0.6) -- (-0.6,0.6); \draw[heavy] (-0.6,0.6) -- (-0.6,-0.6);
+  \draw[heavy] (-0.6,-0.6) -- (0.6,-0.6); \draw[heavy] (0.6,-0.6) -- (1.2,-1.05);
+  \draw[gluon] (0.6,0.6) -- (0.6,-0.6);
+  \node[vtx] at (-0.6,-0.6) {}; \node[vtx] at (-0.6,0.6) {}; \node[vtx] at (0.6,0.6) {}; \node[vtx] at (0.6,-0.6) {};
+  \node[font=\scriptsize] at (-1.35,-1.2) {$1$}; \node[font=\scriptsize] at (-1.35,1.2) {$2$};
+  \node[font=\scriptsize] at (1.35,-1.2) {$Q$}; \node[font=\scriptsize] at (1.35,1.2) {$\bar Q$};
+  \node[lab] at (0,-1.6) {(27)(29) 箱 $QQQg$};
+\end{scope}
+% box gggQ
+\begin{scope}[shift={(5.85,-7.25)}]
+  \draw[gluon] (-1.2,-1.05) -- (-0.6,-0.6); \draw[gluon] (-1.2,1.05) -- (-0.6,0.6);
+  \draw[gluon] (-0.6,-0.6) -- (-0.6,0.6); \draw[gluon] (-0.6,0.6) -- (0.6,0.6); \draw[gluon] (-0.6,-0.6) -- (0.6,-0.6);
+  \draw[heavy] (1.2,1.05) -- (0.6,0.6); \draw[heavy] (0.6,0.6) -- (0.6,-0.6); \draw[heavy] (0.6,-0.6) -- (1.2,-1.05);
+  \node[vtx] at (-0.6,-0.6) {}; \node[vtx] at (-0.6,0.6) {}; \node[vtx] at (0.6,0.6) {}; \node[vtx] at (0.6,-0.6) {};
+  \node[lab] at (0,-1.6) {(28)(30) 箱 $gggQ$};
+\end{scope}
+% box QQgg
+\begin{scope}[shift={(9.75,-7.25)}]
+  \draw[gluon] (-1.2,-1.05) -- (-0.6,-0.6); \draw[gluon] (1.2,1.05) -- (0.6,0.6);
+  \draw[heavy] (-1.2,1.05) -- (-0.6,0.6); \draw[heavy] (-0.6,0.6) -- (-0.6,-0.6); \draw[heavy] (-0.6,-0.6) -- (0.6,-0.6); \draw[heavy] (0.6,-0.6) -- (1.2,-1.05);
+  \draw[gluon] (-0.6,0.6) -- (0.6,0.6); \draw[gluon] (0.6,0.6) -- (0.6,-0.6);
+  \node[vtx] at (-0.6,-0.6) {}; \node[vtx] at (-0.6,0.6) {}; \node[vtx] at (0.6,0.6) {}; \node[vtx] at (0.6,-0.6) {};
+  \node[font=\scriptsize] at (-1.35,-1.2) {$1$}; \node[font=\scriptsize] at (-1.35,1.2) {$\bar Q$};
+  \node[font=\scriptsize] at (1.35,-1.2) {$Q$}; \node[font=\scriptsize] at (1.35,1.2) {$2$};
+  \node[lab] at (0,-1.6) {(31)(32) 箱 $QQgg$};
+\end{scope}
+\end{tikzpicture}
+\caption{(B) $gg\to Q\bar Q$（$gg\to t\bar t$）の1ループの図の代表（番号は FeynArts の順、1、2 は入るグルーオン）。上の2段は木の $t$、$u$、$s$ チャンネルの図の補正で、$t$、$u$ チャンネルの頂点の補正は二つの頂点と二つのチャンネルについて8個、$s$ チャンネルの頂点は $Q\bar Qg^*$ の2個と $gg\to g^*$ の15個（質量のないクォークのループ10、$Q$ のループ2、ゴーストのループ2、グルーオンのループ1）である。下の段の箱は、外線を時間の順に並べず、ループの上の順に描いた（(31)(32) では一方のグルーオンが $Q$ の線に、他方が3グルーオンの頂点に付く）。(27)(29)、(28)(30)、(31)(32) の組は、二つのグルーオンを入れ替えたもの。スケールを持たない (33)〜(35) は描いていない。対抗項の $\delta_m$ は内線の $Q$ の質量の on-shell の対抗項である。}
+\label{fig:scatB}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+% soft exchange between legs i and j
+\begin{scope}[shift={(0,0)}]
+  \draw[thick] (-1.45,-0.9) -- (0,0); \draw[thick] (-1.45,0.9) -- (0,0);
+  \draw[thick] (1.45,-0.9) -- (0,0); \draw[thick] (1.45,0.9) -- (0,0);
+  \node[blob,minimum size=0.9cm] at (0,0) {};
+  \draw[gluon] (-1.05,0.65) .. controls (-0.6,1.45) and (0.6,1.45) .. (1.05,0.65);
+  \node[vtx] at (-1.05,0.65) {}; \node[vtx] at (1.05,0.65) {};
+  \node[font=\scriptsize] at (-1.65,1.0) {$i$}; \node[font=\scriptsize] at (1.65,1.0) {$j$};
+  \node[lab] at (0,-1.75) {(a) 軟らかい交換\\$\boldsymbol T_i\cdot\boldsymbol T_j\ln\frac{\mu^2}{-s_{ij}}$、$\boldsymbol T_I\cdot\boldsymbol T_j\ln\frac{m\mu}{-s_{Ij}}$};
+\end{scope}
+% collinear region along a massless leg
+\begin{scope}[shift={(4.6,0)}]
+  \draw[thick] (-1.6,-1.0) -- (0,0); \draw[thick] (-1.45,0.9) -- (0,0);
+  \draw[thick] (1.45,-0.9) -- (0,0); \draw[thick] (1.45,0.9) -- (0,0);
+  \node[blob,minimum size=0.9cm] at (0,0) {};
+  \draw[gluon] (-1.25,-0.78) .. controls (-0.95,-0.45) and (-0.65,-0.3) .. (-0.42,-0.12);
+  \node[vtx] at (-1.25,-0.78) {};
+  \node[font=\scriptsize] at (-1.8,-1.1) {$i$};
+  \node[lab] at (0,-1.75) {(b) 質量のない外線に沿う領域\\$-\frac{C_i}{\epsilon^2}$、$\frac{\gamma_i}{2\epsilon}$};
+\end{scope}
+% heavy pair exchange
+\begin{scope}[shift={(9.2,0)}]
+  \draw[thick] (-1.45,-0.9) -- (0,0); \draw[thick] (-1.45,0.9) -- (0,0);
+  \draw[line width=1.35pt] (1.45,-0.9) -- (0,0); \draw[line width=1.35pt] (1.45,0.9) -- (0,0);
+  \node[blob,minimum size=0.9cm] at (0,0) {};
+  \draw[gluon] (0.95,-0.6) -- (0.95,0.6);
+  \node[vtx] at (0.95,-0.6) {}; \node[vtx] at (0.95,0.6) {};
+  \node[font=\scriptsize] at (1.65,-1.0) {$Q$}; \node[font=\scriptsize] at (1.65,1.0) {$\bar Q$};
+  \node[lab] at (0,-1.75) {(c) 重い対の交換\\$\boldsymbol T_3\cdot\boldsymbol T_4\,\beta_{34}\coth\beta_{34}$};
+\end{scope}
+\end{tikzpicture}
+\caption{式~\eqref{eq:irpole} の赤外の極の三つの源（\ref{app:ir}）。灰色の円は木の振幅。(a) 外線 $i$、$j$ の間の軟らかいグルーオンの交換は、色の相関 $\boldsymbol T_i\cdot\boldsymbol T_j$ と eikonal な積分を与える。(b) 質量のない外線に平行な仮想のグルーオンは、軟らかい領域と重なって2重の極 $-C_i/\epsilon^2$ を、共線の領域だけで異常次元 $\gamma_i$ を与える。(c) 重いクォークの対の間の交換は、閾値で $\beta\to0$ の Coulomb の特異性を持つ。}
+\label{fig:irreg}
+\end{figure}
 
 \paragraph{ゲージパラメータ依存のまとめ。}$\xi$ に依存するのは、$\delta_3$、$\tilde\delta_3$、$\delta_2$ と四つの頂点の対抗項、$\gamma_A$、$\gamma_c$、$\gamma_\psi$、留数の赤外の極である。$\delta_g$、$\delta_m$、$\beta_0$、$\gamma_m$、極質量、$\alpha_s^{(n_l)}$、木の振幅のスピン・色の和（物理的な偏極の和）、対抗項と留数を含む1ループの干渉 $W$ は $\xi$ によらない。$\xi$ 自身も繰り込まれて走り、Landau ゲージはその固定点である。
 
@@ -752,15 +989,128 @@ $\Sigma_V^{\mathrm R}$（$u$） & 9 & $0$ & $8.2\times10^{-16}$ & $2.1\times10^{
 \end{tabular}
 \end{table}
 
-\paragraph{手順 (4)：1ループの $q\bar q\to Q\bar Q$ と $gg\to Q\bar Q$。}(A) $u(p_1)\bar u(p_2)\to t(k_1)\bar t(k_2)$ と (B) $g(p_1)g(p_2)\to t(k_1)\bar t(k_2)$ の1ループの補正を、Born との干渉 $W$（式~\eqref{eq:irpole} の前の定義）として一般の $\xi$ で求めた。基準点は $m=\mu=1$、$s=10$、$t=(p_1-k_1)^2=-3$（$u=-5$）、$g=1$ で、Dirac 代数と外線の和は $D$ 次元でとった（CDR）。FeynArts の図は、外線の自己エネルギーとタドポールを除いて (A) が15個、(B) が46個だった（\texttt{scat\_feyncalc.wl}）。(A) は、$t$ と $u$ の頂点の補正（可換と非可換）が各2、箱が2、$s$ チャンネルのグルーオンの自己エネルギーの挿入が9（4グルーオンの頂点のループ1、クォークのループ6、ゴーストとグルーオンのループ各1）で、4グルーオンの頂点のループはスケールを持たず0である。(B) は、重いクォークの線に付く三角形が11（$t\bar tg^*$ の頂点2、二つの外のグルーオンが4グルーオンの頂点で付くもの1、$t$、$u$ チャンネルのクォークとグルーオンの頂点8）、$gg\to g^*$ の三角形が15（クォークのループ12、ゴーストのループ2、グルーオンのループ1）、箱が6、スケールを持たない図が3、$s$ チャンネルの自己エネルギーの挿入が9、$t$、$u$ チャンネルの $t$ の自己エネルギーの挿入が2である。
+\paragraph{手順 (4)：1ループの $q\bar q\to Q\bar Q$ と $gg\to Q\bar Q$。}(A) $u(p_1)\bar u(p_2)\to t(k_1)\bar t(k_2)$ と (B) $g(p_1)g(p_2)\to t(k_1)\bar t(k_2)$ の1ループの補正を、Born との干渉 $W$（式~\eqref{eq:irpole} の前の定義）として一般の $\xi$ で求めた。基準点は $m=\mu=1$、$s=10$、$t=(p_1-k_1)^2=-3$（$u=-5$）、$g=1$ で、Dirac 代数と外線の和は $D$ 次元でとった（CDR）。FeynArts の図は、外線の自己エネルギーとタドポールを除いて (A) が15個、(B) が46個だった（図~\ref{fig:scatA}、\ref{fig:scatB}、\texttt{scat\_feyncalc.wl}）。(A) は、$t$ と $u$ の頂点の補正（可換と非可換）が各2、箱が2、$s$ チャンネルのグルーオンの自己エネルギーの挿入が9（4グルーオンの頂点のループ1、クォークのループ6、ゴーストとグルーオンのループ各1）で、4グルーオンの頂点のループはスケールを持たず0である。(B) は、重いクォークの線に付く三角形が11（$t\bar tg^*$ の頂点2、二つの外のグルーオンが4グルーオンの頂点で付くもの1、$t$、$u$ チャンネルのクォークとグルーオンの頂点8）、$gg\to g^*$ の三角形が15（クォークのループ12、ゴーストのループ2、グルーオンのループ1）、箱が6、スケールを持たない図が3、$s$ チャンネルの自己エネルギーの挿入が9、$t$、$u$ チャンネルの $t$ の自己エネルギーの挿入が2である。
 
-計算の流れは次の通りである。$s$ チャンネルのグルーオンの伝播関数のゲージ部分は、保存する $t$ の流れ、または物理的な偏極の和をとった外の3グルーオンの頂点に付くので、0として落とした。図ごとに、振幅を $1-\xi$ のべきと木の図に分けて Dirac 代数、スピンと偏極の和、色の和をとり（式~\eqref{eq:ghostsum} の前の物理的な偏極の和、参照ベクトルはもう一方のグルーオン）、ループ運動量を $l\to\pm l+c$ とずらして、各項の伝播関数を9個の積分の族（(A) の箱2、重いクォークの頂点1、(B) の箱6。3グルーオンの箱は (A) の箱と同じ族になった）のどれかの部分集合にした。分子は族の伝播関数で書き直し、LiteRed~\cite{lee12,lee14} の部分積分で (A) は12個、(B) は38個のマスター積分（$A_0$、$B_0$、$C_0$、$D_0$）に直した（\texttt{scat\_litered.wl}）。ゲージ部分の2重の伝播関数を含む積分は、TID で PaVe 関数にすると運動量0の辺を持つ関数になり、LoopTools と Package-X では評価できないので、この経路をとった。軟らかい三角形（質量のないグルーオンが二つの on-shell の外線を結ぶもの）は Cayley 行列式が0で、$A_0$ と $B_0$ に $1/(D-4)$ の係数で簡約される。そこで $A_0$ と $B_0$ は $O(\epsilon^2)$ まで厳密に（ガンマ関数、または Feynman パラメータの積分を40桁で）、$C_0$ と $D_0$ は LoopTools で評価した（\texttt{scat\_eval.wl}）。マスター積分は、$A_0$、$B_0$ で厳密な値、LoopTools、Package-X が、$C_0$ で LoopTools と Package-X が $\epsilon^{-2}$ から $\epsilon^0$ の係数まで $7\times10^{-16}$ 以内で一致した。対抗項は式~\eqref{eq:ct} の $\MSbar$（$n_f=6$）で、(B) の $t$、$u$ チャンネルの内線の $t$ には on-shell の質量の対抗項 $\delta_m^{\mathrm{OS}}=-C_F\frac{g^2}{K}\frac{(D-1)(D-2)}{2(D-3)}\frac{A_0(m^2)}{m^2}$（$=-C_F\frac{g^2}{K}(\frac3\epsilon+4)$、$\mu=m$）を、内線の質量についての微分として加えた。外線の留数は式~\eqref{eq:os} を $D$ 次元で使った（グルーオンは $R_G-1=-\frac23T_F(D-2)\frac{g^2}{K}\frac{A_0(m^2)}{m^2}-\delta_3$）。
+計算の流れは次の通りである。$s$ チャンネルのグルーオンの伝播関数のゲージ部分は、保存する $t$ の流れ、または物理的な偏極の和をとった外の3グルーオンの頂点に付くので、0として落とした。図ごとに、振幅を $1-\xi$ のべきと木の図に分けて Dirac 代数、スピンと偏極の和、色の和をとり（式~\eqref{eq:ghostsum} の前の物理的な偏極の和、参照ベクトルはもう一方のグルーオン）、ループ運動量を $l\to\pm l+c$ とずらして、各項の伝播関数を9個の積分の族（図~\ref{fig:families}。(A) の箱2、重いクォークの頂点1、(B) の箱6。3グルーオンの箱は (A) の箱と同じ族になった）のどれかの部分集合にした。分子は族の伝播関数で書き直し、LiteRed~\cite{lee12,lee14} の部分積分で (A) は12個、(B) は38個のマスター積分（$A_0$、$B_0$、$C_0$、$D_0$）に直した（\texttt{scat\_litered.wl}）。ゲージ部分の2重の伝播関数を含む積分は、TID で PaVe 関数にすると運動量0の辺を持つ関数になり、LoopTools と Package-X では評価できないので、この経路をとった。軟らかい三角形（質量のないグルーオンが二つの on-shell の外線を結ぶもの）は Cayley 行列式が0で、$A_0$ と $B_0$ に $1/(D-4)$ の係数で簡約される。そこで $A_0$ と $B_0$ は $O(\epsilon^2)$ まで厳密に（ガンマ関数、または Feynman パラメータの積分を40桁で）、$C_0$ と $D_0$ は LoopTools で評価した（\texttt{scat\_eval.wl}）。マスター積分は、$A_0$、$B_0$ で厳密な値、LoopTools、Package-X が、$C_0$ で LoopTools と Package-X が $\epsilon^{-2}$ から $\epsilon^0$ の係数まで $7\times10^{-16}$ 以内で一致した。対抗項は式~\eqref{eq:ct} の $\MSbar$（$n_f=6$）で、(B) の $t$、$u$ チャンネルの内線の $t$ には on-shell の質量の対抗項 $\delta_m^{\mathrm{OS}}=-C_F\frac{g^2}{K}\frac{(D-1)(D-2)}{2(D-3)}\frac{A_0(m^2)}{m^2}$（$=-C_F\frac{g^2}{K}(\frac3\epsilon+4)$、$\mu=m$）を、内線の質量についての微分として加えた。外線の留数は式~\eqref{eq:os} を $D$ 次元で使った（グルーオンは $R_G-1=-\frac23T_F(D-2)\frac{g^2}{K}\frac{A_0(m^2)}{m^2}-\delta_3$）。
 
 結果を表~\ref{tab:scat} に示す。(A)、(B) とも、$W$ の $1/\epsilon^2$ と $1/\epsilon$ の係数は、$D$ 次元の Born と色の相関から作った式~\eqref{eq:irpole} と、$N$ と $\xi$ の関数として記号として一致した（$C_F=\frac{N^2-1}{2N}$ に直して比べた。FeynCalc の \texttt{SUNSimplify} は $C_A^3$ と $C_F$ の形を混ぜて返す）。色の相関は Born の色の和に生成子を挿入して求め、(A) は式~\eqref{eq:colcorr} に一致し、(B) は色の保存 $\sum_{j\ne i}\langle\boldsymbol T_i\cdot\boldsymbol T_j\rangle=-C_i\langle\mathcal M_0|\mathcal M_0\rangle$ を満たした。$W$ の有限部分は $\xi$ によらなかった（$\xi$ の多項式の係数が0）。$\xi$ に依存するのは、ループの図、$\delta_{1F}$、$\delta_1$、$\delta_2$、$\delta_3$、留数の極で、和で打ち消す。
 
 Feynman ゲージ（$\xi=1$）では、図ごとに二つの独立な経路と比べた。一つは、2重の伝播関数が現れないので TID で PaVe 関数に分解して LoopTools で評価する経路、もう一つは、未修正の FeynArts と FormCalc で振幅を作り、\texttt{CalcFeynAmp}、\texttt{HelicityME}、\texttt{PolarizationSum} に \texttt{Dimension -> 0} を付けて $D-4$ を残す経路である（\texttt{scat\_formcalc.wl}、\ref{app:details}）。FormCalc の Born は $D$ の依存まで FeynCalc と一致し、(A) は $16|\mathcal M_0|^2=\frac{288}{25}+8(D-4)$、(B) は $4|\mathcal M_0|^2=\frac{184}{675}[226+228(D-4)+75(D-4)^2]$（SU(3)）だった。図ごとの $KW$ の差の最大値は、(A) で TID が $2.4\times10^{-13}$、FormCalc が $2.7\times10^{-13}$、(B) で TID が $1.5\times10^{-12}$、FormCalc が $2.2\times10^{-12}$ だった（$KW$ の図ごとの値は最大で約1900）。
 
-最後に、(A) の虚部をユニタリー性で確かめた。$s$ チャンネルの2粒子の中間状態 $n=d\bar d$（$s\bar s$、$c\bar c$、$b\bar b$ も同じ）、$u\bar u$、$t\bar t$、$gg$ について、$\frac12\sum\mathcal M_0^*(i\to f)\mathcal M_0(i\to n)\mathcal M_0(n\to f)$ を $D$ 次元の2体の位相空間で積分し（$\overline{\mathrm{MS}}$ の因子 $S_\epsilon^{-1}$ を掛ける）、その中間状態を持つ図の組の $\mathrm{Im}\,W$ と比べた（表~\ref{tab:unit}）。被積分関数には、$q_1\parallel p_1,p_2$（$u\bar u\to u\bar u$ の $t$ チャンネル、$u\bar u\to gg$ の $t$、$u$ チャンネルの質量のないクォーク）と $q_1\parallel k_1$（$t\bar t\to t\bar t$ の $t$ チャンネルのグルーオン、Coulomb）の方向に $1/(1-\cos)$ の特異点がある。その留数の角度積分を $D$ 次元で解析的に、残りを4次元で数値的に求めた。$1/\epsilon$ の係数（$u\bar u$ の共線、$t\bar t$ の Coulomb）と有限部分が、すべての組で $1.4\times10^{-13}$ 以内で一致した。クォーク対の中間状態では、FeynArts の木の振幅をスピンの和でつなぐと閉じたフェルミオンの線の符号 $-1$ が現れないので、その符号を掛けた。符号は $d\bar d$ の組（真空偏極の虚部 $\mathrm{Im}\,\Pi<0$、Peskin--Schroeder と同じ）で確かめられる。
+最後に、(A) の虚部をユニタリー性で確かめた。$s$ チャンネルの2粒子の中間状態 $n=d\bar d$（$s\bar s$、$c\bar c$、$b\bar b$ も同じ）、$u\bar u$、$t\bar t$、$gg$ について、$\frac12\sum\mathcal M_0^*(i\to f)\mathcal M_0(i\to n)\mathcal M_0(n\to f)$ を $D$ 次元の2体の位相空間で積分し（$\overline{\mathrm{MS}}$ の因子 $S_\epsilon^{-1}$ を掛ける）、その中間状態を持つ図の組の $\mathrm{Im}\,W$ と比べた（図~\ref{fig:cuts}、表~\ref{tab:unit}）。被積分関数には、$q_1\parallel p_1,p_2$（$u\bar u\to u\bar u$ の $t$ チャンネル、$u\bar u\to gg$ の $t$、$u$ チャンネルの質量のないクォーク）と $q_1\parallel k_1$（$t\bar t\to t\bar t$ の $t$ チャンネルのグルーオン、Coulomb）の方向に $1/(1-\cos)$ の特異点がある。その留数の角度積分を $D$ 次元で解析的に、残りを4次元で数値的に求めた。$1/\epsilon$ の係数（$u\bar u$ の共線、$t\bar t$ の Coulomb）と有限部分が、すべての組で $1.4\times10^{-13}$ 以内で一致した。クォーク対の中間状態では、FeynArts の木の振幅をスピンの和でつなぐと閉じたフェルミオンの線の符号 $-1$ が現れないので、その符号を掛けた。符号は $d\bar d$ の組（真空偏極の虚部 $\mathrm{Im}\,\Pi<0$、Peskin--Schroeder と同じ）で確かめられる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+\newcommand{\famlabel}[5]{%
+  \node[font=\scriptsize,anchor=east] at (-0.68,0) {#1};
+  \node[font=\scriptsize,anchor=south] at (0,0.68) {#2};
+  \node[font=\scriptsize,anchor=west] at (0.68,0) {#3};
+  \node[font=\scriptsize,anchor=north] at (0,-0.68) {#4};
+  \node[lab] at (0,-1.75) {#5};}
+\newcommand{\famlegs}[4]{%
+  \draw[pz] (-0.6,-0.6) -- (-0.95,-0.95); \draw[pz] (-0.6,0.6) -- (-0.95,0.95);
+  \draw[pz] (0.6,0.6) -- (0.95,0.95); \draw[pz] (0.6,-0.6) -- (0.95,-0.95);
+  \node[font=\scriptsize] at (-1.12,-1.1) {#1}; \node[font=\scriptsize] at (-1.12,1.1) {#2};
+  \node[font=\scriptsize] at (1.12,1.1) {#3}; \node[font=\scriptsize] at (1.12,-1.1) {#4};}
+% F2 (= G2)
+\begin{scope}[shift={(0,0)}]
+  \draw[pz] (-0.6,-0.6) -- (-0.6,0.6) -- (0.6,0.6); \draw[pm] (0.6,0.6) -- (0.6,-0.6); \draw[pz] (0.6,-0.6) -- (-0.6,-0.6);
+  \famlegs{$p_1$}{$p_2$}{$k_2$}{$k_1$}
+  \famlabel{$l-p_1$}{$l-p_1-p_2$}{$l-k_1$}{$l$}{F2（$=$G2）\\直の箱}
+\end{scope}
+% F1 (= G4)
+\begin{scope}[shift={(4.3,0)}]
+  \draw[pz] (-0.6,-0.6) -- (-0.6,0.6) -- (0.6,0.6); \draw[pm] (0.6,0.6) -- (0.6,-0.6); \draw[pz] (0.6,-0.6) -- (-0.6,-0.6);
+  \famlegs{$p_1$}{$p_2$}{$k_1$}{$k_2$}
+  \famlabel{$l-p_1$}{$l-p_1-p_2$}{$l-k_2$}{$l$}{F1（$=$G4）\\交差した箱}
+\end{scope}
+% F3
+\begin{scope}[shift={(8.6,0)}]
+  \coordinate (A) at (-0.55,0); \coordinate (B) at (0.65,0.75); \coordinate (C) at (0.65,-0.75);
+  \draw[pm] (A) -- (B); \draw[pz] (B) -- (C); \draw[pm] (C) -- (A);
+  \draw[pz] (A) -- (-1.0,0); \draw[pz] (B) -- (1.0,1.1); \draw[pz] (C) -- (1.0,-1.1);
+  \node[font=\scriptsize,anchor=east] at (-1.0,0) {$p_1{+}p_2$}; \node[font=\scriptsize,anchor=west] at (1.02,1.1) {$k_2$}; \node[font=\scriptsize,anchor=west] at (1.02,-1.1) {$k_1$};
+  \node[font=\scriptsize,anchor=south east] at (0.05,0.4) {$l-p_1-p_2+k_1$}; \node[font=\scriptsize,anchor=west] at (0.7,0) {$l$}; \node[font=\scriptsize,anchor=north east] at (0.05,-0.4) {$l+k_1$};
+  \node[lab] at (0,-1.75) {F3 重いクォークの頂点\\（$+(l-p_1)^2$）};
+\end{scope}
+% G1
+\begin{scope}[shift={(12.9,0)}]
+  \draw[pm] (-0.6,-0.6) -- (-0.6,0.6) -- (0.6,0.6); \draw[pz] (0.6,0.6) -- (0.6,-0.6); \draw[pm] (0.6,-0.6) -- (-0.6,-0.6);
+  \famlegs{$p_1$}{$p_2$}{$k_2$}{$k_1$}
+  \famlabel{$l$}{$l+p_2$}{$l-p_1+k_1$}{$l-p_1$}{G1\\箱 $QQQg$}
+\end{scope}
+% G3
+\begin{scope}[shift={(2.15,-3.9)}]
+  \draw[pm] (-0.6,-0.6) -- (-0.6,0.6) -- (0.6,0.6); \draw[pz] (0.6,0.6) -- (0.6,-0.6); \draw[pm] (0.6,-0.6) -- (-0.6,-0.6);
+  \famlegs{$p_1$}{$p_2$}{$k_1$}{$k_2$}
+  \famlabel{$l$}{$l+p_2$}{$l+p_2-k_1$}{$l-p_1$}{G3\\箱 $QQQg$（交差）}
+\end{scope}
+% G5
+\begin{scope}[shift={(6.45,-3.9)}]
+  \draw[pm] (-0.6,-0.6) -- (-0.6,0.6); \draw[pz] (-0.6,0.6) -- (0.6,0.6) -- (0.6,-0.6); \draw[pm] (0.6,-0.6) -- (-0.6,-0.6);
+  \famlegs{$p_1$}{$k_1$}{$p_2$}{$k_2$}
+  \famlabel{$l$}{$l-k_1$}{$l+p_2-k_1$}{$l-p_1$}{G5 箱 $QQgg$\\（$p_1$ が $Q$ の線）}
+\end{scope}
+% G6
+\begin{scope}[shift={(10.75,-3.9)}]
+  \draw[pz] (-0.6,-0.6) -- (-0.6,0.6); \draw[pm] (-0.6,0.6) -- (0.6,0.6) -- (0.6,-0.6); \draw[pz] (0.6,-0.6) -- (-0.6,-0.6);
+  \famlegs{$p_1$}{$k_1$}{$p_2$}{$k_2$}
+  \famlabel{$l$}{$l-k_1$}{$l+p_2-k_1$}{$l-p_1$}{G6 箱 $QQgg$\\（$p_2$ が $Q$ の線）}
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (4) の積分の族（\texttt{scat\_litered.wl}）。各辺は伝播関数 $1/((l+q)^2-m_i^2)$ で、太い辺は質量 $m$ の重いクォーク、細い辺は質量0。角の外の運動量はループの上の順。F3 は重いクォークの頂点の三角形に $(l-p_1)^2$ を加えて伝播関数の基底を完全にしたもの。3グルーオンの箱の族 G2、G4 は、ループ運動量のずらしで F2、F1 と同じになる。ループ運動量のずらしで各項の伝播関数をこれらの部分集合にし、LiteRed で簡約した。}
+\label{fig:families}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% n = d dbar
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-1.65,-0.85) -- (-1.15,0); \draw[fermion] (-1.15,0) -- (-1.65,0.85);
+  \draw[gluon] (-1.15,0) -- (-0.45,0); \draw[gluon] (0.45,0) -- (1.15,0);
+  \draw[fermion] (-0.45,0) arc (180:0:0.45); \draw[fermion] (0.45,0) arc (360:180:0.45);
+  \draw[heavy] (1.65,0.85) -- (1.15,0); \draw[heavy] (1.15,0) -- (1.65,-0.85);
+  \node[vtx] at (-1.15,0) {}; \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {}; \node[vtx] at (1.15,0) {};
+  \draw[cutl] (0,-0.85) -- (0,0.85);
+  \node[lab] at (0,-1.55) {(a) $n=d\bar d$\\（(8)〜(12) の1本）};
+\end{scope}
+% n = u ubar
+\begin{scope}[shift={(3.9,0)}]
+  \draw[fermion] (-1.35,-0.9) -- (-0.65,-0.45); \draw[fermion] (-0.65,-0.45) -- (0,0);
+  \draw[fermion] (0,0) -- (-0.65,0.45); \draw[fermion] (-0.65,0.45) -- (-1.35,0.9);
+  \draw[gluon] (-0.65,-0.45) -- (-0.65,0.45);
+  \draw[gluon] (0,0) -- (0.8,0);
+  \draw[heavy] (1.45,0.85) -- (0.8,0); \draw[heavy] (0.8,0) -- (1.45,-0.85);
+  \node[vtx] at (-0.65,-0.45) {}; \node[vtx] at (-0.65,0.45) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.8,0) {};
+  \draw[cutl] (-0.32,-0.85) -- (-0.32,0.85);
+  \node[lab] at (0,-1.55) {(b) $n=u\bar u$\\（(3) と $u$ のループ）};
+\end{scope}
+% n = t tbar
+\begin{scope}[shift={(7.8,0)}]
+  \draw[fermion] (-1.45,-0.85) -- (-0.8,0); \draw[fermion] (-0.8,0) -- (-1.45,0.85);
+  \draw[gluon] (-0.8,0) -- (0,0);
+  \draw[heavy] (0,0) -- (0.65,-0.45); \draw[heavy] (0.65,-0.45) -- (1.35,-0.9);
+  \draw[heavy] (1.35,0.9) -- (0.65,0.45); \draw[heavy] (0.65,0.45) -- (0,0);
+  \draw[gluon] (0.65,-0.45) -- (0.65,0.45);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.65,-0.45) {}; \node[vtx] at (0.65,0.45) {};
+  \draw[cutl] (0.32,-0.85) -- (0.32,0.85);
+  \node[lab] at (0,-1.55) {(c) $n=t\bar t$\\（(1) と (13)）};
+\end{scope}
+% n = g g
+\begin{scope}[shift={(11.7,0)}]
+  \draw[fermion] (-1.3,-1.05) -- (-0.6,-0.6); \draw[fermion] (-0.6,-0.6) -- (-0.6,0.6); \draw[fermion] (-0.6,0.6) -- (-1.3,1.05);
+  \draw[gluon] (-0.6,0.6) -- (0.6,0.6); \draw[gluon] (-0.6,-0.6) -- (0.6,-0.6);
+  \draw[heavy] (1.3,1.05) -- (0.6,0.6); \draw[heavy] (0.6,0.6) -- (0.6,-0.6); \draw[heavy] (0.6,-0.6) -- (1.3,-1.05);
+  \node[vtx] at (-0.6,-0.6) {}; \node[vtx] at (-0.6,0.6) {}; \node[vtx] at (0.6,0.6) {}; \node[vtx] at (0.6,-0.6) {};
+  \draw[cutl] (0,-1.0) -- (0,1.0);
+  \node[lab] at (0,-1.55) {(d) $n=gg$\\（(2)、(4)〜(7)、(14)、(15)）};
+\end{scope}
+\end{tikzpicture}
+\caption{(A) の $s$ チャンネルの2粒子の切断（表~\ref{tab:unit}）。破線で切った2本の線を on-shell にし、左右の木の振幅の積を2体の位相空間で積分すると、その中間状態を持つ図の組の $2\,\mathrm{Im}\,W$ になる。(b) では $u\bar u\to u\bar u$ の $t$ チャンネルのグルーオンが前方で、(c) では $t\bar t\to t\bar t$ のグルーオンが $q_1\parallel k_1$ で特異になり、$1/\epsilon$ の虚部（共線と Coulomb）を与える。(d) の $gg$ には、箱 (5)(6) のほか非可換な頂点 (2)、(4)、ゴーストとグルーオンのループ (14)、(15) が寄与する（グルーオンは物理的な偏極だけを足すので、ゴースト対の切断は要らない）。}
+\label{fig:cuts}
+\end{figure}
 
 \begin{table}[tbp]
 \centering\small
