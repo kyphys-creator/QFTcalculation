@@ -1,0 +1,14 @@
+# lbl_mg5.mg5 -- photon-photon scattering, a loop-induced process, with the NLO UFO (research note models/spinor_qed,
+# step (10)).  Run from Src/:   mg5_aMC lbl_mg5.mg5 > work/lbl_mg5.log   (run_lbl_check.sh does this)
+# Imports a copy of generated/SpinorQED_NLO_MS_UFO in work/ (12 boxes and the two R2 vertices of the electron and muon loops;
+# no counterterm contributes).  Two outputs:
+#   MadLoop standalone of the squared loop amplitude ([sqrvirt=QED]; [noborn=QED] cannot be written as standalone code)
+#     -> work/ml_lbl, evaluated per helicity by lbl_madloop_driver.f;
+#   MadEvent for the loop-induced process ([noborn=QED]) -> work/me_lbl, launched by lbl_me_launch.mg5 after
+#     run_lbl_check.sh adds the missing "Block loop" (MU_R) to its param_card (MadEvent otherwise looks for the Z mass).
+set automatic_html_opening False
+import model ./work/SpinorQED_NLO_MS_UFO
+generate a a > a a QED=4 [sqrvirt=QED]
+output standalone ./work/ml_lbl -f
+generate a a > a a QED=4 [noborn=QED]
+output madevent ./work/me_lbl -f

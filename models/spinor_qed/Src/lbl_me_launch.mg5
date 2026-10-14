@@ -1,0 +1,70 @@
+# lbl_me_launch.mg5 -- MadEvent cross sections of gamma gamma -> gamma gamma (loop-induced, both lepton loops) at
+# sqrt(s) = 1, 2, 3, 6 (GeV, m_e = 1, m_mu = 1.7, e = 1), three runs with the seeds 1, 2, 3 at each energy, in this order
+# (lbl_numeric.py relies on it).  Fixed-energy photon beams (lpp = 0), all photon cuts off (pta, etaa, draa), 20000
+# unweighted events per run.  The error MadEvent quotes for one run is not reliable (it varied from 2 to 19 pb at
+# sqrt(s) = 3 for the same number of events), so lbl_numeric.py uses the spread of the three runs.  Run from Src/ after
+# lbl_mg5.mg5:   mg5_aMC lbl_me_launch.mg5 > work/lbl_me_launch.log   (run_lbl_check.sh does this)
+set automatic_html_opening False
+launch ./work/me_lbl
+0
+set lpp1 0
+set lpp2 0
+set nevents 20000
+set pta 0
+set etaa -1
+set draa 0
+set use_syst False
+set ebeam1 0.5
+set ebeam2 0.5
+set iseed 1
+0
+launch ./work/me_lbl
+0
+set iseed 2
+0
+launch ./work/me_lbl
+0
+set iseed 3
+0
+launch ./work/me_lbl
+0
+set ebeam1 1.0
+set ebeam2 1.0
+set iseed 1
+0
+launch ./work/me_lbl
+0
+set iseed 2
+0
+launch ./work/me_lbl
+0
+set iseed 3
+0
+launch ./work/me_lbl
+0
+set ebeam1 1.5
+set ebeam2 1.5
+set iseed 1
+0
+launch ./work/me_lbl
+0
+set iseed 2
+0
+launch ./work/me_lbl
+0
+set iseed 3
+0
+launch ./work/me_lbl
+0
+set ebeam1 3.0
+set ebeam2 3.0
+set iseed 1
+0
+launch ./work/me_lbl
+0
+set iseed 2
+0
+launch ./work/me_lbl
+0
+set iseed 3
+0
