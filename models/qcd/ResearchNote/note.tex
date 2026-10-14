@@ -47,7 +47,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論、スピノル QED のノート~\cite{phi3note,phi34note,yukawanote,qednote} に続き、非可換ゲージ理論の例として QCD を $d=4$ で調べる。ゲージ群は SU($N$) で、グルーオンに質量のない軽いクォーク $n_l$ 本と質量 $m$ の重いクォーク1本が結合する。群の因子 $C_F$、$C_A$、$T_F$ は記号で残し、数値の基準は SU(3)、$n_l=5$ とする。共変ゲージのパラメータ $\xi$ と Faddeev--Popov のゴーストを残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、色の代数、べき数え上げ、Slavnov--Taylor 恒等式、1ループの1PI 関数と対抗項、繰り込み群の係数を手で求めた。グルーオンの自己エネルギーのうちグルーオンのループとゴーストのループの和は、$D$ 次元で厳密に $\frac{g^2C_A}{2(4\pi)^2}[\frac{3D-2}{D-1}+(2D-7)(1-\xi)-\frac{D-4}{4}(1-\xi)^2]B_0$ となる。グルーオンのループだけでは横波でなく、その縦の部分をゴーストのループが打ち消す。クォークの頂点とゴーストの頂点の発散は、それぞれ $\xi$ に依存するが、どちらから結合の繰り込みを読み取っても同じ $Z_g=1-\frac{g^2}{2(4\pi)^2}\beta_0\DUV$、$\beta_0=\frac{11}{3}C_A-\frac43T_Fn_f$ を与え、漸近的自由を示す。3グルーオンと4グルーオンの頂点の発散は Slavnov--Taylor 恒等式から求めた。Landau ゲージではゴースト頂点が発散しない（Taylor の非繰り込み定理）。重いクォークの極質量 $m_{\mathrm p}=m(\mu)[1+C_F\frac{g^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ と、重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ への換算も求めた。木のレベルでは、$q\bar q\to Q\bar Q$、$gg\to Q\bar Q$、$gg\to gg$、$e^+e^-\to q\bar qg$ の振幅とスピン・色の和を求めた。外のグルーオンの偏極の和を $-g_{\mu\nu}$ で置き換えると、物理的な和より大きくなり、その差はゴースト対の生成 $c\bar c\to Q\bar Q$ の振幅の2乗に等しい。最後に、検算と応用（漸近的自由と $\alpha_s$ の走り、2ループの $\beta$ 関数、$e^+e^-\to$ ハドロン、重いクォークの対生成、インスタントン）の十の手順を定め、その最初の手順として FeynRules の模型ファイルを作った。16個の頂点は手計算と記号として一致し、MadGraph の図の数も手で数えた数と一致した。導出は付録に載せる。
+$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論、スピノル QED のノート~\cite{phi3note,phi34note,yukawanote,qednote} に続き、非可換ゲージ理論の例として QCD を $d=4$ で調べる。ゲージ群は SU($N$) で、グルーオンに質量のない軽いクォーク $n_l$ 本と質量 $m$ の重いクォーク1本が結合する。群の因子 $C_F$、$C_A$、$T_F$ は記号で残し、数値の基準は SU(3)、$n_l=5$ とする。共変ゲージのパラメータ $\xi$ と Faddeev--Popov のゴーストを残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、色の代数、べき数え上げ、Slavnov--Taylor 恒等式、1ループの1PI 関数と対抗項、繰り込み群の係数を手で求めた。グルーオンの自己エネルギーのうちグルーオンのループとゴーストのループの和は、$D$ 次元で厳密に $\frac{g^2C_A}{2(4\pi)^2}[\frac{3D-2}{D-1}+(2D-7)(1-\xi)-\frac{D-4}{4}(1-\xi)^2]B_0$ となる。グルーオンのループだけでは横波でなく、その縦の部分をゴーストのループが打ち消す。クォークの頂点とゴーストの頂点の発散は、それぞれ $\xi$ に依存するが、どちらから結合の繰り込みを読み取っても同じ $Z_g=1-\frac{g^2}{2(4\pi)^2}\beta_0\DUV$、$\beta_0=\frac{11}{3}C_A-\frac43T_Fn_f$ を与え、漸近的自由を示す。3グルーオンと4グルーオンの頂点の発散は Slavnov--Taylor 恒等式から求め、3グルーオンについては図の直接の和でも確かめた。Landau ゲージではゴースト頂点が発散しない（Taylor の非繰り込み定理）。重いクォークの極質量 $m_{\mathrm p}=m(\mu)[1+C_F\frac{g^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ と、重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ への換算も求めた。木のレベルでは、$q\bar q\to Q\bar Q$、$gg\to Q\bar Q$、$gg\to gg$、$e^+e^-\to q\bar qg$ の振幅とスピン・色の和を求めた。外のグルーオンの偏極の和を $-g_{\mu\nu}$ で置き換えると、物理的な和より大きくなり、その差はゴースト対の生成 $c\bar c\to Q\bar Q$ の振幅の2乗に等しい。断面積は閉じた形に積分した。最後に、検算と応用（漸近的自由と $\alpha_s$ の走り、2ループの $\beta$ 関数、$e^+e^-\to$ ハドロン、重いクォークの対生成、インスタントン）の十の手順を定め、最初の二つを行った。手順 (1) では FeynRules の模型ファイルを作り、16個の頂点は手計算と記号として一致し、MadGraph の図の数も手で数えた数と一致した。手順 (2) では、四つの過程の振幅とスピン・色の和、ゴースト対の関係を FeynCalc で記号として（$gg\to gg$ は厳密な有理数の運動学で）確かめ、Dirac 行列、Gell-Mann 行列、偏極ベクトルを陽に作った数値でも相対 $10^{-13}$ 以下で確かめた。MadGraph の12個の断面積は閉じた形と $1.04\sigma$ 以内で一致した。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -591,11 +591,24 @@ R_G=1+\Pi^{\mathrm R}(0)=1-\frac{g^2}{K}\Bigl[\Bigl(\frac{13}6-\frac\xi2\Bigr)C_
 \end{equation}
 となる。$-g_{\mu\nu}$ で置き換えた和は、二つの外のグルーオンの非物理的な偏極（時間的と縦）の寄与を含み、それがゴースト対の生成の振幅の2乗に等しい。ループの中でゴーストが非物理的な偏極を打ち消すのと同じ構造である。
 
+\paragraph{断面積。}式~\eqref{eq:sumtree} を角度について積分すると（\ref{app:tree}）
+\begin{equation}
+\begin{gathered}
+\sigma_A=\frac{g^4T_F^2d_A}{12\pi s\,d_F^2}\,\beta\Bigl(1+\frac\rho2\Bigr),\qquad
+\sigma_B=\frac{g^4C_AC_F\,\beta}{16\pi s\,d_A^2}\Bigl\{C_F\Bigl[(4+4\rho-2\rho^2)\frac{L}{\beta}-4(1+\rho)\Bigr]-C_A\Bigl[\frac43+\frac{5\rho}3-\rho^2\frac L\beta\Bigr]\Bigr\},\\
+\sigma_C(c_0)=\frac{\pi\alpha_s^2C_A^2}{s\,d_A}\Bigl[\frac{16c_0}{1-c_0^2}+\frac{11}2c_0+\frac{c_0^3}6-4\ln\frac{1+c_0}{1-c_0}\Bigr],\qquad
+\frac{\sigma_D(y)}{\sigma_0}=C_F\frac{\alpha_s}{2\pi}F(y),\\
+F(y)=(3-6y)\ln\frac{y}{1-2y}+2\ln^2\frac{y}{1-y}+\frac52-6y-\frac92y^2+4\,\mathrm{Li}_2\Bigl(\frac{y}{1-y}\Bigr)-\frac{\pi^2}3
+\end{gathered}
+\label{eq:sigtree}
+\end{equation}
+となる。初期状態のスピンと色については平均をとり、$\beta=\sqrt{1-\rho}$、$L=\ln\frac{1+\beta}{1-\beta}$ である。$\sigma_C$ は散乱角を $|\cos\theta|<c_0$ に制限したもので（$t$、$u$ チャンネルのグルーオンの極で全断面積は発散する）、同種粒子の因子 $\frac12$ を含む。$\sigma_D$ は3つの対の不変質量がすべて $ys$ を超える領域（$x_1,x_2,x_3<1-y$）の3ジェットの断面積で、$\sigma_0=N_cQ_q^2\frac{4\pi\alpha^2}{3s}$ は $e^+e^-\to q\bar q$ の木の断面積である。SU(3) では $\sigma_A=\frac{8\pi\alpha_s^2}{27s}\beta(1+\frac\rho2)$、$\sigma_B=\frac{\pi\alpha_s^2}{3s}[(1+\rho+\frac{\rho^2}{16})L-\beta(\frac74+\frac{31}{16}\rho)]$~\cite{combridge,gor} である。$F(y)$ は $y\to0$ で $2\ln^2y$ のように発散し（軟らかく共線なグルーオンの2重対数）、$y=\frac13$ で0になる。
+
 \paragraph{ゲージパラメータ依存のまとめ。}$\xi$ に依存するのは、$\delta_3$、$\tilde\delta_3$、$\delta_2$ と四つの頂点の対抗項、$\gamma_A$、$\gamma_c$、$\gamma_\psi$、留数の赤外の極である。$\delta_g$、$\delta_m$、$\beta_0$、$\gamma_m$、極質量、$\alpha_s^{(n_l)}$、木の振幅のスピン・色の和（物理的な偏極の和）は $\xi$ によらない。$\xi$ 自身も繰り込まれて走り、Landau ゲージはその固定点である。
 
 \section{検算の計画}\label{sec:plan}
 
-第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、FeynArts と FeynCalc で次のことを予備的に確かめた：式~\eqref{eq:V} の三つの2点関数（$D$ 次元で記号として、グルーオンのループとゴーストのループの縮約を別々に）、横波性、式~\eqref{eq:Vpole} のクォークとゴーストの頂点の極（外の運動量で展開し、すべての伝播関数に同じ質量を入れる赤外の組み替えで）、式~\eqref{eq:sumtree} の (A)、(B)、(D) と式~\eqref{eq:ghostsum}。(C) は、Gell-Mann 行列から作った構造定数と陽な偏極ベクトルによる数値で確かめた（FeynCalc で4本のグルーオンの物理的な偏極の和を記号でとる計算は30分で終わらなかった）。頂点の極を一般の外の運動量のまま TID と \texttt{PaVeUVPart} で取り出すと、伝播関数が2重になる PaVe 関数を含むクォーク頂点の可換な図で、ゲージ部分の極が $-(1-\xi)$ でなく $+(1-\xi)$ になった。赤外の組み替えでは正しい値になったので、この食い違いは手順 (3) で調べる。正式な検算は手順 (2)、(3) で行う。
+第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、FeynArts と FeynCalc で次のことを予備的に確かめた：式~\eqref{eq:V} の三つの2点関数（$D$ 次元で記号として、グルーオンのループとゴーストのループの縮約を別々に）、横波性、式~\eqref{eq:Vpole} のクォーク、ゴースト、3グルーオンの頂点の極（外の運動量で展開し、すべての伝播関数に同じ質量を入れる赤外の組み替えで。3グルーオンの頂点は FeynArts の18個の図の和）、式~\eqref{eq:sumtree} の (A)、(B)、(D) と式~\eqref{eq:ghostsum}。(C) は、Gell-Mann 行列から作った構造定数と陽な偏極ベクトルによる数値で確かめた（FeynCalc で4本のグルーオンの物理的な偏極の和を記号でとる計算は30分で終わらなかった）。頂点の極を一般の外の運動量のまま TID と \texttt{PaVeUVPart} で取り出すと、伝播関数が2重になる PaVe 関数を含むクォーク頂点の可換な図で、ゲージ部分の極が $-(1-\xi)$ でなく $+(1-\xi)$ になった。赤外の組み替えでは正しい値になったので、この食い違いは手順 (3) で調べる。正式な検算は手順 (2)、(3) で行う。
 
 \begin{table}[tbp]
 \centering\small
@@ -657,12 +670,44 @@ $gg\to ggg$ & 25 & 3点だけの木15と、4点一つと3点一つの木 $\binom
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (2)：木の振幅とスピン・色の和、断面積。}FeynArts の模型から (A)〜(D) とゴースト対の木の図を作り（1、3、4、2 個と、$c\bar c\to t\bar t$、$\bar cc\to t\bar t$ の各1個）、FeynCalc で式~\eqref{eq:Mtree}〜\eqref{eq:ghostsum} と比べた（\texttt{tree\_feyncalc.wl}）。(A)、(B) では、グルーオンの伝播関数の $\xi$ の項が Dirac 方程式で消え、振幅が $\xi$ によらないことを確かめた。振幅そのものは、(A)、(B)、(D) では全体の符号 $-1$ を除いて式~\eqref{eq:Mtree} と一致した（スピン、偏極、色について和をとった $|\mathcal M_{\mathrm{FC}}+\mathcal M_{\mathrm{note}}|^2$ が記号として0）。この符号は外のフェルミオンの演算子の並べ方の規約で、QED のノートと同じである。スピン・色の和は、(A) が式~\eqref{eq:sumtree}、(B) の物理的な偏極の和が SU($N$) の式~\eqref{eq:sumtree} および SU(3) の Combridge の式と記号として一致した。(B) では、$-g_{\mu\nu}$ の和と物理的な和の差が、FeynArts のゴーストの図の2乗の和に記号として等しく（式~\eqref{eq:ghostsum}）、それぞれが $g^4C_Ad_A\tau_1\tau_2$ で、ゴーストの振幅は\ref{app:tree} の式と全体の符号を除いて一致した。(C) は、4本のグルーオンの物理的な偏極の和を記号でとる計算が30分で終わらなかったので、厳密な有理数の運動学 $p_1=(5,0,0,5)$、$p_2=(5,0,0,-5)$、$k_1=(5,3,0,4)$、$k_2=(5,-3,0,-4)$ と、陽な実の偏極ベクトルの16通りで比べた。FeynArts の振幅を色の構造 $f^{abe}f^{cde}$、$f^{ace}f^{bde}$ に射影すると（Jacobi 恒等式で三つ目はこの二つで書ける）、図~\ref{fig:rules} の Feynman 則で書いた4つの図の和と、16通りすべてで厳密に一致した。$\xi$ による微分と、$\varepsilon(p_1)\to p_1$ とした振幅は厳密に0で、色の和は $16g^4C_A^2d_A(3-\frac{tu}{s^2}-\frac{su}{t^2}-\frac{st}{u^2})$ と厳密に一致した。(D) は、レプトンの向きについて平均した物理的な和が、3ジェットの分布 $C_F\frac{\alpha_s}{2\pi}\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$ と記号として一致した。
+
+次に、Dirac 行列、スピノル、Gell-Mann 行列、偏極ベクトルを陽に作り、トレースや色の恒等式を使わずに振幅を足し上げた（\texttt{tree\_sigma.py}）。3つのエネルギーと5つの角度で、(A)、(B)、(C) の和は式~\eqref{eq:sumtree} と相対 $1.1\times10^{-15}$ 以内で一致し、$\xi=0$ と $3$ の値の差は $7\times10^{-16}$ 以下だった。(B) の $-g_{\mu\nu}$ の和（4つの基底ベクトルに $-g_{\lambda\lambda}$ の重みを付けた和）と物理的な和の差は、陽に作ったゴースト対の振幅の2乗の和と $4\times10^{-13}$ で一致した。Ward 恒等式は、(B) では $p_{1\mu}\mathcal M^{\mu\nu}=\frac{g^2}sp_2^\nu\bar u[T^a,T^b]\slashed p_1v$ がすべての成分、スピン、色について相対 $5\times10^{-15}$、(C) では $\varepsilon(p_1)\to p_1$ の振幅が $6\times10^{-16}$ で成り立った。(D) は、六つのレプトンの向き（$\pm x,\pm y,\pm z$。向きの2次式の平均を厳密に与える）で平均した和が3ジェットの分布と $7\times10^{-15}$ で一致した。基準点 $\sqrt s=5$、$\cos\theta=0.3$、$m=g=1$ の値 $\sum|\mathcal M_A|^2=9.8848$、$\sum|\mathcal M_B|^2=59.38768087839326$、$\sum|\mathcal M_C|^2=10260.89258785171$ は、FeynCalc の値と表示した全桁で一致した。
+
+最後に、式~\eqref{eq:sigtree} の断面積を、式~\eqref{eq:sumtree} の数値積分（相対 $7\times10^{-16}$ 以内で一致）と MadGraph と比べた（表~\ref{tab:tree}、\texttt{tree\_mg5.mg5}）。12個の断面積はすべて $1.04\sigma$ 以内で一致した。MadGraph の設定は\ref{app:details} に示す。
+
+\begin{table}[tbp]
+\centering\small
+\caption{木の断面積（$m=g=e=1$、GeV の単位で pb）：MadGraph と式~\eqref{eq:sigtree}。各 10000 事象で、誤差は MadGraph の統計誤差。(C) は $|\cos\theta|<0.8$、(D) は $s_{ij}>0.1s$。}
+\label{tab:tree}
+\begin{tabular}{lrrrr}
+\toprule
+過程 & $\sqrt s$ & MadGraph & 式~\eqref{eq:sigtree} & ずれ$/\sigma$ \\
+\midrule
+(A) $u\bar u\to t\bar t$ & 3 & $232360\pm42$ & $232327.6$ & $0.77$ \\
+ & 5 & $90863\pm23$ & $90876.7$ & $-0.59$ \\
+ & 10 & $22933\pm6$ & $22938.5$ & $-0.93$ \\
+(B) $gg\to t\bar t$ & 3 & $245730\pm654$ & $246134.0$ & $-0.62$ \\
+ & 5 & $180800\pm366$ & $180953.8$ & $-0.42$ \\
+ & 10 & $76957\pm86$ & $76900.1$ & $0.66$ \\
+(C) $gg\to gg$ & 5 & $(1.0888\pm0.0009)\times10^7$ & $1.089415\times10^7$ & $-0.65$ \\
+ & 10 & $(2.7245\pm0.0023)\times10^6$ & $2.723537\times10^6$ & $0.42$ \\
+ & 20 & $681210\pm571$ & $680884.3$ & $0.57$ \\
+(D) $e^+e^-\to u\bar ug$ & 5 & $34359\pm91$ & $34302.2$ & $0.62$ \\
+ & 10 & $8561.6\pm20.5$ & $8575.6$ & $-0.68$ \\
+ & 20 & $2137.7\pm5.9$ & $2143.9$ & $-1.04$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{手計算で分かったこと。}非可換性によって、QED になかった構造が三つ現れた。一つ目はゴーストの役割で、グルーオンの自己エネルギーではグルーオンのループの縦の部分を、木の振幅では外のグルーオンの非物理的な偏極の寄与を、それぞれ正確に打ち消す。二つ目は Slavnov--Taylor 恒等式による制約で、四つの頂点の発散はどれも $\xi$ に依存し、値も互いに異なるが、場の繰り込みと組み合わせると同じ $Z_g$ を与える（クォークとゴーストの頂点で手で確かめ、3グルーオンと4グルーオンの頂点は手順 (3) で確かめる）。三つ目は結合の走りの向きで、$\beta_0=\frac{11}3C_A-\frac43T_Fn_f$ の $C_A$ の部分が QED と逆の符号を持ち、漸近的自由を生む。ゲージパラメータも繰り込まれて走り、Landau ゲージがその固定点になる。重いクォークについては、自己エネルギーが QED の $C_F$ 倍なので、極質量と留数は QED の結果をそのまま使える。新しいのは、低いエネルギーで重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ と、$\MSbar$ の $n_f$ フレーバーの結合との換算である。
+\paragraph{手計算で分かったこと。}非可換性によって、QED になかった構造が三つ現れた。一つ目はゴーストの役割で、グルーオンの自己エネルギーではグルーオンのループの縦の部分を、木の振幅では外のグルーオンの非物理的な偏極の寄与を、それぞれ正確に打ち消す。二つ目は Slavnov--Taylor 恒等式による制約で、四つの頂点の発散はどれも $\xi$ に依存し、値も互いに異なるが、場の繰り込みと組み合わせると同じ $Z_g$ を与える（クォークとゴーストの頂点で手で確かめ、3グルーオンの頂点は図の和で予備的に確かめた。4グルーオンの頂点は手順 (3) で確かめる）。三つ目は結合の走りの向きで、$\beta_0=\frac{11}3C_A-\frac43T_Fn_f$ の $C_A$ の部分が QED と逆の符号を持ち、漸近的自由を生む。ゲージパラメータも繰り込まれて走り、Landau ゲージがその固定点になる。重いクォークについては、自己エネルギーが QED の $C_F$ 倍なので、極質量と留数は QED の結果をそのまま使える。新しいのは、低いエネルギーで重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ と、$\MSbar$ の $n_f$ フレーバーの結合との換算である。
 
-\paragraph{今後。}次は手順 (2) で、四つの過程の木の振幅とスピン・色の和を FeynCalc で記号として確かめ、色の行列と偏極ベクトルを陽に作った数値でも確かめ、断面積を MadGraph と比べる。
+\paragraph{検算で分かったこと。}木のレベルでは、手計算、FeynArts と FeynCalc、陽な行列による数値、MadGraph の四つがすべて一致した。とくに、$-g_{\mu\nu}$ の偏極の和の余分な部分がゴースト対の振幅の2乗に等しいことを、記号と数値の両方で確かめた。道具の注意点は三つあった。FeynCalc では \texttt{GS} が $\slashed p$ の略記なので、強い結合の記号に使えない。FeynArts の内線のグルーオンの \texttt{GaugeXi} は色の添字を持つので、普通の記号に置き換えないと色の縮約が止まる。MadGraph は $\alpha_s$ を $M_Z$ から走らせるので、模型の値で比べるには繰り込みのスケールを固定する。
+
+\paragraph{今後。}次は手順 (3) で、1ループの2点関数を一般の $\xi$ で $D$ 次元で記号として確かめ、四つの頂点の極（4グルーオンを含む）を独立に求めて Slavnov--Taylor 恒等式を確かめ、有限部分を Package-X、LoopTools、COLLIER で比べる。
 
 \appendix
 
@@ -803,7 +848,7 @@ ig^3\cdot\Bigl(-\frac i2C_AT^a\Bigr)\cdot\frac32(1+\xi)\cdot\frac iK\DUV\,\gamma
 
 \paragraph{ゴーストの頂点。}出ていくゴースト（色 $a'$、運動量 $p'$）、入るゴースト（$b'$）、外のグルーオン（$a,\mu$）とする。木の頂点は $gf^{a'b'a}p'^\mu$ である。どちらの図でも、出ていくゴーストの頂点の運動量の因子は外の $p'$ なので、残りを外の運動量0で計算する。(e1) は、内線のグルーオン（運動量 $l$）がゴーストの線の両端を結び、外のグルーオンが間のゴーストに付く図である。頂点は $gf^{a'cd}p'^\sigma$、$gf^{cea}(-l)^\mu$、$gf^{eb'd}(-l)^\rho$、伝播関数は $i/l^2$ 二つと $-iP_{\rho\sigma}(l)/l^2$ で、$l^\rho P_{\rho\sigma}(l)=\xi l_\sigma$ から Lorentz 部分は $\xi(p'\cdot l)l^\mu/l^6\to\xi p'^\mu/(Dl^4)$、定数は $g^3\cdot i\cdot i\cdot(-i)=ig^3$ である。色は随伴表現の生成子で $f^{a'cd}f^{cea}f^{eb'd}=-i(F^dF^aF^d)_{a'b'}=-\frac{C_A}2f^{a'b'a}$ である（\ref{app:color}）。したがって (e1) は $ig^3\cdot\frac\xi4\cdot\frac iK\DUV\cdot(-\frac{C_A}2)f^{a'b'a}p'^\mu=\frac\xi8C_A\frac{g^2}K\DUV\times gf^{a'b'a}p'^\mu$ である。(e2) は、外のグルーオンが3グルーオンの頂点で内線のグルーオン $d$（運動量 $l$）と $e$ に分かれ、それらがゴーストの線に付く図である。頂点は $gf^{a'ce}p'^\sigma$、$gf^{cb'd}(-l)^\rho$、$gf^{ade}V^{\mu\rho'\sigma'}(0,l,-l)=gf^{ade}[-g^{\mu\rho'}l^{\sigma'}+2g^{\rho'\sigma'}l^\mu-g^{\sigma'\mu}l^{\rho'}]$ で、$(-l)^\rho P_{\rho\rho'}=-\xi l_{\rho'}$ を縮約すると $-\xi(l^\mu l^{\sigma'}-g^{\sigma'\mu}l^2)$、さらに $p'^\sigma P_{\sigma\sigma'}(l)$ を縮約すると $\eta$ が消えて $-\xi\,p'^\sigma(l^\mu l_\sigma-g^\mu_\sigma l^2)\to\xi\frac{D-1}Dl^2p'^\mu$ である。定数は $g^3\cdot i\cdot(-i)^2=-ig^3$、色は $f^{a'ce}f^{cb'd}f^{ade}=\frac{C_A}2f^{a'b'a}$ で、(e2) は $-ig^3\cdot\frac{3\xi}{4}\cdot\frac iK\DUV\cdot\frac{C_A}2f^{a'b'a}p'^\mu=\frac{3\xi}8C_A\frac{g^2}K\DUV\times gf^{a'b'a}p'^\mu$ である。和が $\frac\xi2C_A$ で、式~\eqref{eq:Vpole} の $\tilde\Lambda$ を得る。どちらの図も、内線のグルーオンの一方が外の反ゴーストでない側のゴーストの運動量 $l$ と縮約され、$l^\rho P_{\rho\sigma}(l)=\xi l_\sigma$ で $\xi$ に比例する。これが Landau ゲージで極が消える理由で、高次でも同じ議論が成り立つ~\cite{taylor}。
 
-\paragraph{3グルーオンと4グルーオンの頂点。}これらの頂点の1ループの図は、内線にグルーオン、ゴースト、クォークを入れた三角形と箱、4グルーオンの頂点を含む図からなり、数が多い。手では式~\eqref{eq:st} を使い、独立に求めた $\delta_g=\tilde\delta_1-\tilde\delta_3-\frac12\delta_3$ から $\delta_1=\delta_g+\frac32\delta_3$、$\delta_4=2\delta_g+2\delta_3$ として式~\eqref{eq:Vpole} の $\Lambda_3$、$\Lambda_4$ を得た。図の直接の和は、手順 (3) で FeynArts の図から求める。外の運動量で展開し（3グルーオンでは1次、4グルーオンでは0次）、すべての伝播関数に同じ質量を入れる赤外の組み替えで極を取り出し、式~\eqref{eq:Vpole} と比べる。
+\paragraph{3グルーオンと4グルーオンの頂点。}これらの頂点の1ループの図は、内線にグルーオン、ゴースト、クォークを入れた三角形と箱、4グルーオンの頂点を含む図からなり、数が多い。手では式~\eqref{eq:st} を使い、独立に求めた $\delta_g=\tilde\delta_1-\tilde\delta_3-\frac12\delta_3$ から $\delta_1=\delta_g+\frac32\delta_3$、$\delta_4=2\delta_g+2\delta_3$ として式~\eqref{eq:Vpole} の $\Lambda_3$、$\Lambda_4$ を得た。図の直接の和は FeynArts の図から求める。外の運動量で展開し（3グルーオンでは1次、4グルーオンでは0次）、すべての伝播関数に同じ質量を入れる赤外の組み替えで極を取り出す。3グルーオンの頂点（18個の図）では、極が一般の $\xi$ で式~\eqref{eq:Vpole} の $\Lambda_3$ と記号として一致することを予備的に確かめた。4グルーオンの頂点（54個の図）は手順 (3) で確かめる。
 
 \section{繰り込み群の導出}\label{app:rg}
 
@@ -841,12 +886,36 @@ p_{1\mu}\mathcal M_B^{\mu\nu}\varepsilon_{2\nu}=\frac{g^2}{s}(p_2\cdot\varepsilo
 
 \paragraph{(D) $e^+e^-\to q\bar qg$。}レプトンの電流 $L^{\mu\nu}=\sum\bar v\gamma^\mu u(\bar v\gamma^\nu u)^*=4(p_1^\mu p_2^\nu+p_2^\mu p_1^\nu-\frac s2g^{\mu\nu})$ を、ハドロンの運動量を固定してレプトンの向きについて平均すると、$\langle p_1^\mu p_2^\nu\rangle=\frac16Q^\mu Q^\nu+\frac{s}{12}g^{\mu\nu}$（$Q=p_1+p_2$。重心系で $\langle n^in^j\rangle=\delta^{ij}/3$ から）で、ハドロンの電流が保存するので $Q^\mu Q^\nu$ の項は落ち、$\langle L^{\mu\nu}\rangle\to-\frac{4s}3g^{\mu\nu}$ である。ハドロンの部分 $-g_{\mu\nu}H^{\mu\nu}$ は質量のない Compton 散乱の交差で、$s_{ij}=(k_i+k_j)^2$ として $8g^2C_Fd_F[\frac{s_{13}}{s_{23}}+\frac{s_{23}}{s_{13}}+\frac{2s\,s_{12}}{s_{13}s_{23}}]$ である。$s_{23}=s(1-x_1)$、$s_{13}=s(1-x_2)$、$s_{12}=s(x_1+x_2-1)$ を入れると括弧は $\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$ になる。3体の位相空間 $\int\dd\Phi_3=\frac{s}{128\pi^3}\int\dd x_1\dd x_2$（向きについて積分）と、2体の木の $\sum|\mathcal M_0|^2$ を同じく平均したものとの比をとると、式~\eqref{eq:sumtree} の4行目を得る。
 
+\paragraph{断面積。}2体の位相空間は $\int\dd\Phi_2=\frac{\beta}{16\pi}\int_{-1}^1\dd c$（$c=\cos\theta$、$\beta$ は終状態の速さ）で、$\sigma=\frac{1}{2s}\frac{1}{n_{\mathrm{init}}}\int\dd\Phi_2\sum|\mathcal M|^2$ である（$n_{\mathrm{init}}$ は初期状態のスピンと色の数の積：(A) $4d_F^2$、(B) と (C) $4d_A^2$）。終状態の重心系で $t-m^2=-\frac s2(1-\beta c)$、$u-m^2=-\frac s2(1+\beta c)$ である。
+
+(A) では $(t-m^2)^2+(u-m^2)^2+2m^2s=\frac{s^2}2(1+\beta^2c^2+\rho)$ で、$\int_{-1}^1\dd c$ は $s^2(1+\frac{\beta^2}3+\rho)=\frac43s^2(1+\frac\rho2)$ を与える（$\beta^2=1-\rho$）。これから $\sigma_A=\frac{1}{2s}\frac{1}{4d_F^2}\frac{\beta}{16\pi}8g^4T_F^2d_A\cdot\frac43(1+\frac\rho2)$ で、式~\eqref{eq:sigtree} の $\sigma_A$ である。
+
+(B) では $\tau_1=\frac12(1-\beta c)$、$\tau_2=\frac12(1+\beta c)$、$w\equiv\tau_1\tau_2=\frac14(1-\beta^2c^2)$ で、$\tau_1^2+\tau_2^2=1-2w$ から被積分関数は $(\frac{C_F}w-C_A)(1+\rho-2w-\frac{\rho^2}{4w})=C_F[\frac{1+\rho}w-2-\frac{\rho^2}{4w^2}]-C_A[1+\rho-2w-\frac{\rho^2}{4w}]$ である。必要な積分は
+\begin{equation*}
+\int_{-1}^1\frac{\dd c}{w}=\frac{4L}{\beta},\qquad
+\int_{-1}^1\frac{\dd c}{w^2}=16\Bigl[\frac1\rho+\frac{L}{2\beta}\Bigr],\qquad
+\int_{-1}^1w\,\dd c=\frac12\Bigl(1-\frac{\beta^2}3\Bigr)
+\end{equation*}
+である（2番目は $\int\frac{\dd c}{(1-\beta^2c^2)^2}=\frac{c}{2(1-\beta^2c^2)}+\frac{1}{4\beta}\ln\frac{1+\beta c}{1-\beta c}$ から）。これらを入れると角度の積分は $C_F[(4+4\rho-2\rho^2)\frac L\beta-4(1+\rho)]-C_A[\frac43+\frac{5\rho}3-\rho^2\frac L\beta]$ で、$\sigma_B=\frac{1}{2s}\frac{1}{4d_A^2}\frac{\beta}{16\pi}8g^4C_AC_F\times(\text{その値})$ が式~\eqref{eq:sigtree} である。SU(3) では角度の積分が $\frac{16+16\rho+\rho^2}3\frac L\beta-\frac{28+31\rho}3$ になり、Combridge の形に戻る。
+
+(C) では $m=0$、$\beta=1$ で、$\frac{tu}{s^2}=\frac{1-c^2}4$、$\frac{su}{t^2}=-\frac{2(1+c)}{(1-c)^2}$、$\frac{st}{u^2}=-\frac{2(1-c)}{(1+c)^2}$ である。$\int_{-c_0}^{c_0}(3-\frac{1-c^2}4)\dd c=\frac{11}2c_0+\frac{c_0^3}6$、$\int_{-c_0}^{c_0}\frac{2(1+c)}{(1-c)^2}\dd c=2[\frac{4c_0}{1-c_0^2}-\ln\frac{1+c_0}{1-c_0}]$（$w=1-c$ として $\frac{2(2-w)}{w^2}$ を積分）で、最後の項も $c\to-c$ で同じ値になる。同種粒子の $\frac12$ を掛けて $\sigma_C=\frac12\cdot\frac{1}{2s}\frac{1}{4d_A^2}\frac{1}{16\pi}\cdot16g^4C_A^2d_A\times(\text{積分})=\frac{\pi\alpha_s^2C_A^2}{s\,d_A}\times(\text{積分})$ である。
+
+(D) では $a=1-x_1$、$b=1-x_2$ とすると $x_3=a+b$ で、領域は $a,b>y$、$a+b<1-y$、被積分関数は $\frac{(1-a)^2+(1-b)^2}{ab}$ である。$a\leftrightarrow b$ の対称性から
+\begin{equation*}
+F(y)=2\int_y^{1-2y}\dd a\,\frac{(1-a)^2}{a}\int_y^{1-y-a}\frac{\dd b}{b}=2\int_y^{1-2y}\Bigl[\frac1a-2+a\Bigr]\ln\frac{1-y-a}{y}\,\dd a\equiv2\bigl[P_1-2P_2+P_3\bigr]
+\end{equation*}
+である。$z\equiv\frac{y}{1-y}$ とし、$P_1$ で $a=(1-y)t$ と置くと $P_1=\int_z^{1-z}\frac{\dd t}t[-\ln z+\ln(1-t)]=-\ln z\ln\frac{1-z}{z}-\mathrm{Li}_2(1-z)+\mathrm{Li}_2(z)$ で、$\mathrm{Li}_2(1-z)=\frac{\pi^2}6-\ln z\ln(1-z)-\mathrm{Li}_2(z)$ を使うと $P_1=\ln^2z+2\mathrm{Li}_2(z)-\frac{\pi^2}6$ である。$P_2$、$P_3$ は $w=1-y-a$ と置いて $\int_y^{1-2y}\ln\frac wy\dd w=(1-2y)\ell-1+3y$、$P_3=(1-y)P_2-[\frac{(1-2y)^2}2\ell-\frac{(1-2y)^2}4+\frac{y^2}4]$（$\ell\equiv\ln\frac{1-2y}{y}$）である。和をとると $\ell$ の係数は $2(1-2y)[-(1+y)-\frac{1-2y}2]=-3(1-2y)$、残りは $2[(1+y)(1-3y)+\frac{(1-2y)^2-y^2}4]=\frac52-6y-\frac92y^2$ で、式~\eqref{eq:sigtree} の $F(y)$ を得る。$\sigma_0$ は $e^+e^-\to\mu^+\mu^-$ の $\frac{4\pi\alpha^2}{3s}$ に色の数 $N_c$ と電荷の2乗を掛けたものである。
+
 \section{検算の細部}\label{app:details}
 
 \paragraph{手順 (1) の模型ファイル。}パラメータの名前は MadGraph の慣習に合わせた。強い結合は外部パラメータ \texttt{aS}（ブロック \texttt{SMINPUTS} の3番、基準値 $1/4\pi$）で与え、$g=\sqrt{4\pi\alpha_s}$ を内部パラメータ \texttt{gs}（UFO での名前 \texttt{G}、次数 \texttt{QCD}$=1$）とした。MadGraph は強い結合をこの二つの名前で探す。光子の結合は外部パラメータ \texttt{ee}（\texttt{QEDBLOCK}、次数 \texttt{QED}$=1$）、重いクォークの質量は \texttt{MT}（基準値 1）である。クォークのクラスは、電荷の違う \texttt{uq}$=\{u,c\}$（\texttt{UpGen}）と \texttt{dq}$=\{d,s,b\}$（\texttt{DownGen}）と、重い \texttt{tq} に分け、PDG 番号と粒子名は標準のもの（1〜6、11、21、22、ゴーストは 82）とした。FeynArts の模型には、意味のない行 \texttt{GaugeXi[F[7]] = GaugeXi[F[4]]} が書き出される（元のクラスの番号 \texttt{F[4]} が残ったもの）。フェルミオンの \texttt{GaugeXi} は使われないので害はない。MadGraph は UFO を読み込むときにその場で書き換えるので、\texttt{Src/work/} に写したものを読み込む（これまでのノートと同じ）。
 
+\paragraph{手順 (2) の FeynCalc。}強い結合の記号は \texttt{gS} とした。FeynCalc の \texttt{GS[p]} は $\slashed p$ の略記なので、\texttt{GS} を結合に使うと $\gamma$ 行列と混ざる。\texttt{FCFAConvert} は FeynArts の \texttt{GS} を \texttt{SMP["g\_s"]} に直し、内線のグルーオンのゲージパラメータを色の添字付きの \texttt{GaugeXi[V[2, \{Glu5\}]]} と書く。この添字は色の構造定数と合わせて3回現れ、\texttt{SUNSimplify} が止まるので、普通の記号 \texttt{xi} に置き換えた。トレースは \texttt{DiracTraceEvaluate -> True} で評価した。(C) の色の射影では、射影子のダミーの添字をノートの振幅と別の名前にした（同じ名前だと添字が4回現れる）。(C) の比較で最初に合わなかったのは、スクリプトに書いた有理数の運動学の $t,u$ の値の誤り（$\cos\theta=\frac45$ では $t=-10$、$u=-90$）で、図ごとの射影の比（$t$ チャンネルが2倍、$u$ チャンネルが $\frac89$ 倍）から特定した。
+
+\paragraph{手順 (2) の MadGraph。}グルーオンのビームも \texttt{lpp = 0} で固定エネルギーにできる。MadGraph は param\_card の \texttt{aS} を $M_Z$ での値として繰り込みのスケールまで走らせるので、\texttt{fixed\_ren\_scale = True}、\texttt{scale = 91.188} として $\alpha_s=1/4\pi$ にした。既定のジェットの切断（\texttt{ptj = 20}、\texttt{etaj = 5}、\texttt{drjj = 0.4}）は外し、(C) では \texttt{etaj} $=\mathrm{atanh}\,0.8$（質量がなく背中合わせなので $|\cos\theta|<0.8$ と同じ）、(D) では \texttt{mmjj} $=\sqrt{0.1s}$（$u$、$\bar u$、$g$ はすべてジェット）とした。ログの断面積は有効数字4桁で、(A) の $\sqrt s=3$ では丸めの誤差（$\pm50$~pb）が統計誤差（42~pb）と同程度になり、ずれが $1.73\sigma$ に見えた。各 run の \texttt{HTML/run\_0n/results.html} は5桁を書き出すので、そちらを使った（ずれは $0.77\sigma$）。
+
 \begin{thebibliography}{99}
-\bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。
+\bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループ・2ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。
 \bibitem{phi34note} $\phi^3+\phi^4$ 理論：1ループの構造、ユニタリー性、偽の真空の崩壊（$d=4$）（本リポジトリ \nolinkurl{models/phi34/ResearchNote/note.pdf}）。
 \bibitem{yukawanote} 擬スカラー湯川理論：1ループの構造と検算（$d=4$）（本リポジトリ \nolinkurl{models/yukawa_ps/ResearchNote/note.pdf}）。
 \bibitem{qednote} スピノル QED：1ループの構造と検算（電子と $\mu$ 粒子、$d=4$）（本リポジトリ \nolinkurl{models/spinor_qed/ResearchNote/note.pdf}）。真空偏極と自己エネルギーの導出（付録~D）、頂点（付録~C）、極質量と留数（付録~F）、木のスピン和。

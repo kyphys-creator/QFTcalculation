@@ -1,0 +1,123 @@
+# tree_mg5.mg5 -- tree-level cross sections with the QCD UFO (research note models/qcd, step (2)).
+# Run from Src/:   mg5_aMC tree_mg5.mg5 > work/tree_mg5.log   (run_tree_check.sh does this)
+# Imports a copy of generated/QCD_UFO in work/ (MadGraph converts UFOs to Python 3 in place).
+# Fixed-energy beams (lpp = 0, also for gluons) in the CM frame, param_card defaults m_t = 1, aS = 1/4pi, e = 1.
+# MadGraph runs alpha_s from its param_card value at M_Z = 91.188 to the renormalization scale, so the scale is fixed
+# at 91.188 (fixed_ren_scale = True, scale = 91.188): then alpha_s = aS.
+# Default jet cuts (ptj = 20, etaj = 5, drjj = 0.4) are switched off; instead
+#   (C) g g > g g: |cos theta| < 0.8 through |eta_j| < atanh(0.8) = 1.0986122886681098 (massless, back to back);
+#   (D) e+ e- > u u~ g: every pair invariant s_ij > 0.1 s through mmjj = sqrt(0.1 s) (u, u~ and g are jets).
+# Processes (A) u u~ > t t~ and (B) g g > t t~ at sqrt(s) = 3, 5, 10; (C) and (D) at 5, 10, 20, in this order
+# (tree_sigma.py relies on it).
+set automatic_html_opening False
+import model ./work/QCD_UFO
+generate u u~ > t t~
+output work/mg5_treeA -f
+launch work/mg5_treeA
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set fixed_ren_scale True
+set fixed_fac_scale True
+set scale 91.188
+set use_syst False
+set ptj 0
+set drjj 0
+set ebeam1 1.5
+set ebeam2 1.5
+0
+launch work/mg5_treeA
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_treeA
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate g g > t t~
+output work/mg5_treeB -f
+launch work/mg5_treeB
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set fixed_ren_scale True
+set fixed_fac_scale True
+set scale 91.188
+set use_syst False
+set ptj 0
+set drjj 0
+set ebeam1 1.5
+set ebeam2 1.5
+0
+launch work/mg5_treeB
+0
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_treeB
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+generate g g > g g
+output work/mg5_treeC -f
+launch work/mg5_treeC
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set fixed_ren_scale True
+set fixed_fac_scale True
+set scale 91.188
+set use_syst False
+set ptj 0
+set drjj 0
+set etaj 1.0986122886681098
+set ebeam1 2.5
+set ebeam2 2.5
+0
+launch work/mg5_treeC
+0
+set ebeam1 5.0
+set ebeam2 5.0
+0
+launch work/mg5_treeC
+0
+set ebeam1 10.0
+set ebeam2 10.0
+0
+generate e+ e- > u u~ g
+output work/mg5_treeD -f
+launch work/mg5_treeD
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set fixed_ren_scale True
+set fixed_fac_scale True
+set scale 91.188
+set use_syst False
+set ptj 0
+set drjj 0
+set etaj -1
+set ebeam1 2.5
+set ebeam2 2.5
+set mmjj 1.5811388300841898
+0
+launch work/mg5_treeD
+0
+set ebeam1 5.0
+set ebeam2 5.0
+set mmjj 3.1622776601683795
+0
+launch work/mg5_treeD
+0
+set ebeam1 10.0
+set ebeam2 10.0
+set mmjj 6.324555320336759
+0
+quit
