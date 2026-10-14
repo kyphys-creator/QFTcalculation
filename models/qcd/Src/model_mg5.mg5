@@ -1,0 +1,37 @@
+# model_mg5.mg5 -- tree diagrams of 2 -> 2 and 2 -> 3 processes from the QCD UFO (research note models/qcd, step (1)).
+# Run via run_model_check.sh (imports a copy in work/, because MadGraph converts UFOs to Python 3 in place).
+# Expected numbers of diagrams (note Table "diagrams"):
+#   (A) u u~ > t t~ 1,  (B) g g > t t~ 3,  (C) g g > g g 4,  (D) u u~ > g g 3,  u g > u g 3,  u u~ > u u~ 2,
+#   u u > u u 2,  u d > u d 1,  (E) e+ e- > u u~ 1,  e+ e- > t t~ 1,
+#   e+ e- > u u~ g 2,  u u~ > t t~ g 5,  g g > t t~ g 16,  g g > g g g 25.
+set automatic_html_opening False
+import model ./work/QCD_UFO
+generate u u~ > t t~
+display diagrams_text
+generate g g > t t~
+display diagrams_text
+generate g g > g g
+display diagrams_text
+generate u u~ > g g
+display diagrams_text
+generate u g > u g
+display diagrams_text
+generate u u~ > u u~
+display diagrams_text
+generate u u > u u
+display diagrams_text
+generate u d > u d
+display diagrams_text
+generate e+ e- > u u~
+display diagrams_text
+generate e+ e- > t t~
+display diagrams_text
+generate e+ e- > u u~ g
+display diagrams_text
+generate u u~ > t t~ g
+display diagrams_text
+generate g g > t t~ g
+display diagrams_text
+generate g g > g g g
+display diagrams_text
+quit
