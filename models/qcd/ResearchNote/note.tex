@@ -53,7 +53,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論、スピノル QED のノート~\cite{phi3note,phi34note,yukawanote,qednote} に続き、非可換ゲージ理論の例として QCD を $d=4$ で調べる。ゲージ群は SU($N$) で、グルーオンに質量のない軽いクォーク $n_l$ 本と質量 $m$ の重いクォーク1本が結合する。群の因子 $C_F$、$C_A$、$T_F$ は記号で残し、数値の基準は SU(3)、$n_l=5$ とする。共変ゲージのパラメータ $\xi$ と Faddeev--Popov のゴーストを残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、色の代数、べき数え上げ、Slavnov--Taylor 恒等式、1ループの1PI 関数と対抗項、繰り込み群の係数を手で求めた。グルーオンの自己エネルギーのうちグルーオンのループとゴーストのループの和は、$D$ 次元で厳密に $\frac{g^2C_A}{2(4\pi)^2}[\frac{3D-2}{D-1}+(2D-7)(1-\xi)-\frac{D-4}{4}(1-\xi)^2]B_0$ となる。グルーオンのループだけでは横波でなく、その縦の部分をゴーストのループが打ち消す。クォークの頂点とゴーストの頂点の発散は、それぞれ $\xi$ に依存するが、どちらから結合の繰り込みを読み取っても同じ $Z_g=1-\frac{g^2}{2(4\pi)^2}\beta_0\DUV$、$\beta_0=\frac{11}{3}C_A-\frac43T_Fn_f$ を与え、漸近的自由を示す。3グルーオンと4グルーオンの頂点の発散は Slavnov--Taylor 恒等式から求め、FeynArts の図の直接の和（18個と54個）でも確かめた。Landau ゲージではゴースト頂点が発散しない（Taylor の非繰り込み定理）。重いクォークの極質量 $m_{\mathrm p}=m(\mu)[1+C_F\frac{g^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ と、重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ への換算も求めた。木のレベルでは、$q\bar q\to Q\bar Q$、$gg\to Q\bar Q$、$gg\to gg$、$e^+e^-\to q\bar qg$ の振幅とスピン・色の和を求めた。外のグルーオンの偏極の和を $-g_{\mu\nu}$ で置き換えると、物理的な和より大きくなり、その差はゴースト対の生成 $c\bar c\to Q\bar Q$ の振幅の2乗に等しい。断面積は閉じた形に積分した。最後に、検算と応用（漸近的自由と $\alpha_s$ の走り、2ループの $\beta$ 関数、$e^+e^-\to$ ハドロン、重いクォークの対生成、インスタントン）の十の手順を定め、最初の七つを行った。手順 (1) では FeynRules の模型ファイルを作り、16個の頂点は手計算と記号として一致し、MadGraph の図の数も手で数えた数と一致した。手順 (2) では、四つの過程の振幅とスピン・色の和、ゴースト対の関係を FeynCalc で記号として（$gg\to gg$ は厳密な有理数の運動学で）確かめ、Dirac 行列、Gell-Mann 行列、偏極ベクトルを陽に作った数値でも相対 $10^{-13}$ 以下で確かめた。MadGraph の12個の断面積は閉じた形と $1.04\sigma$ 以内で一致した。手順 (3) では、四つの2点関数を一般の $\xi$ で $D$ 次元のまま図ごとに記号として確かめ、四つの頂点の極を図の和から独立に求めて Slavnov--Taylor 恒等式を確かめた。有限部分は Package-X、LoopTools、COLLIER が Feynman パラメータの積分と相対 $6\times10^{-15}$ 以内で一致した。手順 (4) では、1ループの $q\bar q\to Q\bar Q$ と $gg\to Q\bar Q$ の Born との干渉を一般の $\xi$ で図ごとに求めた。対抗項と留数を加えると、$1/\epsilon^2$ と $1/\epsilon$ の極は Born の色の相関で決まる赤外の極の一般式と記号として一致し、有限部分は $\xi$ によらなかった。Feynman ゲージでは、TID の経路と FormCalc が図ごとに一致し、$q\bar q\to Q\bar Q$ の虚部は2粒子の中間状態の位相空間積分（ユニタリー性）と極まで含めて一致した。ゲージ部分の2重の伝播関数を含む積分は LoopTools と Package-X で評価できないので、部分積分（LiteRed）でマスター積分に直した。手順 (5) では、NLOCT で作った対抗項と R2 の頂点（手計算と文献の値に一致）の UFO で MadLoop を動かし、極質量と $\alpha_s^{(n_l)}$ に換算した手順 (4) の値と、Born、有限部分、極の係数が相対 $2.5\times10^{-14}$ 以内で一致した（$\mu_R=m,2m,m/2$）。その過程で、FeynArts がゲージ部分の2重の伝播関数を同じ分母の繰り返しで書くと、FeynCalc の TID が誤った紫外の極を与えることを見つけた（先に分母をまとめれば正しい）。手順 (6) では、1PI 関数、極質量、留数、S 行列要素の $\mu$ 依存を Package-X（記号）、LoopTools、COLLIER、MadLoop で確かめ、傾きから $\gamma_A$、$\gamma_c$、$\gamma_\psi$、$\gamma_m$ と $\beta_0$（$\MSbar$ の6フレーバーで7、$\alpha_s^{(n_l)}$ で $\frac{23}3$）を倍精度で読み取った。Landau ゲージでは $\beta_0$ がグルーオンとゴーストの2点関数だけで決まる。MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与は $\Pi_t(s)-\Pi_t(0)$ と一致し、$m_t\to\infty$ で消えた（脱結合）。ゲージパラメータの流れを閉じた形に解き、MadGraph の $\alpha_s$ の走りとも比べた。手順 (7) では、Landau ゲージではゴースト頂点が繰り込まれないことを使い、2ループのグルーオンとゴーストの自己エネルギー（30個の図）から $\beta_1=\frac{34}3C_A^2-4C_FT_Fn_f-\frac{20}3C_AT_Fn_f$ を記号として再現した。積分の簡約は Kira と FIRE が一致し、マスター積分の厳密な値は AMFlow、pySecDec と一致した。繰り込み定数の2重の極は繰り込み群の予想どおりで、2ループでも横波性が成り立った。2ループの $\Lambda^{(5)}$ は 212~MeV で、1ループの値の2.4倍である。導出は付録に載せる。
+$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論、スピノル QED のノート~\cite{phi3note,phi34note,yukawanote,qednote} に続き、非可換ゲージ理論の例として QCD を $d=4$ で調べる。ゲージ群は SU($N$) で、グルーオンに質量のない軽いクォーク $n_l$ 本と質量 $m$ の重いクォーク1本が結合する。群の因子 $C_F$、$C_A$、$T_F$ は記号で残し、数値の基準は SU(3)、$n_l=5$ とする。共変ゲージのパラメータ $\xi$ と Faddeev--Popov のゴーストを残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、色の代数、べき数え上げ、Slavnov--Taylor 恒等式、1ループの1PI 関数と対抗項、繰り込み群の係数を手で求めた。グルーオンの自己エネルギーのうちグルーオンのループとゴーストのループの和は、$D$ 次元で厳密に $\frac{g^2C_A}{2(4\pi)^2}[\frac{3D-2}{D-1}+(2D-7)(1-\xi)-\frac{D-4}{4}(1-\xi)^2]B_0$ となる。グルーオンのループだけでは横波でなく、その縦の部分をゴーストのループが打ち消す。クォークの頂点とゴーストの頂点の発散は、それぞれ $\xi$ に依存するが、どちらから結合の繰り込みを読み取っても同じ $Z_g=1-\frac{g^2}{2(4\pi)^2}\beta_0\DUV$、$\beta_0=\frac{11}{3}C_A-\frac43T_Fn_f$ を与え、漸近的自由を示す。3グルーオンと4グルーオンの頂点の発散は Slavnov--Taylor 恒等式から求め、FeynArts の図の直接の和（18個と54個）でも確かめた。Landau ゲージではゴースト頂点が発散しない（Taylor の非繰り込み定理）。重いクォークの極質量 $m_{\mathrm p}=m(\mu)[1+C_F\frac{g^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ と、重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ への換算も求めた。木のレベルでは、$q\bar q\to Q\bar Q$、$gg\to Q\bar Q$、$gg\to gg$、$e^+e^-\to q\bar qg$ の振幅とスピン・色の和を求めた。外のグルーオンの偏極の和を $-g_{\mu\nu}$ で置き換えると、物理的な和より大きくなり、その差はゴースト対の生成 $c\bar c\to Q\bar Q$ の振幅の2乗に等しい。断面積は閉じた形に積分した。最後に、検算と応用（漸近的自由と $\alpha_s$ の走り、2ループの $\beta$ 関数、$e^+e^-\to$ ハドロン、重いクォークの対生成、インスタントン）の十の手順を定め、最初の八つを行った。手順 (1) では FeynRules の模型ファイルを作り、16個の頂点は手計算と記号として一致し、MadGraph の図の数も手で数えた数と一致した。手順 (2) では、四つの過程の振幅とスピン・色の和、ゴースト対の関係を FeynCalc で記号として（$gg\to gg$ は厳密な有理数の運動学で）確かめ、Dirac 行列、Gell-Mann 行列、偏極ベクトルを陽に作った数値でも相対 $10^{-13}$ 以下で確かめた。MadGraph の12個の断面積は閉じた形と $1.04\sigma$ 以内で一致した。手順 (3) では、四つの2点関数を一般の $\xi$ で $D$ 次元のまま図ごとに記号として確かめ、四つの頂点の極を図の和から独立に求めて Slavnov--Taylor 恒等式を確かめた。有限部分は Package-X、LoopTools、COLLIER が Feynman パラメータの積分と相対 $6\times10^{-15}$ 以内で一致した。手順 (4) では、1ループの $q\bar q\to Q\bar Q$ と $gg\to Q\bar Q$ の Born との干渉を一般の $\xi$ で図ごとに求めた。対抗項と留数を加えると、$1/\epsilon^2$ と $1/\epsilon$ の極は Born の色の相関で決まる赤外の極の一般式と記号として一致し、有限部分は $\xi$ によらなかった。Feynman ゲージでは、TID の経路と FormCalc が図ごとに一致し、$q\bar q\to Q\bar Q$ の虚部は2粒子の中間状態の位相空間積分（ユニタリー性）と極まで含めて一致した。ゲージ部分の2重の伝播関数を含む積分は LoopTools と Package-X で評価できないので、部分積分（LiteRed）でマスター積分に直した。手順 (5) では、NLOCT で作った対抗項と R2 の頂点（手計算と文献の値に一致）の UFO で MadLoop を動かし、極質量と $\alpha_s^{(n_l)}$ に換算した手順 (4) の値と、Born、有限部分、極の係数が相対 $2.5\times10^{-14}$ 以内で一致した（$\mu_R=m,2m,m/2$）。その過程で、FeynArts がゲージ部分の2重の伝播関数を同じ分母の繰り返しで書くと、FeynCalc の TID が誤った紫外の極を与えることを見つけた（先に分母をまとめれば正しい）。手順 (6) では、1PI 関数、極質量、留数、S 行列要素の $\mu$ 依存を Package-X（記号）、LoopTools、COLLIER、MadLoop で確かめ、傾きから $\gamma_A$、$\gamma_c$、$\gamma_\psi$、$\gamma_m$ と $\beta_0$（$\MSbar$ の6フレーバーで7、$\alpha_s^{(n_l)}$ で $\frac{23}3$）を倍精度で読み取った。Landau ゲージでは $\beta_0$ がグルーオンとゴーストの2点関数だけで決まる。MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与は $\Pi_t(s)-\Pi_t(0)$ と一致し、$m_t\to\infty$ で消えた（脱結合）。ゲージパラメータの流れを閉じた形に解き、MadGraph の $\alpha_s$ の走りとも比べた。手順 (7) では、Landau ゲージではゴースト頂点が繰り込まれないことを使い、2ループのグルーオンとゴーストの自己エネルギー（30個の図）から $\beta_1=\frac{34}3C_A^2-4C_FT_Fn_f-\frac{20}3C_AT_Fn_f$ を記号として再現した。積分の簡約は Kira と FIRE が一致し、マスター積分の厳密な値は AMFlow、pySecDec と一致した。繰り込み定数の2重の極は繰り込み群の予想どおりで、2ループでも横波性が成り立った。2ループの $\Lambda^{(5)}$ は 212~MeV で、1ループの値の2.4倍である。手順 (8) では、$e^+e^-\to$ ハドロンの $O(\alpha_s)$ の補正を、$D$ 次元の仮想と実の補正の和（赤外の極が打ち消して $R=R_0(1+\alpha_s/\pi)$）、2ループの光子の自己エネルギーの虚部（光学定理、Kira と AMFlow）、aMC@NLO の三つで確かめた。重いクォークでは閾値の Coulomb の特異性 $\pi^2/(2\beta)$ を含む閉じた形を AMFlow が $10^{-18}$ で再現し、thrust の分布も MadGraph と一致した。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -66,7 +66,7 @@ $\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論、スピ�
 
 求める量は五つである。(i) Feynman 則、色の代数、べき数え上げ、Slavnov--Taylor 恒等式。(ii) 1ループの1PI 関数（グルーオン、ゴースト、クォークの2点関数、四つの頂点）の紫外発散と $\MSbar$ の対抗項。(iii) 繰り込まれた1PI 関数、繰り込み群の係数、$\MSbar$ から on-shell の量（極質量、留数、脱結合した結合）への換算。(iv) 四つの過程の木の振幅とスピン・色の和、1ループの $q\bar q\to Q\bar Q$、$gg\to Q\bar Q$ とその S 行列要素。(v) 応用として、$\alpha_s$ の走りと2ループの $\beta$ 関数、$e^+e^-\to$ ハドロン、重いクォークの対生成、インスタントン。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(7)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:ir} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(8)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:ee} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -359,7 +359,7 @@ $\sum|\mathcal M|^2$ & 外線のスピン、偏極、色についての和（平
 \label{fig:oneloop}
 \end{figure}
 
-\paragraph{色の代数。}色の因子は次の恒等式で計算する（\ref{app:color}）：
+\paragraph{色の代数。}色の因子は次の恒等式で計算する（\ref{app:color}、図~\ref{fig:color}）：
 \begin{equation}
 \begin{gathered}
 T^aT^a=C_F\,\mathbf 1,\qquad \tr(T^aT^b)=T_F\delta^{ab},\qquad f^{acd}f^{bcd}=C_A\delta^{ab},\\
@@ -370,12 +370,121 @@ T^bT^aT^b=\Bigl(C_F-\frac{C_A}2\Bigr)T^a,\qquad f^{abc}T^bT^c=\frac i2C_AT^a,\qq
 \end{equation}
 クォークとグルーオンの頂点の補正 (d1) は、内線のグルーオンが $T^b\cdots T^aT^b$ を作るので $C_F-\frac{C_A}2$ 倍の QED の図になる。(d2) は $f^{abc}T^cT^b=-\frac i2C_AT^a$ を含む。このように、可換な QED の結果は $C_F$ の部分として残り、$C_A$ の部分が非可換性から来る。
 
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9,fermionlate/.style={thick,postaction={decorate},
+    decoration={markings,mark=at position 0.86 with {\arrow{Stealth[length=1.9mm]}}}}]
+% (a) T^a T^a = C_F 1
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-1.15,0) -- (-0.55,0); \draw[fermion] (-0.55,0) -- (0.55,0); \draw[fermion] (0.55,0) -- (1.15,0);
+  \draw[gluon] (0.55,0) arc (0:180:0.55);
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+  \node at (1.55,0) {$=$}; \node at (2.1,0) {$C_F$};
+  \draw[fermion] (2.5,0) -- (3.6,0);
+  \node[lab] at (1.1,-0.75) {(a) $T^aT^a=C_F\mathbf 1$};
+\end{scope}
+% (b) tr(T^a T^b) = T_F delta^{ab}
+\begin{scope}[shift={(6.0,0)}]
+  \draw[gluon] (-1.2,0) -- (-0.45,0); \draw[gluon] (0.45,0) -- (1.2,0);
+  \draw[fermion] (-0.45,0) arc (180:0:0.45); \draw[fermion] (0.45,0) arc (0:-180:0.45);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \node[font=\scriptsize] at (-1.2,0.3) {$a$}; \node[font=\scriptsize] at (1.2,0.3) {$b$};
+  \node at (1.6,0) {$=$}; \node at (2.15,0) {$T_F$};
+  \draw[gluon] (2.55,0) -- (3.65,0);
+  \node[font=\scriptsize] at (2.55,0.3) {$a$}; \node[font=\scriptsize] at (3.65,0.3) {$b$};
+  \node[lab] at (1.2,-0.8) {(b) $\tr(T^aT^b)=T_F\delta^{ab}$};
+\end{scope}
+% (c) f^{acd} f^{bcd} = C_A delta^{ab}
+\begin{scope}[shift={(12.0,0)}]
+  \draw[gluon] (-1.3,0) -- (-0.55,0); \draw[gluon] (0.55,0) -- (1.3,0);
+  \draw[gluon] (0.55,0) arc (0:180:0.55); \draw[gluon] (-0.55,0) arc (180:360:0.55);
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+  \node[font=\scriptsize] at (-1.3,0.3) {$a$}; \node[font=\scriptsize] at (1.3,0.3) {$b$};
+  \node[font=\scriptsize] at (0,0.88) {$c$}; \node[font=\scriptsize] at (0,-0.88) {$d$};
+  \node at (1.7,0) {$=$}; \node at (2.25,0) {$C_A$};
+  \draw[gluon] (2.65,0) -- (3.75,0);
+  \node[font=\scriptsize] at (2.65,0.3) {$a$}; \node[font=\scriptsize] at (3.75,0.3) {$b$};
+  \node[lab] at (1.2,-1.3) {(c) $f^{acd}f^{bcd}=C_A\delta^{ab}$};
+\end{scope}
+% (d) T^b T^a T^b = (C_F - C_A/2) T^a
+\begin{scope}[shift={(0.2,-2.6)}]
+  \draw[fermion] (-1.3,0) -- (-0.65,0); \draw[fermion] (-0.65,0) -- (0,0); \draw[fermion] (0,0) -- (0.65,0); \draw[fermion] (0.65,0) -- (1.3,0);
+  \draw[gluon] (0.65,0) arc (0:180:0.65);
+  \draw[gluon] (0,0) -- (0,-0.8);
+  \node[vtx] at (-0.65,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.65,0) {};
+  \node[font=\scriptsize] at (0,0.92) {$b$}; \node[font=\scriptsize] at (0.22,-0.75) {$a$};
+  \node at (1.65,-0.15) {$=$}; \node[anchor=west] at (1.85,-0.15) {$\Bigl(C_F-\dfrac{C_A}2\Bigr)$};
+  \draw[fermion] (4.05,0) -- (4.7,0); \draw[fermion] (4.7,0) -- (5.35,0);
+  \draw[gluon] (4.7,0) -- (4.7,-0.8);
+  \node[vtx] at (4.7,0) {};
+  \node[font=\scriptsize] at (4.92,-0.75) {$a$};
+  \node[lab] at (2.0,-1.35) {(d) $T^bT^aT^b=\bigl(C_F-\frac{C_A}2\bigr)T^a$};
+\end{scope}
+% (e) f^{abc} T^b T^c = (i/2) C_A T^a
+\begin{scope}[shift={(9.0,-2.6)}]
+  \draw[fermion] (-1.35,0) -- (-0.7,0); \draw[fermion] (-0.7,0) -- (0.7,0); \draw[fermion] (0.7,0) -- (1.35,0);
+  \draw[gluon] (-0.7,0) -- (0,-0.8); \draw[gluon] (0.7,0) -- (0,-0.8);
+  \draw[gluon] (0,-0.8) -- (0,-1.45);
+  \node[vtx] at (-0.7,0) {}; \node[vtx] at (0.7,0) {}; \node[vtx] at (0,-0.8) {};
+  \node[font=\scriptsize] at (-0.62,-0.55) {$c$}; \node[font=\scriptsize] at (0.62,-0.55) {$b$}; \node[font=\scriptsize] at (0.22,-1.38) {$a$};
+  \node at (1.7,-0.15) {$=$}; \node[anchor=west] at (1.9,-0.15) {$\dfrac i2C_A$};
+  \draw[fermion] (3.0,0) -- (3.65,0); \draw[fermion] (3.65,0) -- (4.3,0);
+  \draw[gluon] (3.65,0) -- (3.65,-0.8);
+  \node[vtx] at (3.65,0) {};
+  \node[font=\scriptsize] at (3.87,-0.75) {$a$};
+  \node[lab] at (1.5,-1.85) {(e) $f^{abc}T^bT^c=\frac i2C_AT^a$};
+\end{scope}
+% (f) [T^a, T^b] = i f^{abc} T^c
+\begin{scope}[shift={(0.2,-5.8)}]
+  \draw[fermion] (-1.05,0) -- (-0.45,0); \draw[fermion] (-0.45,0) -- (0.45,0); \draw[fermion] (0.45,0) -- (1.05,0);
+  \draw[gluon] (-0.45,0) -- (-0.45,-0.75); \draw[gluon] (0.45,0) -- (0.45,-0.75);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \node[font=\scriptsize] at (-0.45,-0.95) {$b$}; \node[font=\scriptsize] at (0.45,-0.95) {$a$};
+  \node at (1.4,-0.15) {$-$};
+  \draw[fermion] (1.75,0) -- (2.35,0); \draw[fermion] (2.35,0) -- (3.25,0); \draw[fermion] (3.25,0) -- (3.85,0);
+  \draw[gluon] (2.35,0) -- (2.35,-0.75); \draw[gluon] (3.25,0) -- (3.25,-0.75);
+  \node[vtx] at (2.35,0) {}; \node[vtx] at (3.25,0) {};
+  \node[font=\scriptsize] at (2.35,-0.95) {$a$}; \node[font=\scriptsize] at (3.25,-0.95) {$b$};
+  \node at (4.2,-0.15) {$=$}; \node at (4.55,-0.15) {$i$};
+  \draw[fermion] (4.85,0) -- (5.45,0); \draw[fermion] (5.45,0) -- (6.05,0);
+  \draw[gluon] (5.45,0) -- (5.45,-0.55);
+  \draw[gluon] (5.45,-0.55) -- (5.0,-1.05); \draw[gluon] (5.45,-0.55) -- (5.9,-1.05);
+  \node[vtx] at (5.45,0) {}; \node[vtx] at (5.45,-0.55) {};
+  \node[font=\scriptsize] at (5.67,-0.25) {$c$};
+  \node[font=\scriptsize] at (4.88,-1.22) {$a$}; \node[font=\scriptsize] at (6.02,-1.22) {$b$};
+  \node[lab] at (2.5,-1.65) {(f) $[T^a,T^b]=if^{abc}T^c$};
+\end{scope}
+% (g) Fierz
+\begin{scope}[shift={(9.1,-5.8)}]
+  \draw[fermion] (-1.0,0.45) -- (0,0.45); \draw[fermion] (0,0.45) -- (1.0,0.45);
+  \draw[fermion] (-1.0,-0.45) -- (0,-0.45); \draw[fermion] (0,-0.45) -- (1.0,-0.45);
+  \draw[gluon] (0,0.45) -- (0,-0.45);
+  \node[vtx] at (0,0.45) {}; \node[vtx] at (0,-0.45) {};
+  \node[font=\scriptsize] at (-1.2,0.45) {$j$}; \node[font=\scriptsize] at (1.2,0.45) {$i$};
+  \node[font=\scriptsize] at (-1.2,-0.45) {$l$}; \node[font=\scriptsize] at (1.2,-0.45) {$k$};
+  \node at (1.6,0) {$=$}; \node at (2.25,0) {$T_F\Bigl($};
+  \draw[fermionlate] (2.75,-0.45) .. controls (3.2,-0.45) and (3.2,0.45) .. (3.65,0.45);
+  \draw[fermionlate] (2.75,0.45) .. controls (3.2,0.45) and (3.2,-0.45) .. (3.65,-0.45);
+  \node[font=\scriptsize] at (2.6,0.45) {$j$}; \node[font=\scriptsize] at (3.8,0.45) {$i$};
+  \node[font=\scriptsize] at (2.6,-0.45) {$l$}; \node[font=\scriptsize] at (3.8,-0.45) {$k$};
+  \node at (4.35,0) {$-\dfrac1N$};
+  \draw[fermion] (5.0,0.45) -- (5.9,0.45); \draw[fermion] (5.0,-0.45) -- (5.9,-0.45);
+  \node[font=\scriptsize] at (4.85,0.45) {$j$}; \node[font=\scriptsize] at (6.05,0.45) {$i$};
+  \node[font=\scriptsize] at (4.85,-0.45) {$l$}; \node[font=\scriptsize] at (6.05,-0.45) {$k$};
+  \node at (6.35,0) {$\Bigr)$};
+  \node[lab] at (2.6,-1.25) {(g) $(T^a)_{ij}(T^a)_{kl}=T_F\bigl(\delta_{il}\delta_{kj}-\frac1N\delta_{ij}\delta_{kl}\bigr)$};
+\end{scope}
+\end{tikzpicture}
+\caption{色の代数の図（式~\eqref{eq:color}、\ref{app:color}）。矢印の付いた線は基本表現の添字の $\delta_{ij}$、巻いた線は随伴表現の添字の $\delta^{ab}$ で、線の上の点は $(T^a)_{ji}$（矢印が $i$ から $j$ へ向かう）、巻いた線3本の点は $f^{abc}$ である（添字の順と符号は下の式による）。一つの線に付いた $T$ は、矢印に逆らって読んだ順に行列として掛ける。(a)〜(c) は Casimir と規格化、(d) と (e) はクォークの頂点の補正 (d1)、(d2) の色の因子、(f) は3グルーオンの頂点が交換子から現れること、(g) は完全性（Fierz の恒等式）で、ほかの恒等式はすべてこれから導ける。}
+\label{fig:color}
+\end{figure}
+
 \paragraph{べき数え上げ。}外のグルーオン線 $E_G$ 本、外のゴースト線（ゴーストと反ゴーストの合計）$E_c$ 本、外のクォーク線 $E_q$ 本の図の表面的な発散次数は
 \begin{equation}
 \omega=4-E_G-E_c-\frac32E_q
 \label{eq:omega}
 \end{equation}
-である（\ref{app:counting}）。ゴーストの頂点の運動量は出ていくゴーストのものなので、外の反ゴースト線ごとに外の運動量が一つ積分の外に出て、実際の次数は $\omega-E_c/2$ になる。$\omega\ge0$ となる関数は、グルーオンの2点（$\omega=2$）、3点（1）、4点（0）、ゴーストの2点（2、実際は1）、ゴースト頂点（1、実際は0）、クォークの2点（1）、クォーク頂点（0）の七つである（グルーオンの1点関数は色の添字が一つしかなく0）。グルーオンの2点関数は横波性（下の式~\eqref{eq:st}）により、3点関数は Lorentz 共変性と Bose 対称性により外の運動量について1次になり、どれも実質は対数発散である。これらが式~\eqref{eq:L} の八つの対抗項 $\delta_3,\delta_1,\delta_4,\tilde\delta_3,\tilde\delta_1,\delta_2,\delta_m,\delta_{1F}$ に対応する。
+である（\ref{app:counting}）。ゴーストの頂点の運動量は出ていくゴーストのものなので、外の反ゴースト線ごとに外の運動量が一つ積分の外に出て、実際の次数は $\omega-E_c/2$ になる。$\omega\ge0$ となる関数は、グルーオンの2点（$\omega=2$）、3点（1）、4点（0）、ゴーストの2点（2、実際は1）、ゴースト頂点（1、実際は0）、クォークの2点（1）、クォーク頂点（0）の七つである（図~\ref{fig:divergent} の上の段。グルーオンの1点関数は色の添字が一つしかなく0）。グルーオンの2点関数は横波性（下の式~\eqref{eq:st}）により、3点関数は Lorentz 共変性と Bose 対称性により外の運動量について1次になり、どれも実質は対数発散である。これらが式~\eqref{eq:L} の八つの対抗項 $\delta_3,\delta_1,\delta_4,\tilde\delta_3,\tilde\delta_1,\delta_2,\delta_m,\delta_{1F}$ に対応する。
 
 \paragraph{Slavnov--Taylor 恒等式。}ゲージ固定とゴーストの項を含めたラグランジアンは BRST 変換で不変である。そこから二つの結論が出る（\ref{app:st}）。一つ目に、裸のラグランジアンには一つの裸の結合 $g_0$ しかないので、四つの頂点の対抗項はすべて同じ $Z_g$ を与えなければならない：
 \begin{equation}
@@ -383,7 +492,79 @@ Z_g=\frac{Z_1}{Z_3^{3/2}}=\frac{Z_4^{1/2}}{Z_3}=\frac{\tilde Z_1}{\tilde Z_3Z_3^
 k_\mu k_\nu D^{\mu\nu}_{ab}(k)=-i\xi\delta^{ab}\ \Longrightarrow\ k_\mu\Pi^{\mu\nu}_{ab}(k)=0.
 \label{eq:st}
 \end{equation}
-二つ目（右の式）に、完全なグルーオンの伝播関数 $D^{\mu\nu}_{ab}$ の縦の部分は木のままで、1PI 2点関数は横波である。QED では各フェルミオンのループが別々に横波だったが、QCD ではグルーオンのループ (a1) だけでは横波でなく、ゴーストのループ (a3) を足して初めて横波になる（下の式~\eqref{eq:V} の説明）。式~\eqref{eq:st} の四つの比は1ループで $\delta_g=\delta_1-\frac32\delta_3=\frac12\delta_4-\delta_3=\tilde\delta_1-\tilde\delta_3-\frac12\delta_3=\delta_{1F}-\delta_2-\frac12\delta_3$ となる。四つの頂点の発散を独立に計算して、これが成り立つかを確かめる。
+二つ目（右の式）に、完全なグルーオンの伝播関数 $D^{\mu\nu}_{ab}$ の縦の部分は木のままで、1PI 2点関数は横波である。QED では各フェルミオンのループが別々に横波だったが、QCD ではグルーオンのループ (a1) だけでは横波でなく、ゴーストのループ (a3) を足して初めて横波になる（下の式~\eqref{eq:V} の説明と図~\ref{fig:divergent} の下の段）。式~\eqref{eq:st} の四つの比は1ループで $\delta_g=\delta_1-\frac32\delta_3=\frac12\delta_4-\delta_3=\tilde\delta_1-\tilde\delta_3-\frac12\delta_3=\delta_{1F}-\delta_2-\frac12\delta_3$ となる。四つの頂点の発散を独立に計算して、これが成り立つかを確かめる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% the seven superficially divergent 1PI functions
+\begin{scope}[shift={(0,0)}]
+  \draw[gluon] (-1.05,0) -- (-0.3,0); \draw[gluon] (0.3,0) -- (1.05,0);
+  \node[blob,minimum size=17pt] at (0,0) {};
+  \node[lab,font=\footnotesize] at (0,-1.15) {$\omega=2$\\$\delta_3$};
+\end{scope}
+\begin{scope}[shift={(2.35,0)}]
+  \draw[gluon] (180:0.3) -- (180:1.05); \draw[gluon] (60:0.3) -- (60:1.0); \draw[gluon] (-60:0.3) -- (-60:1.0);
+  \node[blob,minimum size=17pt] at (0,0) {};
+  \node[lab,font=\footnotesize] at (0,-1.15) {$\omega=1$\\$\delta_1$};
+\end{scope}
+\begin{scope}[shift={(4.7,0)}]
+  \draw[gluon] (135:0.3) -- (135:1.0); \draw[gluon] (45:0.3) -- (45:1.0); \draw[gluon] (-45:0.3) -- (-45:1.0); \draw[gluon] (-135:0.3) -- (-135:1.0);
+  \node[blob,minimum size=17pt] at (0,0) {};
+  \node[lab,font=\footnotesize] at (0,-1.15) {$\omega=0$\\$\delta_4$};
+\end{scope}
+\begin{scope}[shift={(7.05,0)}]
+  \draw[ghost] (-1.05,0) -- (-0.3,0); \draw[ghost] (0.3,0) -- (1.05,0);
+  \node[blob,minimum size=17pt] at (0,0) {};
+  \node[lab,font=\footnotesize] at (0,-1.15) {$\omega=2\,(1)$\\$\tilde\delta_3$};
+\end{scope}
+\begin{scope}[shift={(9.4,0)}]
+  \draw[ghost] (-135:1.0) -- (-135:0.3); \draw[ghost] (135:0.3) -- (135:1.0); \draw[gluon] (0:0.3) -- (0:1.05);
+  \node[blob,minimum size=17pt] at (0,0) {};
+  \node[lab,font=\footnotesize] at (0,-1.15) {$\omega=1\,(0)$\\$\tilde\delta_1$};
+\end{scope}
+\begin{scope}[shift={(11.75,0)}]
+  \draw[fermion] (-1.05,0) -- (-0.3,0); \draw[fermion] (0.3,0) -- (1.05,0);
+  \node[blob,minimum size=17pt] at (0,0) {};
+  \node[lab,font=\footnotesize] at (0,-1.15) {$\omega=1$\\$\delta_2,\ \delta_m$};
+\end{scope}
+\begin{scope}[shift={(14.1,0)}]
+  \draw[fermion] (-135:1.0) -- (-135:0.3); \draw[fermion] (135:0.3) -- (135:1.0); \draw[gluon] (0:0.3) -- (0:1.05);
+  \node[blob,minimum size=17pt] at (0,0) {};
+  \node[lab,font=\footnotesize] at (0,-1.15) {$\omega=0$\\$\delta_{1F}$};
+\end{scope}
+% transversality of the gluon self-energy
+\begin{scope}[shift={(0,-3.4)}]
+  \node[anchor=east] at (0.55,0) {$k_\mu k_\nu\Biggl[$};
+  \begin{scope}[shift={(1.95,0)}]
+    \draw[gluon] (-1.3,0) -- (-0.55,0); \draw[gluon] (0.55,0) -- (1.3,0);
+    \draw[gluon] (0.55,0) arc (0:180:0.55); \draw[gluon] (-0.55,0) arc (180:360:0.55);
+    \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+    \draw[mom] (-1.2,0.32) -- (-0.75,0.32) node[midway,above,font=\scriptsize] {$k$};
+    \node[font=\scriptsize] at (-1.45,-0.25) {$\mu$}; \node[font=\scriptsize] at (1.45,-0.25) {$\nu$};
+    \node[lab] at (0,-1.4) {(a1)\\$-\frac{g^2C_A}{4K}k^4B_0$};
+  \end{scope}
+  \node at (3.75,0) {$+$};
+  \begin{scope}[shift={(5.45,0)}]
+    \draw[gluon] (-1.3,0) -- (-0.55,0); \draw[gluon] (0.55,0) -- (1.3,0);
+    \draw[ghost] (-0.55,0) arc (180:0:0.55); \draw[ghost] (0.55,0) arc (360:180:0.55);
+    \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+    \node[lab] at (0,-1.4) {(a3)\\$+\frac{g^2C_A}{4K}k^4B_0$};
+  \end{scope}
+  \node at (7.1,0) {$+$};
+  \begin{scope}[shift={(8.75,0)}]
+    \draw[gluon] (-1.3,0) -- (-0.55,0); \draw[gluon] (0.55,0) -- (1.3,0);
+    \draw[fermion] (-0.55,0) arc (180:0:0.55); \draw[fermion] (0.55,0) arc (360:180:0.55);
+    \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+    \node[lab] at (0,-1.4) {(a4)\\$0$};
+  \end{scope}
+  \node[anchor=west] at (10.15,0) {$\Biggr]=0$};
+  \node[lab,align=left,anchor=west] at (11.9,-0.1) {グルーオンのループだけでは\\横波でなく、ゴーストの\\ループが縦の部分を消す};
+\end{scope}
+\end{tikzpicture}
+\caption{上：表面的な発散次数 $\omega\ge0$ の七つの1PI 関数（式~\eqref{eq:omega}、\ref{app:counting}）と、その発散を消す対抗項（式~\eqref{eq:ct}）。左から、グルーオンの2点、3点、4点関数、ゴーストの2点関数、ゴーストの頂点、クォークの2点関数、クォークの頂点で、灰色の円はすべての1PI 図の和である。括弧の中は、ゴーストの頂点の運動量の因子が外の反ゴーストに付くことを考えた実際の次数。下：グルーオンの自己エネルギーの横波性（式~\eqref{eq:st}）。外の添字を運動量 $k$ で縮約すると、グルーオンのループ (a1) とゴーストのループ (a3) が $\mp\frac{g^2C_A}{4K}k^4B_0$ を与えて打ち消し、クォークのループ (a4) は QED と同じく1本ずつ0である（(a2) はスケールのない積分で0）。}
+\label{fig:divergent}
+\end{figure}
 
 \paragraph{1ループの2点関数。}図~\ref{fig:oneloop} の (a)〜(c) を Feynman 則で書き、$g_{\mu\nu}$ と $k_\mu k_\nu$ で縮約し、分子を伝播関数の分母で書き直すと、すべて $A_0$ と $B_0$ に帰着する（\ref{app:ren}）。$D$ 次元で
 \begin{equation}
@@ -500,7 +681,68 @@ W_{-1}(\mu)=W_{-1}+LW_{-2},\qquad L=\ln\frac{\mu^2}{m^2},\\
 \end{gathered}
 \label{eq:rgW}
 \end{equation}
-となる（1行目の右辺の $W_{\mathrm{fin}}$、$W_{-k}$ は $\mu=m$ の値で、$\beta_0$ は結合の処方のもの。$\MSbar$ の $n_f$ フレーバーの結合では $\beta_0^{(n_f)}$、$\alpha_s^{(n_l)}$ では $\beta_0^{(n_l)}$ である）。$g(\mu)$ を式~\eqref{eq:run} で走らせると、断面積 $\propto g^4[B+2\frac{g^2}{K}\mathrm{Re}\,W]$ の $\beta_0$ の項は $g^4$ の走りと打ち消し、残る $\ln\mu$ は赤外の極の分だけで、それは実の放射と打ち消す（手順 (8)、(9)）。$W$ の虚部は赤外の極を通してしか $\mu$ によらない。2行目は重いクォークの脱結合~\cite{ac75} の1ループの形である。重いクォークのループは、$\mu$ によらない差 $\Pi_Q^{\mathrm R}(k^2)-\Pi_Q^{\mathrm R}(0)$ としては $k^2/m^2$ で消えるが、$\MSbar$ の $\Pi_Q^{\mathrm R}(0)=-\frac43T_F\frac{g^2}K\ln\frac{\mu^2}{m^2}$ は消えず、結合を $\alpha_s^{(n_l)}$ に換えるとこの対数が結合に吸収される。例えば質量のないクォークの $q\bar q\to q'\bar q'$ では、重いクォークは $s$ チャンネルのグルーオンの自己エネルギーだけに入り、$\alpha_s^{(n_l)}$ では $W_Q=[\Pi_Q^{\mathrm R}(s)-\Pi_Q^{\mathrm R}(0)]B$ となって、$m\to\infty$ で $-\frac43T_F\frac{g^2}K\frac{s}{5m^2}B$ のように消える。
+となる（1行目の右辺の $W_{\mathrm{fin}}$、$W_{-k}$ は $\mu=m$ の値で、$\beta_0$ は結合の処方のもの。$\MSbar$ の $n_f$ フレーバーの結合では $\beta_0^{(n_f)}$、$\alpha_s^{(n_l)}$ では $\beta_0^{(n_l)}$ である）。$g(\mu)$ を式~\eqref{eq:run} で走らせると、断面積 $\propto g^4[B+2\frac{g^2}{K}\mathrm{Re}\,W]$ の $\beta_0$ の項は $g^4$ の走りと打ち消し、残る $\ln\mu$ は赤外の極の分だけで、それは実の放射と打ち消す（手順 (8)、(9)）。$W$ の虚部は赤外の極を通してしか $\mu$ によらない。2行目は重いクォークの脱結合~\cite{ac75} の1ループの形である。重いクォークのループは、$\mu$ によらない差 $\Pi_Q^{\mathrm R}(k^2)-\Pi_Q^{\mathrm R}(0)$ としては $k^2/m^2$ で消えるが、$\MSbar$ の $\Pi_Q^{\mathrm R}(0)=-\frac43T_F\frac{g^2}K\ln\frac{\mu^2}{m^2}$ は消えず、結合を $\alpha_s^{(n_l)}$ に換えるとこの対数が結合に吸収される。例えば質量のないクォークの $q\bar q\to q'\bar q'$ では、重いクォークは $s$ チャンネルのグルーオンの自己エネルギーだけに入り、$\alpha_s^{(n_l)}$ では $W_Q=[\Pi_Q^{\mathrm R}(s)-\Pi_Q^{\mathrm R}(0)]B$ となって、$m\to\infty$ で $-\frac43T_F\frac{g^2}K\frac{s}{5m^2}B$ のように消える（図~\ref{fig:decouple}）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.88,
+  sq/.style={rectangle,draw=black,fill=black!70,inner sep=0pt,minimum size=6pt},
+  dia/.style={rectangle,rotate=45,draw=black,fill=white,thick,inner sep=0pt,minimum size=6pt}]
+% row 1: the heavy quark in q qbar -> q' qbar'
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-2.1,-0.75) -- (-1.5,0); \draw[fermion] (-1.5,0) -- (-2.1,0.75);
+  \draw[gluon] (-1.5,0) -- (-0.5,0); \draw[gluon] (0.5,0) -- (1.5,0);
+  \draw[heavy] (-0.5,0) arc (180:0:0.5); \draw[heavy] (0.5,0) arc (360:180:0.5);
+  \draw[fermion] (2.1,0.75) -- (1.5,0); \draw[fermion] (1.5,0) -- (2.1,-0.75);
+  \node[vtx] at (-1.5,0) {}; \node[vtx] at (1.5,0) {}; \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[font=\scriptsize] at (-2.3,-0.9) {$u$}; \node[font=\scriptsize] at (-2.3,0.9) {$\bar u$};
+  \node[font=\scriptsize] at (2.3,-0.9) {$d$}; \node[font=\scriptsize] at (2.3,0.9) {$\bar d$};
+  \node[font=\scriptsize] at (0,0.75) {$t$};
+  \node at (2.75,0) {$+$};
+\end{scope}
+\begin{scope}[shift={(5.5,0)}]
+  \draw[fermion] (-1.8,-0.75) -- (-1.2,0); \draw[fermion] (-1.2,0) -- (-1.8,0.75);
+  \draw[gluon] (-1.2,0) -- (0,0); \draw[gluon] (0,0) -- (1.2,0);
+  \draw[fermion] (1.8,0.75) -- (1.2,0); \draw[fermion] (1.2,0) -- (1.8,-0.75);
+  \node[vtx] at (-1.2,0) {}; \node[vtx] at (1.2,0) {}; \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (0,0.45) {$-\delta Z_G^Q$};
+  \node at (2.4,0) {$=$};
+\end{scope}
+\node[anchor=west] at (8.0,0) {$\bigl[\Pi_Q^{\mathrm R}(s)-\Pi_Q^{\mathrm R}(0)\bigr]\times$};
+\begin{scope}[shift={(13.0,0)}]
+  \draw[fermion] (-1.3,-0.75) -- (-0.6,0); \draw[fermion] (-0.6,0) -- (-1.3,0.75);
+  \draw[gluon] (-0.6,0) -- (0.6,0);
+  \draw[fermion] (1.3,0.75) -- (0.6,0); \draw[fermion] (0.6,0) -- (1.3,-0.75);
+  \node[vtx] at (-0.6,0) {}; \node[vtx] at (0.6,0) {};
+\end{scope}
+\node[lab] at (7.3,-1.35) {(a) $\alpha_s^{(n_l)}$ での $t$ の寄与：$m\to\infty$ で $-\frac43T_F\frac{g^2}K\frac{s}{5m^2}\mathcal M_0\to0$};
+% row 2: the heavy loop at low momentum
+\begin{scope}[shift={(0.4,-3.2)}]
+  \draw[gluon] (-1.5,0) -- (-0.5,0); \draw[gluon] (0.5,0) -- (1.5,0);
+  \draw[heavy] (-0.5,0) arc (180:0:0.5); \draw[heavy] (0.5,0) arc (360:180:0.5);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \draw[mom] (-1.35,0.32) -- (-0.85,0.32) node[midway,above,font=\scriptsize] {$k$};
+  \node[lab] at (0,-0.9) {$k^2\ll m^2$};
+  \node at (2.0,0) {$=$};
+\end{scope}
+\begin{scope}[shift={(4.0,-3.2)}]
+  \draw[gluon] (-1.1,0) -- (0,0); \draw[gluon] (0,0) -- (1.1,0);
+  \node[sq] at (0,0) {};
+  \node[lab] at (0,-0.75) {$\Pi_Q^{\mathrm R}(0)$\\$=-\frac43T_F\frac{g^2}K\ln\frac{\mu^2}{m^2}$};
+  \node at (1.6,0) {$+$};
+\end{scope}
+\begin{scope}[shift={(7.2,-3.2)}]
+  \draw[gluon] (-1.1,0) -- (0,0); \draw[gluon] (0,0) -- (1.1,0);
+  \node[dia] at (0,0) {};
+  \node[lab] at (0,-0.75) {$-\frac43T_F\frac{g^2}K\frac{k^2}{5m^2}$};
+  \node at (1.7,0) {$+\ \cdots$};
+\end{scope}
+\node[lab,align=left,anchor=west] at (9.7,-3.2) {黒い四角は結合に吸収されて $\alpha_s^{(n_l)}$\\になり、白い菱形は $1/m^2$ で\\抑えられた局所的な項\\（次元6の演算子）};
+\node[lab] at (5.7,-5.0) {(b) 低いエネルギーでの重いクォークのループ};
+\end{tikzpicture}
+\caption{重いクォークの脱結合（式~\eqref{eq:os}、\eqref{eq:rgW}、\ref{app:os}、\ref{app:rg}、手順 (6)）。太い線は $t$ である。(a) 質量のないクォークの $u\bar u\to d\bar d$ では、$t$ は $s$ チャンネルのグルーオンの自己エネルギーにだけ入る。結合を $\alpha_s^{(n_l)}$ にすると、$t$ のループに on-shell のグルーオンの場の定数の $t$ の部分 $-\delta Z_G^Q$（$\otimes$）が加わり、和は $\mu$ によらない差 $\Pi_Q^{\mathrm R}(s)-\Pi_Q^{\mathrm R}(0)$ を Born $\mathcal M_0$ に掛けたものになる。これは $m\to\infty$ で $s/m^2$ のように消える（MadLoop の $W_t$、表~\ref{tab:rg}）。(b) $k^2\ll m^2$ での $t$ のループの展開。$k$ によらない項 $\Pi_Q^{\mathrm R}(0)$ は $\MSbar$ では $\ln(\mu^2/m^2)$ として残るが、グルーオンの場の規格化を通して結合に吸収され、$n_l$ フレーバーの理論の結合 $\alpha_s^{(n_l)}$ になる。残りは $k^2/m^2$ で抑えられる。}
+\label{fig:decouple}
+\end{figure}
 
 ゲージパラメータの方程式~\eqref{eq:run} の解と、二つの処方の $\Lambda_{\mathrm{QCD}}$ の関係は
 \begin{equation}
@@ -516,7 +758,7 @@ z_{22}=\frac{z_1(z_1-\beta_0)}2,\qquad \gamma=-z_1a-2z_{21}a^2,\qquad
 \beta=-\beta_0\frac{g^3}K-\beta_1\frac{g^5}{K^2},\qquad \beta_1=4\tilde z_{21}+2z_{21}\quad(\xi=0)
 \label{eq:zalpha}
 \end{equation}
-となる（$Z_3$ と $\tilde Z_3$ の $z_1$ は式~\eqref{eq:ct} の $\xi=0$ の値 $\frac{13}6C_A-\frac43T_Fn_f$ と $\frac34C_A$）。1番目の式は2重の極が1ループの量で決まること、最後の式は $\ln Z_\alpha=-2\ln\tilde Z_3-\ln Z_3$ の $a^2/\epsilon$ の係数が $-\beta_1/2$ であることを表す。2ループのグルーオンとゴーストの自己エネルギー（図~\ref{fig:twoloop}）を Landau ゲージで計算すると（手順 (7)）
+となる（$Z_3$ と $\tilde Z_3$ の $z_1$ は式~\eqref{eq:ct} の $\xi=0$ の値 $\frac{13}6C_A-\frac43T_Fn_f$ と $\frac34C_A$）。1番目の式は2重の極が1ループの量で決まること、最後の式は $\ln Z_\alpha=-2\ln\tilde Z_3-\ln Z_3$ の $a^2/\epsilon$ の係数が $-\beta_1/2$ であることを表す。2ループのグルーオンとゴーストの自己エネルギー（図~\ref{fig:twoloop}、対抗項の挿入は図~\ref{fig:twoloopct}）を Landau ゲージで計算すると（手順 (7)）
 \begin{equation}
 \begin{gathered}
 z_{21}=\frac{59}{16}C_A^2-\frac52C_AT_Fn_f-2C_FT_Fn_f,\qquad
@@ -605,6 +847,79 @@ $\frac{\dd\alpha_s}{\dd\ln\mu^2}=-b_0\alpha_s^2-b_1\alpha_s^3$（$b_0=\beta_0/4\
 \end{tikzpicture}
 \caption{2ループのグルーオン（(a)〜(f)）とゴースト（(g)、(h)）の自己エネルギーの図の例（手順 (7)、Landau ゲージ）。図は全部でグルーオンに23個、ゴーストに7個ある（FeynArts、質量のないクォーク1本）。灰色の円は1ループの自己エネルギー（グルーオン、ゴースト、クォークのループ）の挿入を表す。外線が同じ頂点に付く図はスケールのない積分になり、0になる。}
 \label{fig:twoloop}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.88]
+% row 1: the renormalized self-energy at order a^2
+\node[anchor=east] at (0.9,0) {$\Pi^{\mathrm R}\big|_{a^2}=\ \displaystyle\sum$};
+\begin{scope}[shift={(2.5,0)}]
+  \draw[gluon] (-1.55,0) -- (-0.75,0); \draw[gluon] (0.75,0) -- (1.55,0);
+  \draw[gluon] (-0.75,0) arc (180:90:0.75); \draw[gluon] (0,0.75) arc (90:0:0.75);
+  \draw[gluon] (0.75,0) arc (0:-90:0.75); \draw[gluon] (0,-0.75) arc (-90:-180:0.75);
+  \draw[gluon] (0,0.75) -- (0,-0.75);
+  \node[vtx] at (-0.75,0) {}; \node[vtx] at (0.75,0) {}; \node[vtx] at (0,0.75) {}; \node[vtx] at (0,-0.75) {};
+  \node[lab] at (0,-1.25) {2ループの図};
+\end{scope}
+\node at (4.75,0) {$+\ \displaystyle\sum$};
+\begin{scope}[shift={(6.95,0)}]
+  \draw[gluon] (-1.55,0) -- (-0.7,0); \draw[gluon] (0.7,0) -- (1.55,0);
+  \draw[gluon] (0.7,0) arc (0:180:0.7); \draw[gluon] (-0.7,0) arc (180:360:0.7);
+  \node[ctv] at (-0.7,0) {}; \node[vtx] at (0.7,0) {};
+  \node[lab] at (0,-1.25) {1ループの対抗項を\\一つ挿入した図};
+\end{scope}
+\node at (8.9,0) {$+$};
+\begin{scope}[shift={(10.3,0)}]
+  \draw[gluon] (-1.1,0) -- (0,0); \draw[gluon] (0,0) -- (1.1,0);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (0,0.42) {$\delta_3^{(2)}$};
+  \node[lab] at (0,-1.25) {2ループの\\対抗項};
+\end{scope}
+\node[lab,align=left,anchor=west] at (11.7,0.05) {$\delta_3^{(2)}=\Bigl(\dfrac{z_{22}}{\epsilon^2}+\dfrac{z_{21}}{\epsilon}\Bigr)a^2$};
+% row 2: a subdivergence and the counterterm that removes it
+\begin{scope}[shift={(1.6,-3.3)}]
+  \fill[black!12] (-0.75,0) arc (180:90:0.75) -- (0,-0.75) arc (-90:-180:0.75) -- cycle;
+  \draw[gluon] (-1.55,0) -- (-0.75,0); \draw[gluon] (0.75,0) -- (1.55,0);
+  \draw[gluon] (-0.75,0) arc (180:90:0.75); \draw[gluon] (0,0.75) arc (90:0:0.75);
+  \draw[gluon] (0.75,0) arc (0:-90:0.75); \draw[gluon] (0,-0.75) arc (-90:-180:0.75);
+  \draw[gluon] (0,0.75) -- (0,-0.75);
+  \node[vtx] at (-0.75,0) {}; \node[vtx] at (0.75,0) {}; \node[vtx] at (0,0.75) {}; \node[vtx] at (0,-0.75) {};
+\end{scope}
+\draw[-{Stealth[length=2.2mm]},thick] (3.55,-3.3) -- (4.55,-3.3);
+\begin{scope}[shift={(6.3,-3.3)}]
+  \draw[gluon] (-1.55,0) -- (-0.7,0); \draw[gluon] (0.7,0) -- (1.55,0);
+  \draw[gluon] (0.7,0) arc (0:180:0.7); \draw[gluon] (-0.7,0) arc (180:360:0.7);
+  \node[ctv] at (-0.7,0) {}; \node[vtx] at (0.7,0) {};
+  \node[font=\scriptsize] at (-1.0,0.38) {$\delta_1$};
+\end{scope}
+\node[lab,align=left,anchor=west] at (8.4,-3.3) {灰色の部分ループは3グルーオンの頂点の補正で、\\その発散 $\Lambda_3|_{\mathrm{UV}}$ を、1ループの図の頂点に\\入れた $\delta_1=-\Lambda_3|_{\mathrm{UV}}$ が消す（部分発散）};
+% row 3: the sum of the insertions in (a1)
+\begin{scope}[shift={(1.6,-6.4)}]
+  \draw[gluon] (-1.45,0) -- (-0.65,0); \draw[gluon] (0.65,0) -- (1.45,0);
+  \draw[gluon] (0.65,0) arc (0:180:0.65); \draw[gluon] (-0.65,0) arc (180:360:0.65);
+  \node[ctv] at (-0.65,0) {}; \node[vtx] at (0.65,0) {};
+  \node[lab] at (0,-1.0) {$\delta_1\times$(a1)};
+  \node at (1.8,0) {$+$};
+\end{scope}
+\begin{scope}[shift={(5.2,-6.4)}]
+  \draw[gluon] (-1.45,0) -- (-0.65,0); \draw[gluon] (0.65,0) -- (1.45,0);
+  \draw[gluon] (0.65,0) arc (0:180:0.65); \draw[gluon] (-0.65,0) arc (180:360:0.65);
+  \node[vtx] at (-0.65,0) {}; \node[ctv] at (0.65,0) {};
+  \node[lab] at (0,-1.0) {$\delta_1\times$(a1)};
+  \node at (1.8,0) {$+$};
+\end{scope}
+\begin{scope}[shift={(8.8,-6.4)}]
+  \draw[gluon] (-1.45,0) -- (-0.65,0); \draw[gluon] (0.65,0) -- (1.45,0);
+  \draw[gluon] (0.65,0) arc (0:90:0.65); \draw[gluon] (0,0.65) arc (90:180:0.65); \draw[gluon] (-0.65,0) arc (180:360:0.65);
+  \node[vtx] at (-0.65,0) {}; \node[vtx] at (0.65,0) {}; \node[ctv] at (0,0.65) {};
+  \node[lab] at (0,-1.05) {$-2\delta_3\times$(a1)};
+\end{scope}
+\node[anchor=west] at (10.45,-6.4) {$=(2\delta_g+\delta_3)\times$(a1)};
+\node[lab] at (6.6,-8.05) {$2\delta_g+\delta_3=\dfrac{z_1-\beta_0}{\epsilon}\,a$：どの1ループの図でも同じ（内線の場の因子は打ち消す）};
+\end{tikzpicture}
+\caption{2ループの繰り込み（式~\eqref{eq:zalpha}、\eqref{eq:z2}、\ref{app:rg}、手順 (7)、Landau ゲージ）。上：繰り込まれたグルーオンの自己エネルギーの $a^2$ の項は、2ループの図（図~\ref{fig:twoloop}）、1ループの図に1ループの対抗項（$\otimes$、図~\ref{fig:rules}）を一つ入れた図、2ループの対抗項の和である。中：2ループの図の部分ループの発散は、対応する1ループの対抗項を入れた図が消す。下：グルーオンのループ (a1) では、頂点の $\delta_1=\delta_g+\frac32\delta_3$（式~\eqref{eq:st}）が2個、内線の対抗項が $-\delta_3$ ずつ2本分（$\otimes$ で内線が区別されるので対称性因子は1になり、(a1) の $\frac12$ の2倍）で、和は $(2\delta_g+\delta_3)$ 倍の (a1) である。ゴーストとクォークのループでも、$\tilde\delta_1=\delta_g+\tilde\delta_3+\frac12\delta_3$、$\delta_{1F}=\delta_g+\delta_2+\frac12\delta_3$ から同じ因子になる。$2\delta_g=-\frac{\beta_0}\epsilon a$、$\delta_3=\frac{z_1}\epsilon a$ なので、対抗項を挿入した図の和は $\frac{z_1-\beta_0}{\epsilon}a^2\Pi^{(1)}$ で、裸の自己エネルギーから求めた\ref{app:rg} の式の第1項に当たる。}
+\label{fig:twoloopct}
 \end{figure}
 
 \paragraph{木の振幅とスピン・色の和。}四つの過程の木の振幅は、全体の位相を除いて
@@ -725,7 +1040,82 @@ $\frac{\dd\alpha_s}{\dd\ln\mu^2}=-b_0\alpha_s^2-b_1\alpha_s^3$（$b_0=\beta_0/4\
 \sum\bigl|\mathcal M(c\bar c\to Q\bar Q)\bigr|^2=g^4C_Ad_A\,\tau_1\tau_2
 \label{eq:ghostsum}
 \end{equation}
-となる。$-g_{\mu\nu}$ で置き換えた和は、二つの外のグルーオンの非物理的な偏極（時間的と縦）の寄与を含み、それがゴースト対の生成の振幅の2乗に等しい。ループの中でゴーストが非物理的な偏極を打ち消すのと同じ構造である。
+となる。$-g_{\mu\nu}$ で置き換えた和は、二つの外のグルーオンの非物理的な偏極（時間的と縦）の寄与を含み、それがゴースト対の生成の振幅の2乗に等しい。ループの中でゴーストが非物理的な偏極を打ち消すのと同じ構造である（図~\ref{fig:ghostpair}）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.88]
+% row 1: the polarization sum of g g -> Q Qbar
+\begin{scope}[shift={(0,0)}]
+  \node[anchor=east] at (-1.25,0) {$\displaystyle\sum_{\mathrm{phys}}$};
+  \draw[thick] (-1.2,-0.95) -- (-1.2,0.95);
+  \draw[gluon] (-1.05,-0.7) -- (-0.25,-0.15); \draw[gluon] (-1.05,0.7) -- (-0.25,0.15);
+  \draw[heavy] (0.25,-0.15) -- (1.0,-0.7); \draw[heavy] (1.0,0.7) -- (0.25,0.15);
+  \node[blob,minimum size=15pt] at (0,0) {};
+  \draw[thick] (1.2,-0.95) -- (1.2,0.95); \node[font=\scriptsize] at (1.38,0.95) {$2$};
+  \node at (1.8,0) {$=$};
+\end{scope}
+\begin{scope}[shift={(4.3,0)}]
+  \node[anchor=east] at (-1.25,0) {$\displaystyle\sum_{-g}$};
+  \draw[thick] (-1.2,-0.95) -- (-1.2,0.95);
+  \draw[gluon] (-1.05,-0.7) -- (-0.25,-0.15); \draw[gluon] (-1.05,0.7) -- (-0.25,0.15);
+  \draw[heavy] (0.25,-0.15) -- (1.0,-0.7); \draw[heavy] (1.0,0.7) -- (0.25,0.15);
+  \node[blob,minimum size=15pt] at (0,0) {};
+  \draw[thick] (1.2,-0.95) -- (1.2,0.95); \node[font=\scriptsize] at (1.38,0.95) {$2$};
+  \node at (1.7,0) {$-$};
+\end{scope}
+\begin{scope}[shift={(8.4,0)}]
+  \node[anchor=east] at (-1.4,0) {$\displaystyle\sum$};
+  \draw[thick] (-1.35,-0.95) -- (-1.35,0.95);
+  \draw[ghost] (-1.15,-0.75) -- (-0.5,0); \draw[ghost] (-0.5,0) -- (-1.15,0.75);
+  \draw[gluon] (-0.5,0) -- (0.5,0);
+  \draw[heavy] (0.5,0) -- (1.15,-0.75); \draw[heavy] (1.15,0.75) -- (0.5,0);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[font=\scriptsize] at (-1.05,-0.95) {$c$}; \node[font=\scriptsize] at (-1.05,0.95) {$\bar c$};
+  \draw[thick] (1.35,-0.95) -- (1.35,0.95); \node[font=\scriptsize] at (1.53,0.95) {$2$};
+  \node at (1.8,0) {$-$};
+\end{scope}
+\begin{scope}[shift={(12.5,0)}]
+  \node[anchor=east] at (-1.4,0) {$\displaystyle\sum$};
+  \draw[thick] (-1.35,-0.95) -- (-1.35,0.95);
+  \draw[ghost] (-0.5,0) -- (-1.15,-0.75); \draw[ghost] (-1.15,0.75) -- (-0.5,0);
+  \draw[gluon] (-0.5,0) -- (0.5,0);
+  \draw[heavy] (0.5,0) -- (1.15,-0.75); \draw[heavy] (1.15,0.75) -- (0.5,0);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[font=\scriptsize] at (-1.05,-0.95) {$\bar c$}; \node[font=\scriptsize] at (-1.05,0.95) {$c$};
+  \draw[thick] (1.35,-0.95) -- (1.35,0.95); \node[font=\scriptsize] at (1.53,0.95) {$2$};
+\end{scope}
+\node[lab] at (6.0,-1.45) {(a) 外のグルーオンの偏極の和（式~\eqref{eq:ghostsum}）};
+% row 2: the same structure inside a loop (cuts of the gluon self-energy)
+\begin{scope}[shift={(0.9,-3.6)}]
+  \draw[gluon] (-1.5,0) -- (-0.7,0); \draw[gluon] (0.7,0) -- (1.5,0);
+  \draw[gluon] (0.7,0) arc (0:180:0.7); \draw[gluon] (-0.7,0) arc (180:360:0.7);
+  \node[vtx] at (-0.7,0) {}; \node[vtx] at (0.7,0) {};
+  \draw[cutl] (0,1.05) -- (0,-1.05);
+  \node[lab] at (0,-1.3) {(a1)、$-g_{\mu\nu}$};
+  \node at (1.95,0) {$+$};
+\end{scope}
+\begin{scope}[shift={(4.8,-3.6)}]
+  \draw[gluon] (-1.5,0) -- (-0.7,0); \draw[gluon] (0.7,0) -- (1.5,0);
+  \draw[ghost] (-0.7,0) arc (180:0:0.7); \draw[ghost] (0.7,0) arc (360:180:0.7);
+  \node[vtx] at (-0.7,0) {}; \node[vtx] at (0.7,0) {};
+  \draw[cutl] (0,1.05) -- (0,-1.05);
+  \node[lab] at (0,-1.3) {(a3)};
+  \node at (1.95,0) {$=$};
+\end{scope}
+\begin{scope}[shift={(8.7,-3.6)}]
+  \draw[gluon] (-1.5,0) -- (-0.7,0); \draw[gluon] (0.7,0) -- (1.5,0);
+  \draw[gluon] (0.7,0) arc (0:180:0.7); \draw[gluon] (-0.7,0) arc (180:360:0.7);
+  \node[vtx] at (-0.7,0) {}; \node[vtx] at (0.7,0) {};
+  \draw[cutl] (0,1.05) -- (0,-1.05);
+  \node[lab] at (0,-1.3) {物理的な偏極だけ};
+\end{scope}
+\node[lab,align=left,anchor=west] at (10.9,-3.6) {切断した線の和：\\$gg$ の非物理的な偏極を\\ゴースト対が打ち消す};
+\node[lab] at (6.0,-5.65) {(b) ループの中の同じ構造（グルーオンの自己エネルギーの切断）};
+\end{tikzpicture}
+\caption{偏極の和とゴースト（式~\eqref{eq:ghostsum}、\ref{app:tree}）。(a) $gg\to Q\bar Q$ で、外のグルーオンの偏極の和を $-g_{\mu\nu}$ にすると、時間的と縦の偏極の寄与が加わる。それはゴースト対の生成 $c\bar c\to Q\bar Q$ と $\bar cc\to Q\bar Q$（ゴーストの頂点を通る $s$ チャンネルのグルーオン）の振幅の2乗の和に等しく、引くと物理的な2つの偏極の和になる。灰色の円は木の三つの図（図~\ref{fig:tree} の (B)）の和、太い線は重いクォークである。(b) 同じ関係をグルーオンの自己エネルギーの虚部（赤の破線の切断、Cutkosky の規則）で見たもの。外の線を保存する電流につなぐと、グルーオンのループ (a1) の2グルーオンの切断（偏極の和 $-g_{\mu\nu}$）とゴーストのループ (a3) のゴースト対の切断（閉じたループの $-1$ を含む）の和が、物理的な偏極だけの2グルーオンの位相空間の積分になる。図~\ref{fig:divergent} の横波性と同じく、ゴーストはグルーオンの非物理的な自由度を打ち消すために現れる。}
+\label{fig:ghostpair}
+\end{figure}
 
 \paragraph{断面積。}式~\eqref{eq:sumtree} を角度について積分すると（\ref{app:tree}）
 \begin{equation}
@@ -1008,6 +1398,164 @@ W^{(4)}_{-k}(\mu)=\bigl[\boldsymbol Z^{(1)}(\mu)\otimes B(4)\bigr]_{\epsilon^{-k
 
 \paragraph{ゲージパラメータ依存のまとめ。}$\xi$ に依存するのは、$\delta_3$、$\tilde\delta_3$、$\delta_2$ と四つの頂点の対抗項、$\gamma_A$、$\gamma_c$、$\gamma_\psi$、留数の赤外の極である。$\delta_g$、$\delta_m$、$\beta_0$、$\gamma_m$、極質量、$\alpha_s^{(n_l)}$、木の振幅のスピン・色の和（物理的な偏極の和）、対抗項と留数を含む1ループの干渉 $W$ は $\xi$ によらない。$\xi$ 自身も繰り込まれて走り、Landau ゲージはその固定点である。
 
+\paragraph{$e^+e^-\to$ ハドロン。}$e^+e^-\to\gamma^*\to$ ハドロンの断面積は、レプトンの向きについて平均すると、ハドロンのテンソルの $-g_{\mu\nu}H^{\mu\nu}$ だけで決まる（電流の保存で $q_\mu q_\nu$ の項は落ちる）。$R=\sigma(e^+e^-\to\text{ハドロン})/\sigma(e^+e^-\to\mu^+\mu^-)$ を $D$ 次元の Born $R_0=N_cQ_q^2$ との比で $R/R_0=1+r_V+r_R$ と書くと、質量のないクォークでは（$a=g^2/K$、\ref{app:ee}）
+\begin{equation}
+\begin{gathered}
+F^{(1)}(s)=-C_Fa\,\frac{2-\epsilon+2\epsilon^2}{\epsilon^2(1-2\epsilon)}\,\frac{e^{\epsilon\gamma_E}\Gamma(1+\epsilon)\Gamma^2(1-\epsilon)}{\Gamma(1-2\epsilon)}\Bigl(\frac{\mu^2}{-s-i0}\Bigr)^{\epsilon},\\
+r_V=2\,\mathrm{Re}\,F^{(1)}=C_Fa\Bigl[-\frac4{\epsilon^2}-\frac6\epsilon-16+\frac{7\pi^2}3\Bigr],\\
+r_R=C_Fa\,\frac{4e^{\epsilon\gamma_E}(1-2\epsilon)(2-2\epsilon+\epsilon^2)\Gamma(-\epsilon)^2}{\Gamma(3-3\epsilon)}\Bigl(\frac{\mu^2}{s}\Bigr)^{\epsilon}=C_Fa\Bigl[\frac4{\epsilon^2}+\frac6\epsilon+19-\frac{7\pi^2}3\Bigr],\\
+\frac R{R_0}=1+3C_Fa=1+\frac{3C_F}4\,\frac{\alpha_s}\pi
+\end{gathered}
+\label{eq:rr}
+\end{equation}
+である（$\mu^2=s$ とした展開、$O(\epsilon)$ を除く）。$F^{(1)}$ はクォークと光子の頂点の形状因子（図~\ref{fig:eediag}）で、質量のないクォークでは $\gamma^\mu$ に比例する。1ループの頂点は $F^{(1)}=C_Fa[(D-7)B_0(s)-2sC_0(s)]$ で、$\xi$ によらず、部分積分の関係 $C_0=-\frac{2(D-3)}{(D-4)s}B_0$ で $B_0$ だけになる。$r_R$ は3体の位相空間で $q\bar qg$ の $-g_{\mu\nu}H^{\mu\nu}$ を積分したもので、Dalitz の変数 $y_{ij}=s_{ij}/s$ の積分が $D$ 次元で $\Gamma$ 関数になる。赤外の極（軟らかいグルーオンと共線の対）は $r_V$ と $r_R$ の間で打ち消し、SU(3) では $R=R_0(1+\alpha_s/\pi)$ を得る~\cite{ds79,ckt79,cg80}。光学定理から $R$ は光子の自己エネルギーの虚部に比例するので、同じ値は2ループの光子の自己エネルギー（クォークのループにグルーオン1本）の虚部からも得られる（図~\ref{fig:eecut}）。その2粒子の切断が $r_V$、3粒子の切断が $r_R$ に当たる。
+
+重いクォークの対の生成では、極質量 $m$ と速度 $\beta=\sqrt{1-4m^2/s}$ で
+\begin{equation}
+\begin{gathered}
+R_Q=N_cQ_Q^2\,\frac{\beta(3-\beta^2)}2\Bigl[1+C_F\frac{\alpha_s}{\pi}\Delta^{(1)}(\beta)\Bigr],\\
+\Delta^{(1)}=\frac{2}{\beta(3-\beta^2)}\Bigl[\frac{3-\beta^2}2B-\frac{1-\beta}{16}(33-39\beta-17\beta^2+7\beta^3)\ln p+\frac38\beta(5-3\beta^2)\Bigr],\\
+B=(1+\beta^2)\bigl[2\ln(1-p)\ln p+\ln(1+p)\ln p+2\,\mathrm{Li}_2(p)+\mathrm{Li}_2(p^2)\bigr]-2\beta\bigl[2\ln(1-p)+\ln(1+p)\bigr],\qquad p=\frac{1-\beta}{1+\beta},\\
+\Delta^{(1)}=\frac{\pi^2}{2\beta}-4+O(\beta)\quad(\beta\to0),\qquad \Delta^{(1)}\to\frac34\quad(\beta\to1)
+\end{gathered}
+\label{eq:rmass}
+\end{equation}
+である（QED の結果~\cite{ht98} の $\alpha\to C_F\alpha_s$。この次数では $\alpha_s$ の処方によらない）。閾値の $\frac{\pi^2}{2\beta}$ は Coulomb の特異性で、対の間の Coulomb のポテンシャル $-C_F\alpha_s/r$ による Sommerfeld の因子 $X/(1-e^{-X})$（$X=\pi C_F\alpha_s/\beta$）の1次の項 $\frac X2=C_F\frac{\alpha_s}\pi\frac{\pi^2}{2\beta}$ である~\cite{cm98}。$\beta\lesssim\pi C_F\alpha_s$ では $\alpha_s$ の展開が使えなくなる。$-4$ は閾値の硬い補正である。
+
+3ジェットの分布の例として、thrust $T=\max_ix_i$（$x_i=2E_i/\sqrt s$）の分布は、式~\eqref{eq:sumtree} の (D) を $T$ が一定の線に沿って積分して
+\begin{equation}
+\frac1{\sigma_0}\frac{\dd\sigma}{\dd T}=C_F\frac{\alpha_s}{2\pi}\Bigl[\frac{2(3T^2-3T+2)}{T(1-T)}\ln\frac{2T-1}{1-T}-\frac{3(3T-2)(2-T)}{1-T}\Bigr],\qquad
+\int_{2/3}^{1-y}\dd T\,\frac1{\sigma_0}\frac{\dd\sigma}{\dd T}=C_F\frac{\alpha_s}{2\pi}F(y)
+\label{eq:thrust}
+\end{equation}
+である（\ref{app:ee}）。$x_i=1-y_{jk}$ なので $T<1-y$ はすべての対で $s_{ij}>ys$ と同じで、右の式は式~\eqref{eq:sigtree} の $F(y)$ に戻る。$T\to1$ の $\ln(1-T)/(1-T)$ は軟らかい共線の放射の対数である。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% (a) Born
+\begin{scope}[shift={(0.3,0)}]
+  \draw[photon] (-1.4,0) -- (0,0);
+  \draw[fermion] (1.25,0.85) -- (0,0); \draw[fermion] (0,0) -- (1.25,-0.85);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.0,0.3) {$\gamma^*(q)$};
+  \node[font=\scriptsize,anchor=west] at (1.25,-0.9) {$q(p_1)$}; \node[font=\scriptsize,anchor=west] at (1.25,0.9) {$\bar q(p_2)$};
+  \node[lab] at (0,-1.35) {(a) Born};
+\end{scope}
+% (b) vertex correction
+\begin{scope}[shift={(4.3,0)}]
+  \draw[photon] (-1.4,0) -- (0,0);
+  \draw[fermion] (1.25,0.85) -- (0.7,0.48); \draw[fermion] (0.7,0.48) -- (0,0);
+  \draw[fermion] (0,0) -- (0.7,-0.48); \draw[fermion] (0.7,-0.48) -- (1.25,-0.85);
+  \draw[gluon] (0.7,0.48) -- (0.7,-0.48);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.7,0.48) {}; \node[vtx] at (0.7,-0.48) {};
+  \draw[mom] (0.98,0.22) -- (0.98,-0.22) node[midway,right,font=\scriptsize] {$l$};
+  \node[lab] at (0,-1.35) {(b) 頂点 $F^{(1)}$};
+\end{scope}
+% (c) real emission from the quark
+\begin{scope}[shift={(8.2,0)}]
+  \draw[photon] (-1.4,0) -- (0,0);
+  \draw[fermion] (1.25,0.85) -- (0,0);
+  \draw[fermion] (0,0) -- (0.7,-0.48); \draw[fermion] (0.7,-0.48) -- (1.25,-0.85);
+  \draw[gluon] (0.7,-0.48) -- (1.5,-0.25);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.7,-0.48) {};
+  \node[font=\scriptsize,anchor=east] at (0.38,-0.48) {$p_1\!+\!p_3$};
+  \node[font=\scriptsize,anchor=west] at (1.5,-0.2) {$g(p_3)$};
+  \node[lab] at (0,-1.35) {(c) $q$ から};
+\end{scope}
+% (d) real emission from the antiquark
+\begin{scope}[shift={(12.1,0)}]
+  \draw[photon] (-1.4,0) -- (0,0);
+  \draw[fermion] (1.25,0.85) -- (0.7,0.48); \draw[fermion] (0.7,0.48) -- (0,0);
+  \draw[fermion] (0,0) -- (1.25,-0.85);
+  \draw[gluon] (0.7,0.48) -- (1.5,0.25);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.7,0.48) {};
+  \node[font=\scriptsize,anchor=east] at (0.38,0.48) {$p_2\!+\!p_3$};
+  \node[font=\scriptsize,anchor=west] at (1.5,0.2) {$g(p_3)$};
+  \node[lab] at (0,-1.35) {(d) $\bar q$ から};
+\end{scope}
+% row 2: the heavy-quark photon self-energy at O(alpha_s) with the mass counterterm
+\begin{scope}[shift={(0.6,-3.3)}]
+  \draw[photon] (-1.5,0) -- (-0.8,0); \draw[photon] (0.8,0) -- (1.5,0);
+  \draw[heavy] (-0.8,0) arc (180:90:0.8); \draw[heavy] (0,0.8) arc (90:0:0.8);
+  \draw[heavy] (0.8,0) arc (360:270:0.8); \draw[heavy] (0,-0.8) arc (270:180:0.8);
+  \draw[gluon] (0,0.8) -- (0,-0.8);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0.8,0) {}; \node[vtx] at (0,0.8) {}; \node[vtx] at (0,-0.8) {};
+  \node[lab] at (0,-1.3) {(e)};
+\end{scope}
+\begin{scope}[shift={(3.85,-3.3)}]
+  \draw[photon] (-1.5,0) -- (-0.8,0); \draw[photon] (0.8,0) -- (1.5,0);
+  \draw[heavy] (-0.8,0) arc (180:135:0.8); \draw[heavy] (-0.566,0.566) arc (135:45:0.8); \draw[heavy] (0.566,0.566) arc (45:0:0.8);
+  \draw[heavy] (0.8,0) arc (360:180:0.8);
+  \draw[gluon] (-0.566,0.566) .. controls (-0.45,1.45) and (0.45,1.45) .. (0.566,0.566);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0.8,0) {}; \node[vtx] at (-0.566,0.566) {}; \node[vtx] at (0.566,0.566) {};
+  \node[lab] at (0,-1.3) {(f)};
+\end{scope}
+\begin{scope}[shift={(7.1,-3.3)}]
+  \draw[photon] (-1.5,0) -- (-0.8,0); \draw[photon] (0.8,0) -- (1.5,0);
+  \draw[heavy] (-0.8,0) arc (180:0:0.8);
+  \draw[heavy] (0.8,0) arc (360:315:0.8); \draw[heavy] (0.566,-0.566) arc (315:225:0.8); \draw[heavy] (-0.566,-0.566) arc (225:180:0.8);
+  \draw[gluon] (0.566,-0.566) .. controls (0.45,-1.45) and (-0.45,-1.45) .. (-0.566,-0.566);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0.8,0) {}; \node[vtx] at (-0.566,-0.566) {}; \node[vtx] at (0.566,-0.566) {};
+  \node[lab] at (0,-1.6) {(g)};
+\end{scope}
+\begin{scope}[shift={(10.35,-3.3)}]
+  \draw[photon] (-1.5,0) -- (-0.8,0); \draw[photon] (0.8,0) -- (1.5,0);
+  \draw[heavy] (-0.8,0) arc (180:90:0.8); \draw[heavy] (0,0.8) arc (90:0:0.8);
+  \draw[heavy] (0.8,0) arc (360:180:0.8);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0.8,0) {}; \node[ctv] at (0,0.8) {};
+  \node[font=\scriptsize] at (0,1.15) {$\delta m$};
+  \node[lab] at (0,-1.3) {(h)};
+\end{scope}
+\begin{scope}[shift={(13.6,-3.3)}]
+  \draw[photon] (-1.5,0) -- (-0.8,0); \draw[photon] (0.8,0) -- (1.5,0);
+  \draw[heavy] (-0.8,0) arc (180:0:0.8);
+  \draw[heavy] (0.8,0) arc (360:270:0.8); \draw[heavy] (0,-0.8) arc (270:180:0.8);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0.8,0) {}; \node[ctv] at (0,-0.8) {};
+  \node[font=\scriptsize] at (0,-1.12) {$\delta m$};
+  \node[lab] at (0,-1.45) {(i)};
+\end{scope}
+\node[lab] at (7.1,-5.25) {(e)〜(g)：$\Pi^{(2)}$、\quad (h)+(i)：$\delta m\,\partial_m\Pi^{(1)}$};
+\end{tikzpicture}
+\caption{$e^+e^-\to$ ハドロンの図（式~\eqref{eq:rr}、\eqref{eq:rmass}、\ref{app:ee}、手順 (8)）。上：$\gamma^*\to q\bar q$ の Born (a)、1ループの頂点の補正 (b)（形状因子 $F^{(1)}$。質量のないクォークの外線の自己エネルギーはスケールのない積分で0）、実のグルーオンの放射 (c)、(d)（内線の運動量は $p_1+p_3$ と $p_2+p_3$）。(b) と Born の干渉が $r_V$、(c)+(d) の2乗が $r_R$ である。下：重いクォーク（太い線）の光子の2ループの自己エネルギー。グルーオンを1本含む3個の図 (e)〜(g) の和が $\Pi^{(2)}$ で、その虚部が光学定理で $O(\alpha_s)$ の $R_Q$ を与える（切断は図~\ref{fig:eecut}）。極質量で書くには $m_{\mathrm{bare}}=m+\delta m$ の質量の対抗項（$\otimes$、頂点 $-i\delta m$）を各線に入れた (h)、(i) を加える。その和は $\delta m\,\partial_m\Pi^{(1)}$ である。クォークの場と光子の頂点の対抗項は Ward 恒等式で打ち消すので現れない。}
+\label{fig:eediag}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) vertex type, two-particle cut
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (-2.1,0) -- (-1,0); \draw[photon] (1,0) -- (2.1,0);
+  \draw[fermion] (-1,0) arc (180:0:1); \draw[fermion] (1,0) arc (0:-180:1);
+  \draw[gluon] (0,1) -- (0,-1);
+  \node[vtx] at (-1,0) {}; \node[vtx] at (1,0) {}; \node[vtx] at (0,1) {}; \node[vtx] at (0,-1) {};
+  \draw[cutl] (0.55,1.35) -- (0.55,-1.35);
+  \node[lab] at (0,-1.75) {(a) 2粒子の切断\\（仮想の補正）};
+\end{scope}
+% (b) vertex type, three-particle cut
+\begin{scope}[shift={(5.0,0)}]
+  \draw[photon] (-2.1,0) -- (-1,0); \draw[photon] (1,0) -- (2.1,0);
+  \draw[fermion] (-1,0) arc (180:0:1); \draw[fermion] (1,0) arc (0:-180:1);
+  \draw[gluon] (0,1) -- (0,-1);
+  \node[vtx] at (-1,0) {}; \node[vtx] at (1,0) {}; \node[vtx] at (0,1) {}; \node[vtx] at (0,-1) {};
+  \draw[cutl] (0.55,1.35) -- (-0.55,-1.35);
+  \node[lab] at (0,-1.75) {(b) 3粒子の切断\\（実の放射の干渉）};
+\end{scope}
+% (c) self-energy insertion, three-particle cut
+\begin{scope}[shift={(10.0,0)}]
+  \draw[photon] (-2.1,0) -- (-1,0); \draw[photon] (1,0) -- (2.1,0);
+  \draw[fermion] (-1,0) arc (180:0:1); \draw[fermion] (1,0) arc (0:-180:1);
+  \draw[gluon] (-0.766,0.643) .. controls (-0.55,1.65) and (0.55,1.65) .. (0.766,0.643);
+  \node[vtx] at (-1,0) {}; \node[vtx] at (1,0) {}; \node[vtx] at (-0.766,0.643) {}; \node[vtx] at (0.766,0.643) {};
+  \draw[cutl] (0,1.75) -- (0,-1.35);
+  \node[lab] at (0,-1.75) {(c) 3粒子の切断\\（実の放射の2乗）};
+\end{scope}
+\end{tikzpicture}
+\caption{光学定理と $e^+e^-\to$ ハドロン（手順 (8)）。$O(\alpha_s)$ の $R$ は、グルーオンを1本含む光子の2ループの自己エネルギーの虚部で、その切断（赤の破線、切った線を on-shell にする）が仮想の補正（(a)、$q\bar q$ の中間状態）と実のグルーオンの放射（(b)、(c)、$q\bar qg$）に当たる。(c) の2粒子の切断は質量のないクォークではスケールのない積分で0になる。}
+\label{fig:eecut}
+\end{figure}
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、FeynArts と FeynCalc で次のことを予備的に確かめた：式~\eqref{eq:V} の三つの2点関数（$D$ 次元で記号として、グルーオンのループとゴーストのループの縮約を別々に）、横波性、式~\eqref{eq:Vpole} のクォーク、ゴースト、3グルーオンの頂点の極（外の運動量で展開し、すべての伝播関数に同じ質量を入れる赤外の組み替えで。3グルーオンの頂点は FeynArts の18個の図の和）、式~\eqref{eq:sumtree} の (A)、(B)、(D) と式~\eqref{eq:ghostsum}。(C) は、Gell-Mann 行列から作った構造定数と陽な偏極ベクトルによる数値で確かめた（FeynCalc で4本のグルーオンの物理的な偏極の和を記号でとる計算は30分で終わらなかった）。頂点の極を一般の外の運動量のまま TID と \texttt{PaVeUVPart} で取り出すと、伝播関数が2重になる PaVe 関数を含むクォーク頂点の可換な図で、ゲージ部分の極が $-(1-\xi)$ でなく $+(1-\xi)$ になった。赤外の組み替えでは正しい値になった。原因は手順 (3) で特定した（第~\ref{sec:checks} 節）。正式な検算は手順 (2)、(3) で行う。
@@ -1029,7 +1577,7 @@ Feynman 則、色の代数 & \ref{app:rules}、\ref{app:color} & FeynArts の模
 S 行列要素と on-shell の量 \eqref{eq:os}、\eqref{eq:mlconv} & \ref{app:os}、\ref{app:ir} & NLOCT の対抗項と R2 の頂点 & — & 数値 & MadLoop（極の係数も） \\
 繰り込み群 \eqref{eq:rge}、\eqref{eq:run}、\eqref{eq:rgslope}〜\eqref{eq:xirun} & \ref{app:rg} & $\mu$ を変えて評価 & 記号（$\mu$ を残す）と数値 & 数値 & MadLoop の $\mu_R$ と $m_t$、MadGraph の $\alpha_s$ \\
 2ループの $\beta$ 関数 \eqref{eq:zalpha}〜\eqref{eq:run2} & \ref{app:rg} & 2ループの図と積分の簡約（Kira、FIRE） & — & AMFlow、pySecDec & MadGraph の $\alpha_s$（2ループ） \\
-$e^+e^-\to$ ハドロン & 後で & 実と仮想の $D$ 次元の和 & 数値 & 数値 & 3ジェット、NLO \\
+$e^+e^-\to$ ハドロン \eqref{eq:rr}〜\eqref{eq:thrust} & \ref{app:ee} & 実と仮想の $D$ 次元の和、光子の2ループの自己エネルギー（光学定理、Kira） & 記号と数値 & 数値、AMFlow & aMC@NLO（$u\bar u$、$t\bar t$）、thrust \\
 重いクォークの対生成 & 後で & — & — & 数値 & MadLoop、NLO \\
 インスタントン & 後で & — & — & — & — \\
 \bottomrule
@@ -1370,7 +1918,92 @@ $\alpha_s^{(5)}(\mu)$（MadGraph） & 式~\eqref{eq:run} & — & — & — & $2.
 \label{fig:rgflow}
 \end{figure}
 
-\paragraph{手順 (7)：2ループの $\beta$ 関数。}式~\eqref{eq:zalpha}〜\eqref{eq:run2} を確かめた。スクリプトは \texttt{twoloop\_feyncalc.wl}（FeynArts + FeynCalc、Kira、FIRE）、\texttt{twoloop\_eval.wl}（マスター積分と AMFlow、繰り込み定数）、\texttt{twoloop\_numeric.py}（pySecDec、$\alpha_s$ の走り、図）で、\texttt{run\_twoloop\_check.sh} でまとめて実行できる（約7分）。FeynArts は、Landau ゲージの1PI の2ループの図をグルーオンに23個、ゴーストに7個生成した（質量のないクォーク1本で、閉じたクォークのループを含むグルーオンの7個とゴーストの1個は $n_f$ 倍した。$\MSbar$ の繰り込み定数は質量によらないので、$t$ も質量なしで数えてよい）。同じ手順を1ループに使うと式~\eqref{eq:V} の $\xi=0$ の値を再現し、規格化を確かめた。各図のループ運動量をずらして、伝播関数をすべて一つの族 $\{l_1^2,l_2^2,(l_1-q)^2,(l_2-q)^2,(l_1-l_2)^2\}$ に入れた（手順 (4) と同じく、FeynCalc の \texttt{FCLoopFindTopologyMappings} は4本の伝播関数の部分族をこの族に写さなかったので、ずらしは自分で探した）。現れた851個の積分を Kira~\cite{kira3} と FIRE~\cite{fire7} で部分積分により簡約すると、二つの表は対称性で等しい積分を写した後で記号として一致し、マスター積分は sunset と bubble の2乗の二つになった。これらの $\Gamma$ 関数による厳密な値は、AMFlow~\cite{amflow,amflow2}（30桁）と $10^{-28}$ で、pySecDec~\cite{pysecdec,pysecdec16} とその誤差の範囲（$10^{-10}$ 程度）で一致した。2ループの $q_\mu q_\nu\Pi^{\mu\nu}$ は簡約の後で $D$ 次元で厳密に0になり、2ループでも横波性（式~\eqref{eq:st}）が成り立つ。繰り込み定数の2重の極は式~\eqref{eq:zalpha} の予想と記号として一致し、1重の極から得た $\beta_1$ は Caswell と Jones の値と記号として一致した（表~\ref{tab:twoloop}）。異常次元は、SU(3) で Chetyrkin の式 (27)、(31) の $\xi_L=0$ の値と一致した。繰り込んだ2ループの自己エネルギーの有限部分（$\mu^2=-q^2$）は\ref{app:details} に載せる。
+\paragraph{手順 (7)：2ループの $\beta$ 関数。}式~\eqref{eq:zalpha}〜\eqref{eq:run2} を確かめた。スクリプトは \texttt{twoloop\_feyncalc.wl}（FeynArts + FeynCalc、Kira、FIRE）、\texttt{twoloop\_eval.wl}（マスター積分と AMFlow、繰り込み定数）、\texttt{twoloop\_numeric.py}（pySecDec、$\alpha_s$ の走り、図）で、\texttt{run\_twoloop\_check.sh} でまとめて実行できる（約7分）。FeynArts は、Landau ゲージの1PI の2ループの図をグルーオンに23個、ゴーストに7個生成した（質量のないクォーク1本で、閉じたクォークのループを含むグルーオンの7個とゴーストの1個は $n_f$ 倍した。$\MSbar$ の繰り込み定数は質量によらないので、$t$ も質量なしで数えてよい）。同じ手順を1ループに使うと式~\eqref{eq:V} の $\xi=0$ の値を再現し、規格化を確かめた。各図のループ運動量をずらして、伝播関数をすべて一つの族 $\{l_1^2,l_2^2,(l_1-q)^2,(l_2-q)^2,(l_1-l_2)^2\}$ に入れた（図~\ref{fig:families2}。手順 (4) と同じく、FeynCalc の \texttt{FCLoopFindTopologyMappings} は4本の伝播関数の部分族をこの族に写さなかったので、ずらしは自分で探した）。現れた851個の積分を Kira~\cite{kira3} と FIRE~\cite{fire7} で部分積分により簡約すると、二つの表は対称性で等しい積分を写した後で記号として一致し、マスター積分は sunset と bubble の2乗の二つになった。これらの $\Gamma$ 関数による厳密な値は、AMFlow~\cite{amflow,amflow2}（30桁）と $10^{-28}$ で、pySecDec~\cite{pysecdec,pysecdec16} とその誤差の範囲（$10^{-10}$ 程度）で一致した。2ループの $q_\mu q_\nu\Pi^{\mu\nu}$ は簡約の後で $D$ 次元で厳密に0になり、2ループでも横波性（式~\eqref{eq:st}）が成り立つ。繰り込み定数の2重の極は式~\eqref{eq:zalpha} の予想と記号として一致し、1重の極から得た $\beta_1$ は Caswell と Jones の値と記号として一致した（表~\ref{tab:twoloop}）。異常次元は、SU(3) で Chetyrkin の式 (27)、(31) の $\xi_L=0$ の値と一致した。繰り込んだ2ループの自己エネルギーの有限部分（$\mu^2=-q^2$）は\ref{app:details} に載せる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9,
+  ext/.style={thick},
+  ln/.style={thick},
+  hv/.style={line width=2pt},
+  dotm/.style={circle,fill=black,inner sep=0pt,minimum size=4.5pt},
+  num/.style={font=\scriptsize,inner sep=1pt}]
+% the two-loop family k2 / k2m
+\begin{scope}[shift={(0,0)}]
+  \draw[ext] (-1.9,0) -- (-1.0,0); \draw[ext] (1.0,0) -- (1.9,0);
+  \draw[hv] (-1.0,0) arc (180:90:1.0); \draw[hv] (0,1.0) arc (90:0:1.0);
+  \draw[hv] (1.0,0) arc (0:-90:1.0); \draw[hv] (0,-1.0) arc (-90:-180:1.0);
+  \draw[ln] (0,1.0) -- (0,-1.0);
+  \node[num] at (-0.95,0.85) {$1$}; \node[num] at (0.95,0.85) {$2$};
+  \node[num] at (-0.95,-0.85) {$3$}; \node[num] at (0.95,-0.85) {$4$}; \node[num] at (0.2,0) {$5$};
+  \draw[mom] (-1.75,0.25) -- (-1.25,0.25) node[midway,above,font=\scriptsize] {$q$};
+  \node[lab,align=left,anchor=west] at (2.2,0.05) {$D_1=l_1^2-m^2,\ D_2=l_2^2-m^2$\\$D_3=(l_1-q)^2-m^2$\\$D_4=(l_2-q)^2-m^2$\\$D_5=(l_1-l_2)^2$};
+  \node[lab] at (0,-1.45) {k2m（k2 は $m=0$）};
+\end{scope}
+% the one-loop family k1m
+\begin{scope}[shift={(9.6,0)}]
+  \draw[ext] (-1.6,0) -- (-0.7,0); \draw[ext] (0.7,0) -- (1.6,0);
+  \draw[hv] (-0.7,0) arc (180:0:0.7); \draw[hv] (0.7,0) arc (360:180:0.7);
+  \node[num] at (0,0.95) {$1$}; \node[num] at (0,-0.95) {$2$};
+  \node[lab,align=left,anchor=west] at (1.9,0.05) {$D_1=l_1^2-m^2$\\$D_2=(l_1-q)^2-m^2$};
+  \node[lab] at (0,-1.45) {k1m};
+\end{scope}
+% masters of k2 (massless, step (7))
+\begin{scope}[shift={(0.2,-3.4)}]
+  \draw[ext] (-1.4,0) -- (-0.7,0); \draw[ext] (0.7,0) -- (1.4,0);
+  \draw[ln] (-0.7,0) arc (180:0:0.7); \draw[ln] (0.7,0) arc (360:180:0.7); \draw[ln] (-0.7,0) -- (0.7,0);
+  \node[lab] at (0,-1.1) {sunset\\$\{1,0,0,1,1\}$};
+\end{scope}
+\begin{scope}[shift={(3.3,-3.4)}]
+  \draw[ext] (-1.55,0) -- (-1.1,0); \draw[ext] (1.1,0) -- (1.55,0);
+  \draw[ln] (-0.55,0) circle (0.55); \draw[ln] (0.55,0) circle (0.55);
+  \node[lab] at (0,-1.1) {bubble$^2$\\$\{1,1,1,1,0\}$};
+\end{scope}
+\node[lab] at (1.75,-5.3) {(a) k2 のマスター積分（手順 (7)）};
+% masters of k2m and k1m (step (8))
+\begin{scope}[shift={(6.6,-3.4)}]
+  \draw[ext] (-1.3,0) -- (-0.65,0); \draw[ext] (0.65,0) -- (1.3,0);
+  \draw[hv] (-0.65,0) arc (180:0:0.65); \draw[hv] (0.65,0) arc (360:180:0.65); \draw[ln] (-0.65,0) -- (0.65,0);
+  \node[lab] at (0,-1.1) {$\{0,1,1,0,1\}$};
+\end{scope}
+\begin{scope}[shift={(9.3,-3.4)}]
+  \draw[ext] (-1.3,0) -- (-0.65,0); \draw[ext] (0.65,0) -- (1.3,0);
+  \draw[hv] (-0.65,0) arc (180:0:0.65); \draw[hv] (0.65,0) arc (360:180:0.65); \draw[ln] (-0.65,0) -- (0.65,0);
+  \node[dotm] at (0,0) {};
+  \node[lab] at (0,-1.1) {$\{0,1,1,0,2\}$};
+\end{scope}
+\begin{scope}[shift={(11.8,-3.4)}]
+  \draw[hv] (-0.42,0) circle (0.42); \draw[hv] (0.42,0) circle (0.42);
+  \node[vtx] at (0,0) {};
+  \node[lab] at (0,-1.1) {$\{1,1,0,0,0\}$};
+\end{scope}
+\begin{scope}[shift={(6.6,-6.5)}]
+  \draw[ext] (-1.3,0) -- (-0.55,0); \draw[ext] (0.55,0) -- (1.3,0);
+  \draw[hv] (0,0) circle (0.55);
+  \draw[hv] (0,0.55+0.38) circle (0.38);
+  \node[vtx] at (0,0.55) {};
+  \node[lab] at (0,-1.0) {$\{1,1,1,0,0\}$};
+\end{scope}
+\begin{scope}[shift={(9.3,-6.5)}]
+  \draw[ext] (-1.45,0) -- (-1.0,0); \draw[ext] (1.0,0) -- (1.45,0);
+  \draw[hv] (-0.5,0) circle (0.5); \draw[hv] (0.5,0) circle (0.5);
+  \node[lab] at (0,-1.0) {$\{1,1,1,1,0\}$};
+\end{scope}
+\begin{scope}[shift={(11.8,-6.5)}]
+  \draw[hv] (0,0.3) circle (0.42); \node[vtx] at (0,-0.12) {};
+  \draw[ext] (-0.75,-0.12) -- (0.75,-0.12);
+  \node[lab] at (0,-1.0) {k1m $\{1,0\}$};
+\end{scope}
+\begin{scope}[shift={(14.1,-6.5)}]
+  \draw[ext] (-1.15,0) -- (-0.5,0); \draw[ext] (0.5,0) -- (1.15,0);
+  \draw[hv] (0,0) circle (0.5);
+  \node[lab] at (0,-1.0) {k1m $\{1,1\}$};
+\end{scope}
+\node[lab] at (10.2,-7.95) {(b) k2m と k1m のマスター積分（手順 (8)、太い線は質量 $m$）};
+\end{tikzpicture}
+\caption{2ループと1ループの積分の族（手順 (7)、(8)、\ref{app:rg}）。上：族 k2m の5本の伝播関数 $D_i$（番号の辺）と、1ループの族 k1m。k2m は光子の自己エネルギーの、重いクォークのループ（$D_1$〜$D_4$）にグルーオン（$D_5$）を1本張った図（図~\ref{fig:eecut} の (a)）の形で、質量のない族 k2 は手順 (7) のグルーオンとゴーストの自己エネルギーにも使う。積分は指数の組 $\{a_1,\dots,a_5\}$（$\prod D_i^{-a_i}$）で表し、指数0の辺は縮める。下：Kira で部分積分により簡約したマスター積分。(a) 質量のない k2 では sunset と bubble の2乗の二つで、$\Gamma$ 関数で厳密に書ける（\ref{app:rg}）。(b) k2m では、2本の重い線と1本のグルーオンの sunset（点は伝播関数の2乗）、tadpole の2乗、bubble と tadpole の積、bubble の2乗の五つ、k1m では tadpole（$A_0$）と bubble（$B_0$）の二つで、これら七つを AMFlow で求めた。}
+\label{fig:families2}
+\end{figure}
 
 2ループの走りは、式~\eqref{eq:run2} の厳密な解が数値積分と $1.4\times10^{-12}$ で一致した。MadGraph の \texttt{ALPHAS}（\texttt{nloop = 2}）は同じ方程式を Newton 法で解くが、相対の刻みが $5\times10^{-4}$ を下回ったところで止めるので、解から最大 $1.8\times10^{-7}$ ずれた。その値からもう1回 Newton 法を進めると、ずれは $3.4\times10^{-14}$ になった。1ループ（\texttt{nloop = 1}）は閉じた形と $2.4\times10^{-15}$ で一致する（手順 (6)）。$\alpha_s$ の1ループと2ループの差を図~\ref{fig:twoloop_running} に示す。
 
@@ -1402,14 +2035,47 @@ $\gamma_A^{(2)}$、$\gamma_c^{(2)}$ & Chetyrkin~\cite{chetyrkin05}（SU(3)） & 
 \label{fig:twoloop_running}
 \end{figure}
 
+\paragraph{手順 (8)：$e^+e^-\to$ ハドロン。}式~\eqref{eq:rr}〜\eqref{eq:thrust} を三つの方法で確かめた。スクリプトは \texttt{ee\_feyncalc.wl}（$D$ 次元の仮想と実の補正、thrust）、\texttt{ee\_optical.wl}（光子の自己エネルギーと Kira）、\texttt{ee\_amflow.wl}（重いクォークのマスター積分）、\texttt{ee\_mg5.py}（MadGraph）、\texttt{ee\_numeric.py}（比較と図）で、\texttt{run\_ee\_check.sh} でまとめて実行できる（約25分）。
+
+一つ目は $D$ 次元の和である。$q\bar q$ と $q\bar qg$ の $-g_{\mu\nu}H^{\mu\nu}$ を FeynCalc の $D$ 次元のトレースで求め、$D=4$ で式~\eqref{eq:sumtree} の (D) に戻ることを確かめた。Dalitz の積分は Dirichlet の積分で、$r_R$ は $\epsilon$ について厳密な式~\eqref{eq:rr} になった。仮想の補正は FeynArts の頂点の図（一般の $\xi$）から作り、TID の結果 $C_F[(D-7)B_0-2sC_0]$ は $\xi$ によらなかった。$B_0$、$C_0$ の厳密な形は Package-X と LoopTools の Laurent の係数と一致し、部分積分の関係も満たした。$r_V+r_R$ の極は記号として打ち消し、有限部分は $3C_Fa$ になった。
+
+二つ目は光学定理である。FeynArts の2ループの光子の自己エネルギーのうちグルーオンを含む3個の図を、手順 (7) と同じくループ運動量をずらして積分の族に入れ、Kira で簡約した。質量のない $u$ では、手順 (7) の厳密なマスター積分で虚部をとると、$\mathrm{Im}\,\Pi^{(2)}/\mathrm{Im}\,\Pi^{(1)}=3C_Fa$（$\Delta^{(1)}=\frac34$）を記号として得た。$\Pi^{(2)}$ の極は $1/\epsilon$ だけで、部分発散はクォークの自己エネルギーと頂点の間で打ち消す。$t$ では、質量のある族の5個と1ループの2個のマスター積分（図~\ref{fig:families2}）を、AMFlow で $\beta=0.1,0.3,0.5,0.7,0.9$ について25桁で求めた（約9分）。on-shell の質量の対抗項 $\delta m\,\partial_m\Pi^{(1)}$ を加えると、$1/\epsilon$ の極の虚部は $10^{-21}$ 以下で0になり、$\Delta^{(1)}(\beta)$ は式~\eqref{eq:rmass} の閉じた形と $10^{-18}$ 以内で一致した（表~\ref{tab:ee}）。閉じた形の閾値の展開は、$\beta=0.1,0.01,0.001$ で $\frac{\pi^2}{2\beta}-4$ との差が $0.33$、$0.046$、$0.0049$ と $\beta$ に比例して0に近づいた。
+
+三つ目は MadGraph である。手順 (5) の NLO の UFO で、aMC@NLO の固定次数の計算（$\alpha_s=0.118$、$e=1$、$m_t=m$）を $e^+e^-\to u\bar u$（$\sqrt s=10$）と $e^+e^-\to t\bar t$（$\beta=0.3,0.5,0.7,0.9$）について行った。各点を乱数の種を変えて4回ずつ計算し、平均と、そのばらつきから求めた平均の誤差で比べた。$K=\sigma_{\mathrm{NLO}}/\sigma_0$（$\sigma_0$ は厳密な LO）は、$u\bar u$ で $K=1.03752(7)$（予想 $1.03756$）、$t\bar t$ で $K=1.64930(2)$、$1.31370(4)$、$1.15950(3)$、$1.06760(2)$（予想 $1.64928$、$1.31377$、$1.15954$、$1.06758$） で、式~\eqref{eq:rr}、\eqref{eq:rmass} と統計誤差の範囲で一致した（表~\ref{tab:ee}）。thrust は、MadEvent の LO の $e^+e^-\to u\bar ug$ の $10^5$ 事象（$s_{ij}>0.01s$、すなわち $T<0.99$）を20の区間に分けた分布が式~\eqref{eq:thrust} と $\chi^2=25.8$（自由度19）で一致し、全断面積は $C_F\frac{\alpha_s}{2\pi}F(0.01)$ と $0.6993(6)$ 対 $0.6996$ で一致した（図~\ref{fig:ee}）。
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (8) の検算。$\Delta^{(1)}$ は $R=R_0[1+C_F\frac{\alpha_s}\pi\Delta^{(1)}]$ の係数（質量のない極限で $\frac34$）。aMC@NLO の $K$ は4つの種の平均で、誤差はばらつきから求めた平均の誤差。AMFlow と閉じた形の差は $10^{-18}$ 以下である。}
+\label{tab:ee}
+\begin{tabular}{lllll}
+\toprule
+過程 & $\Delta^{(1)}$（AMFlow、光学定理） & 閉じた形 & aMC@NLO の $K$ & 予想の $K$ \\
+\midrule
+$u\bar u$（$\sqrt s=10$） & $\frac34$（記号） & $\frac34$ & $1.03752(7)$ & $1.03756$ \\
+$t\bar t$、$\beta=0.1$ & $45.678049154929$ & $45.678049154929$ & — & — \\
+$t\bar t$、$\beta=0.3$ & $12.964659191267$ & $12.964659191267$ & $1.64930(2)$ & $1.64928$ \\
+$t\bar t$、$\beta=0.5$ & $6.265282303256$ & $6.265282303256$ & $1.31370(4)$ & $1.31377$ \\
+$t\bar t$、$\beta=0.7$ & $3.185673557951$ & $3.185673557951$ & $1.15950(3)$ & $1.15954$ \\
+$t\bar t$、$\beta=0.9$ & $1.349475144821$ & $1.349475144821$ & $1.06760(2)$ & $1.06758$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{../figs/ee_rratio.pdf}
+\caption{$e^+e^-\to$ ハドロン（手順 (8)、$\alpha_s=0.118$）。左：重いクォークの $\Delta^{(1)}(\beta)$。実線は閉じた形（式~\eqref{eq:rmass}）、破線は閾値の形 $\frac{\pi^2}{2\beta}-4$、点線は質量のない極限 $\frac34$、丸は AMFlow による光子の自己エネルギーの虚部、四角は aMC@NLO。右：thrust の分布（式~\eqref{eq:thrust}、$C_F\alpha_s/2\pi$ の単位）と MadGraph の LO の $10^5$ 事象（$T<0.99$）。}
+\label{fig:ee}
+\end{figure}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{手計算で分かったこと。}非可換性によって、QED になかった構造が三つ現れた。一つ目はゴーストの役割で、グルーオンの自己エネルギーではグルーオンのループの縦の部分を、木の振幅では外のグルーオンの非物理的な偏極の寄与を、それぞれ正確に打ち消す。二つ目は Slavnov--Taylor 恒等式による制約で、四つの頂点の発散はどれも $\xi$ に依存し、値も互いに異なるが、場の繰り込みと組み合わせると同じ $Z_g$ を与える（クォークとゴーストの頂点で手で確かめ、手順 (3) で四つの頂点すべてを図の和で確かめた）。三つ目は結合の走りの向きで、$\beta_0=\frac{11}3C_A-\frac43T_Fn_f$ の $C_A$ の部分が QED と逆の符号を持ち、漸近的自由を生む。ゲージパラメータも繰り込まれて走り、Landau ゲージと $\xi_*=\frac{13}3-\frac{8T_Fn_f}{3C_A}$ がその固定点になる。Landau ゲージは赤外に向かって、$\xi_*$ は紫外に向かって $\xi$ を引き付ける。Landau ゲージではゴースト頂点が繰り込まれないので、$\beta_0$ と $\beta_1$ はグルーオンとゴーストの2点関数だけで決まる。2ループでは、2重の極が1ループの量で決まるという繰り込み群の制約が、部分発散（1ループの結合の繰り込みを入れた1ループの図）の扱いを確かめる。また、$\Lambda_{\mathrm{QCD}}$ の値は定義の次数に強くよるが、$\alpha_s(\mu)$ そのものはあまりよらない。重いクォークについては、自己エネルギーが QED の $C_F$ 倍なので、極質量と留数は QED の結果をそのまま使える。新しいのは、低いエネルギーで重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ と、$\MSbar$ の $n_f$ フレーバーの結合との換算である。
+\paragraph{手計算で分かったこと。}非可換性によって、QED になかった構造が三つ現れた。一つ目はゴーストの役割で、グルーオンの自己エネルギーではグルーオンのループの縦の部分を、木の振幅では外のグルーオンの非物理的な偏極の寄与を、それぞれ正確に打ち消す。二つ目は Slavnov--Taylor 恒等式による制約で、四つの頂点の発散はどれも $\xi$ に依存し、値も互いに異なるが、場の繰り込みと組み合わせると同じ $Z_g$ を与える（クォークとゴーストの頂点で手で確かめ、手順 (3) で四つの頂点すべてを図の和で確かめた）。三つ目は結合の走りの向きで、$\beta_0=\frac{11}3C_A-\frac43T_Fn_f$ の $C_A$ の部分が QED と逆の符号を持ち、漸近的自由を生む。ゲージパラメータも繰り込まれて走り、Landau ゲージと $\xi_*=\frac{13}3-\frac{8T_Fn_f}{3C_A}$ がその固定点になる。Landau ゲージは赤外に向かって、$\xi_*$ は紫外に向かって $\xi$ を引き付ける。Landau ゲージではゴースト頂点が繰り込まれないので、$\beta_0$ と $\beta_1$ はグルーオンとゴーストの2点関数だけで決まる。2ループでは、2重の極が1ループの量で決まるという繰り込み群の制約が、部分発散（1ループの結合の繰り込みを入れた1ループの図）の扱いを確かめる。また、$\Lambda_{\mathrm{QCD}}$ の値は定義の次数に強くよるが、$\alpha_s(\mu)$ そのものはあまりよらない。$e^+e^-\to$ ハドロンでは、仮想の補正と実の放射の赤外の極（$1/\epsilon^2$ と $1/\epsilon$）が打ち消し、残る有限部分 $3C_Fa$ は光子の自己エネルギーの虚部と同じである。重いクォークでは、閾値で Coulomb の $\pi^2/(2\beta)$ が大きくなり、$\alpha_s$ の展開は $\beta\gg\alpha_s$ でしか使えない。重いクォークについては、自己エネルギーが QED の $C_F$ 倍なので、極質量と留数は QED の結果をそのまま使える。新しいのは、低いエネルギーで重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ と、$\MSbar$ の $n_f$ フレーバーの結合との換算である。
 
-\paragraph{検算で分かったこと。}木のレベルでは、手計算、FeynArts と FeynCalc、陽な行列による数値、MadGraph の四つがすべて一致した。とくに、$-g_{\mu\nu}$ の偏極の和の余分な部分がゴースト対の振幅の2乗に等しいことを、記号と数値の両方で確かめた。道具の注意点は三つあった。FeynCalc では \texttt{GS} が $\slashed p$ の略記なので、強い結合の記号に使えない。FeynArts の内線のグルーオンの \texttt{GaugeXi} は色の添字を持つので、普通の記号に置き換えないと色の縮約が止まる。MadGraph は $\alpha_s$ を $M_Z$ から走らせるので、模型の値で比べるには繰り込みのスケールを固定する。1ループでは、2点関数、頂点の極、有限部分がすべて手計算と一致した。道具については二つの誤りの起こり方が分かった。一つ目に、FeynArts はゲージ部分の $1/k^4$ を同じ分母の繰り返しで書き、FeynCalc の TID はそれを運動量0の辺を持つ4点関数として分解して、誤った紫外の極を与える。先に \texttt{FDS} で分母をまとめれば正しい。二つ目に、FeynCalc の \texttt{SUNSimplify} は $K_{3,3}$ の形につながった6個の構造定数の縮約を評価せずに残し、\texttt{Explicit -> True} を付けると評価する（値は0）。どちらも、紫外の極を外の運動量の展開と赤外の組み替えという独立な方法で求めていたので見つかった。1ループの散乱振幅（手順 (4)）では、赤外の極が一般の式と、有限部分が $\xi$ について、FeynCalc と FormCalc が図ごとに、虚部がユニタリー性と一致した。ここで分かった道具の注意点は三つある。一つ目に、一般の $\xi$ のゲージ部分の2重の伝播関数は TID と LoopTools、Package-X では扱えず、部分積分でマスター積分に直す必要がある。軟らかい三角形は $A_0$、$B_0$ に $1/(D-4)$ の係数で簡約されるので、それらを $O(\epsilon^2)$ まで評価する。二つ目に、FeynCalc の積分の族の同定（\texttt{FCLoopFindTopologies}、\texttt{FCLoopFindTopologyMappings}）は数値の運動学で運動量のずらしを見落とし、\texttt{FDS} は大きな図で非常に遅い。どちらも使わず、ずらしを自分で探した。三つ目に、FormCalc は \texttt{Dimension -> 0} で CDR の値を与える（既定の \texttt{Dimension -> D} では外線のスピンと偏極の和が4次元になる）。手順 (5) では、NLOCT の対抗項と R2 の頂点が手計算と文献の値に一致し、MadLoop が換算した手順 (4) の値と倍精度で一致した。MadLoop の値は、結合（$\alpha_s^{(n_l)}$）、外線の和の次元（4次元）、極の規格化（$(4\pi)^\epsilon/\Gamma(1-\epsilon)$）の三点で CDR の $W$ と違い、三つの差はどれも Born と同程度の大きさなので、比べる前に式~\eqref{eq:mlconv} の換算が要る。また、MadGraph の param\_card の $\alpha_s$ は7桁に切り詰められ、指数付きの長い仮数は読み違えられる。手順 (6) では、1PI 関数と S 行列要素の $\mu$ 依存がどのツールでも繰り込み群の予想と倍精度で一致し、$\beta_0$ と $\gamma_m$ を傾きから読み取れた。脱結合の検算では、MadGraph の \texttt{/ t} で重いクォークを除いた過程が $n_l$ フレーバーの理論の値を与え、MadLoop の重いクォークの寄与は $\Pi_t(s)-\Pi_t(0)$ と一致した。一方、$k^2\ll m^2$ や $m_t^2\gg s$ では、倍精度のツール（LoopTools、COLLIER、MadLoop）は打ち消しで桁を落とす。手順 (7) では、Kira と FIRE の簡約、厳密なマスター積分と AMFlow、pySecDec がすべて一致し、2ループの横波性と繰り込み群の2重の極が成り立った。MadGraph の2ループの $\alpha_s$ は、Newton 法の止め方のために $10^{-7}$ の精度しかない。
+\paragraph{検算で分かったこと。}木のレベルでは、手計算、FeynArts と FeynCalc、陽な行列による数値、MadGraph の四つがすべて一致した。とくに、$-g_{\mu\nu}$ の偏極の和の余分な部分がゴースト対の振幅の2乗に等しいことを、記号と数値の両方で確かめた。道具の注意点は三つあった。FeynCalc では \texttt{GS} が $\slashed p$ の略記なので、強い結合の記号に使えない。FeynArts の内線のグルーオンの \texttt{GaugeXi} は色の添字を持つので、普通の記号に置き換えないと色の縮約が止まる。MadGraph は $\alpha_s$ を $M_Z$ から走らせるので、模型の値で比べるには繰り込みのスケールを固定する。1ループでは、2点関数、頂点の極、有限部分がすべて手計算と一致した。道具については二つの誤りの起こり方が分かった。一つ目に、FeynArts はゲージ部分の $1/k^4$ を同じ分母の繰り返しで書き、FeynCalc の TID はそれを運動量0の辺を持つ4点関数として分解して、誤った紫外の極を与える。先に \texttt{FDS} で分母をまとめれば正しい。二つ目に、FeynCalc の \texttt{SUNSimplify} は $K_{3,3}$ の形につながった6個の構造定数の縮約を評価せずに残し、\texttt{Explicit -> True} を付けると評価する（値は0）。どちらも、紫外の極を外の運動量の展開と赤外の組み替えという独立な方法で求めていたので見つかった。1ループの散乱振幅（手順 (4)）では、赤外の極が一般の式と、有限部分が $\xi$ について、FeynCalc と FormCalc が図ごとに、虚部がユニタリー性と一致した。ここで分かった道具の注意点は三つある。一つ目に、一般の $\xi$ のゲージ部分の2重の伝播関数は TID と LoopTools、Package-X では扱えず、部分積分でマスター積分に直す必要がある。軟らかい三角形は $A_0$、$B_0$ に $1/(D-4)$ の係数で簡約されるので、それらを $O(\epsilon^2)$ まで評価する。二つ目に、FeynCalc の積分の族の同定（\texttt{FCLoopFindTopologies}、\texttt{FCLoopFindTopologyMappings}）は数値の運動学で運動量のずらしを見落とし、\texttt{FDS} は大きな図で非常に遅い。どちらも使わず、ずらしを自分で探した。三つ目に、FormCalc は \texttt{Dimension -> 0} で CDR の値を与える（既定の \texttt{Dimension -> D} では外線のスピンと偏極の和が4次元になる）。手順 (5) では、NLOCT の対抗項と R2 の頂点が手計算と文献の値に一致し、MadLoop が換算した手順 (4) の値と倍精度で一致した。MadLoop の値は、結合（$\alpha_s^{(n_l)}$）、外線の和の次元（4次元）、極の規格化（$(4\pi)^\epsilon/\Gamma(1-\epsilon)$）の三点で CDR の $W$ と違い、三つの差はどれも Born と同程度の大きさなので、比べる前に式~\eqref{eq:mlconv} の換算が要る。また、MadGraph の param\_card の $\alpha_s$ は7桁に切り詰められ、指数付きの長い仮数は読み違えられる。手順 (6) では、1PI 関数と S 行列要素の $\mu$ 依存がどのツールでも繰り込み群の予想と倍精度で一致し、$\beta_0$ と $\gamma_m$ を傾きから読み取れた。脱結合の検算では、MadGraph の \texttt{/ t} で重いクォークを除いた過程が $n_l$ フレーバーの理論の値を与え、MadLoop の重いクォークの寄与は $\Pi_t(s)-\Pi_t(0)$ と一致した。一方、$k^2\ll m^2$ や $m_t^2\gg s$ では、倍精度のツール（LoopTools、COLLIER、MadLoop）は打ち消しで桁を落とす。手順 (7) では、Kira と FIRE の簡約、厳密なマスター積分と AMFlow、pySecDec がすべて一致し、2ループの横波性と繰り込み群の2重の極が成り立った。MadGraph の2ループの $\alpha_s$ は、Newton 法の止め方のために $10^{-7}$ の精度しかない。手順 (8) では、$D$ 次元の実と仮想の和、2ループの光子の自己エネルギーの虚部（Kira、AMFlow）、閉じた形、aMC@NLO の4つが一致した。aMC@NLO を Z も W もない模型で動かすには、M$_Z$、M$_W$ の値と、頂点を持たない Z、W の粒子が要った。また、aMC@NLO のログの断面積は4桁なので、全桁の値は結果のファイルから読む。
 
-\paragraph{今後。}次は手順 (8) で、$e^+e^-\to$ ハドロンの $R$ 比の $O(\alpha_s)$ の補正を、仮想の補正と実のグルーオンの放射の $D$ 次元の和として求め、赤外の極の打ち消しを確かめる。
+\paragraph{今後。}次は手順 (9) で、手順 (4)、(5) の仮想の補正に実の放射を加え、$q\bar q\to Q\bar Q$ と $gg\to Q\bar Q$ の部分断面積の NLO を Nason--Dawson--Ellis~\cite{nde88} と MadGraph の NLO と比べる。
 
 \appendix
 
@@ -1570,7 +2236,7 @@ $\alpha_s=g^2/4\pi$ について $\frac{\dd\alpha_s}{\dd\ln\mu}=\frac{2g}{4\pi}\
 \end{equation*}
 である。これが有限であることから $z_{22}=\frac12z_1(z_1-\beta_0)$ で、$\gamma=\frac12\frac{\dd\ln Z}{\dd\ln\mu}=-z_1a-2z_{21}a^2$ である。結合では、$a_0\mu^{-2\epsilon}=Z_\alpha a$ が $\mu$ によらないことから、$\frac{\dd a}{\dd\ln\mu^2}=-\epsilon a+\beta_a(a)$ として $\beta_a=a^2\frac{\dd Z_\alpha^{(1)}}{\dd a}$（$Z_\alpha^{(1)}$ は $1/\epsilon$ の係数）で、$\beta_a=-\beta_0a^2-\beta_1a^3$ から $Z_\alpha^{(1)}=-\beta_0a-\frac12\beta_1a^2$ である。$\ln Z$ の $a^2/\epsilon$ の係数は $Z$ のそれと同じ（積は高い極だけを作る）なので、$\ln Z_\alpha=-2\ln\tilde Z_3-\ln Z_3$ から $-\frac12\beta_1=-2\tilde z_{21}-z_{21}$ である。$\frac{\dd g}{\dd\ln\mu}=\frac{K}{g}\frac{\dd a}{\dd\ln\mu^2}$ から $\beta=-\beta_0\frac{g^3}K-\beta_1\frac{g^5}{K^2}$ である。
 
-\paragraph{裸の自己エネルギーからの繰り込み定数。}$\mu^2=-q^2$ とすると対数がすべて0になる。裸の結合を $a_0=Z_\alpha a$（$\MSbar$ の測度を含む）と書き、1ループと2ループの裸の自己エネルギーを $\Pi=a_0\Pi^{(1)}+a_0^2\Pi^{(2)}=a\Pi^{(1)}+a^2(\Pi^{(2)}-\frac{\beta_0}\epsilon\Pi^{(1)})+O(a^3)$ とする（$\Pi^{(1)}$ は式~\eqref{eq:V} の $\xi=0$ の値で、$D$ 次元で厳密）。繰り込まれた伝播関数の逆 $q^2(1-\Pi^{\mathrm R})=Z_3q^2(1-\Pi)$ が有限であることから、$a$ の次数で $\frac{z_1}\epsilon=[\Pi^{(1)}]_{\mathrm{pole}}$、$a^2$ の次数で $\frac{z_{22}}{\epsilon^2}+\frac{z_{21}}{\epsilon}=[\frac{z_1-\beta_0}{\epsilon}\Pi^{(1)}+\Pi^{(2)}]_{\mathrm{pole}}$ である（$\Pi^{(1)}$ の $O(\epsilon)$ の項が $1/\epsilon$ と掛かって極に入る）。ゴーストでは $1+\tilde\Pi^{\mathrm R}=\tilde Z_3(1+\tilde\Pi)$ から、符号を変えて同じ式を得る。$\Pi^{\mathrm R}$ の $a^2$ の有限部分は $[\frac{z_1-\beta_0}{\epsilon}\Pi^{(1)}+\Pi^{(2)}]_{\epsilon^0}$ である。
+\paragraph{裸の自己エネルギーからの繰り込み定数。}$\mu^2=-q^2$ とすると対数がすべて0になる。裸の結合を $a_0=Z_\alpha a$（$\MSbar$ の測度を含む）と書き、1ループと2ループの裸の自己エネルギーを $\Pi=a_0\Pi^{(1)}+a_0^2\Pi^{(2)}=a\Pi^{(1)}+a^2(\Pi^{(2)}-\frac{\beta_0}\epsilon\Pi^{(1)})+O(a^3)$ とする（$\Pi^{(1)}$ は式~\eqref{eq:V} の $\xi=0$ の値で、$D$ 次元で厳密）。繰り込まれた伝播関数の逆 $q^2(1-\Pi^{\mathrm R})=Z_3q^2(1-\Pi)$ が有限であることから、$a$ の次数で $\frac{z_1}\epsilon=[\Pi^{(1)}]_{\mathrm{pole}}$、$a^2$ の次数で $\frac{z_{22}}{\epsilon^2}+\frac{z_{21}}{\epsilon}=[\frac{z_1-\beta_0}{\epsilon}\Pi^{(1)}+\Pi^{(2)}]_{\mathrm{pole}}$ である（$\Pi^{(1)}$ の $O(\epsilon)$ の項が $1/\epsilon$ と掛かって極に入る）。$\frac{z_1-\beta_0}{\epsilon}\Pi^{(1)}$ は、1ループの図に1ループの対抗項を一つ挿入した図の和に当たる（図~\ref{fig:twoloopct}）。ゴーストでは $1+\tilde\Pi^{\mathrm R}=\tilde Z_3(1+\tilde\Pi)$ から、符号を変えて同じ式を得る。$\Pi^{\mathrm R}$ の $a^2$ の有限部分は $[\frac{z_1-\beta_0}{\epsilon}\Pi^{(1)}+\Pi^{(2)}]_{\epsilon^0}$ である。
 
 \paragraph{2ループのマスター積分。}1ループ当たり $J=e^{\epsilon\gamma_E}\int\frac{\dd^Dl}{i\pi^{D/2}}$ とし、Minkowski の伝播関数で、$G(a,b)=\frac{\Gamma(a+b-D/2)\Gamma(D/2-a)\Gamma(D/2-b)}{\Gamma(a)\Gamma(b)\Gamma(D-a-b)}$ とする。Wick 回転で $\int\frac{\dd^Dl}{i\pi^{D/2}}\frac{1}{(l^2)^a((l-q)^2)^b}=(-1)^{a+b}G(a,b)(-q^2)^{D/2-a-b}$ である。bubble の2乗は二つの1ループの積で $e^{2\epsilon\gamma_E}G(1,1)^2(-q^2)^{-2\epsilon}$、sunset $\{l_1^2,(l_2-q)^2,(l_1-l_2)^2\}$ は、$l_1$ の積分が $(-l_2^2)^{-\epsilon}G(1,1)$ を与え、残りの $l_2$ の積分が指数 $(\epsilon,1)$ の1ループになるので、$-e^{2\epsilon\gamma_E}G(1,1)G(\epsilon,1)(-q^2)^{1-2\epsilon}$ である。展開すると
 \begin{equation*}
@@ -1660,6 +2326,29 @@ c=T_F\Bigl(1-\frac1{N^2}\Bigr)\delta_{i_3i_1}\delta_{i_2i_4}-\frac1N(T^a)_{i_3i_
 
 \paragraph{S 行列要素の規約（式~\eqref{eq:mlconv}）。}$W$ を、ループ積分（$\mu^{2\epsilon}$ を含む）の部分と、純粋な極の部分に分ける。後者は $\MSbar$ の対抗項と、留数のうち $-\delta_2$（質量のないクォークの留数 $R_q-1=-\delta_2$ はすべてこれ）、グルーオンの留数のうち $-\delta_3$ である。頂点の対抗項は $\delta_{1F}=\delta_g+\delta_2+\frac12\delta_3$、$\delta_1=\delta_g+\frac32\delta_3$ と書け（式~\eqref{eq:st}）、場の部分は留数の $-\delta_2$、$-\delta_3$、伝播関数の $-\delta_2$、$-\delta_3$ と打ち消すので、純粋な極の和は $2\delta_gB(D)=-\frac{g^2}{K}\frac{\beta_0^{(n_f)}}{\epsilon}B(D)$ になる（(A)、(B) とも Born は $g^2$ の2乗）。残りは $\mu=\lambda m$ で $\lambda^{2\epsilon}$ 倍になるので、$W(\lambda)=\lambda^{2\epsilon}[W(1)+\frac{g^2}K\frac{\beta_0^{(n_f)}}{\epsilon}B(D)]-\frac{g^2}K\frac{\beta_0^{(n_f)}}{\epsilon}B(D)$ で、$\epsilon^0$ の係数は $W_{\mathrm{fin}}+L(W_{-1}+\frac{g^2}K\beta_0^{(n_f)}B)+\frac{L^2}2W_{-2}$ である（$B(D)$ の $O(\epsilon)$ の項は打ち消す）。結合を $\alpha_s^{(n_l)}$ に換えると、Born が $1+\frac83T_F\frac{g^2}KL$ 倍になり、$\mathcal M_1$ には $\frac43T_F\frac{g^2}{K}L\,\mathcal M_0$ が加わる（$\mathcal M_0\propto g^2$）。これで $\beta_0^{(n_f)}$ が $\beta_0^{(n_l)}$ に変わる。外線を4次元にとると、1ループの振幅 $|\mathcal M_1\rangle=\boldsymbol Z^{(1)}|\mathcal M_0\rangle+|\mathcal F\rangle$（$\mathcal F$ は有限）のうち、$\langle\mathcal M_0|\mathcal F\rangle$ の4次元と $D$ 次元の和の差は $O(\epsilon)$ である。一方、$\langle\mathcal M_0|\boldsymbol Z^{(1)}|\mathcal M_0\rangle$ は Born と色の相関を4次元にとると極だけになる。したがって $W^{(4)}_{\mathrm{fin}}=W_{\mathrm{fin}}-[\boldsymbol Z^{(1)}\otimes B(D)]_{\epsilon^0}$ で、極は $\boldsymbol Z^{(1)}\otimes B(4)$ である。$\boldsymbol Z^{(1)}(\mu)$ は、$\mu$ に依存する対数（$\ln\frac{\mu^2}{-s_{ij}}$、$\ln\frac{m\mu}{-s_{Ij}}$）で $\mu$ を残す。
 
+\section{$e^+e^-\to$ ハドロンの導出}\label{app:ee}
+
+\paragraph{光学定理と $-g_{\mu\nu}H^{\mu\nu}$。}$\sigma(e^+e^-\to X)=\frac1{2s}\int\dd\Phi_X\,L_{\mu\nu}H^{\mu\nu}_X$ で、レプトンのテンソルは $L_{\mu\nu}=e^2[4(p_{1\mu}p_{2\nu}+p_{2\mu}p_{1\nu})-2sg_{\mu\nu}]/s^2$ の形である。ハドロンの運動量の和 $q$ を固定してレプトンの向きについて平均すると $\langle L_{\mu\nu}\rangle\propto q_\mu q_\nu-q^2g_{\mu\nu}$ で、$q_\mu H^{\mu\nu}=0$（電流の保存）から $-g_{\mu\nu}H^{\mu\nu}$ だけが残る。比 $R/R_0$ ではレプトンの因子が消えるので、$D$ 次元のまま $\int\dd\Phi_n(-g_{\mu\nu}H^{\mu\nu}_n)$ の比をとればよい。Cutkosky の規則から、$\sum_X\int\dd\Phi_X H^{\mu\nu}_X$ は光子の2点関数の虚部 $-2\,\mathrm{Im}\,\Pi(s+i0)(q^\mu q^\nu-q^2g^{\mu\nu})$ の定数倍で、$R/R_0=\mathrm{Im}\,\Pi(s)/\mathrm{Im}\,\Pi^{(1)}(s)$ である。$O(\alpha_s)$ の $\Pi^{(2)}$ では、クォークの場と光子の頂点の対抗項は打ち消し（Ward 恒等式）、強い結合の繰り込みは次の次数、光子の場の対抗項は実の定数なので、$\mathrm{Im}\,\Pi^{(2)}$ は有限である。重いクォークでは極質量の対抗項が要り（図~\ref{fig:eediag} の (h)、(i)）、$m_{\mathrm{bare}}=m+\delta m$ として $\Pi^{(1)}(m_{\mathrm{bare}})$ から $\delta m\,\partial_m\Pi^{(1)}$ が加わる（$\delta m=-C_Fa\frac{(D-1)(D-2)}{2(D-3)}\frac{A_0(m^2)}m$、\ref{app:os}）。
+
+\paragraph{$D$ 次元の位相空間。}質量のない2体と3体の位相空間は
+\begin{equation*}
+\Phi_2=\frac1{8\pi}\Bigl(\frac{4\pi}{s}\Bigr)^\epsilon\frac{\Gamma(1-\epsilon)}{\Gamma(2-2\epsilon)},\qquad
+\frac{\dd\Phi_3}{\Phi_2}=\frac{s}{16\pi^2}\Bigl(\frac{4\pi}s\Bigr)^\epsilon\frac{1}{\Gamma(1-\epsilon)}\,(y_{12}y_{13}y_{23})^{-\epsilon}\,\dd y_{13}\dd y_{23}
+\end{equation*}
+である（$y_{12}+y_{13}+y_{23}=1$）。2体では $\int\dd^{D-1}k/(2E)$ を角度の積分 $\Omega_{D-1}=2\pi^{(D-1)/2}/\Gamma(\frac{D-1}2)$ で行い、3体ではハドロンの重心系で二つの粒子のエネルギーと間の角度を残して積分すると、$\sin\theta$ の $D-4$ 乗が $(y_{12}y_{13}y_{23})^{-\epsilon}$ を与える。$\MSbar$ の結合 $g_0^2=g^2\mu^{2\epsilon}(e^{\gamma_E}/4\pi)^\epsilon$ と合わせると、実の補正の因子は $a\,e^{\epsilon\gamma_E}(\mu^2/s)^\epsilon/\Gamma(1-\epsilon)$ になる。Dalitz の積分は Dirichlet の積分 $\int y_{13}^{\alpha-1}y_{23}^{\beta-1}y_{12}^{\gamma-1}\dd y_{13}\dd y_{23}=\frac{\Gamma(\alpha)\Gamma(\beta)\Gamma(\gamma)}{\Gamma(\alpha+\beta+\gamma)}$ である。
+
+\paragraph{実の補正。}$\gamma^*(q)\to q(p_1)\bar q(p_2)g(p_3)$ の振幅は $\bar u(p_1)[\gamma^\nu\frac{\slashed p_1+\slashed p_3}{s_{13}}\gamma^\mu-\gamma^\mu\frac{\slashed p_2+\slashed p_3}{s_{23}}\gamma^\nu]T^av(p_2)\varepsilon^*_\nu$ で、グルーオンが1本で電流が色について一重項なので、偏極の和を $-g$ にしてよい。$D$ 次元のトレースから
+\begin{equation*}
+\frac{-g_{\mu\nu}H^{\mu\nu}_3}{-g_{\mu\nu}H^{\mu\nu}_2/s}=C_Fg^2\,\frac{4+(D-2)(y_{13}^2+y_{23}^2)+2(D-4)y_{13}y_{23}-4(y_{13}+y_{23})}{y_{13}y_{23}}
+\end{equation*}
+（$-g_{\mu\nu}H^{\mu\nu}_2=2(D-2)N_cs$）である。$D=4$ で $x_1=1-y_{23}$、$x_2=1-y_{13}$ とすると $2(x_1^2+x_2^2)/[(1-x_1)(1-x_2)]$ で、式~\eqref{eq:sumtree} の (D) である。各項の Dirichlet の積分を足すと式~\eqref{eq:rr} の $r_R$ を得る。
+
+\paragraph{仮想の補正。}頂点の図の分子を $\bar v(p_2)\cdots u(p_1)$ で挟み、Born の電流とのトレースで $\gamma^\mu$ の係数を読むと $F^{(1)}=C_Fa[(D-7)B_0(s)-2sC_0(s)]$ である（$\xi$ の部分は、外線が on-shell で質量がないとスケールのない積分になって消える）。質量のない3点関数は Feynman パラメータで $C_0=-e^{\epsilon\gamma_E}\frac{\Gamma(1+\epsilon)\Gamma^2(1-\epsilon)}{\epsilon^2\Gamma(1-2\epsilon)}(-s)^{-1-\epsilon}$、2点関数は $B_0=e^{\epsilon\gamma_E}\frac{\Gamma(\epsilon)\Gamma^2(1-\epsilon)}{\Gamma(2-2\epsilon)}(-s)^{-\epsilon}$ で、比は $C_0/B_0=-\frac{1-2\epsilon}{\epsilon s}=-\frac{2(D-3)}{(D-4)s}$ である。これを入れると $(D-7)+\frac{4(D-3)}{D-4}=\frac{D^2-7D+16}{D-4}=-\frac{2-\epsilon+2\epsilon^2}{\epsilon}$ から式~\eqref{eq:rr} の $F^{(1)}$ を得る。$s>0$ では $(-s-i0)^{-\epsilon}=s^{-\epsilon}e^{i\pi\epsilon}$ なので $\mathrm{Re}$ は $\cos\pi\epsilon=1-\frac{\pi^2\epsilon^2}2+\cdots$ を掛け、$-\frac4{\epsilon^2}$ から $+2\pi^2$ が出る。$e^{\epsilon\gamma_E}\Gamma(1+\epsilon)\Gamma^2(1-\epsilon)/\Gamma(1-2\epsilon)=1-\frac{\pi^2}{12}\epsilon^2+\cdots$ と $e^{\epsilon\gamma_E}/\Gamma(1-\epsilon)\times\Gamma(-\epsilon)^2\cdots$ の展開を合わせると、$r_V$ と $r_R$ の $\pi^2$ の項は打ち消し、有限部分は $-16+19=3$ である。
+
+\paragraph{重いクォーク。}$\Delta^{(1)}$ の閉じた形は文献~\cite{ht98} の式 (49)、(50) である（本ノートでは AMFlow で数値として確かめた）。閾値では $p=1-2\beta+O(\beta^2)$、$\mathrm{Li}_2(1)=\frac{\pi^2}6$ から $B\to\frac{\pi^2}2$、$\frac{3-\beta^2}{2}B\to\frac{3\pi^2}4$ で、$r_0\approx\frac32\beta$ で割ると $\frac{\pi^2}{2\beta}$ が出る。$\beta\to1$ では $p\to0$ で $B\to0$、$\ln p$ の項も $(1-\beta)\ln p\to0$ で、$\frac38\beta(5-3\beta^2)\to\frac34$ が残る。
+
+\paragraph{thrust（式~\eqref{eq:thrust}）。}$\frac1{\sigma_0}\frac{\dd\sigma}{\dd x_1\dd x_2}=C_F\frac{\alpha_s}{2\pi}f$、$f=\frac{x_1^2+x_2^2}{(1-x_1)(1-x_2)}$（$D=4$）を、$T=\max(x_1,x_2,x_3)$ が一定の線に沿って積分する。$T=x_1$ では $x_2$ が $2-2T$ から $T$（$x_3=2-x_1-x_2\le T$）、$T=x_2$ は対称性で同じ、$T=x_3$ では $x_1$ が $2-2T$ から $T$ で $x_2=2-T-x_1$ である。$2\int_{2-2T}^T\frac{T^2+x^2}{(1-T)(1-x)}\dd x+\int_{2-2T}^T\frac{x^2+(2-T-x)^2}{(1-x)(x+T-1)}\dd x$ を部分分数で積分すると式~\eqref{eq:thrust} を得る。
+
 \section{検算の細部}\label{app:details}
 
 \paragraph{手順 (1) の模型ファイル。}パラメータの名前は MadGraph の慣習に合わせた。強い結合は外部パラメータ \texttt{aS}（ブロック \texttt{SMINPUTS} の3番、基準値 $1/4\pi$）で与え、$g=\sqrt{4\pi\alpha_s}$ を内部パラメータ \texttt{gs}（UFO での名前 \texttt{G}、次数 \texttt{QCD}$=1$）とした。MadGraph は強い結合をこの二つの名前で探す。光子の結合は外部パラメータ \texttt{ee}（\texttt{QEDBLOCK}、次数 \texttt{QED}$=1$）、重いクォークの質量は \texttt{MT}（基準値 1）である。クォークのクラスは、電荷の違う \texttt{uq}$=\{u,c\}$（\texttt{UpGen}）と \texttt{dq}$=\{d,s,b\}$（\texttt{DownGen}）と、重い \texttt{tq} に分け、PDG 番号と粒子名は標準のもの（1〜6、11、21、22、ゴーストは 82）とした。FeynArts の模型には、意味のない行 \texttt{GaugeXi[F[7]] = GaugeXi[F[4]]} が書き出される（元のクラスの番号 \texttt{F[4]} が残ったもの）。フェルミオンの \texttt{GaugeXi} は使われないので害はない。MadGraph は UFO を読み込むときにその場で書き換えるので、\texttt{Src/work/} に写したものを読み込む（これまでのノートと同じ）。
@@ -1686,6 +2375,8 @@ c=T_F\Bigl(1-\frac1{N^2}\Bigr)\delta_{i_3i_1}\delta_{i_2i_4}-\frac1N(T^a)_{i_3i_
 \end{aligned}
 \end{equation*}
 である（Landau ゲージ。SU(3)、$n_f=6$ で $-24.94$、$-36.31$）。MadGraph の $\alpha_s$ は手順 (6) の \texttt{alfas\_mg5.f} に、ループの数を引数で与えられるようにして使った。
+
+\paragraph{手順 (8)。}FeynArts の1ループの頂点 $\{u,\bar u\}\to\gamma$ には、グルーオンの交換と光子の交換の2個の図があり、$g_s$ を含む前者だけを残した。2ループの光子の自己エネルギーも同じく6個のうちグルーオンを含む3個を残した。FCFAConvert は1ループの閉じたクォークのループの色の和（\texttt{SumOver}）を落とすので、$N_c$ を手で掛けた（2ループでは SUNSimplify がトレースから $C_FC_A$ を返す）。Package-X の \texttt{PaXEvaluate} は $1/\epsilon$ を掛けた PaVe 関数を扱わないので、$B_0$、$C_0$ をそれぞれ厳密な形と比べた。AMFlow の \texttt{SolveIntegrals} は、求めた積分より多い積分の値を返すことがあり（5個に対して7個）、値は位置ではなく積分の名前で対応させる。aMC@NLO では、MadGraph5\_aMC@NLO 3.8.1 の NLO の雛形（\texttt{fks\_singular.f}、\texttt{ewsudakov\_functions\_dummy.f}）と \texttt{launch} が $M_Z$、$M_W$ を参照するので、UFO の作業用の複製に値（91.188、80.379）と頂点を持たない Z、W の粒子を加えた（\texttt{ee\_mg5.py}）。既定のジェットのカット $p_{T,j}>10$~GeV は低いエネルギーで位相空間をすべて除くので、\texttt{ptj = 0}、\texttt{etaj = -1} とした。ログの全断面積は4桁なので、全桁の値は \texttt{Events/run\_NN/res\_<k>.txt} の最後の \texttt{Total:} から読んだ。種は \texttt{iseed} で 11、22、33、44 とした。
 
 \begin{thebibliography}{99}
 \bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループ・2ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。
@@ -1725,6 +2416,8 @@ c=T_F\Bigl(1-\frac1{N^2}\Bigr)\delta_{i_3i_1}\delta_{i_2i_4}-\frac1N(T^a)_{i_3i_
 \bibitem{amflow2} R.-J. Huang, X. Liu, Y.-Q. Ma, ``AMFlow 2.0: significant algorithmic and software improvements for Feynman integral evaluation,'' arXiv:2607.08477。
 \bibitem{pysecdec} S. Borowka, G. Heinrich, S. Jahn, S. P. Jones, M. Kerner, J. Schlenk, T. Zirke, ``pySecDec: a toolbox for the numerical evaluation of multi-scale integrals,'' Comput. Phys. Commun. \textbf{222}, 313 (2018), arXiv:1703.09692。
 \bibitem{pysecdec16} G. Heinrich, S. P. Jones, M. Kerner, V. Magerya, A. Olsson, J. Schlenk, ``Numerical scattering amplitudes with pySecDec,'' Comput. Phys. Commun. \textbf{295}, 108956 (2024), arXiv:2305.19768。
+\bibitem{ht98} A. H. Hoang, T. Teubner, ``Analytic calculation of two-loop corrections to heavy quark pair production vertices induced by light quarks,'' Nucl. Phys. B \textbf{519}, 285 (1998), hep-ph/9707496。式 (49)、(50) と付録~A が $O(\alpha)$ のベクトルの電流の補正。
+\bibitem{cm98} A. Czarnecki, K. Melnikov, ``Two-loop QCD corrections to the heavy quark pair production cross section in $e^+e^-$ annihilation near the threshold,'' Phys. Rev. Lett. \textbf{80}, 2531 (1998), hep-ph/9712222。式 (3) が閾値の $\Delta^{(1)}=\frac{\pi^2}{2\beta}-4$。
 \bibitem{lee12} R. N. Lee, ``Presenting LiteRed: a tool for the Loop InTEgrals REDuction,'' arXiv:1212.2685。
 \bibitem{lee14} R. N. Lee, ``LiteRed 1.4: a powerful tool for reduction of multiloop integrals,'' J. Phys. Conf. Ser. \textbf{523}, 012059 (2014), arXiv:1310.1145。
 \bibitem{catani98} S. Catani, ``The Singular Behavior of QCD Amplitudes at Two Loop Order,'' Phys. Lett. B \textbf{427}, 161 (1998), arXiv:hep-ph/9802439。
