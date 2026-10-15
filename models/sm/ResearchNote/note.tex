@@ -49,7 +49,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote,qednote,qcdnote} に続き、標準模型の電弱相互作用の1ループの繰り込みを $d=4$ で調べる。模型は3世代のフェルミオン（CKM 行列は単位行列、ニュートリノは質量0）、$SU(2)_L\times U(1)_Y$ のゲージ場、Higgs 二重項と、QCD のゲージ場である。自発的に破れた対称性のもとで、$R_\xi$ ゲージの Goldstone ボソンとゴーストを残し、紫外発散を次元正則化で扱い、物理的な質量と $\alpha(0)$ を入力とする on-shell の処方で繰り込む。本ノートではまず、Feynman 則（93個の頂点のクラス）、木のレベルの関係（$G_F$ と $M_W$、$W$、$Z$、$H$、$t$ の崩壊幅、$e^+e^-\to f\bar f$ の断面積）、1ループのタドポールと自己エネルギー、on-shell の対抗項、$\Delta\alpha$、$\Delta\rho$、$\Delta r$、$H\to\gamma\gamma$ の振幅、1ループの $\beta$ 関数を求めた。自己エネルギーのフェルミオンのループは一般のカイラルな結合の形で手で導き、ボソンのループは $\xi=1$ で FeynCalc で足して Denner の式と照合した。符号の規約は FeynRules の標準模型（Peskin--Schroeder と同じ）に合わせた。この規約では光子の場の符号が Denner の総説~\cite{denner93} と逆なので、$\gamma Z$ 混合の自己エネルギーとそれを含む式の符号が変わり、電荷の繰り込みは $\delta Z_e=\frac12\Pi^{AA}(0)+\frac{\sw}{\cw}\Sigma^{AZ}_T(0)/M_Z^2$、$\Delta r$ の混合の項は $-2\frac{\cw}{\sw}\Sigma^{AZ}_T(0)/M_Z^2$ になる。この符号で $\Delta r$ の紫外の極が消え、$\delta Z_e$ の極が電荷の $\beta$ 関数の係数 $\frac43\sum N_cQ_f^2-7$ を再現することを確かめた。1ループの $\Delta r$ は $0.02978$（$\Delta\alpha=0.05933$、$-\frac{\cw^2}{\sw^2}\Delta\rho_t=-0.03286$、残り $0.00331$）、$M_W=80.473$~GeV で、最低次の $\Gamma(H\to\gamma\gamma)$ は $9.39$~keV である。最後に、検算と応用（$\Delta r$ と $M_W$、MadGraph の完全な電弱 NLO との比較、$H\to\gamma\gamma$、$Z$ の部分幅、繰り込み群と真空の安定性、低エネルギーのニュートリノ散乱）の十の手順を定め、手順 (1) を行った。FeynRules の模型ファイルから得た93個の頂点のクラスは、すべて手計算の表と記号として一致した（わざと3か所を誤らせた表では3個の差が出た）。MadGraph が作った21個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。導出は付録に載せる。
+$\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote,qednote,qcdnote} に続き、標準模型の電弱相互作用の1ループの繰り込みを $d=4$ で調べる。模型は3世代のフェルミオン（CKM 行列は単位行列、ニュートリノは質量0）、$SU(2)_L\times U(1)_Y$ のゲージ場、Higgs 二重項と、QCD のゲージ場である。自発的に破れた対称性のもとで、$R_\xi$ ゲージの Goldstone ボソンとゴーストを残し、紫外発散を次元正則化で扱い、物理的な質量と $\alpha(0)$ を入力とする on-shell の処方で繰り込む。本ノートではまず、Feynman 則（93個の頂点のクラス）、木のレベルの関係（$G_F$ と $M_W$、$W$、$Z$、$H$、$t$ の崩壊幅、$e^+e^-\to f\bar f$ の断面積）、1ループのタドポールと自己エネルギー、on-shell の対抗項、$\Delta\alpha$、$\Delta\rho$、$\Delta r$、$H\to\gamma\gamma$ の振幅、1ループの $\beta$ 関数を求めた。自己エネルギーのフェルミオンのループは一般のカイラルな結合の形で手で導き、ボソンのループは $\xi=1$ で FeynCalc で足して Denner の式と照合した。符号の規約は FeynRules の標準模型（Peskin--Schroeder と同じ）に合わせた。この規約では光子の場の符号が Denner の総説~\cite{denner93} と逆なので、$\gamma Z$ 混合の自己エネルギーとそれを含む式の符号が変わり、電荷の繰り込みは $\delta Z_e=\frac12\Pi^{AA}(0)+\frac{\sw}{\cw}\Sigma^{AZ}_T(0)/M_Z^2$、$\Delta r$ の混合の項は $-2\frac{\cw}{\sw}\Sigma^{AZ}_T(0)/M_Z^2$ になる。この符号で $\Delta r$ の紫外の極が消え、$\delta Z_e$ の極が電荷の $\beta$ 関数の係数 $\frac43\sum N_cQ_f^2-7$ を再現することを確かめた。1ループの $\Delta r$ は $0.02978$（$\Delta\alpha=0.05933$、$-\frac{\cw^2}{\sw^2}\Delta\rho_t=-0.03286$、残り $0.00331$）、$M_W=80.473$~GeV で、最低次の $\Gamma(H\to\gamma\gamma)$ は $9.39$~keV である。最後に、検算と応用（$\Delta r$ と $M_W$、MadGraph の完全な電弱 NLO との比較、$H\to\gamma\gamma$、$Z$ の部分幅、繰り込み群と真空の安定性、低エネルギーのニュートリノ散乱）の十の手順を定め、手順 (1) と (2) を行った。FeynRules の模型ファイルから得た93個の頂点のクラスは、すべて手計算の表と記号として一致した（わざと3か所を誤らせた表では3個の差が出た）。MadGraph が作った21個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。手順 (2) では、FeynRules の模型の38個の頂点のクラスの振幅が FeynArts の \texttt{SM.mod}（Denner の規約）の振幅と、光子の脚ごとに $-1$、$G^\pm$ の脚ごとに $\mp i$ の因子だけ違うことを記号として確かめた。$\mu$ 崩壊の $\sum|\mathcal M|^2$、終状態の質量を残した $W$、$Z$、$H$、$t$ の2体の崩壊幅、$e^+e^-\to\mu^+\mu^-$ の $\sum|\mathcal M|^2$ は、FeynCalc の結果と手計算の式の差が記号として0になり、27個の部分幅は MadGraph の値と倍精度で一致した。$e^+e^-\to W^+W^-$ では、縦波の $W$ 対の三つの図がそれぞれ $s/M_W^2$ に比例して増え、その係数が手で求めた比 $\frac1{2\sw^2}:Q_e:g_L^e\cw/\sw$ になって和で打ち消すことを、明示的な行列で $\sqrt s=30$~TeV まで確かめた。断面積と $\mu$ の崩壊幅は MadGraph の値と統計誤差の $1.4$ 倍以内で一致した。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -62,7 +62,7 @@ $\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote
 
 求める量は六つである。(i) Feynman 則（$R_\xi$ ゲージ、Goldstone ボソンとゴーストを含む）。(ii) 木のレベルの関係と、$W$、$Z$、$H$、$t$ の崩壊幅、$\mu$ 崩壊、$e^+e^-\to f\bar f$ の断面積。(iii) 1ループのタドポールと、$AA$、$AZ$、$ZZ$、$WW$、$HH$ の自己エネルギー。(iv) on-shell の対抗項と電荷の繰り込み。(v) $\Delta\alpha$、$\Delta\rho$、$\Delta r$ と $M_W$。(vi) 応用として、$H\to\gamma\gamma$、$Z\to f\bar f$ の1ループ、1ループの $\beta$ 関数と真空の安定性、低エネルギーのニュートリノ散乱。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(v) と (vi) の一部の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:beta} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(v) と (vi) の一部の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1) と (2)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:beta} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -281,7 +281,14 @@ A_{ij}=Q_eQ_f+g_i^eg_j^f\chi(s)
 \end{equation}
 を与える（$\theta$ は $e^-$ と $f$ の間の角）。$\sigma=\frac{\pi\alpha^2N_c}{3s}\sum_{ij}|A_{ij}|^2$、前後の非対称は $A_{\mathrm{FB}}=\frac34\bigl[|A_{LL}|^2+|A_{RR}|^2-|A_{LR}|^2-|A_{RL}|^2\bigr]/\sum_{ij}|A_{ij}|^2$ である。光子だけでは $\dd\sigma/\dd\cos\theta=\frac{\pi\alpha^2N_cQ_f^2}{2s}(1+\cos^2\theta)$ に戻る。
 
-\paragraph{$e^+e^-\to W^+W^-$ のゲージの打ち消し。}$\nu_e$ の $t$ チャンネルの交換と光子、$Z$ の $s$ チャンネルの交換は、縦波の $W$ 対に対して、それぞれ高いエネルギーで $s/M_W^2$ に比例して増える。その増加は三つの図の和で打ち消し、和は一定に近づく。この打ち消しは、手順 (2) で図ごとの振幅を比べて確かめる（後で）。
+\paragraph{$e^+e^-\to W^+W^-$ のゲージの打ち消し。}$\nu_e$ の $t$ チャンネルの交換と光子、$Z$ の $s$ チャンネルの交換は、縦波の $W$ 対に対して、それぞれ高いエネルギーで $s/M_W^2$ に比例して増える。$e^-(p_1)e^+(p_2)\to W^-(k_1)W^+(k_2)$ で $e^-$ のカイラリティを $i=L,R$ とし、共通の因子を $C_i=\frac{e^2}{2M_W^2}\bar v(p_2)(\slashed k_2-\slashed k_1)P_iu(p_1)$（大きさは $\frac{e^2s}{2M_W^2}\sin\theta$）とすると、主要な項は
+\begin{equation}
+\mathcal M_t\simeq\frac{\delta_{iL}}{2\sw^2}\,C_i,\qquad
+\mathcal M_\gamma\simeq Q_e\,C_i,\qquad
+\mathcal M_Z\simeq g_i^e\frac{\cw}{\sw}\,C_i
+\label{eq:wwcancel}
+\end{equation}
+である（\ref{app:tree}）。$g_L$、$g_R$ の形（表~\ref{tab:rules-f}）から $Q+g_L\cw/\sw=T^3/\sw^2$、$Q+g_R\cw/\sw=0$ なので、$T^3_e=-\frac12$ で三つの係数の和はどちらのカイラリティでも0になり、$s/M_W^2$ に比例する増加は打ち消す。和は一定に近づく。
 
 \subsection{1ループのタドポールと自己エネルギー}\label{sec:selfenergy}
 
@@ -546,7 +553,7 @@ K\frac{\dd\mu^2}{\dd\ln\mu}=\mu^2\Bigl[12\lambda+6y_t^2-\frac92g^2-\frac32g'^2\B
 \midrule
 Feynman 則 & \ref{app:rules} & FeynArts の模型の係数 & \texttt{SM.mod} との対応 & — & UFO の頂点と図の数 \\
 木の関係、崩壊幅、$e^+e^-\to f\bar f$ \eqref{eq:GF}〜\eqref{eq:eeff} & \ref{app:tree} & 記号 & 数値 & — & 幅と断面積 \\
-$e^+e^-\to W^+W^-$ の打ち消し & 後で & 図ごとの高エネルギーの振る舞い & 数値 & — & 断面積 \\
+$e^+e^-\to W^+W^-$ の打ち消し \eqref{eq:wwcancel} & \ref{app:tree} & 図ごとの高エネルギーの振る舞い & 数値 & — & 断面積 \\
 タドポールと自己エネルギー \eqref{eq:T}〜\eqref{eq:SH} & \ref{app:se} & Feynman ゲージで $D$ 次元の記号。一般の $\xi$ は \texttt{SM.mod} で（後で） & 数値 & 解析式と数値 & — \\
 on-shell の対抗項、$\delta Z_e$ \eqref{eq:ct}〜\eqref{eq:dZe} & \ref{app:ren} & 記号、$\xi$ によらないこと & \texttt{RenConst} & 数値 & — \\
 $\Delta\alpha$、$\Delta\rho$、$\Delta r$、$M_W$ \eqref{eq:dalpha}〜\eqref{eq:mw} & \ref{app:dr} & $\mu$ 崩壊の頂点と箱、$\xi$ によらないこと & 数値 & 数値 & — \\
@@ -565,7 +572,7 @@ $Z\to f\bar f$ の1ループ & 後で & — & 数値 & — & — \\
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}、手順 (2) は \texttt{run\_tree\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}模型ファイルは FeynRules~2.3.49 に付属の標準模型 \texttt{SM.fr}（版 1.4.7）を変更せずに使った（\texttt{Src/SM.fr}）。\texttt{FeynmanGauge = True} で、Goldstone ボソンとゴーストを含む。ゲージ固定の項はラグランジアンに含まれず、Feynman ゲージの伝播関数とゴーストとスカラーの結合が直接与えられる。FeynRules のエルミート性のチェックは通った。運動項の規格化のチェックはニュートリノについて、質量項のチェックは Goldstone ボソンについて警告を出したが、どちらも模型の誤りではない（\ref{app:details}）。\texttt{FeynmanRules} は93個の頂点のクラスを返し、スクリプト \texttt{generate\_SM.wl} はそれぞれを表~\ref{tab:rules-f}〜\ref{tab:rules-gh} の式と比べた。比べる前に、$\gamma^\mu$ を $\gamma^\mu(P_L+P_R)$ に分け、湯川行列を対角で実の $y_f$ にし、CKM の和の添字を縮約し、3点の頂点では運動量の保存で $p_3$ を消し、$\cw^2+\sw^2=1$ を使った。93個の差はすべて記号として0になった。比較が甘くないことを確かめるため、表の3か所（$HHH$ の係数、$\bar u^Zu^ZH$ の $\cw$ の次数、$AW\bar W$ の符号）をわざと誤らせた写しで同じ比較をすると、ちょうどその3個に差が出た。
 
@@ -595,13 +602,62 @@ $ZZ\to HH$ & 4／6 & $t$、$u$ チャンネルの $Z$、$s$ チャンネルの $
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (2)：木の振幅と崩壊幅。}三つのスクリプトで確かめた。\texttt{tree\_feyncalc.wl} は、FeynArts で図を作り、FeynCalc でスピンと偏極の和をとって、振幅の2乗を記号として求める。\texttt{tree\_mg5.mg5} は、MadGraph で崩壊幅と断面積を求める。\texttt{tree\_numeric.py} は、Dirac 行列、ヘリシティのスピノル、偏極ベクトルを明示的な $4\times4$ の行列とベクトルで書き、表~\ref{tab:rules-f}、\ref{tab:rules-sv} の Feynman 則から図ごとの振幅を数値で組み立てる（トレースやスピンの和の公式を使わない）。スピノルと偏極ベクトルは、先に $\sum u\bar u=\slashed p+m$、$\sum v\bar v=\slashed p-m$、$\sum\epsilon\epsilon^*=-g+kk/M^2$ を丸め誤差（$9\times10^{-16}$）で満たすことを確かめた。数値のパラメータは UFO の既定の値で、$\alpha^{-1}(M_Z)=127.9$、$G_F=1.16637\times10^{-5}$~GeV$^{-2}$、$M_Z=91.1876$~GeV から $M_W=79.8244$~GeV、$\sw^2=0.233699$ となる。ほかに $\Gamma_Z=2.4952$、$M_H=125$、$m_t=172$、$m_b=4.7$~GeV を使い、崩壊幅では Cabibbo 角 $0.227736$ を入れた。
+
+\paragraph{\texttt{SM.mod} との規約の対応。}FeynRules の模型（FeynArts に書き出したもの）と FeynArts の \texttt{SM.mod} で、同じ外線を持つ切断された振幅を38個のクラスで求めた。3点の頂点は $1\to2$ の図、4点の頂点は $1\to3$ の1個の頂点の図で、フェルミオンの頂点16個、ボソンの3点の頂点14個、4点の頂点8個である（\texttt{SM.mod} は $V[3]=W^-$、$S[3]=G^-$ なので、本ノートの $W^+$ を $-V[3]$ に対応させる）。振幅の比は、光子の脚ごとに $-1$、入ってくる $G^+$（出ていく $G^-$）ごとに $-i$、出ていく $G^+$（入ってくる $G^-$）ごとに $+i$ で、38個すべてで「本ノートの振幅 $-$ 比 $\times$ \texttt{SM.mod} の振幅」が記号として0になった（比が $-1$ のもの6個、$+1$ のもの26個、$\pm i$ のもの6個）。これは場の対応 $A^{\mathrm{Denner}}=-A$、$\phi^+=-iG^+$（Denner の $\Phi=(\phi^+,(v+H+i\chi)/\sqrt2)^T$ と式~\eqref{eq:Phi}）にあたり、$Z$、$W^\pm$、$H$、$G^0=\chi$ は同じである。光子の符号は第~\ref{sec:selfenergy} 節の $\Sigma^{AZ}$ の符号の違いの原因で、$G^\pm$ の位相は $G^\pm$ を外線に持つ振幅の位相だけを変える。
+
+\paragraph{$\mu$ 崩壊と崩壊幅。}$\mu^-(p)\to\nu_\mu(k_1)e^-(k_2)\bar\nu_e(k_3)$ の $W$ の交換の図（$m_e=0$。$G^\pm$ の交換は $m_e$ に比例して消える）について、FeynCalc のスピンの和と式~\eqref{eq:mudecay} の差は記号として0になり、Fermi の極限で $128G_F^2(p\cdot k_3)(k_1\cdot k_2)$ になった。この行列要素を Dalitz の領域で数値積分した崩壊幅は、$m_e$ を残した閉じた形と $2\times10^{-8}$ で一致した。2体の崩壊幅は、FeynCalc で終状態の質量を残して求め、$Z\to\nu\bar\nu,e^-e^+,u\bar u,d\bar d$ と式~\eqref{eq:widths}、$H\to\ell\bar\ell,u\bar u,d\bar d$ と式~\eqref{eq:widthsHt}、$W^+\to\ell^+\nu$ と $t\to bW^+$（$m_b\ne0$）と\ref{app:tree} の質量を含む形の差が、すべて記号として0になった。MadGraph の \texttt{compute\_widths}（FeynRules が UFO に書いた2体の幅の解析式）の27個の部分幅（$Z$ が11、$W$ が7、$H$ が8、$t$ が1）は、本ノートの式の値と相対 $6.7\times10^{-16}$ 以内で一致した。全幅は $\Gamma_Z=2.411596$、$\Gamma_W=2.002524$~GeV、部分幅は $\Gamma(H\to b\bar b)=5.390687\times10^{-3}$、$\Gamma(t\to bW^+)=1.466877$~GeV である（$m_b=4.7$~GeV の極の質量を使った最低次の値）。
+
+\paragraph{$e^+e^-\to\mu^+\mu^-$。}FeynCalc の $\sum|\mathcal M|^2$（光子と $Z$ の2個の図、$\Gamma_Z=0$）と式~\eqref{eq:eeff} の差は記号として0になった。明示的な行列では、$\Gamma_Z$ を残したヘリシティの振幅の和が、$\sqrt s=30$、$M_Z$、$200$~GeV の27点で式~\eqref{eq:eeff} と相対 $1.1\times10^{-15}$ で一致した。断面積を表~\ref{tab:treenum} に示す。前後の非対称は $A_{\mathrm{FB}}=-0.063364$、$+0.012570$、$+0.552996$ である（$\sqrt s=30$、$M_Z$、$200$~GeV）。
+
+\paragraph{$e^+e^-\to W^+W^-$。}FeynArts は3個の図（$t$ チャンネルの $\nu_e$、$s$ チャンネルの $\gamma$、$Z$）を作った。FeynCalc の $\sum|\mathcal M|^2$（$W$ の偏極の和は $-g+kk/M_W^2$、$\Gamma_Z=0$）の6点（$\sqrt s=200$、$500$、$1000$~GeV、$\cos\theta=-0.5$、$0.3$）の値は、明示的な行列のヘリシティと偏極の和と相対 $2.6\times10^{-14}$ で一致した。縦波の $W$ 対の図ごとの振幅を表~\ref{tab:wwcancel} に示す。どの図も $s/M_W^2$ に比例して増え、その係数は式~\eqref{eq:wwcancel} の $x_V\,(-e^2\sin\theta)$（$x_t=\frac1{2\sw^2}$、$x_\gamma=Q_e$、$x_Z=g_L^e\cw/\sw$）に近づく。$\sqrt s=30$~TeV で光子の図を $-1$ にそろえた比は $2.139533:-1:-1.139514$ で、式~\eqref{eq:wwcancel} の $2.139503:-1:-1.139503$ と $M_W^2/s$ の補正の範囲で一致した。各図は $\sqrt s=30$~TeV で $|\mathcal M|\approx1.4\times10^4$ まで増えるが、和は $0.1309$ にとどまる（打ち消しは5桁）。右巻きの $e^-$ では $\nu_e$ の図がなく、光子と $Z$ の図が $\mp0.093726$ で打ち消す。断面積は表~\ref{tab:treenum} に示す。
+
+\begin{table}[tbp]
+\centering\small
+\caption{$e^+e^-_{L}\to W^-_0W^+_0$（$e^-$ のヘリシティ $-\frac12$、$e^+$ は $+\frac12$、縦波の $W$ 対、$\cos\theta=0.3$）の図ごとの振幅 $\mathcal M_V$ を $s/(2M_W^2)$ で割った値の実部。虚部は $\Gamma_Z$ からだけ来て、$8\times10^{-4}$ 以下である。最後の行は式~\eqref{eq:wwcancel} の高エネルギーの極限 $x_V(-e^2\sin\theta)$。}
+\label{tab:wwcancel}
+\begin{tabular}{rrrrrr}
+\toprule
+$\sqrt s$ (GeV) & $t$ チャンネルの $\nu_e$ & $\gamma$ & $Z$ & 和 & $|\mathcal M_{\text{和}}|$ \\
+\midrule
+200 & $-0.197937$ & $0.074441$ & $0.107081$ & $-1.64\times10^{-2}$ & $0.051582$ \\
+1000 & $-0.203037$ & $0.093703$ & $0.107670$ & $-1.66\times10^{-3}$ & $0.130580$ \\
+3000 & $-0.200810$ & $0.093726$ & $0.106899$ & $-1.85\times10^{-4}$ & $0.130830$ \\
+30000 & $-0.200530$ & $0.093726$ & $0.106802$ & $-1.85\times10^{-6}$ & $0.130855$ \\
+\midrule
+極限 & $-0.200527$ & $0.093726$ & $0.106801$ & $0$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\caption{断面積と $\mu$ の崩壊幅：本ノート（明示的な行列の振幅を $\cos\theta$ で数値積分したもの。$e^+e^-\to\mu^+\mu^-$ は式~\eqref{eq:eeff} の積分と相対 $2\times10^{-16}$ で一致）と MadGraph（10万事象、乱数の種を固定）。MadGraph では $e,\mu,u,d,s,c$ の質量と Cabibbo 角を0にした制限カードを使い、$\Gamma_Z=2.4952$~GeV を伝播関数に入れた。$\mu$ の崩壊幅は、$m_e$ を残した閉じた形に $W$ の伝播関数の補正 $1+\frac35m_\mu^2/M_W^2$ を掛けたもの（\ref{app:tree}）で、MadGraph は $m_e$、$m_\mu$ と $W$ の伝播関数を含む。}
+\label{tab:treenum}
+\begin{tabular}{lrrrr}
+\toprule
+量 & $\sqrt s$ (GeV) & 本ノート & MadGraph & 差／誤差 \\
+\midrule
+$\sigma(e^+e^-\to\mu^+\mu^-)$ (pb) & 30 & 110.9447 & $110.960\pm0.011$ & $+1.36$ \\
+ & 91.1876 & 1979.161 & $1979.30\pm0.20$ & $+0.68$ \\
+ & 200 & 2.98995 & $2.98991\pm0.00076$ & $-0.05$ \\
+$\sigma(e^+e^-\to W^+W^-)$ (pb) & 200 & 19.1610 & $19.149\pm0.014$ & $-0.82$ \\
+ & 500 & 7.02762 & $7.0235\pm0.0051$ & $-0.79$ \\
+ & 1000 & 2.62128 & $2.6200\pm0.0024$ & $-0.54$ \\
+$\Gamma_\mu$ ($10^{-19}$~GeV) & & 3.00881 & $3.0078\pm0.0013$ & $-0.75$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手計算で分かったこと。}対称性の破れによって、QCD のノートまでになかった構造が三つ現れた。一つ目は、ゲージ場の質量と Goldstone ボソンの結びつきで、$R_\xi$ ゲージ \eqref{eq:gf} の符号はラグランジアンの $W$ と $G^\pm$、$Z$ と $G^0$ の混合から決まり、ゴーストとスカラーの結合が $\xi$ に比例する。二つ目は、光子と $Z$ の混合で、電荷の繰り込み \eqref{eq:dZe} と $\Delta r$ \eqref{eq:dr} に $\Sigma^{AZ}_T(0)$ が入り、その符号が光子の場の符号の規約に依存する。本ノートの規約（FeynRules、Peskin--Schroeder）では Denner の規約と符号が逆になり、その符号でだけ $\Delta r$ の紫外の極が消える。三つ目は、重いトップの非脱結合で、$\Delta\rho\propto m_t^2$ が $\Delta r$ の大きな部分を占め、$\Delta\alpha$ の寄与のほぼ半分を打ち消す。1ループの $M_W=80.473$~GeV は測定値より約 $0.1$~GeV 大きく、その差が高次の補正の大きさを示す。
 
 \paragraph{検算で分かったこと。}手順 (1) では、FeynRules の標準模型の93個の頂点のクラスがすべて手計算の表と一致し、MadGraph の図の数もユニタリーゲージと Feynman ゲージの両方で一致した。道具の注意点は二つあった。一つ目に、FeynRules の制限ファイルを読み込んでから UFO を書き出すと、MadGraph が使えない UFO になることがある。制限は MadGraph の制限カードで与えるのが確実である。二つ目に、FeynRules の \texttt{IndexDelta} は外線の添字の $\delta$ をほかの因子と勝手に縮約し、\texttt{ProjP - ProjM} を \texttt{Ga[5]} にまとめるので、頂点を記号として比べるときは評価されない記号に置き換える必要がある。
 
-\paragraph{今後。}次は手順 (2) で、木の振幅と崩壊幅、$e^+e^-\to f\bar f$、$e^+e^-\to W^+W^-$ を FeynCalc と MadGraph で確かめ、FeynArts の \texttt{SM.mod} との規約の対応を確かめる。
+手順 (2) では、FeynRules の模型と FeynArts の \texttt{SM.mod} の規約の違いが、光子の場の符号と $G^\pm$ の位相 $i$ の二つだけであることを38個の頂点のクラスで確かめた。前者は $\Sigma^{AZ}$ と $\delta Z_e$ の符号に効き、後者は $G^\pm$ を外線に持つ振幅の位相だけを変える。後者は断面積には効かないが、手順 (3) で $W$ と $G^\pm$ の混合の Slavnov--Taylor 恒等式を \texttt{SM.mod} の結果と比べるときに必要になる。木の振幅の2乗、崩壊幅、断面積は、FeynCalc の記号の計算、明示的な行列の数値、MadGraph の三つで一致した。$e^+e^-\to W^+W^-$ の打ち消しは、左巻きの $e^-$ では三つの図、右巻きでは光子と $Z$ の二つの図で起こり、どちらも $Z$ の結合 $g_{L,R}$ と電荷の関係 $Q+g_L\cw/\sw=T^3/\sw^2$、$Q+g_R\cw/\sw=0$ で決まる。つまり、$AW\bar W$ と $W\bar WZ$ の頂点の係数の比 $\cw/\sw$ と、$W$ とフェルミオンの結合 $e/(\sqrt2\sw)$ が、フェルミオンの中性の結合と同じ $\sw$、$\cw$ で書かれていることが打ち消しの条件である。道具の注意点は三つあった。FeynCalc~10 の \texttt{DiracTrace} は既定ではトレースを評価しない。切断された頂点の振幅は運動量の保存を自動では使わない。MadGraph のログは断面積を有効数字3〜4桁でしか書かず、10万事象の統計誤差より丸めが大きくなることがある（\ref{app:details}）。
+
+\paragraph{今後。}次は手順 (3) で、タドポールと自己エネルギー \eqref{eq:T}〜\eqref{eq:SH} を Feynman ゲージで図ごとに記号として確かめ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で $\xi$ への依存と極、$W$ と $G^\pm$ の混合の Slavnov--Taylor 恒等式を調べる。有限部分は Package-X、LoopTools、COLLIER で比べる。
 
 \appendix
 
@@ -621,11 +677,32 @@ gT^3W^3+g'YB=eQA+\frac{e}{\sw\cw}\bigl(T^3-Q\sw^2\bigr)Z
 
 \section{木のレベルの導出}\label{app:tree}
 
-\paragraph{$G_F$。}$\mu^-\to\nu_\mu e^-\bar\nu_e$ の振幅は、$q^2\ll M_W^2$ で $W$ の伝播関数が $ig_{\mu\nu}/M_W^2$ になり、$-i\frac{g^2}{2M_W^2}[\bar u_{\nu_\mu}\gamma^\mu P_Lu_\mu][\bar u_e\gamma_\mu P_Lv_{\bar\nu_e}]$ となる。Fermi の4点相互作用 $-\frac{4G_F}{\sqrt2}[\bar\nu_\mu\gamma^\mu P_L\mu][\bar e\gamma_\mu P_L\nu_e]$ と比べて $\frac{G_F}{\sqrt2}=\frac{g^2}{8M_W^2}$ を得る。崩壊幅は標準的な3体の位相空間の積分である。
+\paragraph{$G_F$。}$\mu^-\to\nu_\mu e^-\bar\nu_e$ の振幅は、$q^2\ll M_W^2$ で $W$ の伝播関数が $ig_{\mu\nu}/M_W^2$ になり、$-i\frac{g^2}{2M_W^2}[\bar u_{\nu_\mu}\gamma^\mu P_Lu_\mu][\bar u_e\gamma_\mu P_Lv_{\bar\nu_e}]$ となる。Fermi の4点相互作用 $-\frac{4G_F}{\sqrt2}[\bar\nu_\mu\gamma^\mu P_L\mu][\bar e\gamma_\mu P_L\nu_e]$ と比べて $\frac{G_F}{\sqrt2}=\frac{g^2}{8M_W^2}$ を得る。$W$ の伝播関数を残すと、$\mu^-(p)\to\nu_\mu(k_1)e^-(k_2)\bar\nu_e(k_3)$ のすべてのスピンについての和は
+\begin{equation}
+\sum|\mathcal M|^2=\frac{4e^4}{\sw^4}\,\frac{(p\cdot k_3)(k_1\cdot k_2)}{(q^2-M_W^2)^2},\qquad q^2=(k_2+k_3)^2
+\label{eq:mudecay}
+\end{equation}
+で（$m_e=0$）、$q^2\ll M_W^2$ で $128G_F^2(p\cdot k_3)(k_1\cdot k_2)$ になる。崩壊幅は標準的な3体の位相空間の積分である。$m_e$ を残すと $\Gamma_\mu$ に $f(x)=1-8x+8x^3-x^4-12x^2\ln x$（$x=m_e^2/m_\mu^2$）が掛かり、伝播関数の $q^2$ への依存は $1+\frac35m_\mu^2/M_W^2$ を掛ける。
 
 \paragraph{2体の崩壊幅。}頂点 $i\gamma^\mu(v-a\gamma_5)$ でベクトル粒子（質量 $M$）が質量 $m$ のフェルミオン対に崩壊する幅は、偏極について平均して $\Gamma=\frac{N_cM}{12\pi}\beta[v^2(1+2\mu)+a^2\beta^2]$（$\mu=m^2/M^2$、$\beta=\sqrt{1-4\mu}$）である。$Z$ では $v=e\gV$、$a=e\gA$、$W$ では $v=a=e/(2\sqrt2\sw)$ を入れて式~\eqref{eq:widths} を得る。スカラー（頂点 $-im/v$）では $\Gamma=\frac{N_cm^2M_H}{8\pi v^2}\beta^3$ で、$1/v^2=e^2/(4\sw^2M_W^2)$ から式~\eqref{eq:widthsHt} の第1式を得る。$t\to bW$ は $\frac{G_Fm_t^3}{8\sqrt2\pi}(1-x)^2(1+2x)$（$x=M_W^2/m_t^2$）で、$G_F/\sqrt2=\pi\alpha/(2\sw^2M_W^2)$ から第2式になる。
 
+終状態の質量が異なるとき（$m_1$、$m_2$、運動量 $|\boldsymbol p|=\lambda^{1/2}(M^2,m_1^2,m_2^2)/(2M)$）、ベクトル粒子の幅は
+\begin{equation*}
+\Gamma(V\to f_1\bar f_2)=\frac{N_c|\boldsymbol p|}{6\pi M^2}\Bigl[\bigl(v^2+a^2\bigr)\Bigl(M^2-\frac{m_1^2+m_2^2}2-\frac{(m_1^2-m_2^2)^2}{2M^2}\Bigr)+3\bigl(v^2-a^2\bigr)m_1m_2\Bigr]
+\end{equation*}
+である（$W\to u\bar d$ では $N_c|V_{ud}|^2$）。$m_1=m_2$ で上の式に戻り、$W^+\to\ell^+\nu$ では $\Gamma=\frac{\alpha M_W}{12\sw^2}(1-x)^2(1+\frac x2)$（$x=m_\ell^2/M_W^2$）になる。$t\to bW^+$ で $m_b$ を残すと、$r_b=m_b^2/m_t^2$、$r_W=M_W^2/m_t^2$ として
+\begin{equation*}
+\Gamma(t\to bW^+)=\frac{G_Fm_t^3}{8\sqrt2\pi}\lambda^{1/2}(1,r_b,r_W)\Bigl[(1-r_b)^2+r_W(1+r_b)-2r_W^2\Bigr]
+\end{equation*}
+で、$r_b=0$ で上の形に戻る。
+
 \paragraph{$e^+e^-\to f\bar f$。}光子と $Z$ の頂点はどちらも $i\times$（結合）$\gamma^\mu$ の形で、伝播関数は $-ig_{\mu\nu}/s$ と $-ig_{\mu\nu}/(s-M_Z^2+iM_Z\Gamma_Z)$（$k_\mu k_\nu$ の項は質量0の外線で消える）なので、ヘリシティの振幅は光子の振幅に $A_{ij}=Q_eQ_f+g^e_ig^f_j\chi(s)$ を掛けたものになる。光子だけの $\dd\sigma/\dd\Omega=\frac{\alpha^2}{4s}(1+\cos^2\theta)$ を、同じヘリシティ（$LL$、$RR$）の $(1+\cos\theta)^2$ と逆のヘリシティの $(1-\cos\theta)^2$ に分け（それぞれ和の $\frac14$）、$|A_{ij}|^2$ を掛けて式~\eqref{eq:eeff} を得る。
+
+\paragraph{$e^+e^-\to W^+W^-$ の高エネルギーの振る舞い。}縦波の偏極ベクトルは $\epsilon_0(k)=k/M_W+O(M_W/E)$ である。$t$ チャンネルの図は、表~\ref{tab:rules-f} の頂点 $\frac{ie}{\sqrt2\sw}\gamma^\mu P_L$ を二つと $\nu_e$ の伝播関数 $i(\slashed p_1-\slashed k_1)/t$（$t=(p_1-k_1)^2$）を含む。$\epsilon_0(k_1)\to k_1/M_W$ とし、$\slashed p_1u(p_1)=0$ を使うと $(\slashed p_1-\slashed k_1)\slashed k_1u(p_1)=(2p_1\!\cdot\!k_1-M_W^2)u(p_1)=-t\,u(p_1)$ で、伝播関数の $1/t$ が消える。さらに $\bar v(p_2)(\slashed p_1+\slashed p_2)u(p_1)=0$ から $\bar v(p_2)\slashed k_2u(p_1)=\frac12\bar v(p_2)(\slashed k_2-\slashed k_1)u(p_1)$ なので、$\mathcal M_t\simeq\frac1{2\sw^2}C_L$ を得る。$s$ チャンネルでは、$q=k_1+k_2$、$s=2M_W^2+2k_1\!\cdot\!k_2$ から
+\begin{equation*}
+\Gamma^{\rho\mu\nu}(q,-k_1,-k_2)\,k_{1\mu}k_{2\nu}=(k_1-k_2)^\rho\bigl(k_1\!\cdot\!k_2+M_W^2\bigr)=\frac s2(k_1-k_2)^\rho
+\end{equation*}
+で、伝播関数の $1/s$（$Z$ では $1/(s-M_Z^2)\to1/s$）が消える。頂点 $-ie\Gamma$、$-ie\frac{\cw}{\sw}\Gamma$（表~\ref{tab:rules-sv}）と電子の電流 $ieQ_e\bar v\gamma_\rho u$、$ieg_i^e\bar v\gamma_\rho P_iu$ を合わせて $\mathcal M_\gamma\simeq Q_eC_i$、$\mathcal M_Z\simeq g_i^e\frac{\cw}{\sw}C_i$ を得る。これが式~\eqref{eq:wwcancel} である。残りは $M_W^2/s$ だけ小さく、和は一定の振幅に近づく。
 
 \section{自己エネルギーとタドポールの導出}\label{app:se}
 
@@ -689,6 +766,8 @@ ie\gamma^\mu\Bigl[Q\Bigl(\delta Z_e+\frac12\delta Z_{AA}+\delta Z_f\Bigr)+\frac1
 \paragraph{FeynCalc で FeynRules の模型を使うときの注意。}予備的な自己エネルギーの計算で四つのことが分かった。(a) FeynRules が書いた FeynArts の模型は、FeynCalc の FeynArts では \texttt{FAPatch} を通す必要がある（これまでのノートと同じ）。(b) \texttt{InsertionLevel -> \{Particles\}} で挿入すると、フェルミオンのループが一つも作られなかった（原因は未確認）。クラスの段階で挿入すると世代は一般の添字のまま残り、$\sum_f$ の形の結果になる。(c) クォークの質量は色の添字を持ち（\texttt{Md[gen, col]}）、\texttt{FCFAConvert} の \texttt{DropSumOver} は色の和 \texttt{SumOver[Index[Colour,3],3]} も落とす。閉じたクォークのループでは色の和が一つだけなので、それを $N_c$ に置き換え、質量の色の添字を外した。(d) \texttt{DiagramSelect} に名前を付けた関数を渡すと選び出しが働かなかったので、純関数を使った。
 
 \paragraph{MadGraph の設定。}\texttt{model\_mg5.mg5} はユニタリーゲージで21個の過程の図を数え、\texttt{set gauge Feynman} の後で模型を読み込み直して同じ過程を数える。制限カード \texttt{restrict\_massless.dat} は \texttt{make\_restrict.py} が UFO の \texttt{parameters.py} の外部パラメータから作る（FeynRules の UFO は Python~2 の形で書かれているので、正規表現で読む）。
+
+\paragraph{手順 (2) の FeynCalc と MadGraph の設定。}\texttt{tree\_feyncalc.wl} では次のことが必要だった。(a) FeynCalc~10 の \texttt{DiracTrace} は既定ではトレースを評価しないので、\texttt{DiracTraceEvaluate -> True} を付けてから \texttt{Contract} した。(b) 切断された頂点の振幅は、入ってくる運動量 $q$ と出ていく $k_i$ を両方含み、運動量の保存を使わない。$AW\bar W$ などの差は $q=\sum k_i$ を入れ、\texttt{MomentumExpand} と \texttt{ExpandScalarProduct} で展開してはじめて0になった。(c) クォークの色の和は \texttt{SUNFDelta} の2乗を $N_c$ に置き換えた。(d) 崩壊幅では、崩壊するベクトル粒子と終状態のベクトル粒子の偏極の和を \texttt{DoPolarizationSums} でとった。(e) \texttt{SM.mod} の振幅は \texttt{GaugeRules -> \{\_GaugeXi -> 1\}} で作った。(f) FeynArts~3.12 は Mathematica~14 で模型を初期化するときに \texttt{RuleDelayed::rhs} のメッセージを出す。結果には影響しないので \texttt{Quiet} で抑えた。\texttt{tree\_mg5.mg5} は、制限のない模型で \texttt{compute\_widths} と $\mu$ の崩壊幅を、制限カードの模型で断面積を求める。MadGraph のログは断面積を有効数字3〜4桁でしか書かない（たとえば \texttt{111 +- 0.01131 pb}）ので、\texttt{tree\_numeric.py} は各実行の banner の \texttt{Integrated weight} を使う。乱数の種は実行ごとに固定した（\texttt{iseed} が101〜107）。\texttt{compute\_widths} の部分幅は、書き出したカード \texttt{widths\_card.dat} の \texttt{DECAY} のブロックの注釈から読む。
 
 \paragraph{Mathematica の版。}素の FeynArts~3.12 は、Mathematica 14.3.0 では模型の初期化（\texttt{InitializeModel}）の途中でカーネルが落ちる。原因はパターン照合で、\texttt{MatchQ[G[1][x] . \{g\}, G[s\_][f\_\_] . k\_List]} だけでカーネルが落ちる（wolframscript は「ライセンスの誤り」と表示する）。FeynArts は \texttt{InitGenericCoupling} でこの形のパターンを使う。14.2.1 では正しく \texttt{True} を返すので、本ノートの計算は 14.2.1 で行った。
 
