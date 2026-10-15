@@ -49,7 +49,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote,qednote,qcdnote} に続き、標準模型の電弱相互作用の1ループの繰り込みを $d=4$ で調べる。模型は3世代のフェルミオン（CKM 行列は単位行列、ニュートリノは質量0）、$SU(2)_L\times U(1)_Y$ のゲージ場、Higgs 二重項と、QCD のゲージ場である。自発的に破れた対称性のもとで、$R_\xi$ ゲージの Goldstone ボソンとゴーストを残し、紫外発散を次元正則化で扱い、物理的な質量と $\alpha(0)$ を入力とする on-shell の処方で繰り込む。本ノートではまず、Feynman 則（93個の頂点のクラス）、木のレベルの関係（$G_F$ と $M_W$、$W$、$Z$、$H$、$t$ の崩壊幅、$e^+e^-\to f\bar f$ の断面積）、1ループのタドポールと自己エネルギー、on-shell の対抗項、$\Delta\alpha$、$\Delta\rho$、$\Delta r$、$H\to\gamma\gamma$ の振幅、1ループの $\beta$ 関数を求めた。自己エネルギーのフェルミオンのループは一般のカイラルな結合の形で手で導き、ボソンのループは $\xi=1$ で FeynCalc で足して Denner の式と照合した。符号の規約は FeynRules の標準模型（Peskin--Schroeder と同じ）に合わせた。この規約では光子の場の符号が Denner の総説~\cite{denner93} と逆なので、$\gamma Z$ 混合の自己エネルギーとそれを含む式の符号が変わり、電荷の繰り込みは $\delta Z_e=\frac12\Pi^{AA}(0)+\frac{\sw}{\cw}\Sigma^{AZ}_T(0)/M_Z^2$、$\Delta r$ の混合の項は $-2\frac{\cw}{\sw}\Sigma^{AZ}_T(0)/M_Z^2$ になる。この符号で $\Delta r$ の紫外の極が消え、$\delta Z_e$ の極が電荷の $\beta$ 関数の係数 $\frac43\sum N_cQ_f^2-7$ を再現することを確かめた。1ループの $\Delta r$ は $0.02978$（$\Delta\alpha=0.05933$、$-\frac{\cw^2}{\sw^2}\Delta\rho_t=-0.03286$、残り $0.00331$）、$M_W=80.473$~GeV で、最低次の $\Gamma(H\to\gamma\gamma)$ は $9.39$~keV である。最後に、検算と応用（$\Delta r$ と $M_W$、MadGraph の完全な電弱 NLO との比較、$H\to\gamma\gamma$、$Z$ の部分幅、繰り込み群と真空の安定性、低エネルギーのニュートリノ散乱）の十の手順を定め、手順 (1) と (2) を行った。FeynRules の模型ファイルから得た93個の頂点のクラスは、すべて手計算の表と記号として一致した（わざと3か所を誤らせた表では3個の差が出た）。MadGraph が作った21個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。手順 (2) では、FeynRules の模型の38個の頂点のクラスの振幅が FeynArts の \texttt{SM.mod}（Denner の規約）の振幅と、光子の脚ごとに $-1$、$G^\pm$ の脚ごとに $\mp i$ の因子だけ違うことを記号として確かめた。$\mu$ 崩壊の $\sum|\mathcal M|^2$、終状態の質量を残した $W$、$Z$、$H$、$t$ の2体の崩壊幅、$e^+e^-\to\mu^+\mu^-$ の $\sum|\mathcal M|^2$ は、FeynCalc の結果と手計算の式の差が記号として0になり、27個の部分幅は MadGraph の値と倍精度で一致した。$e^+e^-\to W^+W^-$ では、縦波の $W$ 対の三つの図がそれぞれ $s/M_W^2$ に比例して増え、その係数が手で求めた比 $\frac1{2\sw^2}:Q_e:g_L^e\cw/\sw$ になって和で打ち消すことを、明示的な行列で $\sqrt s=30$~TeV まで確かめた。断面積と $\mu$ の崩壊幅は MadGraph の値と統計誤差の $1.4$ 倍以内で一致した。導出は付録に載せる。
+$\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote,qednote,qcdnote} に続き、標準模型の電弱相互作用の1ループの繰り込みを $d=4$ で調べる。模型は3世代のフェルミオン（CKM 行列は単位行列、ニュートリノは質量0）、$SU(2)_L\times U(1)_Y$ のゲージ場、Higgs 二重項と、QCD のゲージ場である。自発的に破れた対称性のもとで、$R_\xi$ ゲージの Goldstone ボソンとゴーストを残し、紫外発散を次元正則化で扱い、物理的な質量と $\alpha(0)$ を入力とする on-shell の処方で繰り込む。本ノートではまず、Feynman 則（93個の頂点のクラス）、木のレベルの関係（$G_F$ と $M_W$、$W$、$Z$、$H$、$t$ の崩壊幅、$e^+e^-\to f\bar f$ の断面積）、1ループのタドポールと自己エネルギー、on-shell の対抗項、$\Delta\alpha$、$\Delta\rho$、$\Delta r$、$H\to\gamma\gamma$ の振幅、1ループの $\beta$ 関数を求めた。自己エネルギーのフェルミオンのループは一般のカイラルな結合の形で手で導き、ボソンのループは $\xi=1$ で FeynCalc で足して Denner の式と照合した。符号の規約は FeynRules の標準模型（Peskin--Schroeder と同じ）に合わせた。この規約では光子の場の符号が Denner の総説~\cite{denner93} と逆なので、$\gamma Z$ 混合の自己エネルギーとそれを含む式の符号が変わり、電荷の繰り込みは $\delta Z_e=\frac12\Pi^{AA}(0)+\frac{\sw}{\cw}\Sigma^{AZ}_T(0)/M_Z^2$、$\Delta r$ の混合の項は $-2\frac{\cw}{\sw}\Sigma^{AZ}_T(0)/M_Z^2$ になる。この符号で $\Delta r$ の紫外の極が消え、$\delta Z_e$ の極が電荷の $\beta$ 関数の係数 $\frac43\sum N_cQ_f^2-7$ を再現することを確かめた。1ループの $\Delta r$ は $0.02978$（$\Delta\alpha=0.05933$、$-\frac{\cw^2}{\sw^2}\Delta\rho_t=-0.03286$、残り $0.00331$）、$M_W=80.473$~GeV で、最低次の $\Gamma(H\to\gamma\gamma)$ は $9.39$~keV である。最後に、検算と応用（$\Delta r$ と $M_W$、MadGraph の完全な電弱 NLO との比較、$H\to\gamma\gamma$、$Z$ の部分幅、繰り込み群と真空の安定性、低エネルギーのニュートリノ散乱）の十の手順を定め、手順 (1)〜(3) を行った。FeynRules の模型ファイルから得た93個の頂点のクラスは、すべて手計算の表と記号として一致した（わざと3か所を誤らせた表では3個の差が出た）。MadGraph が作った21個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。手順 (2) では、FeynRules の模型の38個の頂点のクラスの振幅が FeynArts の \texttt{SM.mod}（Denner の規約）の振幅と、光子の脚ごとに $-1$、$G^\pm$ の脚ごとに $\mp i$ の因子だけ違うことを記号として確かめた。$\mu$ 崩壊の $\sum|\mathcal M|^2$、終状態の質量を残した $W$、$Z$、$H$、$t$ の2体の崩壊幅、$e^+e^-\to\mu^+\mu^-$ の $\sum|\mathcal M|^2$ は、FeynCalc の結果と手計算の式の差が記号として0になり、27個の部分幅は MadGraph の値と倍精度で一致した。$e^+e^-\to W^+W^-$ では、縦波の $W$ 対の三つの図がそれぞれ $s/M_W^2$ に比例して増え、その係数が手で求めた比 $\frac1{2\sw^2}:Q_e:g_L^e\cw/\sw$ になって和で打ち消すことを、明示的な行列で $\sqrt s=30$~TeV まで確かめた。断面積と $\mu$ の崩壊幅は MadGraph の値と統計誤差の $1.4$ 倍以内で一致した。手順 (3) では、ゴーストを含む88個の頂点のクラスで \texttt{SM.mod} との対応（光子とそのゴーストの脚ごとに $-1$、$G^\pm$ の脚ごとに $\mp i$）を確かめた。タドポールと自己エネルギーの12個の式は FeynCalc の $D$ 次元の結果と記号として一致し、Feynman ゲージでは \texttt{SM.mod} の図とも組ごとに一致した。一般の $R_\xi$ ゲージでは、手で導いた2点関数の Slavnov--Taylor 恒等式が、タドポールの付いた図を含めると $D$ 次元で厳密に成り立った。$\Sigma^{AA}_T(0)=0$、タドポールを含めた殻上の自己エネルギー、電荷の繰り込み定数の極は $\xi$ によらなかった。有限部分は、LoopTools、Package-X、COLLIER の値が30桁の積分と相対 $10^{-14}$ 以内で一致し、虚部は光学定理で木の崩壊幅と一致した。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -62,7 +62,7 @@ $\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote
 
 求める量は六つである。(i) Feynman 則（$R_\xi$ ゲージ、Goldstone ボソンとゴーストを含む）。(ii) 木のレベルの関係と、$W$、$Z$、$H$、$t$ の崩壊幅、$\mu$ 崩壊、$e^+e^-\to f\bar f$ の断面積。(iii) 1ループのタドポールと、$AA$、$AZ$、$ZZ$、$WW$、$HH$ の自己エネルギー。(iv) on-shell の対抗項と電荷の繰り込み。(v) $\Delta\alpha$、$\Delta\rho$、$\Delta r$ と $M_W$。(vi) 応用として、$H\to\gamma\gamma$、$Z\to f\bar f$ の1ループ、1ループの $\beta$ 関数と真空の安定性、低エネルギーのニュートリノ散乱。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(v) と (vi) の一部の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1) と (2)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:beta} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(v) と (vi) の一部の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(3)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:beta} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -428,6 +428,29 @@ $\sum_{\mathrm{doublets}}$ は各世代の $(\nu,\ell)$、$(u,d)$ を走り、$m
 
 式~\eqref{eq:SAA}、\eqref{eq:SZZ}、\eqref{eq:SWW} のボソンの部分は Denner の式~\cite{denner93} と同じ形で、式~\eqref{eq:SAZ} は Denner の式と符号が逆である（光子の場の符号の違い、\ref{app:se}）。これらの式は $D$ 次元の係数を $\epsilon$ で展開したときの有理数の項を含む（たとえば $(D-2)A_0\to2A_0-2m^2$ は $A_0=m^2[B_0(0)+1]$ と合わせて $2m^2B_0(0)$ になる）。
 
+\paragraph{一般の $R_\xi$ ゲージと Slavnov--Taylor 恒等式。}光子、$Z$、$W$ のゲージパラメータを $\xi_A$、$\xi_Z$、$\xi_W$ とする（式~\eqref{eq:gf}）。$a(k)$ が入り $b(k)$ が出る1ループの2点関数を、式~\eqref{eq:Gamma2} の $\Gamma$ と同じ規格化で $\Gamma^{a\to b}$ と書く。ゲージ固定の関数の2点関数は補正を受けないので、
+\begin{equation}
+\begin{gathered}
+k^\mu k^\nu\Gamma^{A\to A}_{\mu\nu}=0,\qquad k^\mu k^\nu\Gamma^{A\to Z}_{\mu\nu}+iM_Zk^\mu\Gamma^{A\to G^0}_\mu=0,\\
+k^\mu k^\nu\Gamma^{V\to V}_{\mu\nu}+iM_Vk^\mu\Gamma^{V\to G}_\mu-iM_Vk^\nu\Gamma^{G\to V}_\nu+M_V^2\Gamma^{G\to G}=0\qquad\bigl((V,G)=(Z,G^0),\ (W^+,G^+)\bigr)
+\end{gathered}
+\label{eq:ST}
+\end{equation}
+が成り立つ（\ref{app:se}）。ここで $\Gamma$ は、1PI の図に、Higgs の線でタドポールをつないだ図を加えたものである。1PI の図だけで書くと、$Z$ と $W$ の式に $T$ に比例する項が加わる。タドポールは一般の $\xi$ で
+\begin{equation}
+\begin{aligned}
+T=\frac{e}{4K\sw M_W}\Bigl[&-8\sum_fN_cm_f^2A_0(m_f)+3M_H^2A_0(M_H)+4(D-1)M_W^2A_0(M_W)+2(D-1)M_Z^2A_0(M_Z)\\
+&+2M_H^2A_0\bigl(\sqrt{\xi_W}M_W\bigr)+M_H^2A_0\bigl(\sqrt{\xi_Z}M_Z\bigr)\Bigr]
+\end{aligned}
+\label{eq:Txi}
+\end{equation}
+である（$D$ 次元のまま。$\xi=1$ で $\epsilon$ について展開すると式~\eqref{eq:T}）。Goldstone ボソンとゴーストの寄与は、合わせて質量 $\sqrt\xi M$ の $A_0$ の項になる。$\gamma Z$ の混合は $k^2=0$ で
+\begin{equation}
+\Sigma^{AZ}_T(0)=-\aK\frac{1}{\sw\cw\,D(\xi_W-1)}\Bigl[\bigl(D(1+\xi_W)-2\xi_W\bigr)A_0\bigl(\sqrt{\xi_W}M_W\bigr)-2(D-1)A_0(M_W)\Bigr]
+\label{eq:SAZ0xi}
+\end{equation}
+で、$\xi_W\to1$ で式~\eqref{eq:Pi0} に戻り、紫外の極は $-\aK\frac{M_W^2}{\sw\cw}\frac{3+\xi_W}2\DUV$ である。$\Sigma^{AA}_T(0)=0$ はすべての $\xi$ で成り立つ。式~\eqref{eq:Txi}、\eqref{eq:SAZ0xi} は手順 (3) で FeynCalc から得た（第~\ref{sec:checks} 節）。
+
 \subsection{on-shell の対抗項}\label{sec:ct}
 
 裸のパラメータと場を
@@ -554,7 +577,7 @@ K\frac{\dd\mu^2}{\dd\ln\mu}=\mu^2\Bigl[12\lambda+6y_t^2-\frac92g^2-\frac32g'^2\B
 Feynman 則 & \ref{app:rules} & FeynArts の模型の係数 & \texttt{SM.mod} との対応 & — & UFO の頂点と図の数 \\
 木の関係、崩壊幅、$e^+e^-\to f\bar f$ \eqref{eq:GF}〜\eqref{eq:eeff} & \ref{app:tree} & 記号 & 数値 & — & 幅と断面積 \\
 $e^+e^-\to W^+W^-$ の打ち消し \eqref{eq:wwcancel} & \ref{app:tree} & 図ごとの高エネルギーの振る舞い & 数値 & — & 断面積 \\
-タドポールと自己エネルギー \eqref{eq:T}〜\eqref{eq:SH} & \ref{app:se} & Feynman ゲージで $D$ 次元の記号。一般の $\xi$ は \texttt{SM.mod} で（後で） & 数値 & 解析式と数値 & — \\
+タドポールと自己エネルギー \eqref{eq:T}〜\eqref{eq:SH} & \ref{app:se} & Feynman ゲージで $D$ 次元の記号、\texttt{SM.mod} と図の組ごと。一般の $\xi$ で ST 恒等式 \eqref{eq:ST}（\texttt{SM.mod}） & 数値 & 解析式と数値 & — \\
 on-shell の対抗項、$\delta Z_e$ \eqref{eq:ct}〜\eqref{eq:dZe} & \ref{app:ren} & 記号、$\xi$ によらないこと & \texttt{RenConst} & 数値 & — \\
 $\Delta\alpha$、$\Delta\rho$、$\Delta r$、$M_W$ \eqref{eq:dalpha}〜\eqref{eq:mw} & \ref{app:dr} & $\mu$ 崩壊の頂点と箱、$\xi$ によらないこと & 数値 & 数値 & — \\
 完全な電弱 NLO（$e^+e^-\to\mu^+\mu^-$） & 後で & — & 数値 & 数値 & MadLoop（\texttt{loop\_qcd\_qed\_sm}） \\
@@ -572,7 +595,7 @@ $Z\to f\bar f$ の1ループ & 後で & — & 数値 & — & — \\
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}、手順 (2) は \texttt{run\_tree\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}、手順 (2) は \texttt{run\_tree\_check.sh}、手順 (3) は \texttt{run\_oneloop\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}模型ファイルは FeynRules~2.3.49 に付属の標準模型 \texttt{SM.fr}（版 1.4.7）を変更せずに使った（\texttt{Src/SM.fr}）。\texttt{FeynmanGauge = True} で、Goldstone ボソンとゴーストを含む。ゲージ固定の項はラグランジアンに含まれず、Feynman ゲージの伝播関数とゴーストとスカラーの結合が直接与えられる。FeynRules のエルミート性のチェックは通った。運動項の規格化のチェックはニュートリノについて、質量項のチェックは Goldstone ボソンについて警告を出したが、どちらも模型の誤りではない（\ref{app:details}）。\texttt{FeynmanRules} は93個の頂点のクラスを返し、スクリプト \texttt{generate\_SM.wl} はそれぞれを表~\ref{tab:rules-f}〜\ref{tab:rules-gh} の式と比べた。比べる前に、$\gamma^\mu$ を $\gamma^\mu(P_L+P_R)$ に分け、湯川行列を対角で実の $y_f$ にし、CKM の和の添字を縮約し、3点の頂点では運動量の保存で $p_3$ を消し、$\cw^2+\sw^2=1$ を使った。93個の差はすべて記号として0になった。比較が甘くないことを確かめるため、表の3か所（$HHH$ の係数、$\bar u^Zu^ZH$ の $\cw$ の次数、$AW\bar W$ の符号）をわざと誤らせた写しで同じ比較をすると、ちょうどその3個に差が出た。
 
@@ -649,6 +672,77 @@ $\Gamma_\mu$ ($10^{-19}$~GeV) & & 3.00881 & $3.0078\pm0.0013$ & $-0.75$ \\
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (3)：タドポールと自己エネルギー。}スクリプトは四つで、\texttt{run\_oneloop\_check.sh} で再実行できる（約3分）。\texttt{oneloop\_conv.wl} は頂点の規約の対応を調べる。\texttt{oneloop\_feyncalc.wl} は FeynArts と FeynCalc で2点関数を $D$ 次元で求め、手計算の式、\texttt{SM.mod}、Slavnov--Taylor 恒等式と比べ、有限部分に現れる $B_0$ を LoopTools と Package-X で数値にする。\texttt{oneloop\_collier.f90} は同じ $B_0$ を COLLIER で求め、\texttt{oneloop\_numeric.py} はそれらを30桁の積分と比べる。FeynCalc の振幅は、テンソル積分を $A_0$、$B_0$ に簡約し、$B_0(0,m_1,m_2)$ を $D$ 次元で厳密に $A_0$ で書いた形で比べた。
+
+\paragraph{すべての頂点のクラスの規約。}手順 (2) の38個に、ゴーストの23個とスカラーやゲージ場の4点の頂点などを加え、グルーオンを含む5個を除く88個のクラスで、FeynRules の模型と \texttt{SM.mod}（$\xi=1$）の切断された振幅の比を求めた。比はすべて数になり、頂点の場ごとの因子の積 $\prod_fc(f)$ で88個すべてが説明できた。因子は $c(A)=c(u^A)=c(\bar u^A)=-1$、$c(G^+)=-i$、$c(G^-)=+i$、ほかは1である（比が $1$ のものが49個、$-1$、$-i$、$+i$ のものが13個ずつ）。ゴーストの因子は23個のゴーストの頂点から一通りに決まった。光子のゴーストは光子と同じく符号を変え、$W$ のゴーストは $G^\pm$ の位相を受けない。どの場でも $c(f)c(\bar f)=1$ なので内線の因子は打ち消し、二つの模型は場の取り方（$A^{\mathrm{Denner}}=-A$、$u^{A,\mathrm{Denner}}=-u^A$、$\phi^+=-iG^+$）だけが違う。
+
+\paragraph{Feynman ゲージ。}FeynRules の模型の1PI の図（フェルミオンのループはクラスの段階で数える。図~\ref{fig:oneloop} の説明の数）から、式~\eqref{eq:T}〜\eqref{eq:SH} のフェルミオンとボソンの部分（12個の式）を $D$ 次元で求めた。$\epsilon$ で展開して有理数の項を出すと、手計算の式との差はすべて記号として0になった。同じ2点関数を \texttt{SM.mod}（$\xi=1$）からも求め、位相（トポロジー）と内線の場が同じ図の組ごとに、外線の因子で直して $D$ 次元のまま比べた。12個の2点関数（$AA$、$AZ$、$ZZ$、$WW$、$HH$、$A$ と $Z$ と $G^0$ の混合、$W$ と $G^\pm$ の混合、$G^0G^0$、$G^+G^-$）とタドポールの233個の組で、差はすべて0になった（表~\ref{tab:se}）。
+
+\begin{table}[tbp]
+\centering\small
+\caption{Feynman ゲージの1ループの2点関数とタドポールの図の数（1PI の図とタドポールの付いた図、フェルミオンのループはクラスの段階）と、FeynRules の模型と \texttt{SM.mod} を比べた図の組の数。組は位相と内線の場で分けた。すべての組で $D$ 次元の差が0になった。$a\to b$ は $a$ が入り $b$ が出る2点関数。}
+\label{tab:se}
+\begin{tabular}{lrr@{\qquad}lrr}
+\toprule
+2点関数 & 図 & 組 & 2点関数 & 図 & 組 \\
+\midrule
+$A\to A$ & 11 & 9 & $A\to G^0$ & 7 & 5 \\
+$A\to Z$ & 11 & 9 & $Z\to G^0$、$G^0\to Z$ & 20、20 & 17、17 \\
+$Z\to Z$ & 27 & 24 & $G^0\to G^0$ & 25 & 22 \\
+$W^+\to W^+$ & 30 & 27 & $W^+\to G^+$、$G^+\to W^+$ & 22、22 & 20、20 \\
+$H\to H$ & 30 & 27 & $G^+\to G^+$ & 28 & 26 \\
+タドポール & 11 & 10 & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{一般の $R_\xi$ ゲージ。}\texttt{SM.mod} で $\xi_A$、$\xi_Z$、$\xi_W$ を残して同じ2点関数を求め、外線の因子で本ノートの規約に直した。$R_\xi$ ゲージの伝播関数の $1/[(q^2-M^2)(q^2-\xi M^2)]$ は、部分分数に分けてから簡約した。Slavnov--Taylor 恒等式 \eqref{eq:ST} の四つの式は、タドポールの付いた図を含めると $D$ 次元で記号として0になった。1PI の図だけでは $AA$、$AZ$ の式は0のままで、$Z$ と $W$ の式にそれぞれ $\frac{eM_Z}{2\sw\cw}KT$、$\frac{eM_W}{2\sw}KT$ が残った（$T$ は式~\eqref{eq:Txi}）。これが Denner の恒等式~\cite{denner93} の $T$ の項にあたる。$k=0$ で真空の積分として直接求めると、$\Sigma^{AA}_T(0)=0$ がすべての $\xi$ で成り立ち、$\Sigma^{AZ}_T(0)$ は式~\eqref{eq:SAZ0xi} になった。タドポールの付いた図を含めた $\Sigma^{ZZ}_T(M_Z^2)$、$\Sigma^W_T(M_W^2)$、$\Sigma^H(M_H^2)$ は、一般の $\xi$ の値と $\xi=1$ の値の差が $D$ 次元で0になり、$\xi$ によらない。1PI だけの $\Sigma^{ZZ}_T(M_Z^2)$ は $\xi$ に依存し、その依存はタドポールの $\xi$ 依存で打ち消される。これは、タドポールを自己エネルギーに含める Fleischer と Jegerlehner の処方~\cite{fj81} で質量の対抗項が $\xi$ によらないことにあたる。紫外の極の $\xi$ への依存を表~\ref{tab:xipoles} に示す。$\xi=1$ の極は手計算の式の極と一致した。電荷の繰り込みでは、$\frac12\Pi^{AA}(0)$ の極の $\frac12\xi_W$ と $\frac{\sw}{\cw}\Sigma^{AZ}_T(0)/M_Z^2$ の極の $-\frac12\xi_W$ が打ち消し、$\delta Z_e$ の極は $\xi$ によらず $\frac12\aK\bigl[\frac43\sum_fN_cQ_f^2-7\bigr]\DUV$ になった（フェルミオンは1世代で確かめた）。
+
+\paragraph{$W$ の自己エネルギーの $\xi_A$ の部分。}光子の伝播関数の $\xi_A$ の部分 $(1-\xi_A)q_\mu q_\nu/q^4$ は、$\int\dd^Dq/q^4=0$ のように紫外と赤外の極が打ち消し合う積分を生む。そのため、$A_0$、$B_0$ の係数から読んだ $1/\epsilon$ の係数には赤外の極が混ざり、$k^2$ の多項式にならなかった（$1/k^2$ の項が残った）。光子とそのゴーストに質量 $\lambda$ を与えて紫外の極を求め、$\lambda\to0$ とすると、極は表~\ref{tab:xipoles} の多項式になった。差の赤外の極は $\aK\frac{(1-\xi_A)(k^2-M_W^2)}{12k^2}\bigl[(9+\xi_W)k^2+(1+\xi_W)M_W^2\bigr]$ で、$k^2-M_W^2$ に比例して殻上で消える。
+
+\begin{table}[tbp]
+\centering\small\renewcommand{\arraystretch}{2.3}
+\caption{一般の $R_\xi$ ゲージの1PI の自己エネルギーとタドポールの紫外の極のうち、$\xi$ に依存する部分（\texttt{SM.mod}、本ノートの規約）。自己エネルギーは $\aK\DUV$ を、タドポールは $\DUV$ を掛ける。$\xi=1$ の値を足すと、式~\eqref{eq:T}〜\eqref{eq:SH} の極になる。}
+\label{tab:xipoles}
+\begin{tabular}{ll}
+\toprule
+量 & 極の $\xi$ に依存する部分 \\
+\midrule
+$\Sigma^{AA}_T$ & $\xi_Wk^2$ \\
+$\Sigma^{AZ}_T$ & $\dfrac{\cw}{2\sw}\xi_W\bigl(2k^2-M_Z^2\bigr)$ \\
+$\Sigma^{ZZ}_T$ & $\dfrac{\xi_W}{\sw^2}\Bigl(\cw^2k^2-\dfrac{2\cw^2-1}2M_Z^2\Bigr)+\dfrac{\xi_ZM_Z^2}{4\sw^2\cw^2}$ \\
+$\Sigma^W_T$ & $\dfrac{\xi_A}2\bigl(k^2-M_W^2\bigr)+\dfrac{\xi_Wk^2}{2\sw^2}+\dfrac{\xi_Z}{\sw^2}\Bigl(\dfrac{\cw^2k^2}2-\dfrac{2\cw^4-1}4M_Z^2\Bigr)$ \\
+$\Sigma^H$ & $\bigl(2k^2+M_H^2\bigr)\Bigl(\dfrac{\xi_W}{4\sw^2}+\dfrac{\xi_Z}{8\sw^2\cw^2}\Bigr)$ \\
+$T$ & $\dfrac{eM_H^2}{4K\sw M_W}\bigl(2M_W^2\xi_W+M_Z^2\xi_Z\bigr)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{有限部分。}式~\eqref{eq:T}〜\eqref{eq:SH} を数値の点で20個の値（表~\ref{tab:senum}）について比べた。点は $\alpha=1/137.035999177$、$M_W=80.3692$、$M_Z=91.1880$、$M_H=125.20$~GeV、PDG のフェルミオンの質量~\cite{pdg24}（$u,d,s$ は $2.16$、$4.70$、$93.5$~MeV）、$\mu=M_Z$、$\DUV=0$ である。現れる132個の $B_0$ を LoopTools、Package-X、COLLIER で求めた。Feynman パラメータの積分（mpmath、30桁）からのずれは、$B_0$ で相対 $1.2\times10^{-14}$、$2\times10^{-16}$、$2.5\times10^{-14}$ 以内、自己エネルギーで $5.0\times10^{-15}$、$1.8\times10^{-16}$、$7.6\times10^{-15}$ 以内だった。虚部は光学定理で木の崩壊幅とつながる。この点ではボソンの閾値が閉じているので（$W\gamma$ の閾値はちょうど $k^2=M_W^2$ で虚部を生まない）、$\mathrm{Im}\,\Sigma^W_T(M_W^2)/M_W$、$\mathrm{Im}\,\Sigma^{ZZ}_T(M_Z^2)/M_Z$、$\mathrm{Im}\,\Sigma^H(M_H^2)/M_H$ は、\ref{app:tree} の質量を含む式で求めたフェルミオン対への崩壊幅の和 $1.970213$、$2.351793$、$0.004767794$~GeV と相対 $10^{-16}$ 以内で一致した。
+
+\begin{table}[tbp]
+\centering\small
+\caption{有限部分（$\DUV=0$、$\mu=M_Z$、単位は GeV$^2$、$T$ は GeV$^3$）。値は mpmath の積分による。LoopTools、Package-X、COLLIER の値との相対の差は最大で $5.0\times10^{-15}$、$1.8\times10^{-16}$、$7.6\times10^{-15}$。}
+\label{tab:senum}
+\begin{tabular}{lrrr@{\qquad}lrrr}
+\toprule
+量 & $k^2$ & 実部 & 虚部 & 量 & $k^2$ & 実部 & 虚部 \\
+\midrule
+$\Sigma^{AA}_T$ & $-M_Z^2$ & $-56.3099$ & 0 & $\Sigma^{ZZ}_T$ & $-M_Z^2$ & $94.2016$ & 0 \\
+ & $M_W^2$ & $48.1006$ & $104.7445$ & & $M_W^2$ & $232.4035$ & $166.5159$ \\
+ & $M_Z^2$ & $50.1387$ & $134.8427$ & & $M_Z^2$ & $228.0064$ & $214.4553$ \\
+ & $(200~\mathrm{GeV})^2$ & $-137.6235$ & $490.3383$ & & $(200~\mathrm{GeV})^2$ & $-310.7317$ & $421.5388$ \\
+$\Sigma^{AZ}_T$ & $-M_Z^2$ & $-15.7144$ & 0 & $\Sigma^W_T$ & $-M_Z^2$ & $18.6901$ & 0 \\
+ & $M_W^2$ & $-2.4962$ & $38.1826$ & & $M_W^2$ & $102.6832$ & $158.3445$ \\
+ & $M_Z^2$ & $-7.9970$ & $49.1544$ & & $M_Z^2$ & $86.0430$ & $190.4222$ \\
+ & $(200~\mathrm{GeV})^2$ & $-265.4350$ & $-98.7148$ & & $(200~\mathrm{GeV})^2$ & $-455.8897$ & $252.4191$ \\
+$\Sigma^H$ & $-M_H^2$ & $3466.819$ & 0 & $T$ & & $87811.59$ & 0 \\
+ & $M_H^2$ & $2480.099$ & $0.596928$ & & & & \\
+ & $(300~\mathrm{GeV})^2$ & $559.536$ & $-466.540$ & & & & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手計算で分かったこと。}対称性の破れによって、QCD のノートまでになかった構造が三つ現れた。一つ目は、ゲージ場の質量と Goldstone ボソンの結びつきで、$R_\xi$ ゲージ \eqref{eq:gf} の符号はラグランジアンの $W$ と $G^\pm$、$Z$ と $G^0$ の混合から決まり、ゴーストとスカラーの結合が $\xi$ に比例する。二つ目は、光子と $Z$ の混合で、電荷の繰り込み \eqref{eq:dZe} と $\Delta r$ \eqref{eq:dr} に $\Sigma^{AZ}_T(0)$ が入り、その符号が光子の場の符号の規約に依存する。本ノートの規約（FeynRules、Peskin--Schroeder）では Denner の規約と符号が逆になり、その符号でだけ $\Delta r$ の紫外の極が消える。三つ目は、重いトップの非脱結合で、$\Delta\rho\propto m_t^2$ が $\Delta r$ の大きな部分を占め、$\Delta\alpha$ の寄与のほぼ半分を打ち消す。1ループの $M_W=80.473$~GeV は測定値より約 $0.1$~GeV 大きく、その差が高次の補正の大きさを示す。
@@ -657,7 +751,9 @@ $\Gamma_\mu$ ($10^{-19}$~GeV) & & 3.00881 & $3.0078\pm0.0013$ & $-0.75$ \\
 
 手順 (2) では、FeynRules の模型と FeynArts の \texttt{SM.mod} の規約の違いが、光子の場の符号と $G^\pm$ の位相 $i$ の二つだけであることを38個の頂点のクラスで確かめた。前者は $\Sigma^{AZ}$ と $\delta Z_e$ の符号に効き、後者は $G^\pm$ を外線に持つ振幅の位相だけを変える。後者は断面積には効かないが、手順 (3) で $W$ と $G^\pm$ の混合の Slavnov--Taylor 恒等式を \texttt{SM.mod} の結果と比べるときに必要になる。木の振幅の2乗、崩壊幅、断面積は、FeynCalc の記号の計算、明示的な行列の数値、MadGraph の三つで一致した。$e^+e^-\to W^+W^-$ の打ち消しは、左巻きの $e^-$ では三つの図、右巻きでは光子と $Z$ の二つの図で起こり、どちらも $Z$ の結合 $g_{L,R}$ と電荷の関係 $Q+g_L\cw/\sw=T^3/\sw^2$、$Q+g_R\cw/\sw=0$ で決まる。つまり、$AW\bar W$ と $W\bar WZ$ の頂点の係数の比 $\cw/\sw$ と、$W$ とフェルミオンの結合 $e/(\sqrt2\sw)$ が、フェルミオンの中性の結合と同じ $\sw$、$\cw$ で書かれていることが打ち消しの条件である。道具の注意点は三つあった。FeynCalc~10 の \texttt{DiracTrace} は既定ではトレースを評価しない。切断された頂点の振幅は運動量の保存を自動では使わない。MadGraph のログは断面積を有効数字3〜4桁でしか書かず、10万事象の統計誤差より丸めが大きくなることがある（\ref{app:details}）。
 
-\paragraph{今後。}次は手順 (3) で、タドポールと自己エネルギー \eqref{eq:T}〜\eqref{eq:SH} を Feynman ゲージで図ごとに記号として確かめ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で $\xi$ への依存と極、$W$ と $G^\pm$ の混合の Slavnov--Taylor 恒等式を調べる。有限部分は Package-X、LoopTools、COLLIER で比べる。
+手順 (3) では、ゴーストを含めても二つの模型の違いが場の取り方（光子とそのゴーストの符号、$G^\pm$ の位相）だけであることを確かめ、一般の $R_\xi$ ゲージの計算に \texttt{SM.mod} を同じ変換で使えるようにした。2点関数の Slavnov--Taylor 恒等式は、タドポールの付いた図を含めると厳密に成り立ち、1PI の図だけでは $T$ の項が要る。殻上の $\Sigma_T(M^2)$ も、タドポールを含めてはじめて $\xi$ によらない。どちらも、自己エネルギーにタドポールを含めるかどうかが $\xi$ への依存を左右することを示しており、手順 (4) で質量の対抗項の処方を比べるときの基準になる。電荷の繰り込みでは、$\Pi^{AA}(0)$ と $\Sigma^{AZ}_T(0)$ の $\xi_W$ への依存が打ち消し、$\delta Z_e$ の極は $\xi$ によらない。$W$ の自己エネルギーの $\xi_A$ の部分は殻の外で赤外発散し、次元正則化では紫外の極と区別がつかないので、光子に質量を与えて分けた。道具の注意点は四つあった。一つ目に、FeynArts の \texttt{SM.mod} はタドポールを光子や $Z$ の線でつないだ図も作り、運動量0の光子の線で簡約が止まる（FeynCalc の \texttt{FCLoopSplit} が計算全体を中断する）。二つ目に、FeynArts の \texttt{DiagramSelect} は位相の情報を判定関数に渡さないので、タドポールをつなぐ線の場で図を選ぶには、位相ごとに挿入して場の番号で選ぶ。三つ目に、FeynHelpers が返す $A_0$、$B_0$ は FeynCalc の規格化で、$\DUV=0$ の値にするには $1/\epsilon$ の係数に $\gamma_E+\ln\pi$ を掛けて足す。四つ目に、置き換えの規則 \texttt{Conjugate[x\_] :> x} をほかの規則と一度に使うと、共役の中の記号が置き換わらない（\ref{app:details}）。
+
+\paragraph{今後。}次は手順 (4) で、on-shell の対抗項 \eqref{eq:ct}〜\eqref{eq:dZe} を求め、FormCalc の \texttt{RenConst} と比べる。$\delta Z_e$ と物理的な質量の対抗項の $\xi$ への依存を、タドポールの扱い（$\delta t=-T$ と Fleischer--Jegerlehner の処方）ごとに調べる。
 
 \appendix
 
@@ -717,7 +813,9 @@ K\Sigma^{ab}_T(k^2)=-N_c\Bigl[\bigl(L_aL_b+R_aR_b\bigr)\frac23G(k^2;m_1,m_2)-\bi
 \end{equation}
 を得る。等しい質量では $G(k^2;m,m)=F_f(k^2)+3m^2B_0(k^2,m,m)$ である。$v=\frac{L+R}2$、$a=\frac{L-R}2$ で書くと、等しい質量のとき $K\Sigma^{ab}_T=-N_c[\frac43(v_av_b+a_aa_b)F_f+8a_aa_bm^2B_0]$ になる。光子（$L=R=eQ$）、$\gamma Z$（$Z$ は $L=eg_L$、$R=eg_R$、$v=e\gV$、$a=e\gA$）、$Z$、$W$（$L=e/(\sqrt2\sw)$、$R=0$）を入れて、式~\eqref{eq:SAA}〜\eqref{eq:SWW} のフェルミオンの部分を得る。$\gamma Z$ では光子の軸性の結合が0なので $m^2B_0$ の項がない。Higgs の自己エネルギーとタドポールは、頂点 $-im_f/v$ から $K\Sigma^H_f=-N_c\frac{e^2m_f^2}{2\sw^2M_W^2}[2A_0(m_f)+(4m_f^2-k^2)B_0(k^2,m_f,m_f)]$、$KT_f=-\frac{2e}{\sw M_W}N_cm_f^2A_0(m_f)$ である（$1/v=e/(2\sw M_W)$）。
 
-\paragraph{ボソンのループ。}Feynman ゲージのボソンのループは、手では導かず、予備的な計算（第~\ref{sec:plan} 節）で FeynCalc を使って足した。図~\ref{fig:oneloop} の (b)〜(h) の各図を表~\ref{tab:rules-sv}〜\ref{tab:rules-gh} の頂点で書き、テンソル積分を $A_0$、$B_0$ に簡約して足したものである。光子の自己エネルギーでは $W$ のループ、$G^\pm$ のループ、$WG^\pm$ のループ、ゴーストのループ、4点の図が寄与する。$D$ 次元の係数（$(D-2)$、$(D-1)$ など）を $\epsilon$ で展開して有理数の項を出すと、式~\eqref{eq:SAA}、\eqref{eq:SZZ}、\eqref{eq:SWW} のボソンの部分は Denner の式~\cite{denner93}（付録~B）と同じ形になり、式~\eqref{eq:SAZ} は符号が逆になる。符号の違いは光子の場の規約 $A^{\mathrm{Denner}}=-A$ による。タドポール \eqref{eq:T} と Higgs の自己エネルギー \eqref{eq:SH} のボソンの部分は、FeynCalc の結果を $A_0$、$B_0$ で整理した形である。どの式も、手順 (3) で図ごとに正式に確かめる。$\Sigma^{AZ}$ は光子の場を1本含むので、規約を変えると全体の符号が変わり、$AA$、$ZZ$、$WW$、$HH$ は変わらない。
+\paragraph{ボソンのループ。}Feynman ゲージのボソンのループは、手では導かず、予備的な計算（第~\ref{sec:plan} 節）で FeynCalc を使って足した。図~\ref{fig:oneloop} の (b)〜(h) の各図を表~\ref{tab:rules-sv}〜\ref{tab:rules-gh} の頂点で書き、テンソル積分を $A_0$、$B_0$ に簡約して足したものである。光子の自己エネルギーでは $W$ のループ、$G^\pm$ のループ、$WG^\pm$ のループ、ゴーストのループ、4点の図が寄与する。$D$ 次元の係数（$(D-2)$、$(D-1)$ など）を $\epsilon$ で展開して有理数の項を出すと、式~\eqref{eq:SAA}、\eqref{eq:SZZ}、\eqref{eq:SWW} のボソンの部分は Denner の式~\cite{denner93}（付録~B）と同じ形になり、式~\eqref{eq:SAZ} は符号が逆になる。符号の違いは光子の場の規約 $A^{\mathrm{Denner}}=-A$ による。タドポール \eqref{eq:T} と Higgs の自己エネルギー \eqref{eq:SH} のボソンの部分は、FeynCalc の結果を $A_0$、$B_0$ で整理した形である。どの式も、手順 (3) で FeynRules の模型と \texttt{SM.mod} の図の組ごとに確かめた（第~\ref{sec:checks} 節）。$\Sigma^{AZ}$ は光子の場を1本含むので、規約を変えると全体の符号が変わり、$AA$、$ZZ$、$WW$、$HH$ は変わらない。
+
+\paragraph{Slavnov--Taylor 恒等式。}BRST 不変性から、ゲージ固定の関数 $F^Z=\partial\!\cdot\!Z-\xi_ZM_ZG^0$ の連結な2点関数 $\langle F^ZF^Z\rangle$ は木の値のままで、ループの補正を受けない。運動量 $k$ が入ってくる場では $\partial_\mu\to-ik_\mu$ なので、$F^Z$ は $(Z_\mu,G^0)$ に $r(k)=(-ik_\mu,-\xi_ZM_Z)$ を掛けた和である。$R_\xi$ ゲージの伝播関数では $k_\mu D_0^{\mu\nu}(k)=-i\xi_Zk^\nu/(k^2-\xi_ZM_Z^2)$、$D_0^{G^0}=i/(k^2-\xi_ZM_Z^2)$ なので、出ていく側の $D_0r(-k)$ は $(k^\mu,-iM_Z)$ に、入ってくる側の $r(k)^TD_0$ は $(k^\nu,iM_Z)$ に比例する。1ループで連結な伝播関数を $D=D_0+D_0\Gamma D_0$ と書くと、$\langle F^ZF^Z\rangle$ の1ループの項が0であることから、出ていく脚に $(k,iM_Z)$、入ってくる脚に $(k,-iM_Z)$ を掛けた和が0になり、式~\eqref{eq:ST} の $Z$ の式を得る。同じ式は、ゲージ不変な2次の項 $\frac12(\partial_\mu G^0+M_ZZ_\mu)^2$ が $\delta Z_\mu=\partial_\mu\theta$、$\delta G^0=-M_Z\theta$ で不変であることからも分かる。$W^\pm$ では、$D_\mu\Phi$ の上の成分 $-i(\partial_\mu G^++M_WW^+_\mu)$ から $\delta G^\pm=-M_W\theta^\pm$ で、同じ形になる。光子には Goldstone ボソンがないので $F^A=\partial\!\cdot\!A$ で、$\langle F^AF^A\rangle$ と $\langle F^ZF^A\rangle$ から残りの二つの式を得る。$D$ は連結なグリーン関数なので、$\Gamma$ にはタドポールを内線でつないだ図が入る。1PI の図だけで書くと、タドポールの図の分が $T$ に比例する項として残る。
 
 \section{on-shell の対抗項の導出}\label{app:ren}
 
@@ -768,6 +866,8 @@ ie\gamma^\mu\Bigl[Q\Bigl(\delta Z_e+\frac12\delta Z_{AA}+\delta Z_f\Bigr)+\frac1
 \paragraph{MadGraph の設定。}\texttt{model\_mg5.mg5} はユニタリーゲージで21個の過程の図を数え、\texttt{set gauge Feynman} の後で模型を読み込み直して同じ過程を数える。制限カード \texttt{restrict\_massless.dat} は \texttt{make\_restrict.py} が UFO の \texttt{parameters.py} の外部パラメータから作る（FeynRules の UFO は Python~2 の形で書かれているので、正規表現で読む）。
 
 \paragraph{手順 (2) の FeynCalc と MadGraph の設定。}\texttt{tree\_feyncalc.wl} では次のことが必要だった。(a) FeynCalc~10 の \texttt{DiracTrace} は既定ではトレースを評価しないので、\texttt{DiracTraceEvaluate -> True} を付けてから \texttt{Contract} した。(b) 切断された頂点の振幅は、入ってくる運動量 $q$ と出ていく $k_i$ を両方含み、運動量の保存を使わない。$AW\bar W$ などの差は $q=\sum k_i$ を入れ、\texttt{MomentumExpand} と \texttt{ExpandScalarProduct} で展開してはじめて0になった。(c) クォークの色の和は \texttt{SUNFDelta} の2乗を $N_c$ に置き換えた。(d) 崩壊幅では、崩壊するベクトル粒子と終状態のベクトル粒子の偏極の和を \texttt{DoPolarizationSums} でとった。(e) \texttt{SM.mod} の振幅は \texttt{GaugeRules -> \{\_GaugeXi -> 1\}} で作った。(f) FeynArts~3.12 は Mathematica~14 で模型を初期化するときに \texttt{RuleDelayed::rhs} のメッセージを出す。結果には影響しないので \texttt{Quiet} で抑えた。\texttt{tree\_mg5.mg5} は、制限のない模型で \texttt{compute\_widths} と $\mu$ の崩壊幅を、制限カードの模型で断面積を求める。MadGraph のログは断面積を有効数字3〜4桁でしか書かない（たとえば \texttt{111 +- 0.01131 pb}）ので、\texttt{tree\_numeric.py} は各実行の banner の \texttt{Integrated weight} を使う。乱数の種は実行ごとに固定した（\texttt{iseed} が101〜107）。\texttt{compute\_widths} の部分幅は、書き出したカード \texttt{widths\_card.dat} の \texttt{DECAY} のブロックの注釈から読む。
+
+\paragraph{手順 (3) の FeynCalc の設定。}\texttt{oneloop\_feyncalc.wl} では次のことが必要だった。(a) タドポールを内線でつなぐ位相では、\texttt{SM.mod} は光子や $Z$ の線でつないだ図も作る。光子の線は運動量0で $1/0$ になり、簡約が止まる。ベクトル場、$G^0$、$G^\pm$ のタドポールは0なので、タドポールの位相だけで別に挿入し、つなぐ線（\texttt{Propagator[Internal]}）の場が $H$ の図だけを選んだ。\texttt{DiagramSelect} の判定関数には \texttt{FeynmanGraph} の規則だけが渡され、位相は渡されない。場の番号は挿入した後の位相にしか付かない。(b) 簡約は、射影、部分分数（\texttt{ApartFF}）、同じ分母のまとめ（\texttt{FDS}）、\texttt{TID}、\texttt{PaVeReduce} の順で行った。\texttt{FDS} は、QCD のノートで同じ分母を並べたまま \texttt{TID} に渡すと誤った極が出たことに倣った（今回の結果は \texttt{FDS} の有無で変わらなかった）。(c) $\gamma_5$ を含むトレースの $\epsilon$ テンソルの項は、外の運動量が一つの2点関数では0なので、\texttt{FCSetDiracGammaScheme["NDR-Discard"]} で捨てた。(d) $k=0$ の自己エネルギーは、\texttt{FCReplaceMomenta} で外の運動量を0にしてから、真空の積分として求めた。(e) FeynHelpers の \texttt{LToolsEvaluate}、\texttt{PaXEvaluate} は $a/\epsilon+b$ を返し、$\DUV=0$ の値は $b+a(\gamma_E+\ln\pi)$ である（Feynman パラメータの積分と比べて確かめた）。(f) FeynRules の模型の湯川結合は \texttt{Conjugate[yd[...]]} の形でも現れる。\texttt{Conjugate[x\_] :> x} をほかの規則と一度の \texttt{ReplaceAll} で使うと、外側の \texttt{Conjugate} が外れた中身にはほかの規則が当たらず、湯川結合の記号が残った。共役を先に外す。
 
 \paragraph{Mathematica の版。}素の FeynArts~3.12 は、Mathematica 14.3.0 では模型の初期化（\texttt{InitializeModel}）の途中でカーネルが落ちる。原因はパターン照合で、\texttt{MatchQ[G[1][x] . \{g\}, G[s\_][f\_\_] . k\_List]} だけでカーネルが落ちる（wolframscript は「ライセンスの誤り」と表示する）。FeynArts は \texttt{InitGenericCoupling} でこの形のパターンを使う。14.2.1 では正しく \texttt{True} を返すので、本ノートの計算は 14.2.1 で行った。
 

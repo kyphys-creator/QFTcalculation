@@ -483,7 +483,7 @@ zsh の単語分割（shell） & \texttt{for r in "1 85" ...; do set -- \$r} や
 \textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
 \midrule
 Mathematica 14.3.0 と FeynArts（SM） & 素の FeynArts 3.12 が模型の初期化（\texttt{InitializeModel}）でカーネルごと落ちる（wolframscript は「ライセンスの誤り」と表示）。FormCalc の試験も落ち、FeynRules の試験は止まる & \texttt{MatchQ[G[1][x] . \{g\}, G[s\_][f\_\_] . k\_List]} の照合だけでカーネルが落ちる（14.2.1 では \texttt{True}）。FeynArts は \texttt{InitGenericCoupling} でこの形を使う & 14.2.1 を使う \\
-FeynArts の \texttt{SM.mod} と FeynRules の標準模型（SM） & 同じ頂点の振幅が、光子の脚ごとに $-1$、$G^\pm$ の脚ごとに $\mp i$ だけ違う。$\Sigma^{AZ}$ と、それを含む $\delta Z_e$、$\Delta r$ の式の符号が Denner の論文と逆になる & 規約の違い。\texttt{SM.mod} と FormCalc は Denner の規約（$A^{\mathrm{Denner}}=-A$、$\phi^+=-iG^+$）、FeynRules と MadGraph は Peskin--Schroeder。\texttt{SM.mod} は \texttt{V[3]} が $W^-$、\texttt{S[3]} が $G^-$ & 一つの計算で二つの模型の頂点や対抗項を混ぜない。比べるときは外線の因子 $(-1)^{n_A}(\mp i)^{n_{G^\pm}}$ で直す（93個のうち38個の頂点のクラスで確かめた。ゴーストは未確認） \\
+FeynArts の \texttt{SM.mod} と FeynRules の標準模型（SM） & 同じ頂点の振幅が、光子の脚ごとに $-1$、$G^\pm$ の脚ごとに $\mp i$ だけ違う。$\Sigma^{AZ}$ と、それを含む $\delta Z_e$、$\Delta r$ の式の符号が Denner の論文と逆になる & 規約の違い。\texttt{SM.mod} と FormCalc は Denner の規約（$A^{\mathrm{Denner}}=-A$、$\phi^+=-iG^+$）、FeynRules と MadGraph は Peskin--Schroeder。\texttt{SM.mod} は \texttt{V[3]} が $W^-$、\texttt{S[3]} が $G^-$ & 一つの計算で二つの模型の頂点や対抗項を混ぜない。比べるときは外線の因子 $(-1)^{n_A}(\mp i)^{n_{G^\pm}}$ で直す。光子のゴーストと反ゴーストも $-1$、$W$ のゴーストは1（グルーオンを除く88個の頂点のクラスで確かめた） \\
 FeynRules の制限と UFO（SM） & 制限（\texttt{DiagonalCKM.rst}）を読み込んでから UFO を書くと \texttt{Inner::incom} が出る。軽いフェルミオンの質量を0にする制限も加えた UFO を、MadGraph が読めない（\texttt{KeyError: GetIntOrder[yu[2]]}） & 特定していない & UFO は制限なしで書き、MadGraph の制限カード（\texttt{restrict\_massless.dat}）で質量と Cabibbo 角を0にする。FeynRules の UFO の \texttt{parameters.py} は Python~2 の形なので、カードは正規表現で読んで作る \\
 FeynRules の頂点の比較（SM） & \texttt{ProjP - ProjM} が \texttt{Ga[5]} にまとまる。外線の添字を持つ \texttt{IndexDelta} がほかの因子と縮約される。置き換えの結果に模型の記号（\texttt{b} など）が漏れる & FeynRules を読み込んだカーネルでの自動の評価。パターンの変数の名前が模型の記号と同じ & 比べる前に Dirac の構造と $\delta$ を評価されない記号に置き換える。パターンの変数は模型にない名前にする（\texttt{SM\$} で終える） \\
 FeynCalc と FeynRules の模型（SM） & \texttt{InsertionLevel -> \{Particles\}} の1ループの自己エネルギーにフェルミオンのループが現れない。\texttt{DiagramSelect} に名前を付けた関数を渡すと選ばない。クォークの質量が色の添字を持つ（\texttt{Md[gen, col]}） & 前の二つは特定していない。質量は模型の書き方 & クラスの段階で挿入し、世代の和を記号のまま残す。純関数を渡す。質量の色の添字を外し、閉じたループの色の和を $N_c$ にする（QCD の手順 (8) と同じ） \\
@@ -495,7 +495,26 @@ MadGraph の \texttt{compute\_widths}（SM） & 部分幅が画面に出ない &
 \end{tabularx}
 \end{table}
 
-\paragraph{標準模型のノートで分かった問題。}2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)、(2) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e} にまとめる。
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2e} の続き（標準模型のノート~\cite{smnote} の手順 (3)）。}
+\label{tab:issues2f}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+FeynArts のタドポールの位相と \texttt{SM.mod}（SM） & 2点関数の図にタドポールの付いた位相を入れると、FeynCalc が \texttt{FCLoopSplit::failmsg} を出して計算全体を中断する（\texttt{Check} では捕まらない） & \texttt{SM.mod} がタドポールを光子の線でもつなぎ、運動量0の光子の伝播関数が $1/0$ になる & ベクトル場、$G^0$、$G^\pm$ のタドポールは0なので、タドポールの位相だけで挿入し、つなぐ線（\texttt{Propagator[Internal]}）の場が $H$ の図を選ぶ \\
+FeynArts の \texttt{DiagramSelect}（SM） & 位相の線で図を選べない & 判定関数には \texttt{FeynmanGraph} の規則（\texttt{Field[n] -> 場}）だけが渡される。挿入前の位相には場の番号がない & 位相ごとに挿入し、挿入後の位相から線の場の番号を読んで、純関数で選ぶ \\
+次元正則化の紫外と赤外の極（SM） & 一般の $\xi_A$ の $W$ の自己エネルギーで、$A_0$、$B_0$ の係数から読んだ $1/\epsilon$ の係数に $1/k^2$ の項が残る & 光子の伝播関数の $(1-\xi_A)q_\mu q_\nu/q^4$ が $\int\mathrm{d}^Dq/q^4=0$（紫外と赤外の極が打ち消す）を含み、殻の外で赤外発散する & 紫外の極は光子とそのゴーストに質量 $\lambda$ を与えて求め、$\lambda\to0$ とする（$k^2$ の多項式になる） \\
+FeynHelpers の $A_0$、$B_0$（SM） & \texttt{LToolsEvaluate}、\texttt{PaXEvaluate} の $\epsilon^0$ の係数が LoopTools の既定（$\Delta=0$）の値と $\gamma_E+\ln\pi$ だけずれる & FeynCalc の積分の規格化 & $a/\epsilon+b$ から $b+a(\gamma_E+\ln\pi)$ をとる（積分と比べて確かめた） \\
+\texttt{ReplaceAll} と \texttt{Conjugate}（SM） & FeynRules の模型の湯川結合の記号が一部だけ残る & \texttt{Conjugate[x\_] :> x} とほかの規則を一度に使うと、外側が先に置き換わり、中身にほかの規則が当たらない & 共役を先に外す（\texttt{//. Conjugate[x\_] :> x} の後でほかの規則） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{標準模型のノートで分かった問題。}2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)〜(3) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e}、\ref{tab:issues2f} にまとめる。
+
+手順 (3) では、タドポールと自己エネルギーを Feynman ゲージで手計算の式と \texttt{SM.mod} の両方と記号として比べ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で2点関数の Slavnov--Taylor 恒等式を確かめた。有限部分の $B_0$ は LoopTools、Package-X、COLLIER が30桁の積分と相対 $2.5\times10^{-14}$ 以内で一致した。
 
 最も注意が要るのは、符号の規約である。FeynArts の \texttt{SM.mod} と FormCalc は Denner の総説の規約を、FeynRules と MadGraph は Peskin--Schroeder の規約を使い、光子の場の符号と、Higgs 二重項の荷電の成分の位相が違う。場の取り方の違いなので、内線の因子は打ち消し（内線の光子は $(-1)^2$、内線の $G^\pm$ は $(+i)(-i)$）、断面積や崩壊幅などの物理量は変わらない。一方、外線に光子や $G^\pm$ を持つグリーン関数（$\Sigma^{AZ}$、$W$ と $G^\pm$ の混合）と、それから作る対抗項（$\delta Z_{ZA}$、$\delta Z_e$ の式）は符号や位相が変わる。FeynRules の模型の振幅に FormCalc の対抗項を足すような、二つの規約を混ぜた計算は誤る。MadGraph のログの断面積は、今回も有効数字3〜4桁（\texttt{111 +- 0.01131 pb}）で、10万事象の統計誤差より丸めが大きかった（表~\ref{tab:issues2} の「MadGraph の既定のカットと出力」と同じ）。各実行のバナーの \texttt{Integrated weight} を読み、乱数の種を \texttt{iseed} で固定すると、同じ値が再現した。
 
