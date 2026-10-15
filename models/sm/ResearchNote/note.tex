@@ -39,6 +39,15 @@
     decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
   vtx/.style={circle,fill=black,inner sep=1.3pt},
   lab/.style={font=\small,align=center},
+  slab/.style={font=\scriptsize,align=center},
+  mom/.style={-{Stealth[length=1.6mm]},thin},
+  ctv/.style={circle,draw=black,fill=white,inner sep=0pt,minimum size=7pt,path picture={
+      \draw (path picture bounding box.north west) -- (path picture bounding box.south east)
+            (path picture bounding box.south west) -- (path picture bounding box.north east);}},
+  blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
+  heavy/.style={line width=1.35pt,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=2.2mm]}}}},
+  contact/.style={rectangle,fill=black,inner sep=0pt,minimum size=5pt},
 }
 
 \title{標準模型：電弱の1ループの繰り込みと検算（on-shell の処方、$d=4$）}
@@ -165,7 +174,111 @@ S^{ij,kl}=2g^{\mu_i\mu_j}g^{\mu_k\mu_l}-g^{\mu_i\mu_k}g^{\mu_j\mu_l}-g^{\mu_i\mu
 \end{gathered}
 \label{eq:GammaS}
 \end{equation}
-と書く。頂点のクラスは93個で、フェルミオン23、スカラーの自己結合9、ゲージ場の自己結合8、ゲージ場とスカラー29、ゴーストとゲージ場13、ゴーストとスカラー11である。ゴーストとスカラーの結合は Feynman ゲージの値で、一般の $R_\xi$ ゲージでは反ゴーストのゲージ場の $\xi$ が掛かる。
+と書く。頂点のクラスは93個で、フェルミオン23、スカラーの自己結合9、ゲージ場の自己結合8、ゲージ場とスカラー29、ゴーストとゲージ場13、ゴーストとスカラー11である。ゴーストとスカラーの結合は Feynman ゲージの値で、一般の $R_\xi$ ゲージでは反ゴーストのゲージ場の $\xi$ が掛かる。伝播関数と頂点の型を図~\ref{fig:rulesfig} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+% propagators
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (0,0) -- (2.1,0);
+  \draw[mom] (0.75,0.32) -- (1.35,0.32) node[midway,above,font=\scriptsize] {$k$};
+  \node[font=\scriptsize] at (-0.25,0) {$\mu$}; \node[font=\scriptsize] at (2.35,0) {$\nu$};
+  \node[slab] at (1.05,-0.75) {$A,\ Z,\ W$\\式~\eqref{eq:propV}};
+\end{scope}
+\begin{scope}[shift={(3.6,0)}]
+  \draw[scalar] (0,0) -- (2,0);
+  \node[slab] at (1,-0.75) {$H$\\$\dfrac{i}{k^2-M_H^2}$};
+\end{scope}
+\begin{scope}[shift={(6.9,0)}]
+  \draw[scalar] (0,0) -- (2,0);
+  \node[slab] at (1,-0.75) {$G^0$、$G^\pm$\\$\dfrac{i}{k^2-\xi_VM_V^2}$};
+\end{scope}
+\begin{scope}[shift={(10.2,0)}]
+  \draw[ghost] (0,0) -- (2,0);
+  \node[slab] at (1,-0.75) {$u^Z$、$u^\pm$（$u^A$ は $M=0$）\\$\dfrac{i}{k^2-\xi_VM_V^2}$};
+\end{scope}
+\begin{scope}[shift={(13.5,0)}]
+  \draw[fermion] (0,0) -- (2,0);
+  \draw[mom] (0.7,0.32) -- (1.3,0.32) node[midway,above,font=\scriptsize] {$p$};
+  \node[slab] at (1,-0.75) {$f$\\$\dfrac{i(\slashed p+m_f)}{p^2-m_f^2}$};
+\end{scope}
+% three-point vertices
+\begin{scope}[shift={(0.9,-3.0)}]
+  \draw[fermion] (-0.85,-0.6) -- (0,0); \draw[fermion] (0,0) -- (-0.85,0.6); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.05,-0.75) {$f$}; \node[font=\scriptsize] at (-1.05,0.75) {$f$}; \node[font=\scriptsize] at (1.35,0.25) {$Z_\mu$};
+  \node[slab] at (0.15,-1.35) {$\bar ffV$（表~\ref{tab:rules-f}）\\$ie\gamma^\mu(g_L^fP_L+g_R^fP_R)$};
+\end{scope}
+\begin{scope}[shift={(3.9,-3.0)}]
+  \draw[fermion] (-0.85,-0.6) -- (0,0); \draw[fermion] (0,0) -- (-0.85,0.6); \draw[scalar] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.05,-0.75) {$f$}; \node[font=\scriptsize] at (-1.05,0.75) {$f$}; \node[font=\scriptsize] at (1.3,0.25) {$H$};
+  \node[slab] at (0.15,-1.35) {$\bar ffS$（表~\ref{tab:rules-f}）\\$-i\dfrac{m_f}{v}$};
+\end{scope}
+\begin{scope}[shift={(6.9,-3.0)}]
+  \draw[photon] (0,0) -- (-0.95,0.65); \draw[photon] (0,0) -- (-0.95,-0.65); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize,anchor=east] at (-0.95,0.7) {$A_{\mu_1}$}; \node[font=\scriptsize,anchor=east] at (-0.95,-0.7) {$W_{\mu_2}$};
+  \node[font=\scriptsize] at (1.4,0.25) {$\bar W_{\mu_3}$};
+  \node[slab] at (0.15,-1.35) {$VVV$（表~\ref{tab:rules-sv}）\\$-ie\,\Gamma^{\mu_1\mu_2\mu_3}(p_1,p_2,p_3)$};
+\end{scope}
+\begin{scope}[shift={(9.9,-3.0)}]
+  \draw[photon] (0,0) -- (-0.62,0.62); \draw[photon] (0,0) -- (0.62,0.62); \draw[photon] (0,0) -- (-0.62,-0.62); \draw[photon] (0,0) -- (0.62,-0.62);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.85,0.82) {$W$}; \node[font=\scriptsize] at (0.85,0.82) {$W$};
+  \node[font=\scriptsize] at (-0.85,-0.8) {$\bar W$}; \node[font=\scriptsize] at (0.85,-0.8) {$\bar W$};
+  \node[slab] at (0,-1.6) {$VVVV$（表~\ref{tab:rules-sv}）\\$i\dfrac{e^2}{\sw^2}S^{12,34}$};
+\end{scope}
+\begin{scope}[shift={(12.6,-3.0)}]
+  \draw[scalar] (0,0) -- (-0.9,0.6); \draw[scalar] (0,0) -- (-0.9,-0.6); \draw[scalar] (0,0) -- (1.0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.1,0.72) {$H$}; \node[font=\scriptsize] at (-1.1,-0.72) {$H$}; \node[font=\scriptsize] at (1.22,0.22) {$H$};
+  \node[slab] at (0.1,-1.35) {$SSS$\\$-6i\lambda v$};
+\end{scope}
+\begin{scope}[shift={(15.2,-3.0)}]
+  \draw[scalar] (0,0) -- (-0.62,0.62); \draw[scalar] (0,0) -- (0.62,0.62); \draw[scalar] (0,0) -- (-0.62,-0.62); \draw[scalar] (0,0) -- (0.62,-0.62);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.82,0.8) {$H$}; \node[font=\scriptsize] at (0.82,0.8) {$H$}; \node[font=\scriptsize] at (-0.82,-0.8) {$H$}; \node[font=\scriptsize] at (0.82,-0.8) {$H$};
+  \node[slab] at (0,-1.6) {$SSSS$\\$-6i\lambda$};
+\end{scope}
+% gauge-scalar and ghost vertices
+\begin{scope}[shift={(0.9,-6.3)}]
+  \draw[scalar] (0,0) -- (-0.9,0.6); \draw[scalar] (0,0) -- (-0.9,-0.6); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.12,0.72) {$G^0$}; \node[font=\scriptsize] at (-1.1,-0.72) {$H$}; \node[font=\scriptsize] at (1.4,0.25) {$Z_{\mu_3}$};
+  \node[slab] at (0.15,-1.35) {$VSS$（表~\ref{tab:rules-vs}）\\$\dfrac{e}{2\sw\cw}(p_1-p_2)^{\mu_3}$};
+\end{scope}
+\begin{scope}[shift={(4.2,-6.3)}]
+  \draw[scalar] (-1.0,0) -- (0,0); \draw[photon] (0,0) -- (0.9,0.65); \draw[photon] (0,0) -- (0.9,-0.65);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.25,0.2) {$H$}; \node[font=\scriptsize] at (1.2,0.8) {$W_{\mu_2}$}; \node[font=\scriptsize] at (1.2,-0.8) {$\bar W_{\mu_3}$};
+  \node[slab] at (0.05,-1.35) {$VVS$（表~\ref{tab:rules-vs}）\\$i\dfrac{eM_W}{\sw}g^{\mu_2\mu_3}$};
+\end{scope}
+\begin{scope}[shift={(7.4,-6.3)}]
+  \draw[scalar] (0,0) -- (-0.62,0.62); \draw[scalar] (0,0) -- (-0.62,-0.62); \draw[photon] (0,0) -- (0.62,0.62); \draw[photon] (0,0) -- (0.62,-0.62);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.82,0.8) {$H$}; \node[font=\scriptsize] at (-0.82,-0.8) {$H$};
+  \node[font=\scriptsize] at (0.98,0.8) {$W_{\mu_3}$}; \node[font=\scriptsize] at (0.98,-0.8) {$\bar W_{\mu_4}$};
+  \node[slab] at (0,-1.6) {$VVSS$（表~\ref{tab:rules-vs}）\\$i\dfrac{e^2}{2\sw^2}g^{\mu_3\mu_4}$};
+\end{scope}
+\begin{scope}[shift={(10.6,-6.3)}]
+  \draw[ghost] (-0.85,-0.6) -- (0,0); \draw[ghost] (0,0) -- (-0.85,0.6); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.08,-0.75) {$u^+$}; \node[font=\scriptsize] at (-1.08,0.75) {$\bar u^+$}; \node[font=\scriptsize] at (1.35,0.25) {$A_\mu$};
+  \draw[mom] (-0.3,0.55) -- (-0.75,0.87) node[midway,above,font=\scriptsize] {$p$};
+  \node[slab] at (0.15,-1.35) {$\bar uuV$（表~\ref{tab:rules-gh}）\\$-iep^\mu$};
+\end{scope}
+\begin{scope}[shift={(13.8,-6.3)}]
+  \draw[ghost] (-0.85,-0.6) -- (0,0); \draw[ghost] (0,0) -- (-0.85,0.6); \draw[scalar] (0,0) -- (1.0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.08,-0.75) {$u^\pm$}; \node[font=\scriptsize] at (-1.08,0.75) {$\bar u^\pm$}; \node[font=\scriptsize] at (1.22,0.22) {$H$};
+  \node[slab] at (0.15,-1.35) {$\bar uuS$（表~\ref{tab:rules-gh}）\\$-i\dfrac{e}{2\sw}M_W$};
+\end{scope}
+\end{tikzpicture}
+\caption{伝播関数（上の段、式~\eqref{eq:propV}）と頂点の11の型（中と下の段）。頂点の下の式は、それぞれの型の代表の Feynman 則で、ほかの頂点は表~\ref{tab:rules-f}〜\ref{tab:rules-gh} にある。波線はゲージ場（$A$、$Z$、$W$）、破線はスカラー（$H$、$G^0$、$G^\pm$）、点線はゴースト、矢印の付いた実線はフェルミオンである。矢印はフェルミオン数とゴースト数の流れの向きで、運動量はすべて頂点に入る向きにとる（ゴーストの頂点の $p$ は反ゴースト $\bar u$ の脚の運動量）。$\bar u^\pm u^\pm A$ の符号は $\bar u^+u^+A$ のもので、$\bar u^-u^-A$ では逆になる。ゴーストとスカラーの頂点は Feynman ゲージの値で、一般の $R_\xi$ ゲージでは反ゴーストのゲージ場の $\xi$ が掛かる。ループ運動量ごとに $\int\dd^Dk/(2\pi)^D$ を掛け、閉じたフェルミオンとゴーストのループには $-1$ を掛ける。}
+\label{fig:rulesfig}
+\end{figure}
 
 \begin{table}[tbp]
 \centering\small\renewcommand{\arraystretch}{1.75}
@@ -250,6 +363,102 @@ $\bar u^Zu^-G^+$, $\bar u^Zu^+G^-$ & $\pm\dfrac{eM_W}{2\sw\cw}$ & $\bar u^Zu^ZH$
 \end{table}
 
 \subsection{木のレベルの関係と崩壊幅}\label{sec:tree}
+
+木の図を図~\ref{fig:tree} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+% (a) muon decay
+\begin{scope}[shift={(1.2,0)}]
+  \draw[fermion] (-1.2,0.55) -- (0,0); \draw[fermion] (0,0) -- (1.2,0.55);
+  \draw[photon] (0,0) -- (0,-1.2);
+  \draw[fermion] (0,-1.2) -- (1.2,-0.75); \draw[fermion] (1.2,-1.65) -- (0,-1.2);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0,-1.2) {};
+  \node[font=\scriptsize] at (-1.45,0.6) {$\mu^-$}; \node[font=\scriptsize] at (1.45,0.6) {$\nu_\mu$};
+  \node[font=\scriptsize] at (1.42,-0.7) {$e^-$}; \node[font=\scriptsize] at (1.42,-1.7) {$\bar\nu_e$};
+  \node[font=\scriptsize] at (-0.35,-0.6) {$W^-$};
+  \node[slab] at (0,-2.25) {(a)};
+\end{scope}
+\draw[-{Stealth[length=2mm]},thick] (2.95,-0.6) -- (3.75,-0.6) node[midway,above,font=\scriptsize] {$q^2\ll M_W^2$};
+\begin{scope}[shift={(5.3,-0.6)}]
+  \draw[fermion] (-1.0,0.65) -- (0,0); \draw[fermion] (0,0) -- (1.0,0.65);
+  \draw[fermion] (0,0) -- (1.0,-0.2); \draw[fermion] (1.0,-0.85) -- (0,0);
+  \node[contact] at (0,0) {};
+  \node[font=\scriptsize] at (-1.25,0.7) {$\mu^-$}; \node[font=\scriptsize] at (1.25,0.7) {$\nu_\mu$};
+  \node[font=\scriptsize] at (1.25,-0.15) {$e^-$}; \node[font=\scriptsize] at (1.25,-0.9) {$\bar\nu_e$};
+  \node[slab] at (0,-1.65) {(b)\ $-\dfrac{4G_F}{\sqrt2}$};
+\end{scope}
+% (c) two-body decays
+\begin{scope}[shift={(8.4,-0.6)}]
+  \draw[photon] (-1.0,0) -- (0,0); \draw[fermion] (0,0) -- (0.95,0.6); \draw[fermion] (0.95,-0.6) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.25,0.25) {$W^+$}; \node[font=\scriptsize] at (1.15,0.7) {$\nu$}; \node[font=\scriptsize] at (1.2,-0.7) {$\ell^+$};
+  \node[slab] at (0,-1.65) {(c1)};
+\end{scope}
+\begin{scope}[shift={(11.0,-0.6)}]
+  \draw[photon] (-1.0,0) -- (0,0); \draw[fermion] (0,0) -- (0.95,0.6); \draw[fermion] (0.95,-0.6) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.25) {$Z$}; \node[font=\scriptsize] at (1.15,0.7) {$f$}; \node[font=\scriptsize] at (1.15,-0.7) {$\bar f$};
+  \node[slab] at (0,-1.65) {(c2)};
+\end{scope}
+\begin{scope}[shift={(13.5,-0.6)}]
+  \draw[scalar] (-1.0,0) -- (0,0); \draw[fermion] (0,0) -- (0.95,0.6); \draw[fermion] (0.95,-0.6) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.25) {$H$}; \node[font=\scriptsize] at (1.15,0.7) {$f$}; \node[font=\scriptsize] at (1.15,-0.7) {$\bar f$};
+  \node[slab] at (0,-1.65) {(c3)};
+\end{scope}
+\begin{scope}[shift={(16.0,-0.6)}]
+  \draw[fermion] (-1.0,0) -- (0,0); \draw[fermion] (0,0) -- (0.95,0.6); \draw[photon] (0,0) -- (0.95,-0.6);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.25) {$t$}; \node[font=\scriptsize] at (1.15,0.7) {$b$}; \node[font=\scriptsize] at (1.25,-0.75) {$W^+$};
+  \node[slab] at (0,-1.65) {(c4)};
+\end{scope}
+% (d) e+e- -> f fbar
+\begin{scope}[shift={(1.0,-4.3)}]
+  \draw[fermion] (-0.9,0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,-0.65);
+  \draw[photon] (0,0) -- (1.4,0);
+  \draw[fermion] (1.4,0) -- (2.3,0.65); \draw[fermion] (2.3,-0.65) -- (1.4,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.4,0) {};
+  \node[font=\scriptsize] at (-1.15,0.7) {$e^-$}; \node[font=\scriptsize] at (-1.15,-0.7) {$e^+$};
+  \node[font=\scriptsize] at (2.5,0.7) {$f$}; \node[font=\scriptsize] at (2.5,-0.7) {$\bar f$};
+  \node[font=\scriptsize] at (0.7,0.35) {$\gamma,\ Z$};
+  \node[slab] at (0.7,-1.45) {(d)\ $A_{ij}=Q_eQ_f+g_i^eg_j^f\chi(s)$};
+\end{scope}
+% (e) e+e- -> W-W+
+\begin{scope}[shift={(5.6,-4.3)}]
+  \draw[fermion] (-1.0,0.75) -- (0,0.5); \draw[fermion] (0,0.5) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (-1.0,-0.75);
+  \draw[photon] (0,0.5) -- (1.2,0.75); \draw[photon] (0,-0.5) -- (1.2,-0.75);
+  \node[vtx] at (0,0.5) {}; \node[vtx] at (0,-0.5) {};
+  \node[font=\scriptsize] at (-1.25,0.8) {$e^-$}; \node[font=\scriptsize] at (-1.25,-0.8) {$e^+$};
+  \node[font=\scriptsize] at (1.5,0.8) {$W^-$}; \node[font=\scriptsize] at (1.5,-0.8) {$W^+$};
+  \node[font=\scriptsize] at (0.3,0) {$\nu_e$};
+  \node[slab] at (0.1,-1.45) {(e1)\ $x_t=\dfrac{\delta_{iL}}{2\sw^2}$};
+\end{scope}
+\begin{scope}[shift={(9.0,-4.3)}]
+  \draw[fermion] (-0.9,0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,-0.65);
+  \draw[photon] (0,0) -- (1.3,0);
+  \draw[photon] (1.3,0) -- (2.2,0.65); \draw[photon] (1.3,0) -- (2.2,-0.65);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.3,0) {};
+  \node[font=\scriptsize] at (-1.15,0.7) {$e^-$}; \node[font=\scriptsize] at (-1.15,-0.7) {$e^+$};
+  \node[font=\scriptsize] at (2.5,0.7) {$W^-$}; \node[font=\scriptsize] at (2.5,-0.7) {$W^+$};
+  \node[font=\scriptsize] at (0.65,0.32) {$\gamma$};
+  \node[slab] at (0.65,-1.45) {(e2)\ $x_\gamma=Q_e$};
+\end{scope}
+\begin{scope}[shift={(13.4,-4.3)}]
+  \draw[fermion] (-0.9,0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,-0.65);
+  \draw[photon] (0,0) -- (1.3,0);
+  \draw[photon] (1.3,0) -- (2.2,0.65); \draw[photon] (1.3,0) -- (2.2,-0.65);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.3,0) {};
+  \node[font=\scriptsize] at (-1.15,0.7) {$e^-$}; \node[font=\scriptsize] at (-1.15,-0.7) {$e^+$};
+  \node[font=\scriptsize] at (2.5,0.7) {$W^-$}; \node[font=\scriptsize] at (2.5,-0.7) {$W^+$};
+  \node[font=\scriptsize] at (0.65,0.32) {$Z$};
+  \node[slab] at (0.65,-1.45) {(e3)\ $x_Z=g_i^e\dfrac{\cw}{\sw}$};
+\end{scope}
+\end{tikzpicture}
+\caption{木の図（\ref{app:tree}）。時間は左から右へ流れ、矢印はフェルミオン数の流れの向きである（出ていく反粒子は矢印が頂点に向かう）。(a) $\mu$ 崩壊の $W$ の交換と、(b) $q^2\ll M_W^2$ でそれが縮んだ Fermi の4点相互作用（四角の頂点）。両者を比べて式~\eqref{eq:GF} を得る。(c1)〜(c4) は2体の崩壊幅 \eqref{eq:widths}、\eqref{eq:widthsHt} の図。(d) $e^+e^-\to f\bar f$ の $s$ チャンネルの光子と $Z$ の交換で、ヘリシティごとの振幅の比が式~\eqref{eq:eeff} の $A_{ij}$ になる。(e1)〜(e3) $e^+e^-\to W^-W^+$ の $t$ チャンネルの $\nu_e$ と $s$ チャンネルの光子と $Z$ の交換。縦波の $W$ 対では、それぞれの図が $s/M_W^2$ に比例して増え、その係数が式~\eqref{eq:wwcancel} の $x_V$（$\mathcal M_V\simeq x_VC_i$）である。$e^-$ のカイラリティ $i=L,R$ のどちらでも $x_t+x_\gamma+x_Z=0$ で、増加は打ち消す。}
+\label{fig:tree}
+\end{figure}
 
 \paragraph{$G_F$ と $M_W$。}$\mu$ 崩壊の $W$ の交換を運動量の小さい極限で4フェルミオンの相互作用と比べると
 \begin{equation}
@@ -428,6 +637,51 @@ $\sum_{\mathrm{doublets}}$ は各世代の $(\nu,\ell)$、$(u,d)$ を走り、$m
 
 式~\eqref{eq:SAA}、\eqref{eq:SZZ}、\eqref{eq:SWW} のボソンの部分は Denner の式~\cite{denner93} と同じ形で、式~\eqref{eq:SAZ} は Denner の式と符号が逆である（光子の場の符号の違い、\ref{app:se}）。これらの式は $D$ 次元の係数を $\epsilon$ で展開したときの有理数の項を含む（たとえば $(D-2)A_0\to2A_0-2m^2$ は $A_0=m^2[B_0(0)+1]$ と合わせて $2m^2B_0(0)$ になる）。
 
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+% Gamma = 1PI + tadpole-attached
+\node[lab] at (-0.2,0) {$\Gamma^{a\to b}\ =$};
+\begin{scope}[shift={(1.9,0)}]
+  \draw[thick] (-1.0,0) -- (-0.35,0); \draw[thick] (0.35,0) -- (1.0,0);
+  \node[blob,minimum size=20pt] at (0,0) {\scriptsize 1PI};
+  \node[font=\scriptsize] at (-1.2,0.2) {$a$}; \node[font=\scriptsize] at (1.2,0.2) {$b$};
+\end{scope}
+\node[lab] at (3.55,0) {$+$};
+\begin{scope}[shift={(5.2,-0.35)}]
+  \draw[thick] (-1.0,0) -- (1.0,0);
+  \draw[scalar] (0,0) -- (0,0.75);
+  \node[blob,minimum size=16pt] at (0,1.0) {\scriptsize $T$};
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.2) {$a$}; \node[font=\scriptsize] at (1.2,0.2) {$b$}; \node[font=\scriptsize] at (0.28,0.38) {$H$};
+\end{scope}
+\node[slab,text width=6.2cm,anchor=west] at (7.0,0) {1PI の図とタドポールの付いた図。タドポールの線は運動量0の $H$ で、$A$、$Z$、$G^0$、$G^\pm$ の線のタドポールは0。};
+% ST identity
+\begin{scope}[shift={(0,-2.3)}]
+  \node[lab] at (0,0) {$k^\mu k^\nu$};
+  \draw[photon] (0.65,0) -- (1.3,0); \draw[photon] (1.9,0) -- (2.55,0);
+  \node[blob,minimum size=17pt] at (1.6,0) {};
+  \node[font=\scriptsize] at (0.6,0.25) {$V_\mu$}; \node[font=\scriptsize] at (2.6,0.25) {$V_\nu$};
+  \node[lab] at (3.75,0) {$+\,iM_Vk^\mu$};
+  \draw[photon] (4.75,0) -- (5.4,0); \draw[scalar] (6.0,0) -- (6.65,0);
+  \node[blob,minimum size=17pt] at (5.7,0) {};
+  \node[font=\scriptsize] at (4.7,0.25) {$V_\mu$}; \node[font=\scriptsize] at (6.7,0.25) {$G$};
+  \node[lab] at (7.85,0) {$-\,iM_Vk^\nu$};
+  \draw[scalar] (8.85,0) -- (9.5,0); \draw[photon] (10.1,0) -- (10.75,0);
+  \node[blob,minimum size=17pt] at (9.8,0) {};
+  \node[font=\scriptsize] at (8.8,0.25) {$G$}; \node[font=\scriptsize] at (10.8,0.25) {$V_\nu$};
+  \node[lab] at (11.65,0) {$+\,M_V^2$};
+  \draw[scalar] (12.3,0) -- (12.95,0); \draw[scalar] (13.55,0) -- (14.2,0);
+  \node[blob,minimum size=17pt] at (13.25,0) {};
+  \node[font=\scriptsize] at (12.25,0.25) {$G$}; \node[font=\scriptsize] at (14.25,0.25) {$G$};
+  \node[lab] at (14.9,0) {$=0$};
+\end{scope}
+\end{tikzpicture}
+\caption{2点関数の Slavnov--Taylor 恒等式（式~\eqref{eq:ST}、\ref{app:se}）。上：恒等式に入る2点関数 $\Gamma^{a\to b}$ は、1PI の図と、運動量0の $H$ の線でタドポール $T$ をつないだ図の和である（$a$ が入り、$b$ が出る）。下：$(V,G)=(Z,G^0)$、$(W^+,G^+)$ の恒等式。灰色の円は $\Gamma$、外線の $k^\mu$ はその添字を運動量で縮約することを表す。係数は、ゲージ固定の関数 $F=\partial\!\cdot\!V-\xi M_VG$ の2点関数が補正を受けないことから決まる。光子では $G$ の脚がなく、$k^\mu k^\nu\Gamma^{A\to A}_{\mu\nu}=0$、$k^\mu k^\nu\Gamma^{A\to Z}_{\mu\nu}+iM_Zk^\mu\Gamma^{A\to G^0}_\mu=0$ である。1PI の図だけで書くと、右辺は0ではなく $Z$ で $\frac{eM_Z}{2\sw\cw}KT$、$W$ で $\frac{eM_W}{2\sw}KT$ になる（第~\ref{sec:checks} 節）。}
+\label{fig:st}
+\end{figure}
+
 \paragraph{一般の $R_\xi$ ゲージと Slavnov--Taylor 恒等式。}光子、$Z$、$W$ のゲージパラメータを $\xi_A$、$\xi_Z$、$\xi_W$ とする（式~\eqref{eq:gf}）。$a(k)$ が入り $b(k)$ が出る1ループの2点関数を、式~\eqref{eq:Gamma2} の $\Gamma$ と同じ規格化で $\Gamma^{a\to b}$ と書く。ゲージ固定の関数の2点関数は補正を受けないので、
 \begin{equation}
 \begin{gathered}
@@ -436,7 +690,7 @@ k^\mu k^\nu\Gamma^{V\to V}_{\mu\nu}+iM_Vk^\mu\Gamma^{V\to G}_\mu-iM_Vk^\nu\Gamma
 \end{gathered}
 \label{eq:ST}
 \end{equation}
-が成り立つ（\ref{app:se}）。ここで $\Gamma$ は、1PI の図に、Higgs の線でタドポールをつないだ図を加えたものである。1PI の図だけで書くと、$Z$ と $W$ の式に $T$ に比例する項が加わる。タドポールは一般の $\xi$ で
+が成り立つ（図~\ref{fig:st}、\ref{app:se}）。ここで $\Gamma$ は、1PI の図に、Higgs の線でタドポールをつないだ図を加えたものである。1PI の図だけで書くと、$Z$ と $W$ の式に $T$ に比例する項が加わる。タドポールは一般の $\xi$ で
 \begin{equation}
 \begin{aligned}
 T=\frac{e}{4K\sw M_W}\Bigl[&-8\sum_fN_cm_f^2A_0(m_f)+3M_H^2A_0(M_H)+4(D-1)M_W^2A_0(M_W)+2(D-1)M_Z^2A_0(M_Z)\\
@@ -452,6 +706,74 @@ T=\frac{e}{4K\sw M_W}\Bigl[&-8\sum_fN_cm_f^2A_0(m_f)+3M_H^2A_0(M_H)+4(D-1)M_W^2A
 で、$\xi_W\to1$ で式~\eqref{eq:Pi0} に戻り、紫外の極は $-\aK\frac{M_W^2}{\sw\cw}\frac{3+\xi_W}2\DUV$ である。$\Sigma^{AA}_T(0)=0$ はすべての $\xi$ で成り立つ。式~\eqref{eq:Txi}、\eqref{eq:SAZ0xi} は手順 (3) で FeynCalc から得た（第~\ref{sec:checks} 節）。
 
 \subsection{on-shell の対抗項}\label{sec:ct}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+% two-point counterterms
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (0,0) -- (2.0,0); \node[ctv] at (1.0,0) {};
+  \node[font=\scriptsize] at (-0.25,0) {$W$}; \node[font=\scriptsize] at (2.3,0) {$W$};
+  \node[slab] at (1.0,-0.85) {(a)\\$-\delta M_W^2+\delta Z_W(k^2-M_W^2)$};
+\end{scope}
+\begin{scope}[shift={(4.3,0)}]
+  \draw[photon] (0,0) -- (2.0,0); \node[ctv] at (1.0,0) {};
+  \node[font=\scriptsize] at (-0.25,0) {$A$}; \node[font=\scriptsize] at (2.3,0) {$Z$};
+  \node[slab] at (1.0,-0.85) {(b)\\$\frac12\delta Z_{AZ}k^2+\frac12\delta Z_{ZA}(k^2-M_Z^2)$};
+\end{scope}
+\begin{scope}[shift={(8.8,0)}]
+  \draw[scalar] (0,0) -- (2.0,0); \node[ctv] at (1.0,0) {};
+  \node[font=\scriptsize] at (-0.25,0) {$H$}; \node[font=\scriptsize] at (2.3,0) {$H$};
+  \node[slab] at (1.0,-0.85) {(c)\\$-\delta M_H^2+\delta Z_H(k^2-M_H^2)$};
+\end{scope}
+\begin{scope}[shift={(12.6,0)}]
+  \draw[scalar] (0,0) -- (0.95,0); \node[blob,minimum size=15pt] at (1.25,0) {\scriptsize $T$};
+  \node[lab] at (2.0,0) {$+$};
+  \draw[scalar] (2.45,0) -- (3.4,0); \node[ctv] at (3.4,0) {};
+  \node[lab] at (3.95,0) {$=0$};
+  \node[slab] at (1.9,-0.85) {(d)\\$\delta t=-T$};
+\end{scope}
+% Thomson limit of the e e gamma vertex
+\begin{scope}[shift={(0.6,-2.9)}]
+  \draw[fermion] (-1.1,-0.8) -- (-0.6,-0.44); \draw[fermion] (-0.6,-0.44) -- (0,0);
+  \draw[fermion] (0,0) -- (-0.6,0.44); \draw[fermion] (-0.6,0.44) -- (-1.1,0.8);
+  \draw[photon] (-0.6,-0.44) -- (-0.6,0.44);
+  \draw[photon] (0,0) -- (1.0,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (-0.6,-0.44) {}; \node[vtx] at (-0.6,0.44) {};
+  \node[font=\scriptsize] at (1.25,0.22) {$A$};
+  \node[slab] at (0.05,-1.3) {(e) 頂点の補正\\（$\gamma$、$Z$、$W$、$G$）};
+\end{scope}
+\begin{scope}[shift={(3.5,-2.9)}]
+  \draw[fermion] (-0.95,-0.68) -- (0,0); \draw[fermion] (0,0) -- (-0.95,0.68);
+  \node[blob,minimum size=11pt] at (-0.55,-0.39) {};
+  \draw[photon] (0,0) -- (1.0,0); \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (1.25,0.22) {$A$};
+  \node[slab] at (0.05,-1.3) {(f) 外線のフェルミオン\\（$\frac12\delta Z_f$ ずつ）};
+\end{scope}
+\begin{scope}[shift={(6.6,-2.9)}]
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \draw[photon] (0,0) -- (0.55,0); \node[blob,minimum size=11pt] at (0.75,0) {}; \draw[photon] (0.95,0) -- (1.5,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (1.75,0.22) {$A$}; \node[font=\scriptsize] at (0.3,0.3) {$A$};
+  \node[slab] at (0.3,-1.3) {(g) $\hat\Sigma^{AA}$\\（0、条件 $\hat\Sigma^{AA\prime}_T(0)=0$）};
+\end{scope}
+\begin{scope}[shift={(10.0,-2.9)}]
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \draw[photon] (0,0) -- (0.55,0); \node[blob,minimum size=11pt] at (0.75,0) {}; \draw[photon] (0.95,0) -- (1.5,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (1.75,0.22) {$A$}; \node[font=\scriptsize] at (0.3,0.3) {$Z$};
+  \node[slab] at (0.3,-1.3) {(h) $\hat\Sigma^{AZ}$\\（0、条件 $\hat\Sigma^{AZ}_T(0)=0$）};
+\end{scope}
+\begin{scope}[shift={(13.6,-2.9)}]
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \draw[photon] (0,0) -- (1.0,0); \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (1.25,0.22) {$A$};
+  \node[slab] at (0.05,-1.45) {(i) 頂点の対抗項\\$Q(\delta Z_e+\frac12\delta Z_{AA}+\delta Z_f)$\\$+\frac12\delta Z_{ZA}(g_LP_L+g_RP_R)$};
+\end{scope}
+\end{tikzpicture}
+\caption{on-shell の対抗項（式~\eqref{eq:rentrans}〜\eqref{eq:dZe}、\ref{app:ren}）。上：2点関数の対抗項（$\otimes$）と、繰り込まれた自己エネルギー $\hat\Sigma=\Sigma+(\text{対抗項})$ への寄与。(d) タドポールは $\delta t=-T$ で打ち消すので、自己エネルギーにタドポールの図は入らない。下：Thomson 極限（光子の運動量 $q\to0$）の $ff\gamma$ 頂点の1ループの補正。(e) の頂点の補正のうち QED と同じ部分は、(f) の外線の場の繰り込みと Ward 恒等式で打ち消し、$T^3_f$ に比例する部分は Feynman ゲージで $W$ を含む頂点の補正と打ち消す。外の光子の線では、繰り込まれた (g)、(h) が on-shell の条件で0になる。残る (i) の $Q_f$ に比例する部分が0になる条件 $\delta Z_e+\frac12\delta Z_{AA}-\frac{\sw}{2\cw}\delta Z_{ZA}=0$ から、式~\eqref{eq:dZe} を得る。}
+\label{fig:ct}
+\end{figure}
 
 裸のパラメータと場を
 \begin{equation}
@@ -473,7 +795,7 @@ H_0=\bigl(1+\tfrac12\delta Z_H\bigr)H
 \end{gathered}
 \label{eq:ct}
 \end{equation}
-を得る（$'$ は $k^2$ についての微分、\ref{app:ren}）。弱混合角は $\sw^2=1-M_W^2/M_Z^2$ の定義から
+を得る（$'$ は $k^2$ についての微分、図~\ref{fig:ct}、\ref{app:ren}）。弱混合角は $\sw^2=1-M_W^2/M_Z^2$ の定義から
 \begin{equation}
 \frac{\delta\sw^2}{\sw^2}=\frac{\cw^2}{\sw^2}\Bigl(\frac{\delta M_Z^2}{M_Z^2}-\frac{\delta M_W^2}{M_W^2}\Bigr)
 \label{eq:dsw}
@@ -489,6 +811,98 @@ H_0=\bigl(1+\tfrac12\delta Z_H\bigr)H
 となる（最後の形は Feynman ゲージの式~\eqref{eq:Pi0} を入れたもの、\ref{app:ren}）。Denner の規約では第2項の符号が逆で、$\delta Z_e=-\frac12\delta Z_{AA}-\frac{\sw}{2\cw}\delta Z_{ZA}$ と書かれる。$\delta Z_e$ の紫外の極 $-\aK\bigl(-\frac23\sum N_cQ_f^2+\frac72\bigr)\DUV$ は、電荷の $\beta$ 関数の係数 $b_e=\frac43\sum N_cQ_f^2-7$（ボソンの $-7$ は $W$ のループの $-\frac{22}3$ と Higgs 二重項の $\frac13$ の和）と $\delta Z_e|_{\mathrm{UV}}=\aK\frac{b_e}2\DUV$ で一致する。
 
 \subsection{$\Delta\alpha$、$\Delta\rho$、$\Delta r$ と $M_W$}\label{sec:dr}
+
+$\mu$ 崩壊の1ループの図と、$\Delta\alpha$、$\Delta\rho$ の図を図~\ref{fig:dr} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+% (a) W self-energy and counterterm
+\begin{scope}[shift={(1.2,0)}]
+  \draw[fermion] (-1.15,0.6) -- (0,0.25); \draw[fermion] (0,0.25) -- (1.15,0.6);
+  \draw[photon] (0,0.25) -- (0,-0.12); \node[blob,minimum size=10pt] at (0,-0.35) {}; \draw[photon] (0,-0.58) -- (0,-0.95);
+  \node[vtx] at (0,0.25) {};
+  \node[font=\scriptsize] at (-1.38,0.65) {$\mu^-$}; \node[font=\scriptsize] at (1.4,0.65) {$\nu_\mu$};
+  \draw[fermion] (0,-0.95) -- (1.1,-0.55); \draw[fermion] (1.1,-1.35) -- (0,-0.95);
+  \node[vtx] at (0,-0.95) {};
+  \node[font=\scriptsize] at (1.33,-0.5) {$e^-$}; \node[font=\scriptsize] at (1.35,-1.4) {$\bar\nu_e$};
+  \node[slab] at (0,-1.95) {(a) $\Sigma^W_T(0)$ と\\$\delta M_W^2$、$\delta Z_W$};
+\end{scope}
+% (b) vertex correction with Z between mu and nu_mu
+\begin{scope}[shift={(4.6,0)}]
+  \draw[fermion] (-1.15,0.85) -- (-0.6,0.6); \draw[fermion] (-0.6,0.6) -- (0,0.25); \draw[fermion] (0,0.25) -- (0.6,0.6); \draw[fermion] (0.6,0.6) -- (1.15,0.85);
+  \draw[photon] (-0.6,0.6) to[bend left=75] (0.6,0.6);
+  \draw[photon] (0,0.25) -- (0,-0.95);
+  \node[vtx] at (-0.6,0.6) {}; \node[vtx] at (0.6,0.6) {}; \node[vtx] at (0,0.25) {};
+  \node[font=\scriptsize] at (-1.38,0.9) {$\mu^-$}; \node[font=\scriptsize] at (1.4,0.9) {$\nu_\mu$}; \node[font=\scriptsize] at (0,1.3) {$Z$};
+  \draw[fermion] (0,-0.95) -- (1.1,-0.55); \draw[fermion] (1.1,-1.35) -- (0,-0.95);
+  \node[vtx] at (0,-0.95) {};
+  \node[font=\scriptsize] at (1.33,-0.5) {$e^-$}; \node[font=\scriptsize] at (1.35,-1.4) {$\bar\nu_e$};
+  \node[slab] at (0,-1.95) {(b) 頂点の補正\\（$Z$、$\gamma$）};
+\end{scope}
+% (c) vertex correction with the WWZ coupling
+\begin{scope}[shift={(8.0,0)}]
+  \draw[fermion] (-1.15,0.85) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (0.1,0.25); \draw[fermion] (0.1,0.25) -- (1.15,0.75);
+  \draw[photon] (-0.55,0.55) -- (-0.15,-0.3);
+  \draw[photon] (0.1,0.25) -- (-0.15,-0.3); \draw[photon] (-0.15,-0.3) -- (0,-0.95);
+  \node[vtx] at (-0.55,0.55) {}; \node[vtx] at (0.1,0.25) {}; \node[vtx] at (-0.15,-0.3) {};
+  \node[font=\scriptsize] at (-1.38,0.9) {$\mu^-$}; \node[font=\scriptsize] at (1.4,0.8) {$\nu_\mu$};
+  \node[font=\scriptsize] at (-0.68,-0.02) {$Z$}; \node[font=\scriptsize] at (0.35,-0.12) {$W$};
+  \draw[fermion] (0,-0.95) -- (1.1,-0.55); \draw[fermion] (1.1,-1.35) -- (0,-0.95);
+  \node[vtx] at (0,-0.95) {};
+  \node[font=\scriptsize] at (1.33,-0.5) {$e^-$}; \node[font=\scriptsize] at (1.35,-1.4) {$\bar\nu_e$};
+  \node[slab] at (0,-1.95) {(c) 頂点の補正\\（$W\bar WZ$、$AW\bar W$）};
+\end{scope}
+% (d) box
+\begin{scope}[shift={(11.4,-0.15)}]
+  \draw[fermion] (-1.15,0.6) -- (-0.45,0.6); \draw[fermion] (-0.45,0.6) -- (0.45,0.6); \draw[fermion] (0.45,0.6) -- (1.15,0.6);
+  \draw[fermion] (-1.15,-0.6) -- (-0.45,-0.6); \draw[fermion] (-0.45,-0.6) -- (0.45,-0.6); \draw[fermion] (0.45,-0.6) -- (1.15,-0.6);
+  \draw[photon] (-0.45,0.6) -- (-0.45,-0.6); \draw[photon] (0.45,0.6) -- (0.45,-0.6);
+  \node[vtx] at (-0.45,0.6) {}; \node[vtx] at (0.45,0.6) {}; \node[vtx] at (-0.45,-0.6) {}; \node[vtx] at (0.45,-0.6) {};
+  \node[font=\scriptsize] at (-1.38,0.62) {$\mu^-$}; \node[font=\scriptsize] at (1.4,0.62) {$\nu_\mu$};
+  \node[font=\scriptsize] at (-1.38,-0.62) {$\bar\nu_e$}; \node[font=\scriptsize] at (1.38,-0.62) {$e^-$};
+  \node[font=\scriptsize] at (-0.7,0) {$W$}; \node[font=\scriptsize] at (0.75,0) {$Z$};
+  \node[slab] at (0,-1.8) {(d) 箱（$WZ$、$W\gamma$）};
+\end{scope}
+% (e) external leg
+\begin{scope}[shift={(14.8,0)}]
+  \draw[fermion] (-1.15,0.6) -- (0,0.25); \draw[fermion] (0,0.25) -- (1.15,0.6);
+  \node[blob,minimum size=10pt] at (-0.6,0.43) {};
+  \draw[photon] (0,0.25) -- (0,-0.95); \node[vtx] at (0,0.25) {};
+  \node[font=\scriptsize] at (-1.38,0.65) {$\mu^-$}; \node[font=\scriptsize] at (1.4,0.65) {$\nu_\mu$};
+  \draw[fermion] (0,-0.95) -- (1.1,-0.55); \draw[fermion] (1.1,-1.35) -- (0,-0.95);
+  \node[vtx] at (0,-0.95) {};
+  \node[font=\scriptsize] at (1.33,-0.5) {$e^-$}; \node[font=\scriptsize] at (1.35,-1.4) {$\bar\nu_e$};
+  \node[slab] at (0,-1.95) {(e) 外線の\\場の繰り込み};
+\end{scope}
+% Delta alpha and Delta rho
+\begin{scope}[shift={(1.6,-3.6)}]
+  \draw[photon] (-1.0,0) -- (0,0); \draw[photon] (1.0,0) -- (2.0,0);
+  \draw[fermion] (0,0) arc (180:0:0.5); \draw[fermion] (1.0,0) arc (360:180:0.5);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.2) {$A$}; \node[font=\scriptsize] at (2.2,0.2) {$A$}; \node[font=\scriptsize] at (0.5,0.75) {$f$};
+  \node[slab] at (0.5,-1.0) {(f) $\Delta\alpha$：$f=\ell,u,d,s,c,b$};
+\end{scope}
+\begin{scope}[shift={(7.0,-3.6)}]
+  \draw[photon] (-1.0,0) -- (0,0); \draw[photon] (1.0,0) -- (2.0,0);
+  \draw[heavy] (0,0) arc (180:0:0.5); \draw[fermion] (1.0,0) arc (360:180:0.5);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.2) {$W$}; \node[font=\scriptsize] at (2.2,0.2) {$W$};
+  \node[font=\scriptsize] at (0.5,0.78) {$t$}; \node[font=\scriptsize] at (0.5,-0.75) {$b$};
+  \node[slab] at (0.5,-1.15) {(g) $\Sigma^W_T(0)$};
+\end{scope}
+\begin{scope}[shift={(12.0,-3.6)}]
+  \draw[photon] (-1.0,0) -- (0,0); \draw[photon] (1.0,0) -- (2.0,0);
+  \draw[heavy] (0,0) arc (180:0:0.5); \draw[heavy] (1.0,0) arc (360:180:0.5);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.2) {$Z$}; \node[font=\scriptsize] at (2.2,0.2) {$Z$};
+  \node[font=\scriptsize] at (0.5,0.78) {$t$};
+  \node[slab] at (0.5,-1.15) {(h) $\Sigma^{ZZ}_T(0)$};
+\end{scope}
+\end{tikzpicture}
+\caption{$\mu$ 崩壊の1ループの補正と $\Delta r$（式~\eqref{eq:dr}、\ref{app:dr}）。上：(a) $W$ の伝播関数の補正は $q^2\to0$ で $(\Sigma^W_T(0)-\delta M_W^2)/M_W^2$ を与え、$\delta Z_W$ は二つの頂点の対抗項と打ち消す。(b)、(c) は $W$ の頂点の補正の例（下の頂点にも同じ図がある）、(d) は箱の図（$W$ と $Z$、$W$ と光子を交換する図と、それらの交差した図）、(e) は外線の場の繰り込みである（見やすさのため、外線の位置は時間の順ではない）。(b)〜(e) の和が $\delta_{\mathrm{VB}}'$ で、光子の交換のうち Fermi 理論の QED の補正にあたる部分は $G_F$ の定義に含まれるので除く。結合の対抗項 $2\delta Z_e-\delta\sw^2/\sw^2$ を加えると式~\eqref{eq:dr} になる。下：(f) 軽いフェルミオンの真空偏極が $\Delta\alpha$ \eqref{eq:dalpha} を与え、(g)、(h) の $k^2=0$ の $t$、$b$ のループ（太い線がトップ）の差が $\Delta\rho_t$ \eqref{eq:drho} になる。}
+\label{fig:dr}
+\end{figure}
 
 \paragraph{$\Delta\alpha$。}軽いフェルミオン（トップ以外）の真空偏極の走り
 \begin{equation}
@@ -534,7 +948,51 @@ M_W^2\Bigl(1-\frac{M_W^2}{M_Z^2}\Bigr)=\frac{\pi\alpha}{\sqrt2G_F}\frac1{1-\Delt
 
 \subsection{$H\to\gamma\gamma$}\label{sec:hgg}
 
-$H\to\gamma\gamma$ は1ループで初めて起こり、その振幅は有限で $\xi$ によらない~\cite{egn76,svvz79}。幅は
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+\newcommand{\hggtri}[4]{%
+  \draw[scalar] (-0.95,0) -- (0,0);
+  \draw[#1] (0,0) -- (1.05,0.62); \draw[#2] (1.05,0.62) -- (1.05,-0.62); \draw[#3] (1.05,-0.62) -- (0,0);
+  \draw[photon] (1.05,0.62) -- (1.9,0.95); \draw[photon] (1.05,-0.62) -- (1.9,-0.95);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.05,0.62) {}; \node[vtx] at (1.05,-0.62) {};
+  \node[font=\scriptsize] at (-1.15,0.2) {$H$}; \node[font=\scriptsize] at (2.1,1.05) {$\gamma$}; \node[font=\scriptsize] at (2.1,-1.05) {$\gamma$};
+  \node[slab] at (0.5,-1.45) {#4};}
+\begin{scope}[shift={(1.0,0)}] \hggtri{heavy}{heavy}{heavy}{(a) $t$（$b$、$c$、$\tau$）} \end{scope}
+\begin{scope}[shift={(4.9,0)}] \hggtri{photon}{photon}{photon}{(b) $W$} \end{scope}
+\begin{scope}[shift={(8.8,0)}] \hggtri{scalar}{scalar}{scalar}{(c) $G^\pm$} \end{scope}
+\begin{scope}[shift={(12.7,0)}] \hggtri{ghost}{ghost}{ghost}{(d) $u^\pm$} \end{scope}
+\begin{scope}[shift={(1.0,-3.3)}] \hggtri{photon}{scalar}{scalar}{(e) $W$ と $G^\pm$} \end{scope}
+\begin{scope}[shift={(4.9,-3.3)}]
+  \draw[scalar] (-0.95,0) -- (0,0);
+  \draw[photon] (0,0) arc (180:0:0.55); \draw[photon] (1.1,0) arc (360:180:0.55);
+  \draw[photon] (1.1,0) -- (1.9,0.75); \draw[photon] (1.1,0) -- (1.9,-0.75);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.1,0) {};
+  \node[font=\scriptsize] at (-1.15,0.2) {$H$}; \node[font=\scriptsize] at (2.1,0.85) {$\gamma$}; \node[font=\scriptsize] at (2.1,-0.85) {$\gamma$};
+  \node[slab] at (0.5,-1.45) {(f) $W$（$AAW\bar W$）};
+\end{scope}
+\begin{scope}[shift={(8.8,-3.3)}]
+  \draw[scalar] (-0.95,0) -- (0,0);
+  \draw[scalar] (0,0) arc (180:0:0.55); \draw[scalar] (1.1,0) arc (360:180:0.55);
+  \draw[photon] (1.1,0) -- (1.9,0.75); \draw[photon] (1.1,0) -- (1.9,-0.75);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.1,0) {};
+  \node[font=\scriptsize] at (-1.15,0.2) {$H$}; \node[font=\scriptsize] at (2.1,0.85) {$\gamma$}; \node[font=\scriptsize] at (2.1,-0.85) {$\gamma$};
+  \node[slab] at (0.5,-1.45) {(g) $G^\pm$（$AAG^+G^-$）};
+\end{scope}
+\begin{scope}[shift={(12.7,-3.3)}]
+  \draw[scalar] (-0.95,0) -- (0,0);
+  \draw[photon] (0,0) arc (180:0:0.55); \draw[scalar] (1.1,0) arc (360:180:0.55);
+  \draw[photon] (0,0) -- (-0.55,-0.9); \draw[photon] (1.1,0) -- (1.95,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.1,0) {};
+  \node[font=\scriptsize] at (-1.15,0.2) {$H$}; \node[font=\scriptsize] at (-0.75,-1.0) {$\gamma$}; \node[font=\scriptsize] at (2.15,0.2) {$\gamma$};
+  \node[slab] at (0.5,-1.45) {(h) $W$ と $G^\pm$（$AG^\pm HW$）};
+\end{scope}
+\end{tikzpicture}
+\caption{$H\to\gamma\gamma$ の1ループの図の型（式~\eqref{eq:hgg}、Feynman ゲージ）。太い線はトップ（ほかのフェルミオンも同じ形）、破線の内線は $G^\pm$、点線は $u^\pm$ のゴーストである。三角形の図には、二つの光子を入れ替えた図と、ループの向きが逆の図もある。ユニタリーゲージでは (a)、(b)、(f) だけが残る。$R_\xi$ ゲージの (c)〜(e)、(g)、(h) は Goldstone ボソンとゴーストの寄与で、和は有限で $\xi$ によらない。フェルミオンの図の和が $N_cQ_f^2A_{1/2}(\tau_f)$、ボソンの図の和が $A_1(\tau_W)$ で、両者は逆の符号を持つ（式~\eqref{eq:hggA}）。}
+\label{fig:hgg}
+\end{figure}
+
+$H\to\gamma\gamma$ は1ループで初めて起こり（図~\ref{fig:hgg}）、その振幅は有限で $\xi$ によらない~\cite{egn76,svvz79}。幅は
 \begin{equation}
 \Gamma(H\to\gamma\gamma)=\frac{G_F\alpha^2M_H^3}{128\sqrt2\pi^3}\Bigl|\sum_fN_cQ_f^2A_{1/2}(\tau_f)+A_1(\tau_W)\Bigr|^2,\qquad \tau_i=\frac{M_H^2}{4m_i^2}
 \label{eq:hgg}
