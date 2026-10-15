@@ -354,7 +354,7 @@ FeynMaster のマニュアルは、FeynRules の3つのファイルで \texttt{M
 
 \paragraph{検証で踏んだ二つの落とし穴。}一つ目は、FeynRules の試験で Feynman 則の計算結果を変数 \texttt{v} に代入したことである。\texttt{v} は標準模型ファイルでヒッグス場の真空期待値を表すので、続く UFO 出力からフェルミオンとゲージ粒子の頂点がすべて消え、評価されないコードを粒子名に含む頂点が3000個以上できた。一時は FeynRules と Mathematica 14 の非互換だと判断しかけたが、代入をやめると出力は正常に戻った。模型の記号に値を代入してはならない。二つ目は、試験スクリプトに \texttt{formcalc.wl} という名前を付けたことである。macOS のファイル名は大文字と小文字を区別しないので、そのフォルダで \texttt{Get["FormCalc\bq"]} を実行すると、Mathematica は本物の FormCalc ではなくこのスクリプト（\texttt{FormCalc.wl} と同一視される）を読み、自分自身を呼んで再帰の上限に達した。試験スクリプトにはすべて \texttt{test\_} を付けた。
 
-\paragraph{フェルミオンとゲージ場の模型で分かった問題。}2026年10月12日から14日に、擬スカラー湯川理論のノート~\cite{yukawanote}、スピノル QED のノート~\cite{qednote}、QCD のノート~\cite{qcdnote}（手順 (1)〜(5)）で、フェルミオンとゲージ場を含む模型の1ループの検算を行った。ツールの版は変えていない。その途中で分かった問題と注意を表~\ref{tab:issues2}〜\ref{tab:issues2c} にまとめる。MadGraph の木の断面積の不足とその原因は、上の段落で述べた。以下、残りを道具ごとに説明する。どれも \pth{hep/README.md} の既知の問題にも書いてある。
+\paragraph{フェルミオンとゲージ場の模型で分かった問題。}2026年10月12日から14日に、擬スカラー湯川理論のノート~\cite{yukawanote}、スピノル QED のノート~\cite{qednote}、QCD のノート~\cite{qcdnote}（手順 (1)〜(7)）で、フェルミオンとゲージ場を含む模型の1ループの検算を行った。ツールの版は変えていない。その途中で分かった問題と注意を表~\ref{tab:issues2}〜\ref{tab:issues2c} にまとめる。MadGraph の木の断面積の不足とその原因は、上の段落で述べた。以下、残りを道具ごとに説明する。どれも \pth{hep/README.md} の既知の問題にも書いてある。
 
 \begin{table}[p]
 \centering\footnotesize
@@ -407,7 +407,7 @@ FormCalc の $D$ 次元（QCD） & \texttt{Dimension -> D} では外線のスピ
 
 \begin{table}[tbp]
 \centering\footnotesize
-\caption{表~\ref{tab:issues2}、\ref{tab:issues2b} の続き（QCD のノートの手順 (5)、(6) ほか）。}
+\caption{表~\ref{tab:issues2}、\ref{tab:issues2b} の続き（QCD のノートの手順 (5)〜(7) ほか）。}
 \label{tab:issues2c}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
@@ -418,6 +418,7 @@ FeynRules と NLOCT の色の記法（QCD） & 木の頂点と NLOCT の頂点�
 MadGraph の param\_card の $\alpha_s$（QCD） & MadLoop の Born が相対 $3.9\times10^{-8}$、仮想の補正が $5.8\times10^{-8}$ ずれる。指数付きの長い仮数（\texttt{7.957747154594767e-02}）を書くと $\alpha_s$ を約 $7.96$ と読む & param\_card を7桁で書く（\texttt{7.957747e-02}）。長い仮数の読み取り & 指数のない小数で書く（\texttt{0.07957747154594767}） \\
 MadLoop の規格化（QCD） & 有限部分が CDR の手計算と Born と同程度の大きさだけ違う & 結合が $\alpha_s^{(n_l)}$、外線の和が4次元、極の規格化が $(4\pi)^\epsilon/\Gamma(1-\epsilon)$（有限部分が $\overline{\mathrm{MS}}$ より $\frac{\pi^2}{12}\times$ 2重極の係数だけ大きい）。$\alpha_s$ は走らせない & 三つを換算して比べる（QCD のノートの式~(18)） \\
 MadLoop の単体のプログラム（QCD） & \texttt{check\_sa.f} を書き換えずに \texttt{PS.input} を置いても、MadLoop は自分で選んだ点で計算し、値が予想と合わない（質量を変えた比較が意味をなさない） & 既定は \texttt{READPS = .FALSE.}、\texttt{NPSPOINTS = 4}、\texttt{MU\_R = SQRTS} & \texttt{READPS = .TRUE.}、\texttt{NPSPOINTS = 1} にし、$\mu_R$ を \texttt{MU\_R.input} から読む（\nolinkurl{models/qcd/Src/run_rg_check.sh}）。質量は param\_card を書き換えれば再コンパイルは要らない \\
+MadGraph の2ループの $\alpha_s$（QCD） & \texttt{ALPHAS(Q)} の \texttt{nloop = 2} が、2ループの方程式の厳密な解から相対 $1.8\times10^{-7}$ ずれる（\texttt{nloop = 1} は $2\times10^{-15}$） & \texttt{NEWTON1} は相対の刻みが \texttt{TOL = 5D-4} を下回ると止まる（2次収束で $\lesssim(5\times10^{-4})^2$ が残る） & 精密な比較では、その値からもう1回 Newton 法を進める（$3\times10^{-14}$ になる） \\
 \texttt{wolframscript} の停止（QCD） & \texttt{pkill} と \texttt{kill}（SIGTERM）で止まらず、古いカーネルが CPU を使い続ける。Claude Code のサンドボックスからは何も起きない & SIGTERM を無視する & \texttt{kill -9} を \texttt{wolframscript} と子の \texttt{WolframKernel} の両方に。\texttt{ps} で確かめる \\
 mpmath と \texttt{NIntegrate}（QED） & Python がトレースバックなしで止まる（\texttt{gmp: overflow in mpz type}）。\texttt{NIntegrate::inumri} & 大きな複素数や指数で gmp の整数があふれる。記号の前処理 & 被積分関数が $e^{-180}$ より小さいところで切る。\texttt{\_?NumericQ} の関数にする \\
 \bottomrule
@@ -443,6 +444,8 @@ mpmath と \texttt{NIntegrate}（QED） & Python がトレースバックなし�
 手順 (5) では、NLOCT の対抗項と R2 の頂点を含む UFO で、$u\bar u\to t\bar t$ と $gg\to t\bar t$ の MadLoop の値を求めた（\nolinkurl{models/qcd/Src/run_madloop_check.sh}）。極質量と $\alpha_s^{(n_l)}$ に換算した手順 (4) の値と、Born、有限部分、極の係数が $\mu_R=m,2m,m/2$ で相対 $2.5\times10^{-14}$ 以内で一致した。そのために要った指定と換算は表~\ref{tab:issues2c} にまとめた。MadGraph は UFO の係数（上の段落）だけでなく、param\_card の $\alpha_s$ も7桁で書くので、MadLoop の値が $\alpha_s$ の切り詰めの比（$\alpha_s^2$、$\alpha_s^3$）だけずれた。長い仮数に指数を付けて書き直すと MadLoop はそれを読み違えたので、指数のない小数で書く。NLOCT の対抗項（UV の頂点9個、R2 の頂点12個）は、手計算と Draggiotis--Garzelli--Papadopoulos--Pittau の Feynman 則に一致した。
 
 手順 (6) では、1PI 関数と S 行列要素の $\mu$ 依存を Package-X（\texttt{ScaleMu} を記号のまま）、LoopTools（\texttt{LToolsSetMudim} のオプション）、COLLIER（\texttt{SetMuUV2\_cll}、\texttt{SetMuIR2\_cll}）、MadLoop（\texttt{MU\_R.input}）で求め、傾きが繰り込み群の予想と倍精度で一致した。重いクォークの脱結合の検算では、MadGraph のループの過程で \texttt{/ t} を付けると、$t$ を含むループ、R2、UV の対抗項がすべて除かれ、$n_l$ フレーバーの理論の値になった。それとの差として、MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与は手計算の $\Pi_t(s)-\Pi_t(0)$ と一致した。MadGraph の $\alpha_s$ の関数 \texttt{ALPHAS(Q)}（\texttt{Template/LO/Source/alfas\_functions.f}、$M_Z=91.188$~GeV）は、$b$ の質量 4.7~GeV より上をすべて5フレーバーで走らせ、$t$ のしきいを持たない（$\alpha_s^{(n_l)}$ の処方）。1ループ（\texttt{nloop = 1}）では閉じた形と $2\times10^{-15}$ で一致した。
+
+手順 (7) では、Landau ゲージの2ループのグルーオンとゴーストの自己エネルギー（FeynArts の図 23 個と 7 個）を FeynCalc で積分の族に直し、Kira 3.1 と FIRE 7.1 で簡約して $\beta_1$ を記号として再現した。FeynCalc の \texttt{FCLoopFindTopologyMappings} は、手順 (4) と同じく4本の伝播関数の部分族を5本の族に写さなかったので、ずらしは自分で探した（$2\times2$ のユニモジュラー行列と外の運動量の組み合わせ）。FIRE は対称性で等しい積分を別のマスター積分として残すので、\texttt{FCLoopFindIntegralMappings} で写してから Kira と比べると、851個の積分ですべて一致した。AMFlow は正則化のパラメータを自分の記号 \texttt{eps} で返すので、Mathematica の \texttt{Epsilon} などと比べる前に置き換える。質量のない2ループのマスター積分では、AMFlow は $\Gamma$ 関数の閉じた形と $10^{-28}$ で、pySecDec は誤差の範囲（$10^{-10}$ 程度）で一致した。MadGraph の2ループの $\alpha_s$ の精度は表~\ref{tab:issues2c} の通りである。
 
 \paragraph{Package-X。}Package-X の結果を \texttt{Simplify[..., qq < 0]} のように空間的な $q^2$ を仮定して簡約すると、対数と平方根の閾値より上の枝が $+i0$ の処方と合わないことがある。時間的な $q^2$ では、有理数の $q^2$ を代入した式に \texttt{PaXEvaluate} を呼び、枝の選び方を Package-X に任せる（スピノル QED のノートの手順 (9)）。Package-X の数値関数 \texttt{ScalarC0}、\texttt{ScalarD0} は、内線の質量の2乗ではなく質量を引数にとる（湯川のノートの手順 (3)）。
 
