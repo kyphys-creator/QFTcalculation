@@ -44,7 +44,7 @@
 
 \title{ループ計算環境の構築記録\\[2pt]{\large \texttt{\textasciitilde/hep} に組んだ1ループ計算スタック（Apple M3・Mathematica 14.2）}}
 \author{}
-\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日）}
+\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日）}
 
 \begin{document}
 \maketitle
@@ -474,6 +474,31 @@ zsh の単語分割（shell） & \texttt{for r in "1 85" ...; do set -- \$r} や
 
 手順 (9) では、重いクォークの対生成の NLO の部分断面積 $f^{(1)}_{ij}$ を reverse unitarity で求めた（\nolinkurl{models/qcd/Src/run_hq_check.sh}）。実の放射の $D$ 次元の2乗振幅を FeynCalc で図の組ごとに求め、切断の上の変数で部分分数にし、Kira 3.1（\texttt{cut\_propagators}）で簡約し、マスター積分を AMFlow 2.0 で求めた。仮想の補正は MadLoop の値に $D$ 次元の極の部分を足した（ノートの式 (mlconv)）。三つのチャンネルの $f^{(1)}$ は Czakon と Mitov の厳密な結果（arXiv:0811.4119 の電子版の Mathematica のファイル）と、$q\bar q$、$qg$ で相対 $4\times10^{-11}$、$gg$ で $2\times10^{-8}$ 以内で一致した。aMC@NLO とのハドロンの断面積の比較では、$pp$ は $0.07\%$ 以内で一致したが、$p\bar p$ は aMC@NLO の側に表~\ref{tab:issues2d} の食い違いが残った。道具の問題は表~\ref{tab:issues2d} にまとめた。
 
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2d} の続き（標準模型のノート~\cite{smnote} の手順 (1)、(2)。SM はそのノートを表す）。}
+\label{tab:issues2e}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+Mathematica 14.3.0 と FeynArts（SM） & 素の FeynArts 3.12 が模型の初期化（\texttt{InitializeModel}）でカーネルごと落ちる（wolframscript は「ライセンスの誤り」と表示）。FormCalc の試験も落ち、FeynRules の試験は止まる & \texttt{MatchQ[G[1][x] . \{g\}, G[s\_][f\_\_] . k\_List]} の照合だけでカーネルが落ちる（14.2.1 では \texttt{True}）。FeynArts は \texttt{InitGenericCoupling} でこの形を使う & 14.2.1 を使う \\
+FeynArts の \texttt{SM.mod} と FeynRules の標準模型（SM） & 同じ頂点の振幅が、光子の脚ごとに $-1$、$G^\pm$ の脚ごとに $\mp i$ だけ違う。$\Sigma^{AZ}$ と、それを含む $\delta Z_e$、$\Delta r$ の式の符号が Denner の論文と逆になる & 規約の違い。\texttt{SM.mod} と FormCalc は Denner の規約（$A^{\mathrm{Denner}}=-A$、$\phi^+=-iG^+$）、FeynRules と MadGraph は Peskin--Schroeder。\texttt{SM.mod} は \texttt{V[3]} が $W^-$、\texttt{S[3]} が $G^-$ & 一つの計算で二つの模型の頂点や対抗項を混ぜない。比べるときは外線の因子 $(-1)^{n_A}(\mp i)^{n_{G^\pm}}$ で直す（93個のうち38個の頂点のクラスで確かめた。ゴーストは未確認） \\
+FeynRules の制限と UFO（SM） & 制限（\texttt{DiagonalCKM.rst}）を読み込んでから UFO を書くと \texttt{Inner::incom} が出る。軽いフェルミオンの質量を0にする制限も加えた UFO を、MadGraph が読めない（\texttt{KeyError: GetIntOrder[yu[2]]}） & 特定していない & UFO は制限なしで書き、MadGraph の制限カード（\texttt{restrict\_massless.dat}）で質量と Cabibbo 角を0にする。FeynRules の UFO の \texttt{parameters.py} は Python~2 の形なので、カードは正規表現で読んで作る \\
+FeynRules の頂点の比較（SM） & \texttt{ProjP - ProjM} が \texttt{Ga[5]} にまとまる。外線の添字を持つ \texttt{IndexDelta} がほかの因子と縮約される。置き換えの結果に模型の記号（\texttt{b} など）が漏れる & FeynRules を読み込んだカーネルでの自動の評価。パターンの変数の名前が模型の記号と同じ & 比べる前に Dirac の構造と $\delta$ を評価されない記号に置き換える。パターンの変数は模型にない名前にする（\texttt{SM\$} で終える） \\
+FeynCalc と FeynRules の模型（SM） & \texttt{InsertionLevel -> \{Particles\}} の1ループの自己エネルギーにフェルミオンのループが現れない。\texttt{DiagramSelect} に名前を付けた関数を渡すと選ばない。クォークの質量が色の添字を持つ（\texttt{Md[gen, col]}） & 前の二つは特定していない。質量は模型の書き方 & クラスの段階で挿入し、世代の和を記号のまま残す。純関数を渡す。質量の色の添字を外し、閉じたループの色の和を $N_c$ にする（QCD の手順 (8) と同じ） \\
+FeynCalc 10 のトレース（SM） & \texttt{FermionSpinSum} の後の \texttt{DiracTrace} が評価されずに残る & \texttt{DiracTrace} の既定は \texttt{DiracTraceEvaluate -> False} & \texttt{DiracTrace[..., DiracTraceEvaluate -> True]} にしてから \texttt{Contract} する \\
+FeynCalc の切断した頂点の振幅（SM） & 二つの模型の3点の振幅の差が、0のはずなのに $(k_1+k_2-q)^\rho$ の形の項で残る & 運動量の保存を自動では使わない。合成した運動量（\texttt{FV[-k1 - q, rho]}）は \texttt{Momentum[q]} の置き換えに当たらない & \texttt{MomentumExpand} で運動量を分けてから $q=\sum k_i$ を入れ、\texttt{ExpandScalarProduct} で展開する \\
+FeynArts 3.12 と Mathematica 14 のメッセージ（SM） & 模型を使うたびに \texttt{RuleDelayed::rhs} が出る。先に \texttt{Off} しても出る & FeynArts の \texttt{Initialize} の規則 \texttt{Index[i\_] :> i\_}。結果には影響しない & \texttt{InsertFields} と \texttt{CreateFeynAmp} を \texttt{Quiet[..., RuleDelayed::rhs]} で囲む \\
+MadGraph の \texttt{compute\_widths}（SM） & 部分幅が画面に出ない & 書き出したカードの分岐比の行の注釈（\texttt{\#} の後）にだけ書かれる & \texttt{--output} で書いたカードの \texttt{DECAY} のブロックの注釈を読む \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{標準模型のノートで分かった問題。}2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)、(2) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e} にまとめる。
+
+最も注意が要るのは、符号の規約である。FeynArts の \texttt{SM.mod} と FormCalc は Denner の総説の規約を、FeynRules と MadGraph は Peskin--Schroeder の規約を使い、光子の場の符号と、Higgs 二重項の荷電の成分の位相が違う。場の取り方の違いなので、内線の因子は打ち消し（内線の光子は $(-1)^2$、内線の $G^\pm$ は $(+i)(-i)$）、断面積や崩壊幅などの物理量は変わらない。一方、外線に光子や $G^\pm$ を持つグリーン関数（$\Sigma^{AZ}$、$W$ と $G^\pm$ の混合）と、それから作る対抗項（$\delta Z_{ZA}$、$\delta Z_e$ の式）は符号や位相が変わる。FeynRules の模型の振幅に FormCalc の対抗項を足すような、二つの規約を混ぜた計算は誤る。MadGraph のログの断面積は、今回も有効数字3〜4桁（\texttt{111 +- 0.01131 pb}）で、10万事象の統計誤差より丸めが大きかった（表~\ref{tab:issues2} の「MadGraph の既定のカットと出力」と同じ）。各実行のバナーの \texttt{Integrated weight} を読み、乱数の種を \texttt{iseed} で固定すると、同じ値が再現した。
+
 \paragraph{Package-X。}Package-X の結果を \texttt{Simplify[..., qq < 0]} のように空間的な $q^2$ を仮定して簡約すると、対数と平方根の閾値より上の枝が $+i0$ の処方と合わないことがある。時間的な $q^2$ では、有理数の $q^2$ を代入した式に \texttt{PaXEvaluate} を呼び、枝の選び方を Package-X に任せる（スピノル QED のノートの手順 (9)）。Package-X の数値関数 \texttt{ScalarC0}、\texttt{ScalarD0} は、内線の質量の2乗ではなく質量を引数にとる（湯川のノートの手順 (3)）。
 
 \paragraph{倍精度で桁を落とすところ。}倍精度のツール（LoopTools、COLLIER、FormCalc、MadLoop）は、大きな打ち消しのある領域で桁を落とす。真空偏極を PaVe 関数で書いた $(1+2m^2/q^2)B_0(q^2)-(2m^2/q^2)B_0(0)$ は、小さい $|q^2|$ で約 $\log_{10}(m^2/|q^2|)$ 桁を失う。$q^2\to0$ までの積分（異常磁気モーメントへの真空偏極の寄与など）では、級数か、Package-X を有理数の入力で30桁で評価した値を使う。光子--光子散乱の振幅は低エネルギーで $s^2$ のように小さくなるが、それは $O(1)$ の項の打ち消しで作られるので、倍精度のツールの値は $s=0.01m^2$ で $10^{-5}$ ほどずれる。COLLIER では、ある点（$s=0.01m^2$、$\cos\theta=0.872$）でループの二つの向きの値が相対 $3\times10^{-6}$ ずれ、振幅は Euler--Heisenberg の値から $34\%$ ずれた。そこでの基準には、有理数の運動学で Package-X を80桁で評価した値を使った。重いクォークの脱結合でも同じことが起こる（QCD のノートの手順 (6)）。$\Pi_t(k^2)-\Pi_t(0)\propto k^2/(5m^2)$ を $(1+2m^2/k^2)B_0(k^2)-(2m^2/k^2)B_0(0)$ の形で評価すると、$|k^2|=10^{-3}$〜$10^{-2}m^2$ で LoopTools は相対 $4\times10^{-10}$、COLLIER は $7\times10^{-8}$ ずれた（COLLIER は $|k^2|=10^{-2}m^2$ の方が $10^{-3}m^2$ よりずれが大きい）。MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与（$\propto s/m_t^2$）は、$m_t^2/s=10^5$ で $0.65\%$ ずれ、$m_t$ によらないはずの極の係数も $6\times10^{-10}$ 揺れた。
@@ -838,7 +863,7 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 
 \paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO の断面積の計算（\texttt{[QCD]}、実の放射を含む \texttt{[QED]}）、Mathematica 14.1.0 での動作である。はじめ確かめていなかった NLOCT の対抗項と NLO 用 UFO は、その後 $\phi^3$、擬スカラー湯川、スピノル QED のノート~\cite{phi3note,yukawanote,qednote} で、手計算の対抗項と記号として一致し、MadLoop の値も手計算の式と倍精度の範囲で一致した（第~\ref{sec:issues} 節の回避策のもとで）。FormCalc の記号の計算と LoopTools の組、MadLoop のループで誘起される過程（\texttt{[sqrvirt=QED]}）と MadEvent（\texttt{[noborn=QED]}）も、スピノル QED のノートで確かめた。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。
 
-\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
+\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
 
 \paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。
 
@@ -1054,6 +1079,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{yukawanote} 擬スカラー湯川理論：1ループの構造と検算（本リポジトリ \nolinkurl{models/yukawa_ps/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~Q。
 \bibitem{qednote} スピノル QED：1ループの構造と検算（本リポジトリ \nolinkurl{models/spinor_qed/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
 \bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
+\bibitem{smnote} 標準模型：電弱の1ループの繰り込みと検算（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~G。
 \end{thebibliography}
 
 \end{document}
