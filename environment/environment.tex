@@ -439,6 +439,27 @@ mpmath と \texttt{NIntegrate}（QED） & Python がトレースバックなし�
 
 \paragraph{FormCalc。}FormCalc 9.10 の \texttt{HelicityME} は、既定の \texttt{FermionChains -> WeylChains} では失敗するので、\texttt{CalcFeynAmp} に \texttt{FermionChains -> VA} を与える。偏極を指定しない \texttt{\_Hel = 0} では各フェルミオンに $(\gamma\cdot p+m)/2$ を使うので、結果はスピン和の $1/2^n$（$2\to2$ で $1/16$）になる。\texttt{SquaredME[a, b]} は $a^*b$ で、木とループの干渉は \texttt{SquaredME[}木\texttt{, }ループ\texttt{]} で得る（逆の順序では虚部の符号が逆になる）。紫外の極の $(D-4)$ 倍から来る有理項には記号 \texttt{Finite} が掛かるので、有限部分では1、極の係数では0とする。一つのセッションで別の過程を計算しようとすると止まる（\texttt{DeclareProcess::incomp}）ので、過程を替えるたびに \texttt{ClearProcess[]} を呼ぶ。スピノルの鎖の名前（\texttt{F1}、\texttt{F2}）はセッションごとに入れ替わるので、名前ではなく中身で区別する。\texttt{PaVeReduce -> True} の結果に現れる \texttt{IGram[x]}（$=1/x$）と3引数の \texttt{Den[p, m, d]}（$=(p-m)^{-d}$）は、数値にする前に置き換える。
 
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2c} の続き（QCD のノートの手順 (9)）。}
+\label{tab:issues2d}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+aMC@NLO と固定した $\hat s$（QCD） & 始状態にパートンがある NLO を \texttt{lpp = 0} で \texttt{launch} すると \texttt{Process has incoming j\_fks, but fixed shat: not allowed for processes generated at NLO} で止まる & 始状態の共線の対抗項がパートン分布の運動量の割合を変えた値を要る & 同じパートン分布と $\alpha_s$ で自分の部分断面積を畳み込み、ハドロンの断面積で比べる \\
+aMC@NLO の反陽子（QCD） & $p\bar p$ の NLO（1.96 TeV、13 TeV、$\mu=m_t$）が厳密な NLO より $0.5\%$、$0.4\%$ 大きい（$pp$ は $0.07\%$ 以内で一致）。$gg$ の Born の部分過程（\texttt{P0\_gg\_ttx}）が $pp$ と $p\bar p$ で 5〜14$\sigma$ 違う & 特定していない（$gg$ と $qg$ のルミノシティは $pp$ と $p\bar p$ で等しいので、部分過程の値は等しいはず。3.8.1、\texttt{nn23nlo}）& 精密な比較には $pp$ を使う。$p\bar p$ はビームを入れ替えても（$\bar pp$）、種を変えても同じ値になる \\
+FeynCalc の 2→3 の2乗（QCD） & $gg\to t\bar tg$（16個の図）の2乗を一度にトレースすると、偏極のテンソルとの縮約で 45 分を超え 5.7~GB に達する & 開いた6個の添字のままトレースを評価してから縮約する & 図の組ごとに、偏極のテンソルを掛けてトレースの中で縮約してから評価する（1組 数秒〜25分、元の方法の10〜100分の1） \\
+Kira と切断した伝播関数（QCD） & 位相空間の積分（\texttt{cut\_propagators}）のマスター積分に、切断した伝播関数の2乗（$\delta$ 関数の微分）が選ばれる & 積分の順序の既定 & \texttt{preferred\_masters} に、各セクターの非切断の線の点や分子を一つ付けた積分を並べる \\
+AMFlow と位相空間（QCD） & 2ループの位相空間の積分が $\epsilon^{-2}$ の項だけ返る & \texttt{SolveIntegrals} の3番目の引数は $\epsilon^{-2L}$ から数えた項の数 & $\epsilon^2$ まで要るときは6。切断の規格化は標準の位相空間（$D$ 次元の2体と3体の体積で確かめた） \\
+多変数の部分分数（QCD） & $gg\to t\bar tg$ の被積分関数全体に Leinartas の方法をかけると 12875 項、42 の積分の族になる & 大きな共通の分子と、見かけの分母の組み合わせ & 図の組ごとにかける（172 項、15 の族）。分子は族ごとにまとめて一度だけ展開する \\
+分岐関数の $+$ 分布（QCD） & $gg$ の $1/\epsilon$ の極が、$1/\epsilon^2$ の係数のちょうど2倍だけ残る & $\frac z{(1-z)_+}$ と $[\frac z{1-z}]_+$ は $\delta(1-z)$ だけ違う & $[\frac z{1-z}]_+$ で書くときは $\delta(1-z)$ の係数を $\frac{\beta_0}2-2C_A$ にする \\
+大きな有理式の評価（QCD） & $D=4$ の $gg\to t\bar tg$ の2乗振幅が MadGraph と最大 $10^{-4}$ ずれる & 倍精度の入力で大きな有理式を評価すると打ち消しで桁が落ちる & 入力を40桁にして評価する（$7\times10^{-15}$） \\
+zsh の単語分割（shell） & \texttt{for r in "1 85" ...; do set -- \$r} や、変数を並べた \texttt{for} が引数を分けない & zsh は引用符のない変数を単語に分けない & bash で実行するか、引数を明示する（\texttt{\$\{=r\}}） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \paragraph{QCD のノートで分かった問題。}QCD のノートの手順 (3) で、頂点の紫外の極を二つの方法で求めた。一つは、FeynArts の振幅を TID で PaVe 関数に分解して \texttt{PaVeUVPart} で極を取る方法、もう一つは、外の運動量で展開してすべての分母に同じ質量を入れる赤外の組み替えで、$\int\mathrm{d}^Dl/l^4$ 型の積分の極を取る方法である。クォークとグルーオンの頂点の可換な図で、前者は $(C_F-\frac{C_A}2)(2-\xi)$、後者は手計算と同じ $(C_F-\frac{C_A}2)\xi$ を与えた。FeynArts は内線のグルーオンのゲージ部分 $(1-\xi)k_\mu k_\nu/k^4$ を、同じ分母を2回並べた形（\texttt{FAD[l, k1 + l, k1 + l - p2, k1 + l - p2]}）で書く。TID はこれを運動量0の辺を持つ4点関数（Gram 行列式が0）として分解し、\texttt{UsePaVeBasis -> True} では誤った極を、既定のスカラー積分への分解では外の運動量に依存する「極」を返した。現れる個々の PaVe 関数の \texttt{PaVeUVPart} は正しい。先に \texttt{FDS}（\texttt{FeynAmpDenominatorSimplify}）で同じ分母を2乗にまとめると正しい極になる。2点関数では TID が2重の伝播関数を $C_0(0,p^2,p^2;\dots)$ として扱い、部分積分で $B_0$ に直せたので問題は出なかった。4グルーオンの頂点の極を色の構造に射影すると、ゴーストとグルーオンの箱の色の因子と射影子の積に、6個の構造定数が $K_{3,3}$ の形につながった縮約 $f^{123}f^{145}f^{267}f^{389}f^{479}f^{568}$ が現れた。\texttt{SUNSimplify} はこれを \texttt{SUNFToTraces -> True} を付けても評価せずに残し、\texttt{Explicit -> True} を付けると0を返した（Gell-Mann 行列から作った数値の $f^{abc}$ でも $2\times10^{-16}$）。平面的なつながりは、オプションなしで評価される。
 
 手順 (4) の1ループの $q\bar q\to Q\bar Q$、$gg\to Q\bar Q$ では、一般の $\xi$ のゲージ部分から運動量0の辺を持つ PaVe 関数（5点関数を含む）が現れ、LoopTools と Package-X では評価できなかった。そこで、ループ運動量を自分でずらして9個の積分の族の部分集合にし、分子を族の伝播関数で書き直して、LiteRed で部分積分による簡約を行った（FeynCalc の \texttt{FCLoopFindTopologies} と \texttt{FCLoopFindTopologyMappings} は、数値の運動学ではずらしを見つけられなかった）。LiteRed は FIRE 7.1 の \texttt{extra/LiteRed} にあり、\texttt{\$Path} に \texttt{Setup} を加えて読み込む。FeynCalc と同じカーネルで読むと、LiteRed の記号（\texttt{MetricTensor}、\texttt{Factor2} など）が FeynCalc の同名の記号と衝突する警告が出るので、別のカーネルで使った。軟らかい三角形は Cayley 行列式が0で、$A_0$ と $B_0$ に $1/(D-4)$ の係数で簡約されるので、それらのマスター積分を $O(\epsilon^2)$ まで評価した（ガンマ関数、または Feynman パラメータの積分を40桁で）。FormCalc は、\texttt{Dimension -> 0} を \texttt{CalcFeynAmp}、\texttt{HelicityME}、\texttt{PolarizationSum} に付けると CDR の値を返し（Born が $D$ の依存まで FeynCalc と一致）、FeynCalc と図ごとに $10^{-12}$ 以内で一致した。
@@ -450,6 +471,8 @@ mpmath と \texttt{NIntegrate}（QED） & Python がトレースバックなし�
 手順 (7) では、Landau ゲージの2ループのグルーオンとゴーストの自己エネルギー（FeynArts の図 23 個と 7 個）を FeynCalc で積分の族に直し、Kira 3.1 と FIRE 7.1 で簡約して $\beta_1$ を記号として再現した。FeynCalc の \texttt{FCLoopFindTopologyMappings} は、手順 (4) と同じく4本の伝播関数の部分族を5本の族に写さなかったので、ずらしは自分で探した（$2\times2$ のユニモジュラー行列と外の運動量の組み合わせ）。FIRE は対称性で等しい積分を別のマスター積分として残すので、\texttt{FCLoopFindIntegralMappings} で写してから Kira と比べると、851個の積分ですべて一致した。AMFlow は正則化のパラメータを自分の記号 \texttt{eps} で返すので、Mathematica の \texttt{Epsilon} などと比べる前に置き換える。質量のない2ループのマスター積分では、AMFlow は $\Gamma$ 関数の閉じた形と $10^{-28}$ で、pySecDec は誤差の範囲（$10^{-10}$ 程度）で一致した。MadGraph の2ループの $\alpha_s$ の精度は表~\ref{tab:issues2c} の通りである。
 
 手順 (8) では、$e^+e^-\to$ ハドロンの $O(\alpha_s)$ の補正を、$D$ 次元の実と仮想の和、2ループの光子の自己エネルギーの虚部（Kira、AMFlow）、aMC@NLO で確かめた。FeynArts の1ループの光子の自己エネルギーでは、\texttt{FCFAConvert} が閉じたクォークのループの色の和（\texttt{SumOver}）を落とし、$N_c$ が抜ける（2ループでは \texttt{SUNSimplify} がトレースから $C_FC_A$ を返すので抜けない）。Package-X の \texttt{PaXEvaluate} は $1/\epsilon$ を掛けた PaVe 関数を扱わない（``cannot handle PaVe functions multiplied by 1/Epsilon poles''）。AMFlow の \texttt{SolveIntegrals} は求めた積分より多くの値（5個に対して7個）を返すことがあるので、位置ではなく積分の名前で対応させる。重いクォークの対の $\Delta^{(1)}(\beta)$ は、AMFlow の光学定理と閉じた形が $10^{-18}$ で一致した。aMC@NLO は、Z、W のない模型と結果の読み方（表~\ref{tab:issues2c}）を直すと、$u\bar u$ と $t\bar t$ の4点で $K$ が予想と統計誤差の範囲で一致した。
+
+手順 (9) では、重いクォークの対生成の NLO の部分断面積 $f^{(1)}_{ij}$ を reverse unitarity で求めた（\nolinkurl{models/qcd/Src/run_hq_check.sh}）。実の放射の $D$ 次元の2乗振幅を FeynCalc で図の組ごとに求め、切断の上の変数で部分分数にし、Kira 3.1（\texttt{cut\_propagators}）で簡約し、マスター積分を AMFlow 2.0 で求めた。仮想の補正は MadLoop の値に $D$ 次元の極の部分を足した（ノートの式 (mlconv)）。三つのチャンネルの $f^{(1)}$ は Czakon と Mitov の厳密な結果（arXiv:0811.4119 の電子版の Mathematica のファイル）と、$q\bar q$、$qg$ で相対 $4\times10^{-11}$、$gg$ で $2\times10^{-8}$ 以内で一致した。aMC@NLO とのハドロンの断面積の比較では、$pp$ は $0.07\%$ 以内で一致したが、$p\bar p$ は aMC@NLO の側に表~\ref{tab:issues2d} の食い違いが残った。道具の問題は表~\ref{tab:issues2d} にまとめた。
 
 \paragraph{Package-X。}Package-X の結果を \texttt{Simplify[..., qq < 0]} のように空間的な $q^2$ を仮定して簡約すると、対数と平方根の閾値より上の枝が $+i0$ の処方と合わないことがある。時間的な $q^2$ では、有理数の $q^2$ を代入した式に \texttt{PaXEvaluate} を呼び、枝の選び方を Package-X に任せる（スピノル QED のノートの手順 (9)）。Package-X の数値関数 \texttt{ScalarC0}、\texttt{ScalarD0} は、内線の質量の2乗ではなく質量を引数にとる（湯川のノートの手順 (3)）。
 
@@ -1030,7 +1053,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{url:tsil} TSIL. \url{https://www.niu.edu/spmartin/TSIL/}
 \bibitem{yukawanote} 擬スカラー湯川理論：1ループの構造と検算（本リポジトリ \nolinkurl{models/yukawa_ps/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~Q。
 \bibitem{qednote} スピノル QED：1ループの構造と検算（本リポジトリ \nolinkurl{models/spinor_qed/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
-\bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~L。
+\bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
 \end{thebibliography}
 
 \end{document}
