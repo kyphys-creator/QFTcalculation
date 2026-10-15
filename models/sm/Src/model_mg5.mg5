@@ -1,0 +1,97 @@
+# model_mg5.mg5 -- tree diagrams from the SM UFO in unitary gauge and in Feynman gauge (research note models/sm, step (1)).
+# Run via run_model_check.sh (imports a copy in work/, because MadGraph converts UFOs to Python 3 in place).
+# b, t, tau massive; e, mu, u, d, s, c massless (Massless.rst).  Expected numbers of diagrams (note Table "diagrams"),
+# unitary / Feynman gauge:
+#   e+ e- > mu+ mu- 2/2,  e+ e- > e+ e- 4/4,  e+ e- > ve ve~ 2/2,  e+ e- > vm vm~ 1/1,  e+ e- > ta+ ta- 2/2,
+#   e+ e- > t t~ 2/2,  e+ e- > w+ w- 3/3,  u u~ > w+ w- 3/3,  e+ e- > z h 1/1,  e+ e- > z z 2/2,
+#   mu- > vm e- ve~ 1/1,  u d~ > e+ ve 1/1,  h > b b~ 1/1,  h > ta+ ta- 1/1,  t > b w+ 1/1,  b b~ > h 1/1,
+#   g g > t t~ h 8/8,  w+ w- > w+ w- 7/7,  w+ w- > z z 4/6,  w+ w- > h h 4/6,  z z > h h 4/6.
+set automatic_html_opening False
+import model ./work/SM_UFO-massless
+generate e+ e- > mu+ mu-
+display diagrams_text
+generate e+ e- > e+ e-
+display diagrams_text
+generate e+ e- > ve ve~
+display diagrams_text
+generate e+ e- > vm vm~
+display diagrams_text
+generate e+ e- > ta+ ta-
+display diagrams_text
+generate e+ e- > t t~
+display diagrams_text
+generate e+ e- > w+ w-
+display diagrams_text
+generate u u~ > w+ w-
+display diagrams_text
+generate e+ e- > z h
+display diagrams_text
+generate e+ e- > z z
+display diagrams_text
+generate mu- > vm e- ve~
+display diagrams_text
+generate u d~ > e+ ve
+display diagrams_text
+generate h > b b~
+display diagrams_text
+generate h > ta+ ta-
+display diagrams_text
+generate t > b w+
+display diagrams_text
+generate b b~ > h
+display diagrams_text
+generate g g > t t~ h
+display diagrams_text
+generate w+ w- > w+ w-
+display diagrams_text
+generate w+ w- > z z
+display diagrams_text
+generate w+ w- > h h
+display diagrams_text
+generate z z > h h
+display diagrams_text
+set gauge Feynman
+import model ./work/SM_UFO-massless
+generate e+ e- > mu+ mu-
+display diagrams_text
+generate e+ e- > e+ e-
+display diagrams_text
+generate e+ e- > ve ve~
+display diagrams_text
+generate e+ e- > vm vm~
+display diagrams_text
+generate e+ e- > ta+ ta-
+display diagrams_text
+generate e+ e- > t t~
+display diagrams_text
+generate e+ e- > w+ w-
+display diagrams_text
+generate u u~ > w+ w-
+display diagrams_text
+generate e+ e- > z h
+display diagrams_text
+generate e+ e- > z z
+display diagrams_text
+generate mu- > vm e- ve~
+display diagrams_text
+generate u d~ > e+ ve
+display diagrams_text
+generate h > b b~
+display diagrams_text
+generate h > ta+ ta-
+display diagrams_text
+generate t > b w+
+display diagrams_text
+generate b b~ > h
+display diagrams_text
+generate g g > t t~ h
+display diagrams_text
+generate w+ w- > w+ w-
+display diagrams_text
+generate w+ w- > z z
+display diagrams_text
+generate w+ w- > h h
+display diagrams_text
+generate z z > h h
+display diagrams_text
+quit
