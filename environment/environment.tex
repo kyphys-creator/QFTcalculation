@@ -499,7 +499,7 @@ MadGraph の \texttt{compute\_widths}（SM） & 部分幅が画面に出ない &
 
 \begin{table}[tbp]
 \centering\footnotesize
-\caption{表~\ref{tab:issues2e} の続き（標準模型のノート~\cite{smnote} の手順 (3)、(4)）。}
+\caption{表~\ref{tab:issues2e} の続き（標準模型のノート~\cite{smnote} の手順 (3)〜(5)）。}
 \label{tab:issues2f}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
@@ -512,6 +512,10 @@ FeynHelpers の $A_0$、$B_0$（SM） & \texttt{LToolsEvaluate}、\texttt{PaXEva
 \texttt{ReplaceAll} と \texttt{Conjugate}（SM） & FeynRules の模型の湯川結合の記号が一部だけ残る & \texttt{Conjugate[x\_] :> x} とほかの規則を一度に使うと、外側が先に置き換わり、中身にほかの規則が当たらない & 共役を先に外す（\texttt{//. Conjugate[x\_] :> x} の後でほかの規則） \\
 FormCalc の \texttt{CalcRenConst}（SM） & 繰り込み定数の式に、\texttt{Mf2[4, Gen3]} と \texttt{MB2} のような名前の付いた質量が混ざり、世代の和が \texttt{SumOver[Gen3, 3]} のまま残る。値を入れても \texttt{B0i} が評価されずに残る & \texttt{SM.mod} の質量の定義（\texttt{MQD[3] = MB}）。記号が残ると LoopTools が呼ばれない & \texttt{Mf2[t, g]} と名前の付いた質量（\texttt{ME2}〜\texttt{MB2}）の両方に値を入れ、\texttt{SumOver} を明示的な和にし、\texttt{Finite} を1にする。LoopTools は同じカーネルで \texttt{Install} し、\texttt{SetMudim}、\texttt{SetDelta}、\texttt{SetLambda} を設定する \\
 FeynCalc の \texttt{Pair} の順（SM） & 被積分関数を外の運動量で展開すると、$q\!\cdot\!k$ の置き換えが当たらず、結果が0になった & FeynCalc は \texttt{Pair[Momentum[k, D], Momentum[q, D]]} のように引数を並べ替える & 置き換えの規則に両方の順を入れ、残った \texttt{Pair} を検出して表示する \\
+FormCalc の記号の \texttt{UpValues}（SM） & FormCalc を読み込んだカーネルでは、外から読み込んだ式の \texttt{MH\^{}2} が \texttt{MH2} になり、\texttt{MH -> 125.2} で置き換えても記号が残る & FormCalc は \texttt{MW}、\texttt{MZ}、\texttt{MH} などに、偶数べきを \texttt{MW2} などに書き換える \texttt{UpValues} を付ける & 外の式は FormCalc を読み込まないカーネルで数値にし、FormCalc の側とは数値だけをファイルで受け渡す \\
+FormCalc の \texttt{SelfEnergy}（SM） & \texttt{SelfEnergy[V[3] -> V[3], 0]} の値が、\texttt{CalcRenConst} の繰り込み定数と同じ処方の1PI の自己エネルギーと、タドポールの付いた図の分（\texttt{Den[MH2, 0]} を含む項）だけ違う & オプションなしの \texttt{SelfEnergy} は \texttt{CreateTopologies} の既定でタドポールの付いた図を含む。\texttt{RenConst} の定数は \texttt{ExcludeTopologies -> Internal} で作られる & \texttt{SelfEnergy[..., ExcludeTopologies -> Internal]} とする \\
+FeynCalc の \texttt{Uncontract}（SM） & \texttt{Uncontract[x, q, Pair -> All, DiracGamma -> All]} で \texttt{GSD[q]} が分かれず、メッセージも出ない & \texttt{DiracGamma} の既定値は \texttt{True} で、\texttt{All} はそれを無効にする & \texttt{DiracGamma -> True}（既定値）のままにする \\
+FeynCalc の \texttt{Contract} と $\epsilon$ テンソル（SM） & $\mathrm{tr}[\gamma^a\gamma^b\gamma^c\gamma^\sigma P_R]\,\mathrm{tr}[\gamma_c\gamma_b\gamma_a\gamma_\sigma P_R]$ を \texttt{Contract} すると \texttt{Eps[a, b, c, sig]\^{}2} が残る（正しくは $64$。添字が同じ順のトレースの積では残らない） & 縮約の途中でできた $\epsilon$ テンソルの2乗を、同じ呼び出しでは縮約しない（推論） & \texttt{Contract} を2回通す（$\mu$ 崩壊の箱の図の射影） \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -536,9 +540,9 @@ Mathematica の動径の積分（QCD） & $\sum\mathrm{tr}(D_\mu G_{\mu\nu})^2$ 
 \end{tabularx}
 \end{table}
 
-\paragraph{標準模型のノートで分かった問題。}2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)〜(4) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e}、\ref{tab:issues2f} にまとめる（手順 (4) まで）。
+\paragraph{標準模型のノートで分かった問題。}2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)〜(5) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e}、\ref{tab:issues2f} にまとめる（手順 (5) まで）。
 
-手順 (3) では、タドポールと自己エネルギーを Feynman ゲージで手計算の式と \texttt{SM.mod} の両方と記号として比べ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で2点関数の Slavnov--Taylor 恒等式を確かめた。有限部分の $B_0$ は LoopTools、Package-X、COLLIER が30桁の積分と相対 $2.5\times10^{-14}$ 以内で一致した。手順 (4) では、on-shell の12個の対抗項が FormCalc の \texttt{RenConst} と相対 $2\times10^{-15}$ 以内で一致した。
+手順 (3) では、タドポールと自己エネルギーを Feynman ゲージで手計算の式と \texttt{SM.mod} の両方と記号として比べ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で2点関数の Slavnov--Taylor 恒等式を確かめた。有限部分の $B_0$ は LoopTools、Package-X、COLLIER が30桁の積分と相対 $2.5\times10^{-14}$ 以内で一致した。手順 (4) では、on-shell の12個の対抗項が FormCalc の \texttt{RenConst} と相対 $2\times10^{-15}$ 以内で一致した。手順 (5) では、$\mu$ 崩壊の頂点と箱の図から $\Delta r$ を組み、FormCalc の繰り込み定数から組んだ値と相対 $1.2\times10^{-15}$ で一致した。FormCalc の記号の \texttt{UpValues} のため、FormCalc と外の式の数値は別のカーネルで求めた。
 
 最も注意が要るのは、符号の規約である。FeynArts の \texttt{SM.mod} と FormCalc は Denner の総説の規約を、FeynRules と MadGraph は Peskin--Schroeder の規約を使い、光子の場の符号と、Higgs 二重項の荷電の成分の位相が違う。場の取り方の違いなので、内線の因子は打ち消し（内線の光子は $(-1)^2$、内線の $G^\pm$ は $(+i)(-i)$）、断面積や崩壊幅などの物理量は変わらない。一方、外線に光子や $G^\pm$ を持つグリーン関数（$\Sigma^{AZ}$、$W$ と $G^\pm$ の混合）と、それから作る対抗項（$\delta Z_{ZA}$、$\delta Z_e$ の式）は符号や位相が変わる。FeynRules の模型の振幅に FormCalc の対抗項を足すような、二つの規約を混ぜた計算は誤る。MadGraph のログの断面積は、今回も有効数字3〜4桁（\texttt{111 +- 0.01131 pb}）で、10万事象の統計誤差より丸めが大きかった（表~\ref{tab:issues2} の「MadGraph の既定のカットと出力」と同じ）。各実行のバナーの \texttt{Integrated weight} を読み、乱数の種を \texttt{iseed} で固定すると、同じ値が再現した。
 
