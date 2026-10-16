@@ -1,0 +1,720 @@
+% note.tex — 標準模型：MS-bar の電弱の1ループの繰り込みと検算（FJ のタドポール、一般の R_xi ゲージ、d = 4）
+% コンパイル: lualatex note.tex（目次と参照の解決のため2〜3回）
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}
+\usepackage{amsmath,amssymb,slashed}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={The Standard Model: electroweak one-loop renormalization in the MS-bar scheme with Fleischer-Jegerlehner tadpoles and tool checks},pdfauthor={}}
+
+\setlength{\emergencystretch}{3em}
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\MSbar}{\overline{\mathrm{MS}}}
+\newcommand{\DUV}{\Delta_{\mathrm{UV}}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\sw}{s_W}
+\newcommand{\cw}{c_W}
+\newcommand{\re}{\mathrm{Re}\,}
+
+\tikzset{
+  photon/.style={thick,decorate,decoration={snake,amplitude=1.1pt,segment length=4.6pt}},
+  gluon/.style={thick,decorate,decoration={coil,amplitude=2.3pt,segment length=3.6pt,aspect=0.75}},
+  fermion/.style={thick,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
+  scalar/.style={thick,dashed},
+  ghost/.style={thick,densely dotted,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
+  vtx/.style={circle,fill=black,inner sep=1.3pt},
+  lab/.style={font=\small,align=center},
+  slab/.style={font=\scriptsize,align=center},
+  mom/.style={-{Stealth[length=1.6mm]},thin},
+  ctv/.style={circle,draw=black,fill=white,inner sep=0pt,minimum size=7pt,path picture={
+      \draw (path picture bounding box.north west) -- (path picture bounding box.south east)
+            (path picture bounding box.south west) -- (path picture bounding box.north east);}},
+  blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
+}
+
+\title{標準模型：$\MSbar$ の電弱の1ループの繰り込みと検算\\（FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）}
+\author{}
+\date{2026年10月16日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+$\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote,qednote,qcdnote} に続き、標準模型の電弱相互作用の1ループの繰り込みを $d=4$ で調べる。これまでのノートと同じく、紫外発散を次元正則化と $\MSbar$ で処理する。模型は3世代のフェルミオン（CKM 行列は単位行列、ニュートリノは質量0）、$SU(3)_C\times SU(2)_L\times U(1)_Y$ のゲージ場、Higgs 二重項からなり、一般の $R_\xi$ ゲージ（$\xi_A,\xi_Z,\xi_W$）で Goldstone ボソンとゴーストを残す。$\MSbar$ のパラメータは、破れていないラグランジアンの $g_s,g,g',\lambda,\mu^2,y_f$ で、真空期待値は $v\equiv\sqrt{\mu^2/\lambda}$ とする。タドポールは打ち消さず図として含める（Fleischer--Jegerlehner の処方~\cite{fj81}）。このとき $v$ と $\MSbar$ の質量 $M_W=gv/2$ などはゲージによらず、その対抗項は $\frac{\DUV}2\,\dd M^2/\dd\ln\mu$ と1ループの $\beta$ 関数だけで決まる。共変微分の符号と電荷の割り当ては QED と QCD のノートと同じで、すべての場が $D_\mu=\partial_\mu-ieQA_\mu$ で光子と結合する（$e>0$、$Q_e=-1$）。本ノートではまず、Feynman 則（93個の頂点のクラス、ゴーストとスカラーの結合は反ゴーストのゲージ場の $\xi$ に比例する）、木のレベルの関係と崩壊幅、$\MSbar$ の対抗項と1ループの $\beta$ 関数、$\MSbar$ の質量と $v$ の走り、一般の $R_\xi$ ゲージのタドポール $T$ を手で求めた。$T$ の $\xi$ 依存は Goldstone ボソンのループだけに残り（ベクトル場のループの $\xi$ の部分はゴーストのループが打ち消す）、タドポールを各次数で打ち消す処方の真空期待値 $v+T/M_H^2$ は、その分だけゲージに依存して走る。$\phi^3$ のノートの線形項と違い、標準模型にはタドポールを独立に打ち消すパラメータがない。検算と応用の十の手順を定め、手順 (1) を行った。模型ファイル \texttt{SM.fr} は FeynRules に付属のものを使わずに一から書き、ゴーストとスカラーの結合は二重項の BRST 変換から模型ファイルの中で生成した。FeynRules 2.3.49 が出力した93個の頂点のクラスは、すべて手計算の表と記号として一致した（わざと3か所を誤らせた表では3個の差が出た）。MadGraph 3.8.1 が作った21個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。この過程で、自分の模型ファイルの誤り（湯川の項で世代の添字が3回現れ、FeynRules が警告なしに余分な添字を残した）と、ツールの問題を二つ見つけた。FeynRules を読み込んだカーネルでは置き換えの規則の左辺 \texttt{ProjM[\_,\_]} が射影演算子のトレース2に評価され、MadGraph は Feynman ゲージを許さない模型（UFO の \texttt{gauge = [0]}）で、続くコマンドを警告なしに組み込みの標準模型で実行する。導出は付録に載せる。
+\end{abstract}
+
+\tableofcontents
+
+\section{目的と問い}\label{sec:intro}
+
+本ノートの問いは二つである。\textbf{第一に、自発的に破れたゲージ理論である標準模型の電弱部分で、$\MSbar$ の1ループの繰り込みの構造はどうなるか。とくに、Goldstone ボソンとゴースト、タドポール、光子と $Z$ の混合が、ゲージによらない $\MSbar$ のパラメータにどう組み込まれるかを、これまでのノートと同じ手順でツールと突き合わせられるか。第二に、測定された物理量から $\MSbar$ のパラメータを決め、高いスケールまで走らせたとき、何が分かるか。}具体的には、極質量と $G_F$、$\alpha(0)$ の $\MSbar$ のパラメータへの換算、結合の走り、Higgs のポテンシャルの安定性を調べる。
+
+第一の問いを立てる理由は、QCD のノート~\cite{qcdnote} までの模型ではゲージ対称性が破れておらず、ゲージ場の質量、Goldstone ボソン、スカラーとゴーストの結合、タドポール、異なるゲージ場の混合を扱っていないからである。これまでのノートはすべて $\MSbar$ で繰り込み、$\MSbar$ のパラメータ（QED の $e(\mu)$、$m(\mu)$、QCD の $g(\mu)$、$m(\mu)$）はゲージによらず、物理量が $\xi$ によらないことを手順ごとに確かめてきた。標準模型でもこの処方を保つには、タドポールの扱いを選ぶ必要がある。$\phi^3$ と $\phi^3+\phi^4$ のノート~\cite{phi3note,phi34note} では、タドポールを線形項 $Y\phi$ で各次数打ち消した。$Y$ は対称性で禁じられない独立なパラメータなので、この条件で決めても何も失わない。標準模型ではゲージ対称性が線形項を禁じるので、タドポールを打ち消すには展開の点 $v$ を木のポテンシャルの最小点からずらすしかなく、そのずらしがゲージに依存する。そこで本ノートでは、タドポールを打ち消さずに図として含める Fleischer と Jegerlehner の処方~\cite{fj81}（以下 FJ）をとり、すべての $\MSbar$ のパラメータをゲージによらないものにする。打ち消す処方との関係（どの量がどれだけゲージに依存するか）も結果として求める。第二の問いを立てる理由は、Higgs の4点結合 $\lambda$ が高いスケールで負になるかどうかという問いが、トップの湯川結合とゲージ結合の $\MSbar$ の値、とくに極質量からの換算に敏感で、その換算に上の構造がすべて入るからである~\cite{degrassi12,buttazzo13}。
+
+以前に本リポジトリにあった標準模型のノート（2026年10月16日に削除、最後の版はコミット 201985b）は、on-shell の処方で、FeynRules に付属の模型ファイルをそのまま使っていた。本ノートはそれを使わずに作り直したものである。模型ファイルは一から書き、FeynRules に付属の \texttt{SM.fr} と \nolinkurl{models/backup_20261009} の模型ファイルは書式を見るためだけに読んだ。頂点はすべて手計算の表と照合する（手順 (1)）。以前のノートで分かったツールの問題（計算環境の記録~\cite{env} の表 10、11、13、14）は参考にする。
+
+求める量は六つである。(i) Feynman 則（一般の $R_\xi$ ゲージ）。(ii) 木のレベルの関係と、$W$、$Z$、$H$、$t$ の崩壊幅、$e^+e^-\to f\bar f$。(iii) $\MSbar$ の対抗項、1ループの $\beta$ 関数、$\MSbar$ の質量と $v$ の走り。(iv) 1ループのタドポールと自己エネルギー、FJ とタドポールを打ち消す処方の関係。(v) 極質量、$G_F$、$\alpha(0)$ と $\MSbar$ のパラメータの換算。(vi) 応用として、測定値から決めた $\MSbar$ のパラメータ、結合の走りと真空の安定性。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
+
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(iv) の手計算の結果を述べる（(iv) の自己エネルギーの有限部分と (v)、(vi) は、それぞれの手順を行うときに加える）。第~\ref{sec:plan} 節で、それらをツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:tadpole} に、検算の細部は\ref{app:details} にある。
+
+\section{設定}\label{sec:setup}
+
+模型は、$SU(3)_C\times SU(2)_L\times U(1)_Y$ のゲージ場 $G^a_\mu$、$W^a_\mu$、$B_\mu$、Higgs 二重項 $\Phi$、3世代のフェルミオンからなる。ゲージ固定とゴーストの項を除いたラグランジアン密度は
+\begin{equation}
+\begin{aligned}
+\mathcal L_0={}&-\frac14B_{\mu\nu}B^{\mu\nu}-\frac14W^a_{\mu\nu}W^{a\mu\nu}-\frac14G^a_{\mu\nu}G^{a\mu\nu}
++\sum_{\psi}\bar\psi\,i\slashed D\psi
++(D_\mu\Phi)^\dagger(D^\mu\Phi)+\mu^2\Phi^\dagger\Phi-\lambda(\Phi^\dagger\Phi)^2\\
+&-\sum_{i=1}^3\Bigl(y_{d_i}\,\bar Q_{Li}\Phi\,d_{Ri}+y_{\ell_i}\,\bar L_{Li}\Phi\,\ell_{Ri}+y_{u_i}\,\bar Q_{Li}\tilde\Phi\,u_{Ri}+\mathrm{h.c.}\Bigr),\\
+D_\mu={}&\partial_\mu-ig'YB_\mu-igT^aW^a_\mu-ig_sT^aG^a_\mu,\qquad
+W^a_{\mu\nu}=\partial_\mu W^a_\nu-\partial_\nu W^a_\mu+g\epsilon^{abc}W^b_\mu W^c_\nu
+\end{aligned}
+\label{eq:L}
+\end{equation}
+である（$G^a_{\mu\nu}$ は QCD のノート~\cite{qcdnote} と同じ）。$\psi$ は左巻きの二重項 $Q_L=(u_L,d_L)$、$L_L=(\nu_L,\ell_L)$ と右巻きの一重項 $u_R$、$d_R$、$\ell_R$ を走る。$SU(2)_L$ の生成子は $T^a=\sigma^a/2$ で左巻きの二重項と $\Phi$ にだけ働き、$Q=T^3+Y$ で、$Y$ は $Q_L$、$L_L$、$u_R$、$d_R$、$\ell_R$、$\Phi$ に対して $\frac16$、$-\frac12$、$\frac23$、$-\frac13$、$-1$、$\frac12$ である。$\tilde\Phi_i=\epsilon_{ij}\Phi_j^*$（$\epsilon_{12}=1$）である。湯川結合は世代について対角で、CKM 行列は単位行列である。Higgs 二重項を
+\begin{equation}
+\Phi=\begin{pmatrix}-iG^+\\[2pt] \dfrac{v+H+iG^0}{\sqrt2}\end{pmatrix},\qquad v\equiv\sqrt{\mu^2/\lambda}
+\label{eq:Phi}
+\end{equation}
+と書き（$G^+$ の位相は Peskin--Schroeder~\cite{peskin} と FeynRules の標準模型と同じ）、ゲージ場を
+\begin{equation}
+W^\pm_\mu=\frac{W^1_\mu\mp iW^2_\mu}{\sqrt2},\qquad
+Z_\mu=\cw W^3_\mu-\sw B_\mu,\qquad A_\mu=\sw W^3_\mu+\cw B_\mu,\qquad
+\cw=\frac{g}{\sqrt{g^2+g'^2}}
+\label{eq:fields}
+\end{equation}
+と組み替える（$\sw=g'/\sqrt{g^2+g'^2}$）。$v$ は木のポテンシャル $-\mu^2|\Phi|^2+\lambda|\Phi|^4$ の最小点である。ここで
+\begin{equation}
+e=g\sw=g'\cw,\quad M_W=\frac{gv}{2}=\frac{ev}{2\sw},\quad M_Z=\frac{\sqrt{g^2+g'^2}\,v}{2}=\frac{M_W}{\cw},\quad M_H^2=2\lambda v^2=2\mu^2,\quad m_f=\frac{y_fv}{\sqrt2}
+\label{eq:masses}
+\end{equation}
+で、すべての場が共変微分の $-ieQA_\mu$ で光子と結合する（\ref{app:rules}）。$Z$ との結合は $-i\frac{e}{\sw\cw}(T^3-\sw^2Q)Z_\mu$ である。
+
+\paragraph{ゲージ固定とゴースト。}ゲージ固定には $R_\xi$ ゲージ~\cite{fls72} を使い、
+\begin{equation}
+\begin{gathered}
+\mathcal L_{\mathrm{gf}}=-\frac{(F^A)^2}{2\xi_A}-\frac{(F^Z)^2}{2\xi_Z}-\frac{F^+F^-}{\xi_W}-\frac{(\partial^\mu G^a_\mu)^2}{2\xi_G},\\
+F^A=\partial^\mu A_\mu,\qquad F^Z=\partial^\mu Z_\mu-\xi_ZM_ZG^0,\qquad F^\pm=\partial^\mu W^\pm_\mu-\xi_WM_WG^\pm
+\end{gathered}
+\label{eq:gf}
+\end{equation}
+とする。この符号で、$(D_\mu\Phi)^\dagger D^\mu\Phi$ に現れるゲージ場と Goldstone ボソンの2次の混合 $M_W(W^{+\mu}\partial_\mu G^-+W^{-\mu}\partial_\mu G^+)+M_ZZ^\mu\partial_\mu G^0$ が部分積分の後に打ち消し、Goldstone ボソンは質量 $\sqrt{\xi_Z}M_Z$、$\sqrt{\xi_W}M_W$ を持つ（\ref{app:rules}）。Faddeev--Popov の項は
+\begin{equation}
+\begin{gathered}
+\mathcal L_{\mathrm{FP}}=-\sum_{k=A,Z,+,-}\bar u^k\,sF^k-\bar u^a_G\,\partial^\mu(D_\mu u_G)^a,\\
+s\Phi=i\Bigl(gT^au^a+\frac{g'}2u^B\Bigr)\Phi,\qquad sW^a_\mu=\partial_\mu u^a+g\epsilon^{abc}W^b_\mu u^c,\qquad sB_\mu=\partial_\mu u^B
+\end{gathered}
+\label{eq:fp}
+\end{equation}
+で、$s$ はゲージ変換のパラメータをゴーストで置き換えた BRST 変換である。ゴーストは場と同じ行列で $u^A,u^Z,u^\pm$ に組み替え、$\bar u^\pm$ は $u^\pm$ と対になる反ゴーストである。$sF^k$ の Goldstone ボソンの部分から、ゴーストの質量 $\xi_ZM_Z^2$、$\xi_WM_W^2$ と、反ゴーストのゲージ場の $\xi$ に比例するゴーストとスカラーの結合が生じる。
+
+\paragraph{伝播関数。}光子、$Z$、$W$ の伝播関数は
+\begin{equation}
+\frac{-i}{k^2-M_V^2}\Bigl[g_{\mu\nu}-(1-\xi_V)\frac{k_\mu k_\nu}{k^2-\xi_VM_V^2}\Bigr]
+\qquad(V=A,Z,W;\ M_A=0)
+\label{eq:propV}
+\end{equation}
+で、$G^0$ と $u^Z$ は $i/(k^2-\xi_ZM_Z^2)$、$G^\pm$ と $u^\pm$ は $i/(k^2-\xi_WM_W^2)$、$u^A$ は $i/k^2$、$H$ は $i/(k^2-M_H^2)$、フェルミオンは $i(\slashed p+m_f)/(p^2-m_f^2)$、グルーオンとそのゴーストは QCD のノートと同じである。$\xi_V=1$ が 't~Hooft--Feynman ゲージ（以下 Feynman ゲージ）、$\xi_V\to0$ が Landau ゲージである。
+
+\paragraph{繰り込み。}裸の量と繰り込まれた量を
+\begin{equation}
+\begin{gathered}
+g_0=\mu^\epsilon Z_gg,\quad g'_0=\mu^\epsilon Z_{g'}g',\quad g_{s0}=\mu^\epsilon Z_{g_s}g_s,\quad
+\lambda_0=\mu^{2\epsilon}Z_\lambda\lambda,\quad \mu_0^2=Z_{\mu^2}\mu^2,\quad y_{f0}=\mu^\epsilon Z_{y_f}y_f,\\
+W^a_0=Z_W^{1/2}W^a,\quad B_0=Z_B^{1/2}B,\quad G_0=Z_G^{1/2}G,\quad \Phi_0=Z_\Phi^{1/2}\Phi,\quad \psi_0=Z_\psi^{1/2}\psi
+\end{gathered}
+\label{eq:bare}
+\end{equation}
+で結ぶ（$\psi$ はカイラルな多重項ごと）。パラメータの繰り込み定数 $Z_X$ はすべて $\MSbar$ で、$Z_X-1$ は $\DUV$ に比例する。それらはゲージによらない（第~\ref{sec:rg} 節）。場の繰り込み定数もこのノートでは $\MSbar$ とするが、ゲージに依存し、物理量には入らない。$\mathcal L_{\mathrm{gf}}$ は繰り込まれた場と $\MSbar$ の $M_Z$、$M_W$ で書き、対抗項を付けない（QED と QCD のノートの $\xi_0=Z_3\xi$ と同じ扱い）。ゴーストの項の対抗項は1ループの物理量に入らないので書かない。
+
+\paragraph{タドポール（FJ の処方）。}裸の場 $\Phi_0$ を、裸のパラメータで書いた木のポテンシャルの最小点 $v_0=\sqrt{\mu_0^2/\lambda_0}$ のまわりで展開する。すると $H$ の1次の項は裸のラグランジアンにも対抗項にも現れず、タドポールの図（1ループの $H$ の1点関数 $iT$ を $H$ の運動量0の伝播関数で他の線につないだ図）はすべての計算に含める。裸の質量 $M_{W,0}=g_0v_0/2$ などは $\MSbar$ のパラメータの組み合わせで、その対抗項はゲージによらない（第~\ref{sec:rg} 節）。$v$ の代わりに、ループで補正したポテンシャルの最小点 $v+T/M_H^2$ のまわりで展開し、タドポールを各次数で打ち消す処方もある（以下 $\beta_t$ の処方）。両者の関係は第~\ref{sec:tadpole} 節で求める。
+
+\paragraph{前提。}本ノートは次の前提に立つ。
+\begin{enumerate}
+\item 計量は $(+,-,-,-)$、$\hbar=c=1$ とする。共変微分の符号は FeynRules の規約 $D_\mu=\partial_\mu-igT^aW^a_\mu-ig'YB_\mu$ に合わせる（Peskin--Schroeder~\cite{peskin} と同じ）。QED と QCD のノートと同じく $e>0$ で、光子との結合は $D_\mu\supset-ieQA_\mu$、電子は $Q_e=-1$ である。FeynArts の \texttt{SM.mod} と FormCalc は Denner の規約~\cite{denner93} で、光子の場の符号と $G^\pm$ の位相が違う（$A^{\mathrm{Denner}}=-A$、$\phi^+=-iG^+$。計算環境の記録~\cite{env} の表 10）。規約の対応は Romão--Silva~\cite{romao12} にまとめられている。二つの規約の頂点や対抗項を一つの計算で混ぜない。
+\item フェルミオンは3世代で、CKM 行列は単位行列とする。ニュートリノは質量0の左巻きだけの場である。クォークの色の数を $N_c=3$ とし、レプトンでは $N_c=1$ とする。$T^3_f$ と $Q_f$ はフェルミオン $f$ の左巻きの成分の弱アイソスピンの第3成分と電荷である。
+\item ゲージは $R_\xi$ ゲージ \eqref{eq:gf} で、$\xi_A,\xi_Z,\xi_W,\xi_G$ を独立に残す。物理量は $\xi$ によらないはずで、それを確かめる。手計算の有限部分は、とくに断らなければ Feynman ゲージ（すべての $\xi=1$）でとる。
+\item 時空次元は $d=4$ とし、ループ積分は次元正則化で $D=4-2\epsilon$ とする。$\gamma$ 行列は $D$ 次元で反可換とし（NDR）、$\tr1=4$ とする。1ループの2点関数とタドポールには、$\gamma_5$ を含むトレースの曖昧さは現れない。
+\item 紫外発散は $\MSbar$ で処理し、対抗項を $\DUV\equiv1/\epsilon-\gamma_E+\ln4\pi$ に比例させる。$\MSbar$ のパラメータは破れていないラグランジアンの $g_s,g,g',\lambda,\mu^2,y_f$ で、$v=\sqrt{\mu^2/\lambda}$ と式~\eqref{eq:masses} の $e$、$\sw$、$M_W$、$M_Z$、$M_H$、$m_f$ はそれらの関数である（以下、これらを $\MSbar$ の質量などと呼び、物理量と区別するときは $\hat M_W$ などと書く）。タドポールは FJ の処方で扱う。
+\item 1ループの積分は LoopTools の規約~\cite{looptools} の $A_0$、$B_0$ で書き、$\DUV$ をそれらに含める。$\MSbar$ の有限部分は $\DUV=0$ の値である。$\alpha=e^2/4\pi$、$K\equiv(4\pi)^2$ と書く。
+\item 数値を比べるときの基準点は、$\MSbar$ のパラメータで $\alpha^{-1}=128$、$M_W=80$~GeV、$M_Z=91$~GeV（$\sw^2=1881/8281$）、$M_H=125$~GeV、$\alpha_s=0.118$、フェルミオンの質量 $m_t=165$、$m_b=2.86$、$m_c=0.619$、$m_s=0.0546$、$m_d=0.00271$、$m_u=0.00127$、$m_\tau=1.746$、$m_\mu=0.1027$、$m_e=0.000487$~GeV、$\mu=M_Z$ とし、ゲージの検算では $\xi=0,1,3$ を使う（$M_Z$ のスケールでの走る質量に近い値を選んだが、文献の値ではない）。応用の手順では、PDG~2024~\cite{pdg24} の値 $\alpha^{-1}(0)=137.035999177$、$G_F=1.1663788\times10^{-5}$~GeV$^{-2}$、$M_Z=91.1880$~GeV、$M_W=80.3692$~GeV、$M_H=125.20$~GeV、$m_t=172.57$~GeV、$\alpha_s(M_Z)=0.1180$、$\Delta\alpha^{(5)}_{\mathrm{had}}(M_Z^2)=0.02783$ を使う。
+\end{enumerate}
+本文で使う記号を表~\ref{tab:notation} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{本ノートで使う記号。}
+\label{tab:notation}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.1cm}X}
+\toprule
+\textbf{記号} & \textbf{意味} \\
+\midrule
+$A$, $Z$, $W^\pm$, $G$ & 光子、$Z$、$W$、グルーオン（模型ファイル \texttt{Src/SM.fr} の \texttt{A}、\texttt{Z}、\texttt{W}（$W^+$ を消す場）と \texttt{Wbar}、\texttt{G}） \\
+$H$, $G^0$, $G^\pm$ & Higgs ボソンと Goldstone ボソン（\texttt{H}、\texttt{G0}、\texttt{GP}（$G^+$）と \texttt{GPbar}（$G^-$）） \\
+$u^A$, $u^Z$, $u^\pm$, $\bar u^k$ & ゴースト（\texttt{ghA}、\texttt{ghZ}、\texttt{ghWp}、\texttt{ghWm}）と反ゴースト。$\bar u^+$（\texttt{ghWpbar}）は $u^+$ と対になる \\
+$\nu$, $\ell$, $u$, $d$ & フェルミオンのクラス（\texttt{vl}、\texttt{l}、\texttt{uq}、\texttt{dq}）。世代の添字は省く \\
+$g$, $g'$, $g_s$, $\lambda$, $\mu^2$, $y_f$ & $\MSbar$ のパラメータ（式~\eqref{eq:L}） \\
+$v$, $e$, $\sw$, $\cw$ & $v=\sqrt{\mu^2/\lambda}$（\texttt{vev}）、電荷（\texttt{ee}）と弱混合角（\texttt{sw}、\texttt{cw}）。式~\eqref{eq:masses} \\
+$M_W$, $M_Z$, $M_H$, $m_f$ & $\MSbar$ の質量（式~\eqref{eq:masses}）。極質量は $M_{W,\mathrm p}$ などと書く \\
+$Q_f$, $T^3_f$, $N_c$ & フェルミオンの電荷、弱アイソスピンの第3成分、色の数 \\
+$g_L^f$, $g_R^f$ & $Z$ の左右の結合 $g_L=(T^3-Q\sw^2)/(\sw\cw)$、$g_R=-Q\sw/\cw$（頂点は $ie\gamma^\mu(g_LP_L+g_RP_R)$） \\
+$\xi_A,\ \xi_Z,\ \xi_W,\ \xi_G$ & $R_\xi$ ゲージのパラメータ \\
+$D$, $\epsilon$, $K$, $\DUV$ & $D=4-2\epsilon$、$K=(4\pi)^2$、$\DUV=1/\epsilon-\gamma_E+\ln4\pi$ \\
+$A_0,\ B_0$ & 1ループ積分（LoopTools の規約） \\
+$\beta_X$, $\gamma_{\mu^2}$ & $\beta_X=\dd X/\dd\ln\mu$（$X=g,g',g_s,\lambda,y_f$）、$\gamma_{\mu^2}=\dd\mu^2/\dd\ln\mu$ \\
+$\mathcal T$ & $\sum_{i}(3y_{u_i}^2+3y_{d_i}^2+y_{\ell_i}^2)$（湯川結合の2乗の和） \\
+$\gamma_\Phi$ & Higgs 二重項の場の異常次元 $\frac12\dd\ln Z_\Phi/\dd\ln\mu$ \\
+$T$, $\Delta v$ & タドポール（$H$ の1点の1PI 関数を $iT$ と書く）と、それが与える真空のずれ $\Delta v=T/M_H^2$ \\
+$v_\beta$ & $\beta_t$ の処方の真空期待値（ループで補正したポテンシャルの最小点）$v+\Delta v$ \\
+$\Sigma^{VV'}_T$, $\Sigma^H$, $\Sigma^{L,R,S}_f$ & 自己エネルギー（式~\eqref{eq:Gamma2}） \\
+$\Gamma^{\mu\nu\rho}$, $S^{ij,kl}$ & 3点と4点のゲージ場の頂点の Lorentz 構造（式~\eqref{eq:GammaS}） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{結果}\label{sec:results}
+
+\subsection{Feynman 則}\label{sec:rules}
+
+式~\eqref{eq:L}〜\eqref{eq:fp} から読み取れる頂点を、表~\ref{tab:rules-f}〜\ref{tab:rules-gh} に示す（\ref{app:rules}）。運動量はすべて頂点に入る向きにとり、$p_i$ は $i$ 番目の脚の運動量、$\mu_i$ はそのローレンツの添字である。場の並びは FeynRules の出力と同じで、$\{\phi_1,\phi_2,\dots\}$ の頂点はラグランジアンのその場の積の項に対応する。場 $W$ は $W^+$ を消し $W^-$ を作る場、$\bar W$ はその共役で、$G^\pm$、$u^\pm$ も同様である。ゲージ場の頂点の Lorentz 構造を
+\begin{equation}
+\begin{gathered}
+\Gamma^{\mu_1\mu_2\mu_3}(p_1,p_2,p_3)=g^{\mu_1\mu_2}(p_1-p_2)^{\mu_3}+g^{\mu_2\mu_3}(p_2-p_3)^{\mu_1}+g^{\mu_3\mu_1}(p_3-p_1)^{\mu_2},\\
+S^{ij,kl}=2g^{\mu_i\mu_j}g^{\mu_k\mu_l}-g^{\mu_i\mu_k}g^{\mu_j\mu_l}-g^{\mu_i\mu_l}g^{\mu_j\mu_k}
+\end{gathered}
+\label{eq:GammaS}
+\end{equation}
+と書く。頂点のクラスは93個で、フェルミオン23、スカラーの自己結合9、ゲージ場の自己結合8、ゲージ場とスカラー29、ゴーストとゲージ場13、ゴーストとスカラー11である。ゴーストとスカラーの結合は、反ゴーストのゲージ場の $\xi$（$\bar u^\pm$ なら $\xi_W$、$\bar u^Z$ なら $\xi_Z$）に比例し、$\bar u^A$ の結合はない。伝播関数と頂点の型を図~\ref{fig:rulesfig} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+% propagators
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (0,0) -- (2.1,0);
+  \draw[mom] (0.75,0.32) -- (1.35,0.32) node[midway,above,font=\scriptsize] {$k$};
+  \node[font=\scriptsize] at (-0.25,0) {$\mu$}; \node[font=\scriptsize] at (2.35,0) {$\nu$};
+  \node[slab] at (1.05,-0.75) {$A,\ Z,\ W$\\式~\eqref{eq:propV}};
+\end{scope}
+\begin{scope}[shift={(3.6,0)}]
+  \draw[scalar] (0,0) -- (2,0);
+  \node[slab] at (1,-0.75) {$H$\\$\dfrac{i}{k^2-M_H^2}$};
+\end{scope}
+\begin{scope}[shift={(6.9,0)}]
+  \draw[scalar] (0,0) -- (2,0);
+  \node[slab] at (1,-0.75) {$G^0$、$G^\pm$\\$\dfrac{i}{k^2-\xi_VM_V^2}$};
+\end{scope}
+\begin{scope}[shift={(10.2,0)}]
+  \draw[ghost] (0,0) -- (2,0);
+  \node[slab] at (1,-0.75) {$u^Z$、$u^\pm$（$u^A$ は $M=0$）\\$\dfrac{i}{k^2-\xi_VM_V^2}$};
+\end{scope}
+\begin{scope}[shift={(13.5,0)}]
+  \draw[fermion] (0,0) -- (2,0);
+  \draw[mom] (0.7,0.32) -- (1.3,0.32) node[midway,above,font=\scriptsize] {$p$};
+  \node[slab] at (1,-0.75) {$f$\\$\dfrac{i(\slashed p+m_f)}{p^2-m_f^2}$};
+\end{scope}
+% three-point vertices
+\begin{scope}[shift={(0.9,-3.0)}]
+  \draw[fermion] (-0.85,-0.6) -- (0,0); \draw[fermion] (0,0) -- (-0.85,0.6); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.05,-0.75) {$f$}; \node[font=\scriptsize] at (-1.05,0.75) {$f$}; \node[font=\scriptsize] at (1.35,0.25) {$Z_\mu$};
+  \node[slab] at (0.15,-1.35) {$\bar ffV$（表~\ref{tab:rules-f}）\\$ie\gamma^\mu(g_L^fP_L+g_R^fP_R)$};
+\end{scope}
+\begin{scope}[shift={(3.9,-3.0)}]
+  \draw[fermion] (-0.85,-0.6) -- (0,0); \draw[fermion] (0,0) -- (-0.85,0.6); \draw[scalar] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.05,-0.75) {$f$}; \node[font=\scriptsize] at (-1.05,0.75) {$f$}; \node[font=\scriptsize] at (1.3,0.25) {$H$};
+  \node[slab] at (0.15,-1.35) {$\bar ffS$（表~\ref{tab:rules-f}）\\$-i\dfrac{m_f}{v}$};
+\end{scope}
+\begin{scope}[shift={(6.9,-3.0)}]
+  \draw[photon] (0,0) -- (-0.95,0.65); \draw[photon] (0,0) -- (-0.95,-0.65); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize,anchor=east] at (-0.95,0.7) {$A_{\mu_1}$}; \node[font=\scriptsize,anchor=east] at (-0.95,-0.7) {$W_{\mu_2}$};
+  \node[font=\scriptsize] at (1.4,0.25) {$\bar W_{\mu_3}$};
+  \node[slab] at (0.15,-1.35) {$VVV$（表~\ref{tab:rules-sv}）\\$-ie\,\Gamma^{\mu_1\mu_2\mu_3}(p_1,p_2,p_3)$};
+\end{scope}
+\begin{scope}[shift={(9.9,-3.0)}]
+  \draw[photon] (0,0) -- (-0.62,0.62); \draw[photon] (0,0) -- (0.62,0.62); \draw[photon] (0,0) -- (-0.62,-0.62); \draw[photon] (0,0) -- (0.62,-0.62);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.85,0.82) {$W$}; \node[font=\scriptsize] at (0.85,0.82) {$W$};
+  \node[font=\scriptsize] at (-0.85,-0.8) {$\bar W$}; \node[font=\scriptsize] at (0.85,-0.8) {$\bar W$};
+  \node[slab] at (0,-1.6) {$VVVV$（表~\ref{tab:rules-sv}）\\$i\dfrac{e^2}{\sw^2}S^{12,34}$};
+\end{scope}
+\begin{scope}[shift={(12.6,-3.0)}]
+  \draw[scalar] (0,0) -- (-0.9,0.6); \draw[scalar] (0,0) -- (-0.9,-0.6); \draw[scalar] (0,0) -- (1.0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.1,0.72) {$H$}; \node[font=\scriptsize] at (-1.1,-0.72) {$H$}; \node[font=\scriptsize] at (1.22,0.22) {$H$};
+  \node[slab] at (0.1,-1.35) {$SSS$\\$-6i\lambda v$};
+\end{scope}
+\begin{scope}[shift={(15.2,-3.0)}]
+  \draw[scalar] (0,0) -- (-0.62,0.62); \draw[scalar] (0,0) -- (0.62,0.62); \draw[scalar] (0,0) -- (-0.62,-0.62); \draw[scalar] (0,0) -- (0.62,-0.62);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.82,0.8) {$H$}; \node[font=\scriptsize] at (0.82,0.8) {$H$}; \node[font=\scriptsize] at (-0.82,-0.8) {$H$}; \node[font=\scriptsize] at (0.82,-0.8) {$H$};
+  \node[slab] at (0,-1.6) {$SSSS$\\$-6i\lambda$};
+\end{scope}
+% gauge-scalar and ghost vertices
+\begin{scope}[shift={(0.9,-6.3)}]
+  \draw[scalar] (0,0) -- (-0.9,0.6); \draw[scalar] (0,0) -- (-0.9,-0.6); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.12,0.72) {$G^0$}; \node[font=\scriptsize] at (-1.1,-0.72) {$H$}; \node[font=\scriptsize] at (1.4,0.25) {$Z_{\mu_3}$};
+  \node[slab] at (0.15,-1.35) {$VSS$（表~\ref{tab:rules-vs}）\\$\dfrac{e}{2\sw\cw}(p_1-p_2)^{\mu_3}$};
+\end{scope}
+\begin{scope}[shift={(4.2,-6.3)}]
+  \draw[scalar] (-1.0,0) -- (0,0); \draw[photon] (0,0) -- (0.9,0.65); \draw[photon] (0,0) -- (0.9,-0.65);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.25,0.2) {$H$}; \node[font=\scriptsize] at (1.2,0.8) {$W_{\mu_2}$}; \node[font=\scriptsize] at (1.2,-0.8) {$\bar W_{\mu_3}$};
+  \node[slab] at (0.05,-1.35) {$VVS$（表~\ref{tab:rules-vs}）\\$i\dfrac{eM_W}{\sw}g^{\mu_2\mu_3}$};
+\end{scope}
+\begin{scope}[shift={(7.4,-6.3)}]
+  \draw[scalar] (0,0) -- (-0.62,0.62); \draw[scalar] (0,0) -- (-0.62,-0.62); \draw[photon] (0,0) -- (0.62,0.62); \draw[photon] (0,0) -- (0.62,-0.62);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.82,0.8) {$H$}; \node[font=\scriptsize] at (-0.82,-0.8) {$H$};
+  \node[font=\scriptsize] at (0.98,0.8) {$W_{\mu_3}$}; \node[font=\scriptsize] at (0.98,-0.8) {$\bar W_{\mu_4}$};
+  \node[slab] at (0,-1.6) {$VVSS$（表~\ref{tab:rules-vs}）\\$i\dfrac{e^2}{2\sw^2}g^{\mu_3\mu_4}$};
+\end{scope}
+\begin{scope}[shift={(10.6,-6.3)}]
+  \draw[ghost] (-0.85,-0.6) -- (0,0); \draw[ghost] (0,0) -- (-0.85,0.6); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.08,-0.75) {$u^+$}; \node[font=\scriptsize] at (-1.08,0.75) {$\bar u^+$}; \node[font=\scriptsize] at (1.35,0.25) {$A_\mu$};
+  \draw[mom] (-0.3,0.55) -- (-0.75,0.87) node[midway,above,font=\scriptsize] {$p$};
+  \node[slab] at (0.15,-1.35) {$\bar uuV$（表~\ref{tab:rules-gh}）\\$-iep^\mu$};
+\end{scope}
+\begin{scope}[shift={(13.8,-6.3)}]
+  \draw[ghost] (-0.85,-0.6) -- (0,0); \draw[ghost] (0,0) -- (-0.85,0.6); \draw[scalar] (0,0) -- (1.0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.08,-0.75) {$u^\pm$}; \node[font=\scriptsize] at (-1.08,0.75) {$\bar u^\pm$}; \node[font=\scriptsize] at (1.22,0.22) {$H$};
+  \node[slab] at (0.15,-1.35) {$\bar uuS$（表~\ref{tab:rules-gh}）\\$-i\xi_W\dfrac{e}{2\sw}M_W$};
+\end{scope}
+\end{tikzpicture}
+\caption{伝播関数（上の段、式~\eqref{eq:propV}）と頂点の11の型（中と下の段）。頂点の下の式は、それぞれの型の代表の Feynman 則で、ほかの頂点は表~\ref{tab:rules-f}〜\ref{tab:rules-gh} にある。波線はゲージ場（$A$、$Z$、$W$）、破線はスカラー（$H$、$G^0$、$G^\pm$）、点線はゴースト、矢印の付いた実線はフェルミオンである。矢印はフェルミオン数とゴースト数の流れの向きで、運動量はすべて頂点に入る向きにとる（ゴーストの頂点の $p$ は反ゴーストの脚の入る運動量、すなわち出ていくゴーストの運動量）。閉じたフェルミオンとゴーストのループには $-1$ を掛ける。}
+\label{fig:rulesfig}
+\end{figure}
+
+\begin{table}[tbp]
+\centering\small\renewcommand{\arraystretch}{1.75}
+\caption{フェルミオンの頂点（23個）。$f$ は $\nu,\ell,u,d$ のクラスで、色と世代の $\delta$ は省いた（$\bar qqG$ の $T^a$ は色の行列）。$P_{L,R}=(1\mp\gamma_5)/2$。湯川結合は $y_f=\sqrt2m_f/v$。CKM 行列は単位行列なので、荷電の頂点は同じ世代の $u$ と $d$、$\nu$ と $\ell$ を結ぶ。}
+\label{tab:rules-f}
+\begin{tabular}{lll}
+\toprule
+頂点 & Feynman 則 & 対象 \\
+\midrule
+$\bar ffA_{\mu}$ & $ieQ_f\gamma^\mu$ & $\ell,u,d$ \\
+$\bar ffZ_\mu$ & $\dfrac{ie}{\sw\cw}\gamma^\mu\bigl[(T^3_f-Q_f\sw^2)P_L-Q_f\sw^2P_R\bigr]=ie\gamma^\mu(g_L^fP_L+g_R^fP_R)$ & $\nu,\ell,u,d$ \\
+$\bar qqG^a_\mu$ & $ig_sT^a\gamma^\mu$ & $u,d$ \\
+$\bar udW_\mu$、$\bar du\bar W_\mu$、$\bar\nu\ell W_\mu$、$\bar\ell\nu\bar W_\mu$ & $\dfrac{ie}{\sqrt2\sw}\gamma^\mu P_L$ & \\
+$\bar ffH$ & $-i\dfrac{m_f}{v}$ & $\ell,u,d$ \\
+$\bar ffG^0$ & $-2T^3_f\dfrac{m_f}{v}\gamma_5$ & $\ell,u,d$ \\
+$\bar udG^+$、$\bar duG^-$ & $\dfrac{\sqrt2}{v}(m_uP_L-m_dP_R)$、$\dfrac{\sqrt2}{v}(m_dP_L-m_uP_R)$ & \\
+$\bar\nu\ell G^+$、$\bar\ell\nu G^-$ & $-\dfrac{\sqrt2m_\ell}{v}P_R$、$\dfrac{\sqrt2m_\ell}{v}P_L$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small\renewcommand{\arraystretch}{1.75}
+\caption{スカラーの自己結合（9個）とゲージ場の自己結合（8個）。ゲージ場の脚は表の順に $1,2,\dots$ と番号を付け、$\Gamma$ と $S$ は式~\eqref{eq:GammaS}。$GGGG$ は QCD のノート~\cite{qcdnote} の図~1 と同じ。}
+\label{tab:rules-sv}
+\begin{tabular}{llll}
+\toprule
+頂点 & Feynman 則 & 頂点 & Feynman 則 \\
+\midrule
+$HHH$ & $-6i\lambda v$ & $HHHH$, $G^0G^0G^0G^0$ & $-6i\lambda$ \\
+$G^0G^0H$, $G^+G^-H$ & $-2i\lambda v$ & $G^+G^+G^-G^-$ & $-4i\lambda$ \\
+ & & $G^0G^0HH$, $G^+G^-HH$, $G^0G^0G^+G^-$ & $-2i\lambda$ \\
+\midrule
+$AW\bar W$ & $-ie\,\Gamma^{\mu_1\mu_2\mu_3}(p_1,p_2,p_3)$ & $W\bar WZ$ & $-ie\dfrac{\cw}{\sw}\Gamma^{\mu_1\mu_2\mu_3}(p_1,p_2,p_3)$ \\
+$WW\bar W\bar W$ & $i\dfrac{e^2}{\sw^2}S^{12,34}$ & $AAW\bar W$ & $-ie^2S^{12,34}$ \\
+$W\bar WZZ$ & $-ie^2\dfrac{\cw^2}{\sw^2}S^{34,12}$ & $AW\bar WZ$ & $-ie^2\dfrac{\cw}{\sw}S^{14,23}$ \\
+$GGG$ & $g_sf^{a_1a_2a_3}\Gamma^{\mu_1\mu_2\mu_3}(p_1,p_2,p_3)$ & $GGGG$ & QCD のノートの図~1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small\renewcommand{\arraystretch}{1.75}
+\caption{ゲージ場とスカラーの頂点（29個）。$M_W=ev/(2\sw)$。運動量はスカラーの脚のもの。複号は左と右の頂点に順に対応する。}
+\label{tab:rules-vs}
+\begin{tabular}{llll}
+\toprule
+頂点 & Feynman 則 & 頂点 & Feynman 則 \\
+\midrule
+$HW\bar W$ & $i\dfrac{eM_W}{\sw}g^{\mu_2\mu_3}$ & $HZZ$ & $i\dfrac{eM_W}{\sw\cw^2}g^{\mu_2\mu_3}$ \\
+$HHW\bar W$, $G^0G^0W\bar W$, $G^+G^-W\bar W$ & $i\dfrac{e^2}{2\sw^2}g^{\mu_3\mu_4}$ & $HHZZ$, $G^0G^0ZZ$ & $i\dfrac{e^2}{2\sw^2\cw^2}g^{\mu_3\mu_4}$ \\
+$G^+G^-ZZ$ & $i\dfrac{e^2(\cw^2-\sw^2)^2}{2\sw^2\cw^2}g^{\mu_3\mu_4}$ & $AAG^+G^-$ & $2ie^2g^{\mu_1\mu_2}$ \\
+$AG^+G^-Z$ & $ie^2\dfrac{\cw^2-\sw^2}{\sw\cw}g^{\mu_1\mu_4}$ & $AG^+G^-$ & $ie(p_2-p_3)^{\mu_1}$ \\
+$G^+G^-Z$ & $ie\dfrac{\cw^2-\sw^2}{2\sw\cw}(p_1-p_2)^{\mu_3}$ & $G^0HZ$ & $\dfrac{e}{2\sw\cw}(p_1-p_2)^{\mu_3}$ \\
+$G^+H\bar W$, $G^-HW$ & $\dfrac{e}{2\sw}(p_1-p_2)^{\mu_3}$ & $G^0G^+\bar W$, $G^0G^-W$ & $\pm\dfrac{ie}{2\sw}(p_1-p_2)^{\mu_3}$ \\
+$AG^+\bar W$, $AG^-W$ & $\pm eM_Wg^{\mu_1\mu_3}$ & $G^+\bar WZ$, $G^-WZ$ & $\mp eM_W\dfrac{\sw}{\cw}g^{\mu_2\mu_3}$ \\
+$AG^0G^+\bar W$, $AG^0G^-W$ & $-\dfrac{ie^2}{2\sw}g^{\mu_1\mu_4}$ & $AG^+H\bar W$, $AG^-HW$ & $\pm\dfrac{e^2}{2\sw}g^{\mu_1\mu_4}$ \\
+$G^0G^+\bar WZ$, $G^0G^-WZ$ & $\dfrac{ie^2}{2\cw}g^{\mu_3\mu_4}$ & $G^+H\bar WZ$, $G^-HWZ$ & $\mp\dfrac{e^2}{2\cw}g^{\mu_3\mu_4}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small\renewcommand{\arraystretch}{1.75}
+\caption{ゴーストの頂点（24個）。$p$ は反ゴーストの脚の入る運動量（出ていくゴーストの運動量）。ゴーストとスカラーの結合は反ゴーストのゲージ場の $\xi$ に比例する。複号は左と右の頂点に順に対応する。}
+\label{tab:rules-gh}
+\begin{tabular}{llll}
+\toprule
+頂点 & Feynman 則 & 頂点 & Feynman 則 \\
+\midrule
+$\bar u^Au^-W_\mu$, $\bar u^Au^+\bar W_\mu$ & $\mp iep^\mu$ & $\bar u^+u^AW_\mu$, $\bar u^-u^A\bar W_\mu$ & $\pm iep^\mu$ \\
+$\bar u^+u^+A_\mu$, $\bar u^-u^-A_\mu$ & $\mp iep^\mu$ & $\bar u^+u^+Z_\mu$, $\bar u^-u^-Z_\mu$ & $\mp ie\dfrac{\cw}{\sw}p^\mu$ \\
+$\bar u^Zu^-W_\mu$, $\bar u^Zu^+\bar W_\mu$ & $\mp ie\dfrac{\cw}{\sw}p^\mu$ & $\bar u^+u^ZW_\mu$, $\bar u^-u^Z\bar W_\mu$ & $\pm ie\dfrac{\cw}{\sw}p^\mu$ \\
+$\bar u^au^bG^c_\mu$ & $-g_sf^{abc}p^\mu$ & & \\
+\midrule
+$\bar u^+u^AG^+$, $\bar u^-u^AG^-$ & $\mp\xi_WeM_W$ & $\bar u^+u^+G^0$, $\bar u^-u^-G^0$ & $\pm\xi_W\dfrac{e}{2\sw}M_W$ \\
+$\bar u^+u^+H$, $\bar u^-u^-H$ & $-i\xi_W\dfrac{e}{2\sw}M_W$ & $\bar u^+u^ZG^+$, $\bar u^-u^ZG^-$ & $\mp\xi_WeM_W\dfrac{\cw^2-\sw^2}{2\sw\cw}$ \\
+$\bar u^Zu^-G^+$, $\bar u^Zu^+G^-$ & $\pm\xi_Z\dfrac{eM_W}{2\sw\cw}$ & $\bar u^Zu^ZH$ & $-i\xi_Z\dfrac{eM_W}{2\sw\cw^2}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{べき数え上げ。}外線のボソン $E_B$ 本とフェルミオン $E_F$ 本の1PI 図の表面的な発散次数は、くりこみ可能な理論の一般の式 $\omega=4-E_B-\frac32E_F$ である（ゴーストはボソンと同じに数える）。$R_\xi$ ゲージの伝播関数 \eqref{eq:propV} は $k\to\infty$ で $1/k^2$ になるので、ユニタリーゲージと違ってこの数え上げが使える。タドポール（$E_B=1$）は $\omega=3$ だが、次元正則化では $A_0$ の $m^2\DUV$ だけが残る。
+
+\subsection{木のレベルの関係と崩壊幅}\label{sec:tree}
+
+$\MSbar$ のパラメータで書いた木のレベルの関係は、物理的な入力で書いたものと同じ形である。$\mu$ 崩壊の4フェルミの振幅を運動量0で比べると、木のレベルでは
+\begin{equation}
+\frac{G_F}{\sqrt2}=\frac{g^2}{8M_W^2}=\frac1{2v^2}
+\label{eq:GF}
+\end{equation}
+である（1ループの補正は手順 (6) で加える）。2体の崩壊幅は、終状態の質量を残して（\ref{app:tree}）
+\begin{equation}
+\begin{aligned}
+\Gamma(W^+\to f\bar f')&=N_c\frac{e^2M_W}{48\pi\sw^2}\,\lambda^{1/2}(1,x_f,x_{f'})\Bigl[1-\frac{x_f+x_{f'}}2-\frac{(x_f-x_{f'})^2}2\Bigr],\qquad x=\frac{m^2}{M_W^2},\\
+\Gamma(Z\to f\bar f)&=N_c\frac{e^2M_Z}{24\pi}\beta_f\bigl[(g_L^{f2}+g_R^{f2})(1-x_f)+6g_L^fg_R^fx_f\bigr],\qquad x_f=\frac{m_f^2}{M_Z^2},\ \beta_f=\sqrt{1-4x_f},\\
+\Gamma(H\to f\bar f)&=N_c\frac{m_f^2M_H}{8\pi v^2}\beta_f^3,\qquad \beta_f=\sqrt{1-4m_f^2/M_H^2},\\
+\Gamma(t\to bW^+)&=\frac{e^2m_t^3}{64\pi\sw^2M_W^2}\,\lambda^{1/2}(1,x_b,x_W)\bigl[(1-x_b)^2+x_W(1+x_b)-2x_W^2\bigr],\qquad x=\frac{m^2}{m_t^2}
+\end{aligned}
+\label{eq:widths}
+\end{equation}
+で、$\lambda(a,b,c)=a^2+b^2+c^2-2ab-2bc-2ca$ である。質量0では $\Gamma(W\to\ell\nu)=e^2M_W/(48\pi\sw^2)$、$\Gamma(Z\to\nu\bar\nu)=e^2M_Z/(96\pi\sw^2\cw^2)$ になり、式~\eqref{eq:GF} で $G_FM_W^3/(6\sqrt2\pi)$、$G_FM_Z^3/(12\sqrt2\pi)$ と書ける。$H\to WW$、$ZZ$ は基準点でも物理の値でも2体では開かない。
+
+質量0のフェルミオンの $e^+e^-\to f\bar f$（$f\ne e$）は、光子と $Z$ の $s$ チャンネルの交換で（\ref{app:tree}）
+\begin{equation}
+\sum|\mathcal M|^2=4e^4N_c\Bigl[u^2\bigl(|A_{LL}|^2+|A_{RR}|^2\bigr)+t^2\bigl(|A_{LR}|^2+|A_{RL}|^2\bigr)\Bigr],\qquad
+A_{ij}=\frac{Q_eQ_f}{s}+\frac{g_i^eg_j^f}{s-M_Z^2+iM_Z\Gamma_Z}
+\label{eq:eeff}
+\end{equation}
+である（$i,j=L,R$、$t=(p_{e^-}-p_f)^2$）。光子だけなら $8e^4N_cQ_f^2(t^2+u^2)/s^2$ になる。
+
+\subsection{$\MSbar$ の対抗項と繰り込み群}\label{sec:rg}
+
+\paragraph{1ループの $\beta$ 関数。}式~\eqref{eq:bare} の裸の量が $\mu$ によらないことから、1ループでは
+\begin{equation}
+Z_X=1+\frac{\beta_X}{2X}\DUV\qquad(X=g,g',g_s,\lambda,y_f,\mu^2;\ \beta_{\mu^2}\equiv\gamma_{\mu^2})
+\label{eq:zrule}
+\end{equation}
+で、$\beta_X$ は4次元の1ループの $\beta$ 関数である（\ref{app:rg}）。標準模型では
+\begin{equation}
+\begin{aligned}
+K\beta_{g_s}&=-7g_s^3,\qquad K\beta_g=-\frac{19}6g^3,\qquad K\beta_{g'}=\frac{41}6g'^3,\\
+K\beta_{y_u}&=y_u\Bigl[\frac32(y_u^2-y_d^2)+\mathcal T-8g_s^2-\frac94g^2-\frac{17}{12}g'^2\Bigr],\\
+K\beta_{y_d}&=y_d\Bigl[\frac32(y_d^2-y_u^2)+\mathcal T-8g_s^2-\frac94g^2-\frac5{12}g'^2\Bigr],\\
+K\beta_{y_\ell}&=y_\ell\Bigl[\frac32y_\ell^2+\mathcal T-\frac94g^2-\frac{15}4g'^2\Bigr],\\
+K\beta_\lambda&=24\lambda^2+4\lambda\mathcal T-2\sum_i\bigl(3y_{u_i}^4+3y_{d_i}^4+y_{\ell_i}^4\bigr)-3\lambda(3g^2+g'^2)+\frac38\bigl[2g^4+(g^2+g'^2)^2\bigr],\\
+K\gamma_{\mu^2}&=\mu^2\Bigl[12\lambda+2\mathcal T-\frac92g^2-\frac32g'^2\Bigr]
+\end{aligned}
+\label{eq:beta}
+\end{equation}
+である（$y_u$ と $y_d$ は同じ世代の組、$\mathcal T=\sum_i(3y_{u_i}^2+3y_{d_i}^2+y_{\ell_i}^2)$）。トップだけを残すと、よく知られた $K\beta_{y_t}=y_t(\frac92y_t^2-8g_s^2-\frac94g^2-\frac{17}{12}g'^2)$、$K\beta_\lambda=24\lambda^2+12\lambda y_t^2-6y_t^4-3\lambda(3g^2+g'^2)+\frac38[2g^4+(g^2+g'^2)^2]$ になる~\cite{mv1,mv2,mv3,arason92}。ゲージ結合の係数は $-\frac{11}3C_2(G)+\frac23S_2(F)+\frac13S_2(S)$（$F$ は Weyl フェルミオン、$S$ は複素スカラー）で、$SU(2)$ では $-\frac{22}3+4+\frac16$、$U(1)$ では $\frac{20}3+\frac16$、$SU(3)$ では $-11+4$ である。$\beta_\lambda$ と $\gamma_{\mu^2}$ は、Landau ゲージの1ループの有効ポテンシャルが $\mu$ によらないことと、Landau ゲージの $K\gamma_\Phi=\mathcal T-\frac94g^2-\frac34g'^2$ から導いた（\ref{app:rg}）。
+
+\paragraph{$e$、$\sw^2$ と $\MSbar$ の質量の走り。}式~\eqref{eq:masses} から
+\begin{equation}
+\frac{\dd e}{\dd\ln\mu}=\frac{11}3\frac{e^3}K,\qquad
+\frac{\dd\sw^2}{\dd\ln\mu}=\frac{2e^2}K\Bigl(\frac{41}6\sw^2+\frac{19}6\cw^2\Bigr)
+\label{eq:erun}
+\end{equation}
+である。$\frac{11}3=\frac43\sum_fN_cQ_f^2-7$ は、3世代のフェルミオン（$\frac43\cdot8$）と $W$ のループ（$-7$）の和で、$W$ を脱結合させていない $\MSbar$ の電荷の走りである。$v^2=\mu^2/\lambda$ と質量の走りは
+\begin{equation}
+\begin{aligned}
+K\frac{\dd\ln v^2}{\dd\ln\mu}&=K\Bigl(\frac{\gamma_{\mu^2}}{\mu^2}-\frac{\beta_\lambda}\lambda\Bigr)
+=-12\lambda-2\mathcal T+\frac92g^2+\frac32g'^2+\frac2\lambda\sum_fN_cy_f^4-\frac3{8\lambda}\bigl[2g^4+(g^2+g'^2)^2\bigr],\\
+\frac{\dd\ln M_W^2}{\dd\ln\mu}&=\frac{\dd\ln v^2}{\dd\ln\mu}+\frac{2\beta_g}g,\qquad
+\frac{\dd\ln M_Z^2}{\dd\ln\mu}=\frac{\dd\ln v^2}{\dd\ln\mu}+\frac{2(g\beta_g+g'\beta_{g'})}{g^2+g'^2},\\
+\frac{\dd\ln M_H^2}{\dd\ln\mu}&=\frac{\gamma_{\mu^2}}{\mu^2},\qquad
+\frac{\dd\ln m_f^2}{\dd\ln\mu}=\frac{\dd\ln v^2}{\dd\ln\mu}+\frac{2\beta_{y_f}}{y_f}
+\end{aligned}
+\label{eq:vrun}
+\end{equation}
+である（$\sum_f$ は9個の質量のあるフェルミオンについての和）。$v^2$ の走りの $1/\lambda$ の項はタドポールから来る（第~\ref{sec:tadpole} 節）。物理の値の付近（$\mu\approx m_t$）では $\frac2\lambda\sum N_cy_f^4\approx6y_t^4/\lambda\approx37$ で、残りの項の和（約 $-7$）の5倍ほどあり、FJ の処方の $v^2$ と $\MSbar$ の質量は $\mu$ が $e$ 倍になるごとに2割ほど変わる。
+
+\paragraph{質量の対抗項。}FJ の処方では、裸の質量は $\MSbar$ のパラメータの組み合わせで（$M_{W,0}^2=g_0^2\mu_0^2/(4\lambda_0)$ など）、式~\eqref{eq:zrule} から
+\begin{equation}
+\delta M^2\equiv M_0^2-M^2=\frac{\DUV}2\,\frac{\dd M^2}{\dd\ln\mu}\qquad(M=M_W,M_Z,M_H,m_f\ \text{の2乗})
+\label{eq:dM2}
+\end{equation}
+である。これらは $\MSbar$ のパラメータの $\beta$ 関数だけで決まるので、ゲージによらない。
+
+\subsection{タドポールと2点関数}\label{sec:tadpole}
+
+\paragraph{タドポール。}1ループの $H$ の1点の1PI 関数 $iT$ は、図~\ref{fig:tadpole} の図の和で、一般の $R_\xi$ ゲージで（\ref{app:tadpole}）
+\begin{equation}
+\begin{aligned}
+T=\frac1{Kv}\Bigl[&2M_W^2\bigl(3A_0(M_W)-2M_W^2\bigr)+M_Z^2\bigl(3A_0(M_Z)-2M_Z^2\bigr)+\frac32M_H^2A_0(M_H)\\
+&+\frac{M_H^2}2\Bigl(A_0\bigl(\sqrt{\xi_Z}M_Z\bigr)+2A_0\bigl(\sqrt{\xi_W}M_W\bigr)\Bigr)-4\sum_fN_cm_f^2A_0(m_f)\Bigr]
+\end{aligned}
+\label{eq:T}
+\end{equation}
+である。$-2M_V^2$ は $(D-1)A_0(M_V)$ の $(D-4)A_0$ から来る有理数の項である。$W$ と $Z$ のループの $\xi$ に比例する部分 $\xi_VA_0(\sqrt{\xi_V}M_V)$ は、ゴーストのループがちょうど打ち消し、$\xi$ 依存は Goldstone ボソンのループの質量 $\sqrt{\xi_V}M_V$ だけに残る。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\foreach \x/\sty/\lbl in {0/fermion/{$f$：$-4N_cm_f^2A_0$}, 3.0/photon/{$W$、$Z$}, 6.0/scalar/{$H$、$G^0$、$G^\pm$}, 9.0/ghost/{$u^Z$、$u^\pm$}} {
+  \begin{scope}[shift={(\x,0)}]
+    \draw[scalar] (0,-0.9) -- (0,0);
+    \draw[\sty] (0,0) arc (-90:270:0.55);
+    \node[vtx] at (0,0) {};
+    \node[font=\scriptsize] at (0.25,-0.8) {$H$};
+    \node[lab,font=\scriptsize] at (0,-1.35) {\lbl};
+  \end{scope}}
+\begin{scope}[shift={(12.6,0)}]
+  \draw[photon] (-1.0,-0.6) -- (0,-0.6); \draw[photon] (0,-0.6) -- (1.0,-0.6);
+  \draw[scalar] (0,-0.6) -- (0,0.15);
+  \node[blob,minimum size=0.6cm] at (0,0.45) {$T$};
+  \node[vtx] at (0,-0.6) {};
+  \node[font=\scriptsize] at (0.28,-0.2) {$H$};
+  \node[lab,font=\scriptsize] at (0,-1.35) {タドポールの付いた図};
+\end{scope}
+\end{tikzpicture}
+\caption{1ループのタドポールの図（左の4つ）と、タドポールを2点関数につないだ図（右）。ゴーストのループは $W$、$Z$ のループの $\xi$ に比例する部分を打ち消す。$u^A$ と $H$ の結合はない。FJ の処方では右の形の図をすべての計算に含める。}
+\label{fig:tadpole}
+\end{figure}
+
+\paragraph{2点関数とタドポールの寄与。}1PI の2点関数の1ループの部分を、Denner~\cite{denner93} と同じ形で
+\begin{equation}
+\Gamma^{VV'}_{\mu\nu}\supset-ig_{\mu\nu}\Sigma^{VV'}_T(k^2)+(k_\mu k_\nu\ \text{の項}),\qquad
+\Gamma^H\supset i\Sigma^H(k^2),\qquad
+\Gamma^f\supset i\bigl[\slashed pP_L\Sigma^L_f+\slashed pP_R\Sigma^R_f+m_f\Sigma^S_f\bigr]
+\label{eq:Gamma2}
+\end{equation}
+と書く。FJ の処方では、これにタドポールの付いた図（図~\ref{fig:tadpole} の右）を加えたものを2点関数とする。その寄与は
+\begin{equation}
+\Sigma^{WW}_T\supset-2M_W^2\frac{\Delta v}v,\qquad \Sigma^{ZZ}_T\supset-2M_Z^2\frac{\Delta v}v,\qquad
+\Sigma^H\supset-6\lambda v\,\Delta v=-\frac{3T}v,\qquad \Sigma^S_f\supset-\frac{\Delta v}v
+\label{eq:tadins}
+\end{equation}
+で（$\Delta v\equiv T/M_H^2$）、光子と $\gamma Z$ の混合には付かない（$HAA$、$HAZ$ の頂点がない）。$W$、$Z$、フェルミオンでは、木の質量の $v$ を $v+\Delta v$ に置き換えたことと同じである。Higgs では $6\lambda v\Delta v$ で、$M_H^2=2\lambda v^2$ の $v$ を置き換えた $4\lambda v\Delta v$ と違う。ループで補正したポテンシャルの曲率が変わるからである（\ref{app:tadpole}）。
+
+\paragraph{極質量の紫外の極。}極は $k^2-M_0^2+\Sigma_T(k^2)=0$（$H$ では $\Sigma^H$、フェルミオンでは $m_{\mathrm p}=m(1-\Sigma^V-\Sigma^S)$、$\Sigma^V=(\Sigma^L+\Sigma^R)/2$）にあるので、1ループの極質量は
+\begin{equation}
+M_{\mathrm p}^2=M^2-\re\Sigma_T(M^2)\big|_{\MSbar}
+\label{eq:pole}
+\end{equation}
+で、それが有限であることは、タドポールを含めた $\Sigma_T(M^2)$ の $\DUV$ の係数が式~\eqref{eq:dM2} の $\frac12\dd M^2/\dd\ln\mu$ に等しいことと同じである。右辺はゲージによらないので、$\Sigma_T(M^2)$ の紫外の極は、タドポールを含めると $\xi$ によらないはずである。同じことが有限部分にも言え、1ループの極質量はタドポールを含めると $\xi$ によらない（手順 (3)、(5) で確かめる）。
+
+\paragraph{$\beta_t$ の処方との関係。}ループで補正したポテンシャルの最小点は $v+\Delta v$ である（\ref{app:tadpole}）。$\beta_t$ の処方はこの点のまわりで展開してタドポールの図を除き、その代わりに $v_\beta=v+\Delta v|_{\MSbar}$ を真空期待値とする。1ループでは、FJ のタドポールの付いた図（式~\eqref{eq:tadins}）が、$\beta_t$ の処方の木の質量の $v_\beta$ と $v$ の差にちょうど置き換わり、物理量はどちらでも同じである。違いは $v_\beta$（と $g v_\beta/2$ などの「$\MSbar$ の質量」）がゲージに依存することである。式~\eqref{eq:T} の $A_0$ の $\ln\mu^2$ と式~\eqref{eq:vrun} から
+\begin{equation}
+\frac{\dd\ln v_\beta}{\dd\ln\mu}=\frac12\frac{\dd\ln v^2}{\dd\ln\mu}+\frac{\dd}{\dd\ln\mu}\frac{\Delta v}v
+=-\gamma_\Phi^{\mathrm L}+\frac1{4K}\bigl[\xi_Z(g^2+g'^2)+2\xi_Wg^2\bigr],\qquad
+K\gamma_\Phi^{\mathrm L}=\mathcal T-\frac94g^2-\frac34g'^2
+\label{eq:vbeta}
+\end{equation}
+である（$\gamma_\Phi^{\mathrm L}$ は Landau ゲージの $\Phi$ の異常次元）。$v$ の走りの $1/\lambda$ の項は $\Delta v$ の走りと打ち消し、$v_\beta$ は Landau ゲージでは場の異常次元で走り、一般の $R_\xi$ ゲージでは Goldstone ボソンの質量を通じて $\xi$ に依存して走る。$\phi^3$ のノートの線形項 $Y$ と違い、この依存を吸収する独立なパラメータはない。
+
+\section{検算の計画}\label{sec:plan}
+
+第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。一般の $R_\xi$ ゲージの計算は、本ノートの模型ファイルから書き出した FeynArts の模型（\texttt{GaugeXi} を残す）と FeynCalc で行い、Feynman ゲージでは FeynArts の \texttt{SM.mod} と FormCalc（Denner の規約）とも、外線の因子で規約を直して比べる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{各量と、それを計算して突き合わせる手段。「—」はその手段を使わないことを表す。}
+\label{tab:plan}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{2.1cm}}
+\toprule
+\textbf{量} & \textbf{手計算} & \textbf{FeynCalc + FeynArts、FormCalc} & \textbf{数値（LoopTools、COLLIER、Package-X など）} & \textbf{MadGraph} \\
+\midrule
+Feynman 則 & \ref{app:rules} & 自前の模型（FeynRules）の頂点と表の差 & — & UFO と図の数 \\
+木の関係、崩壊幅、$e^+e^-\to f\bar f$ \eqref{eq:GF}〜\eqref{eq:eeff} & \ref{app:tree} & 振幅の2乗を記号として & 陽な行列 & 幅と断面積 \\
+タドポール \eqref{eq:T}、タドポールの寄与 \eqref{eq:tadins} & \ref{app:tadpole} & 一般の $R_\xi$ で $D$ 次元で記号として。\texttt{SM.mod} & 数値 & — \\
+自己エネルギー、極の $\xi$ 依存 \eqref{eq:dM2}、\eqref{eq:pole} & \ref{app:tadpole} & 一般の $R_\xi$ で、Slavnov--Taylor 恒等式も & 数値 & — \\
+$\beta$ 関数 \eqref{eq:beta}〜\eqref{eq:vrun} & \ref{app:rg} & 1PI 関数の極。一般の公式（Machacek--Vaughn）の陽な実装 & — & — \\
+$v_\beta$ の走り \eqref{eq:vbeta} & \ref{app:tadpole} & 一般の $R_\xi$ のタドポール & 数値 & — \\
+極質量、$G_F$、$\alpha(0)$ の換算 & 手順 (5)、(6) & 一般の $R_\xi$。FormCalc & 数値 & — \\
+$\MSbar$ のパラメータの決定、走り、真空の安定性 & 手順 (7)〜(10) & — & 常微分方程式、bounce & MadLoop \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点で、ツールどうしと手計算の数値が倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。FeynCalc の PaVe 関数の $\epsilon^0$ の係数は、これまでのノートと同じく $\MSbar$ の値に直してから比べる。MadGraph の断面積は、自分で数値積分した値と統計誤差の範囲で一致することを求める。$\xi$ によらないはずの量は、記号として $\xi$ を含まないこと、または $\xi=0,1,3$ で同じ値になることを求める。応用の手順では、比べる値の精度（文献の値の桁数、統計誤差）の範囲で一致することを求め、その精度を各手順に示す。
+
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{SM.fr} を一から書き、FeynArts の模型と UFO を書き出して、Feynman 則と MadGraph の図を確かめる。(2) 木の振幅の2乗と崩壊幅を FeynCalc で記号として確かめ、MadGraph の幅と断面積と比べる。$e^+e^-\to W^+W^-$ の縦波の $W$ 対で、三つの図の $s/M_W^2$ に比例して増える部分が打ち消すことを確かめる。(3) タドポールと自己エネルギーを一般の $R_\xi$ ゲージで $D$ 次元で求め、式~\eqref{eq:T} と、タドポールを含めた $\Sigma(M^2)$ の紫外の極が式~\eqref{eq:dM2} に等しく $\xi$ によらないことを確かめる。2点関数の Slavnov--Taylor 恒等式を確かめ、有限部分を LoopTools、Package-X、COLLIER で比べ、Feynman ゲージでは \texttt{SM.mod} の図と比べる。(4) $\beta$ 関数 \eqref{eq:beta} を、1PI 関数の極（$e$ は光子の自己エネルギーと $\gamma Z$ の混合、湯川結合は頂点、$\lambda$ は4点関数）と、一般の公式~\cite{mv1,mv2,mv3,luo03} を標準模型の場で陽に組んだ実装の二つで確かめる。式~\eqref{eq:vbeta} の $v_\beta$ の走りを確かめる。(5) $W$、$Z$、$H$、$t$ の1ループの極質量を $\MSbar$ のパラメータで求め、$\xi$ によらないこと、$\mu$ を変えた変化が式~\eqref{eq:vrun} と打ち消すことを確かめる（トップには $O(\alpha_s)$ を含める）。(6) $\mu$ 崩壊の1ループ（頂点と箱の図）から $G_F$ と $\MSbar$ の $v$ の関係を、光子の真空偏極から $\alpha(0)$ と $e(\mu)$ の関係を求め、$\xi$ によらないことを確かめる。(7) 測定値（$G_F$、$M_Z$、$M_W$、$M_H$、$m_t$、$\alpha(0)$ と $\Delta\alpha_{\mathrm{had}}$、$\alpha_s$）から1ループの換算で $\MSbar$ のパラメータを決め、高次の文献の値~\cite{buttazzo13,mr19} と比べる。(8) 1ループと2ループの繰り込み群の方程式で結合を走らせ、$\lambda$ が0になるスケールを求めて文献~\cite{degrassi12,buttazzo13} と比べる。$\MSbar$ の質量の走りを FJ と $\beta_t$ の処方で比べる。(9) $\MSbar$ の対抗項（FJ を対抗項の形にしたもの）で1ループの電弱の振幅を MadLoop と FormCalc で比べる。(10) 繰り込み群で改良した有効ポテンシャルで、真空の崩壊の bounce と寿命を、$\phi^3+\phi^4$ と湯川のノート~\cite{phi34note,yukawanote} の道具で求める。
+
+\section{検算}\label{sec:checks}
+
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、各手順は \texttt{run\_*.sh} でまとめて再実行できる（手順 (1) は \texttt{run\_model\_check.sh}）。
+
+\paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/SM.fr} を一から書いた。ラグランジアンは式~\eqref{eq:L} とゴーストの項 \eqref{eq:fp} で、ゲージ固定の項 \eqref{eq:gf} は頂点を持たないので含めない。ゲージ群、共変微分、場の強さは FeynRules の記法（\texttt{DC}、\texttt{FS}）で書き、湯川結合は世代について対角な行列にした。ゴーストとスカラーの結合は、手で展開した式を使わず、模型ファイルの中で $s\Phi=i(gT^au^a+\frac{g'}2u^B)\Phi$ を2行2列の行列で計算し、そこから $sG^\pm$、$sG^0$ を取り出して $\xi_ZM_Z\bar u^ZsG^0+\xi_WM_W(\bar u^+sG^++\bar u^-sG^-)$ を作った。こうすると、表~\ref{tab:rules-gh} との比較は自分の手計算の写しどうしの比較にならない。外部パラメータは $\MSbar$ の $\alpha^{-1}$、$M_W$、$M_Z$、$M_H$、フェルミオンの質量、$\alpha_s$、$\xi_A,\xi_Z,\xi_W,\xi_G$ で、$v$、$\lambda$、$\mu^2$、湯川結合は式~\eqref{eq:masses} の内部パラメータである（\ref{app:details}）。
+
+FeynRules のチェックでは、エルミート性が通り（$\mathcal L-\mathcal L^\dagger$ の頂点は0個）、警告は予想した二つだけだった。左巻きだけのニュートリノの運動項の規格化と、Goldstone ボソンの質量項の符号（質量はゲージ固定の項から来るが、それを含めていない）である。質量のスペクトルは模型ファイルの値と一致し、ゴーストの質量は $\xi_WM_W^2$、$\xi_ZM_Z^2$ になった。頂点のクラスは93個で、内訳は第~\ref{sec:rules} 節の数と同じである。スクリプト \texttt{generate\_SM.wl} は、それぞれの頂点を表~\ref{tab:rules-f}〜\ref{tab:rules-gh} の式と比べた。フェルミオンの頂点は世代ごとに分けて比べ、世代の非対角の成分が0であることも確かめた。$v$、$\lambda$、$y_f$ を式~\eqref{eq:masses} で $M_W$、$M_H$、$m_f$ に直し、3点の頂点では運動量の保存を使うと、93個すべての差が記号として0になった。比べ方が誤りを見逃さないことを確かめるため、わざと3か所を誤らせた表（$AW\bar W$ の符号、$G^0G^0H$ の2倍、$\bar u^Zu^ZH$ の $\xi_Z$ の欠落）とも比べ、ちょうど3個の差が出た。FeynArts の模型では、ゴーストとスカラーの11個の結合の $\xi_Z$、$\xi_W$ を FeynArts の \texttt{GaugeXi[Z]}、\texttt{GaugeXi[W]} に置き換え、伝播関数の \texttt{GaugeXi} と同じ記号にした。クラスは \texttt{F[1]}〜\texttt{F[4]}（$\nu,\ell,u,d$、世代の添字付き）、\texttt{S[1]}〜\texttt{S[3]}（$H,G^0,G^+$）、\texttt{V[1]}〜\texttt{V[4]}（$A,Z,W^+,G$）、\texttt{U[1]}〜\texttt{U[5]}（$u^A,u^Z,u^+,u^-,u_G$）である。
+
+この過程で三つのことが分かった。一つ目は自分の模型ファイルの誤りで、湯川の項を最初 $y_f\bar Q_{Lf}\Phi d_{Rf}$ のように一つの世代の添字を3回使って書いたところ、FeynRules は警告を出さずに、頂点に縮約されない世代の添字を残した（$\bar udG^+$ の頂点に \texttt{IndexDelta[Index[Generation, Ext[2]], Index[Generation, a]]} が現れた）。湯川結合を対角の行列 $y_{f_1f_2}$ にして、どの添字も2回だけ現れるように直した。二つ目は比べる側の問題で、FeynRules を読み込んだカーネルでは、置き換えの規則の左辺 \texttt{ProjM[\_, \_]} が射影演算子のトレース2に評価され、規則が式の中の整数2をすべて $P_L$ に置き換えた（$e^2$ が $e^{P_L}$ になった）。左辺を \texttt{HoldPattern} で包み、パターンの変数に別の名前を付けて直した。三つ目は MadGraph の問題で、次の段落に書く。
+
+UFO は制限なしで書き、MadGraph の制限カード \texttt{restrict\_massless.dat}（トップ以外のフェルミオンを質量0にする）をスクリプト \texttt{make\_restrict.py} で作った。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の木の図を、ユニタリーゲージと Feynman ゲージの両方で生成し、すべて手で数えた数と一致した。Feynman ゲージで図が増えるのは、$\gamma\gamma\to W^+W^-$（$t$、$u$ チャンネルの $G^\pm$）、$W^+W^-\to ZZ$、$W^+W^-\to HH$（$G^\pm$）、$ZZ\to HH$（$G^0$）である。最初の実行では、Feynman ゲージの数がユニタリーゲージと同じになった。MadGraph は UFO の \texttt{gauge = [0]}（Feynman ゲージを許さない）を見て「Feynman gauge is not allowed for your current model」と表示してユニタリーゲージに戻り、模型の読み込みに失敗したまま、続く \texttt{generate} を警告なしに組み込みの標準模型で実行していた。FeynRules は大域変数 \texttt{FeynmanGauge} が \texttt{True} のときだけ \texttt{gauge = [0, 1]} と書く。本ノートの模型は Goldstone ボソンとゴーストをいつも含むので、\texttt{SM.fr} でこの変数を \texttt{True} にし、スクリプトはログにこの表示があれば止まるようにした。スクリプトは \texttt{generate\_SM.wl}（FeynRules）、\texttt{make\_restrict.py}、\texttt{model\_mg5.mg5}（MadGraph）である。手順 (1) で分かったツールの問題は計算環境の記録~\cite{env} の表 15 にまとめた。
+
+\begin{table}[tbp]
+\centering\small
+\caption{MadGraph 3.8.1 が本ノートの UFO（トップ以外のフェルミオンは質量0）から生成した木の図の数（ユニタリーゲージ / Feynman ゲージ）と、その内訳。どれも手で数えた数と一致した。MadGraph は既定で結合の次数が最小の図だけを作る。}
+\label{tab:diagrams}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{5.3cm}>{\raggedright\arraybackslash}p{2.1cm}X}
+\toprule
+過程 & 図の数 & 内訳 \\
+\midrule
+$e^+e^-\to\mu^+\mu^-$, $u\bar u$, $t\bar t$ & 2 / 2 & $s$ チャンネルの $\gamma$、$Z$ \\
+$e^+e^-\to e^+e^-$ & 4 / 4 & $s$、$t$ チャンネルの $\gamma$、$Z$ \\
+$e^+e^-\to\nu_e\bar\nu_e$ / $\nu_\mu\bar\nu_\mu$ & 2 / 2、1 / 1 & $s$ の $Z$ と $t$ の $W$ / $s$ の $Z$ \\
+$e^+e^-\to W^+W^-$, $u\bar u\to W^+W^-$ & 3 / 3 & $s$ の $\gamma$、$Z$、$t$ の $\nu_e$（$d$） \\
+$e^+e^-\to ZH$ / $ZZ$ & 1 / 1、2 / 2 & $s$ の $Z$ / $t$、$u$ の $e$ \\
+$\gamma\gamma\to W^+W^-$ & 3 / 5 & $t$、$u$ の $W$、接触（Feynman ゲージでは $t$、$u$ の $G^\pm$ も） \\
+$W^+W^-\to W^+W^-$ & 7 / 7 & $s$、$t$ の $\gamma$、$Z$、$H$、接触 \\
+$W^+W^-\to ZZ$ & 4 / 6 & $t$、$u$ の $W$、$s$ の $H$、接触（$t$、$u$ の $G^\pm$） \\
+$W^+W^-\to HH$ & 4 / 6 & $s$ の $H$、$t$、$u$ の $W$、接触（$t$、$u$ の $G^\pm$） \\
+$ZZ\to HH$ & 4 / 6 & $s$ の $H$、$t$、$u$ の $Z$、接触（$t$、$u$ の $G^0$） \\
+$gg\to t\bar t$ / $gg\to t\bar tH$ & 3 / 3、8 / 8 & $s$、$t$、$u$ / それに $H$ を3本のトップの線のどれかに付けたもの（$s$ では2本） \\
+$t\to bW^+$, $H\to W^+W^-$, $u\bar d\to W^+H$, $e^-\bar\nu_e\to\mu^-\bar\nu_\mu$ & 1 / 1 & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{議論と今後}\label{sec:discussion}
+
+\paragraph{現時点で分かったこと。}$\MSbar$ のパラメータを破れていないラグランジアンのもの（$g_s,g,g',\lambda,\mu^2,y_f$）にとり、タドポールを FJ の処方で扱うと、標準模型の1ループの繰り込みは QED と QCD のノートの $\MSbar$ と同じ形になる。$\MSbar$ の質量の対抗項は $\frac{\DUV}2\dd M^2/\dd\ln\mu$ で、$\beta$ 関数だけから決まり、ゲージによらない。その代わり、タドポールが質量の走りに $1/\lambda$ の大きな項を持ち込む。タドポールを打ち消す $\beta_t$ の処方では、この項が消える代わりに真空期待値が $\xi$ に依存して走る（式~\eqref{eq:vbeta}）。$\phi^3$ のノートの線形項と違い、標準模型ではこの依存を吸収するパラメータがないので、ゲージによらない $\MSbar$ のパラメータの組を保つには FJ の処方が要る。模型ファイルは手計算の Feynman 則と93個すべてのクラスで記号として一致し、MadGraph の図の数も両方のゲージで手で数えた数と一致した。
+
+\paragraph{次の手順。}手順 (2) で木の振幅と崩壊幅を、手順 (3) でタドポールと自己エネルギーを一般の $R_\xi$ ゲージで確かめる。自己エネルギーの有限部分の手計算の式（フェルミオンのループは一般のカイラルな結合で、ボソンのループは Feynman ゲージで）と、極質量、$G_F$、$\alpha(0)$ の換算の式は、手順 (3)、(5)、(6) を行うときに第~\ref{sec:results} 節に加える。
+
+\appendix
+
+\section{Feynman 則の導出}\label{app:rules}
+
+\paragraph{ゲージ場と光子の結合。}式~\eqref{eq:L} の共変微分の中立な部分は、式~\eqref{eq:fields} で
+\begin{equation*}
+-i\bigl(gT^3W^3+g'YB\bigr)=-i\bigl[(g\sw T^3+g'\cw Y)A+(g\cw T^3-g'\sw Y)Z\bigr]=-i\Bigl[eQA+\frac{e}{\sw\cw}(T^3-\sw^2Q)Z\Bigr]
+\end{equation*}
+である（$g\sw=g'\cw=e$、$Y=Q-T^3$）。荷電の部分は $T^1W^1+T^2W^2=\frac1{\sqrt2}(\sigma^+W^++\sigma^-W^-)$（$\sigma^\pm=(\sigma^1\pm i\sigma^2)/2$）である。$\bar\psi i\slashed D\psi$ から表~\ref{tab:rules-f} の上の4行が出る。たとえば $\bar u_L\gamma^\mu d_LW^+_\mu$ の係数は $g/\sqrt2$ で、頂点は $i\frac{e}{\sqrt2\sw}\gamma^\mu P_L$ である。
+
+\paragraph{湯川結合。}式~\eqref{eq:Phi} を入れると、$d$ 型の項は $iy_d\bar u_Ld_RG^+-\frac{y_d}{\sqrt2}\bar d_Ld_R(v+H+iG^0)+\mathrm{h.c.}$、$u$ 型の項は $\tilde\Phi=((v+H-iG^0)/\sqrt2,-iG^-)$ から $-\frac{y_u}{\sqrt2}\bar u_Lu_R(v+H-iG^0)+iy_u\bar d_Lu_RG^-+\mathrm{h.c.}$ である。$\bar d_Ld_R-\bar d_Rd_L=\bar d\gamma_5d$ から $\bar ddG^0$ の項は $-i\frac{m_d}vG^0\bar d\gamma_5d$ で、頂点は $\frac{m_d}v\gamma_5=-2T^3_d\frac{m_d}v\gamma_5$ になる。$\bar udG^+$ の係数は $iy_dP_R$（$d$ 型の項）と $-iy_uP_L$（$u$ 型の項のエルミート共役）の和で、頂点は $y_uP_L-y_dP_R=\frac{\sqrt2}v(m_uP_L-m_dP_R)$ である。
+
+\paragraph{スカラーのポテンシャル。}$\mu^2=\lambda v^2$ のとき、$|\Phi|^2=\frac{v^2}2+X$、$X=vH+\frac12(H^2+G^{02})+G^+G^-$ とすると、ポテンシャルは定数を除いて $\lambda X^2$ である。$-\lambda v^2H^2$ が $M_H^2=2\lambda v^2$ を与え、$-\lambda v H(H^2+G^{02}+2G^+G^-)$ と $-\lambda(\frac12H^2+\frac12G^{02}+G^+G^-)^2$ から表~\ref{tab:rules-sv} の上の段が出る（同じ場の並べ方の数を掛ける。たとえば $HHH$ は $-\lambda v\cdot3!$）。
+
+\paragraph{ゲージ場とスカラー。}$D_\mu\Phi$ の成分は
+\begin{equation*}
+\begin{aligned}
+D_\mu\Phi_1&=-i\Bigl[\partial_\mu G^+-i\bigl(eA_\mu+e'Z_\mu\bigr)G^++\frac g2W^+_\mu(v+H+iG^0)\Bigr],\\
+D_\mu\Phi_2&=\frac1{\sqrt2}\Bigl[\partial_\mu H+i\partial_\mu G^0+ig_ZZ_\mu(v+H+iG^0)-gW^-_\mu G^+\Bigr]
+\end{aligned}
+\end{equation*}
+で、$e'=e(\cw^2-\sw^2)/(2\sw\cw)$、$g_Z=e/(2\sw\cw)$ である。$|D\Phi_1|^2+|D\Phi_2|^2$ を展開すると、2次の項として $M_W^2W^+W^-$、$\frac12M_Z^2Z^2$（$M_Z=g_Zv$）と混合 $M_W(W^+\cdot\partial G^-+W^-\cdot\partial G^+)+M_ZZ\cdot\partial G^0$ が、3次と4次の項として表~\ref{tab:rules-vs} が出る。$Z$、$W^\mp$、$G^\pm$ の3点の頂点 $\mp eM_W\frac{\sw}{\cw}$ は、$D\Phi_1$ の $e'$ の項（$\cw^2-\sw^2$ に比例）と $D\Phi_2$ の $g_Z$ の項の和で、$g_Z-e'=e\sw/\cw$ による。微分の付いた項の運動量は $\partial_\mu\phi\to-ip_\mu\phi$（入る運動量）で、たとえば $\frac g2W^-_\mu(H\partial^\mu G^+-G^+\partial^\mu H)$ から $G^+H\bar W$ の頂点 $\frac{e}{2\sw}(p_1-p_2)^{\mu_3}$ が出る。
+
+\paragraph{ゲージ場の自己結合。}$-\frac14W^a_{\mu\nu}W^{a\mu\nu}$ の頂点は QCD の $f^{abc}$ を $\epsilon^{abc}$ に置き換えたもので、3点は $g\epsilon^{abc}\Gamma$ である。場 $X$ への $W^a$ の係数を $C^a_X$（$C_{W^\pm}=(1,\pm i,0)/\sqrt2$、$C_A=(0,0,\sw)$、$C_Z=(0,0,\cw)$）とすると、場 $X,Y,Z'$ の頂点は $\sum\epsilon^{abc}C^a_XC^b_YC^c_{Z'}$ 倍である。$\epsilon^{3bc}C^b_{W^+}C^c_{W^-}=-i$ から $AW\bar W$ は $-ig\sw\Gamma=-ie\Gamma$ になる。4点も同様である。
+
+\paragraph{ゲージ固定。}式~\eqref{eq:gf} の $-\frac1{2\xi_Z}(\partial Z-\xi_ZM_ZG^0)^2$ は、交差項 $M_Z(\partial\cdot Z)G^0=-M_ZZ\cdot\partial G^0$（部分積分）で $|D\Phi_2|^2$ の混合を消し、$-\frac12\xi_ZM_Z^2G^{02}$ で $G^0$ に質量を与える。$-\frac1{\xi_W}F^+F^-$ も同様に $W$ と $G^\pm$ の混合を消し、$-\xi_WM_W^2G^+G^-$ を与える。$W$、$Z$ の運動項 $\frac12V(\partial^2+M^2)V$ にゲージ固定の $\frac1{2\xi}(\partial V)^2$ を加えた逆を取ると、式~\eqref{eq:propV} の伝播関数になる。
+
+\paragraph{ゴースト。}BRST 変換 $s$ はゲージ変換 $\delta W^a=\partial\alpha^a+g\epsilon^{abc}W^b\alpha^c$、$\delta B=\partial\alpha^B$、$\delta\Phi=i(g\alpha^aT^a+\frac{g'}2\alpha^B)\Phi$ の $\alpha$ をゴーストに置き換えたものである（$D_\mu$ の符号から、この組み合わせで $D_\mu\Phi$ が共変に変換する）。$\bar u^aF^a$ を実の基底で書いて $W^\pm$ の基底に直すと $-(\bar u^+sF^++\bar u^-sF^-)$ になり、$\bar u^+$ は $u^+$ と対になる反ゴースト（FeynRules の \texttt{ghWpbar}）である。ゲージ部分 $-\bar u^k\partial\cdot sV^k$ は、反ゴーストも場と同じ実の行列で回るので $-\bar u^a\partial^\mu(D_\mu u)^a$ に等しく、部分積分の後 $g\epsilon^{abc}(\partial^\mu\bar u^a)W^b_\mu u^c$ から表~\ref{tab:rules-gh} の上の段が出る（$\partial\bar u\to-ip$）。スカラー部分は $s\Phi$ を成分で書いて
+\begin{equation*}
+\begin{aligned}
+sG^+&=ieu^AG^++ie'u^ZG^+-M_Wu^+-\frac g2u^+(H+iG^0),\\
+sG^-&=-ieu^AG^--ie'u^ZG^--M_Wu^--\frac g2u^-(H-iG^0),\\
+sG^0&=-\frac{ig}2\bigl(u^-G^+-u^+G^-\bigr)-M_Zu^Z-\frac e{2\sw\cw}u^ZH
+\end{aligned}
+\end{equation*}
+で（$sH$ は $\bar u^A$ にしか掛からないが、$F^A$ に Goldstone ボソンがないので現れない）、$-\bar u^ksF^k$ の Goldstone ボソンの部分 $\xi_ZM_Z\bar u^ZsG^0+\xi_WM_W(\bar u^+sG^++\bar u^-sG^-)$ から、ゴーストの質量 $\xi_ZM_Z^2$、$\xi_WM_W^2$ と表~\ref{tab:rules-gh} の下の段が出る。たとえば $\bar u^Zu^ZH$ は $i\cdot\xi_ZM_Z\cdot(-\frac e{2\sw\cw})=-i\xi_Z\frac{eM_W}{2\sw\cw^2}$ である。
+
+\section{木のレベルの導出}\label{app:tree}
+
+\paragraph{$W$ と $Z$ の崩壊。}$W^+\to f\bar f'$ の振幅は $\frac{g}{\sqrt2}\epsilon_\mu\bar u(p_1)\gamma^\mu P_Lv(p_2)$ である。スピンの和をとると、質量の項は $P_L(\slashed p_2-m_2)\gamma^\nu P_L=\slashed p_2\gamma^\nu P_L$ で落ち、偏極の和 $-g_{\mu\nu}+k_\mu k_\nu/M_W^2$ と縮約して
+\begin{equation*}
+\sum|\mathcal M|^2=\frac{g^2}2\Bigl[2p_1\!\cdot\!p_2+\frac{4(k\!\cdot\!p_1)(k\!\cdot\!p_2)}{M_W^2}\Bigr]=g^2M_W^2\Bigl[1-\frac{x_1+x_2}2-\frac{(x_1-x_2)^2}2\Bigr]
+\end{equation*}
+である。偏極の平均 $\frac13$ と2体の位相空間 $|\boldsymbol p|/(8\pi M_W^2)$、$|\boldsymbol p|=\frac{M_W}2\lambda^{1/2}$ を掛けて式~\eqref{eq:widths} の1行目になる。$Z\to f\bar f$ では結合を $\gamma^\mu(v_f-a_f\gamma_5)$、$v_f=(g_L+g_R)/2$、$a_f=(g_L-g_R)/2$ と書くと、よく知られた $\Gamma=N_c\frac{e^2M_Z}{12\pi}\beta_f[v_f^2(1+2x_f)+a_f^2\beta_f^2]$ で、$v^2+a^2=\frac12(g_L^2+g_R^2)$、$v^2-a^2=g_Lg_R$ から2行目の形になる。
+
+\paragraph{$H$ とトップの崩壊。}$H\to f\bar f$ は $\sum|\mathcal M|^2=\frac{m_f^2}{v^2}\tr[(\slashed p_1+m_f)(\slashed p_2-m_f)]N_c=\frac{2m_f^2}{v^2}M_H^2\beta_f^2N_c$ で、位相空間 $\beta_f/(16\pi M_H)$ を掛けて3行目になる。$t\to bW^+$ は $W$ の崩壊と同じトレースで、$p_t=p_b+k$ を使うと $\sum|\mathcal M|^2=\frac{g^2}{2M_W^2}[(m_t^2-m_b^2)^2+M_W^2(m_t^2+m_b^2)-2M_W^4]$ になり、スピンの平均 $\frac12$ と位相空間 $\lambda^{1/2}/(16\pi m_t)$ を掛けて4行目になる。
+
+\paragraph{$e^+e^-\to f\bar f$。}光子の振幅は $(ieQ_e)(ieQ_f)(-i/s)[\bar v\gamma^\mu u][\bar u\gamma_\mu v]$、$Z$ の振幅は $Q_eQ_f/s$ を $g_i^eg_j^f/(s-M_Z^2+iM_Z\Gamma_Z)$ に置き換えたもので、質量0のフェルミオンではヘリシティごとに分かれる。左巻きの $e^-$ から左巻きの $f$ への振幅の2乗は $(1+\cos\theta)^2\propto u^2$ に比例し、式~\eqref{eq:eeff} になる。光子だけでは $A_{ij}=Q_eQ_f/s$ で、$8e^4N_cQ_f^2(t^2+u^2)/s^2$ を再現する。
+
+\section{$\MSbar$ の対抗項と $\beta$ 関数の導出}\label{app:rg}
+
+\paragraph{規則 \eqref{eq:zrule}。}$X_0=\mu^{n_X\epsilon}Z_XX$（$n_X=1$：$g,g',g_s,y_f$、$n_X=2$：$\lambda$、$n_X=0$：$\mu^2$）で、1ループの $Z_X=1+c_X/\epsilon$ の $c_X$ は結合の2乗（$g^2$、$y^2$、$\lambda$）について1次の同次式である。木のレベルでは $\dd X/\dd\ln\mu=-n_X\epsilon X$ なので $\dd c_X/\dd\ln\mu=-2\epsilon c_X$ で、$\dd X_0/\dd\ln\mu=0$ から $\beta_X=-n_X\epsilon X+2c_XX$ を得る。$\epsilon\to0$ で $c_X=\beta_X/(2X)$ で、$\MSbar$ では $1/\epsilon$ を $\DUV$ にする。質量の2乗 $M^2=\prod X^{k_X}$ の裸の値は $\prod X_0^{k_X}$ から $\mu^\epsilon$ の因子が打ち消し（$M_W^2=g^2\mu^2/(4\lambda)$ では $\mu^{2\epsilon}/\mu^{2\epsilon}$）、$\delta M^2/M^2=\sum k_X(Z_X-1)=\frac{\DUV}2\dd\ln M^2/\dd\ln\mu$ で式~\eqref{eq:dM2} になる。
+
+\paragraph{ゲージ結合。}1ループの $\beta$ 関数の係数 $b$（$K\beta_g=bg^3$）は、Weyl フェルミオン $F$ と複素スカラー $S$ について $b=-\frac{11}3C_2(G)+\frac23\sum_FS_2(F)+\frac13\sum_SS_2(S)$ である（QCD のノートの $\beta_0$ の一般化。$S_2$ は表現の Dynkin 指数、$U(1)$ では $Y^2$）。$SU(2)$：1世代に左巻きの二重項が4個（$Q_L$ の色3つと $L_L$）で $\frac23\cdot\frac12\cdot12=4$、Higgs で $\frac13\cdot\frac12$。$U(1)$：1世代の $\sum Y^2=6\cdot\frac1{36}+3\cdot\frac49+3\cdot\frac19+2\cdot\frac14+1=\frac{10}3$、3世代で $\frac23\cdot10$、Higgs で $\frac13\cdot2\cdot\frac14$。$SU(3)$：$-11+\frac23\cdot\frac12\cdot12$。
+
+\paragraph{湯川結合。}$\bar\psi_L\phi\psi_R$ の形の結合の1ループの $\beta$ 関数は、三つの場の異常次元と頂点の補正の和である。Landau ゲージでは、フェルミオンの場のゲージ場による繰り込みが0になり、スカラーの場は $-3g^2C_2(\phi)$、頂点のゲージ場の交換は $-6g^2T_L\cdot T_R=-3g^2[C_2(\psi_L)+C_2(\psi_R)-C_2(\phi)]$ を与え（$\phi$ の電荷は $T_L-T_R$）、和はゲージによらない $-3g^2[C_2(\psi_L)+C_2(\psi_R)]$ になる。トップでは $-3[g_s^2(\frac43+\frac43)+g^2\frac34+g'^2(\frac1{36}+\frac49)]=-8g_s^2-\frac94g^2-\frac{17}{12}g'^2$、ボトムでは $g'^2$ の係数が $-3(\frac1{36}+\frac19)=-\frac5{12}$、レプトンでは $-3(\frac34g^2+(\frac14+1)g'^2)$ である。湯川の部分は、場の異常次元が $\Phi$ で $\mathcal T$、$Q_L$ で $\frac12(y_u^2+y_d^2)$、$u_R$ で $y_u^2$ で、頂点の補正（$\Phi$ の内線が $Q_L$ を $d_R$ に変える図）が $-2y_d^2$ なので、和は $\mathcal T+\frac32(y_u^2-y_d^2)$ である（いずれも $K$ で割る）。レプトンでは右巻きのニュートリノがないので頂点の補正がなく、$\mathcal T+\frac32y_\ell^2$ である。
+
+\paragraph{$\beta_\lambda$ と $\gamma_{\mu^2}$。}Landau ゲージの1ループの有効ポテンシャルは、背景場 $\phi$（$H$ の方向）の関数として
+\begin{equation*}
+V=-\frac{\mu^2}2\phi^2+\frac\lambda4\phi^4+\frac1{4K}\sum_in_iM_i^4(\phi)\Bigl[\ln\frac{M_i^2(\phi)}{\mu^2}-c_i\Bigr]
+\end{equation*}
+で、$(n_i,M_i^2)$ は $W$：$(6,\frac{g^2}4\phi^2)$、$Z$：$(3,\frac{g^2+g'^2}4\phi^2)$、$H$：$(1,3\lambda\phi^2-\mu^2)$、Goldstone：$(3,\lambda\phi^2-\mu^2)$、フェルミオン：$(-4N_c,\frac{y_f^2}2\phi^2)$ である。$\dd V/\dd\ln\mu=0$、すなわち $(\partial_{\ln\mu}+\beta_\lambda\partial_\lambda+\gamma_{\mu^2}\partial_{\mu^2}-\gamma_\Phi\phi\partial_\phi)V=0$ を1ループで書くと
+\begin{equation*}
+\frac{\beta_\lambda}4\phi^4-\frac{\gamma_{\mu^2}}2\phi^2-\gamma_\Phi\bigl(-\mu^2\phi^2+\lambda\phi^4\bigr)=\frac1{2K}\sum_in_iM_i^4(\phi)
+\end{equation*}
+である。右辺の $\phi^4$ の係数は $12\lambda^2+\frac38g^4+\frac3{16}(g^2+g'^2)^2-\sum_fN_cy_f^4$、$\phi^2$ の係数は $-12\lambda\mu^2$ で、Landau ゲージの $K\gamma_\Phi^{\mathrm L}=\mathcal T-\frac94g^2-\frac34g'^2$（フェルミオンのループと、スカラーのゲージ場による $-3g^2C_2(\Phi)$）を入れると式~\eqref{eq:beta} の $\beta_\lambda$ と $\gamma_{\mu^2}$ になる。$\beta_\lambda$ と $\gamma_{\mu^2}$ は Lagrangian のパラメータの $\MSbar$ の $\beta$ 関数なので、Landau ゲージで求めてもゲージによらない。
+
+\paragraph{$e$、$\sw^2$、$v^2$。}$\dd\ln e/\dd\ln\mu=\sw^2\beta_g/g+\cw^2\beta_{g'}/g'=\frac{e^2}K(-\frac{19}6+\frac{41}6)$ で式~\eqref{eq:erun} の1つ目になる。$\sw^2=g'^2/(g^2+g'^2)$ から $\dd\sw^2/\dd\ln\mu=2\sw^2\cw^2(\beta_{g'}/g'-\beta_g/g)$ で2つ目になる。$v^2=\mu^2/\lambda$ の走りは $\gamma_{\mu^2}/\mu^2-\beta_\lambda/\lambda$ に式~\eqref{eq:beta} を入れたもので、$\beta_\lambda/\lambda$ のゲージ場と湯川の4次の項が $1/\lambda$ の項になる。
+
+\section{タドポールの導出}\label{app:tadpole}
+
+\paragraph{各ループ。}$\int\dd^Dk/(2\pi)^D\,(k^2-m^2)^{-1}=(i/K)A_0(m)$ を使う。3点の結合 $-ic$（$H$ と実のスカラー2本）のループは対称性因子 $\frac12$ で $T=cA_0/(2K)$、複素スカラーでは $cA_0/K$ である。$HHH$（$c=6\lambda v$）で $3\lambda vA_0(M_H)$、$G^0G^0H$（$c=2\lambda v$）で $\lambda vA_0(\sqrt{\xi_Z}M_Z)$、$G^+G^-H$ で $2\lambda vA_0(\sqrt{\xi_W}M_W)$ になる。フェルミオンのループは $-1$ とトレース $4m_f$ で $T=-4N_cm_f^2A_0(m_f)/(Kv)$ である。$W$ のループは頂点 $igM_Wg^{\mu\nu}$ と伝播関数 \eqref{eq:propV} の縮約で
+\begin{equation*}
+g_{\mu\nu}\Bigl[g^{\mu\nu}-(1-\xi)\frac{k^\mu k^\nu}{k^2-\xi M^2}\Bigr]\frac1{k^2-M^2}=\frac{D-1}{k^2-M^2}+\frac{\xi}{k^2-\xi M^2}
+\end{equation*}
+（$k^2/[(k^2-M^2)(k^2-\xi M^2)]$ を部分分数にした）から $T_W=\frac{gM_W}K[(D-1)A_0(M_W)+\xi_WA_0(\sqrt{\xi_W}M_W)]$ で、$Z$ は $\frac12$ と $gM_Z/\cw$ で同様である。ゴーストのループは $-1$ と結合 $-i\xi_W\frac g2M_W$（$u^+$、$u^-$ の2本）、$-i\xi_Z\frac{g}{2\cw}M_Z$ で $-\xi_WgM_WA_0(\sqrt{\xi_W}M_W)/K$、$-\xi_Z\frac{gM_Z}{2\cw}A_0(\sqrt{\xi_Z}M_Z)/K$ になり、ベクトル場のループの $\xi$ の項をちょうど打ち消す。$gM_W=2M_W^2/v$、$gM_Z/(2\cw)=M_Z^2/v$、$\lambda v=M_H^2/(2v)$ と $(D-1)A_0(M)=3A_0(M)-2M^2+O(\epsilon)$ で式~\eqref{eq:T} になる。紫外の極は $T_{\mathrm{UV}}=\frac{\DUV}{Kv}[6M_W^4+3M_Z^4+\frac32M_H^4+\frac{M_H^2}2(\xi_ZM_Z^2+2\xi_WM_W^2)-4\sum N_cm_f^4]$ である。
+
+\paragraph{タドポールの寄与と真空のずれ。}頂点 $HXY$ にタドポールをつなぐと、$H$ の伝播関数 $i/(0-M_H^2)$ と $iT$ から頂点の $T/M_H^2=\Delta v$ 倍になる。これは木の頂点の $H$ を定数 $\Delta v$ に置き換えたもので、$HW\bar W$ では $i\frac{2M_W^2}vg^{\mu\nu}\Delta v$、すなわち $\Sigma^{WW}_T\supset-2M_W^2\Delta v/v$ で式~\eqref{eq:tadins} になる。ループの1点関数 $iT$ は有効作用の1次の項 $TH$ に当たるので、有効ポテンシャルは最小点の近くで $\frac12M_H^2h^2-Th$ で、最小点は $h=T/M_H^2=\Delta v$ にある。その点のまわりの木の Higgs の質量は $3\lambda(v+\Delta v)^2-\mu^2=2\lambda v^2+6\lambda v\Delta v$ で、式~\eqref{eq:tadins} の $\Sigma^H$ の寄与と一致する。
+
+\paragraph{$v_\beta$ の走り。}$\beta_t$ の処方では、ラグランジアンの結合 $g,g',\lambda,y_f$ は同じ $\MSbar$ の値のまま、展開の点を $v_\beta$ にとり、繰り込まれたタドポールが消えるように $\mu^2$ の有限部分を決める。1ループの物理量が FJ の処方と同じになるのは $v_\beta=v+\Delta v|_{\MSbar}$ のときで、$v_\beta$ の対抗項は $v$ の対抗項に $\Delta v$ の紫外の極（$\xi$ を含む）を加えたものになる。$v$ の極 $\frac{\DUV}4v\,\dd\ln v^2/\dd\ln\mu$ の $1/\lambda$ の部分 $\frac{\DUV v}{K}\frac1{2\lambda}\bigl[\sum N_cy_f^4-\frac3{16}(2g^4+(g^2+g'^2)^2)\bigr]$ は、$\Delta v=T/M_H^2$ の極の $\xi$ によらないゲージ場とフェルミオンの部分（式~\eqref{eq:T} の $T_{\mathrm{UV}}$ から）と打ち消す。$\Delta v/v$ の $\ln\mu^2$ への依存は $A_0(m)$ の $m^2\ln\mu^2$ から来て
+\begin{equation*}
+\begin{aligned}
+\frac{\dd}{\dd\ln\mu}\frac{\Delta v}v&=\frac{12M_W^4+6M_Z^4+3M_H^4+M_H^2(\xi_ZM_Z^2+2\xi_WM_W^2)-8\sum N_cm_f^4}{Kv^2M_H^2}\\
+&=\frac1K\Bigl[\frac{X}\lambda+6\lambda+\frac14\bigl(\xi_Z(g^2+g'^2)+2\xi_Wg^2\bigr)\Bigr]
+\end{aligned}
+\end{equation*}
+で、$X=\frac3{16}(2g^4+(g^2+g'^2)^2)-\sum N_cy_f^4$ である。一方、付録~\ref{app:rg} の $\beta_\lambda$ と $\gamma_{\mu^2}$ の関係から $\frac12K\,\dd\ln v^2/\dd\ln\mu=-K\gamma_\Phi^{\mathrm L}-6\lambda-X/\lambda$ なので、和は式~\eqref{eq:vbeta} になる。Landau ゲージで $v_\beta$ が $-\gamma_\Phi^{\mathrm L}$ で走ることは、Landau ゲージの有効ポテンシャルの最小点が場と同じに繰り込まれることと合う。一般の $R_\xi$ ゲージでは、ゲージ固定の項が $v$ を含むので、$v_\beta$ の走りは場の異常次元と一致しない~\cite{ssv13}。
+
+\section{検算の細部}\label{app:details}
+
+\paragraph{模型ファイルのパラメータ。}\texttt{SM.fr} の外部パラメータは、ブロック \texttt{SMINPUTS} の \texttt{aEWM1}（$4\pi/e^2$、1番）と \texttt{aS}（$\alpha_s$、3番）、ブロック \texttt{MASS} の $M_Z$、$M_W$、$M_H$ と9個のフェルミオンの質量、ブロック \texttt{DECAY} の $W$、$Z$、$H$、$t$ の幅、ブロック \texttt{GAUGE} の $\xi_A,\xi_Z,\xi_W,\xi_G$（値1）である。内部パラメータは $e=\sqrt{4\pi/\texttt{aEWM1}}$、$\cw=M_W/M_Z$、$\sw=\sqrt{1-\cw^2}$、$v=2M_W\sw/e$、$\lambda=M_H^2/(2v^2)$、$\mu^2=\lambda v^2$、$y_f=\sqrt2m_f/v$（対角の行列 \texttt{yl}、\texttt{yu}、\texttt{yd}、実数）で、$g=e/\sw$、$g'=e/\cw$ は FeynRules の \texttt{Definitions} で頂点の中で置き換える。これは $(g,g',\lambda,\mu^2,y_f)$ と同じ数のパラメータの別の組で、どれも $\MSbar$ の量である。結合の次数は MadGraph の規約で、$e$ と湯川結合が \texttt{QED} を1、$g_s$ が \texttt{QCD} を1数える。粒子の名前と PDG の番号は MadGraph の標準模型と同じで、Goldstone ボソンは 250、251 である。
+
+\paragraph{比べ方。}\texttt{generate\_SM.wl} は、FeynRules の頂点の Dirac 構造、計量、運動量、色の行列を評価されない記号（\texttt{gSM\$[mu]} など）に置き換えてから表と比べる。置き換えの規則の左辺はすべて \texttt{HoldPattern} で包む（手順 (1) の二つ目の問題）。差は $\cw=\sqrt{1-\sw^2}$ を入れて \texttt{Together} と \texttt{Simplify} で簡約する。4グルーオンの頂点の縮約される色の添字は名前を付け直し、構造定数は引数を並べ替えて符号を付ける。
+
+\begin{thebibliography}{99}
+\bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループ・2ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。
+\bibitem{phi34note} $\phi^3+\phi^4$ 理論：1ループの構造、ユニタリー性、偽の真空の崩壊（$d=4$）（本リポジトリ \nolinkurl{models/phi34/ResearchNote/note.pdf}）。
+\bibitem{yukawanote} 擬スカラー湯川理論：1ループの構造と検算（$d=4$）（本リポジトリ \nolinkurl{models/yukawa_ps/ResearchNote/note.pdf}）。
+\bibitem{qednote} スピノル QED：1ループの構造と検算（電子と $\mu$ 粒子、$d=4$）（本リポジトリ \nolinkurl{models/spinor_qed/ResearchNote/note.pdf}）。
+\bibitem{qcdnote} QCD：1ループ・2ループの構造、インスタントンと検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。
+\bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}）。以前の標準模型のノートで分かったツールの問題は表 10、11、13、14。
+\bibitem{peskin} M. E. Peskin, D. V. Schroeder, \textit{An Introduction to Quantum Field Theory}（Addison-Wesley, 1995）。標準模型と $R_\xi$ ゲージ（20、21 章）。
+\bibitem{fj81} J. Fleischer, F. Jegerlehner, ``Radiative corrections to Higgs decays in the extended Weinberg-Salam model,'' Phys. Rev. D \textbf{23}, 2001 (1981)。
+\bibitem{fls72} K. Fujikawa, B. W. Lee, A. I. Sanda, ``Generalized renormalizable gauge formulation of spontaneously broken gauge theories,'' Phys. Rev. D \textbf{6}, 2923 (1972)。
+\bibitem{denner93} A. Denner, ``Techniques for the calculation of electroweak radiative corrections at the one-loop level and results for W-physics at LEP200,'' Fortsch. Phys. \textbf{41}, 307 (1993), arXiv:0709.1075。
+\bibitem{romao12} J. C. Romão, J. P. Silva, ``A resource for signs and Feynman diagrams of the Standard Model,'' Int. J. Mod. Phys. A \textbf{27}, 1230025 (2012), arXiv:1209.6213。
+\bibitem{looptools} T. Hahn, M. Pérez-Victoria, ``Automatized one-loop calculations in four and D dimensions,'' Comput. Phys. Commun. \textbf{118}, 153 (1999), arXiv:hep-ph/9807565。
+\bibitem{mv1} M. E. Machacek, M. T. Vaughn, ``Two-loop renormalization group equations in a general quantum field theory (I). Wave function renormalization,'' Nucl. Phys. B \textbf{222}, 83 (1983)。
+\bibitem{mv2} M. E. Machacek, M. T. Vaughn, ``(II). Yukawa couplings,'' Nucl. Phys. B \textbf{236}, 221 (1984)。
+\bibitem{mv3} M. E. Machacek, M. T. Vaughn, ``(III). Scalar quartic couplings,'' Nucl. Phys. B \textbf{249}, 70 (1985)。
+\bibitem{luo03} M.-X. Luo, H.-W. Wang, Y. Xiao, ``Two-loop renormalization group equations in general gauge field theories,'' Phys. Rev. D \textbf{67}, 065019 (2003), arXiv:hep-ph/0211440。
+\bibitem{arason92} H. Arason \textit{et al.}, ``Renormalization-group study of the standard model and its extensions: The standard model,'' Phys. Rev. D \textbf{46}, 3945 (1992)。
+\bibitem{degrassi12} G. Degrassi \textit{et al.}, ``Higgs mass and vacuum stability in the Standard Model at NNLO,'' JHEP \textbf{08}, 098 (2012), arXiv:1205.6497。
+\bibitem{buttazzo13} D. Buttazzo \textit{et al.}, ``Investigating the near-criticality of the Higgs boson,'' JHEP \textbf{12}, 089 (2013), arXiv:1307.3536。
+\bibitem{mr19} S. P. Martin, D. G. Robertson, ``Standard Model parameters in the tadpole-free pure $\overline{\mathrm{MS}}$ scheme,'' Phys. Rev. D \textbf{100}, 073004 (2019), arXiv:1907.02500。
+\bibitem{ssv13} M. Sperling, D. Stöckinger, A. Voigt, ``Renormalization of vacuum expectation values in spontaneously broken gauge theories,'' JHEP \textbf{07}, 132 (2013), arXiv:1305.1548。
+\bibitem{pdg24} S. Navas \textit{et al.} (Particle Data Group), Phys. Rev. D \textbf{110}, 030001 (2024)。
+\end{thebibliography}
+
+\end{document}

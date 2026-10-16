@@ -44,7 +44,7 @@
 
 \title{ループ計算環境の構築記録\\[2pt]{\large \texttt{\textasciitilde/hep} に組んだ1ループ計算スタック（Apple M3・Mathematica 14.2）}}
 \author{}
-\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日）}
+\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日）}
 
 \begin{document}
 \maketitle
@@ -586,6 +586,23 @@ FormCalc の有理数の項と質量0の外線（SM） & 有限部分が MadLoop
 手順 (3) では、タドポールと自己エネルギーを Feynman ゲージで手計算の式と \texttt{SM.mod} の両方と記号として比べ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で2点関数の Slavnov--Taylor 恒等式を確かめた。有限部分の $B_0$ は LoopTools、Package-X、COLLIER が30桁の積分と相対 $2.5\times10^{-14}$ 以内で一致した。手順 (4) では、on-shell の12個の対抗項が FormCalc の \texttt{RenConst} と相対 $2\times10^{-15}$ 以内で一致した。手順 (5) では、$\mu$ 崩壊の頂点と箱の図から $\Delta r$ を組み、FormCalc の繰り込み定数から組んだ値と相対 $1.2\times10^{-15}$ で一致した。FormCalc の記号の \texttt{UpValues} のため、FormCalc と外の式の数値は別のカーネルで求めた。手順 (6) では、FeynRules と NLOCT で作った NLO の模型で、$e^+e^-\to\mu^+\mu^-$ の電弱の仮想の補正が MadLoop と FormCalc で相対 $6\times10^{-9}$ 以内で一致した。そのためには表~\ref{tab:issues2h} の問題を避ける必要があった。とくに、NLOCT の閉じた形の対抗項の倍精度での打ち消しと、MadLoop が外線の $m_e^2$ を0にする扱いは、どちらも警告なしに値を桁違いに誤らせる。LoopTools の閾値より下の $C_0$ の誤り（表~\ref{tab:issues}）は、この Mac でも再現した（$C_0(1,1,1;1,1,1)=6.87+34.2i$）。MadGraph の電弱 NLO の模型（$\alpha(M_Z)$ と $G_\mu$ の処方、トップ以外のフェルミオンは質量0）とも、同じ処方の FormCalc と相対 $7\times10^{-13}$ 以内で一致した。そのためには、表~\ref{tab:issues2i} の二つの規約の違い（COLLIER の極の規格化と、FormCalc の質量0の外線の有理数の項）を直す必要があった。どちらも二重極のある質量0の外線でだけ現れ、極の一致では見つからない。
 
 最も注意が要るのは、符号の規約である。FeynArts の \texttt{SM.mod} と FormCalc は Denner の総説の規約を、FeynRules と MadGraph は Peskin--Schroeder の規約を使い、光子の場の符号と、Higgs 二重項の荷電の成分の位相が違う。場の取り方の違いなので、内線の因子は打ち消し（内線の光子は $(-1)^2$、内線の $G^\pm$ は $(+i)(-i)$）、断面積や崩壊幅などの物理量は変わらない。一方、外線に光子や $G^\pm$ を持つグリーン関数（$\Sigma^{AZ}$、$W$ と $G^\pm$ の混合）と、それから作る対抗項（$\delta Z_{ZA}$、$\delta Z_e$ の式）は符号や位相が変わる。FeynRules の模型の振幅に FormCalc の対抗項を足すような、二つの規約を混ぜた計算は誤る。MadGraph のログの断面積は、今回も有効数字3〜4桁（\texttt{111 +- 0.01131 pb}）で、10万事象の統計誤差より丸めが大きかった（表~\ref{tab:issues2} の「MadGraph の既定のカットと出力」と同じ）。各実行のバナーの \texttt{Integrated weight} を読み、乱数の種を \texttt{iseed} で固定すると、同じ値が再現した。
+
+\paragraph{$\overline{\mathrm{MS}}$ の標準模型のノートで分かった問題。}2026年10月16日に、標準模型を $\overline{\mathrm{MS}}$ と FJ のタドポールの処方、一般の $R_\xi$ ゲージで作り直したノート~\cite{smmsbarnote} を始めた（上の段落のノートとは別のもの。計算機と版は同じ）。手順 (1) では、模型ファイル \texttt{SM.fr} を一から書き、FeynRules の93個の頂点のクラスを手計算の表と記号として比べ、MadGraph の21個の過程の図の数を両方のゲージで確かめた。分かった問題を表~\ref{tab:issues2j} にまとめる。
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2i} の続き（$\overline{\mathrm{MS}}$ の標準模型のノート~\cite{smmsbarnote} の手順 (1)。SM2 はそのノートを表す）。}
+\label{tab:issues2j}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+FeynRules の添字の数え方（SM2） & 湯川の項を \texttt{yd[ff] QLbar[sp,ii,ff,cc].dR[sp,ff,cc] Phi[ii]} と書くと、警告なしに頂点に縮約されない添字（\texttt{Index[Generation, a]}）が残る & 同じ添字を3回使った模型ファイルの誤り。FeynRules は添字が2回ずつ現れるかを確かめない & 湯川結合を対角の行列 \texttt{yd[ff1, ff2]}（非対角を \texttt{Definitions} で0）にして、どの添字も2回だけにする \\
+FeynRules と置き換えの規則（SM2） & 頂点を比べるための規則 \texttt{ProjM[\_, \_] :> pL} が、式の中の整数2をすべて置き換える（$e^2$ が $e^{p_L}$ になる） & FeynRules を読み込んだカーネルでは、左辺の \texttt{ProjM[\_, \_]} が同じ引数の射影演算子のトレース2に評価される（\texttt{ProjP} も同じ） & 左辺を \texttt{HoldPattern} で包み、パターンの変数に別々の名前を付ける（\texttt{ProjM[s1\_, s2\_]}） \\
+MadGraph のゲージと UFO（SM2） & \texttt{set gauge Feynman} の後の \texttt{generate} が、自前の UFO ではなく組み込みの標準模型の図を作る。エラーにはならない & UFO の \texttt{gauge = [0]} を見て MadGraph がユニタリーゲージに戻し（``Feynman gauge is not allowed for your current model''）、模型を外したまま \texttt{generate} で ``No model currently active, so we import the Standard Model'' とする。FeynRules は大域変数 \texttt{FeynmanGauge} が \texttt{True} のときだけ \texttt{gauge = [0, 1]} と書く & Goldstone ボソンとゴーストを含む模型では \texttt{FeynmanGauge = True} を模型ファイルに書く。スクリプトはログにこの二つの表示があれば止まるようにする \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \paragraph{Package-X。}Package-X の結果を \texttt{Simplify[..., qq < 0]} のように空間的な $q^2$ を仮定して簡約すると、対数と平方根の閾値より上の枝が $+i0$ の処方と合わないことがある。時間的な $q^2$ では、有理数の $q^2$ を代入した式に \texttt{PaXEvaluate} を呼び、枝の選び方を Package-X に任せる（スピノル QED のノートの手順 (9)）。Package-X の数値関数 \texttt{ScalarC0}、\texttt{ScalarD0} は、内線の質量の2乗ではなく質量を引数にとる（湯川のノートの手順 (3)）。
 
@@ -1172,6 +1189,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{qednote} スピノル QED：1ループの構造と検算（本リポジトリ \nolinkurl{models/spinor_qed/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
 \bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~N。
 \bibitem{smnote} 標準模型：電弱の1ループの繰り込みと検算（本リポジトリの \nolinkurl{models/sm/ResearchNote/note.pdf}。2026年10月16日に \nolinkurl{models/sm} ごと削除した。最後の版はコミット 201985b にある）。ツールとの照合は第5節と付録~G。
+\bibitem{smmsbarnote} 標準模型：$\overline{\mathrm{MS}}$ の電弱の1ループの繰り込みと検算（FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm/ResearchNote/note.pdf}。上の \cite{smnote} を削除した後に同じ場所に作り直したもの）。
 \end{thebibliography}
 
 \end{document}

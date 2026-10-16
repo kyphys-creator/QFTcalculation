@@ -1,0 +1,655 @@
+(* ::Package:: *)
+
+(* SM.fr -- FeynRules model file of the Standard Model in the MS-bar scheme and a general R_xi gauge
+   (models/sm/ResearchNote/note.tex, Eqs. (L), (gf), (fp)).  Written for the note; the FeynRules SM.fr and the files
+   in models/backup_20261009 were read for the syntax only, nothing was copied from them unchecked.
+
+   L = -1/4 B_{mu nu}^2 - 1/4 W^a_{mu nu}^2 - 1/4 G^a_{mu nu}^2 + sum_psi psibar i Dslash psi
+       + (D Phi)^dagger (D Phi) + muH2 Phi^dagger Phi - lam (Phi^dagger Phi)^2
+       - (yd QLbar Phi dR + yl LLbar Phi lR + yu QLbar Phitilde uR + h.c.) + L_gf + L_FP,
+   D_mu = d_mu - i gs T^a G^a_mu - i gw T^a W^a_mu - i g1 Y B_mu    (FeynRules' sign convention, Peskin-Schroeder)
+   Q = T^3 + Y,  Y(QL, LL, uR, dR, lR, Phi) = 1/6, -1/2, 2/3, -1/3, -1, 1/2,
+   Phi = (-i G+, (vev + H + i G0)/sqrt 2)  (Peskin-Schroeder's phase of the charged Goldstone),
+   W+ = (W1 - i W2)/sqrt 2,  Z = cw W3 - sw B,  A = sw W3 + cw B,  ee = gw sw = g1 cw,
+   so that every field couples to the photon through D_mu = d_mu - i ee Q A_mu as in the QED and QCD notes.
+
+   - Parameters.  All parameters are MS-bar running parameters at one scale mu (the values below are a benchmark,
+     not fitted).  The independent set of the note is (gw, g1, gs, lam, muH2, y_f); the file uses the equivalent set
+     (aEWM1 = 4 pi/ee^2, MW, MZ, MH, fermion masses, aS) of MS-bar quantities defined by the tree relations
+     MW = gw vev/2, MZ = sqrt(gw^2 + g1^2) vev/2, MH^2 = 2 lam vev^2 = 2 muH2, m_f = y_f vev/sqrt 2.
+     vev = sqrt(muH2/lam) is the minimum of the tree potential (the tadpoles are not cancelled, note Sec. 2).
+   - CKM = 1, massless left-handed neutrinos.
+   - Gauge fixing (note Eq. (gf)), written in renormalized fields and not added here because it has no vertices:
+       L_gf = -(d.A)^2/(2 xiA) - (d.Z - xiZ MZ G0)^2/(2 xiZ) - (d.W+ - xiW MW G+)(d.W- - xiW MW G-)/xiW.
+     L_FP = - sum_k ubar^k s F^k with the BRST variations s V = D u (adjoint) and s Phi = i (gw u^a T^a + g1 Y u^B) Phi.
+     The ghost-scalar part  xiZ MZ ubarZ s G0 + xiW MW (ubar+ s G+ + ubar- s G-)  is computed below from s Phi
+     (LGhostScalar); ubar+ (ghWpbar) is the antighost paired with u+ (ghWp).
+   - Gauge parameters: xiA, xiZ, xiW, xiG (block GAUGE, value 1 = Feynman gauge for MadGraph).  In the FeynArts model
+     the propagators carry GaugeXi[A], GaugeXi[Z], GaugeXi[W], GaugeXi[G]; generate_SM.wl writes the FeynArts model
+     with xiZ -> GaugeXi[Z], xiW -> GaugeXi[W] in the ghost-scalar couplings.
+   - Coupling orders (MadGraph): ee and the Yukawa couplings count QED = 1, gs counts QCD = 1.
+   - Load from this folder:
+       $FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}];
+       SetDirectory[$FeynRulesPath]; << FeynRules`
+       SetDirectory[".../models/sm/Src"]; LoadModel["SM.fr"]
+*)
+
+(* The Lagrangian always contains the Goldstone bosons and the ghosts (general R_xi gauge).  FeynmanGauge = True
+   only makes the UFO declare gauge = [0, 1], so that MadGraph accepts "set gauge Feynman"; MadGraph removes the
+   Goldstones and ghosts itself in unitary gauge. *)
+FeynmanGauge = True;
+
+M$ModelName = "SM_MSbar";
+
+M$Information = {
+  Authors -> {"K. Yasuda"},
+  Date    -> "2026-10-16",
+  Version -> "1.0",
+  Comment -> "Standard Model, MS-bar parameters, general R_xi gauge, CKM = 1 (cross-check model for the loop stack)"
+};
+
+M$InteractionOrderHierarchy = {
+  {QCD, 1},
+  {QED, 2}
+};
+
+(* ************************** *)
+(* *****      vevs      ***** *)
+(* ************************** *)
+
+M$vevs = { {Phi[2], vev} };
+
+(* ************************** *)
+(* *****  Gauge groups  ***** *)
+(* ************************** *)
+
+M$GaugeGroups = {
+  U1Y == {
+    Abelian          -> True,
+    CouplingConstant -> g1,
+    GaugeBoson       -> B,
+    Charge           -> Y
+  },
+  SU2L == {
+    Abelian           -> False,
+    CouplingConstant  -> gw,
+    GaugeBoson        -> Wi,
+    StructureConstant -> Eps,
+    Representations   -> {Ta, SU2D},
+    Definitions       -> {Ta[a_, b_, c_] -> PauliSigma[a, b, c]/2, FSU2L[i_, j_, k_] :> I Eps[i, j, k]}
+  },
+  SU3C == {
+    Abelian           -> False,
+    CouplingConstant  -> gs,
+    GaugeBoson        -> G,
+    StructureConstant -> f,
+    Representations   -> {T, Colour},
+    SymmetricTensor   -> dSUN
+  }
+};
+
+(* ************************** *)
+(* *****    Indices     ***** *)
+(* ************************** *)
+
+IndexRange[Index[SU2W      ]] = Unfold[Range[3]];
+IndexRange[Index[SU2D      ]] = Unfold[Range[2]];
+IndexRange[Index[Gluon     ]] = NoUnfold[Range[8]];
+IndexRange[Index[Colour    ]] = NoUnfold[Range[3]];
+IndexRange[Index[Generation]] = Range[3];
+
+IndexStyle[SU2W,       j];
+IndexStyle[SU2D,       k];
+IndexStyle[Gluon,      a];
+IndexStyle[Colour,     m];
+IndexStyle[Generation, f];
+
+(* ************************** *)
+(* *****   Parameters   ***** *)
+(* ************************** *)
+
+M$Parameters = {
+  (* external: MS-bar values at the benchmark scale *)
+  aEWM1 == {
+    ParameterType    -> External,
+    BlockName        -> SMINPUTS,
+    OrderBlock       -> 1,
+    Value            -> 128.,
+    InteractionOrder -> {QED, -2},
+    Description      -> "Inverse of the MS-bar electromagnetic coupling 4 pi/ee^2"
+  },
+  aS == {
+    ParameterType    -> External,
+    BlockName        -> SMINPUTS,
+    OrderBlock       -> 3,
+    Value            -> 0.118,
+    InteractionOrder -> {QCD, 2},
+    TeX              -> Subscript[\[Alpha], s],
+    Description      -> "MS-bar strong coupling gs^2/(4 pi)"
+  },
+  xiA == {
+    ParameterType -> External,
+    BlockName     -> GAUGE,
+    OrderBlock    -> 1,
+    Value         -> 1.,
+    TeX           -> Subscript[\[Xi], A],
+    Description   -> "Gauge parameter of the photon"
+  },
+  xiZ == {
+    ParameterType -> External,
+    BlockName     -> GAUGE,
+    OrderBlock    -> 2,
+    Value         -> 1.,
+    TeX           -> Subscript[\[Xi], Z],
+    Description   -> "Gauge parameter of the Z"
+  },
+  xiW == {
+    ParameterType -> External,
+    BlockName     -> GAUGE,
+    OrderBlock    -> 3,
+    Value         -> 1.,
+    TeX           -> Subscript[\[Xi], W],
+    Description   -> "Gauge parameter of the W"
+  },
+  xiG == {
+    ParameterType -> External,
+    BlockName     -> GAUGE,
+    OrderBlock    -> 4,
+    Value         -> 1.,
+    TeX           -> Subscript[\[Xi], G],
+    Description   -> "Gauge parameter of the gluon"
+  },
+  (* internal *)
+  aEW == {
+    ParameterType    -> Internal,
+    Value            -> 1/aEWM1,
+    InteractionOrder -> {QED, 2},
+    TeX              -> Subscript[\[Alpha], EW],
+    Description      -> "MS-bar electromagnetic coupling"
+  },
+  ee == {
+    ParameterType    -> Internal,
+    Value            -> Sqrt[4 Pi aEW],
+    InteractionOrder -> {QED, 1},
+    TeX              -> e,
+    Description      -> "MS-bar electric charge gw g1/sqrt(gw^2 + g1^2)"
+  },
+  cw == {
+    ParameterType -> Internal,
+    Value         -> MW/MZ,
+    TeX           -> Subscript[c, w],
+    Description   -> "Cosine of the MS-bar weak mixing angle gw/sqrt(gw^2 + g1^2)"
+  },
+  sw == {
+    ParameterType -> Internal,
+    Value         -> Sqrt[1 - cw^2],
+    TeX           -> Subscript[s, w],
+    Description   -> "Sine of the MS-bar weak mixing angle g1/sqrt(gw^2 + g1^2)"
+  },
+  gw == {
+    ParameterType    -> Internal,
+    Definitions      -> {gw -> ee/sw},
+    InteractionOrder -> {QED, 1},
+    TeX              -> Subscript[g, w],
+    Description      -> "SU(2)L coupling"
+  },
+  g1 == {
+    ParameterType    -> Internal,
+    Definitions      -> {g1 -> ee/cw},
+    InteractionOrder -> {QED, 1},
+    TeX              -> Subscript[g, 1],
+    Description      -> "U(1)Y coupling"
+  },
+  gs == {
+    ParameterType    -> Internal,
+    Value            -> Sqrt[4 Pi aS],
+    InteractionOrder -> {QCD, 1},
+    TeX              -> Subscript[g, s],
+    ParameterName    -> G,
+    Description      -> "SU(3)C coupling"
+  },
+  vev == {
+    ParameterType    -> Internal,
+    Value            -> 2 MW sw/ee,
+    InteractionOrder -> {QED, -1},
+    Description      -> "Minimum of the tree potential sqrt(muH2/lam)"
+  },
+  lam == {
+    ParameterType    -> Internal,
+    Value            -> MH^2/(2 vev^2),
+    InteractionOrder -> {QED, 2},
+    Description      -> "Higgs quartic coupling"
+  },
+  muH2 == {
+    ParameterType -> Internal,
+    Value         -> lam vev^2,
+    TeX           -> Subscript[\[Mu], H]^2,
+    Description   -> "Mass parameter of the Higgs potential"
+  },
+  yl == {
+    ParameterType    -> Internal,
+    Indices          -> {Index[Generation], Index[Generation]},
+    Definitions      -> {yl[i_?NumericQ, j_?NumericQ] :> 0 /; (i =!= j)},
+    Value            -> {yl[1, 1] -> Sqrt[2] Me/vev, yl[2, 2] -> Sqrt[2] MMU/vev, yl[3, 3] -> Sqrt[2] MTA/vev},
+    ComplexParameter -> False,
+    InteractionOrder -> {QED, 1},
+    ParameterName    -> {yl[1, 1] -> ye, yl[2, 2] -> ym, yl[3, 3] -> ytau},
+    TeX              -> Superscript[y, l],
+    Description      -> "Lepton Yukawa couplings (diagonal)"
+  },
+  yu == {
+    ParameterType    -> Internal,
+    Indices          -> {Index[Generation], Index[Generation]},
+    Definitions      -> {yu[i_?NumericQ, j_?NumericQ] :> 0 /; (i =!= j)},
+    Value            -> {yu[1, 1] -> Sqrt[2] MU/vev, yu[2, 2] -> Sqrt[2] MC/vev, yu[3, 3] -> Sqrt[2] MT/vev},
+    ComplexParameter -> False,
+    InteractionOrder -> {QED, 1},
+    ParameterName    -> {yu[1, 1] -> yup, yu[2, 2] -> yc, yu[3, 3] -> yt},
+    TeX              -> Superscript[y, u],
+    Description      -> "Up-type Yukawa couplings (diagonal)"
+  },
+  yd == {
+    ParameterType    -> Internal,
+    Indices          -> {Index[Generation], Index[Generation]},
+    Definitions      -> {yd[i_?NumericQ, j_?NumericQ] :> 0 /; (i =!= j)},
+    Value            -> {yd[1, 1] -> Sqrt[2] MD/vev, yd[2, 2] -> Sqrt[2] MS/vev, yd[3, 3] -> Sqrt[2] MB/vev},
+    ComplexParameter -> False,
+    InteractionOrder -> {QED, 1},
+    ParameterName    -> {yd[1, 1] -> ydo, yd[2, 2] -> ys, yd[3, 3] -> yb},
+    TeX              -> Superscript[y, d],
+    Description      -> "Down-type Yukawa couplings (diagonal)"
+  }
+};
+
+(* ************************** *)
+(* *****   Particles    ***** *)
+(* ************************** *)
+
+M$ClassesDescription = {
+
+  (* gauge bosons *)
+  V[1] == {
+    ClassName       -> A,
+    SelfConjugate   -> True,
+    Mass            -> 0,
+    Width           -> 0,
+    ParticleName    -> "a",
+    PDG             -> 22,
+    PropagatorLabel -> "a",
+    PropagatorType  -> W,
+    PropagatorArrow -> None,
+    FullName        -> "Photon"
+  },
+  V[2] == {
+    ClassName       -> Z,
+    SelfConjugate   -> True,
+    Mass            -> {MZ, 91.},
+    Width           -> {WZ, 2.4955},
+    ParticleName    -> "Z",
+    PDG             -> 23,
+    PropagatorLabel -> "Z",
+    PropagatorType  -> Sine,
+    PropagatorArrow -> None,
+    FullName        -> "Z"
+  },
+  V[3] == {
+    ClassName        -> W,
+    SelfConjugate    -> False,
+    Mass             -> {MW, 80.},
+    Width            -> {WW, 2.085},
+    ParticleName     -> "W+",
+    AntiParticleName -> "W-",
+    QuantumNumbers   -> {Q -> 1},
+    PDG              -> 24,
+    PropagatorLabel  -> "W",
+    PropagatorType   -> Sine,
+    PropagatorArrow  -> Forward,
+    FullName         -> "W"
+  },
+  V[4] == {
+    ClassName       -> G,
+    SelfConjugate   -> True,
+    Indices         -> {Index[Gluon]},
+    Mass            -> 0,
+    Width           -> 0,
+    ParticleName    -> "g",
+    PDG             -> 21,
+    PropagatorLabel -> "G",
+    PropagatorType  -> C,
+    PropagatorArrow -> None,
+    FullName        -> "Gluon"
+  },
+
+  (* ghosts of the physical gauge bosons *)
+  U[1] == {
+    ClassName       -> ghA,
+    SelfConjugate   -> False,
+    Ghost           -> A,
+    QuantumNumbers  -> {GhostNumber -> 1},
+    Mass            -> 0,
+    Width           -> 0,
+    PropagatorLabel -> "uA",
+    PropagatorType  -> GhostDash,
+    PropagatorArrow -> Forward
+  },
+  U[2] == {
+    ClassName       -> ghZ,
+    SelfConjugate   -> False,
+    Ghost           -> Z,
+    QuantumNumbers  -> {GhostNumber -> 1},
+    Mass            -> {MZ, 91.},
+    Width           -> {WZ, 2.4955},
+    PropagatorLabel -> "uZ",
+    PropagatorType  -> GhostDash,
+    PropagatorArrow -> Forward
+  },
+  U[3] == {
+    ClassName       -> ghWp,
+    SelfConjugate   -> False,
+    Ghost           -> W,
+    QuantumNumbers  -> {GhostNumber -> 1, Q -> 1},
+    Mass            -> {MW, 80.},
+    Width           -> {WW, 2.085},
+    PropagatorLabel -> "uWp",
+    PropagatorType  -> GhostDash,
+    PropagatorArrow -> Forward
+  },
+  U[4] == {
+    ClassName       -> ghWm,
+    SelfConjugate   -> False,
+    Ghost           -> Wbar,
+    QuantumNumbers  -> {GhostNumber -> 1, Q -> -1},
+    Mass            -> {MW, 80.},
+    Width           -> {WW, 2.085},
+    PropagatorLabel -> "uWm",
+    PropagatorType  -> GhostDash,
+    PropagatorArrow -> Forward
+  },
+  U[5] == {
+    ClassName       -> ghG,
+    SelfConjugate   -> False,
+    Indices         -> {Index[Gluon]},
+    Ghost           -> G,
+    PDG             -> 82,
+    QuantumNumbers  -> {GhostNumber -> 1},
+    Mass            -> 0,
+    Width           -> 0,
+    PropagatorLabel -> "uG",
+    PropagatorType  -> GhostDash,
+    PropagatorArrow -> Forward
+  },
+
+  (* unphysical gauge fields and their ghosts (symmetric basis) *)
+  V[11] == {
+    ClassName     -> B,
+    Unphysical    -> True,
+    SelfConjugate -> True,
+    Definitions   -> {B[mu_] -> -sw Z[mu] + cw A[mu]}
+  },
+  V[12] == {
+    ClassName     -> Wi,
+    Unphysical    -> True,
+    SelfConjugate -> True,
+    Indices       -> {Index[SU2W]},
+    FlavorIndex   -> SU2W,
+    Definitions   -> {Wi[mu_, 1] -> (Wbar[mu] + W[mu])/Sqrt[2], Wi[mu_, 2] -> (Wbar[mu] - W[mu])/(I Sqrt[2]),
+                      Wi[mu_, 3] -> cw Z[mu] + sw A[mu]}
+  },
+  U[11] == {
+    ClassName     -> ghB,
+    Unphysical    -> True,
+    SelfConjugate -> False,
+    Ghost         -> B,
+    Definitions   -> {ghB -> -sw ghZ + cw ghA}
+  },
+  U[12] == {
+    ClassName     -> ghWi,
+    Unphysical    -> True,
+    SelfConjugate -> False,
+    Ghost         -> Wi,
+    Indices       -> {Index[SU2W]},
+    FlavorIndex   -> SU2W,
+    Definitions   -> {ghWi[1] -> (ghWp + ghWm)/Sqrt[2], ghWi[2] -> (ghWm - ghWp)/(I Sqrt[2]), ghWi[3] -> cw ghZ + sw ghA}
+  },
+
+  (* fermions: mass eigenstates (CKM = 1) *)
+  F[1] == {
+    ClassName        -> vl,
+    ClassMembers     -> {ve, vm, vt},
+    Indices          -> {Index[Generation]},
+    FlavorIndex      -> Generation,
+    SelfConjugate    -> False,
+    Mass             -> 0,
+    Width            -> 0,
+    QuantumNumbers   -> {LeptonNumber -> 1},
+    PropagatorLabel  -> {"v", "ve", "vm", "vt"},
+    PropagatorType   -> S,
+    PropagatorArrow  -> Forward,
+    PDG              -> {12, 14, 16},
+    ParticleName     -> {"ve", "vm", "vt"},
+    AntiParticleName -> {"ve~", "vm~", "vt~"},
+    FullName         -> {"Electron-neutrino", "Mu-neutrino", "Tau-neutrino"}
+  },
+  F[2] == {
+    ClassName        -> l,
+    ClassMembers     -> {e, mu, ta},
+    Indices          -> {Index[Generation]},
+    FlavorIndex      -> Generation,
+    SelfConjugate    -> False,
+    Mass             -> {Ml, {Me, 0.000487}, {MMU, 0.1027}, {MTA, 1.746}},
+    Width            -> 0,
+    QuantumNumbers   -> {Q -> -1, LeptonNumber -> 1},
+    PropagatorLabel  -> {"l", "e", "mu", "ta"},
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> {11, 13, 15},
+    ParticleName     -> {"e-", "mu-", "ta-"},
+    AntiParticleName -> {"e+", "mu+", "ta+"},
+    FullName         -> {"Electron", "Muon", "Tau"}
+  },
+  F[3] == {
+    ClassName        -> uq,
+    ClassMembers     -> {u, c, t},
+    Indices          -> {Index[Generation], Index[Colour]},
+    FlavorIndex      -> Generation,
+    SelfConjugate    -> False,
+    Mass             -> {Mu, {MU, 0.00127}, {MC, 0.619}, {MT, 165.}},
+    Width            -> {0, 0, {WT, 1.42}},
+    QuantumNumbers   -> {Q -> 2/3},
+    PropagatorLabel  -> {"uq", "u", "c", "t"},
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> {2, 4, 6},
+    ParticleName     -> {"u", "c", "t"},
+    AntiParticleName -> {"u~", "c~", "t~"},
+    FullName         -> {"u-quark", "c-quark", "t-quark"}
+  },
+  F[4] == {
+    ClassName        -> dq,
+    ClassMembers     -> {d, s, b},
+    Indices          -> {Index[Generation], Index[Colour]},
+    FlavorIndex      -> Generation,
+    SelfConjugate    -> False,
+    Mass             -> {Md, {MD, 0.00271}, {MS, 0.0546}, {MB, 2.86}},
+    Width            -> 0,
+    QuantumNumbers   -> {Q -> -1/3},
+    PropagatorLabel  -> {"dq", "d", "s", "b"},
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> {1, 3, 5},
+    ParticleName     -> {"d", "s", "b"},
+    AntiParticleName -> {"d~", "s~", "b~"},
+    FullName         -> {"d-quark", "s-quark", "b-quark"}
+  },
+
+  (* fermions: chiral components and doublets *)
+  F[11] == {
+    ClassName      -> LL,
+    Unphysical     -> True,
+    Indices        -> {Index[SU2D], Index[Generation]},
+    FlavorIndex    -> SU2D,
+    SelfConjugate  -> False,
+    QuantumNumbers -> {Y -> -1/2},
+    Definitions    -> {LL[sp1_, 1, ff_] :> Module[{sp2}, ProjM[sp1, sp2] vl[sp2, ff]],
+                       LL[sp1_, 2, ff_] :> Module[{sp2}, ProjM[sp1, sp2] l[sp2, ff]]}
+  },
+  F[12] == {
+    ClassName      -> lR,
+    Unphysical     -> True,
+    Indices        -> {Index[Generation]},
+    FlavorIndex    -> Generation,
+    SelfConjugate  -> False,
+    QuantumNumbers -> {Y -> -1},
+    Definitions    -> {lR[sp1_, ff_] :> Module[{sp2}, ProjP[sp1, sp2] l[sp2, ff]]}
+  },
+  F[13] == {
+    ClassName      -> QL,
+    Unphysical     -> True,
+    Indices        -> {Index[SU2D], Index[Generation], Index[Colour]},
+    FlavorIndex    -> SU2D,
+    SelfConjugate  -> False,
+    QuantumNumbers -> {Y -> 1/6},
+    Definitions    -> {QL[sp1_, 1, ff_, cc_] :> Module[{sp2}, ProjM[sp1, sp2] uq[sp2, ff, cc]],
+                       QL[sp1_, 2, ff_, cc_] :> Module[{sp2}, ProjM[sp1, sp2] dq[sp2, ff, cc]]}
+  },
+  F[14] == {
+    ClassName      -> uR,
+    Unphysical     -> True,
+    Indices        -> {Index[Generation], Index[Colour]},
+    FlavorIndex    -> Generation,
+    SelfConjugate  -> False,
+    QuantumNumbers -> {Y -> 2/3},
+    Definitions    -> {uR[sp1_, ff_, cc_] :> Module[{sp2}, ProjP[sp1, sp2] uq[sp2, ff, cc]]}
+  },
+  F[15] == {
+    ClassName      -> dR,
+    Unphysical     -> True,
+    Indices        -> {Index[Generation], Index[Colour]},
+    FlavorIndex    -> Generation,
+    SelfConjugate  -> False,
+    QuantumNumbers -> {Y -> -1/3},
+    Definitions    -> {dR[sp1_, ff_, cc_] :> Module[{sp2}, ProjP[sp1, sp2] dq[sp2, ff, cc]]}
+  },
+
+  (* scalars *)
+  S[1] == {
+    ClassName       -> H,
+    SelfConjugate   -> True,
+    Mass            -> {MH, 125.},
+    Width           -> {WH, 0.0041},
+    PropagatorLabel -> "H",
+    PropagatorType  -> D,
+    PropagatorArrow -> None,
+    PDG             -> 25,
+    ParticleName    -> "H",
+    FullName        -> "H"
+  },
+  S[2] == {
+    ClassName       -> G0,
+    SelfConjugate   -> True,
+    Goldstone       -> Z,
+    Mass            -> {MZ, 91.},
+    Width           -> {WZ, 2.4955},
+    PropagatorLabel -> "Go",
+    PropagatorType  -> D,
+    PropagatorArrow -> None,
+    PDG             -> 250,
+    ParticleName    -> "G0",
+    FullName        -> "G0"
+  },
+  S[3] == {
+    ClassName        -> GP,
+    SelfConjugate    -> False,
+    Goldstone        -> W,
+    Mass             -> {MW, 80.},
+    QuantumNumbers   -> {Q -> 1},
+    Width            -> {WW, 2.085},
+    PropagatorLabel  -> "GP",
+    PropagatorType   -> D,
+    PropagatorArrow  -> None,
+    PDG              -> 251,
+    ParticleName     -> "G+",
+    AntiParticleName -> "G-",
+    FullName         -> "GP"
+  },
+  S[11] == {
+    ClassName      -> Phi,
+    Unphysical     -> True,
+    Indices        -> {Index[SU2D]},
+    FlavorIndex    -> SU2D,
+    SelfConjugate  -> False,
+    QuantumNumbers -> {Y -> 1/2},
+    Definitions    -> {Phi[1] -> -I GP, Phi[2] -> (vev + H + I G0)/Sqrt[2]}
+  }
+};
+
+(* FeynArts propagators: R_xi gauge (Goldstones and ghosts of Z and W have mass^2 xi M^2) *)
+GaugeXi[V[1]]  = GaugeXi[A];
+GaugeXi[V[2]]  = GaugeXi[Z];
+GaugeXi[V[3]]  = GaugeXi[W];
+GaugeXi[V[4]]  = GaugeXi[G];
+GaugeXi[S[1]]  = 1;
+GaugeXi[S[2]]  = GaugeXi[Z];
+GaugeXi[S[3]]  = GaugeXi[W];
+GaugeXi[U[1]]  = GaugeXi[A];
+GaugeXi[U[2]]  = GaugeXi[Z];
+GaugeXi[U[3]]  = GaugeXi[W];
+GaugeXi[U[4]]  = GaugeXi[W];
+GaugeXi[U[5]]  = GaugeXi[G];
+
+(* ************************** *)
+(* *****   Lagrangian   ***** *)
+(* ************************** *)
+
+LGaugeSM := Block[{mu, nu, ii, aa},
+  ExpandIndices[(-1/4 FS[B, mu, nu] FS[B, mu, nu] - 1/4 FS[Wi, mu, nu, ii] FS[Wi, mu, nu, ii]
+    - 1/4 FS[G, mu, nu, aa] FS[G, mu, nu, aa]), FlavorExpand -> SU2W]];
+
+LFermionSM := Block[{mu},
+  ExpandIndices[I (QLbar.Ga[mu].DC[QL, mu] + LLbar.Ga[mu].DC[LL, mu]
+    + uRbar.Ga[mu].DC[uR, mu] + dRbar.Ga[mu].DC[dR, mu] + lRbar.Ga[mu].DC[lR, mu]),
+    FlavorExpand -> {SU2W, SU2D}]];
+
+(* V = -muH2 |Phi|^2 + lam |Phi|^4 has its minimum at |Phi|^2 = vev^2/2 because muH2 = lam vev^2 *)
+LHiggsSM := Block[{ii, jj, mu},
+  ExpandIndices[(DC[Phibar[ii], mu] DC[Phi[ii], mu] + muH2 Phibar[ii] Phi[ii]
+    - lam Phibar[ii] Phi[ii] Phibar[jj] Phi[jj]), FlavorExpand -> {SU2D, SU2W}]];
+
+(* Yukawa couplings: diagonal matrices (CKM = 1), every index appears exactly twice;
+   Phitilde_i = Eps[i, j] Phibar[j] = (conj(Phi_2), -conj(Phi_1)) *)
+LYukawaSM := Block[{sp, ii, jj, cc, ff1, ff2, yuk},
+  yuk = ExpandIndices[(-yd[ff1, ff2] QLbar[sp, ii, ff1, cc].dR[sp, ff2, cc] Phi[ii]
+    - yl[ff1, ff2] LLbar[sp, ii, ff1].lR[sp, ff2] Phi[ii]
+    - yu[ff1, ff2] QLbar[sp, ii, ff1, cc].uR[sp, ff2, cc] Eps[ii, jj] Phibar[jj]), FlavorExpand -> SU2D];
+  yuk + HC[yuk]];
+
+(* Faddeev-Popov term, gauge part: - sum_a ubar^a d^mu (D_mu u)^a for B, W^a and the gluon.  The antighosts rotate
+   with the same real matrices as the ghosts, so this equals - sum_k ubar^k d.(s V^k) in the mass basis. *)
+LGhostGaugeSM := Block[{mu, ii, aa},
+  ExpandIndices[(-ghBbar.del[del[ghB, mu], mu] - ghWibar[ii].del[DC[ghWi[ii], mu], mu]
+    - ghGbar[aa].del[DC[ghG[aa], mu], mu]), FlavorExpand -> SU2W]];
+
+(* Faddeev-Popov term, scalar part: - ubar^k s F^k with F^Z = d.Z - xiZ MZ G0, F^+- = d.W^+- - xiW MW G^+-
+   contributes  xiZ MZ ubarZ s G0 + xiW MW (ubar+ s G+ + ubar- s G-).
+   s Phi = i (gw/2 sigma^a u^a + g1/2 u^B) Phi with commuting placeholders ghPH$[k] for the ghosts
+   {u^B, u^1, u^2, u^3} (real: conj(ghPH$[k]) = ghPH$[k]); s Phi^dagger = -i Phi^dagger (...).
+   Then G+ = i Phi_1, G- = -i conj(Phi_1), G0 = (Phi_2 - conj(Phi_2))/(i sqrt 2).  Each coefficient of ghPH$[k] multiplies
+   the antighost-ghost product ubar.u_k, u_k = {ghB, ghWi[1], ghWi[2], ghWi[3]} (expanded by FeynRules). *)
+LGhostScalarSM := Block[{ugen, phiv, phibarv, sPhi, sPhibar, sGP, sGPbar, sG0, ghs, term},
+  ugen = gw/2 Sum[ghPH$[k + 1] {{{0, 1}, {1, 0}}, {{0, -I}, {I, 0}}, {{1, 0}, {0, -1}}}[[k]], {k, 3}]
+         + g1/2 ghPH$[1] IdentityMatrix[2];
+  phiv    = {-I GP, (vev + H + I G0)/Sqrt[2]};
+  phibarv = {I GPbar, (vev + H - I G0)/Sqrt[2]};
+  sPhi    = I ugen.phiv;
+  sPhibar = -I phibarv.ugen;
+  sGP     = Expand[I sPhi[[1]]];
+  sGPbar  = Expand[-I sPhibar[[1]]];
+  sG0     = Expand[(sPhi[[2]] - sPhibar[[2]])/(I Sqrt[2])];
+  ghs = {ghB, ghWi[1], ghWi[2], ghWi[3]};
+  term[bar_, sX_] := Sum[bar.ghs[[k]] Coefficient[sX, ghPH$[k]], {k, 4}];
+  ExpandIndices[(xiZ MZ term[ghZbar, sG0] + xiW MW (term[ghWpbar, sGP] + term[ghWmbar, sGPbar])),
+    FlavorExpand -> SU2W]];
+
+LGhostSM := LGhostGaugeSM + LGhostScalarSM;
+
+LSM := LGaugeSM + LFermionSM + LHiggsSM + LYukawaSM + LGhostSM;
