@@ -177,7 +177,7 @@ treeSC$[key_] := Module[{born, cc, kinds, w0, wm, sun = CF -> (CA^2 - 1)/(2 CA),
    Print["(b) (", key, ") Born(D) = ", InputForm[Factor[born]], ";  colour conservation sum_j <T_i.T_j> + C_i Born (i = 1, 3): ",
     Simplify[{cc[{1, 2}] + cc[{1, 3}] + cc[{1, 4}] + If[key === "A", CF, CA] born, cc[{1, 3}] + cc[{2, 3}] + cc[{3, 4}] + CF born} /. sun],
     "  (expect {0, 0})"];
-   If[key === "A", Print["(b) (A) <T_i.T_j>/Born - Eq. (17) for 12, 13, 14, 23, 24, 34: ",
+   If[key === "A", Print["(b) (A) <T_i.T_j>/Born - Eq. (colcorr) for 12, 13, 14, 23, 24, 34: ",
      Simplify[(cc /@ pairsSC$)/born - {(CA - 2 CF)/2, CA/2 - 2 CF, 2 CF - CA, 2 CF - CA, CA/2 - 2 CF, (CA - 2 CF)/2} /. sun], "  (expect 0)"]];
    {w0, wm} = If[key === "A", {<||>, 0},
      kinds = Table[With[{q = Cases[{FCE[a]}, FAD[___, {q_, mt}, ___] :> q, Infinity]},

@@ -1,8 +1,8 @@
 # %% [markdown]
 # # Step (2): tree-level spin/colour sums and cross sections with explicit matrices (QCD)
 #
-# Research note models/qcd, step (2).  Independent numerical checks of Eq. (12) (eq:Mtree), Eq. (13) (eq:sumtree),
-# Eq. (14) (eq:ghostsum) and Eq. (15) (eq:sigtree), with explicit Dirac matrices, spinors, Gell-Mann matrices and real
+# Research note models/qcd, step (2).  Independent numerical checks of Eq. (Mtree), Eq. (sumtree),
+# Eq. (ghostsum) and Eq. (sigtree), with explicit Dirac matrices, spinors, Gell-Mann matrices and real
 # transverse polarization vectors, before any trace or colour identity:
 #
 # 1. Spin, polarization and colour sums of the Feynman-rule amplitudes against the closed forms of the note, at many
@@ -10,12 +10,12 @@
 #    - (A) u ubar -> t tbar, (B) g g -> t tbar, (C) g g -> g g with the gluon propagator in a general covariant gauge
 #      -i [g - (1 - xi) q q/q^2]/q^2: the amplitudes must not depend on xi;
 #    - (B): the physical polarization sum, the -g sum (four basis vectors weighted by -g_{ll}) and the ghost pairs
-#      c cbar -> t tbar, cbar c -> t tbar (Eq. (14)); the Ward residual p1_mu M^{mu nu} = (g^2/s) p2^nu ubar[T^a,T^b]p1slash v
+#      c cbar -> t tbar, cbar c -> t tbar (Eq. (ghostsum)); the Ward residual p1_mu M^{mu nu} = (g^2/s) p2^nu ubar[T^a,T^b]p1slash v
 #      for every component nu, spin and colour;
 #    - (C): Ward identity (eps(p1) -> p1 with the other gluons physical);
 #    - (D) e- e+ -> u ubar g: the sum over spins, polarizations and colours averaged over the lepton directions (six
 #      directions +-x, +-y, +-z integrate a quadratic polynomial of the direction exactly) against the three-jet formula.
-# 2. Cross sections: Eq. (15) against the numerical integral of Eq. (13), and against MadGraph (tree_mg5.mg5):
+# 2. Cross sections: Eq. (sigtree) against the numerical integral of Eq. (sumtree), and against MadGraph (tree_mg5.mg5):
 #    (A), (B) at sqrt(s) = 3, 5, 10;  (C) with |cos theta| < C0 (MadGraph: |eta_j| < atanh(C0)) at 5, 10, 20;
 #    (D) with all pair invariants s_ij > Y s (MadGraph: mmjj = sqrt(Y s)) at 5, 10, 20.
 #
@@ -175,7 +175,7 @@ def sumA_note(sqrts, cth):
 # ## (B) g g -> t tbar, -g sum, ghosts and the Ward residual
 #
 # M = -g^2 ubar [T^aT^b e1 (k1-p1+m) e2/(t-m^2) + T^bT^a e2 (k1-p2+m) e1/(u-m^2) + [T^a,T^b] V/s] v with the s-channel
-# gluon propagator in a general gauge: V = (gluon vertex contracted with e1, e2) . N(P) . gamma (note Eq. (12)).
+# gluon propagator in a general gauge: V = (gluon vertex contracted with e1, e2) . N(P) . gamma (note Eq. (Mtree)).
 
 # %%
 def three_gluon(k, p, q):
@@ -415,7 +415,7 @@ print("check point sqrt(s) = 5, cos = 0.3 (tree_feyncalc.wl prints the same): "
       f"(A) {sumA(5.0, 0.3):.16g}  (B) {sumB(5.0, 0.3):.16g}  (C) {sumC(5.0, 0.3):.16g}")
 
 # %% [markdown]
-# ## 2. Cross sections: Eq. (15) and numerical integrals of Eq. (13)
+# ## 2. Cross sections: Eq. (sigtree) and numerical integrals of Eq. (sumtree)
 #
 # sigma = (1/2s) (1/(spin x colour average)) int sum|M|^2 dPhi_2,  dPhi_2 = beta/(16 pi) dcos  (identical gluons in
 # (C): extra 1/2);  sigma_D = sigma_0 C_F alpha_s/2pi F(Y), sigma_0 = N_c Q_u^2 4 pi alpha^2/(3s).
@@ -445,7 +445,7 @@ def sigC_note(sq):
 
 
 def F3jet(y):
-    """int over s_ij > y s of (x1^2 + x2^2)/((1-x1)(1-x2)) dx1 dx2 (note Eq. (15))"""
+    """int over s_ij > y s of (x1^2 + x2^2)/((1-x1)(1-x2)) dx1 dx2 (note Eq. (sigtree))"""
     li2 = lambda z: spence(1 - z)       # scipy's spence(x) = Li2(1 - x)
     return ((3 - 6 * y) * math.log(y / (1 - 2 * y)) + 2 * math.log(y / (1 - y)) ** 2 + 2.5 - 6 * y - 4.5 * y * y
             + 4 * li2(y / (1 - y)) - math.pi ** 2 / 3)
@@ -479,11 +479,11 @@ def sig_numeric(proc, sq):
 
 
 NOTE = {"A": sigA_note, "B": sigB_note, "C": sigC_note, "D": sigD_note}
-print("\nCross sections in pb (GeV units): Eq. (15) vs numerical integral of Eq. (13)")
+print("\nCross sections in pb (GeV units): Eq. (sigtree) vs numerical integral of Eq. (sumtree)")
 for proc in "ABCD":
     for sq in SQRTS[proc]:
         a, b = NOTE[proc](sq), sig_numeric(proc, sq)
-        print(f"({proc}) sqrt(s) = {sq:5.1f}: Eq. (15) {a * GEV2_TO_PB:.10e}   numerical {b * GEV2_TO_PB:.10e}   rel {a / b - 1: .1e}")
+        print(f"({proc}) sqrt(s) = {sq:5.1f}: Eq. (sigtree) {a * GEV2_TO_PB:.10e}   numerical {b * GEV2_TO_PB:.10e}   rel {a / b - 1: .1e}")
 
 # %% [markdown]
 # ## 3. MadGraph
@@ -521,7 +521,7 @@ if os.path.exists(log):
     vals, src = read_mg5(log)
     order = [(p, sq) for p in "ABCD" for sq in SQRTS[p]]
     print(f"\nMadGraph ({log}, values from {src}): {len(vals)} cross sections")
-    print("proc sqrt(s)   MadGraph [pb]              Eq. (15) [pb]        pull")
+    print("proc sqrt(s)   MadGraph [pb]              Eq. (sigtree) [pb]   pull")
     for (proc, sq), (v, e) in zip(order, vals):
         ref = NOTE[proc](sq) * GEV2_TO_PB
         print(f"({proc}) {sq:6.1f}   {v:.5e} +- {e:.2e}   {ref:.6e}   {(v - ref) / e: .2f}")

@@ -10,7 +10,7 @@
 #   beta_0 from the two-point functions alone:  beta/g = gamma_A + 2 gamma_c - xi C_A g^2/K (the last term is the ghost vertex,
 #         Z~_1 = 1 - xi C_A g^2/(2 K eps); 0 in the Landau gauge), i.e.  beta_0 = slope(Pi)/2 - slope(Pitilde) + xi C_A;
 #   S-matrix element (Eq. (rgW)): d(K W)/d ln mu^2 = K W_-1 + beta_0 B(4) (+ ln mu^2 K W_-2), beta_0 = 7 for the MS-bar coupling with
-#         n_f = 6 (LoopTools, rg_feyncalc.wl (d)) and 23/3 for alpha_s^(n_l) (MadLoop, Eq. (18));
+#         n_f = 6 (LoopTools, rg_feyncalc.wl (d)) and 23/3 for alpha_s^(n_l) (MadLoop, Eq. (mlconv));
 #   decoupling: K [Pi_t(k^2) - Pi_t(0)] = -(4/3) T_F [k^2/(5 m^2) + 3 k^4/(140 m^4) + ...];  in MadLoop (alpha_s^(n_l)) the top part of
 #         u ubar -> d dbar is W(m_t) - W(no top) = [Pi_t(s) - Pi_t(0)] B (the s-channel gluon), -> 0 as s/(5 m_t^2).
 # Slopes from mu = 1/2 and 2: [X(2) - X(1/2)]/(2 ln 2) per ln mu (1PI), /(2 ln 4) per ln mu^2 (K W); X(1) - mean = (ln 4)^2/2 K W_-2.

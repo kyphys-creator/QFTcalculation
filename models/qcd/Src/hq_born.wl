@@ -54,9 +54,9 @@ res = Association[Table[key -> Module[{born, cc, t0 = AbsoluteTime[]},
       Print[key, ": colour conservation (expect 0, 0): ", Simplify[{cc[{1, 2}] + cc[{1, 3}] + cc[{1, 4}] + If[key === "A", CF, CA] born,
           cc[{1, 3}] + cc[{2, 3}] + cc[{3, 4}] + CF born} /. CF -> (CA^2 - 1)/(2 CA)]];
       <|"born" -> born, "cc" -> cc|>], {key, {"A", "B"}}]];
-(* D = 4 checks against Eq. (13) *)
-Print["A: Born(4) - Eq.(13): ", Simplify[(res["A"]["born"] /. D -> 4) - 8 TF^2 (CA^2 - 1) ((t - 1)^2 + (u - 1)^2 + 2 s)/s^2 /. CF -> (CA^2 - 1)/(2 CA)]];
+(* D = 4 checks against Eq. (sumtree) *)
+Print["A: Born(4) - Eq. (sumtree): ", Simplify[(res["A"]["born"] /. D -> 4) - 8 TF^2 (CA^2 - 1) ((t - 1)^2 + (u - 1)^2 + 2 s)/s^2 /. CF -> (CA^2 - 1)/(2 CA)]];
 Module[{t1 = (1 - t)/s, t2 = (1 - u)/s, rho = 4/s},
-  Print["B: Born(4) - Eq.(13): ", Simplify[(res["B"]["born"] /. D -> 4) - 8 CA CF (CF/(t1 t2) - CA) (t1^2 + t2^2 + rho - rho^2/(4 t1 t2)) /. CF -> (CA^2 - 1)/(2 CA)]]];
+  Print["B: Born(4) - Eq. (sumtree): ", Simplify[(res["B"]["born"] /. D -> 4) - 8 CA CF (CF/(t1 t2) - CA) (t1^2 + t2^2 + rho - rho^2/(4 t1 t2)) /. CF -> (CA^2 - 1)/(2 CA)]]];
 Put[res, FileNameJoin[{s9, "born.m"}]];
 Quiet[DeleteDirectory[modelTmp, DeleteContents -> True]];

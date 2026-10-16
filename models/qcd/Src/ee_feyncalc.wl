@@ -11,11 +11,11 @@
 (*  r_V = 2 Re F^(1)(s + i0),  F^(1) = C_F a [(D-7) B0(s) - 2 s C0(s)] = -C_F a (2 - eps + 2 eps^2)/eps B0(s)  (C0 = -2 (D-3)/((D-4) s) B0, IBP),*)
 (*  r_R = C_F a E^(eps gamma_E)/Gamma(1-eps) Int dy13 dy23 (y12 y13 y23)^(-eps) (-g H_3)/(-g H_2/s)   (three-body phase space / two-body, y_ij = s_ij/s).*)
 (*(a) -g_{mu nu} H^{mu nu} of q qbar and q qbar g in D dimensions (FeynCalc traces; gluon polarization sum -g, allowed for one gluon and a*)
-(*    colour-singlet current); D = 4 against Eq. (19) (eq:sumtree, (D)).  The Dalitz integrals are Dirichlet integrals, exact in eps.*)
+(*    colour-singlet current); D = 4 against Eq. (sumtree) (D).  The Dalitz integrals are Dirichlet integrals, exact in eps.*)
 (*(b) the one-loop q qbar gamma vertex from FeynArts (the gluon diagram; general xi), the interference with the tree current, TID: F^(1) in*)
 (*    terms of B0 and C0, xi-independent; the IBP relation checked with Package-X; F^(1) at s = mu^2 with Package-X and LoopTools.*)
 (*(c) the sum: poles cancel, R/R_0 = 1 + 3 C_F a (= 1 + alpha_s/pi in SU(3)).*)
-(*(d) the thrust T = max x_i: (1/sigma_0) dsigma/dT from Eq. (19), against the closed form (eq:thrust); its integral from 2/3 to 1 - y is the*)
+(*(d) the thrust T = max x_i: (1/sigma_0) dsigma/dT from Eq. (sumtree), against the closed form (eq:thrust); its integral from 2/3 to 1 - y is the*)
 (*    three-jet fraction F(y) of Eq. (sigtree) (T < 1 - y is the same as s_ij > y s for all pairs).  -> results/ee_feyncalc.csv*)
 
 
@@ -60,7 +60,7 @@ h3EE$ = Factor[Contract[DiracSimplify[DiracTrace[GSD[p1].curEE$.GSD[p2].curCEE$]
 h2EE$ = Factor[-Contract[DiracSimplify[DiracTrace[GSD[p1].GAD[mu].GSD[p2].GAD[mu2]]] MTD[mu, mu2]] /. s12 -> s];
 Print["(a) -g H_2/N = ", InputForm[h2EE$], ";  -g H_3/(C_F N) = ", InputForm[h3EE$]];
 x3EE$ = Simplify[(h3EE$/(h2EE$/s)) /. {s13 -> s (1 - x2), s23 -> s (1 - x1)} /. D -> 4];
-Print["(a) D = 4 ratio minus 8 (x1^2 + x2^2)/((1 - x1)(1 - x2)) /2 ... : ", Simplify[x3EE$ - 2 (x1^2 + x2^2)/((1 - x1) (1 - x2))], "  (expect 0: Eq. (19) (D) with C_F alpha_s/(2 pi) = 2 C_F a)"];
+Print["(a) D = 4 ratio minus 8 (x1^2 + x2^2)/((1 - x1)(1 - x2)) /2 ... : ", Simplify[x3EE$ - 2 (x1^2 + x2^2)/((1 - x1) (1 - x2))], "  (expect 0: Eq. (sumtree) (D) with C_F alpha_s/(2 pi) = 2 C_F a)"];
 (* Dirichlet integrals over the simplex y12 + y13 + y23 = 1 *)
 dirEE$[a_, b_, c_] := Gamma[a] Gamma[b] Gamma[c]/Gamma[a + b + c];
 realEE$ = Module[{e = Expand[(h3EE$/(h2EE$/s)) /. {s13 -> y13, s23 -> y23} /. s -> 1], cr},
@@ -156,7 +156,7 @@ fxEE$[x1_, x2_] := (x1^2 + x2^2)/((1 - x1) (1 - x2));
 thrustEE$[t_] = Simplify[2 Integrate[fxEE$[t, x2], {x2, 2 - 2 t, t}, Assumptions -> 2/3 < t < 1] +
      Integrate[fxEE$[x1, 2 - t - x1], {x1, 2 - 2 t, t}, Assumptions -> 2/3 < t < 1], 2/3 < t < 1];
 closedEE$[t_] := 2 (3 t^2 - 3 t + 2)/(t (1 - t)) Log[(2 t - 1)/(1 - t)] - 3 (3 t - 2) (2 - t)/(1 - t);
-Print["(d) thrust: integral of Eq. (19) minus the closed form (in units of 2 C_F a = C_F alpha_s/(2 pi)): ",
+Print["(d) thrust: integral of Eq. (sumtree) minus the closed form (in units of 2 C_F a = C_F alpha_s/(2 pi)): ",
   FullSimplify[thrustEE$[t] - closedEE$[t], 2/3 < t < 1], "  (expect 0);  at T = 0.9: ", N[{thrustEE$[9/10], closedEE$[9/10]}]];
 (* the three-jet fraction F(y) of Eq. (sigtree): sigma_D(y)/sigma_0 = C_F alpha_s/(2 pi) F(y), s_ij > y s for all pairs <=> T < 1 - y *)
 fyEE$[y_] := (3 - 6 y) Log[y/(1 - 2 y)] + 2 Log[y/(1 - y)]^2 + 5/2 - 6 y - 9/2 y^2 + 4 PolyLog[2, y/(1 - y)] - Pi^2/3;

@@ -5,7 +5,7 @@
 #      integrands -> work/scat/{A,B}                                                                  (scat_feyncalc.wl)
 #   2. FormCalc (own kernel), Feynman gauge, CDR via Dimension -> 0 -> work/scat/{A,B}/formcalc.m    (scat_formcalc.wl)
 #   3. LiteRed IBP reduction to masters -> work/scat/{A,B}/ibp.m                                       (scat_litered.wl)
-#   4. masters (exact A0, B0; LoopTools, Package-X), counterterms and residues, IR poles vs Eq. (16), xi independence,
+#   4. masters (exact A0, B0; LoopTools, Package-X), counterterms and residues, IR poles vs Eq. (irpole), xi independence,
 #      diagram-by-diagram comparison IBP / TID / FormCalc at xi = 1, unitarity of (A)
 #      -> results/scat_mathematica.csv, scat_perdiagram.csv, scat_unitarity.csv                       (scat_eval.wl)
 # Needs Src/generated/ (run run_model_check.sh first).  About an hour on 8 cores (NJOBS = 5 jobs for (B) besides the other stages).

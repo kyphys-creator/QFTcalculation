@@ -1,7 +1,7 @@
 # Step (10) library: Gel'fand-Yaglom ratios of -D^2 + m^2 (isospin t = 1/2, 1) in the BPST background, rho = 1 (regular gauge).
 # Partial waves (l, j), l = 0, 1/2, 1, ..., j in |l - t| .. l + t, degeneracy (2l+1)(2j+1):
 #   H = -d_r^2 - (3/r) d_r + 4 l(l+1)/r^2 + U(r) + m^2,  U = 4 (j(j+1) - l(l+1))/(r^2+1) - 4 t(t+1)/(r^2+1)^2,
-#   ln R = ln(psi/psi_free)(r -> infinity), psi, psi_free ~ r^(2l) at r -> 0  (note Eq. (instgy)).
+#   ln R = ln(psi/psi_free)(r -> infinity), psi, psi_free ~ r^(2l) at r -> 0  (note Eq. (instrad) and app:inst).
 # Groups with the same l: t = 1/2: the pair (l, l+1/2) & (l+1/2, l); t = 1: the pair (l, l+1) & (l+1, l) and the single (l, l) (l >= 1/2).
 # The massless solutions psi0 are elementary (inst_bpst.wl); the mass correction Delta = lim (ln(psi/psi0) - ln(psi_free^(k)/r^(2k))) is
 # integrated with the free reference of the large-r angular momentum k, which removes the large cancellations inside a pair.

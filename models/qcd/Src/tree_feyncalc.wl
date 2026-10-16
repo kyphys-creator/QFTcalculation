@@ -5,7 +5,7 @@
 
 
 (* ::Text:: *)
-(*Research note models/qcd, step (2): compare with Eq. (12) (eq:Mtree), Eq. (13) (eq:sumtree) and Eq. (14) (eq:ghostsum).*)
+(*Research note models/qcd, step (2): compare with Eq. (Mtree), Eq. (sumtree) and Eq. (ghostsum).*)
 (*  (A) u(p1) ubar(p2) -> t(k1) tbar(k2):  M = g^2/s [vbar(p2) g^nu T^a u(p1)] [ubar(k1) g_nu T^a v(k2)]*)
 (*  (B) g(p1,a) g(p2,b) -> t(k1) tbar(k2): M = -g^2 ubar(k1) [T^a T^b e1 (k1-p1+m) e2/(t-m^2) + T^b T^a e2 (k1-p2+m) e1/(u-m^2)*)
 (*        + [T^a,T^b]/s ((e1.e2)(p1-p2) + 2(e1.p2) e2 - 2(e2.p1) e1)] v(k2)*)
@@ -19,7 +19,7 @@
 (*  - (C): the amplitude is evaluated with exact rational kinematics and explicit polarization vectors (the symbolic*)
 (*    physical polarization sum over four gluons did not finish in 30 min): it is compared with the Feynman rules of*)
 (*    the note diagram by diagram through colour projections, the Ward identity is checked, and the colour-summed*)
-(*    |M|^2 is compared with Eq. (13).*)
+(*    |M|^2 is compared with Eq. (sumtree).*)
 (*Uses the FeynArts model in Src/generated/QCD_FA (run generate_QCD.wl first); a copy is patched with FAPatch.*)
 (*Symbols: gS = g (FeynArts GS; NOT GS, which is FeynCalc's slash), mt = m (MT), eQ = e (EL), xi = GaugeXi[G].*)
 
@@ -105,7 +105,7 @@ spA$ = Simplify[spinColTree$[mA$ + mAnote$] /. u -> 2 mt^2 - s - t /. toCF$];
 Print["(A) sum|M(FC) - M(note)|^2 = ", dmA$, ",  sum|M(FC) + M(note)|^2 = ", spA$, "   (expect one of them 0)"];
 sqA$ = spinColTree$[mA$];
 sqAnote$ = 8 gS^4 TF^2 (CA^2 - 1) ((t - mt^2)^2 + (u - mt^2)^2 + 2 mt^2 s)/s^2;
-Print["(A) sum|M|^2(FeynCalc) - Eq. (13) = ", Simplify[(sqA$ - sqAnote$) /. toCF$ /. u -> 2 mt^2 - s - t], "   (expect 0)"];
+Print["(A) sum|M|^2(FeynCalc) - Eq. (sumtree) = ", Simplify[(sqA$ - sqAnote$) /. toCF$ /. u -> 2 mt^2 - s - t], "   (expect 0)"];
 
 
 (* ::Section:: *)
@@ -152,7 +152,7 @@ sqBminusg$ = Simplify[DoPolarizationSums[DoPolarizationSums[
      ReplaceAll[#, toCF$] & // ReplaceAll[#, u -> 2 mt^2 - s - t] &];
 tau1$ = (mt^2 - t)/s; tau2$ = (mt^2 - u)/s; rho$ = 4 mt^2/s;
 sqBnote$ = 8 gS^4 CA CF (CF/(tau1$ tau2$) - CA) (tau1$^2 + tau2$^2 + rho$ - rho$^2/(4 tau1$ tau2$));
-Print["(B) physical sum|M|^2(FeynCalc) - Eq. (13) = ", Simplify[(sqBphys$ - sqBnote$) /. toCF$ /. u -> 2 mt^2 - s - t], "   (expect 0)"];
+Print["(B) physical sum|M|^2(FeynCalc) - Eq. (sumtree) = ", Simplify[(sqBphys$ - sqBnote$) /. toCF$ /. u -> 2 mt^2 - s - t], "   (expect 0)"];
 Print["(B) SU(3), initial average: sum/256 - Combridge = ",
   Simplify[(sqBphys$/256 /. CA -> 3) - gS^4 (1/(6 tau1$ tau2$) - 3/8) (tau1$^2 + tau2$^2 + rho$ - rho$^2/(4 tau1$ tau2$)) /. u -> 2 mt^2 - s - t],
   "   (expect 0)"];
@@ -160,7 +160,7 @@ Print["(B) SU(3), initial average: sum/256 - Combridge = ",
 
 (* ::Text:: *)
 (*Ghost pairs c(p1, a) cbar(p2, b) -> t tbar and cbar(p1, a) c(p2, b) -> t tbar (one s-channel diagram each).*)
-(*Eq. (14): sum_{-g} - sum_phys = sum|M(c cbar)|^2 + sum|M(cbar c)|^2 and sum|M(c cbar)|^2 = g^4 C_A d_A tau1 tau2.*)
+(*Eq. (ghostsum): sum_{-g} - sum_phys = sum|M(c cbar)|^2 + sum|M(cbar c)|^2 and sum|M(c cbar)|^2 = g^4 C_A d_A tau1 tau2.*)
 (*App. I: M(c cbar -> t tbar) = -(g^2/s) ubar [T^a, T^b] p2slash v.*)
 
 
@@ -266,7 +266,7 @@ Print["(C) colour projections, M(FC) - M(note) for all 16 polarizations (expect 
 Print["(C) colour projections of d M/d xi (expect all 0): ", Union[Flatten[resC$[[All, 4]]]]];
 sqC$ = Total[resC$[[All, 3]]];
 sqCnote$ = 16 gS^4 9 8 (3 - t u/s^2 - s u/t^2 - s t/u^2) /. numC$;
-Print["(C) sum|M|^2 at s = 100, cos = 4/5: FeynCalc ", sqC$, ", Eq. (13) ", sqCnote$, ", difference ", Simplify[sqC$ - sqCnote$], "   (expect 0)"];
+Print["(C) sum|M|^2 at s = 100, cos = 4/5: FeynCalc ", sqC$, ", Eq. (sumtree) ", sqCnote$, ", difference ", Simplify[sqC$ - sqCnote$], "   (expect 0)"];
 (* Ward identity: e1 -> p1 with the other three physical polarizations *)
 wardC$ = Table[
    setVecsC$[{vecC$[p1], polC$[p2][[i2]], polC$[k1][[i3]], polC$[k2][[i4]]}];

@@ -5,7 +5,7 @@
 
 
 (* ::Text:: *)
-(*Research note models/qcd, step (3).  Compares with Eqs. (5) (eq:V), (6) (eq:Vpole), (7) (eq:ct), (8) (eq:VR) and (4) (eq:st).*)
+(*Research note models/qcd, step (3).  Compares with Eqs. (V), (Vpole), (ct), (VR) and (st).*)
 (*(a) FeynArts 1PI diagrams from Src/generated/QCD_FA (photon and electron excluded), GaugeRules -> {} keeps xi:*)
 (*    gluon 2-point 9 (seagull, 6 quark loops, ghost loop, gluon loop), ghost 2-point 1, u and t self-energies 1 each,*)
 (*    quark-gluon vertex 2 (u and t), ghost vertex 2, three-gluon vertex 18, four-gluon vertex 54.*)
@@ -15,14 +15,14 @@
 (*    I(2,1) = -(D-3)/k^2 I(1,1), I(2,2) = (D-3)(D-6)/k^4 I(1,1); the doubled gluon propagator of the t self-energy by the*)
 (*    QED-note relation J12 = [(D-2) A0 - (D-3)(m^2 + p^2) B0]/(m^2 - p^2)^2.*)
 (*(b) Two-point functions exact in D dimensions: each diagram contracted with g_{mu nu} and k_mu k_nu (App. E), the sum*)
-(*    transverse, Pi, Pitilde, Sigma = Eq. (5) symbolically.*)
+(*    transverse, Pi, Pitilde, Sigma = Eq. (V) symbolically.*)
 (*(c) UV poles of the four vertices by Taylor expansion in the external momenta and infrared rearrangement (every*)
 (*    denominator -> l^2 - MM): quark-gluon (u and t, per diagram), ghost (per diagram), three-gluon (order 1),*)
-(*    four-gluon (order 0, projected on the colour x Lorentz basis); counterterms Eq. (7); Slavnov-Taylor Eq. (4): delta_g*)
+(*    four-gluon (order 0, projected on the colour x Lorentz basis); counterterms Eq. (ct); Slavnov-Taylor Eq. (st): delta_g*)
 (*    from all four vertices.  Also: the same poles from TID at general momenta with PaVeUVPart (the pre-check found a wrong*)
 (*    gauge part for the abelian quark-vertex diagram, note Sec. 4).*)
 (*(d) MS-bar finite parts at g = 1, m = mu = 1 from Package-X and LoopTools -> results/oneloop_mathematica.csv*)
-(*    (oneloop_numeric.py compares them with COLLIER and mpmath integrals of Eq. (8)).*)
+(*    (oneloop_numeric.py compares them with COLLIER and mpmath integrals of Eq. (VR)).*)
 
 
 (* ::Text:: *)
@@ -145,21 +145,21 @@ Print["(b) gluon: k_mu k_nu Pi^{mu nu} summed over diagrams (expect 0): ", Simpl
 PiOL$ = Simplify[totG$[[1]]/(I Pi^2 KK (D - 1) qq)];
 PiQED$[m2_] := gS^2/KK 2/((D - 1) qq) (2 (D - 2) A0[m2] - (4 m2 + (D - 2) qq) B0[qq, m2, m2]);
 PiNote$ = gS^2/KK (CA/2 ((3 D - 2)/(D - 1) + (2 D - 7) eta - (D - 4)/4 eta^2) B0[qq, 0, 0]) + TF (5 PiQED$[0] + PiQED$[mt^2]) /. A0[0] -> 0;
-Print["(b) gluon: Pi - Eq. (5) = ", Simplify[PiOL$ - PiNote$], "   (expect 0; n_l = 5 massless + t)"];
+Print["(b) gluon: Pi - Eq. (V) = ", Simplify[PiOL$ - PiNote$], "   (expect 0; n_l = 5 massless + t)"];
 
 
 (* ::Text:: *)
-(*Ghost: X = K p^2 Pitilde.  Eq. (5): Pitilde = -(g^2 C_A/K)[1/2 + (D-3) eta/4] B0(p^2; 0, 0).*)
+(*Ghost: X = K p^2 Pitilde.  Eq. (V): Pitilde = -(g^2 C_A/K)[1/2 + (D-3) eta/4] B0(p^2; 0, 0).*)
 
 
 FCClearScalarProducts[]; ScalarProduct[p, p] = pp;
 ampC$ = Total[redOL$ /@ (rawOL$[diagC$, {p}, {p}, {mu}] /. xi -> 1 - eta)];
 PitOL$ = Simplify[fullRed$[ampC$ /. SPD[p, p] -> pp]/(I Pi^2 KK pp)];
-Print["(b) ghost: Pitilde - Eq. (5) = ", Simplify[PitOL$ + gS^2 CA/KK (1/2 + (D - 3) eta/4) B0[pp, 0, 0]], "   (expect 0)"];
+Print["(b) ghost: Pitilde - Eq. (V) = ", Simplify[PitOL$ + gS^2 CA/KK (1/2 + (D - 3) eta/4) B0[pp, 0, 0]], "   (expect 0)"];
 
 
 (* ::Text:: *)
-(*Quarks: X = -K Sigma.  Eq. (5): Sigma = C_F (g^2/K)[xi (D-2) pslash B1(p^2; m^2, 0) + (D-1+xi) m B0(p^2; m^2, 0)];*)
+(*Quarks: X = -K Sigma.  Eq. (V): Sigma = C_F (g^2/K)[xi (D-2) pslash B1(p^2; m^2, 0) + (D-1+xi) m B0(p^2; m^2, 0)];*)
 (*for the massless u, B1(p^2; 0, 0) = -B0/2 and the m term is absent.*)
 
 
@@ -170,9 +170,9 @@ sigOL$[diag_, m_] := Module[{x = Total[redOL$ /@ rawOL$[diag, {p}, {p}, {mu}]], 
 {sVu$, sSu$} = sigOL$[diagU$, 0];
 {sVt$, sSt$} = sigOL$[diagT$, mt];
 b1Rule$ = B1[pp_, m2_, 0] :> (A0[m2] - (pp + m2) B0[pp, m2, 0])/(2 pp);
-Print["(b) u: Sigma_V - Eq. (5) = ", Simplify[sVu$ - CF gS^2/KK xi (D - 2) (-1/2) B0[pp, 0, 0]], ",  Sigma_S = ", sSu$, "   (expect 0, 0)"];
-Print["(b) t: Sigma_V - Eq. (5) = ", Simplify[sVt$ - (CF gS^2/KK xi (D - 2) B1[pp, mt^2, 0] /. b1Rule$)],
-  ",  Sigma_S - Eq. (5) = ", Simplify[sSt$ - CF gS^2/KK (D - 1 + xi) B0[pp, mt^2, 0]], "   (expect 0, 0)"];
+Print["(b) u: Sigma_V - Eq. (V) = ", Simplify[sVu$ - CF gS^2/KK xi (D - 2) (-1/2) B0[pp, 0, 0]], ",  Sigma_S = ", sSu$, "   (expect 0, 0)"];
+Print["(b) t: Sigma_V - Eq. (V) = ", Simplify[sVt$ - (CF gS^2/KK xi (D - 2) B1[pp, mt^2, 0] /. b1Rule$)],
+  ",  Sigma_S - Eq. (V) = ", Simplify[sSt$ - CF gS^2/KK (D - 1 + xi) B0[pp, mt^2, 0]], "   (expect 0, 0)"];
 
 
 (* ::Section:: *)
@@ -281,7 +281,7 @@ Print["(c) four-gluon vertex: 12 projections of pole - (g^2/K)(CA (xi - 2/3) + 4
 
 
 (* ::Text:: *)
-(*Slavnov-Taylor, Eq. (4): delta_g = delta1 - 3/2 delta3 = delta4/2 - delta3 = delta1tilde - delta3tilde - delta3/2 = delta1F - delta2 - delta3/2*)
+(*Slavnov-Taylor, Eq. (st): delta_g = delta1 - 3/2 delta3 = delta4/2 - delta3 = delta1tilde - delta3tilde - delta3/2 = delta1F - delta2 - delta3/2*)
 (*with delta1 = -c3, delta4 = -c4, delta1tilde = -lamC, delta1F = -lamF (units g^2 DUV/K).*)
 
 

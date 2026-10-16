@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* QCD.fr -- FeynRules model file for QCD with five massless quarks and one heavy quark, plus a photon and a
-   massless electron as an external probe (models/qcd/ResearchNote/note.tex, Eq. (1)).
+   massless electron as an external probe (models/qcd/ResearchNote/note.tex, Eq. (L)).
 
    L = -1/4 G^a_{mu nu} G^{a mu nu} - cbar^a d^mu D_mu^{ab} c^b + sum_q qbar (i Dslash - m_q) q
        - 1/4 F_{mu nu} F^{mu nu} + ebar i Dslash e,

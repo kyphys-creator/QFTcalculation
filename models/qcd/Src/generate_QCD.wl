@@ -55,7 +55,7 @@ LoadModel["QCD.fr"];
 
 
 (* ::Subsubsection:: *)
-(*Inspect: the Lagrangian of QCD.fr (Eq. (1) without gauge fixing and counterterms)*)
+(*Inspect: the Lagrangian of QCD.fr (Eq. (L) without gauge fixing and counterterms)*)
 
 
 If[$Notebooks,

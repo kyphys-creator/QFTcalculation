@@ -1,14 +1,14 @@
 # %% [markdown]
 # # Step (3): renormalized one-loop two-point functions of QCD -- Package-X, LoopTools and COLLIER against the note
 #
-# Research note models/qcd, Eq. (8) (eq:VR), at g = 1, m = mu = 1, C_A = 3, C_F = 4/3, T_F = 1/2.  All brackets are K/g^2
+# Research note models/qcd, Eq. (VR), at g = 1, m = mu = 1, C_A = 3, C_F = 4/3, T_F = 1/2.  All brackets are K/g^2
 # times the note's quantity (K = (4 pi)^2), split into the 1/eps coefficient minus the counterterm ("pole", must be 0)
 # and the MS-bar finite part:
 # - PiYM (k^2, xi): the gluon + ghost loops of the gluon self-energy;  PiQ0, PiT (k^2): one massless and the t quark loop;
 # - Ghost (p^2, xi): the ghost self-energy;  SigV_t, SigS_t (p^2, xi): Sigma_V^R, Sigma_S^R of t;  SigV_u (p^2, xi).
 # Package-X and LoopTools evaluate the FeynCalc amplitudes (oneloop_feyncalc.wl: the FeynArts diagrams reduced by TID and
-# the IBP relations); COLLIER evaluates the note's Eq. (8) (oneloop_collier.f90).  The references, independent of the
-# three tools, are mpmath integrals (30 digits) of Eq. (8):
+# the IBP relations); COLLIER evaluates the note's Eq. (VR) (oneloop_collier.f90).  The references, independent of the
+# three tools, are mpmath integrals (30 digits) of Eq. (VR):
 #   B0^ab(p^2) = -int_0^1 dx ln(Delta_x - i0),  B1^ab(p^2) = int_0^1 dx x ln(Delta_x - i0),
 #   Delta_x = x m_b^2 + (1-x) m_a^2 - x(1-x) p^2   (mu = 1).
 # Reads results/oneloop_mathematica.csv and results/oneloop_collier.csv, writes results/oneloop_comparison.csv.
@@ -59,7 +59,7 @@ def b1(p2, ma2, mb2):
 
 
 def reference(func, arg, xi):
-    """MS-bar finite part of K/g^2 times Eq. (8)"""
+    """MS-bar finite part of K/g^2 times Eq. (VR)"""
     xi = mp.mpf(xi)
     eta = 1 - xi
     m2 = M * M

@@ -1,4 +1,4 @@
-! oneloop_collier.f90 -- the renormalized one-loop two-point functions of QCD (research note models/qcd, Eq. (8)) from
+! oneloop_collier.f90 -- the renormalized one-loop two-point functions of QCD (research note models/qcd, Eq. (VR)) from
 ! COLLIER, at g = 1, m = mu = 1, C_A = 3, C_F = 4/3, T_F = 1/2 and the points of oneloop_feyncalc.wl.
 ! All brackets are K/g^2 times the note's quantity (K = (4 pi)^2); COLLIER's defaults (Delta_UV = 0, mu_UV^2 = 1) give the
 ! MS-bar finite parts:

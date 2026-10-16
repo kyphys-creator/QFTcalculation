@@ -6,18 +6,18 @@
 
 (* ::Text:: *)
 (*Research note models/qcd, step (4), last stage (after scat_feyncalc.wl, scat_litered.wl, scat_formcalc.wl).  Compares with*)
-(*Eqs. (16) (eq:irpole) and (17) (eq:colcorr).  m = mu = 1, s = 10, t = -3, g = 1, general xi; K = (4 Pi)^2.*)
+(*Eqs. (irpole) and (colcorr).  m = mu = 1, s = 10, t = -3, g = 1, general xi; K = (4 Pi)^2.*)
 (*(a) master integrals in the MS-bar normalization e^(eps gamma_E) int d^D l/(i pi^(D/2)): A0, B0 exactly in eps up to eps^2*)
 (*    (Gamma functions, or Feynman-parameter integrals of ln^n Delta to 40 digits; needed because the IBP coefficients of*)
 (*    the soft triangles contain 1/(D - 4)), C0 and D0 from LoopTools; A0, B0 also from LoopTools and Package-X, C0 from*)
 (*    Package-X.  The FeynArts amplitude has I/(16 Pi^4) int d^D l, so W = sum (coefficient) x I Pi^2 x master is already*)
 (*    in the MS-bar normalization (FeynHelpers returns (1/(i pi^2)) int d^D l; MS-bar = (2 pi)^(2 eps) e^(-eps(ln 4pi -*)
 (*    gamma_E)) times that, which is how the LoopTools and Package-X values are converted).*)
-(*(b) W = sum M0^* M1 = loops + counterterms + residues:  MS-bar counterterms of Eq. (7) with n_f = 6 (vertex factors 1 +*)
+(*(b) W = sum M0^* M1 = loops + counterterms + residues:  MS-bar counterterms of Eq. (ct) with n_f = 6 (vertex factors 1 +*)
 (*    delta, propagator -delta_3, -delta_2), the on-shell top mass counterterm delta_m^OS = -C_F (D-1)(D-2) A0/(2(D-3)m^2)*)
-(*    times d/dm of the internal top line, the residues R_q - 1 = xi C_F/eps, R_Q - 1 (Eq. (5) at p^2 = m^2, exact in D),*)
+(*    times d/dm of the internal top line, the residues R_q - 1 = xi C_F/eps, R_Q - 1 (Eq. (V) at p^2 = m^2, exact in D),*)
 (*    R_G - 1 = Pi_t(0) - delta_3 = -(2/3) T_F (D-2) A0/m^2 - delta_3.  The 1/eps^2 and 1/eps coefficients are compared*)
-(*    with Eq. (16) built from the D-dimensional Born and colour correlations of scat_feyncalc.wl (b); the finite part must*)
+(*    with Eq. (irpole) built from the D-dimensional Born and colour correlations of scat_feyncalc.wl (b); the finite part must*)
 (*    not depend on xi.  Colour: C_F -> (N^2 - 1)/(2N) before comparing (FeynCalc's SUNSimplify mixes C_A^3 and C_F forms).*)
 (*(c) Feynman gauge, diagram by diagram: IBP route ((b) at xi = 1), TID route (scat_feyncalc.wl (d)) and FormCalc*)
 (*    (scat_formcalc.wl), SU(3).*)
@@ -152,7 +152,7 @@ evalProcEV$[key_] := Module[{gl, tree, born, cc, w0, wm, redR, wd, a0, b0m, b1, 
          2 (c[1, 3] lt + c[1, 4] lu + c[2, 3] lu + c[2, 4] lt))/ep)/KK;
    pred = Expand[Normal[Series[pred, {ep, 0, 0}]]];
    diff = Expand[wTot - pred];
-   Print["(b) (", key, ") max |K (W - Eq. (16))| over the 1/eps^2 and 1/eps coefficients (any N, xi): ",
+   Print["(b) (", key, ") max |K (W - Eq. (irpole))| over the 1/eps^2 and 1/eps coefficients (any N, xi): ",
     Max[Abs[N[Flatten[Table[CoefficientList[Numerator[Together[KK Coefficient[diff, ep, k] /. sun]], {CA, xi}], {k, {-2, -1}}]]]]], "  (expect 0)"];
    fin = Together[N[KK Coefficient[wTot, ep, 0]] /. sun];
    Print["(b) (", key, ") xi dependence of the finite part: max |coefficient| = ", Max[Abs[Flatten[CoefficientList[Numerator[Together[fin - (fin /. xi -> 0)]], {CA, xi}]]]], "  (expect 0)"];

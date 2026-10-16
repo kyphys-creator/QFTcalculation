@@ -1,5 +1,5 @@
 # %% [markdown]
-# # Step (9): the partonic functions f0, f1, fbar1 against eta = s/4m^2 - 1 (figs/hq_f.pdf)
+# # Step (9): the partonic functions f0, f1, fbar1 against eta_s = s/4m^2 - 1 (figs/hq_f.pdf)
 #
 # Research note models/qcd, step (9).  f1: this work (results/hq_f1_<chan>.csv, points) and the exact result of Czakon-Mitov at the
 # nodes of hq_hadronic.py (results/hq_cm_nodes.csv of hq_cm.wl, line); f0, fbar1 (Eq. (hqfbar)), threshold expansions (Eq. (hqthr))
@@ -42,7 +42,7 @@ for ax, c, title in zip(axs, ("qq", "gg", "qg"), (r"$q\bar q$", r"$gg$", r"$qg$"
     if c in ("gg", "qg"):
         ax.axhline(float(H.he_gg() if c == "gg" else H.he_gq()), color="C1", lw=0.6, ls=(0, (1, 2)))
         ax.set_ylim(top=1.08*float(H.he_gg() if c == "gg" else H.he_gq()))
-    ax.set_xscale("log"); ax.set_xlabel(r"$\eta=s/4m^2-1$"); ax.set_title(title, fontsize=9); ax.axhline(0, color="k", lw=0.4)
+    ax.set_xscale("log"); ax.set_xlabel(r"$\eta_s=s/4m^2-1$"); ax.set_title(title, fontsize=9); ax.axhline(0, color="k", lw=0.4)
 axs[0].legend(fontsize=6.5, loc="upper right")
 fig.tight_layout()
 fig.savefig(os.path.join(HERE, "..", "figs", "hq_f.pdf"))

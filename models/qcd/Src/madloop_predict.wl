@@ -11,11 +11,11 @@
 (*  - every loop integral scales as (mu^2)^eps; the only pure pole that does not is the MS-bar coupling counterterm,*)
 (*    2 delta_g B(D)/K = -beta0^(6) B(D)/(K eps) (the field counterterms cancel against the residues), so*)
 (*      K W(lambda) = K W(1) + L [K W_{-1} + beta0^(6) B4] + (L^2/2) K W_{-2}            (eps^0; poles: (lambda^2)^eps);*)
-(*  - alpha_s^(6) = alpha_s^(5) [1 + (g^2/K)(4/3) T_F L] (Eq. (11)) multiplies the Born (~ g^4) by 1 + (g^2/K)(8/3) T_F L,*)
+(*  - alpha_s^(6) = alpha_s^(5) [1 + (g^2/K)(4/3) T_F L] (Eq. (os)) multiplies the Born (~ g^4) by 1 + (g^2/K)(8/3) T_F L,*)
 (*    i.e. adds (8/3) T_F L B4 to K (2 Re W) and (4/3) T_F L B4 to K W  (then d(K W)/dL = beta0^(5) B4 + infrared terms);*)
 (*  - four-dimensional external states: the finite remainder K W - Z1 (x) B(D) is the same in CDR and with four-dimensional*)
 (*    spin sums, and Z1 (x) B(4) has no eps^0 term, so  K W^(4)_fin = K W_fin - [Z1(lambda) (x) B(D)]_{eps^0}; the poles are*)
-(*    Z1(lambda) (x) B(4) (Eq. (16) with mu -> lambda m and the four-dimensional Born and colour correlations).*)
+(*    Z1(lambda) (x) B(4) (Eq. (irpole) with mu -> lambda m and the four-dimensional Born and colour correlations).*)
 (*Writes results/madloop_pred.csv: process, lambda, Re K W^(4) (finite), Re of the 1/eps and 1/eps^2 coefficients, B4.*)
 
 

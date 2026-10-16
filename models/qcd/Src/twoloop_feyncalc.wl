@@ -10,7 +10,7 @@
 (*(a) FeynArts diagrams (one-particle irreducible, no tadpoles) with one massless quark flavour u (MS-bar is mass independent; each*)
 (*    closed quark loop is multiplied by n_f at the end): gluon 23, ghost 7.  GaugeRules -> {} and GaugeXi -> 0 give the Landau*)
 (*    propagator -i (g - k k/k^2)/k^2, whose k k/k^4 part FeynArts writes as a repeated denominator.*)
-(*(b) The same pipeline at one loop against Eq. (5) (eq:V) with xi = 0: fixes the normalization (V = A/(2 Pi)^(L D) for PreFactor -> 1;*)
+(*(b) The same pipeline at one loop against Eq. (V) with xi = 0: fixes the normalization (V = A/(2 Pi)^(L D) for PreFactor -> 1;*)
 (*    g^2 x int d^Dl/(2 Pi)^D -> i a J per loop with a = g^2/K and J = E^(eps EulerGamma) int d^Dl/(i Pi^(D/2)) in MS-bar), and FeynCalc's*)
 (*    tr(T^a T^b) = delta^ab/2 (i.e. T_F = 1/2 in the comparison).*)
 (*(c) Dirac traces, colour (SUNSimplify, C_A, C_F), the projections g_{mu nu} Pi^{mu nu} = (D-1) q^2 Pi and q_mu q_nu Pi^{mu nu} (which must*)
@@ -117,7 +117,7 @@ pi1FATL$ = oneLoopTL$[algTL$[Contract[Total[convTL$[insTL$[top1TL$, {V[2]} -> {V
 pt1FATL$ = oneLoopTL$[algTL$[Total[convTL$[insTL$[top1TL$, {U[1]} -> {U[1]}], {mu}, {l1}]]]] I/(I qq) /. {gS -> 1, qq -> -1};
 pi1NoteTL$ = (CA/2 ((3 D - 2)/(D - 1) + (2 D - 7) - (D - 4)/4) - TF 2 (D - 2)/(D - 1)) gTL$[1, 1];
 pt1NoteTL$ = -CA (1/2 + (D - 3)/4) gTL$[1, 1];
-Print["(b) one loop, Landau gauge, one massless flavour: pipeline / Eq. (5) for K Pi/g^2, K Pitilde/g^2 = ",
+Print["(b) one loop, Landau gauge, one massless flavour: pipeline / Eq. (V) for K Pi/g^2, K Pitilde/g^2 = ",
   Simplify[FunctionExpand[{pi1FATL$/pi1NoteTL$, pt1FATL$/pt1NoteTL$} /. TF -> 1/2]], "  (expect {1, 1})"];
 
 

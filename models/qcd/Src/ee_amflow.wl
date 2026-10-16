@@ -18,7 +18,7 @@
 
 
 (* ::Text:: *)
-(*How to run.  Batch:  wolframscript -file ee_amflow.wl  (after ee_optical.wl; about 10 minutes).  Interactive:  ~/hep/bin/wopen ee_amflow.wl, then "Run All Code".  AMFlow is loaded in a kernel of its own.*)
+(*How to run.  Batch:  wolframscript -file ee_amflow.wl  (after ee_optical.wl; about 9 minutes).  Interactive:  ~/hep/bin/wopen ee_amflow.wl, then "Run All Code".  AMFlow is loaded in a kernel of its own.*)
 
 
 (* ::Section:: *)

@@ -1,9 +1,9 @@
 ! rg_collier.f90 -- the mu-dependence of the renormalized one-loop two-point functions of QCD with COLLIER (research note
 ! models/qcd, step (6)).  g = 1, m = 1, C_A = 3, C_F = 4/3, T_F = 1/2, MS-bar at the scale mu (mu_UV = mu_IR = mu, SetMuUV2_cll,
-! SetMuIR2_cll; Delta_UV = Delta_IR = 0).  The brackets (K/g^2 times the note's quantities, Eq. (8)) are those of
+! SetMuIR2_cll; Delta_UV = Delta_IR = 0).  The brackets (K/g^2 times the note's quantities, Eq. (VR)) are those of
 ! oneloop_collier.f90, at the points of rg_feyncalc.wl (c), for mu = 1/2, 1, 2:
 !   PiYM, Ghost (xi = 0, 1, 3), PiQ0 (one massless flavour), PiT (the t loop), SigV_t, SigS_t, SigV_u;
-!   Mpole = SigV_t + SigS_t at p^2 = m^2 (the pole mass, Eq. (11));  R_Q = K (R_t - 1) before -delta2 (finite part; the pole
+!   Mpole = SigV_t + SigS_t at p^2 = m^2 (the pole mass, Eq. (os));  R_Q = K (R_t - 1) before -delta2 (finite part; the pole
 !   column is UV + IR pole minus the expected -3 C_F);  PiT0 = K Pi_t(0) = -(4/3) T_F B0(0; m^2, m^2) (the t part of R_G);
 !   PiTsub = K [Pi_t(k^2) - Pi_t(0)] (decoupling: -(4/3) T_F [k^2/(5 m^2) + ...], no mu).
 ! Writes rows "func,arg,xi,mu,re_pole,im_pole,re_fin,im_fin" to the file given as the first argument.

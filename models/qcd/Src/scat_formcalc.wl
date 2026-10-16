@@ -10,7 +10,7 @@
 (*CalcFeynAmp with Dimension -> 0 keeps the whole amplitude D-dimensional (no rational terms; D - 4 = Dminus4), and*)
 (*HelicityME and PolarizationSum with Dimension -> 0 form the spin and polarization sums in D dimensions: this is CDR,*)
 (*the scheme of scat_feyncalc.wl (the Born comes out as 16 |M0|^2 = 288/25 + 8 Dminus4 for (A), 4 |M0|^2 =*)
-(*184 (226 + 228 Dminus4 + 75 Dminus4^2)/675 for (B) in SU(3), Eq. (13) continued to D dimensions).  _Hel = 0 makes*)
+(*184 (226 + 228 Dminus4 + 75 Dminus4^2)/675 for (B) in SU(3), Eq. (sumtree) continued to D dimensions).  _Hel = 0 makes*)
 (*HelicityME use (pslash + m)/2 per external fermion, hence the factors 16 and 4.  The physical polarization sums of the*)
 (*gluons keep the gauge terms with the reference vectors eta[1] = k[2], eta[2] = k[1] (GaugeTerms -> True), as in*)
 (*scat_feyncalc.wl.  Output: the interference of each diagram, sum M0^* M1 = SquaredME[M0, M1], with the LoopTools*)

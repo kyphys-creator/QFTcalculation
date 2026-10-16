@@ -1,12 +1,12 @@
 #!/bin/bash
 # One-loop 1PI functions of QCD in a general covariant gauge (research note models/qcd, step (3)).
 #   1. FeynArts + FeynCalc: diagrams (gluon, ghost, u, t two-point 9, 1, 1, 1; u, t, ghost vertices 2, 2, 2; three- and
-#      four-gluon vertices 18, 54), the two-point functions vs Eq. (5) exactly in D dimensions (per diagram), transversality,
-#      the vertex poles vs Eq. (6) by Taylor expansion + infrared rearrangement, counterterms Eq. (7), delta_g from all
-#      four vertices (Eq. (4)), the TID + PaVeUVPart comparison; brackets via Package-X and LoopTools
+#      four-gluon vertices 18, 54), the two-point functions vs Eq. (V) exactly in D dimensions (per diagram), transversality,
+#      the vertex poles vs Eq. (Vpole) by Taylor expansion + infrared rearrangement, counterterms Eq. (ct), delta_g from all
+#      four vertices (Eq. (st)), the TID + PaVeUVPart comparison; brackets via Package-X and LoopTools
 #      -> results/oneloop_mathematica.csv                                                        (oneloop_feyncalc.wl)
-#   2. COLLIER, Eq. (8) -> results/oneloop_collier.csv                                           (oneloop_collier.f90)
-#   3. comparison with mpmath integrals of Eq. (8) -> results/oneloop_comparison.csv              (oneloop_numeric.py)
+#   2. COLLIER, Eq. (VR) -> results/oneloop_collier.csv                                          (oneloop_collier.f90)
+#   3. comparison with mpmath integrals of Eq. (VR) -> results/oneloop_comparison.csv             (oneloop_numeric.py)
 # Needs Src/generated/ (run run_model_check.sh first).
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"

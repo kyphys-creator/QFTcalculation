@@ -8,7 +8,7 @@
 #     dxi/dt = (C_A G/K) xi (xi_* - xi),  xi_* = 13/3 - 8 T_F n_f/(3 C_A) = 5/3   (-2 gamma_A xi),
 # with the closed forms  G = G0/(1 + 2 beta0 G0 t/K),  m = m0 (G/G0)^(3 C_F/beta0),  xi/(xi_* - xi) = [xi0/(xi_* - xi0)] (G/G0)^(-C_A xi_*/(2 beta0)).
 # The coupling diverges at Lambda = m exp(-K/(2 beta0 G0)) (1.26e-5 m for the benchmark g(m) = 1); xi = 0 and xi = xi_* are fixed points.
-# Physical scales: alpha_s^(5)(M_Z) = 0.118 runs with n_l = 5 (beta0 = 23/3) as alpha_s^(n_l) of Eq. (11) (MadGraph's convention);
+# Physical scales: alpha_s^(5)(M_Z) = 0.118 runs with n_l = 5 (beta0 = 23/3) as alpha_s^(n_l) of Eq. (os) (MadGraph's convention);
 # above m_t = 172.5 GeV the MS-bar alpha_s^(6) (equal to alpha_s^(5) at mu = m_t at one loop) runs with beta0 = 7.  MadGraph's
 # ALPHAS(Q) (Template/LO/Source/alfas_functions.f, nloop = 1; work/alfas_mg5, built by run_rg_check.sh) is compared for Q >= 5 GeV
 # (below m_b = 4.7 GeV MadGraph switches to n_f = 4).
@@ -110,7 +110,7 @@ L6 = MT * math.exp(-2 * math.pi / (B0 * a5(MT)))
 print(f"alpha_s^(5)(m_t) = {a5(MT):.6f};  one-loop Lambda^(5) = {1e3 * L5:.3f} MeV,  Lambda^(6) = {1e3 * L6:.3f} MeV,  "
       f"m_t (Lambda^(5)/m_t)^(beta0^(5)/beta0^(6)) = {1e3 * MT * (L5 / MT) ** (B0L / B0):.3f} MeV")
 mt_ms = MT / (1 + 4 * a5(MT) / (3 * math.pi))
-print(f"MS-bar m_t(m_t) from the pole mass {MT} GeV (Eq. (11) at mu = m): {mt_ms:.3f} GeV;  m_t(1 TeV) = "
+print(f"MS-bar m_t(m_t) from the pole mass {MT} GeV (Eq. (os) at mu = m): {mt_ms:.3f} GeV;  m_t(1 TeV) = "
       f"{mt_ms * (a6(1000.0) / a5(MT)) ** (3 * CF / B0):.3f} GeV")
 qs = np.geomspace(5.0, 1000.0, 41)
 exe = os.path.join(HERE, "work", "alfas_mg5")

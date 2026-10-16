@@ -13,7 +13,7 @@
 (*  G(a,b) = Gamma(a+b-D/2) Gamma(D/2-a) Gamma(D/2-b)/(Gamma(a) Gamma(b) Gamma(D-a-b))  (App. G).*)
 (*(a) the masters exactly against AMFlow 2.0 (30 digits, up to eps^2) at q^2 = -1.*)
 (*(b) Z_3, Z~_3 from the finiteness of Z_3 (1 - Pi) and Z~_3 (1 + Pitilde) with Pi = a Z_alpha Pi^(1) + a^2 Pi^(2) (bare coupling in terms of the*)
-(*    renormalized one, Z_alpha = 1 - beta_0 a/eps; Pi^(1), Pitilde^(1) of Eq. (5) at xi = 0, exact in D); the double poles against the RG*)
+(*    renormalized one, Z_alpha = 1 - beta_0 a/eps; Pi^(1), Pitilde^(1) of Eq. (V) at xi = 0, exact in D); the double poles against the RG*)
 (*    prediction z_1 (z_1 - beta_0)/2; beta_1 = 4 z~_21 + 2 z_21 from Z_alpha = 1/(Z~_3^2 Z_3); gamma = -z_1 a - 2 z_21 a^2; the finite parts*)
 (*    of the renormalized two-loop functions at mu^2 = -q^2.  -> results/twoloop_z.csv, results/twoloop_masters.csv*)
 
@@ -89,7 +89,7 @@ Print["(b) bare K^2 Pitilde^(2)/g^4: ", InputForm[pt2LTE$]];
 (* Z_3 (1 - Pi) and Z~_3 (1 + Pitilde) finite order by order *)
 z32TE$ = lauTE$[(z31TE$/ep - b0TE$/ep) pi1TE$ + pi2TE$];
 zt32TE$ = -lauTE$[(zt31TE$/ep - b0TE$/ep) pt1TE$ + pt2TE$];
-Print["(b) one loop: z_31 = ", z31TE$, ",  z~_31 = ", zt31TE$, "  (expect 13/6 C_A - 4/3 T_F n_f, 3/4 C_A: Eq. (7) at xi = 0)"];
+Print["(b) one loop: z_31 = ", z31TE$, ",  z~_31 = ", zt31TE$, "  (expect 13/6 C_A - 4/3 T_F n_f, 3/4 C_A: Eq. (ct) at xi = 0)"];
 Print["(b) Z_3 at two loops {1/eps^2, 1/eps} = ", InputForm[z32TE$[[{1, 2}]]], ";  double pole - z_31 (z_31 - beta_0)/2 = ", Expand[z32TE$[[1]] - z31TE$ (z31TE$ - b0TE$)/2]];
 Print["(b) Z~_3 at two loops {1/eps^2, 1/eps} = ", InputForm[zt32TE$[[{1, 2}]]], ";  double pole - z~_31 (z~_31 - beta_0)/2 = ", Expand[zt32TE$[[1]] - zt31TE$ (zt31TE$ - b0TE$)/2]];
 b1TE$ = Expand[4 zt32TE$[[2]] + 2 z32TE$[[2]]];

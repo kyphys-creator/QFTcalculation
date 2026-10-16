@@ -1,6 +1,6 @@
 #!/bin/bash
 # Two-loop beta function of QCD from the Landau-gauge gluon and ghost self-energies (research note models/qcd, step (7)).
-#   1. FeynArts + FeynCalc: the 23 gluon and 7 ghost two-loop diagrams, the one-loop calibration against Eq. (5), the algebra and the
+#   1. FeynArts + FeynCalc: the 23 gluon and 7 ghost two-loop diagrams, the one-loop calibration against Eq. (V), the algebra and the
 #      shifts onto the family k2, IBP reduction with Kira 3.1 and FIRE 7.1 (compared), transversality at two loops
 #      -> results/twoloop_reduction.m                                                         (twoloop_feyncalc.wl)
 #   2. the masters exactly and with AMFlow 2.0; Z_3, Z~_3 to two loops, the RG double poles, beta_1, the anomalous dimensions, the

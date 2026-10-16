@@ -13,7 +13,7 @@
 (*  pole mass K (Sigma_V + Sigma_S)(m^2): 6 C_F for every xi (-gamma_m/m);  K (R_Q - 1) before -delta2: -6 C_F, IR pole -(3 - xi) C_F;*)
 (*  K Pi_Q^R(0) (the t part of R_G): -(8/3) T_F;  decoupling: K [Pi_Q^R(k^2) - Pi_Q^R(0)] = -(4/3) T_F [k^2/(5 m^2) + 3 k^4/(140 m^4) + ...],*)
 (*  independent of mu.*)
-(*(a) the two-point functions from FeynArts as in oneloop_feyncalc.wl (step (3)), checked against Eq. (5) (eq:V); Eq. (5) is used*)
+(*(a) the two-point functions from FeynArts as in oneloop_feyncalc.wl (step (3)), checked against Eq. (V); Eq. (V) is used*)
 (*    from then on (the IBP form of the t self-energy has (m^2 - p^2)^-2 terms, so p^2 = m^2 cannot be substituted directly).*)
 (*(b) slopes symbolically with Package-X (ScaleMu symbolic, general xi and momenta).  The residue needs B0', B1' at threshold, which*)
 (*    Package-X does not evaluate; they are written with the exact D-dimensional relations to A0 (App. F of the QED note).*)
@@ -97,7 +97,7 @@ If[$Notebooks,
 
 (* ::Text:: *)
 (*Amplitudes A = I Pi^2 X with X = K Pi^{mu nu} (gluon), K p^2 Pitilde (ghost), -K Sigma (quarks).  The brackets b... are K/g^2*)
-(*times the note's quantities in D dimensions (Eq. (5)); bPiQ is one quark flavour of mass^2 m2 (T_F x the QED vacuum polarization).*)
+(*times the note's quantities in D dimensions (Eq. (V)); bPiQ is one quark flavour of mass^2 m2 (T_F x the QED vacuum polarization).*)
 
 
 bPiYMRG$ = CA/2 ((3 D - 2)/(D - 1) + (2 D - 7) eta - (D - 4)/4 eta^2) B0[qq, 0, 0];
@@ -117,7 +117,7 @@ sigFARG$[diag_, m_] := Module[{x = Total[redRG$ /@ rawRG$[diag, {p}, {p}, {mu}]]
 {sVuFARG$, sSuFARG$} = sigFARG$[diagURG$, 0];
 {sVtFARG$, sStFARG$} = sigFARG$[diagTRG$, mt];
 FCClearScalarProducts[];
-Print["(a) FeynArts minus Eq. (5) (gluon with n_l = 5 + t, ghost, u Sigma_V and Sigma_S, t Sigma_V and Sigma_S; expect 0): ",
+Print["(a) FeynArts minus Eq. (V) (gluon with n_l = 5 + t, ghost, u Sigma_V and Sigma_S, t Sigma_V and Sigma_S; expect 0): ",
   Simplify[{piFARG$ - (bPiYMRG$ + 5 bPiQRG$[0] + bPiQRG$[mt^2]), ghFARG$ - bGhRG$, sVuFARG$ - (bSVRG$[0] /. b1RuleRG$), sSuFARG$,
      sVtFARG$ - (bSVRG$[mt^2] /. b1RuleRG$), sStFARG$ - bSSRG$[mt^2]} /. TF -> 1/2]];   (* FeynCalc writes tr(T^a T^b) = delta^ab/2 *)
 (* K (R_Q - 1) before -delta2: Sigma_V + 2 m^2 (Sigma_V' + Sigma_S') at p^2 = m^2 (App. F); with the exact A0 relations for Package-X *)
@@ -173,9 +173,9 @@ Print["(b) RG coefficients (g^2/K units): gamma_A = -(1/2) [slope(YM) + n_f slop
   ",  gamma_c = (1/2) slope(Pitilde) = ", symRG$["Pitilde"][[1, 2]]/2, ",  gamma_psi = -(1/2) slope(Sigma_V) = ", -symRG$["Sigma_V, t"][[1, 2]]/2,
   ",  gamma_m/m = 2 gamma_psi - slope(Sigma_S) = ", Simplify[-symRG$["Sigma_V, t"][[1, 2]] - symRG$["Sigma_S, t"][[1, 2]]],
   ",  from the pole mass: ", -symRG$["(Sigma_V + Sigma_S)(m^2), t"][[1, 2]]];
-(* finite parts against Eq. (8) and Eq. (11), and the decoupling expansion *)
+(* finite parts against Eq. (VR) and Eq. (os), and the decoupling expansion *)
 finRG$[x_] := pxSymRG$[x][[2]];
-Print["(b) residue and Pi_Q(0) minus Eqs. (8), (11) (finite parts; expect 0, 0): ",
+Print["(b) residue and Pi_Q(0) minus Eqs. (VR), (os) (finite parts; expect 0, 0): ",
   Simplify[{finRG$[rA0RG$[mt^2]] - CF (-4 - 3 Log[ScaleMu^2/mt^2]), finRG$[bPiQ0RG$[mt^2]] - (-4/3 TF Log[ScaleMu^2/mt^2])}, {ScaleMu > 0, mt > 0}]];
 decRG$ = Normal[Series[finRG$[bPiQRG$[mt^2]] - finRG$[bPiQ0RG$[mt^2]], {qq, 0, 3}]];
 Print["(b) decoupling: K [Pi_Q(k^2) - Pi_Q(0)] up to k^6 = ", InputForm[Simplify[decRG$, {ScaleMu > 0, mt > 0}]],
@@ -252,7 +252,7 @@ Print["(c) wrote results/rg_feyncalc_onepi.csv"];
 (* ::Text:: *)
 (*As scat_eval.wl (c) and (b), Feynman gauge, SU(3): each TID amplitude is evaluated with LoopTools at mudim = mu^2 and*)
 (*converted to MS-bar ((2 Pi)^(2 eps) e^(-eps (ln 4 Pi - gamma_E)), so that K x (value) is K W); the counterterms are the pure*)
-(*poles of Eq. (7) (n_f = 6) times the D-dimensional tree pieces, the residues R_u - 1 = xi C_F/eps, R_t - 1, R_G - 1 =*)
+(*poles of Eq. (ct) (n_f = 6) times the D-dimensional tree pieces, the residues R_u - 1 = xi C_F/eps, R_t - 1, R_G - 1 =*)
 (*Pi_t(0) - delta_3 and the on-shell mass counterterm with LoopTools' A0, B1, DB0, DB1 at the same mu (m = 1).*)
 
 
