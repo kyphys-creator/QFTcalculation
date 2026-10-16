@@ -587,11 +587,11 @@ FormCalc の有理数の項と質量0の外線（SM） & 有限部分が MadLoop
 
 最も注意が要るのは、符号の規約である。FeynArts の \texttt{SM.mod} と FormCalc は Denner の総説の規約を、FeynRules と MadGraph は Peskin--Schroeder の規約を使い、光子の場の符号と、Higgs 二重項の荷電の成分の位相が違う。場の取り方の違いなので、内線の因子は打ち消し（内線の光子は $(-1)^2$、内線の $G^\pm$ は $(+i)(-i)$）、断面積や崩壊幅などの物理量は変わらない。一方、外線に光子や $G^\pm$ を持つグリーン関数（$\Sigma^{AZ}$、$W$ と $G^\pm$ の混合）と、それから作る対抗項（$\delta Z_{ZA}$、$\delta Z_e$ の式）は符号や位相が変わる。FeynRules の模型の振幅に FormCalc の対抗項を足すような、二つの規約を混ぜた計算は誤る。MadGraph のログの断面積は、今回も有効数字3〜4桁（\texttt{111 +- 0.01131 pb}）で、10万事象の統計誤差より丸めが大きかった（表~\ref{tab:issues2} の「MadGraph の既定のカットと出力」と同じ）。各実行のバナーの \texttt{Integrated weight} を読み、乱数の種を \texttt{iseed} で固定すると、同じ値が再現した。
 
-\paragraph{$\overline{\mathrm{MS}}$ の標準模型のノートで分かった問題。}2026年10月16日に、標準模型を $\overline{\mathrm{MS}}$ と FJ のタドポールの処方、一般の $R_\xi$ ゲージで作り直したノート~\cite{smmsbarnote} を始めた（上の段落のノートとは別のもの。計算機と版は同じ）。手順 (1) では、模型ファイル \texttt{SM.fr} を一から書き、FeynRules の93個の頂点のクラスを手計算の表と記号として比べ、MadGraph の21個の過程の図の数を両方のゲージで確かめた。手順 (2) では、木の振幅の2乗を FeynCalc で記号として、$e^+e^-\to W^+W^-$ を明示的な行列で求め、MadGraph の部分幅（相対 $10^{-15}$）と断面積（統計誤差の範囲）と比べた。手順 (3) では、一般の $R_\xi$ ゲージのタドポールと自己エネルギーを FeynCalc で $D$ 次元で求め、FeynArts の \texttt{SMQCD.mod} の値と記号として、$B_0$ を LoopTools、COLLIER、Package-X で比べた。手順 (4) では、2点関数の Slavnov--Taylor 恒等式と、一般の公式による $\beta$ 関数を確かめた。手順 (5)、(6) では、極質量と、$\mu$ 崩壊の1ループと光子の2点関数から $G_F$、$\alpha(0)$ の換算を求め、閉じた形を入れた1ループの式を Mathematica で記号として調べた。手順 (7) では、測定値から1ループで $\overline{\mathrm{MS}}$ のパラメータを決め、オンシェルの自己エネルギーを数値で評価した。分かった問題を表~\ref{tab:issues2j} にまとめる。
+\paragraph{$\overline{\mathrm{MS}}$ の標準模型のノートで分かった問題。}2026年10月16日に、標準模型を $\overline{\mathrm{MS}}$ と FJ のタドポールの処方、一般の $R_\xi$ ゲージで作り直したノート~\cite{smmsbarnote} を始めた（上の段落のノートとは別のもの。計算機と版は同じ）。手順 (1) では、模型ファイル \texttt{SM.fr} を一から書き、FeynRules の93個の頂点のクラスを手計算の表と記号として比べ、MadGraph の21個の過程の図の数を両方のゲージで確かめた。手順 (2) では、木の振幅の2乗を FeynCalc で記号として、$e^+e^-\to W^+W^-$ を明示的な行列で求め、MadGraph の部分幅（相対 $10^{-15}$）と断面積（統計誤差の範囲）と比べた。手順 (3) では、一般の $R_\xi$ ゲージのタドポールと自己エネルギーを FeynCalc で $D$ 次元で求め、FeynArts の \texttt{SMQCD.mod} の値と記号として、$B_0$ を LoopTools、COLLIER、Package-X で比べた。手順 (4) では、2点関数の Slavnov--Taylor 恒等式と、一般の公式による $\beta$ 関数を確かめた。手順 (5)、(6) では、極質量と、$\mu$ 崩壊の1ループと光子の2点関数から $G_F$、$\alpha(0)$ の換算を求め、閉じた形を入れた1ループの式を Mathematica で記号として調べた。手順 (7) では、測定値から1ループで $\overline{\mathrm{MS}}$ のパラメータを決め、オンシェルの自己エネルギーを数値で評価した。手順 (8) では、2ループの $\beta$ 関数を一般の公式から陽な場で組み、文献の式と比べて走らせた。分かった問題を表~\ref{tab:issues2j} にまとめる。
 
 \begin{table}[tbp]
 \centering\footnotesize
-\caption{表~\ref{tab:issues2i} の続き（$\overline{\mathrm{MS}}$ の標準模型のノート~\cite{smmsbarnote} の手順 (1)〜(7)。SM2 はそのノートを表す）。}
+\caption{表~\ref{tab:issues2i} の続き（$\overline{\mathrm{MS}}$ の標準模型のノート~\cite{smmsbarnote} の手順 (1)〜(8)。SM2 はそのノートを表す）。}
 \label{tab:issues2j}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
@@ -612,6 +612,7 @@ Mathematica の \texttt{Integrate} と \texttt{CoefficientList}（SM2） & 光�
 Mathematica の数値の通分と光子の質量（SM2） & オンシェルの $W$ とトップの自己エネルギーの有限部分が \texttt{Indeterminate} になる（\texttt{0.(-Infinity)}、\texttt{ComplexInfinity}） & 三つが重なる。機械精度の数で \texttt{Together} すると、分母の $k^2M_A^2$ と分子の $M_A^2$ の因子がちょうど打ち消さず $10^{-16}/M_A^2$ が残る。赤外の $\ln M_A^2$ はオンシェルで0になる係数 $k^2-M^2$ を持ち、$M_A\to0$ を項ごとにとると $0\times\infty$ になる。$k^2$ に機械精度の $M^2$ を入れると、40桁の $M$ の2乗と $10^{-16}$ ずれ、それが $1/M_A^2$ で拡大される & 光子に小さな質量（$10^{-3}$~GeV）を残し、パラメータと $k^2$ を同じ40桁の数から作って通分し、$10^{-2}$~GeV の値と比べる（差 $10^{-7}$ 以下）。有理数にすると係数が大きくなりすぎてアンダーフローする \\
 閉じた形の $0/0$（SM2） & $\xi=1$ や質量0のフェルミオンで、1ループの関数が \texttt{Indeterminate} になる & $(A_0(a)-A_0(b))/(a-b)$ の形の項が $a=b$ で $0/0$ になる（$\xi_WM_W^2=M_W^2$、$m_u=m_d=0$） & 数値では $\xi=2,3$ を使い、軽いフェルミオンの質量を0にしない（感度は質量を半分にして見る） \\
 Mathematica の差と \texttt{Expand}（SM2） & CKM の効果を $S(m_b\to m_s)-S$ で求めると、変わらないはずのボソンの項が残り、光子の $1/M_A^2$ で発散する & 式が \texttt{ee\^{}2 (...)} のような積の形だと、差をとっても中の同じ項が自動では打ち消さない & 差をとる前に \texttt{Expand} し、差がゲージパラメータと $M_A$ を含まないことを表示する \\
+論文の式の取り出し（SM2） & 2段組みの PDF（Luo--Wang--Xiao、Buttazzo ら）を \texttt{pdftotext} にかけると、長い2ループの式の分数、添字、行の折り返しが崩れて読めない & PDF のレイアウトをテキストに戻す際に、式の要素の並びが保たれない & arXiv の e-print（LaTeX のソース、\texttt{https://arxiv.org/e-print/<番号>}）から式を取る（改行が \texttt{\textbackslash r} のファイルは \texttt{tr} で直し、\texttt{grep -a} で探す）。転記は独立な計算との数値の比較で確かめる \\
 \bottomrule
 \end{tabularx}
 \end{table}
