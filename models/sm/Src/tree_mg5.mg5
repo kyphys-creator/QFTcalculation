@@ -1,0 +1,42 @@
+# Step (2) of the SM note: tree-level widths and cross sections from MadGraph 3.8.1 with the UFO of SM.fr
+# (benchmark parameters of the note; compared with tree_numeric.py by run_tree_check.sh).
+#  - compute_widths: all two-body widths of W+, Z, H, t with all fermion masses (full model, no restriction);
+#    the partial widths are written as comments of the DECAY blocks of work/tree_widths.dat
+#  - e+ e- > mu+ mu- at sqrt s = 200 GeV and e+ e- > w+ w- at 200 and 500 GeV (massless electron and muon:
+#    restrict_massless), no cuts, Z width 2.4955 GeV of the param card
+set automatic_html_opening False
+import model ./work/SM_UFO
+compute_widths w+ z h t --body_decay=2 --output=./work/tree_widths.dat
+import model ./work/SM_UFO-massless
+generate e+ e- > mu+ mu-
+output ./work/mg5_eemm -f
+launch ./work/mg5_eemm
+set lpp1 0
+set lpp2 0
+set ebeam1 100
+set ebeam2 100
+set nevents 20000
+set ptl 0
+set etal -1
+set drll 0
+set mmll 0
+set use_syst False
+done
+generate e+ e- > w+ w-
+output ./work/mg5_eeww -f
+launch ./work/mg5_eeww
+set lpp1 0
+set lpp2 0
+set ebeam1 100
+set ebeam2 100
+set nevents 20000
+set use_syst False
+done
+launch ./work/mg5_eeww
+set lpp1 0
+set lpp2 0
+set ebeam1 250
+set ebeam2 250
+set nevents 20000
+set use_syst False
+done
