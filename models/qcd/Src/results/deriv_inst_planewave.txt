@@ -1,0 +1,27 @@
+(a) N = 2: n=2: 4.7e-16  n=3: 2.3e-15  n=4: 1.2e-14  n=5: 3.4e-15  n=6: 3.6e-14 (|a_1| = 8.9e-16)
+(a) N = 3: n=2: 5.8e-16  n=3: 2.2e-15  n=4: 3.2e-15  n=5: 3.2e-14  n=6: 1.8e-14 (|a_1| = 3.6e-15)
+(b) 24 runs (NMAX = 9, 12 radii, primes [1073741789, 1073741783])
+(c) n = 2:
+  p = 1073741789: P_n of degree 0 (fitted on 1 radii, verified on 11 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == exact -1/12: True
+  p = 1073741783: P_n of degree 0 (fitted on 1 radii, verified on 11 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == exact -1/12: True
+(c) n = 3:
+  p = 1073741789: P_n of degree 1 (fitted on 2 radii, verified on 10 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == exact 1/75: True
+  p = 1073741783: P_n of degree 1 (fitted on 2 radii, verified on 10 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == exact 1/75: True
+(c) n = 4:
+  p = 1073741789: P_n of degree 2 (fitted on 3 radii, verified on 9 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == exact 17/735: True
+  p = 1073741783: P_n of degree 2 (fitted on 3 radii, verified on 9 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == exact 17/735: True
+(c) n = 5:
+  p = 1073741789: P_n of degree 3 (fitted on 4 radii, verified on 8 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == exact -116/2835: True
+  p = 1073741783: P_n of degree 3 (fitted on 4 radii, verified on 8 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == exact -116/2835: True
+(c) n = 6:
+  p = 1073741789: P_n of degree 4 (fitted on 5 radii, verified on 7 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == FHSS = recursion 25624/571725: True; A_n == KLM/DHLM 3958/444675: False
+  p = 1073741783: P_n of degree 4 (fitted on 5 radii, verified on 7 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == FHSS = recursion 25624/571725: True; A_n == KLM/DHLM 3958/444675: False
+(c) n = 7:
+  p = 1073741789: P_n of degree 5 (fitted on 6 radii, verified on 6 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == recursion -3267232/96621525: True
+  p = 1073741783: P_n of degree 5 (fitted on 6 radii, verified on 6 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == recursion -3267232/96621525: True
+(c) n = 8:
+  p = 1073741789: P_n of degree 6 (fitted on 7 radii, verified on 5 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == recursion 132784/131756625: True
+  p = 1073741783: P_n of degree 6 (fitted on 7 radii, verified on 5 more); P_n == DeWitt-recursion polynomial mod p: True; A_n == recursion 132784/131756625: True
+(c) n = 9:
+  p = 1073741789: P_n of degree 7 (fitted on 8 radii, verified on 4 more); A_n == recursion (NMAX = 9) 40094573632/586396035225: True
+  p = 1073741783: P_n of degree 7 (fitted on 8 radii, verified on 4 more); A_n == recursion (NMAX = 9) 40094573632/586396035225: True

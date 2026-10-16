@@ -31,6 +31,9 @@
 #                          deriv_inst_dewitt_num.py   DeWitt recursion in floating point ("4 both": t = 1/2 and 1; "7": A_2..A_7)
 #                          deriv_inst_largem_gy.py    the large-mass expansion against results/inst_gy.csv (N2c)
 #                          deriv_inst_clover.py       the O(a^2) term of the clover charge, results/inst_lattice.csv (N4)
+#   not run here (about 2 hours, 8 processes): run_deriv_inst_a6_check.sh, the m^-8 coefficient A_6 by independent routes:
+#                          deriv_inst_gy_hp*.py (high-precision Gel'fand-Yaglom, fits), deriv_inst_fhss.py, deriv_inst_klm.py,
+#                          deriv_inst_vdv.py, deriv_inst_planewave.py (with deriv_inst_hk_lib.py); outputs results/deriv_inst_*.txt
 #   last, each skipped with a message when its input is missing:
 #   app:ir                 deriv_ir_poles.py          one-loop IR poles, gamma_i, tab:scat (needs work/hq/born.m from run_hq_check.sh)
 #   app:hq                 deriv_hq_thrlog.py         threshold logarithms of Eq. (hqthr) (needs work/hq/born.m, assemble_*.log)

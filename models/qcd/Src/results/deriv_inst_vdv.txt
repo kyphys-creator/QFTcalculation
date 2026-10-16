@@ -1,0 +1,34 @@
+(a) term counts a_1..a_6: [1, 2, 4, 10, 26, 75]  X-free: [0, 1, 2, 5, 12, 34]
+(b) random constant potentials, N = 3, d = 4: tr a_n(ours) = tr a_n(vdV)/n! against the exact heat kernel
+config 0 (FS checks 6e-16, 1e-15):
+   n = 2: exact -1.935015034247e+00  vdV -1.935015034247e+00  rel.diff 2.8e-15
+   n = 3: exact +1.680514974897e+00  vdV +1.680514974897e+00  rel.diff 1.7e-14
+   n = 4: exact -9.096591246333e-01  vdV -9.096591246333e-01  rel.diff 3.0e-14
+   n = 5: exact +3.929217890368e-01  vdV +3.929217890369e-01  rel.diff 2.1e-13
+   n = 6: exact -1.493795632364e-01  vdV +1.949010784642e-01  rel.diff 2.3e+00
+   box-moving identities: rel. diffs 1e-19, 0e+00, 0e+00
+   hermiticity: tr(label-swapped hat term) = conj tr(hat term) to 4e-15
+config 1 (FS checks 2e-16, 7e-16):
+   n = 2: exact -2.866458913169e+00  vdV -2.866458913169e+00  rel.diff 7.7e-16
+   n = 3: exact +3.204333820460e+00  vdV +3.204333820460e+00  rel.diff 1.7e-15
+   n = 4: exact -2.248670042842e+00  vdV -2.248670042842e+00  rel.diff 2.6e-16
+   n = 5: exact +1.230299727290e+00  vdV +1.230299727290e+00  rel.diff 1.4e-14
+   n = 6: exact -5.668391293230e-01  vdV +6.814163824382e-01  rel.diff 2.2e+00
+(c) least squares of the X-free a_6 structures on 70 constant configurations
+a_6 as printed: rel. residual on 70 configs 2.15e+00
+a_6 with Z_(2 -> Z_(2^dagger in the 3/7 term: rel. residual 1.35e+00
+best least-squares combination of the 35 structures: rank 34, rel. residual 2.55e-04 (not in the span if >> 1e-12)
+max |entry| / max |exact|: 2.7e+01 (float rounding ~1e-16 of this)
+(d) BPST, rho = 1, x0 = (r,0,0,0) at 12 radii
+isospin 1/2, max relative deviation of the vdV pointwise density from the DeWitt polynomial over 12 radii: {2: '2e-13', 3: '1e-13', 4: '2e-13', 5: '1e-13', 6: '8e-13'}
+a_6 structures vanishing on BPST at all radii: 27 of 34
+iso 1/2 n = 2: vdV A_n = -0.083333333333 (fit residual 2e-13)   exact (FHSS) -1/12 = -0.083333333333   diff +1.5e-15
+iso 1/2 n = 3: vdV A_n = +0.013333333333 (fit residual 6e-14)   exact (FHSS) 1/75 = +0.013333333333   diff +9.5e-16
+iso 1/2 n = 4: vdV A_n = +0.023129251701 (fit residual 1e-14)   exact (FHSS) 17/735 = +0.023129251701   diff -5.4e-14
+iso 1/2 n = 5: vdV A_n = -0.040917107564 (fit residual 6e-15)   exact (FHSS) -116/2835 = -0.040917107584   diff +2.0e-11
+iso 1/2 n = 6: vdV A_n = +0.044818748916 (fit residual 4e-15)   exact (FHSS) 25624/571725 = +0.044818750273   diff -1.4e-09
+iso 1 n = 2: vdV A_n = -0.333333333333 (fit residual 5e-13)   exact (FHSS) -1/3 = -0.333333333333   diff +1.3e-14
+iso 1 n = 3: vdV A_n = +0.053333333333 (fit residual 1e-14)   exact (FHSS) 4/75 = +0.053333333333   diff -1.4e-14
+iso 1 n = 4: vdV A_n = +0.282993197272 (fit residual 4e-14)   exact (FHSS) 208/735 = +0.282993197279   diff -6.6e-12
+iso 1 n = 5: vdV A_n = -0.466011591098 (fit residual 7e-14)   exact (FHSS) -9248/19845 = -0.466011589821   diff -1.3e-09
+iso 1 n = 6: vdV A_n = +0.143360293570 (fit residual 5e-15)   exact (FHSS) 245888/1715175 = +0.143360298512   diff -4.9e-09

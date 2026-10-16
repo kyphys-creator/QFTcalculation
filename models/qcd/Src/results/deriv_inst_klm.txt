@@ -1,0 +1,29 @@
+(a) KLM a~_5: int 512(35 u - 39)/(315(1+u)^10) d^4x = -1856/2835 pi^2 (printed -1856/2835 pi^2);  16 A_5 = -1856/2835
+    KLM a~_6 density as printed: (-256/51975) [2876 - 86418 u^1 + 404961 u^2 - 765270 u^3 + 397710 u^4]/(1+u)^12;  printed integral 63328/444675 pi^2
+    large-mass series, KLM eq. (gammabarlargemass): m^-2: -1/75, m^-4: -17/735, m^-6: +232/2835, m^-8: -7916/148225
+    large-mass series, DHLM (hep-th/0502087):        m^-2: -1/75, m^-4: -17/735, m^-6: +232/2835, m^-8: -7916/148225
+(b) FHSS as printed (F_klmn = D_k D_l F_mn): numerator ['2876', '-86148', '338016', '-704340', '141750'], A_6 = 25624/571725 = 0.044819
+(c) correct numerator ['2876', '-86148', '338016', '-704340', '141750']: integral/pi^2 = 409984/571725, A_6 = 25624/571725
+    KLM eq. printed [2876, -86418, 404961, -765270, 397710]: integral/pi^2 = 193568/1334025 (KLM state 63328/444675); with 86418 -> 86148: 63328/444675
+    KLM (typo fixed) minus correct: ['0', '0', '66945', '-60930', '255960']
+    KLM: A_6 = 63328/444675/16 = 3958/444675, -Gamma(4) A_6 = -7916/148225 (literature m^-8 coefficient);  correct: A_6 = 25624/571725, -Gamma(4) A_6 = -51248/190575
+(d) KLM D_l F_mn formula at x0 = ['1/2', '0', '0', '0']: 0 of 192 components differ
+(d) KLM D_l F_mn formula at x0 = ['1/3', '1/2', '-2/3', '1']: 0 of 192 components differ
+(e) KLM numerator (typo fixed): [2876, -86148, 404961, -765270, 397710]
+derivative order reversed (D_l D_k F_mn): numerator ['-3286', '-97241', '454491', '-704340', '141750'], A_6 = 13966/334125 = 0.041799
+field-strength indices first (D_m D_n F_kl): numerator ['15467', '1063/2', '486673/4', '34965'], A_6 = -788807/10291050 = -0.076650
+odd-number-of-factor terms with flipped sign (F -> -F, equivalently i -> -i): numerator ['-16358', '-17010', '251016', '704340', '141750'], A_6 = -21304/190575 = -0.111788
+  contribution of the terms with 2 factors: numerator ['480', '-1350', '54525', '0', '141750'], A_6 = -16558/571725 = -0.028961
+  contribution of the terms with 3 factors: numerator ['-486', '-48930', '43500', '-704340'], A_6 = 141512/1225125 = 0.115508
+  contribution of the terms with 4 factors: numerator ['-10694', '-50229', '239991'], A_6 = 2122/408375 = 0.005196
+  contribution of the terms with 5 factors: numerator ['10103', '14361'], A_6 = -319064/8575875 = -0.037205
+  contribution of the terms with 6 factors: numerator ['3473'], A_6 = -27784/2858625 = -0.009719
+only the innermost 0 derivative(s) covariant, outer ones partial: numerator ['5417', '-58888', '-15627', '-183132', '36315'], A_6 = 1934/42525 = 0.045479
+innermost 0 derivative(s) correct, outer ones with the wrong-sign commutator: numerator ['-3226', '-45510', '-87306', '-118401', '124035'], A_6 = 143344/2401245 = 0.059696
+only the innermost 1 derivative(s) covariant, outer ones partial: numerator ['6817/2', '-151969/2', '231362', '-339291', '83565/2'], A_6 = 79682/3274425 = 0.024335
+innermost 1 derivative(s) correct, outer ones with the wrong-sign commutator: numerator ['3956', '-63766', '120307', '-107715', '24495'], A_6 = 2190334/180093375 = 0.012162
+only the innermost 2 derivative(s) covariant, outer ones partial: numerator ['3101', '-282755/4', '661487/2', '-2203515/4', '58125'], A_6 = 4521599/180093375 = 0.025107
+innermost 2 derivative(s) correct, outer ones with the wrong-sign commutator: numerator ['3356', '-55327', '325151', '-403605', '8325'], A_6 = 368878/180093375 = 0.002048
+only the innermost 3 derivative(s) covariant, outer ones partial: numerator ['2876', '-86238', '324021', '-710190', '97200'], A_6 = 71858/1334025 = 0.053866
+innermost 3 derivative(s) correct, outer ones with the wrong-sign commutator: numerator ['2876', '-86328', '310836', '-714240', '58050'], A_6 = 247664/4002075 = 0.061884
+two-factor term [['F', 'klmnrs'], ['F', 'nmlksr']] (coefficient 1/924): 218 distinct index orders of the 2nd factor; orders reproducing the KLM difference: []

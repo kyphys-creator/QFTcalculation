@@ -1,0 +1,135 @@
+(a) O_1: 1 terms, 0 without V; LaTeX round trip identical: True
+    O_2: 2 terms, 1 without V; LaTeX round trip identical: True
+    O_3: 5 terms, 2 without V; LaTeX round trip identical: True
+    O_4: 18 terms, 7 without V; LaTeX round trip identical: True
+    O_5: 103 terms, 36 without V; LaTeX round trip identical: True
+    O_6: 892 terms, 300 without V; LaTeX round trip identical: True
+(b) max rank of F tensors: 6
+N=2 herm=True d=4 rep=0
+   n=2: exact -9.2832490111e-01-1.4e-16i  FHSS -9.2832490111e-01+0.0e+00i  rel.diff 6.5e-15
+   n=3: exact +1.0043730001e+00-1.9e-16i  FHSS +1.0043730001e+00-7.0e-20i  rel.diff 2.5e-14
+   n=4: exact -7.2077842818e-01-8.7e-15i  FHSS -7.2077842818e-01-2.8e-18i  rel.diff 9.8e-14
+   n=5: exact +3.9993606829e-01-6.3e-15i  FHSS +3.9993606829e-01-7.9e-18i  rel.diff 1.7e-13
+   n=6: exact -1.8160372809e-01-7.3e-15i  FHSS -1.8160372809e-01-1.3e-17i  rel.diff 2.9e-12
+N=2 herm=True d=4 rep=1
+   n=2: exact -1.6206664409e+00-1.1e-16i  FHSS -1.6206664409e+00+0.0e+00i  rel.diff 1.1e-15
+   n=3: exact +1.7986462950e+00+2.9e-16i  FHSS +1.7986462950e+00+2.1e-18i  rel.diff 4.0e-16
+   n=4: exact -1.2567010399e+00-7.7e-19i  FHSS -1.2567010399e+00+4.6e-17i  rel.diff 4.8e-15
+   n=5: exact +6.7038464866e-01+7.9e-17i  FHSS +6.7038464866e-01-3.8e-17i  rel.diff 1.4e-14
+   n=6: exact -2.9233839766e-01+5.9e-17i  FHSS -2.9233839766e-01-4.8e-16i  rel.diff 1.9e-14
+N=3 herm=True d=4 rep=0
+   n=2: exact -1.0936488513e+01-2.7e-16i  FHSS -1.0936488513e+01-6.5e-17i  rel.diff 6.5e-16
+   n=3: exact +2.4964699648e+01+3.1e-15i  FHSS +2.4964699648e+01+1.0e-16i  rel.diff 3.1e-16
+   n=4: exact -3.4216925685e+01+2.3e-15i  FHSS -3.4216925685e+01+1.6e-16i  rel.diff 1.1e-14
+   n=5: exact +3.5005184455e+01-5.6e-14i  FHSS +3.5005184455e+01-1.2e-15i  rel.diff 3.5e-14
+   n=6: exact -2.9155145365e+01-3.3e-14i  FHSS -2.9155145365e+01+9.5e-15i  rel.diff 1.4e-13
+N=3 herm=True d=4 rep=1
+   n=2: exact -8.2245978975e+00-3.6e-16i  FHSS -8.2245978975e+00+0.0e+00i  rel.diff 1.9e-15
+   n=3: exact +1.4636376537e+01-2.9e-15i  FHSS +1.4636376537e+01-2.7e-17i  rel.diff 5.2e-16
+   n=4: exact -1.5890948238e+01-7.2e-15i  FHSS -1.5890948238e+01+4.3e-16i  rel.diff 6.6e-16
+   n=5: exact +1.3347924044e+01-1.5e-15i  FHSS +1.3347924044e+01-1.8e-15i  rel.diff 3.2e-14
+   n=6: exact -9.5671982405e+00-8.2e-14i  FHSS -9.5671982405e+00+1.8e-15i  rel.diff 1.4e-14
+N=3 herm=False d=4 rep=0
+   n=2: exact -5.6077170922e+00+4.4e+00i  FHSS -5.6077170922e+00+4.4e+00i  rel.diff 1.2e-15
+   n=3: exact +6.0671939502e+00+8.6e+00i  FHSS +6.0671939502e+00+8.6e+00i  rel.diff 3.1e-15
+   n=4: exact +3.6007427216e+00-5.5e+00i  FHSS +3.6007427216e+00-5.5e+00i  rel.diff 3.5e-14
+   n=5: exact -6.4116579644e+00-5.7e-01i  FHSS -6.4116579644e+00-5.7e-01i  rel.diff 5.1e-15
+   n=6: exact +1.1610046743e+00+5.0e+00i  FHSS +1.1610046743e+00+5.0e+00i  rel.diff 2.4e-13
+N=3 herm=False d=4 rep=1
+   n=2: exact -6.4840414725e-01-1.6e+00i  FHSS -6.4840414725e-01-1.6e+00i  rel.diff 1.2e-15
+   n=3: exact +5.1892364264e+00+2.3e-01i  FHSS +5.1892364264e+00+2.3e-01i  rel.diff 2.2e-15
+   n=4: exact -2.6923616167e+00+4.5e+00i  FHSS -2.6923616167e+00+4.5e+00i  rel.diff 9.1e-16
+   n=5: exact -2.0446265637e+00-2.5e+00i  FHSS -2.0446265637e+00-2.5e+00i  rel.diff 4.6e-15
+   n=6: exact +1.6064317018e+00-9.0e-01i  FHSS +1.6064317018e+00-9.0e-01i  rel.diff 1.9e-14
+N=4 herm=True d=4 rep=0
+   n=2: exact -2.6612668418e+01-5.7e-16i  FHSS -2.6612668418e+01+0.0e+00i  rel.diff 1.1e-15
+   n=3: exact +8.8932529925e+01-1.1e-15i  FHSS +8.8932529925e+01+1.5e-15i  rel.diff 6.4e-16
+   n=4: exact -1.9282608366e+02-7.3e-15i  FHSS -1.9282608366e+02+2.8e-17i  rel.diff 2.5e-15
+   n=5: exact +3.2731778107e+02+1.4e-14i  FHSS +3.2731778107e+02+7.4e-15i  rel.diff 1.7e-16
+   n=6: exact -4.6409240686e+02-8.7e-14i  FHSS -4.6409240686e+02+1.7e-13i  rel.diff 4.3e-15
+N=4 herm=True d=4 rep=1
+   n=2: exact -5.6380929048e+01-2.2e-15i  FHSS -5.6380929048e+01-2.2e-16i  rel.diff 1.3e-16
+   n=3: exact +2.6119340313e+02+2.4e-14i  FHSS +2.6119340313e+02+2.1e-15i  rel.diff 1.5e-15
+   n=4: exact -7.8348700799e+02-2.2e-13i  FHSS -7.8348700799e+02-1.8e-14i  rel.diff 1.3e-15
+   n=5: exact +1.8428988510e+03+4.2e-13i  FHSS +1.8428988510e+03-4.7e-14i  rel.diff 1.1e-14
+   n=6: exact -3.6192010268e+03+9.5e-13i  FHSS -3.6192010268e+03+8.9e-13i  rel.diff 3.2e-14
+N=5 herm=False d=4 rep=0
+   n=2: exact +4.5642279288e+01-5.4e+00i  FHSS +4.5642279288e+01-5.4e+00i  rel.diff 5.8e-17
+   n=3: exact -2.1800933714e+02+7.9e+01i  FHSS -2.1800933714e+02+7.9e+01i  rel.diff 3.1e-15
+   n=4: exact +6.8571281038e+02-3.1e+02i  FHSS +6.8571281038e+02-3.1e+02i  rel.diff 3.4e-15
+   n=5: exact -1.4979944170e+03+5.0e+02i  FHSS -1.4979944170e+03+5.0e+02i  rel.diff 2.4e-15
+   n=6: exact +2.8952332943e+03-1.4e+03i  FHSS +2.8952332943e+03-1.4e+03i  rel.diff 3.0e-14
+N=5 herm=False d=4 rep=1
+   n=2: exact +3.2215815005e+01-1.2e+01i  FHSS +3.2215815005e+01-1.2e+01i  rel.diff 4.6e-16
+   n=3: exact -6.8305970461e+01-1.4e+02i  FHSS -6.8305970461e+01-1.4e+02i  rel.diff 1.2e-15
+   n=4: exact -2.4147230014e+02+2.0e+02i  FHSS -2.4147230014e+02+2.0e+02i  rel.diff 3.2e-16
+   n=5: exact +5.1403483513e+02+1.2e+02i  FHSS +5.1403483513e+02+1.2e+02i  rel.diff 5.4e-15
+   n=6: exact -2.5341088648e+02-1.2e+03i  FHSS -2.5341088648e+02-1.2e+03i  rel.diff 5.5e-14
+N=3 herm=False d=5 rep=0
+   n=2: exact -3.1580065928e+01-5.4e-01i  FHSS -3.1580065928e+01-5.4e-01i  rel.diff 3.4e-16
+   n=3: exact +5.8688115389e+01+3.8e+01i  FHSS +5.8688115389e+01+3.8e+01i  rel.diff 8.6e-16
+   n=4: exact -2.5850506901e+01-7.5e+01i  FHSS -2.5850506901e+01-7.5e+01i  rel.diff 2.9e-15
+   n=5: exact -3.2818805364e+01+4.6e+01i  FHSS -3.2818805364e+01+4.6e+01i  rel.diff 1.8e-14
+   n=6: exact +3.7767247980e+01+1.3e+01i  FHSS +3.7767247980e+01+1.3e+01i  rel.diff 6.2e-14
+N=3 herm=False d=5 rep=1
+   n=2: exact -2.2758976805e+00+1.4e+01i  FHSS -2.2758976805e+00+1.4e+01i  rel.diff 4.6e-16
+   n=3: exact +4.0143118962e+01+2.0e+01i  FHSS +4.0143118962e+01+2.0e+01i  rel.diff 1.2e-15
+   n=4: exact +1.7117387857e+01-2.3e+01i  FHSS +1.7117387857e+01-2.3e+01i  rel.diff 6.6e-15
+   n=5: exact -9.1771047146e+00+6.9e-01i  FHSS -9.1771047146e+00+6.9e-01i  rel.diff 2.5e-14
+   n=6: exact +1.1694176839e+01+9.0e+00i  FHSS +1.1694176839e+01+9.0e+00i  rel.diff 2.2e-13
+N=3 herm=True d=6 rep=0
+   n=2: exact -1.8334642770e+01-3.2e-16i  FHSS -1.8334642770e+01+0.0e+00i  rel.diff 1.9e-15
+   n=3: exact +4.9354380331e+01-3.9e-15i  FHSS +4.9354380331e+01-1.9e-16i  rel.diff 1.0e-15
+   n=4: exact -8.1708854287e+01+6.5e-15i  FHSS -8.1708854287e+01+1.7e-16i  rel.diff 7.8e-17
+   n=5: exact +1.0422694402e+02-3.8e-14i  FHSS +1.0422694402e+02+6.1e-15i  rel.diff 2.2e-14
+   n=6: exact -1.1131061110e+02+1.0e-13i  FHSS -1.1131061110e+02-3.2e-15i  rel.diff 1.0e-14
+N=3 herm=True d=6 rep=1
+   n=2: exact -7.2819868432e+01+9.8e-16i  FHSS -7.2819868432e+01+0.0e+00i  rel.diff 5.9e-16
+   n=3: exact +3.7138760764e+02-3.4e-15i  FHSS +3.7138760764e+02+3.1e-15i  rel.diff 7.7e-16
+   n=4: exact -1.1243356736e+03-2.5e-13i  FHSS -1.1243356736e+03+1.5e-14i  rel.diff 1.4e-15
+   n=5: exact +2.5438727655e+03+3.9e-13i  FHSS +2.5438727655e+03+1.8e-13i  rel.diff 1.1e-14
+   n=6: exact -4.7129108428e+03+2.4e-12i  FHSS -4.7129108428e+03-1.3e-12i  rel.diff 2.5e-14
+worst relative differences: {2: '6.5e-15', 3: '2.5e-14', 4: '9.8e-14', 5: '1.7e-13', 6: '2.9e-12'}
+(c) rank tests
+O_5: 36 V-free basis invariants, N = 8, d = 4, 80 configurations
+singular values: largest 3.823e+00, smallest five 4.45e-02 3.67e-02 1.31e-15 6.02e-16 4.07e-16
+numerical rank (tol 1e-9): 33
+max |least-squares coefficient - FHSS coefficient| = 8.34e-02  (max |FHSS coefficient| = 2.54e-01)
+max residual of FHSS formula relative to |O_n|: 2.04e-13
+O_5: 36 V-free basis invariants, N = 8, d = 5, 80 configurations
+singular values: largest 3.760e+00, smallest five 8.75e-02 6.14e-02 5.04e-02 4.03e-02 3.79e-02
+numerical rank (tol 1e-9): 36
+max |least-squares coefficient - FHSS coefficient| = 2.95e-15  (max |FHSS coefficient| = 2.54e-01)
+max residual of FHSS formula relative to |O_n|: 2.08e-13
+O_6: 300 V-free basis invariants, N = 6, d = 6, 320 configurations
+singular values: largest 9.143e+00, smallest five 2.06e-03 1.80e-03 1.69e-03 1.29e-03 1.16e-03
+numerical rank (tol 1e-9): 300
+max |least-squares coefficient - FHSS coefficient| = 4.21e-14  (max |FHSS coefficient| = 3.71e-01)
+max residual of FHSS formula relative to |O_n|: 8.94e-13
+(d) iso 1/2: exact densities of 346 invariants at 14 radii
+(d) iso 1: exact densities of 346 invariants at 14 radii
+    SO(4) check x0 = ['3/2', '0', '0', '0'] vs ['1/2', '1', '1', '0']: 0 of 346 invariant densities differ
+    SO(4) check x0 = ['1', '0', '0', '0'] vs ['1/2', '1/2', '1/2', '1/2']: 0 of 346 invariant densities differ
+(e) iso 1/2  n = 2: A_n = -1/12 = -0.083333333333
+      FHSS-form tr a_n density = P(u)/(1+u)^4, P = ['-8']
+(e) iso 1/2  n = 3: A_n = 1/75 = 0.013333333333;  m^-2 coefficient -Gamma(n-2) A_n = -1/75 = -0.0133333333
+      FHSS-form tr a_n density = P(u)/(1+u)^6, P = ['-128/15', '96/5']
+(e) iso 1/2  n = 4: A_n = 17/735 = 0.023129251701;  m^-4 coefficient -Gamma(n-2) A_n = -17/735 = -0.0231292517
+      FHSS-form tr a_n density = P(u)/(1+u)^8, P = ['32/105', '1664/21', '-384/7']
+(e) iso 1/2  n = 5: A_n = -116/2835 = -0.040917107584;  m^-6 coefficient -Gamma(n-2) A_n = 232/2835 = 0.0818342152
+      FHSS-form tr a_n density = P(u)/(1+u)^10, P = ['-1664/105', '27904/315', '-11392/21', '1280/7']
+(e) iso 1/2  n = 6: A_n = 25624/571725 = 0.044818750273;  m^-8 coefficient -Gamma(n-2) A_n = -51248/190575 = -0.2689125016
+      FHSS-form tr a_n density = P(u)/(1+u)^12, P = ['-736256/51975', '2450432/5775', '-4120576/2475', '572416/165', '-7680/11']
+(e) iso 1  n = 2: A_n = -1/3 = -0.333333333333
+      FHSS-form tr a_n density = P(u)/(1+u)^4, P = ['-32']
+(e) iso 1  n = 3: A_n = 4/75 = 0.053333333333;  m^-2 coefficient -Gamma(n-2) A_n = -4/75 = -0.0533333333
+      FHSS-form tr a_n density = P(u)/(1+u)^6, P = ['-512/15', '384/5']
+(e) iso 1  n = 4: A_n = 208/735 = 0.282993197279;  m^-4 coefficient -Gamma(n-2) A_n = -208/735 = -0.2829931973
+      FHSS-form tr a_n density = P(u)/(1+u)^8, P = ['13568/105', '6656/21', '-1536/7']
+(e) iso 1  n = 5: A_n = -9248/19845 = -0.466011589821;  m^-6 coefficient -Gamma(n-2) A_n = 18496/19845 = 0.9320231796
+      FHSS-form tr a_n density = P(u)/(1+u)^10, P = ['4608/35', '-69632/45', '-45568/21', '5120/7']
+(e) iso 1  n = 6: A_n = 245888/1715175 = 0.143360298512;  m^-8 coefficient -Gamma(n-2) A_n = -491776/571725 = -0.8601617911
+      FHSS-form tr a_n density = P(u)/(1+u)^12, P = ['6854656/51975', '-121757696/17325', '235384832/17325', '2289664/165', '-30720/11']
+(f) O_5: rank 33 of 36 in d = 4; kernel dim 3 (max |M K| relative 1e-16)
+  iso 1/2: BPST integral of each kernel vector / sum of |terms|: [0.02 0.05 0.03]
+  iso 1: BPST integral of each kernel vector / sum of |terms|: [0.   0.02 0.01]
