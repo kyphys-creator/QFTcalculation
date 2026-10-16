@@ -581,7 +581,7 @@ FormCalc の有理数の項と質量0の外線（SM） & 有限部分が MadLoop
 \end{tabularx}
 \end{table}
 
-\paragraph{標準模型のノートで分かった問題。}2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)〜(6) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e}、\ref{tab:issues2f}、\ref{tab:issues2h}、\ref{tab:issues2i} にまとめる（手順 (6) まで）。
+\paragraph{標準模型のノートで分かった問題。}（このノートとそのスクリプトは2026年10月16日にリポジトリから削除した。以下の記録はツールの問題として残す。ノートとスクリプトの最後の版はコミット 201985b にある。）2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)〜(6) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e}、\ref{tab:issues2f}、\ref{tab:issues2h}、\ref{tab:issues2i} にまとめる（手順 (6) まで）。
 
 手順 (3) では、タドポールと自己エネルギーを Feynman ゲージで手計算の式と \texttt{SM.mod} の両方と記号として比べ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で2点関数の Slavnov--Taylor 恒等式を確かめた。有限部分の $B_0$ は LoopTools、Package-X、COLLIER が30桁の積分と相対 $2.5\times10^{-14}$ 以内で一致した。手順 (4) では、on-shell の12個の対抗項が FormCalc の \texttt{RenConst} と相対 $2\times10^{-15}$ 以内で一致した。手順 (5) では、$\mu$ 崩壊の頂点と箱の図から $\Delta r$ を組み、FormCalc の繰り込み定数から組んだ値と相対 $1.2\times10^{-15}$ で一致した。FormCalc の記号の \texttt{UpValues} のため、FormCalc と外の式の数値は別のカーネルで求めた。手順 (6) では、FeynRules と NLOCT で作った NLO の模型で、$e^+e^-\to\mu^+\mu^-$ の電弱の仮想の補正が MadLoop と FormCalc で相対 $6\times10^{-9}$ 以内で一致した。そのためには表~\ref{tab:issues2h} の問題を避ける必要があった。とくに、NLOCT の閉じた形の対抗項の倍精度での打ち消しと、MadLoop が外線の $m_e^2$ を0にする扱いは、どちらも警告なしに値を桁違いに誤らせる。LoopTools の閾値より下の $C_0$ の誤り（表~\ref{tab:issues}）は、この Mac でも再現した（$C_0(1,1,1;1,1,1)=6.87+34.2i$）。MadGraph の電弱 NLO の模型（$\alpha(M_Z)$ と $G_\mu$ の処方、トップ以外のフェルミオンは質量0）とも、同じ処方の FormCalc と相対 $7\times10^{-13}$ 以内で一致した。そのためには、表~\ref{tab:issues2i} の二つの規約の違い（COLLIER の極の規格化と、FormCalc の質量0の外線の有理数の項）を直す必要があった。どちらも二重極のある質量0の外線でだけ現れ、極の一致では見つからない。
 
@@ -1171,7 +1171,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{yukawanote} 擬スカラー湯川理論：1ループの構造と検算（本リポジトリ \nolinkurl{models/yukawa_ps/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~Q。
 \bibitem{qednote} スピノル QED：1ループの構造と検算（本リポジトリ \nolinkurl{models/spinor_qed/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
 \bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~N。
-\bibitem{smnote} 標準模型：電弱の1ループの繰り込みと検算（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~G。
+\bibitem{smnote} 標準模型：電弱の1ループの繰り込みと検算（本リポジトリの \nolinkurl{models/sm/ResearchNote/note.pdf}。2026年10月16日に \nolinkurl{models/sm} ごと削除した。最後の版はコミット 201985b にある）。ツールとの照合は第5節と付録~G。
 \end{thebibliography}
 
 \end{document}
