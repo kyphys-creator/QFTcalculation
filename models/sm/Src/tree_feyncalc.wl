@@ -69,7 +69,8 @@ convTree$ = Join[{FCGV["EL"] -> ee, SMP["e"] -> ee, FCGV["GS"] -> gS, SMP["g_s"]
 treeDiagrams$[in_, out_] := Quiet[InsertFields[CreateTopologies[0, Length[in] -> Length[out]], in -> out,
     InsertionLevel -> {Particles}, Model -> modelFileTree$, GenericModel -> modelFileTree$], RuleDelayed::rhs];
 treeAmps$[diags_, in_, out_, extra_ : {}] := Module[{a},
-   a = Quiet[FCFAConvert[CreateFeynAmp[diags] /. M$FACouplings,
+   (* GaugeRules -> {} keeps GaugeXi (the FeynArts default {_GaugeXi -> 1} is Feynman gauge) *)
+   a = Quiet[FCFAConvert[CreateFeynAmp[diags, GaugeRules -> {}] /. M$FACouplings,
        IncomingMomenta -> in, OutgoingMomenta -> out, ChangeDimension -> 4, List -> True, SMP -> False,
        UndoChiralSplittings -> True, DropSumOver -> True, TransversePolarizationVectors -> {}], RuleDelayed::rhs];
    a = a /. convTree$ /. yukTree$ /. vev -> 2 MW sw/ee /. extra;
@@ -152,6 +153,8 @@ ampMM$ = treeAmps$[diagsMM$, {p1, p2}, {k1, k2}, {Me -> 0, MMU -> 0}];
 FCClearScalarProducts[];
 SetMandelstam[s, t, u, p1, p2, -k1, -k2, 0, 0, 0, 0];
 mMM$ = FeynAmpDenominatorExplicit[Total[ampMM$]];
+Print["e+ e- -> mu+ mu-: gauge parameters present in the amplitude (expect {xiA, xiZ}): ",
+  Union[Cases[mMM$, xiA | xiZ | xiW, Infinity]]];
 sqMM$ = sumSq$[mMM$, {}] /. u -> -s - t;
 Print["e+ e- -> mu+ mu-: d(sum|M|^2)/d xiA, d xiZ (expect 0, 0): ",
   Simplify[{D[sqMM$, xiA], D[sqMM$, xiZ]}]];
@@ -175,6 +178,8 @@ ampWW$ = treeAmps$[diagsWW$, {p1, p2}, {k1, k2}, {Me -> 0}];
 FCClearScalarProducts[];
 SetMandelstam[s, t, u, p1, p2, -k1, -k2, 0, 0, MW, MW];
 mWW$ = FeynAmpDenominatorExplicit[Total[ampWW$]];
+Print["e+ e- -> W+ W-: gauge parameters present in the amplitude (expect {xiA, xiZ}): ",
+  Union[Cases[mWW$, xiA | xiZ | xiW, Infinity]]];
 sqWW$ = sumSq$[mWW$, {k1, k2}] /. u -> 2 MW^2 - s - t;
 Print["e+ e- -> W+ W-: d(sum|M|^2)/d xiA, xiZ, xiW (expect 0, 0, 0): ",
   Simplify[{D[sqWW$, xiA], D[sqWW$, xiZ], D[sqWW$, xiW]}]];
