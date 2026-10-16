@@ -1,0 +1,4 @@
+dimension of the solution space: 1
+solution (coefficients of g^{mn}p1^r, g^{mn}p2^r, g^{nr}p1^m, g^{nr}p2^m, g^{rm}p1^n, g^{rm}p2^n): [1, -1, 1, 2, -2, -1]
+tree coefficients: [1, -1, 1, 2, -2, -1]
+OK  unique antisymmetric structure = tree

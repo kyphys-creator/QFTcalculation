@@ -1,0 +1,66 @@
+SU(2):
+  OK   tr(TaTb) = TF delta
+  OK   f real
+  OK   [Ta,Tb] = i f T
+  OK   completeness
+  OK   TaTa = CF
+  OK   TcTbTc = -TF/N Tb
+  OK   CF - CA/2 = -TF/N
+  OK   sum_d tr(XT)tr(YT) = TF tr(XY)
+  OK   f^{acd}f^{bcd} = 2 TF N delta
+  OK   f f = -(1/TF) tr([Ta,Tc][Tb,Tc])
+  OK   four traces -TF^2/N, CF TF, CF TF, -TF^2/N; sum -2 TF^2 N
+  OK   f T T = i CA/2 T
+  OK   Jacobi f^{abc}f^{cde}+f^{bdc}f^{cae}+f^{dac}f^{cbe} = 0
+  OK   (d,e) component: -f^{adg}f^{bge}+f^{bdg}f^{age} = f^{abc}f^{cde}
+  OK   [Fa,Fb] = i f F
+  OK   FbFb = CA 1
+  OK   i f^{abc} F^b F^c = -CA/2 F^a
+  OK   FbFaFb = CA/2 Fa
+  OK   c_u = c_t - c_s (Jacobi)
+  OK   colour matrix = CA^2 dA [[1,1/2],[1/2,1]]
+  OK   sum c_s c_t = tr(F^e F^g F^e F^g) = CA/2 tr(F^g F^g)
+SU(3):
+  OK   tr(TaTb) = TF delta
+  OK   f real
+  OK   [Ta,Tb] = i f T
+  OK   completeness
+  OK   TaTa = CF
+  OK   TcTbTc = -TF/N Tb
+  OK   CF - CA/2 = -TF/N
+  OK   sum_d tr(XT)tr(YT) = TF tr(XY)
+  OK   f^{acd}f^{bcd} = 2 TF N delta
+  OK   f f = -(1/TF) tr([Ta,Tc][Tb,Tc])
+  OK   four traces -TF^2/N, CF TF, CF TF, -TF^2/N; sum -2 TF^2 N
+  OK   f T T = i CA/2 T
+  OK   Jacobi f^{abc}f^{cde}+f^{bdc}f^{cae}+f^{dac}f^{cbe} = 0
+  OK   (d,e) component: -f^{adg}f^{bge}+f^{bdg}f^{age} = f^{abc}f^{cde}
+  OK   [Fa,Fb] = i f F
+  OK   FbFb = CA 1
+  OK   i f^{abc} F^b F^c = -CA/2 F^a
+  OK   FbFaFb = CA/2 Fa
+  OK   c_u = c_t - c_s (Jacobi)
+  OK   colour matrix = CA^2 dA [[1,1/2],[1/2,1]]
+  OK   sum c_s c_t = tr(F^e F^g F^e F^g) = CA/2 tr(F^g F^g)
+SU(4):
+  OK   tr(TaTb) = TF delta
+  OK   f real
+  OK   [Ta,Tb] = i f T
+  OK   completeness
+  OK   TaTa = CF
+  OK   TcTbTc = -TF/N Tb
+  OK   CF - CA/2 = -TF/N
+  OK   sum_d tr(XT)tr(YT) = TF tr(XY)
+  OK   f^{acd}f^{bcd} = 2 TF N delta
+  OK   f f = -(1/TF) tr([Ta,Tc][Tb,Tc])
+  OK   four traces -TF^2/N, CF TF, CF TF, -TF^2/N; sum -2 TF^2 N
+  OK   f T T = i CA/2 T
+  OK   Jacobi f^{abc}f^{cde}+f^{bdc}f^{cae}+f^{dac}f^{cbe} = 0
+  OK   (d,e) component: -f^{adg}f^{bge}+f^{bdg}f^{age} = f^{abc}f^{cde}
+  OK   [Fa,Fb] = i f F
+  OK   FbFb = CA 1
+  OK   i f^{abc} F^b F^c = -CA/2 F^a
+  OK   FbFaFb = CA/2 Fa
+  OK   c_u = c_t - c_s (Jacobi)
+  OK   colour matrix = CA^2 dA [[1,1/2],[1/2,1]]
+  OK   sum c_s c_t = tr(F^e F^g F^e F^g) = CA/2 tr(F^g F^g)

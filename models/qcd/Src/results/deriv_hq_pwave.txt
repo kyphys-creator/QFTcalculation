@@ -1,0 +1,6 @@
+threshold: X_t - X_u = (e1.e2)(p1-p2) + m[e1,e2], X_s = (e1.e2)(p1-p2), coefficient = (m/s)[e1,e2], gamma0 u = u, gamma0 v = -v, [gamma0,[e1,e2]] = 0, ubar[e1,e2]v = 0 for all spins/polarizations: True
+the {T^a,T^b} coefficient is nonzero at threshold: True
+[T^a,T^b] coefficient antisymmetric, {T^a,T^b} coefficient symmetric under gluon exchange: True True
+beta = 1/10: sum |A_-|^2 / beta^2 = 0.6034816533
+beta = 1/100: sum |A_-|^2 / beta^2 = 0.5918343127
+beta = 1/1000: sum |A_-|^2 / beta^2 = 0.5917171598

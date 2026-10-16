@@ -1,0 +1,2 @@
+wrote results/twoloop_latex_ref.txt with 15 rows
+{Field[1] -> V[2, {Index[Gluon, 1]}], Field[2] -> V[2, {Index[Gluon, 2]}], Field[3] -> -F[2, {Index[Colour, 3]}], Field[4] -> F[2, {Index[Colour, 4]}], Field[5] -> V[2, {Index[Gluon, 3]}], Field[6] -> F[2, {Index[Colour, 5]}], Field[7] -> -F[2, {Index[Colour, 6]}]}

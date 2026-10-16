@@ -1,0 +1,17 @@
+=== R5: gluon propagator and counterterm insertions ===
+OK  K^{mu nu} (K^{-1})_{nu rho} = delta^mu_rho 
+OK  -1/4F^2 - (dG)^2/(2xi) -> (1/2) G(-k) K G(k), K = -k^2 g + (1-1/xi) k k  [a-b cross term = a.K.b] 
+OK  counterterm: -delta3/4 F^2 cross term = a.[delta3(-k^2 g + k k)].b, vertex i*delta3(-k^2 g + kk) 
+=== R6: BRST nilpotency, SU(3) ===
+OK  [T^a,T^b] = i f^{abc} T^c with tr(T^a T^b) = delta/2 
+OK  Jacobi: f^{abc}f^{bde} + f^{abd}f^{bec} + f^{abe}f^{bcd} = 0 (all a,c,d,e) 
+OK  s^2 c^a = 0 for all a 
+OK  s^2 psi_i = 0 for all colours i 
+OK  s^2 G^a_mu = 0 for all a, mu 
+OK  s^2 (d_mu c^a) = 0 
+OK  s^2 c^a = -g f^{abc}(s c^b) c^c (before Jacobi) 
+OK  c^a c^b T^a T^b = (i/2) f^{abc} c^a c^b T^c 
+OK  negative control: s c^a -> +(g/2) f c c spoils s^2 G = 0 
+     (with the wrong sign, s^2 G^1_0 has 22 nonzero Grassmann monomials)
+
+ALL OK

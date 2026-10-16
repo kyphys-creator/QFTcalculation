@@ -1,0 +1,9 @@
+S_kl(phys, Feynman-rule vertex) vs 8F matrix: max relative deviation 7.77e-16
+S_kl(phys, Eq. (Mtree) form) vs 8F matrix: max relative deviation 7.77e-16
+S_kl(-g, Eq. (Mtree) form) vs 8F matrix: max relative deviation 1.11e-15
+S_kl(-g, Feynman-rule vertex) - S_kl vs 4 tau1 tau2 (1,-1)x(1,-1): max relative deviation 1.05e-12
+-g sum ss vs snippet: max relative deviation 4.77e-15
+-g sum ts vs snippet: max relative deviation 7.77e-15
+-g sum us vs snippet: max relative deviation 2.44e-15
+-g sum tt vs snippet: max relative deviation 3.33e-15
+-g sum tu vs snippet: max relative deviation 2.11e-14

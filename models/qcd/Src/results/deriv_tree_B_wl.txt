@@ -1,0 +1,55 @@
+--- the six -g sums (Eq. (Mtree) form) against the hand results
+Ttt - (8tau2/tau1 + 4rho/tau1 - 2rho^2/tau1^2) -> 0   OK
+Tuu - (tau1<->tau2) -> 0   OK
+Ttu - 2rho(1-rho)/(tau1 tau2) -> 0   OK
+Tts + 8tau2 + 2rho(tau1-tau2)/tau1 -> 0   OK
+Tus - 8tau1 - 2rho(tau2-tau1)/tau2 -> 0   OK
+Tss - 16 tau1 tau2 -> 0   OK
+--- the same sums with the simplified structures N_t, N_u, N_s of the text
+N: Ttt -> 0   OK
+N: Ttu -> 0   OK
+N: Tts -> 0   OK
+N: Tss -> 0   OK
+--- intermediate traces of the text (units s = 1)
+(i)+(iii) -> 0   OK
+(ii) + 8 tau2 (1+rho/2) -> 0   OK
+(iv) - 8 tau1 tau2 -> 0   OK
+(v) - (8 tau2 + 2 rho) -> 0   OK
+sum - [8 tau1 tau2 + 2 rho (tau1 - tau2)] -> 0   OK
+Tr[(k1+m) N_t (k2-m) N_s] (no 1/(-tau1)) vs (i)..(v) -> 0   OK
+(a) + 32 m^2 (k1.k2 + 2m^2) -> 0   OK
+(b) - 16 m^2 (2 k1.p1 + k2.p1) -> 0   OK
+(c) - (b) -> 0   OK
+(d) - 32 (k1.p1)(k2.p1) -> 0   OK
+Ttt tau1^2 - [(a)+(b)+(c)+(d)] -> 0   OK
+(a)+(b)+(c)+(d) - (8 tau1 tau2 + 4 rho tau1 - 2 rho^2) -> 0   OK
+(a') - 16 m^2 (k1.k2 - m^2) -> 0   OK
+(b') - 16[2(k1.k2)(k1.p2) - m^2 k2.p2] - 32 m^2 k1.p2 -> 0   OK
+(c') - 16[2(k1.p1)(k1.k2) - m^2 p1.k2] - 32 m^2 p1.k1 -> 0   OK
+(d') + 32 (p1.p2)(k1.k2) + 16 m^2 p1.p2 -> 0   OK
+sum - 16 m^2 (s/2 - 2 m^2) = 2 rho (1-rho) -> 0   OK
+Ttu tau1 tau2 - sum -> 0   OK
+--- S_kl from the -g sums of the Eq. (Mtree) form
+S11 - 8F tau2/tau1 -> 0   OK
+S22 - 8F tau1/tau2 -> 0   OK
+S12 - 8F -> 0   OK
+S11 + S22 + 2 S12 - 8F/(tau1 tau2)  (QED) -> 0   OK
+pair[G1,G1] - S11 -> 0   OK
+pair[G1,G2] - S12 -> 0   OK
+--- transversality of the Eq. (Mtree) form: sum_spins |ubar (p1.B_k.r) v|^2 and |ubar (r.B_k.p2) v|^2 for arbitrary r
+|p1.B_1.r|^2 -> 0   OK
+|p1.B_2.r|^2 -> 0   OK
+|r.B_1.p2|^2 -> 0   OK
+|r.B_2.p2|^2 -> 0   OK
+--- Feynman-rule vertex: -g sums exceed S_kl by 4 tau1 tau2 (1,-1)x(1,-1); ghost per colour component removes it
+S11^F(-g) - S11 - 4 tau1 tau2 -> 0   OK
+S22^F(-g) - S22 - 4 tau1 tau2 -> 0   OK
+S12^F(-g) - S12 + 4 tau1 tau2 -> 0   OK
+2 sum|ubar p1 v|^2 - 4 tau1 tau2 -> 0   OK
+--- physical polarization sums with P = -g + (p1 p2 + p2 p1)/(p1.p2) for both gluons, Feynman-rule vertex
+S11(phys) - 8F tau2/tau1 -> 0   OK
+S12(phys) - 8F -> 0   OK
+S22(phys) - 8F tau1/tau2 -> 0   OK
+--- colour sum: C_F d_F [C_F(S11+S22+2S12) - C_A S12] = Eq. (sumtree) (B) with T_F = 1/2, d_F = N
+sum|M_B|^2 - 8 CA CF (CF/(tau1 tau2) - CA) F -> 0   OK
+N CF^2 (S11+S22) - CF S12 (form used in app:ir) - same -> 0   OK

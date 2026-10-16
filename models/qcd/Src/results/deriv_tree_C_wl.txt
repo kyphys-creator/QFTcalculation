@@ -1,0 +1,19 @@
+colour matrix in (c_s, c_t) / (CA^2 dA): {{1, 1/2}, {1/2, 1}}   (expect {{1, 1/2}, {1/2, 1}})
+xxxx: (X, Y) = {(3 + c^2)/(1 + c), (2*(3 + c^2))/(-1 + c^2)}   OK
+xxxy: (X, Y) = {0, 0}   OK
+xxyx: (X, Y) = {0, 0}   OK
+xxyy: (X, Y) = {1 - c, -2}   OK
+xyxx: (X, Y) = {0, 0}   OK
+xyxy: (X, Y) = {2, 4/(-1 + c)}   OK
+xyyx: (X, Y) = {(2*(-1 + c))/(1 + c), 4/(1 + c)}   OK
+xyyy: (X, Y) = {0, 0}   OK
+yxxx: (X, Y) = {0, 0}   OK
+yxxy: (X, Y) = {(2*(-1 + c))/(1 + c), 4/(1 + c)}   OK
+yxyx: (X, Y) = {2, 4/(-1 + c)}   OK
+yxyy: (X, Y) = {0, 0}   OK
+yyxx: (X, Y) = {1 - c, -2}   OK
+yyxy: (X, Y) = {0, 0}   OK
+yyyx: (X, Y) = {0, 0}   OK
+yyyy: (X, Y) = {(3 + c^2)/(1 + c), (2*(3 + c^2))/(-1 + c^2)}   OK
+sum over polarizations of X^2+Y^2+XY - 4(3+c^2)^3/(1-c^2)^2 = 0   (expect 0)
+all configurations OK: True

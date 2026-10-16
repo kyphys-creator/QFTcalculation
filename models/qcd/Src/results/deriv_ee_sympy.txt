@@ -1,0 +1,71 @@
+==== E2: reduction of the vertex trace ====
+T from the pieces = hand T: OK (0)
+tr[b a p2 p1]: OK (0)
+tr[a b p2 p1]: OK (0)
+<T/(D1D2D3)> = 2(D-2)s[(D-7)B0 - 2s C0]: OK (0)
+   coefficient of s^2 C0: -4*(D - 2) ; of s B0: 2*(D - 7)*(D - 2)
+F^(1)/(C_F a) = (D-7)B0 - 2 s C0: OK (0)
+-- numerical check of <x>, <y>, <K>, <xy> rules (Euclidean s=-1, eps=-0.3, Feynman parameters) --
+   C0 numeric vs closed (no e^{eps gE}): -13.0013734490375 -13.0013734497868
+   <x>/(B0/2) = 0.999999999930035  <y>/(-B0/2) = 0.99999999999921  <K>/B0 = 1.0  <xy>/(s B0/8) = 1.0
+==== E2: C0 from Feynman parameters, ratio, F^(1), r_V ====
+Feynman combination = l^2 - x2 x3 s ... (with x1 = 1-x2-x3): OK (0)
+C0 Feynman-parameter form = note's form: OK (0)
+   C0/B0 * (-s) = 2 - 1/epsilon  => C0/B0 = (1 - 2*epsilon)/(epsilon*s)
+C0/B0 = +(1-2eps)/(eps s): OK (0)
+C0/B0 = -2(D-3)/((D-4)s): OK (0)
+(D-7) + 4(D-3)/(D-4) = (D^2-7D+16)/(D-4): OK (0)
+(D^2-7D+16)/(D-4) = -(2-eps+2eps^2)/eps: OK (0)
+F^(1) closed = eq:rr form: OK (0)
+   e^{eps gE}Gamma(1+eps)Gamma(1-eps)^2/Gamma(1-2eps) = -pi**2*epsilon**2/12 + 1
+   (2-eps+2eps^2)/(1-2eps) = 8*epsilon**2 + 3*epsilon + 2
+   cos(pi eps) = -pi**2*epsilon**2/2 + 1
+   lnGamma(1-eps) = pi**2*epsilon**2/12 + EulerGamma*epsilon ; lnGamma(1+eps) = pi**2*epsilon**2/12 - EulerGamma*epsilon
+r_V/(C_F a) = -4/eps^2 - 6/eps - 16 + 7pi^2/3: OK (0)
+   pi^2 from cos:  2*pi**2 ; from Gamma's: pi**2/3
+   -2 x 8 = -16
+==== E1: Dirichlet integrals for r_R ====
+   integrand terms: D*y13/y23 + 2*D + D*y23/y13 - 2*y13/y23 - 8 - 4/y23 - 2*y23/y13 - 4/y13 + 4/(y13*y23)
+   term -8  exponents (y13,y23,y12): (1 - epsilon, 1 - epsilon, 1 - epsilon)
+   term -4/y13  exponents (y13,y23,y12): (-epsilon, 1 - epsilon, 1 - epsilon)
+   term -4/y23  exponents (y13,y23,y12): (1 - epsilon, -epsilon, 1 - epsilon)
+   term 2*D  exponents (y13,y23,y12): (1 - epsilon, 1 - epsilon, 1 - epsilon)
+   term -2*y13/y23  exponents (y13,y23,y12): (2 - epsilon, -epsilon, 1 - epsilon)
+   term -2*y23/y13  exponents (y13,y23,y12): (-epsilon, 2 - epsilon, 1 - epsilon)
+   term 4/(y13*y23)  exponents (y13,y23,y12): (-epsilon, -epsilon, 1 - epsilon)
+   term D*y13/y23  exponents (y13,y23,y12): (2 - epsilon, -epsilon, 1 - epsilon)
+   term D*y23/y13  exponents (y13,y23,y12): (-epsilon, 2 - epsilon, 1 - epsilon)
+sum of Dirichlet terms = sum of the four listed integrals: OK (0)
+   each / [Gamma(1-eps)Gamma(-eps)^2/Gamma(3-3eps)]: [4*(3*epsilon - 2)*(3*epsilon - 1), -4*epsilon*(epsilon - 1)**2, -4*epsilon**3, -8*epsilon*(3*epsilon - 2)]
+pieces = 4(2-3e)(1-3e), -4e(1-e)^2, -4e^3, 8e(2-3e): OK (0)
+sum of pieces = 4(2-6e+5e^2-2e^3) = 4(1-2e)(2-2e+e^2): OK (0)
+I = 4 Gamma(1-e)(1-2e)(2-2e+e^2)Gamma(-e)^2/Gamma(3-3e): OK (0)
+e^{eps gE}/Gamma(1-eps) * I = eq:rr closed form: OK (0)
+   (1-2e)(2-2e+e^2)/((2-3e)(1-3e)) = 19*epsilon**2/4 + 3*epsilon/2 + 1
+   e^{eps gE}Gamma(1-eps)^2/Gamma(1-3eps) = -7*pi**2*epsilon**2/12 + 1
+rR closed = (4/eps^2) rat GR: OK (0)
+r_R/(C_F a) = 4/eps^2 + 6/eps + 19 - 7pi^2/3: OK (0)
+   bare Dirichlet sum I (no e^{eps gE}/Gamma(1-eps)) expands to: -2*pi**2 + 19 + 6/epsilon + 4/epsilon**2
+   r_V + r_R = 3
+-- numerical Dirichlet check at eps=-0.4 --
+    -8 : numeric (-0.720396994413 - 2.72447482433e-53j)  Dirichlet -0.720396994413
+    -4/y13 : numeric (-2.88158797765 - 4.57056795025e-53j)  Dirichlet -2.88158797765
+    -4/y23 : numeric (-2.88158797765 - 8.48773196194e-54j)  Dirichlet -2.88158797765
+    2*D : numeric (0.864476393295 + 3.26936978919e-53j)  Dirichlet 0.864476393295
+    -2*y13/y23 : numeric (-0.630347370111 - 1.7799616762e-54j)  Dirichlet -0.630347370111
+    -2*y23/y13 : numeric (-0.630347370111 - 1.46368011054e-53j)  Dirichlet -0.630347370111
+    4/(y13*y23) : numeric (15.8487338771 + 6.79747077259e-53j)  Dirichlet 15.8487338771
+    D*y13/y23 : numeric (1.51283368827 + 4.27190802287e-54j)  Dirichlet 1.51283368827
+    D*y23/y13 : numeric (1.51283368827 + 3.51283590463e-53j)  Dirichlet 1.51283368827
+==== E1: phase space and MS-bar factor ====
+total Phi_3 (recursion) = Phi_2 * s/(16pi^2)(4pi/s)^eps/Gamma(1-eps) * Dirichlet(1-e,1-e,1-e): OK (0)
+   Phi_2 direct / note (numeric at eps=0.17, s=2.3): 1.0000000000000000000
+   g0^2/(16pi^2) (4pi/s)^eps / [a e^{eps gE}(mu^2/s)^eps] (numeric) = 1.0000000000000000000
+   g0^2 * i pi^{D/2}/(2pi)^D / (i a e^{eps gE} mu^{2eps}) (numeric) = 1.0000000000000000000
+==== E4: normalization of eq:sumtree (D) at D = 4 ====
+   -g H2 at D=4 = 4*d_F*s
+   Phi2 at D=4 = 1/(8*pi) ; |k|/(16 pi^2 sqrt s) * 4 pi with |k| = sqrt(s)/2: 1/(8*pi)
+   dPhi_3 at D=4: Phi2 * s/(16 pi^2) = s/(128*pi**3) ; 8 pi^2/(8 (2pi)^5) * (s/4) = s/(128*pi**3)
+ratio = C_F alpha_s/(2 pi) f: OK (0)
+   ratio = C_F*f*g**2/(8*pi**2)
+   (lepton average checked in text already; not part of E4)

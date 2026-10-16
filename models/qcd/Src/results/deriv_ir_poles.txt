@@ -1,0 +1,32 @@
+(1) master formula C0 = e^{eps gE} Gamma(1+eps)/(2 eps) int_0^1 dx (P_x^2)^(-1-eps)  vs the standard
+    two-parameter form  -e^{eps gE} Gamma(1+eps) int dx dy Delta^(-1-eps), Delta=(x p_i - y p_j)^2  (eps = -0.3, Euclidean)
+  massless pair, 2p_i.p_j=-3: -5.06757145723222  vs  -5.06757145723221   |diff| = 8.88e-16  OK
+  massive pair, m=1, 2p_i.p_j=-5: -1.39043100922964  vs  -1.39043100922962   |diff| = 1.6e-14  OK
+  massive-massless, m=1, 2p_I.p_j=-3: -3.29190746104827  vs  -3.29190746104827   |diff| = 4.44e-16  OK
+  massless master vs closed form (s=-3, eps=-0.2): -10.231459859226  vs  -10.231459859226   |diff| = 0.0  OK
+(2) pole parts of 2 s_ij C0 (mu = m = 1)
+  massive pair, s34=-5.0: s34 int dx/P_x^2 vs -2 b coth b: -3.41903623915482  vs  -3.41903623915482   |diff| = 7.89e-31  OK
+  massive pair, s34=-3.0: s34 int dx/P_x^2 vs -2 b coth b: -2.58245364578402  vs  -2.58245364578402   |diff| = 3.94e-31  OK
+  massive pair, s=10 (physical, -i0): s34 int dx/(P_x^2-i0) vs -2 beta34 coth beta34: (-4.2622172820136 + 6.48924588155653j)  vs  (-4.26221728201576 + 6.48924588155778j)   |diff| = 2.5e-12  OK
+    beta34 coth beta34 with beta34 = i pi - b, cosh b=(s-2)/2: (2.13110864100788 - 3.24462294077889j)  vs  (2.13110864100788 - 3.24462294077889j)   |diff| = 5.58e-31  OK
+  sympy: int_0^1 (f(x)-f(0))/x dx = (log(c) - 2*log(m))/c   [expect log(c/m^2)/c]: True
+    massive-massless: numeric J(eps=-0.1) vs 2F1 form: 3.19332175534291  vs  3.19332175534291   |diff| = 0.0  OK
+    massive-massless: coefficient of 1/eps^2: 1.0  vs  1   |diff| = 2.86e-30  OK
+    massive-massless: coefficient of 1/eps  (2 ln(m mu/c)): -2.77258872223978  vs  -2.77258872223978   |diff| = 1.58e-30  OK
+(3) gamma_q from the massless quark form factor F1 = C_F a [(D-7) B0 - 2 s C0] (app:ee), mu^2 = -s
+  poles of (D-7)B0 - 2sC0      : -2 /eps^2 , -3 /eps
+  of which T1.T2 * 2 s C0 (=-C_F 2sC0) gives: -2 /eps^2 , 0 /eps
+  remainder (gamma_1+gamma_2)/(2 eps) with gamma_q = -3 C_F: -3/eps  -> OK
+(4) delta(1-z) coefficients c_i of P_ii (number and momentum sum rules), gamma_i = -2 c_i
+  c_q = 3*C_F/2  c_g = 11*C_A/6 - 2*T_F*n_l/3  (expect 3C_F/2, beta0^(nl)/2 = 11C_A/6 - 2T_F n_l/3);  quark momentum sum rule: 0
+  gamma_q = -2c_q = -3*C_F , gamma_g = -2c_g = -11*C_A/3 + 4*T_F*n_l/3
+(5) <M0|Z^(1)|M0> against tab:scat (SU(3), g = 1, m = mu = 1, s = 10, t = -3; n_l = 5)
+  (A) sum|M0|^2 (D=4) = 11.52 [tab 11.52], colour conservation residues ['0.0', '1.58e-30']
+  (A) KW_-2: -30.72  vs  -30.72   |diff| = 0.0  OK
+  (A) KW_-1: (50.8898930292475 + 24.5230678823757j)  vs  (50.88989 + 24.52307j)   |diff| = 3.7e-6  OK
+      split of KW_-1: Born O(eps) x double pole = 42.6666666667, <Gamma0>/2 = (8.22322636258 + 24.5230678824j), <Gamma0>/B(4) = (1.427643466 + 4.257477063j), dB/dD = 8.0
+  (B) sum|M0|^2 (D=4) = 61.6059259259 [tab 61.6059], colour conservation residues ['0.0', '-2.52e-29']
+  (B) KW_-2: -369.635555555556  vs  -369.6356   |diff| = 4.44e-5  OK
+  (B) KW_-1: (1104.7822788533 - 834.722778143134j)  vs  (1104.78228 - 834.72278j)   |diff| = 2.18e-6  OK
+      split of KW_-1: Born O(eps) x double pole = 745.813333333, <Gamma0>/2 = (358.96894552 - 834.722778143j), <Gamma0>/B(4) = (11.65371481 - 27.098782j), dB/dD = 62.15111111
+ALL CHECKS PASSED

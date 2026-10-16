@@ -1,0 +1,5 @@
+(a) descriptions: 23 gluon, 7 ghost
+(a) two-loop 1PI diagrams: gluon 23, ghost 7
+(d) Kira: True, masters {GLI[k2, {1, 0, 0, 1, 1}], GLI[k2, {1, 1, 1, 1, 0}]}
+(e) sum of diagrams - Src/results/twoloop_reduction.m: gluon 0, ghost 0
+(f) wrote results/twoloop_perdiag.m

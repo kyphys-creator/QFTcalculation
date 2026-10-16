@@ -1,0 +1,8 @@
+T1: int = (-64*Pi^2)/21 (density spherically symmetric: True);  reduction gives (-64*Pi^2)/21;  equal: True
+T2: int = (-512*Pi^2)/49 (density spherically symmetric: True);  reduction gives (-512*Pi^2)/49;  equal: True
+T3: int = (1536*Pi^2)/245 (density spherically symmetric: True);  reduction gives (1536*Pi^2)/245;  equal: True
+T4: int = (-256*Pi^2)/245 (density spherically symmetric: True);  reduction gives (-256*Pi^2)/245;  equal: True
+T5: int = (3072*Pi^2)/245 (density spherically symmetric: True);  reduction gives (3072*Pi^2)/245;  equal: True
+T6: int = (4096*Pi^2)/735 (density spherically symmetric: True);  reduction gives (4096*Pi^2)/735;  equal: True
+T7: int = (-704*Pi^2)/735 (density spherically symmetric: True);  reduction gives (-704*Pi^2)/735;  equal: True
+sum = (2176*Pi^2)/245 = (48 P + 8 R)/35 = (2176*Pi^2)/245;  A_4 = sum/(24 * 16 pi^2) = 17/735 (17/735 = 17/735)

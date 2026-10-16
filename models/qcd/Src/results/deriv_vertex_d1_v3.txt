@@ -1,0 +1,16 @@
+(R7) raw (d1) pole: InputForm[(I/32*(CA - 2*CF)*(-1 + eta)*gS^3*GA[mu]*SUNT[a])/Pi^2]
+(R7) raw (d2) pole: InputForm[((-3*I)/64*CA*(-2 + eta)*gS^3*GA[mu]*SUNT[a])/Pi^2]
+(R7) quark vertex: (d1) pole/(g^2/K) = InputForm[-1/2*(CA*xi) + CF*xi]   (expect (CF - CA/2) xi = InputForm[-1/2*xi/SUNN])
+(R7) quark vertex: (d2) pole/(g^2/K) = InputForm[(3*CA*(1 + xi))/4]   (expect 3 CA (1 + xi)/4)
+(R8 hand) gluon triangle: c = InputForm[(CA*(4 + 9*xi))/8],  pole - c tree = 0
+(R8 hand) ghost triangles (2): c = InputForm[-1/24*CA],  pole - c tree = 0
+(R8 hand) ghost triangle, orientation 1 alone: c = InputForm[-1/12*CA],  pole - c tree = (CA*gS^3*(Pair[LorentzIndex[mu], Momentum[p1]]*Pair[LorentzIndex[nu], LorentzIndex[rho]] + Pair[LorentzIndex[mu], Momentum[p2]]*Pair[LorentzIndex[nu], LorentzIndex[rho]] - Pair[LorentzIndex[mu], LorentzIndex[rho]]*Pair[LorentzIndex[nu], Momentum[p1]] - Pair[LorentzIndex[mu], LorentzIndex[nu]]*Pair[LorentzIndex[rho], Momentum[p2]])*SUNF[SUNIndex[a], SUNIndex[b], SUNIndex[c]])/(128*Pi^2)
+(R8 hand) bubbles with a 4g vertex (3): c = InputForm[(-3*CA*(5 + xi))/8],  pole - c tree = 0
+(R8 hand) quark triangles (2 orientations, one flavour): c = InputForm[2/3],  pole - c tree = 0
+(R8 hand) gluon + ghost + bubbles = InputForm[(-17*CA)/12 + (3*CA*xi)/4]   (expect CA (3 xi/4 - 17/12))
+(R8 FeynArts) 18 diagrams; classes: {{quark, 12}, {ghost, 2}, {gluon triangle, 1}, {bubble, 3}}
+(R8 FeynArts) distinct propagator momenta per diagram: {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2}
+(R8 FeynArts) gluon triangle (1 diagrams): c = InputForm[(CA*(4 + 9*xi))/8],  pole - c tree = 0
+(R8 FeynArts) ghost (2 diagrams): c = InputForm[-1/24*CA],  pole - c tree = 0
+(R8 FeynArts) bubble (3 diagrams): c = InputForm[(-3*CA*(5 + xi))/8],  pole - c tree = 0
+(R8 FeynArts) quark (12 diagrams): c = InputForm[4],  pole - c tree = 0

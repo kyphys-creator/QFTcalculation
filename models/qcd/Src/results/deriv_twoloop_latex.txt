@@ -1,0 +1,28 @@
+--- table 1: 11 class rows, 7 sum rows
+a_gc       (a) グルーオンとゴーストのループの挿入（2）       b, s, poles = pipeline: True
+c_se       ゴーストのループへのゴーストの自己エネルギーの挿入（2）   b, s, poles = pipeline: True
+b          (b) グルーオンだけの図（1）               b, s, poles = pipeline: True
+d_tri      (d) とゴーストの三角形（3）               b, s, poles = pipeline: True
+ef         (e)、(f) など4グルーオンの頂点を含む図（4）     b, s, poles = pipeline: True
+a_q        (a) クォークのループの挿入（1）             b, s, poles = pipeline: True
+q_tri      クォークの三角形（2）                    b, s, poles = pipeline: True
+c_CA       (c) の $C_A$ の部分                b, s, poles = pipeline: True
+c_CF       (c) クォークのループ（1）                b, s, poles = pipeline: True
+q_se       クォークのループへのクォークの自己エネルギーの挿入（2）   b, s, poles = pipeline: True
+scaleless  スケールのない図（5）                    b, s, poles = pipeline: True
+   block {$C_A^2$ の部分: 和 = sum of rows: True
+   block {$C_A^2$ の部分: z row = 和 + 対抗項: True  (-13/8, 59/16)
+   block {$C_AT_Fn_f$ の部分: 和 = sum of rows: True
+   block {$C_AT_Fn_f$ の部分: z row = 和 + 対抗項: True  (1, -5/2)
+   block {$C_FT_Fn_f$ の部分（対抗項は0）: z row = 和 + 対抗項: True  (0, -2)
+--- table 2: 6 class rows, 5 sum rows
+g_gc       (g) グルーオンとゴーストのループの挿入（2）       b, s, poles = pipeline: True
+c_se_line  ゴーストの線へのゴーストの自己エネルギーの挿入（1）     b, s, poles = pipeline: True
+h          (h) 3グルーオンの頂点（1）               b, s, poles = pipeline: True
+crossed    ゴーストの線で2本のグルーオンが交差する図（1）       b, s, poles = pipeline: True
+g_q        (g) クォークのループの挿入（1）             b, s, poles = pipeline: True
+scaleless  スケールのない図（1）                    b, s, poles = pipeline: True
+   block {$C_A^2$ の部分: 和 = sum of rows: True
+   block {$C_A^2$ の部分: z row = 和 + 対抗項: True  (35/32, -95/96)
+   block {$C_AT_Fn_f$ の部分: z row = 和 + 対抗項: True  (-1/2, 5/12)
+ALL OK

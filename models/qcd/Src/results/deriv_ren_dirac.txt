@@ -1,0 +1,10 @@
+OK   tr[g^mu (l+m) g^nu (l'+m)] = 4[l^mu l'^nu + l^nu l'^mu - g^{mu nu}(l.l' - m^2)]
+OK   g_{mu nu} tr = 4[(2-D) l.l' + D m^2]
+OK   k_mu k_nu tr = 4[2(k.l)(k.l') - k^2(l.l' - m^2)]
+OK   gamma^rho (k+m) gamma_rho = -(D-2) k + D m
+OK   gamma^rho l gamma^mu l gamma_rho = -(D-2) l gamma^mu l
+OK   l gamma^mu l = 2 l^mu lslash - l^2 gamma^mu
+OK   l l gamma^mu l l = l^4 gamma^mu
+OK   l gamma^mu l -> -(D-2)/D l^2 gamma^mu
+OK   (d1) Feynman part (D-2)^2/D -> 1 at D=4 and total (D-2)^2/D - eta -> xi
+OK   (d2): gamma^s l gamma^r [g_{mu r} l_s - 2 g_{r s} l_mu + g_{s mu} l_r] = 2 l^2 gamma_mu + 2(D-2) lslash l_mu

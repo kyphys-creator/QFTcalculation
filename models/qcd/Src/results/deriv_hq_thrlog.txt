@@ -1,0 +1,61 @@
+(1) symbolic: R + C + V at threshold (units a = g^2/K, ratio to the D-dim Born sigma0_D(s)), mu = m = 1
+  R poles   : 4*C_i /eps^2 , -16*C_i*ell - C_i*log(16777216) + 16*C_i + 2*T_H2 /eps
+  C poles   : 16*C_i*ell - 16*C_i + C_i*log(65536) + 4*c_i /eps
+  sum of 1/eps^2: 0 ;  sum of 1/eps: 4*c_i + 2*gamma_i   -> poles cancel iff gamma_i = -2 c_i
+  ln(beta) in C finite part: 0 (none)
+  finite part of R + C in units a:  Lambda^2 coeff = 8*C_i ;  Lambda coeff = -32*C_i - 4*T_H2
+  in units alpha_s/pi = 4a:   2*C_i Lambda^2 + -8*C_i - T_H2 Lambda   [eq:hqthr: 2C_i, -(8C_i + w8 C_A)]
+  (constant of R + C, units alpha_s/pi; part of a_ij together with the virtual constant): -2*C_i*polygamma(1, 3/2) + pi**2*C_i/12 + 8*C_i + 3*T_H2
+(2) the elementary integrals
+  int_{-1}^1 (1-c^2)^(a-1) dc = 2^(2a-1) Gamma(a)^2/Gamma(2a): ['-2.1e-10', '0.0']
+  int_0^1 [(1-u)^(1/2-eps) - 1]/u du = -(psi(3/2-eps) + gE): ['0.0', '9.86e-32']
+  int_0^1 dw w^(-1-2eps) (1-w)^(1/2-eps) = Gamma(-2eps)Gamma(3/2-eps)/Gamma(3/2-3eps) (eps=-0.2): -4.76e-14
+  -J^2 omega^2 = (-4*C_i - T_H2*cth**2 + T_H2)/(cth**2 - 1)   [expect 4C_i/(1-c^2) - T_H^2]: True
+  prefactor / (2 a e^{eps gE}/Gamma(1-eps)) = 1
+  gg octet fraction w8 = (N - 2)*(N + 2)/(N**2 - 2)  (SU(3): 5/7 )
+(3) leading-power predictions vs the pieces K sigma_V, K sigma_C, K sigma_R of hq_assemble.wl (work/hq/assemble_*.log)
+  channel qq: C_i = 4/3, w8 = 1, gamma_i = -4, c_i = 2
+    beta = 0.02:
+      K sigma_V  eps^-2: log -2.35659361e-04 pred -2.35659361e-04 rel 0.0e+00;  eps^-1: log -1.58399059e-03 pred -1.58413987e-03 rel 9.4e-05
+      K sigma_C  eps^-1: log -3.62327653e-03 pred -3.62338129e-03 rel 2.9e-05;  eps^0: log -1.94273830e-02 pred -1.94280552e-02 rel 3.5e-05
+      K sigma_R  eps^-2: log +2.35659361e-04 pred +2.35659361e-04 rel 0.0e+00;  eps^-1: log +5.20726712e-03 pred +5.20742687e-03 rel 3.1e-05;  eps^0: log +5.69968266e-02 pred +5.70006972e-02 rel 6.8e-05
+      virtual finite part (units a) minus Coulomb 4 C^Coul pi^2/(2 beta): +8.955823   (tends to a constant: no ln beta in the virtual correction)
+    beta = 0.05:
+      K sigma_V  eps^-2: log -5.87499104e-04 pred -5.87499104e-04 rel 1.8e-16;  eps^-1: log -2.86878430e-03 pred -2.87111288e-03 rel 8.1e-04
+      K sigma_C  eps^-1: log -6.87818093e-03 pred -6.87981448e-03 rel 2.4e-04;  eps^0: log -2.39937679e-02 pred -2.40012531e-02 rel 3.1e-04
+      K sigma_R  eps^-2: log +5.87499104e-04 pred +5.87499104e-04 rel 1.8e-16;  eps^-1: log +9.74696523e-03 pred +9.74945677e-03 rel 2.6e-04;  eps^0: log +7.95166559e-02 pred +7.95633115e-02 rel 5.9e-04
+      virtual finite part (units a) minus Coulomb 4 C^Coul pi^2/(2 beta): +8.921917   (tends to a constant: no ln beta in the virtual correction)
+    beta = 0.1:
+      K sigma_V  eps^-2: log -1.16324580e-03 pred -1.16324580e-03 rel 0.0e+00;  eps^-1: log -4.04294876e-03 pred -4.06146442e-03 rel 4.6e-03
+      K sigma_C  eps^-1: log -1.03838259e-02 pred -1.03968020e-02 rel 1.2e-03;  eps^0: log -2.12056001e-02 pred -2.12469736e-02 rel 2.0e-03
+      K sigma_R  eps^-2: log +1.16324580e-03 pred +1.16324580e-03 rel 0.0e+00;  eps^-1: log +1.44267747e-02 pred +1.44465754e-02 rel 1.4e-03;  eps^0: log +8.67806203e-02 pred +8.70686547e-02 rel 3.3e-03
+      virtual finite part (units a) minus Coulomb 4 C^Coul pi^2/(2 beta): +8.893249   (tends to a constant: no ln beta in the virtual correction)
+  channel gg: C_i = 3, w8 = 5/7, gamma_i = -23/3, c_i = 23/6
+    beta = 0.02:
+      K sigma_V  eps^-2: log -1.74175136e-04 pred -1.74175136e-04 rel 0.0e+00;  eps^-1: log -9.98715679e-04 pred -9.98746087e-04 rel 3.0e-05
+      K sigma_C  eps^-1: log -2.71691485e-03 pred -2.71673596e-03 rel 6.6e-05;  eps^0: log -1.45786365e-02 pred -1.45770768e-02 rel 1.1e-04
+      K sigma_R  eps^-2: log +1.74175136e-04 pred +1.74175136e-04 rel 0.0e+00;  eps^-1: log +3.71563053e-03 pred +3.71541237e-03 rel 5.9e-05;  eps^0: log +3.88964897e-02 pred +3.88909109e-02 rel 1.4e-04
+      virtual finite part (units a) minus Coulomb 4 C^Coul pi^2/(2 beta): +30.408415   (tends to a constant: no ln beta in the virtual correction)
+    beta = 0.05:
+      K sigma_V  eps^-2: log -4.36738183e-04 pred -4.36738183e-04 rel 1.2e-16;  eps^-1: log -1.70707937e-03 pred -1.70755777e-03 rel 2.8e-04
+      K sigma_C  eps^-1: log -5.21418764e-03 pred -5.21140570e-03 rel 5.3e-04;  eps^0: log -1.82824818e-02 pred -1.82633200e-02 rel 1.0e-03
+      K sigma_R  eps^-2: log +4.36738183e-04 pred +4.36738183e-04 rel 1.2e-16;  eps^-1: log +6.92126700e-03 pred +6.91787026e-03 rel 4.9e-04;  eps^0: log +5.30190186e-02 pred +5.29508385e-02 rel 1.3e-03
+      virtual finite part (units a) minus Coulomb 4 C^Coul pi^2/(2 beta): +30.426195   (tends to a constant: no ln beta in the virtual correction)
+    beta = 0.1:
+      K sigma_V  eps^-2: log -8.82640948e-04 pred -8.82640948e-04 rel 0.0e+00;  eps^-1: log -2.24865972e-03 pred -2.25258024e-03 rel 1.7e-03
+      K sigma_C  eps^-1: log -8.10684680e-03 pred -8.08496802e-03 rel 2.7e-03;  eps^0: log -1.70937592e-02 pred -1.69732513e-02 rel 7.0e-03
+      K sigma_R  eps^-2: log +8.82640948e-04 pred +8.82640948e-04 rel 0.0e+00;  eps^-1: log +1.03555065e-02 pred +1.03286774e-02 rel 2.6e-03;  eps^0: log +5.72082405e-02 pred +5.67814254e-02 rel 7.5e-03
+      virtual finite part (units a) minus Coulomb 4 C^Coul pi^2/(2 beta): +30.347162   (tends to a constant: no ln beta in the virtual correction)
+(4) exact f^(1) (this work = Czakon-Mitov to 2e-8, results/hq_f1_*.csv) against eq:hqthr with the constants a_ij of
+    Czakon-Mitov Eqs. (26), (27) (hq_lib.py); the residual divided by f0/(4 pi^2) must vanish as beta -> 0
+  qq  beta =  0.02:  f1 = 0.025781207034  eq:hqthr = 0.025788525266  residual/(f0/4pi^2) = -0.04141  (residual/beta = -2.070;  ln(8 beta^2) = -5.745)
+  qq  beta =  0.05:  f1 = 0.043261427788  eq:hqthr = 0.043333815758  residual/(f0/4pi^2) = -0.16429  (residual/beta = -3.286;  ln(8 beta^2) = -3.912)
+  qq  beta =  0.10:  f1 = 0.055268436870  eq:hqthr = 0.055684048993  residual/(f0/4pi^2) = -0.47638  (residual/beta = -4.764;  ln(8 beta^2) = -2.526)
+  qq  beta =  0.15:  f1 = 0.058459287138  eq:hqthr = 0.059594532498  residual/(f0/4pi^2) = -0.88227  (residual/beta = -5.882;  ln(8 beta^2) = -1.715)
+  qq  beta =  0.20:  f1 = 0.057098446351  eq:hqthr = 0.059367732949  residual/(f0/4pi^2) = -1.35478  (residual/beta = -6.774;  ln(8 beta^2) = -1.139)
+  gg  beta =  0.02:  f1 = 0.025994974326  eq:hqthr = 0.025992007046  residual/(f0/4pi^2) = +0.05111  (residual/beta = +2.555;  ln(8 beta^2) = -5.745)
+  gg  beta =  0.05:  f1 = 0.037130814880  eq:hqthr = 0.037097377151  residual/(f0/4pi^2) = +0.22969  (residual/beta = +4.594;  ln(8 beta^2) = -3.912)
+  gg  beta =  0.10:  f1 = 0.044953536463  eq:hqthr = 0.044753383012  residual/(f0/4pi^2) = +0.68030  (residual/beta = +6.803;  ln(8 beta^2) = -2.526)
+  gg  beta =  0.15:  f1 = 0.048094312339  eq:hqthr = 0.047553754315  residual/(f0/4pi^2) = +1.20460  (residual/beta = +8.031;  ln(8 beta^2) = -1.715)
+  gg  beta =  0.20:  f1 = 0.049305815734  eq:hqthr = 0.048266903766  residual/(f0/4pi^2) = +1.69874  (residual/beta = +8.494;  ln(8 beta^2) = -1.139)
+ALL SYMBOLIC CHECKS PASSED

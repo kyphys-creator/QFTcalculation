@@ -1,0 +1,9 @@
+T^c T^b T^c + T_F/N T^b: 0
+f^{acd}f^{bcd} - 2 T_F N delta^{ab}: 0
+tr([Ta,Tc][Tb,Tc]) + 2 T_F^2 N delta^{ab}: 0
+four traces: {0, 0, 0, 0}
+f^{abc} T^b T^c - i/2 C_A T^a: 0
+sum c_s c_s / (C_A^2 d_A): 1
+sum c_s c_t / (C_A^2 d_A): 1/2
+sum c_t c_t / (C_A^2 d_A): 1
+sum (c_u - c_t + c_s)^2 (Jacobi, expect 0): 0

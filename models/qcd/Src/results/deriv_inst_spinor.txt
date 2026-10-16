@@ -1,0 +1,9 @@
+(a) s sbar = 1 + i eta.sigma: True;  sbar s = 1 + i etabar.sigma: True;  i sigma^a s_nu = eta_(a mu nu) s_mu: True;  etabar.eta = 0: True;  eta_(a al mu) eta_(b al nu) = dd + eps eta: True;  tr(eta_a eta_b eta_c eta_d) = 4(dd - dd + dd): True
+    G^a_mn = -4 eta f^2: True
+(b) translation mode a_mu = G_(1 mu): (-D^2 + +2i ad G) a = 0: True
+(b) translation mode a_mu = G_(1 mu): (-D^2 + -2i ad G) a = 0: False
+(b) translation mode a_mu = G_(4 mu): (-D^2 + +2i ad G) a = 0: True
+(b) translation mode a_mu = G_(4 mu): (-D^2 + -2i ad G) a = 0: False
+(c) s_mu (M_A a)_mu = D D^+ (s.a) [M_A with +2i ad G]: True
+    D^+ D = -D^2 1_2 on s.a: True
+    D^+(s.a) = -D.a - (i/2) etabar sigma (D a - D a): True

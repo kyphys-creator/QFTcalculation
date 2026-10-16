@@ -1,0 +1,7 @@
+gamma^mu a gamma^al b gamma_mu = -2 b gamma^al a + (4-D) a gamma^al b: True
+gamma^al x y gamma_al = 4 x.y - (4-D) x y: True
+g_ab N^ab (FeynCalc) - text: 0
+k_a k_b N^ab (FeynCalc) - text: 0
+(l1-q) k (l2-q) = D3 (l2-q) - D4 (l1-q): True
+l2 k l1 = D1 l2 - D2 l1: True
+tr(T^a T^c T^b T^c) / delta^ab = (-CA + 2*CF)/4  (expect (C_F - C_A/2)/2)

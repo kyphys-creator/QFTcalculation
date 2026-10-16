@@ -1,0 +1,17 @@
+(i) clover at x0 = [0.3, -0.2, 0.5, 0.1]
+    (mu,nu) = (1,2), a = 0.04: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 6.16e-04  (size of (1/6)(D^2+D^2)G: 0.900)
+    (mu,nu) = (1,2), a = 0.02: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 1.54e-04  (size of (1/6)(D^2+D^2)G: 0.900)
+    (mu,nu) = (1,2), a = 0.01: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 3.85e-05  (size of (1/6)(D^2+D^2)G: 0.900)
+    (mu,nu) = (1,4), a = 0.04: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 8.61e-04  (size of (1/6)(D^2+D^2)G: 0.998)
+    (mu,nu) = (1,4), a = 0.02: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 2.15e-04  (size of (1/6)(D^2+D^2)G: 0.998)
+    (mu,nu) = (1,4), a = 0.01: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 5.38e-05  (size of (1/6)(D^2+D^2)G: 0.998)
+    (mu,nu) = (3,4), a = 0.04: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 5.89e-04  (size of (1/6)(D^2+D^2)G: 0.529)
+    (mu,nu) = (3,4), a = 0.02: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 1.48e-04  (size of (1/6)(D^2+D^2)G: 0.529)
+    (mu,nu) = (3,4), a = 0.01: max|(F^cl - G)/a^2 - (1/6)(D_mu^2+D_nu^2)G| = 3.69e-05  (size of (1/6)(D^2+D^2)G: 0.529)
+(ii) sum_{rho sig} tr(D_rho G_{rho sig})^2 = 576*(x1**2 + x2**2 + x3**2 + x4**2)/(x1**2 + x2**2 + x3**2 + x4**2 + 1)**6
+     its integral = 96*pi**2/5
+     eps tr[G (D_rho^2 + D_sig^2) G] = -1536/(x1**2 + x2**2 + x3**2 + x4**2 + 1)**6
+     4 sum tr[G_{rho sig} D_rho^2 G_{rho sig}] equal pointwise: True
+     int eps tr[G (D^2+D^2) G] = -384*pi**2/5  vs -4 x 96*pi**2/5 = -384*pi**2/5
+     Q_cl - Q = (a^2/6)(2/(32 pi^2)) x int = -4/5 a^2
+(iii) lattice: Q_clover - continuum = -0.8026 a^2 +0.2077 a^4  (expected -4/5 a^2)
