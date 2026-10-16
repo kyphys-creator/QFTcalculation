@@ -9,7 +9,8 @@
 #   6. hq_assemble.wl: f1 per channel (the poles cancel) -> results/hq_f1_<chan>.csv
 #   7. hq_cm.wl: the exact f1 of Czakon-Mitov at the grid and at the nodes of the hadronic integrals (only if ../Ref/cm08_src exists;
 #      see hq_cm.wl for the download) -> results/hq_cm.csv, results/hq_cm_nodes.csv
-#   8. hq_mg5.sh (unless NO_MG5=1; needs work/QCD_NLO_UFO_amc from ee_mg5.py), hq_hadronic.py, hq_plot.py
+#   8. hq_mg5.sh, hq_mg5_fix.sh (MG5 with the p pbar fix; unless NO_MG5=1; needs work/QCD_NLO_UFO_amc from ee_mg5.py), hq_hadronic.py,
+#      hq_plot.py
 # About 4 hours on 8 cores (AMFlow about 2 hours, the gg matrix element about 1 hour, aMC@NLO 40 minutes).
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
@@ -46,6 +47,6 @@ for c in qq qg gg; do wolframscript -file hq_assemble.wl $c 2>&1 | grep -E "f1 =
 echo "=== Czakon-Mitov"
 if [ -f ../Ref/cm08_src/x/NLOXSections.m ]; then wolframscript -file hq_cm.wl 2>&1 | grep -E "max|wrote"; else echo "  ../Ref/cm08_src missing: skipped"; fi
 echo "=== hadronic"
-if [ "${NO_MG5:-0}" != 1 ]; then ./hq_mg5.sh; fi
+if [ "${NO_MG5:-0}" != 1 ]; then ./hq_mg5.sh; ./hq_mg5_fix.sh; fi
 "$PY" hq_hadronic.py
 "$PY" hq_plot.py

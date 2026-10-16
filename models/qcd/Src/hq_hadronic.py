@@ -7,7 +7,8 @@
 # spline in ln rho below; with the switch at rho = 0.19 the error was 5e-4 of sigma at 13 TeV, checked with the exact f1 of hq_cm.wl), fbar1 and f0 from hq_lib.py, alpha_s at two loops from alpha_s(M_Z) = 0.119 (the value of the PDF; exact
 # implicit solution, Eq. (run2)), luminosities from the NNPDF2.3 NLO grid of MadGraph (hq_lumi.f).  Compared with aMC@NLO (hq_mg5.sh) at
 # 13 TeV (p p; mu = m/2, m, 2m) and 1.96 TeV (p pbar; mu = m): the second line after 'Total ABS and Total:' of the last res_<k>.txt.
-# Also the LO, the channel decomposition, and sigma with the MS-bar mass m(m) (App. L).  -> results/hq_hadronic.csv
+# Also the LO, the channel decomposition, sigma with the MS-bar mass m(m) (App. L), and the p pbar runs of the patched MG5 (hq_mg5_fix.sh,
+# work/hq/amc_fix, if present).  -> results/hq_hadronic.csv
 # Usage (from Src/): ~/miniforge3/envs/qft/bin/python hq_hadronic.py
 
 # %%
@@ -110,9 +111,9 @@ def sigma(Ecm, ipbar, mu, f1s, n=240, m=MT, shift=None):
 # ## aMC@NLO
 
 # %%
-def amc(run):
-    """sigma, error (pb) of Events/run_<run>[_LO]: the second line after 'Total ABS and Total:' of the last res_<k>.txt"""
-    files = glob.glob(os.path.join(WORK, "amc_had", "Events", f"run_{run:02d}*", "res_*.txt"))
+def amc(run, base="amc_had"):
+    """sigma, error (pb) of <base>/Events/run_<run>[_LO]: the second line after 'Total ABS and Total:' of the last res_<k>.txt"""
+    files = glob.glob(os.path.join(WORK, base, "Events", f"run_{run:02d}*", "res_*.txt"))
     last = max(files, key=lambda f: int(re.search(r"res_(\d+)\.txt", f).group(1)))
     m = re.search(r"Total:\s*\n\s*[0-9.eE+-]+\s*\+-\s*[0-9.eE+-]+[^\n]*\n\s*([0-9.eE+-]+)\s*\+-\s*([0-9.eE+-]+)", open(last).read())
     return float(m.group(1)), float(m.group(2))
@@ -142,19 +143,24 @@ if os.path.exists(os.path.join(HERE, "results", "hq_cm_nodes.csv")):
         ie = interp_error(E, ip)
         print(f"interpolation error of f1 at {E/1000} TeV (ipbar = {ip}), mu = m: " + ", ".join(f"{c} {v:+.4f}" for c, v in ie.items())
               + f" pb, total {sum(ie.values()):+.4f} pb")
-# (label, sqrt(S), ipbar of beam 2, mu, NLO runs, LO run)
-cases = (("LHC 13 TeV p p", 13000.0, 0, MT/2, (2,), None), ("LHC 13 TeV p p", 13000.0, 0, MT, (1, 10), 6), ("LHC 13 TeV p p", 13000.0, 0, 2*MT, (3,), None),
-         ("1.96 TeV p pbar", 1960.0, 1, MT/2, (7,), None), ("1.96 TeV p pbar", 1960.0, 1, MT, (4, 9, 12), 5), ("1.96 TeV p pbar", 1960.0, 1, 2*MT, (8,), None),
-         ("1.96 TeV p p", 1960.0, 0, MT, (11,), None), ("13 TeV p pbar", 13000.0, 1, MT, (13,), None))
+# (label, sqrt(S), ipbar of beam 2, mu, NLO runs, LO run, run of the patched MG5 (hq_mg5_fix.sh))
+cases = (("LHC 13 TeV p p", 13000.0, 0, MT/2, (2,), None, None), ("LHC 13 TeV p p", 13000.0, 0, MT, (1, 10), 6, None),
+         ("LHC 13 TeV p p", 13000.0, 0, 2*MT, (3,), None, None),
+         ("1.96 TeV p pbar", 1960.0, 1, MT/2, (7,), None, 3), ("1.96 TeV p pbar", 1960.0, 1, MT, (4, 9, 12), 5, 1), ("1.96 TeV p pbar", 1960.0, 1, 2*MT, (8,), None, None),
+         ("1.96 TeV p p", 1960.0, 0, MT, (11,), None, None), ("13 TeV p pbar", 13000.0, 1, MT, (13,), None, 2))
+HAVE_FIX = os.path.isdir(os.path.join(WORK, "amc_fix", "Events"))
 rows = []
-for name, E, ip, mu, runs, lorun in cases:
+for name, E, ip, mu, runs, lorun, fixrun in cases:
     a, r = sigma(E, ip, mu, f1s)
     lo = sum(v[0] for v in r.values()); nlo = sum(v[1] for v in r.values())
     m5, e5 = amc_mean(runs)
     l5, le5 = amc(lorun) if lorun else (float("nan"), float("nan"))
     print(f"{name}, mu = {mu}: alpha_s = {a:.6f};  LO {lo:.4f} (aMC {l5:.4f} +- {le5:.4f});  NLO {nlo:.4f} [gg {r['gg'][1]:.4f}, qq {r['qq'][1]:.4f}, "
           f"qg {r['qg'][1]:.4f}];  aMC@NLO {m5:.4f} +- {e5:.4f};  (ours - aMC)/error = {(nlo - m5)/e5:+.2f}, relative {(nlo - m5)/m5:+.2e}")
-    rows.append([name, mu, a, lo, l5, le5, r["gg"][1], r["qq"][1], r["qg"][1], nlo, m5, e5])
+    f5, fe5 = amc(fixrun, "amc_fix") if (fixrun and HAVE_FIX) else (float("nan"), float("nan"))
+    if fixrun and HAVE_FIX:
+        print(f"    patched MG5 (use_evpr for p pbar): {f5:.4f} +- {fe5:.4f};  (ours - patched)/error = {(nlo - f5)/fe5:+.2f}, relative {(nlo - f5)/f5:+.2e}")
+    rows.append([name, mu, a, lo, l5, le5, r["gg"][1], r["qq"][1], r["qg"][1], nlo, m5, e5, f5, fe5])
 # the MS-bar mass m(m) that corresponds to m_p = 172.5 at one loop: m_p = m (1 + 4 alpha_s(m)/(3 pi))
 mbar = brentq(lambda x: x*(1 + 4*alphas(x)/(3*np.pi)) - MT, 150, 172.5, xtol=1e-12)
 for name, E, ip in (("LHC 13 TeV", 13000.0, 0), ("Tevatron 1.96 TeV", 1960.0, 1)):
@@ -162,9 +168,10 @@ for name, E, ip in (("LHC 13 TeV", 13000.0, 0), ("Tevatron 1.96 TeV", 1960.0, 1)
         a, r = sigma(E, ip, k*mbar, f1s, m=mbar, shift=True)
         nlo = sum(v[1] for v in r.values()); lo = sum(v[0] for v in r.values())
         print(f"{name}, MS-bar mass m(m) = {mbar:.3f}, mu = {k} m(m): LO {lo:.3f}, NLO {nlo:.3f} pb")
-        rows.append([name + " MSbar", k*mbar, a, lo, float("nan"), float("nan"), r["gg"][1], r["qq"][1], r["qg"][1], nlo, float("nan"), float("nan")])
+        rows.append([name + " MSbar", k*mbar, a, lo, float("nan"), float("nan"), r["gg"][1], r["qq"][1], r["qg"][1], nlo, float("nan"), float("nan"),
+                     float("nan"), float("nan")])
 with open(os.path.join(HERE, "results", "hq_hadronic.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
-    w.writerow(["collider", "mu", "alpha_s", "LO", "amc_LO", "amc_LO_err", "NLO_gg", "NLO_qq", "NLO_qg", "NLO", "amc", "amc_err"])
+    w.writerow(["collider", "mu", "alpha_s", "LO", "amc_LO", "amc_LO_err", "NLO_gg", "NLO_qq", "NLO_qg", "NLO", "amc", "amc_err", "amc_fixed", "amc_fixed_err"])
     w.writerows(rows)
 print("wrote results/hq_hadronic.csv")
