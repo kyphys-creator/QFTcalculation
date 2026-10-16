@@ -1,0 +1,32 @@
+(a) eta self-dual: True, etabar anti-self-dual: True
+    F^a_{mu nu} (regular) = -4 eta_{a mu nu} rho^2/(x^2+rho^2)^2: True
+    self-dual: regular True, singular True;  D_mu F_mu nu = 0: regular True, singular True
+    (1/2) tr F F = (48*rho^4)/(rho^2 + x1^2 + x2^2 + x3^2 + x4^2)^4,  S g^2 = 8*Pi^2,  Q = (1/16 pi^2) int tr F Fdual = 1;  gauge-invariant density equal in both gauges: True
+    U = (x4 + i x.sigma)/|x|: A_sing = U^+ A_reg U + i U^+ dU: True;  A_reg -> i (dU) U^+ at |x| -> infinity: True
+    winding number (1/24 pi^2) int_{S^3} eps tr (U dU^+)^3 = 1
+(b) translation 1: D_mu a_mu = 0 True, linearized YM True, |a|^2 g^2 = 8*Pi^2 (density spherically symmetric: True)
+(b) translation 2: D_mu a_mu = 0 True, linearized YM True, |a|^2 g^2 = 8*Pi^2 (density spherically symmetric: True)
+(b) translation 3: D_mu a_mu = 0 True, linearized YM True, |a|^2 g^2 = 8*Pi^2 (density spherically symmetric: True)
+(b) translation 4: D_mu a_mu = 0 True, linearized YM True, |a|^2 g^2 = 8*Pi^2 (density spherically symmetric: True)
+(b) dilatation: D_mu a_mu = 0 True, linearized YM True, |a|^2 g^2 = 16*Pi^2 (density spherically symmetric: True)
+(b) gauge 1: D_mu a_mu = 0 True, linearized YM True, |a|^2 g^2 = 4*Pi^2*rho^2 (density spherically symmetric: True)
+(b) gauge 2: D_mu a_mu = 0 True, linearized YM True, |a|^2 g^2 = 4*Pi^2*rho^2 (density spherically symmetric: True)
+(b) gauge 3: D_mu a_mu = 0 True, linearized YM True, |a|^2 g^2 = 4*Pi^2*rho^2 (density spherically symmetric: True)
+(c) {gamma_mu, gamma_nu} = 2 delta: True
+    chi = (x^2+rho^2)^(-3/2) eps_{alpha i}: sb_mu D_mu chi = 0 True (the other chirality: s_mu D_mu chi = 0 False),  normalization c = rho/Pi (psi = c chi, int psi^+ psi = 1)
+(d) [L^1, L^2] = i L^3: True;  -r^2 Laplacian = -(r d_r)^2 - 2 r d_r + 4 L^2: True
+    t = 1/2: -D^2 = -lap + 8 L.T/(r^2+rho^2) + 3 r^2/(r^2+rho^2)^2: True
+    t = 1:   -D^2 = -lap + 8 L.T/(r^2+rho^2) + 8 r^2/(r^2+rho^2)^2: True
+    t=1/2 (l, l+1/2): psi0 = (r^(2*l)*(2 + 2*l + (1 + 2*l)*r^2))/((2 + 2*l)*Sqrt[1 + r^2]);  H psi0 = 0 for symbolic l: True;  psi0/r^(2l) -> 1 at r -> 0: 1;  psi0/r^(2j) at r -> infinity: (1 + 2*l)/(2 + 2*l)
+    t=1/2 (l, l-1/2): psi0 = r^(2*l)/Sqrt[1 + r^2];  H psi0 = 0 for symbolic l: True;  psi0/r^(2l) -> 1 at r -> 0: 1;  psi0/r^(2j) at r -> infinity: 1
+    t=1   (l, l+1): psi0 = (2*r^(2*l)*(((2 + 2*l)*(3 + 2*l))/2 + (1 + 2*l)*(3 + 2*l)*r^2 + ((1 + 2*l)*(2 + 2*l)*r^4)/2))/((2 + 2*l)*(3 + 2*l)*(1 + r^2));  H psi0 = 0 for symbolic l: True;  psi0/r^(2l) -> 1 at r -> 0: 1;  psi0/r^(2j) at r -> infinity: (1 + 2*l)/(3 + 2*l)
+    t=1   (l, l): psi0 = (r^(2*l)*(2 + 2*l + 2*l*r^2))/((2 + 2*l)*(1 + r^2));  H psi0 = 0 for symbolic l: True;  psi0/r^(2l) -> 1 at r -> 0: 1;  psi0/r^(2j) at r -> infinity: l/(1 + l)
+    t=1   (l, l-1): psi0 = r^(2*l)/(1 + r^2);  H psi0 = 0 for symbolic l: True;  psi0/r^(2l) -> 1 at r -> 0: 1;  psi0/r^(2j) at r -> infinity: 1
+(e) t = 1/2: sum_{l <= L} (2l+1)(2l+2) ln((2l+1)/(2l+2)) = -2 L^2 + -4 L + (1/6) ln L + Z, Z = -2 + Log[2]/6 + 2*Log[Glaisher]
+    alpha(1/2) = Z + 127/72 - (1/3) ln 2 (Dunne-Hur-Lee-Min) = -17/72 - Log[2]/6 + 2*Log[Glaisher] = 0.145873312863
+    t = 1:   sum_{l <= L} = -8 L^2 + -16 L + (2/3) ln L + Z, Z = -7 + (5*Log[2])/3 + 8*Log[Glaisher] = -3.8547188828
+    alpha(1) = 4 alpha(1/2) + ln 2 - 5/6 (literature) = -16/9 + Log[2]/3 + 8*Log[Glaisher] = 0.443307098679;  implied kappa_1 = alpha(1) - Z = 47/9 - (4*Log[2])/3 = 4.29802598148  (inst_gy.py determines it from decoupling)
+(f) isospin 1/2: int tr F^2 = 16*Pi^2, int tr F_ij F_jk F_ki = (((-96*I)/5)*Pi^2)/rho^2, int tr (D F)^2 = (384*Pi^2)/(5*rho^2) (= 4 i int tr F^3: True);  A_3 = 1/(75*rho^2) -> ln det(-D^2+m^2)/det(-d^2+m^2) contains -1/(75*rho^2)/m^2
+(f) isospin 1: int tr F^2 = 64*Pi^2, int tr F_ij F_jk F_ki = (((-384*I)/5)*Pi^2)/rho^2, int tr (D F)^2 = (1536*Pi^2)/(5*rho^2) (= 4 i int tr F^3: True);  A_3 = 4/(75*rho^2) -> ln det(-D^2+m^2)/det(-d^2+m^2) contains -4/(75*rho^2)/m^2
+    Wilson action: S_W = int [(1/2) tr F^2 - (a^2/12) sum_{mu nu} tr (D_mu F_mu nu)^2] + O(a^4): sum density = (576*rho^4*(x1^2 + x2^2 + x3^2 + x4^2))/(rho^2 + x1^2 + x2^2 + x3^2 + x4^2)^6, int = (96*Pi^2)/5 -> S_W/(8 pi^2) = 1 + (-1/5) (a/rho)^2
+    clover charge: F_clover = F + (a^2/6)(D_mu^2 + D_nu^2) F + O(a^4) -> Q_clover = 1 + (-4/5) (a/rho)^2

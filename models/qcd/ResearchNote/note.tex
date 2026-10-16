@@ -53,7 +53,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論、スピノル QED のノート~\cite{phi3note,phi34note,yukawanote,qednote} に続き、非可換ゲージ理論の例として QCD を $d=4$ で調べる。ゲージ群は SU($N$) で、グルーオンに質量のない軽いクォーク $n_l$ 本と質量 $m$ の重いクォーク1本が結合する。群の因子 $C_F$、$C_A$、$T_F$ は記号で残し、数値の基準は SU(3)、$n_l=5$ とする。共変ゲージのパラメータ $\xi$ と Faddeev--Popov のゴーストを残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、色の代数、べき数え上げ、Slavnov--Taylor 恒等式、1ループの1PI 関数と対抗項、繰り込み群の係数を手で求めた。グルーオンの自己エネルギーのうちグルーオンのループとゴーストのループの和は、$D$ 次元で厳密に $\frac{g^2C_A}{2(4\pi)^2}[\frac{3D-2}{D-1}+(2D-7)(1-\xi)-\frac{D-4}{4}(1-\xi)^2]B_0$ となる。グルーオンのループだけでは横波でなく、その縦の部分をゴーストのループが打ち消す。クォークの頂点とゴーストの頂点の発散は、それぞれ $\xi$ に依存するが、どちらから結合の繰り込みを読み取っても同じ $Z_g=1-\frac{g^2}{2(4\pi)^2}\beta_0\DUV$、$\beta_0=\frac{11}{3}C_A-\frac43T_Fn_f$ を与え、漸近的自由を示す。3グルーオンと4グルーオンの頂点の発散は Slavnov--Taylor 恒等式から求め、FeynArts の図の直接の和（18個と54個）でも確かめた。Landau ゲージではゴースト頂点が発散しない（Taylor の非繰り込み定理）。重いクォークの極質量 $m_{\mathrm p}=m(\mu)[1+C_F\frac{g^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ と、重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ への換算も求めた。木のレベルでは、$q\bar q\to Q\bar Q$、$gg\to Q\bar Q$、$gg\to gg$、$e^+e^-\to q\bar qg$ の振幅とスピン・色の和を求めた。外のグルーオンの偏極の和を $-g_{\mu\nu}$ で置き換えると、物理的な和より大きくなり、その差はゴースト対の生成 $c\bar c\to Q\bar Q$ の振幅の2乗に等しい。断面積は閉じた形に積分した。最後に、検算と応用（漸近的自由と $\alpha_s$ の走り、2ループの $\beta$ 関数、$e^+e^-\to$ ハドロン、重いクォークの対生成、インスタントン）の十の手順を定め、最初の九つを行った。手順 (1) では FeynRules の模型ファイルを作り、16個の頂点は手計算と記号として一致し、MadGraph の図の数も手で数えた数と一致した。手順 (2) では、四つの過程の振幅とスピン・色の和、ゴースト対の関係を FeynCalc で記号として（$gg\to gg$ は厳密な有理数の運動学で）確かめ、Dirac 行列、Gell-Mann 行列、偏極ベクトルを陽に作った数値でも相対 $10^{-13}$ 以下で確かめた。MadGraph の12個の断面積は閉じた形と $1.04\sigma$ 以内で一致した。手順 (3) では、四つの2点関数を一般の $\xi$ で $D$ 次元のまま図ごとに記号として確かめ、四つの頂点の極を図の和から独立に求めて Slavnov--Taylor 恒等式を確かめた。有限部分は Package-X、LoopTools、COLLIER が Feynman パラメータの積分と相対 $6\times10^{-15}$ 以内で一致した。手順 (4) では、1ループの $q\bar q\to Q\bar Q$ と $gg\to Q\bar Q$ の Born との干渉を一般の $\xi$ で図ごとに求めた。対抗項と留数を加えると、$1/\epsilon^2$ と $1/\epsilon$ の極は Born の色の相関で決まる赤外の極の一般式と記号として一致し、有限部分は $\xi$ によらなかった。Feynman ゲージでは、TID の経路と FormCalc が図ごとに一致し、$q\bar q\to Q\bar Q$ の虚部は2粒子の中間状態の位相空間積分（ユニタリー性）と極まで含めて一致した。ゲージ部分の2重の伝播関数を含む積分は LoopTools と Package-X で評価できないので、部分積分（LiteRed）でマスター積分に直した。手順 (5) では、NLOCT で作った対抗項と R2 の頂点（手計算と文献の値に一致）の UFO で MadLoop を動かし、極質量と $\alpha_s^{(n_l)}$ に換算した手順 (4) の値と、Born、有限部分、極の係数が相対 $2.5\times10^{-14}$ 以内で一致した（$\mu_R=m,2m,m/2$）。その過程で、FeynArts がゲージ部分の2重の伝播関数を同じ分母の繰り返しで書くと、FeynCalc の TID が誤った紫外の極を与えることを見つけた（先に分母をまとめれば正しい）。手順 (6) では、1PI 関数、極質量、留数、S 行列要素の $\mu$ 依存を Package-X（記号）、LoopTools、COLLIER、MadLoop で確かめ、傾きから $\gamma_A$、$\gamma_c$、$\gamma_\psi$、$\gamma_m$ と $\beta_0$（$\MSbar$ の6フレーバーで7、$\alpha_s^{(n_l)}$ で $\frac{23}3$）を倍精度で読み取った。Landau ゲージでは $\beta_0$ がグルーオンとゴーストの2点関数だけで決まる。MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与は $\Pi_t(s)-\Pi_t(0)$ と一致し、$m_t\to\infty$ で消えた（脱結合）。ゲージパラメータの流れを閉じた形に解き、MadGraph の $\alpha_s$ の走りとも比べた。手順 (7) では、Landau ゲージではゴースト頂点が繰り込まれないことを使い、2ループのグルーオンとゴーストの自己エネルギー（30個の図）から $\beta_1=\frac{34}3C_A^2-4C_FT_Fn_f-\frac{20}3C_AT_Fn_f$ を記号として再現した。積分の簡約は Kira と FIRE が一致し、マスター積分の厳密な値は AMFlow、pySecDec と一致した。繰り込み定数の2重の極は繰り込み群の予想どおりで、2ループでも横波性が成り立った。2ループの $\Lambda^{(5)}$ は 212~MeV で、1ループの値の2.4倍である。手順 (8) では、$e^+e^-\to$ ハドロンの $O(\alpha_s)$ の補正を、$D$ 次元の仮想と実の補正の和（赤外の極が打ち消して $R=R_0(1+\alpha_s/\pi)$）、2ループの光子の自己エネルギーの虚部（光学定理、Kira と AMFlow）、aMC@NLO の三つで確かめた。重いクォークでは閾値の Coulomb の特異性 $\pi^2/(2\beta)$ を含む閉じた形を AMFlow が $10^{-18}$ で再現し、thrust の分布も MadGraph と一致した。手順 (9) では、重いクォークの対生成の部分断面積の NLO を求めた。実の放射の位相空間の積分を reverse unitarity で切断した2ループの積分に直し（Kira、AMFlow）、仮想の補正（MadLoop）と質量の因子化の対抗項を加えると赤外の極は打ち消し、$q\bar q$、$qg$、$gg$ の $f^{(1)}$ は Czakon と Mitov の厳密な結果と相対 $2\times10^{-8}$ 以内で一致した。ハドロンの断面積は aMC@NLO と $pp$ で $0.07\%$ 以内で一致したが、$p\bar p$ では aMC@NLO が $0.4$〜$0.7\%$ 大きかった。$\MSbar$ の質量で書くと、スケールによる変化と NLO の補正が小さくなる。導出は付録に載せる。
+$\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論、スピノル QED のノート~\cite{phi3note,phi34note,yukawanote,qednote} に続き、非可換ゲージ理論の例として QCD を $d=4$ で調べる。ゲージ群は SU($N$) で、グルーオンに質量のない軽いクォーク $n_l$ 本と質量 $m$ の重いクォーク1本が結合する。群の因子 $C_F$、$C_A$、$T_F$ は記号で残し、数値の基準は SU(3)、$n_l=5$ とする。共変ゲージのパラメータ $\xi$ と Faddeev--Popov のゴーストを残し、紫外発散と赤外発散をともに次元正則化で扱い、紫外発散は $\MSbar$ で処理する。本ノートではまず、Feynman 則、色の代数、べき数え上げ、Slavnov--Taylor 恒等式、1ループの1PI 関数と対抗項、繰り込み群の係数を手で求めた。グルーオンの自己エネルギーのうちグルーオンのループとゴーストのループの和は、$D$ 次元で厳密に $\frac{g^2C_A}{2(4\pi)^2}[\frac{3D-2}{D-1}+(2D-7)(1-\xi)-\frac{D-4}{4}(1-\xi)^2]B_0$ となる。グルーオンのループだけでは横波でなく、その縦の部分をゴーストのループが打ち消す。クォークの頂点とゴーストの頂点の発散は、それぞれ $\xi$ に依存するが、どちらから結合の繰り込みを読み取っても同じ $Z_g=1-\frac{g^2}{2(4\pi)^2}\beta_0\DUV$、$\beta_0=\frac{11}{3}C_A-\frac43T_Fn_f$ を与え、漸近的自由を示す。3グルーオンと4グルーオンの頂点の発散は Slavnov--Taylor 恒等式から求め、FeynArts の図の直接の和（18個と54個）でも確かめた。Landau ゲージではゴースト頂点が発散しない（Taylor の非繰り込み定理）。重いクォークの極質量 $m_{\mathrm p}=m(\mu)[1+C_F\frac{g^2}{(4\pi)^2}(4+3\ln\frac{\mu^2}{m^2})]$ と、重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ への換算も求めた。木のレベルでは、$q\bar q\to Q\bar Q$、$gg\to Q\bar Q$、$gg\to gg$、$e^+e^-\to q\bar qg$ の振幅とスピン・色の和を求めた。外のグルーオンの偏極の和を $-g_{\mu\nu}$ で置き換えると、物理的な和より大きくなり、その差はゴースト対の生成 $c\bar c\to Q\bar Q$ の振幅の2乗に等しい。断面積は閉じた形に積分した。最後に、検算と応用（漸近的自由と $\alpha_s$ の走り、2ループの $\beta$ 関数、$e^+e^-\to$ ハドロン、重いクォークの対生成、インスタントン）の十の手順を定め、すべてを行った。手順 (1) では FeynRules の模型ファイルを作り、16個の頂点は手計算と記号として一致し、MadGraph の図の数も手で数えた数と一致した。手順 (2) では、四つの過程の振幅とスピン・色の和、ゴースト対の関係を FeynCalc で記号として（$gg\to gg$ は厳密な有理数の運動学で）確かめ、Dirac 行列、Gell-Mann 行列、偏極ベクトルを陽に作った数値でも相対 $10^{-13}$ 以下で確かめた。MadGraph の12個の断面積は閉じた形と $1.04\sigma$ 以内で一致した。手順 (3) では、四つの2点関数を一般の $\xi$ で $D$ 次元のまま図ごとに記号として確かめ、四つの頂点の極を図の和から独立に求めて Slavnov--Taylor 恒等式を確かめた。有限部分は Package-X、LoopTools、COLLIER が Feynman パラメータの積分と相対 $6\times10^{-15}$ 以内で一致した。手順 (4) では、1ループの $q\bar q\to Q\bar Q$ と $gg\to Q\bar Q$ の Born との干渉を一般の $\xi$ で図ごとに求めた。対抗項と留数を加えると、$1/\epsilon^2$ と $1/\epsilon$ の極は Born の色の相関で決まる赤外の極の一般式と記号として一致し、有限部分は $\xi$ によらなかった。Feynman ゲージでは、TID の経路と FormCalc が図ごとに一致し、$q\bar q\to Q\bar Q$ の虚部は2粒子の中間状態の位相空間積分（ユニタリー性）と極まで含めて一致した。ゲージ部分の2重の伝播関数を含む積分は LoopTools と Package-X で評価できないので、部分積分（LiteRed）でマスター積分に直した。手順 (5) では、NLOCT で作った対抗項と R2 の頂点（手計算と文献の値に一致）の UFO で MadLoop を動かし、極質量と $\alpha_s^{(n_l)}$ に換算した手順 (4) の値と、Born、有限部分、極の係数が相対 $2.5\times10^{-14}$ 以内で一致した（$\mu_R=m,2m,m/2$）。その過程で、FeynArts がゲージ部分の2重の伝播関数を同じ分母の繰り返しで書くと、FeynCalc の TID が誤った紫外の極を与えることを見つけた（先に分母をまとめれば正しい）。手順 (6) では、1PI 関数、極質量、留数、S 行列要素の $\mu$ 依存を Package-X（記号）、LoopTools、COLLIER、MadLoop で確かめ、傾きから $\gamma_A$、$\gamma_c$、$\gamma_\psi$、$\gamma_m$ と $\beta_0$（$\MSbar$ の6フレーバーで7、$\alpha_s^{(n_l)}$ で $\frac{23}3$）を倍精度で読み取った。Landau ゲージでは $\beta_0$ がグルーオンとゴーストの2点関数だけで決まる。MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与は $\Pi_t(s)-\Pi_t(0)$ と一致し、$m_t\to\infty$ で消えた（脱結合）。ゲージパラメータの流れを閉じた形に解き、MadGraph の $\alpha_s$ の走りとも比べた。手順 (7) では、Landau ゲージではゴースト頂点が繰り込まれないことを使い、2ループのグルーオンとゴーストの自己エネルギー（30個の図）から $\beta_1=\frac{34}3C_A^2-4C_FT_Fn_f-\frac{20}3C_AT_Fn_f$ を記号として再現した。積分の簡約は Kira と FIRE が一致し、マスター積分の厳密な値は AMFlow、pySecDec と一致した。繰り込み定数の2重の極は繰り込み群の予想どおりで、2ループでも横波性が成り立った。2ループの $\Lambda^{(5)}$ は 212~MeV で、1ループの値の2.4倍である。手順 (8) では、$e^+e^-\to$ ハドロンの $O(\alpha_s)$ の補正を、$D$ 次元の仮想と実の補正の和（赤外の極が打ち消して $R=R_0(1+\alpha_s/\pi)$）、2ループの光子の自己エネルギーの虚部（光学定理、Kira と AMFlow）、aMC@NLO の三つで確かめた。重いクォークでは閾値の Coulomb の特異性 $\pi^2/(2\beta)$ を含む閉じた形を AMFlow が $10^{-18}$ で再現し、thrust の分布も MadGraph と一致した。手順 (9) では、重いクォークの対生成の部分断面積の NLO を求めた。実の放射の位相空間の積分を reverse unitarity で切断した2ループの積分に直し（Kira、AMFlow）、仮想の補正（MadLoop）と質量の因子化の対抗項を加えると赤外の極は打ち消し、$q\bar q$、$qg$、$gg$ の $f^{(1)}$ は Czakon と Mitov の厳密な結果と相対 $2\times10^{-8}$ 以内で一致した。ハドロンの断面積は aMC@NLO と $pp$ で $0.07\%$ 以内で一致したが、$p\bar p$ では aMC@NLO が $0.4$〜$0.7\%$ 大きかった。$\MSbar$ の質量で書くと、スケールによる変化と NLO の補正が小さくなる。手順 (10) では、BPST のインスタントン、8個のゼロモード、クォークのゼロモードを陽な行列で記号として確かめ、'tHooft の1ループの行列式を Gel'fand--Yaglom の方法で部分波ごとに求めた。質量のない部分波は初等関数で解け、和の漸近形から $\alpha(\frac12)=-\frac5{72}-\frac{\ln2}6-2\zeta'(-1)$ を得て、$\alpha(1)=0.443307$ を大きい質量で定数が残らない（脱結合）条件から $2\times10^{-5}$ で再現した。クォークの質量による行列式の変化は、小さい質量と大きい質量の展開（熱核の係数 $-\frac1{75}$）と一致し、格子に置いた BPST の作用と位相的電荷の $O(a^2)$ の誤差は、解析的に求めた係数 $-\frac15$、$-\frac45$ と一致した。$\MSbar$ の1インスタントンの密度では、SU(3) の位相的感受率の格子の値に届くのは $8\pi^2/g^2\approx10$ の大きいインスタントンまで足したときである。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -66,7 +66,7 @@ $\phi^3$ 理論、$\phi^3+\phi^4$ 理論、擬スカラー湯川理論、スピ�
 
 求める量は五つである。(i) Feynman 則、色の代数、べき数え上げ、Slavnov--Taylor 恒等式。(ii) 1ループの1PI 関数（グルーオン、ゴースト、クォークの2点関数、四つの頂点）の紫外発散と $\MSbar$ の対抗項。(iii) 繰り込まれた1PI 関数、繰り込み群の係数、$\MSbar$ から on-shell の量（極質量、留数、脱結合した結合）への換算。(iv) 四つの過程の木の振幅とスピン・色の和、1ループの $q\bar q\to Q\bar Q$、$gg\to Q\bar Q$ とその S 行列要素。(v) 応用として、$\alpha_s$ の走りと2ループの $\beta$ 関数、$e^+e^-\to$ ハドロン、重いクォークの対生成、インスタントン。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では数値基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(9)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:hq} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(iv) の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（手順 (1)〜(10)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:inst} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -1690,13 +1690,94 @@ f^{(1)}\to f^{(1)}+\frac{C_F}{2\pi^2}\bigl[\rho f^{(0)\prime}(\rho)-f^{(0)}(\rho
 \label{fig:hqreal}
 \end{figure}
 
+\paragraph{インスタントン。}Euclid 化した作用 $S_E=\frac12\int\dd^4x\,\tr G_{\mu\nu}G_{\mu\nu}$（$x_4=it$、$D_\mu=\partial_\mu-igA_\mu$）は、$\int\tr(G\mp\tilde G)^2\ge0$（$\tilde G_{\mu\nu}=\frac12\epsilon_{\mu\nu\rho\sigma}G_{\rho\sigma}$）から $S_E\ge\frac{8\pi^2}{g^2}|Q|$、$Q=\frac{g^2}{16\pi^2}\int\dd^4x\,\tr G\tilde G$ を満たし、等号は自己双対 $G=\pm\tilde G$ で成り立つ。SU(2) の部分群（$T^a=\sigma^a/2$）の中の BPST の解~\cite{bpst} は
+\begin{equation}
+A^a_\mu=\frac2g\frac{\eta_{a\mu\nu}x_\nu}{x^2+\rho^2},\qquad G^a_{\mu\nu}=-\frac4g\frac{\eta_{a\mu\nu}\rho^2}{(x^2+\rho^2)^2},\qquad S_E=\frac{8\pi^2}{g^2},\qquad Q=1
+\label{eq:bpst}
+\end{equation}
+である（$\eta_{a\mu\nu}$ は 't Hooft の記号で、$\mu\nu$ について自己双対、\ref{app:inst}）。無限遠で $A_\mu\to\frac ig(\partial_\mu U)U^\dagger$、$U=(x_4+i\boldsymbol x\cdot\boldsymbol\sigma)/|x|$ は純ゲージで、$Q$ は $U$ が無限遠の $S^3$ を SU(2)$\simeq S^3$ に写す巻き付き数1に等しい。Minkowski の時間では、インスタントンは Chern--Simons 数が1だけ異なる古典的な真空の間のトンネルで、真空は $Q$ の異なる真空の重ね合わせの $\theta$ 真空~\cite{cdg76,jr76} になる（図~\ref{fig:instfig}）。解には位置 $z_\mu$、大きさ $\rho$、SU($N$) の中の向きの $4N$ 個の集団座標があり、それぞれがゲージを固定した揺らぎの演算子のゼロモードを与える。SU(2) では、並進 $a_\mu=G_{\mu\nu}$、拡大 $\partial_\rho A_\mu$、ゲージの向き $D_\mu\Lambda^a$ の8個で、ノルムの2乗はそれぞれ $8\pi^2/g^2$、$16\pi^2/g^2$、$4\pi^2\rho^2/g^2$ である。質量のないクォークは、フレーバーごとに1個の、定まったカイラリティのゼロモード $\psi_0=\frac\rho\pi(x^2+\rho^2)^{-3/2}\chi$（$\chi$ はスピンと色の一重項）を持つ。これは指数定理 $n_L-n_R=Q$ の例で、インスタントンを通るとカイラリティが1単位だけ変わる（U(1)$_A$ の異常、図~\ref{fig:instfig}(c)）。
+
+1ループでは、ゼロモードを集団座標の積分に置き換え、残りの非ゼロモードの行列式を自由な場と比べる。自己双対な背景では、ゲージ場とゴーストの行列式は随伴表現のスカラーの $\det(-D^2)^{-1}$ に、クォークの行列式は基本表現のスカラーの $\det(-D^2+m^2)^2$ とゼロモードの $m$ に帰着する（\ref{app:inst}）。isospin $t$ のスカラーの $-D^2$ は、正則ゲージで
+\begin{equation}
+-D^2=-\partial_r^2-\frac3r\partial_r+\frac{4\boldsymbol L^2}{r^2}+\frac{8\boldsymbol L\cdot\boldsymbol T}{r^2+\rho^2}+\frac{4t(t+1)r^2}{(r^2+\rho^2)^2}
+\label{eq:instrad}
+\end{equation}
+（$r=|x|$、$\boldsymbol L$ は $S^3$ の回転の SU(2)$\times$SU(2) の一方の生成子）と書け、$\boldsymbol J=\boldsymbol L+\boldsymbol T$ の部分波 $(l,j)$（縮退度 $(2l+1)(2j+1)$）ごとに動径の常微分演算子 $H_{l,j}$ になる。Gel'fand--Yaglom の定理~\cite{gy60} により、$\det H_{l,j}/\det H^{\mathrm{free}}_l$ は、原点で $r^{2l}$ のように振る舞う二つの解の比の $r\to\infty$ の値である。質量がなければ解は初等関数で、比は $\frac{2l+1}{2l+2}$ などの有理数になる。和には紫外発散があり、$\MSbar$ で繰り込むと
+\begin{equation}
+\begin{gathered}
+\ln\frac{\det(-D^2)}{\det(-\partial^2)}\bigg|_t=\frac{T(t)}3\ln(\mu\rho)+\alpha(t),\\
+\alpha(\tfrac12)=-\frac5{72}-\frac{\ln2}6-2\zeta'(-1)=0.145873,\qquad \alpha(1)=4\alpha(\tfrac12)+\ln2-\frac56=0.443307
+\end{gathered}
+\label{eq:alpha}
+\end{equation}
+となる（$T(t)=\frac13t(t+1)(2t+1)$、't Hooft の値~\cite{thooft76}、閉じた形は文献~\cite{dhlm05b,fm25}）。質量 $m$ のクォークでは $\ln\frac{\det(\slashed D+m)}{\det(\slashed\partial+m)}=\ln\frac m\mu+2\Gamma^S$、$\Gamma^S=\frac16\ln(\mu\rho)+\tilde\Gamma^S(m\rho)$ で
+\begin{equation}
+\tilde\Gamma^S(m\rho)=
+\begin{cases}
+\alpha(\frac12)+\frac{m^2\rho^2}2\bigl[\ln\frac{m\rho}2+\gamma_E+\frac12\bigr]+O(m^4\rho^4\ln^2m\rho) & (m\rho\to0)\\[3pt]
+-\frac16\ln(m\rho)-\frac1{75m^2\rho^2}-\frac{17}{735m^4\rho^4}+O(m^{-6}\rho^{-6}) & (m\rho\to\infty)
+\end{cases}
+\label{eq:instmass}
+\end{equation}
+である~\cite{dhlm05,dhlm05b,hlm09}。大きい質量の展開に定数がないのは重いクォークの脱結合の表れで、$1/m^2$ の係数は熱核の係数の $\int\tr G^3$ で決まる（\ref{app:inst}）。
+
+これらを合わせると、$n_f$ 本の軽いクォークを持つ SU($N$) の1インスタントンの密度は（\ref{app:inst}）
+\begin{equation}
+\dd n=\dd^4z\,\dd\rho\,d(\rho),\qquad
+d(\rho)=\frac{C_N}{\rho^5}\Bigl(\frac{8\pi^2}{g^2}\Bigr)^{2N}e^{-8\pi^2/g^2(\mu)}(\mu\rho)^{\beta_0}\prod_f(C_qm_f\rho),\qquad
+C_N=\frac{2e^{5/6}}{\pi^2}\frac{e^{-(C_2-\frac16)N}}{(N-1)!\,(N-2)!}
+\label{eq:instdens}
+\end{equation}
+で、$C_2=2\alpha(\frac12)+2\ln2=1.678$、$C_q=e^{2\alpha(1/2)}=1.339$、$\beta_0=\frac{11}3N-\frac23n_f$ である（$\MSbar$。Pauli--Villars の正則化では $C_N$ の $-\frac16$ がなく、$C_q$ は同じ~\cite{thooft76,bernard79,np94}）。$(\frac{8\pi^2}{g^2})^{2N}$ は $4N$ 個のゼロモードのノルム、$\beta_0$ は、ゼロモードの $(\mu\rho)^{4N}$、ゲージ場の非ゼロモードの $(\mu\rho)^{-N/3}$、クォークの $(\mu\rho)^{-2/3}$ の和で、$e^{-8\pi^2/g^2(\mu)}(\mu\rho)^{\beta_0}=e^{-8\pi^2/g^2(1/\rho)}$ と1ループの走る結合になる。小さいインスタントンは $\rho^{\beta_0-5}$ で抑えられるが、大きい $\rho$ では結合が強くなって半古典の計算が使えなくなる。軽いクォークは密度を $\prod_fm_f$ で抑え、質量のないクォークがあれば1個のインスタントンの寄与は消えて、$2n_f$ 本のクォークの線を持つ 't Hooft の有効相互作用だけが残る。インスタントンと反インスタントンの希薄な気体では、真空のエネルギー密度は $E(\theta)=-\chi\cos\theta$、位相的感受率は $\chi=2\int\dd\rho\,d(\rho)$ である。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+\begin{scope}[shift={(0,0)}]
+\draw[->] (-0.3,0) -- (5.8,0) node[below,font=\small] {$N_{\mathrm{CS}}$};
+\draw[->] (0,-0.2) -- (0,2.3) node[left,font=\small] {$V$};
+\draw[thick,domain=0.2:5.5,samples=140] plot (\x,{0.8*(1-cos(360*(\x-0.6)/1.5))});
+\foreach \n/\x in {-1/0.6,0/2.1,1/3.6,2/5.1} {\node[below,font=\scriptsize] at (\x,0) {$\n$};}
+\draw[-{Stealth[length=2mm]},red!70!black,thick] (2.15,0.38) -- (3.55,0.38);
+\draw[-{Stealth[length=2mm]},blue!60!black,thick,dashed] (2.05,0.38) -- (0.65,0.38);
+\node[red!70!black,font=\scriptsize] at (2.85,1.85) {$Q=1$};
+\node[blue!60!black,font=\scriptsize] at (1.35,1.85) {$Q=-1$};
+\node[font=\scriptsize] at (3.4,2.35) {$|\theta\rangle=\sum_ne^{in\theta}|n\rangle$};
+\node[font=\small] at (2.7,-0.85) {(a) 古典的な真空の間のトンネル};
+\end{scope}
+\begin{scope}[shift={(6.6,0)}]
+\draw[->] (-0.2,0) -- (3.1,0) node[below,font=\small] {$l$};
+\draw[->] (0,-0.2) -- (0,3.1) node[left,font=\small] {$j$};
+\foreach \k in {0,1,2,3,4} {\pgfmathsetmacro{\l}{\k/2}
+  \ifnum\k<4 \fill (\l*1.1,\l*1.1+0.55) circle (1.6pt); \fi
+  \ifnum\k>0 \fill (\l*1.1,\l*1.1-0.55) circle (1.6pt); \fi}
+\foreach \k in {0,1,2,3} {\pgfmathsetmacro{\l}{\k/2}
+  \draw[red!70!black,thick] (\l*1.1,\l*1.1+0.55) -- (\l*1.1+0.55,\l*1.1);}
+\draw[dotted] (0,0) -- (2.6,2.6);
+\node[font=\scriptsize,align=center] at (2.35,0.45) {組 $(l,l+\frac12)$\\$\&\,(l+\frac12,l)$};
+\node[font=\small] at (1.5,-0.85) {(b) $t=\frac12$ の部分波の組};
+\end{scope}
+\begin{scope}[shift={(11.2,0)}]
+\draw[->] (-0.2,1) -- (4.4,1) node[below,font=\small] {$x_4$};
+\draw[->] (0,-0.1) -- (0,2.6) node[left,font=\small] {$\lambda$};
+\foreach \y in {0.25,0.55,1.45,1.75} {\draw[thin,gray] (0.1,\y) -- (4.1,\y);}
+\draw[thick,red!70!black] (0.1,0.7) .. controls (1.5,0.7) and (2.6,1.3) .. (4.1,1.3);
+\fill (2.1,1) circle (1.4pt);
+\node[font=\scriptsize,red!70!black] at (2.3,2.2) {1個の準位がゼロを横切る};
+\node[font=\small] at (2.1,-0.85) {(c) スペクトルの流れ};
+\end{scope}
+\end{tikzpicture}
+\caption{インスタントン（手順 (10)、\ref{app:inst}）。(a) Chern--Simons 数 $N_{\mathrm{CS}}$ の異なる古典的な真空の間のトンネル。インスタントン（$Q=1$）は $N_{\mathrm{CS}}$ を1上げ、真空は $\theta$ 真空になる。(b) isospin $\frac12$ のスカラーの部分波 $(l,j)$、$j=l\pm\frac12$。特異ゲージでは $l$ と $j$ の役割が入れ替わるので、$l+j$ の等しい2個の部分波を組にして和をとる（赤い線）。(c) インスタントンの背景を $x_4$ に沿って断熱的に見たときの、クォークの Dirac の固有値の流れ。各フレーバーで1個の準位がゼロを横切り、カイラリティが1単位変わる。}
+\label{fig:instfig}
+\end{figure}
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、FeynArts と FeynCalc で次のことを予備的に確かめた：式~\eqref{eq:V} の三つの2点関数（$D$ 次元で記号として、グルーオンのループとゴーストのループの縮約を別々に）、横波性、式~\eqref{eq:Vpole} のクォーク、ゴースト、3グルーオンの頂点の極（外の運動量で展開し、すべての伝播関数に同じ質量を入れる赤外の組み替えで。3グルーオンの頂点は FeynArts の18個の図の和）、式~\eqref{eq:sumtree} の (A)、(B)、(D) と式~\eqref{eq:ghostsum}。(C) は、Gell-Mann 行列から作った構造定数と陽な偏極ベクトルによる数値で確かめた（FeynCalc で4本のグルーオンの物理的な偏極の和を記号でとる計算は30分で終わらなかった）。頂点の極を一般の外の運動量のまま TID と \texttt{PaVeUVPart} で取り出すと、伝播関数が2重になる PaVe 関数を含むクォーク頂点の可換な図で、ゲージ部分の極が $-(1-\xi)$ でなく $+(1-\xi)$ になった。赤外の組み替えでは正しい値になった。原因は手順 (3) で特定した（第~\ref{sec:checks} 節）。正式な検算は手順 (2)、(3) で行う。
 
 \begin{table}[tbp]
 \centering\small
-\caption{各量と、それを計算して突き合わせる手段。「—」はその手段を使わないことを表す。「後で」は、その手順で導出を付録に加えることを表す。}
+\caption{各量と、それを計算して突き合わせる手段。「—」はその手段を使わないことを表す。}
 \label{tab:plan}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.75cm}>{\raggedright\arraybackslash}p{1.75cm}>{\raggedright\arraybackslash}p{2.0cm}}
 \toprule
@@ -1713,7 +1794,7 @@ S 行列要素と on-shell の量 \eqref{eq:os}、\eqref{eq:mlconv} & \ref{app:o
 2ループの $\beta$ 関数 \eqref{eq:zalpha}〜\eqref{eq:run2} & \ref{app:rg} & 2ループの図と積分の簡約（Kira、FIRE） & — & AMFlow、pySecDec & MadGraph の $\alpha_s$（2ループ） \\
 $e^+e^-\to$ ハドロン \eqref{eq:rr}〜\eqref{eq:thrust} & \ref{app:ee} & 実と仮想の $D$ 次元の和、光子の2ループの自己エネルギー（光学定理、Kira） & 記号と数値 & 数値、AMFlow & aMC@NLO（$u\bar u$、$t\bar t$）、thrust \\
 重いクォークの対生成 \eqref{eq:hqf}〜\eqref{eq:hqmsbar} & \ref{app:hq} & $D$ 次元の実の放射、reverse unitarity（Kira）、質量の因子化 & 記号と数値 & AMFlow、MadLoop & aMC@NLO（ハドロンの $t\bar t$） \\
-インスタントン & 後で & — & — & — & — \\
+インスタントン \eqref{eq:bpst}〜\eqref{eq:instdens} & \ref{app:inst} & （FeynCalc は使わない）陽な行列で BPST、ゼロモード、動径の方程式、熱核と格子の係数を記号として & — & Gel'fand--Yaglom の常微分方程式と格子の数値（Python） & — \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -2265,14 +2346,54 @@ $p\bar p$、1.96 TeV、$\MSbar$ & $\bar m/2$ & $9.799$ & & $6.714$ & & \\
 \label{fig:hq}
 \end{figure}
 
+\paragraph{手順 (10)：インスタントン。}式~\eqref{eq:bpst}〜\eqref{eq:instdens} を確かめた。スクリプトは \texttt{inst\_bpst.wl}（BPST、ゼロモード、動径の方程式、質量のない部分波とその和、熱核と格子の係数）、\texttt{inst\_gylib.py}、\texttt{inst\_gy.py}（Gel'fand--Yaglom）、\texttt{inst\_lattice.py}（格子）、\texttt{inst\_density.py}（密度）、\texttt{inst\_plot.py} で、\texttt{run\_inst\_check.sh} でまとめて実行できる（約15分）。
+
+一つ目は記号の計算である。Pauli 行列と 't Hooft の記号を陽に使い、正則ゲージと特異ゲージの BPST の解が自己双対で Yang--Mills 方程式を満たすこと、$S_E=8\pi^2/g^2$、$Q=1$、二つのゲージをつなぐ $U$ の巻き付き数が1であることを確かめた。特異ゲージの8個のゼロモードは背景ゲージの条件と線形化した方程式を満たし、ノルムの2乗は $8\pi^2/g^2$（並進）、$16\pi^2/g^2$（拡大）、$4\pi^2\rho^2/g^2$（ゲージの向き）だった。クォークのゼロモードは一方のカイラリティにだけあり、規格化の係数は $\rho/\pi$ だった。$-D^2$ の式~\eqref{eq:instrad} は isospin $\frac12$、1 の陽な行列で成り立ち、\ref{app:inst} の5種類の質量のない部分波は、$l$ を記号のまま動径の方程式を満たした。質量のない和の漸近形から $\alpha(\frac12)$ の閉じた形を記号として得た。熱核の係数は $A_3=\frac{2T(t)}{75\rho^2}$（$t=\frac12$、1。$\int\tr(DG)^2=4i\int\tr G^3$ も確かめた）、Wilson の作用の $a^2$ の係数は $-\frac15$、クローバーの電荷では $-\frac45$ だった。
+
+二つ目は Gel'fand--Yaglom の数値計算である。部分波ごとの常微分方程式を $\tau=\ln r$ で積分すると、質量のない組の比は閉じた形と $10^{-10}$ で一致した。質量の補正は、質量のない厳密解と、遠方の角運動量の自由解を基準にして求め（\ref{app:details}）、直接の積分と $3\times10^{-11}$ 以内で一致した。質量のない和に Dunne--Hur--Lee--Min の対抗項を加えると、$L=10^4$ で $\alpha(\frac12)$ との差は $1.5\times10^{-5}$ で、$1/L$ で0に近づいた。$l\le1000$ の和と大きい $l$ の当てはめで $\tilde\Gamma^S(m\rho)$ を15点で求めると（$L=500$ と1000 の差は $m\rho\le4$ で $5\times10^{-6}$ 以下）、小さい質量の展開とは $m\rho=0.02$、$0.1$ で $6\times10^{-11}$、$8\times10^{-7}$、大きい質量の展開とは $m\rho=3$〜$8$ で $3\times10^{-5}$ 以内で一致した（図~\ref{fig:inst}）。$\alpha(1)$ は、$t=1$ の和から $\ln L$ と $m^2\ln L$ の項を引いた残りに、大きい $m$ で定数も $m^2$ の項も残らない（脱結合）ように定数と $m^2$ の係数を当てはめて求めた。$m=2$〜8 の6点で、$\alpha(1)=0.44337$、$m^2$ の係数 $-0.7725893$ で、閉じた形の $0.443307$、$2-4\ln2=-0.7725887$ と一致した。$m^2$ の係数を固定すると $\alpha(1)=0.44333$ である。同じ当てはめを $t=\frac12$ に使うと $\alpha(\frac12)=0.145881$、$-0.1931476$（$0.145873$、$\frac12-\ln2$）で、方法の精度は $2\times10^{-5}$ 程度である（表~\ref{tab:inst}）。
+
+三つ目は格子である。BPST の場から厳密なリンク変数を作り（リンクに沿って $A_\mu$ の色の向きは一定）、$[-3\rho,3\rho]^4$ の中で格子間隔 $a=\rho/2$〜$\rho/5$ の Wilson の作用とクローバーの電荷を、同じ点で連続の密度を足したものと比べた。差は $-0.201(a/\rho)^2$、$-0.803(a/\rho)^2$ で、記号の計算の $-\frac15$、$-\frac45$ と一致した。
+
+四つ目は密度である。式~\eqref{eq:instdens} の $C_N$ は、SU(2) で集団座標から直接組み立てた値と、$C_2$ の二つの閉じた形~\cite{dhlm05b,fm25} と倍精度で一致し、$\MSbar$ で $C_3=2.503\times10^{-3}$ である。$\Lambda^{(0)}_{\MSbar}=238$~MeV（$r_0\Lambda=0.602$~\cite{clsw99}、$r_0=0.5$~fm）と2ループの結合で SU(3) の純粋なゲージ理論の $d(\rho)$ を求めると、$\rho=10^{-4}$~fm での傾き $\dd\ln d/\dd\ln\rho=5.84$ は1ループの $\beta_0-5=6$ に対数的に近づく。希薄な気体の $\chi$ が格子の値 $(191\,\mathrm{MeV})^4$~\cite{dgp05} に達するのは $\rho_c=0.50$~fm まで積分したときで（インスタントンと反インスタントンの密度 $0.88\,\mathrm{fm}^{-4}$）、そこでは $8\pi^2/g^2=10.1$ と小さく、1ループの半古典の計算は信頼できない。インスタントン液体の典型的な大きさ $\rho\approx\frac13$~fm~\cite{ss98} でも $8\pi^2/g^2\approx16$ である。
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (10) の検算。$\alpha(t)$ と $m^2$ の係数 $\beta_t$ の「脱結合」は、大きい $m$ で $\tilde\Gamma$ に定数と $m^2$ の項が残らない条件による当てはめ（$m\rho=2$〜8）。格子の係数は $a=\rho/2$〜$\rho/5$ の $(a/\rho)^2$、$(a/\rho)^4$ への当てはめ。}
+\label{tab:inst}
+\begin{tabular}{lll}
+\toprule
+量 & 本ノート & 比べる値 \\
+\midrule
+$S_Eg^2$、$Q$、巻き付き数 & $8\pi^2$、1、1（記号） & — \\
+ゼロモードのノルムの2乗 $\times g^2$ & $8\pi^2$、$16\pi^2$、$4\pi^2\rho^2$（記号） & 文献~\cite{bernard79,vv08} \\
+$\alpha(\frac12)$：質量のない和 & $-\frac5{72}-\frac{\ln2}6-2\zeta'(-1)$（記号） & $0.145873$~\cite{thooft76} \\
+$\alpha(\frac12)$、$\beta_{1/2}$：脱結合 & $0.145881$、$-0.1931476$ & $0.1458733$、$\frac12-\ln2=-0.1931472$ \\
+$\alpha(1)$、$\beta_1$：脱結合 & $0.443370$、$-0.7725893$ & $0.4433071$、$2-4\ln2=-0.7725887$ \\
+$\tilde\Gamma^S$ $-$ 小さい質量の展開（$m\rho=0.02$、$0.1$） & $6\times10^{-11}$、$8\times10^{-7}$ & $O(m^6\rho^6\ln^2m\rho)$ \\
+$\tilde\Gamma^S$ $-$ 大きい質量の展開（$m\rho=4$、$6$） & $3\times10^{-6}$、$-9\times10^{-6}$ & $O(m^{-10}\rho^{-10})$ \\
+熱核の $A_3\rho^2$（$t=\frac12$、1） & $\frac1{75}$、$\frac4{75}$（記号） & $\frac1{75}$~\cite{dhlm05} \\
+Wilson の作用の $(a/\rho)^2$ の係数 & $-0.201$（格子）、$-\frac15$（記号） & $-\frac15$~\cite{gpgsv94} \\
+クローバーの電荷の $(a/\rho)^2$ の係数 & $-0.803$（格子）、$-\frac45$（記号） & — \\
+$C_3$（$\MSbar$）、$C_q$ & $2.503\times10^{-3}$、$1.3388$ & — \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{../figs/inst.pdf}
+\caption{インスタントン（手順 (10)）。左：isospin $\frac12$ のスカラーの $\tilde\Gamma^S(m\rho)$。丸は Gel'fand--Yaglom の数値、破線と点線は小さい質量と大きい質量の展開（式~\eqref{eq:instmass}）。中央：格子の BPST の Wilson の作用とクローバーの電荷から、同じ点の連続の和を引いたもの。直線は $-\frac15(a/\rho)^2$、$-\frac45(a/\rho)^2$。右：SU(3) の純粋なゲージ理論の $d(\rho)$（実線、左の軸）と、$\rho_c$ まで積分した希薄な気体の $\chi^{1/4}$（破線、右の軸。点線は格子の値 191~MeV）。}
+\label{fig:inst}
+\end{figure}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{手計算で分かったこと。}非可換性によって、QED になかった構造が三つ現れた。一つ目はゴーストの役割で、グルーオンの自己エネルギーではグルーオンのループの縦の部分を、木の振幅では外のグルーオンの非物理的な偏極の寄与を、それぞれ正確に打ち消す。二つ目は Slavnov--Taylor 恒等式による制約で、四つの頂点の発散はどれも $\xi$ に依存し、値も互いに異なるが、場の繰り込みと組み合わせると同じ $Z_g$ を与える（クォークとゴーストの頂点で手で確かめ、手順 (3) で四つの頂点すべてを図の和で確かめた）。三つ目は結合の走りの向きで、$\beta_0=\frac{11}3C_A-\frac43T_Fn_f$ の $C_A$ の部分が QED と逆の符号を持ち、漸近的自由を生む。ゲージパラメータも繰り込まれて走り、Landau ゲージと $\xi_*=\frac{13}3-\frac{8T_Fn_f}{3C_A}$ がその固定点になる。Landau ゲージは赤外に向かって、$\xi_*$ は紫外に向かって $\xi$ を引き付ける。Landau ゲージではゴースト頂点が繰り込まれないので、$\beta_0$ と $\beta_1$ はグルーオンとゴーストの2点関数だけで決まる。2ループでは、2重の極が1ループの量で決まるという繰り込み群の制約が、部分発散（1ループの結合の繰り込みを入れた1ループの図）の扱いを確かめる。また、$\Lambda_{\mathrm{QCD}}$ の値は定義の次数に強くよるが、$\alpha_s(\mu)$ そのものはあまりよらない。$e^+e^-\to$ ハドロンでは、仮想の補正と実の放射の赤外の極（$1/\epsilon^2$ と $1/\epsilon$）が打ち消し、残る有限部分 $3C_Fa$ は光子の自己エネルギーの虚部と同じである。重いクォークでは、閾値で Coulomb の $\pi^2/(2\beta)$ が大きくなり、$\alpha_s$ の展開は $\beta\gg\alpha_s$ でしか使えない。重いクォークについては、自己エネルギーが QED の $C_F$ 倍なので、極質量と留数は QED の結果をそのまま使える。新しいのは、低いエネルギーで重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ と、$\MSbar$ の $n_f$ フレーバーの結合との換算である。重いクォークの対生成では、赤外の極は仮想の補正、実の放射、始状態の共線の放射をパートン分布に吸収する対抗項の三つで打ち消し、$\mu$ への依存 $\bar f^{(1)}$ は $f^{(0)}$ と分岐関数だけで決まる。閾値の Coulomb の補正の符号は $Q\bar Q$ の色の状態で決まり、八重項だけの $q\bar q$ では斥力で抑えられ、一重項を含む $gg$ では引力が勝って増える。高エネルギーでは、$t$ チャンネルのグルーオンの交換で $f^{(1)}_{gg}$、$f^{(1)}_{qg}$ が定数に近づく。
+\paragraph{手計算で分かったこと。}非可換性によって、QED になかった構造が三つ現れた。一つ目はゴーストの役割で、グルーオンの自己エネルギーではグルーオンのループの縦の部分を、木の振幅では外のグルーオンの非物理的な偏極の寄与を、それぞれ正確に打ち消す。二つ目は Slavnov--Taylor 恒等式による制約で、四つの頂点の発散はどれも $\xi$ に依存し、値も互いに異なるが、場の繰り込みと組み合わせると同じ $Z_g$ を与える（クォークとゴーストの頂点で手で確かめ、手順 (3) で四つの頂点すべてを図の和で確かめた）。三つ目は結合の走りの向きで、$\beta_0=\frac{11}3C_A-\frac43T_Fn_f$ の $C_A$ の部分が QED と逆の符号を持ち、漸近的自由を生む。ゲージパラメータも繰り込まれて走り、Landau ゲージと $\xi_*=\frac{13}3-\frac{8T_Fn_f}{3C_A}$ がその固定点になる。Landau ゲージは赤外に向かって、$\xi_*$ は紫外に向かって $\xi$ を引き付ける。Landau ゲージではゴースト頂点が繰り込まれないので、$\beta_0$ と $\beta_1$ はグルーオンとゴーストの2点関数だけで決まる。2ループでは、2重の極が1ループの量で決まるという繰り込み群の制約が、部分発散（1ループの結合の繰り込みを入れた1ループの図）の扱いを確かめる。また、$\Lambda_{\mathrm{QCD}}$ の値は定義の次数に強くよるが、$\alpha_s(\mu)$ そのものはあまりよらない。$e^+e^-\to$ ハドロンでは、仮想の補正と実の放射の赤外の極（$1/\epsilon^2$ と $1/\epsilon$）が打ち消し、残る有限部分 $3C_Fa$ は光子の自己エネルギーの虚部と同じである。重いクォークでは、閾値で Coulomb の $\pi^2/(2\beta)$ が大きくなり、$\alpha_s$ の展開は $\beta\gg\alpha_s$ でしか使えない。重いクォークについては、自己エネルギーが QED の $C_F$ 倍なので、極質量と留数は QED の結果をそのまま使える。新しいのは、低いエネルギーで重いクォークを脱結合させた結合 $\alpha_s^{(n_l)}$ と、$\MSbar$ の $n_f$ フレーバーの結合との換算である。重いクォークの対生成では、赤外の極は仮想の補正、実の放射、始状態の共線の放射をパートン分布に吸収する対抗項の三つで打ち消し、$\mu$ への依存 $\bar f^{(1)}$ は $f^{(0)}$ と分岐関数だけで決まる。閾値の Coulomb の補正の符号は $Q\bar Q$ の色の状態で決まり、八重項だけの $q\bar q$ では斥力で抑えられ、一重項を含む $gg$ では引力が勝って増える。高エネルギーでは、$t$ チャンネルのグルーオンの交換で $f^{(1)}_{gg}$、$f^{(1)}_{qg}$ が定数に近づく。インスタントンでは、自己双対性によって、ゲージ場、ゴースト、クォークの1ループの行列式がすべて isospin $\frac12$ と1のスカラーの $-D^2$ に帰着し、その部分波の方程式は質量がなければ初等関数で解ける。紫外発散を除いた定数は $\zeta'(-1)$ と $\ln2$ で書け、$\MSbar$ と Pauli--Villars の違いはゲージ場の $d-4$ 個の余分な成分だけから生じる（$e^{N/6}$）。密度は小さいインスタントンを $\rho^{\beta_0-5}$ で抑えるが、大きい $\rho$ では結合が強くなる。
 
-\paragraph{検算で分かったこと。}木のレベルでは、手計算、FeynArts と FeynCalc、陽な行列による数値、MadGraph の四つがすべて一致した。とくに、$-g_{\mu\nu}$ の偏極の和の余分な部分がゴースト対の振幅の2乗に等しいことを、記号と数値の両方で確かめた。道具の注意点は三つあった。FeynCalc では \texttt{GS} が $\slashed p$ の略記なので、強い結合の記号に使えない。FeynArts の内線のグルーオンの \texttt{GaugeXi} は色の添字を持つので、普通の記号に置き換えないと色の縮約が止まる。MadGraph は $\alpha_s$ を $M_Z$ から走らせるので、模型の値で比べるには繰り込みのスケールを固定する。1ループでは、2点関数、頂点の極、有限部分がすべて手計算と一致した。道具については二つの誤りの起こり方が分かった。一つ目に、FeynArts はゲージ部分の $1/k^4$ を同じ分母の繰り返しで書き、FeynCalc の TID はそれを運動量0の辺を持つ4点関数として分解して、誤った紫外の極を与える。先に \texttt{FDS} で分母をまとめれば正しい。二つ目に、FeynCalc の \texttt{SUNSimplify} は $K_{3,3}$ の形につながった6個の構造定数の縮約を評価せずに残し、\texttt{Explicit -> True} を付けると評価する（値は0）。どちらも、紫外の極を外の運動量の展開と赤外の組み替えという独立な方法で求めていたので見つかった。1ループの散乱振幅（手順 (4)）では、赤外の極が一般の式と、有限部分が $\xi$ について、FeynCalc と FormCalc が図ごとに、虚部がユニタリー性と一致した。ここで分かった道具の注意点は三つある。一つ目に、一般の $\xi$ のゲージ部分の2重の伝播関数は TID と LoopTools、Package-X では扱えず、部分積分でマスター積分に直す必要がある。軟らかい三角形は $A_0$、$B_0$ に $1/(D-4)$ の係数で簡約されるので、それらを $O(\epsilon^2)$ まで評価する。二つ目に、FeynCalc の積分の族の同定（\texttt{FCLoopFindTopologies}、\texttt{FCLoopFindTopologyMappings}）は数値の運動学で運動量のずらしを見落とし、\texttt{FDS} は大きな図で非常に遅い。どちらも使わず、ずらしを自分で探した。三つ目に、FormCalc は \texttt{Dimension -> 0} で CDR の値を与える（既定の \texttt{Dimension -> D} では外線のスピンと偏極の和が4次元になる）。手順 (5) では、NLOCT の対抗項と R2 の頂点が手計算と文献の値に一致し、MadLoop が換算した手順 (4) の値と倍精度で一致した。MadLoop の値は、結合（$\alpha_s^{(n_l)}$）、外線の和の次元（4次元）、極の規格化（$(4\pi)^\epsilon/\Gamma(1-\epsilon)$）の三点で CDR の $W$ と違い、三つの差はどれも Born と同程度の大きさなので、比べる前に式~\eqref{eq:mlconv} の換算が要る。また、MadGraph の param\_card の $\alpha_s$ は7桁に切り詰められ、指数付きの長い仮数は読み違えられる。手順 (6) では、1PI 関数と S 行列要素の $\mu$ 依存がどのツールでも繰り込み群の予想と倍精度で一致し、$\beta_0$ と $\gamma_m$ を傾きから読み取れた。脱結合の検算では、MadGraph の \texttt{/ t} で重いクォークを除いた過程が $n_l$ フレーバーの理論の値を与え、MadLoop の重いクォークの寄与は $\Pi_t(s)-\Pi_t(0)$ と一致した。一方、$k^2\ll m^2$ や $m_t^2\gg s$ では、倍精度のツール（LoopTools、COLLIER、MadLoop）は打ち消しで桁を落とす。手順 (7) では、Kira と FIRE の簡約、厳密なマスター積分と AMFlow、pySecDec がすべて一致し、2ループの横波性と繰り込み群の2重の極が成り立った。MadGraph の2ループの $\alpha_s$ は、Newton 法の止め方のために $10^{-7}$ の精度しかない。手順 (8) では、$D$ 次元の実と仮想の和、2ループの光子の自己エネルギーの虚部（Kira、AMFlow）、閉じた形、aMC@NLO の4つが一致した。aMC@NLO を Z も W もない模型で動かすには、M$_Z$、M$_W$ の値と、頂点を持たない Z、W の粒子が要った。また、aMC@NLO のログの断面積は4桁なので、全桁の値は結果のファイルから読む。手順 (9) では、実の放射の位相空間の積分を切断した2ループの積分に直すと、手順 (7) と同じ簡約と AMFlow がそのまま使え、文献の厳密な結果と $2\times10^{-8}$ 以内で一致した。$P_{gg}$ の $+$ 分布の書き方による $\delta(1-z)$ の係数の違いは、$gg$ の $1/\epsilon$ の極が残ることで見つかった。MadGraph5\_aMC@NLO は $\hat s$ を固定した NLO を計算しないので、ハドロンの断面積で比べた。$pp$ では一致したが、$p\bar p$ では aMC@NLO の NLO が大きく、原因は特定していない。$f^{(1)}$ の補間の誤差も、aMC@NLO との比較で見つかった。
+\paragraph{検算で分かったこと。}木のレベルでは、手計算、FeynArts と FeynCalc、陽な行列による数値、MadGraph の四つがすべて一致した。とくに、$-g_{\mu\nu}$ の偏極の和の余分な部分がゴースト対の振幅の2乗に等しいことを、記号と数値の両方で確かめた。道具の注意点は三つあった。FeynCalc では \texttt{GS} が $\slashed p$ の略記なので、強い結合の記号に使えない。FeynArts の内線のグルーオンの \texttt{GaugeXi} は色の添字を持つので、普通の記号に置き換えないと色の縮約が止まる。MadGraph は $\alpha_s$ を $M_Z$ から走らせるので、模型の値で比べるには繰り込みのスケールを固定する。1ループでは、2点関数、頂点の極、有限部分がすべて手計算と一致した。道具については二つの誤りの起こり方が分かった。一つ目に、FeynArts はゲージ部分の $1/k^4$ を同じ分母の繰り返しで書き、FeynCalc の TID はそれを運動量0の辺を持つ4点関数として分解して、誤った紫外の極を与える。先に \texttt{FDS} で分母をまとめれば正しい。二つ目に、FeynCalc の \texttt{SUNSimplify} は $K_{3,3}$ の形につながった6個の構造定数の縮約を評価せずに残し、\texttt{Explicit -> True} を付けると評価する（値は0）。どちらも、紫外の極を外の運動量の展開と赤外の組み替えという独立な方法で求めていたので見つかった。1ループの散乱振幅（手順 (4)）では、赤外の極が一般の式と、有限部分が $\xi$ について、FeynCalc と FormCalc が図ごとに、虚部がユニタリー性と一致した。ここで分かった道具の注意点は三つある。一つ目に、一般の $\xi$ のゲージ部分の2重の伝播関数は TID と LoopTools、Package-X では扱えず、部分積分でマスター積分に直す必要がある。軟らかい三角形は $A_0$、$B_0$ に $1/(D-4)$ の係数で簡約されるので、それらを $O(\epsilon^2)$ まで評価する。二つ目に、FeynCalc の積分の族の同定（\texttt{FCLoopFindTopologies}、\texttt{FCLoopFindTopologyMappings}）は数値の運動学で運動量のずらしを見落とし、\texttt{FDS} は大きな図で非常に遅い。どちらも使わず、ずらしを自分で探した。三つ目に、FormCalc は \texttt{Dimension -> 0} で CDR の値を与える（既定の \texttt{Dimension -> D} では外線のスピンと偏極の和が4次元になる）。手順 (5) では、NLOCT の対抗項と R2 の頂点が手計算と文献の値に一致し、MadLoop が換算した手順 (4) の値と倍精度で一致した。MadLoop の値は、結合（$\alpha_s^{(n_l)}$）、外線の和の次元（4次元）、極の規格化（$(4\pi)^\epsilon/\Gamma(1-\epsilon)$）の三点で CDR の $W$ と違い、三つの差はどれも Born と同程度の大きさなので、比べる前に式~\eqref{eq:mlconv} の換算が要る。また、MadGraph の param\_card の $\alpha_s$ は7桁に切り詰められ、指数付きの長い仮数は読み違えられる。手順 (6) では、1PI 関数と S 行列要素の $\mu$ 依存がどのツールでも繰り込み群の予想と倍精度で一致し、$\beta_0$ と $\gamma_m$ を傾きから読み取れた。脱結合の検算では、MadGraph の \texttt{/ t} で重いクォークを除いた過程が $n_l$ フレーバーの理論の値を与え、MadLoop の重いクォークの寄与は $\Pi_t(s)-\Pi_t(0)$ と一致した。一方、$k^2\ll m^2$ や $m_t^2\gg s$ では、倍精度のツール（LoopTools、COLLIER、MadLoop）は打ち消しで桁を落とす。手順 (7) では、Kira と FIRE の簡約、厳密なマスター積分と AMFlow、pySecDec がすべて一致し、2ループの横波性と繰り込み群の2重の極が成り立った。MadGraph の2ループの $\alpha_s$ は、Newton 法の止め方のために $10^{-7}$ の精度しかない。手順 (8) では、$D$ 次元の実と仮想の和、2ループの光子の自己エネルギーの虚部（Kira、AMFlow）、閉じた形、aMC@NLO の4つが一致した。aMC@NLO を Z も W もない模型で動かすには、M$_Z$、M$_W$ の値と、頂点を持たない Z、W の粒子が要った。また、aMC@NLO のログの断面積は4桁なので、全桁の値は結果のファイルから読む。手順 (9) では、実の放射の位相空間の積分を切断した2ループの積分に直すと、手順 (7) と同じ簡約と AMFlow がそのまま使え、文献の厳密な結果と $2\times10^{-8}$ 以内で一致した。$P_{gg}$ の $+$ 分布の書き方による $\delta(1-z)$ の係数の違いは、$gg$ の $1/\epsilon$ の極が残ることで見つかった。MadGraph5\_aMC@NLO は $\hat s$ を固定した NLO を計算しないので、ハドロンの断面積で比べた。$pp$ では一致したが、$p\bar p$ では aMC@NLO の NLO が大きく、原因は特定していない。$f^{(1)}$ の補間の誤差も、aMC@NLO との比較で見つかった。手順 (10) では、部分波の和を $l$ で切ると $m^2\ln L$ の見かけの発散が現れ、組の2個の部分波の大きな値どうしの打ち消しで倍精度の桁が落ちた。質量のない厳密解を基準にした補正の方程式にすると、大きな打ち消しは解析的に済み、$10^{-11}$ の精度が得られた。文献の密度の係数には Pauli--Villars と $\MSbar$ の値が混在しており、クォークの係数の変換にも食い違いがあった。
 
-\paragraph{今後。}次は手順 (10) のインスタントンで、BPST の解~\cite{bpst}、位相的電荷、'tHooft の1ループの行列式~\cite{thooft76}（Gel'fand--Yaglom の方法で数値的に）、クォークのゼロモードと質量のあるクォークの行列式~\cite{dhlm05}、$\theta$ 真空、インスタントンの大きさの分布~\cite{bernard79} を求める。
+\paragraph{今後。}本ノートの十の手順はすべて終えた。残る課題には、インスタントンでは 't Hooft の有効相互作用と多インスタントンの配位（インスタントン液体~\cite{ss98}）、重いクォークの対生成では NNLO と閾値の再和、$e^+e^-\to$ ハドロンでは $O(\alpha_s^2)$ の補正がある。
 
 \appendix
 
@@ -2590,6 +2711,57 @@ f^{(1)}\to f^{(1)}+\frac{C_F}{2\pi^2}\bigl[\rho f^{(0)\prime}(\rho)-f^{(0)}(\rho
 \end{equation*}
 とし、$m$ を $\bar m(\mu)$ に置き換えたものになる。さらに $\bar m(\mu)=\bar m(\bar m)[1-\frac{3C_F\alpha_s}{4\pi}\ln\frac{\mu^2}{\bar m^2}]$ を代入すると $\bar f^{(1)}$ の移動が打ち消すので、$\bar m(\bar m)$ で書いた部分断面積では $f^{(1)}$ だけが移動する。
 
+\section{インスタントンの導出}\label{app:inst}
+
+\paragraph{規約と 't Hooft の記号。}Euclid 化（$x_4=it$）では $A_\mu=A^a_\mu T^a$、$D_\mu=\partial_\mu-igA_\mu$、$G_{\mu\nu}=\partial_\mu A_\nu-\partial_\nu A_\mu-ig[A_\mu,A_\nu]$、$G^a_{\mu\nu}=\partial_\mu A^a_\nu-\partial_\nu A^a_\mu+g\epsilon_{abc}A^b_\mu A^c_\nu$（SU(2)、$T^a=\sigma^a/2$）、$S_E=\frac12\int\tr G_{\mu\nu}G_{\mu\nu}=\frac14\int G^a_{\mu\nu}G^a_{\mu\nu}$ とする。't Hooft の記号は $\eta_{aij}=\epsilon_{aij}$、$\eta_{ai4}=-\eta_{a4i}=\delta_{ai}$（$i,j=1,2,3$）、$\bar\eta_{a\mu\nu}$ は $\delta$ の項の符号を変えたもので、$\eta$ は自己双対、$\bar\eta$ は反自己双対である。次の恒等式を使う：
+\begin{equation*}
+\eta_{a\mu\nu}\eta_{b\mu\nu}=4\delta_{ab},\qquad \eta_{a\mu\nu}\eta_{a\mu\lambda}=3\delta_{\nu\lambda},\qquad
+\epsilon_{abc}\eta_{b\mu\lambda}\eta_{c\nu\sigma}=\delta_{\mu\nu}\eta_{a\lambda\sigma}-\delta_{\mu\sigma}\eta_{a\lambda\nu}-\delta_{\lambda\nu}\eta_{a\mu\sigma}+\delta_{\lambda\sigma}\eta_{a\mu\nu}.
+\end{equation*}
+$\int\tr(G\mp\tilde G)^2=2\int\tr(G^2\mp G\tilde G)\ge0$ から $S_E\ge\frac{8\pi^2}{g^2}|Q|$ である。
+
+\paragraph{BPST の解（式~\eqref{eq:bpst}）。}$A^a_\mu=\frac2g\eta_{a\mu\nu}x_\nu f$、$f=1/(x^2+\rho^2)$、$f'=\dd f/\dd x^2=-f^2$ とすると、線形の部分は $\partial_\mu A^a_\nu-\partial_\nu A^a_\mu=\frac2g[-2\eta_{a\mu\nu}f+2f'(x_\mu\eta_{a\nu\lambda}-x_\nu\eta_{a\mu\lambda})x_\lambda]$、2次の部分は上の3番目の恒等式から $g\epsilon_{abc}A^b_\mu A^c_\nu=\frac4gf^2[(x_\mu\eta_{a\nu\lambda}-x_\nu\eta_{a\mu\lambda})x_\lambda+x^2\eta_{a\mu\nu}]$ である。$f'=-f^2$ で $x\eta x$ の項は打ち消し、$G^a_{\mu\nu}=-\frac4g\eta_{a\mu\nu}f(1-x^2f)=-\frac4g\eta_{a\mu\nu}\rho^2f^2$ になる。$\eta$ が自己双対だから $G=\tilde G$ で、Bianchi 恒等式から Yang--Mills 方程式 $D_\mu G_{\mu\nu}=D_\mu\tilde G_{\mu\nu}=0$ が従う。作用は $\frac14\cdot\frac{16\cdot12}{g^2}\int\frac{\rho^4\dd^4x}{(x^2+\rho^2)^4}=\frac{48}{g^2}\cdot2\pi^2\cdot\frac1{12}=\frac{8\pi^2}{g^2}$、$Q=\frac{g^2S_E}{8\pi^2}=1$ である。$\tr G\tilde G=\partial_\mu K_\mu$、$K_\mu=2\epsilon_{\mu\nu\rho\sigma}\tr(A_\nu\partial_\rho A_\sigma-\frac{2ig}3A_\nu A_\rho A_\sigma)$ で、無限遠の純ゲージ $A=\frac ig(\partial U)U^\dagger$ では $Q=\frac1{24\pi^2}\oint\dd S_\mu\,\epsilon_{\mu\nu\rho\sigma}\tr[(U\partial_\nu U^\dagger)(U\partial_\rho U^\dagger)(U\partial_\sigma U^\dagger)]$ は $U$ の巻き付き数である。特異ゲージ $A^{\mathrm s}=U^\dagger AU+\frac igU^\dagger\partial U$ では $A^{a,\mathrm s}_\mu=\frac2g\bar\eta_{a\mu\nu}x_\nu\rho^2/[x^2(x^2+\rho^2)]$ で、場は無限遠で $1/x^3$ で減り、特異点は原点にある。
+
+\paragraph{ゼロモード。}揺らぎ $a_\mu$ に背景ゲージ $D_\mu a_\mu=0$ を課すと、ゼロモードは線形化した方程式 $D_\mu(D_\mu a_\nu-D_\nu a_\mu)-ig[a_\mu,G_{\mu\nu}]=0$ の規格化できる解である。並進 $\partial_\nu A_\mu$ をゲージ変換で背景ゲージに戻すと $a^{(\nu)}_\mu=G_{\nu\mu}$ で、$\int a^{(\nu)a}_\mu a^{(\nu)a}_\mu=\frac14\int G^aG^a=8\pi^2/g^2$ である。拡大は特異ゲージの $\partial_\rho A^{\mathrm s}_\mu$（背景ゲージを満たす）で $16\pi^2/g^2$、ゲージの向きは $D_\mu\Lambda^a$、$\Lambda^a=\frac{x^2}{x^2+\rho^2}T^a$（特異ゲージで $D^2\Lambda=0$ の、無限遠で大域的な回転になる解）で $4\pi^2\rho^2/g^2$ である。SU($N$) では、SU(2) の部分群に埋め込んだ解の向きの自由度 SU($N$)/[SU($N-2$)$\times$U(1)] の $4N-5$ 個がゲージの向きのゼロモードで、合わせて $4N$ 個になる。随伴表現は SU(2) の下で、三重項1個、二重項 $2(N-2)$ 個（複素の二重項 $N-2$ 個）、一重項 $(N-2)^2$ 個に分かれる。
+
+\paragraph{集団座標と1ループの積分。}揺らぎの測度を $\int\prod_i\frac{\dd\xi_i}{\sqrt{2\pi}}e^{-\frac12\xi_i^2\lambda_i}$ と規格化すると、ゼロモードの $\xi_i$ は集団座標 $c_i$ に $\dd\xi_i=\|a_i\|\dd c_i$ で置き換わる。次元正則化（$\MSbar$）や Pauli--Villars（質量 $M$）では、ゼロモード1個ごとに $\mu$（または $M$）が付く。非ゼロモードは背景 Feynman ゲージで、ゲージ場の演算子 $(M_A)_{\mu\nu}=-D^2\delta_{\mu\nu}-2ig\,\mathrm{ad}(G_{\mu\nu})$ とゴーストの $-D^2$ の行列式になる。ベクトルの添字は SU(2)$\times$SU(2) の $(\frac12,\frac12)$ で、自己双対な $G$ はその一方にだけ $\sigma\cdot G$ で結合するので、$M_A$ の非ゼロのスペクトルは $-D^2\otimes1_4$ と等しく、$\det'M_A=\det(-D^2)^4$ である（ゼロモードは $\sigma\cdot G$ の側にだけある）。ゴーストと合わせて $\det'M_A^{-1/2}\det(-D^2)=\det(-D^2_{\mathrm{adj}})^{-1}$ となる。SU(2) では随伴表現は isospin 1 で、式~\eqref{eq:alpha} から $e^{-\frac23\ln(\mu\rho)-\alpha(1)}$ を与える。集団座標は $\dd^4z\,(\frac{8\pi^2}{g^2})^2\frac{\mu^4}{(2\pi)^2}$、$\dd\rho\,(\frac{16\pi^2}{g^2})^{1/2}\frac\mu{\sqrt{2\pi}}$、向き SU(2)/$\mathbb Z_2$ の体積 $8\pi^2$（$U=e^{i\omega^aT^a}$ の $\omega$ の計量）と $(\frac{4\pi^2\rho^2}{g^2})^{3/2}\frac{\mu^3}{(2\pi)^{3/2}}$ を与え、合わせて
+\begin{equation*}
+d(\rho)=\frac{e^{-\alpha(1)}}{4\pi^2}\Bigl(\frac{8\pi^2}{g^2}\Bigr)^4\rho^{-5}e^{-8\pi^2/g^2}(\mu\rho)^{8-\frac23}
+\end{equation*}
+である（Pauli--Villars の値、$\mu\to M$）。$\MSbar$ では、$d=4-2\epsilon$ 次元でベクトルの成分が $d$ 個あるので $\det'M_A=\det(-D^2)^d$ となり、$-\frac d2\ln\det(-D^2)+\ln\det(-D^2)=-\ln\det(-D^2)+\epsilon\ln\det(-D^2)$ の最後の項が、$\ln\det(-D^2_{\mathrm{adj}})$ の極 $\frac N3\cdot\frac1{2\epsilon}$ と掛かって有限の $+\frac N6$ を残す（クォークのトレースは4次元のままなので寄与しない）。これは純粋なゲージ理論の $\Lambda_{\mathrm{PV}}=e^{1/22}\Lambda_{\MSbar}$ と同じで、$\MSbar$ の $C_N$ は Pauli--Villars の値の $e^{N/6}$ 倍である。SU($N$) では、随伴表現の $2(N-2)$ 個の二重項が $e^{-2(N-2)\alpha(1/2)}$ を、$4(N-2)$ 個の向きのゼロモードと向きの体積が Bernard の因子~\cite{bernard79} を与え、式~\eqref{eq:instdens} の $C_N=\frac{2e^{5/6}}{\pi^2}e^{-(C_2-\frac16)N}/[(N-1)!(N-2)!]$ になる。$N=2$ では上の $\frac{e^{-\alpha(1)}}{4\pi^2}e^{1/3}$ に戻り、これが $\alpha(1)=4\alpha(\frac12)+\ln2-\frac56$ と同値である（文献~\cite{fm25} の $C_1$）。
+
+\paragraph{クォーク。}Euclid の $\slashed D$ は反エルミートで、0 でない固有値は $\pm i\lambda$ の対をなす。自己双対な背景では、ゼロモードのないカイラリティの $-\slashed D^2$ は $-D^2\otimes1_2$（スピンの2成分）なので、$\det(\slashed D+m)=m\prod_{\lambda>0}(\lambda^2+m^2)=m\det(-D^2+m^2)^2$ である。比をとって繰り込むと $\ln\frac{\det(\slashed D+m)}{\det(\slashed\partial+m)}=\ln\frac m\mu+2\Gamma^S(m)$ で、大きい $m$ では $\frac23\ln\frac m\mu+O(m^{-2})$ と定数を持たず（脱結合）、小さい $m$ では $\ln(C_qm\rho)-\frac23\ln(\mu\rho)$、$C_q=e^{2\alpha(1/2)}$ となる。クォークの行列式もクォークの結合への寄与も、Pauli--Villars（質量 $M$）と $\MSbar$（$\mu=M$）で等しいので、$C_q$ は二つの正則化で同じである（文献~\cite{fm25} は $\MSbar$ の $C_q$ に $e^{-1/33}$ を掛けており、これは $\Lambda_{\mathrm{PV}}/\Lambda_{\MSbar}=e^{1/22}$ をクォークの $\beta_0$ にも使ったものに当たる）。ゼロモードは $\slashed D\psi_0=0$ を満たす $\psi_0=\frac\rho\pi(x^2+\rho^2)^{-3/2}\chi$（正則ゲージ、$\chi_{\alpha i}=\epsilon_{\alpha i}$）で、$\int\psi_0^\dagger\psi_0=1$ である。
+
+\paragraph{動径の方程式（式~\eqref{eq:instrad}）。}$L^a=-\frac i2\eta_{a\mu\nu}x_\mu\partial_\nu$ は SU(2) の代数 $[L^a,L^b]=i\epsilon_{abc}L^c$ を満たし、$-r^2\partial^2=-(r\partial_r)^2-2r\partial_r+4\boldsymbol L^2$ である（$S^3$ の $n$ 次の調和関数は SU(2)$\times$SU(2) の $(\frac n2,\frac n2)$ で、$l=\frac n2$）。正則ゲージの $A$ では $\partial\cdot A=0$、$2igA_\mu\partial_\mu=\frac{8\boldsymbol L\cdot\boldsymbol T}{r^2+\rho^2}$、$g^2A_\mu A_\mu=\frac{4r^2\boldsymbol T^2}{(r^2+\rho^2)^2}$ で、式~\eqref{eq:instrad} が従う。$2\boldsymbol L\cdot\boldsymbol T=j(j+1)-l(l+1)-t(t+1)$ を使うと
+\begin{equation*}
+H_{l,j}=-\partial_r^2-\frac3r\partial_r+\frac{4l(l+1)}{r^2}+\frac{4[j(j+1)-l(l+1)]}{r^2+\rho^2}-\frac{4t(t+1)\rho^2}{(r^2+\rho^2)^2}+m^2
+\end{equation*}
+である。特異ゲージでは同じ形で $l$ と $j$ が入れ替わる（原点で $4j(j+1)/r^2$、無限遠で $4l(l+1)/r^2$）。Gel'fand--Yaglom の定理~\cite{gy60} から、$\det H_{l,j}/\det H^{\mathrm{free}}_l=\lim_{r\to\infty}\psi(r)/\psi^{\mathrm{free}}(r)$（どちらも原点で $r^{2l}$）である。質量がないとき、原点で正則な解は（$\rho=1$）
+\begin{equation*}
+\begin{aligned}
+&t=\tfrac12:\quad (l,l+\tfrac12):\ \frac{r^{2l}[(2l+2)+(2l+1)r^2]}{(2l+2)\sqrt{1+r^2}},\qquad (l,l-\tfrac12):\ \frac{r^{2l}}{\sqrt{1+r^2}},\\
+&t=1:\quad (l,l+1):\ \frac{r^{2l}[(2l+2)(2l+3)+2(2l+1)(2l+3)r^2+(2l+1)(2l+2)r^4]}{(2l+2)(2l+3)(1+r^2)},\\
+&\phantom{t=1:}\quad (l,l):\ \frac{r^{2l}[(2l+2)+2lr^2]}{(2l+2)(1+r^2)},\qquad (l,l-1):\ \frac{r^{2l}}{1+r^2}
+\end{aligned}
+\end{equation*}
+で、無限遠で $r^{2j}$ の $\frac{2l+1}{2l+2}$、$1$、$\frac{2l+1}{2l+3}$、$\frac l{l+1}$、$1$ 倍になる。個々の比は $r^{2(j-l)}$ で発散するか0になるが、$l+j$ の等しい $(l,j)$ と $(j,l)$ の組（縮退度が等しい）では打ち消し、組の比は $\frac{2l+1}{2l+2}$（$t=\frac12$）、$\frac{2l+1}{2l+3}$（$t=1$）、$(l,l)$ は単独で $\frac l{l+1}$ である。$l$ と $j$ を入れ替えるゲージ変換で不変な $l+j$ で和を切るのが、この組の意味である。
+
+\paragraph{$\alpha(t)$（式~\eqref{eq:alpha}）。}質量のない和は Hurwitz のゼータ関数の微分で書け、$L\to\infty$ で
+\begin{equation*}
+\sum_{l\le L}(2l+1)(2l+2)\ln\frac{2l+1}{2l+2}=-2L^2-4L+\frac16\ln L-2+\frac{\ln2}6+2\ln A+O(L^{-1})
+\end{equation*}
+（$l=0,\frac12,1,\dots$、$\ln A=\frac1{12}-\zeta'(-1)$ は Glaisher の定数）である。$t=1$ では $-8L^2-16L+\frac23\ln L-7+\frac53\ln2+8\ln A$ になる。$\ln L$ の係数は熱核の $\frac{T(t)}3$ に一致する。部分波で切る正則化は $\MSbar$ ではないので、定数を決めるには $\MSbar$ との対応が要る。Dunne--Hur--Lee--Min~\cite{dhlm05,dhlm05b} は、大きい $l$ の WKB と背景の2次の Feynman 図を $\MSbar$ で比べ、$t=\frac12$ で
+\begin{equation*}
+\tilde\Gamma^S(m)=\lim_{L\to\infty}\Bigl[\sum_{l\le L}\Gamma_l(m)+2L^2+4L-\Bigl(\frac16+\frac{m^2}2\Bigr)\ln L+\frac{127}{72}-\frac{\ln2}3+\frac{m^2}2-m^2\ln2+\frac{m^2}2\ln m\Bigr]
+\end{equation*}
+を得た（$\Gamma_l$ は組の対数の比の縮退度つきの和）。$m=0$ で $\alpha(\frac12)=-\frac{17}{72}-\frac{\ln2}6+2\ln A=-\frac5{72}-\frac{\ln2}6-2\zeta'(-1)$ である。$m^2\ln L$ の項は、部分波の切断がゲージ不変でないために生じる見かけの発散で、$\Gamma_l$ の大きい $l$ の振る舞い $\frac{m^2}{4l}$（$\frac12$ 刻み）から来る。$t=1$ では $\Gamma_l\sim\frac{m^2}l$ で、$m^2$ の項はすべて $T(t)$ に比例して4倍になる。定数は、大きい $m$ で $\MSbar$ の $\tilde\Gamma$ が定数を持たないこと（脱結合）から決められ、本ノートの数値（手順 (10)）は $\alpha(1)=4\alpha(\frac12)+\ln2-\frac56$ を与えた。
+
+\paragraph{大きい質量の展開。}$\ln\frac{\det(-D^2+m^2)}{\det(-\partial^2+m^2)}=-\int_0^\infty\frac{\dd s}se^{-m^2s}\sum_ks^{k-2}A_k$ で、$\Omega_{\mu\nu}=[D_\mu,D_\nu]=-igG_{\mu\nu}$、$E=0$ の平らな空間の熱核の係数~\cite{vassilevich03} は $A_2=\frac1{16\pi^2}\frac1{12}\int\tr\Omega^2$、$A_3=\frac1{16\pi^2}\frac1{360}\int\tr[-4(D_\rho\Omega_{\mu\nu})^2+2(D_\mu\Omega_{\mu\nu})^2-12\Omega_{\mu\nu}\Omega_{\nu\rho}\Omega_{\rho\mu}]$（部分積分のあと）である。$A_2=-\frac{g^2}{192\pi^2}\int\tr G^2=-\frac{T(t)}6$ は $\frac{T(t)}3\ln\frac{\Lambda}{m}$ を与え、$\MSbar$ ではこの $\ln$ だけが残り定数は残らない。Yang--Mills 方程式と Bianchi 恒等式から $\int\tr(D_\rho G_{\mu\nu})^2=4ig\int\tr G_{\mu\nu}G_{\nu\rho}G_{\rho\mu}$ で、$A_3=\frac{ig^3}{1440\pi^2}\int\tr G_{\mu\nu}G_{\nu\rho}G_{\rho\mu}$ となる。BPST では（$g=1$）$\int\tr G^2=32\pi^2T(t)$、$\int\tr G_{\mu\nu}G_{\nu\rho}G_{\rho\mu}=-\frac{192i\pi^2}{5\rho^2}T(t)$ で、$A_3=\frac{2T(t)}{75\rho^2}$、すなわち $-\frac{2T(t)}{75m^2\rho^2}$（$t=\frac12$ で $-\frac1{75}$）である。
+
+\paragraph{$\theta$ 真空と希薄な気体。}インスタントンと反インスタントンが互いに独立なら、$Z(\theta)=\sum_{n,\bar n}\frac{(VK)^{n+\bar n}}{n!\,\bar n!}e^{i\theta(n-\bar n)}=\exp(2VK\cos\theta)$（$K=\int\dd\rho\,d(\rho)$）で、真空のエネルギー密度は $E(\theta)=-2K\cos\theta$、位相的感受率は $\chi=\frac{\dd^2E}{\dd\theta^2}|_0=2K$ である。軽いクォークがあると $K\propto\prod_fm_f$ なので、$\theta$ への依存は質量のないクォークがあれば消える（強い CP 問題の解の一つ）。
+
+\paragraph{格子の $O(a^2)$。}リンク $U_\mu(x)=P\exp(-ig\int_x^{x+a\hat\mu}A)$ のプラケットを展開すると、Wilson の作用は $S_W=\sum_p\frac{2N}{g^2}(1-\frac1N\mathrm{Re}\,\tr U_p)=\int[\frac12\tr G^2-\frac{a^2}{12}\sum_{\mu\nu}\tr(D_\mu G_{\mu\nu})^2]+O(a^4)$（$\mu$ について和をとらない $D_\mu G_{\mu\nu}$）、4枚のプラケットの平均（クローバー）は $G+\frac{a^2}6(D_\mu^2+D_\nu^2)G+O(a^4)$ である。BPST では $\sum_{\mu\nu}\tr(D_\mu G_{\mu\nu})^2=576\rho^4x^2/(x^2+\rho^2)^6$ で、$S_W=\frac{8\pi^2}{g^2}[1-\frac15(\frac a\rho)^2+\cdots]$~\cite{gpgsv94}、クローバーの電荷は $Q=1-\frac45(\frac a\rho)^2+\cdots$ である。
+
 \section{検算の細部}\label{app:details}
 
 \paragraph{手順 (1) の模型ファイル。}パラメータの名前は MadGraph の慣習に合わせた。強い結合は外部パラメータ \texttt{aS}（ブロック \texttt{SMINPUTS} の3番、基準値 $1/4\pi$）で与え、$g=\sqrt{4\pi\alpha_s}$ を内部パラメータ \texttt{gs}（UFO での名前 \texttt{G}、次数 \texttt{QCD}$=1$）とした。MadGraph は強い結合をこの二つの名前で探す。光子の結合は外部パラメータ \texttt{ee}（\texttt{QEDBLOCK}、次数 \texttt{QED}$=1$）、重いクォークの質量は \texttt{MT}（基準値 1）である。クォークのクラスは、電荷の違う \texttt{uq}$=\{u,c\}$（\texttt{UpGen}）と \texttt{dq}$=\{d,s,b\}$（\texttt{DownGen}）と、重い \texttt{tq} に分け、PDG 番号と粒子名は標準のもの（1〜6、11、21、22、ゴーストは 82）とした。FeynArts の模型には、意味のない行 \texttt{GaugeXi[F[7]] = GaugeXi[F[4]]} が書き出される（元のクラスの番号 \texttt{F[4]} が残ったもの）。フェルミオンの \texttt{GaugeXi} は使われないので害はない。MadGraph は UFO を読み込むときにその場で書き換えるので、\texttt{Src/work/} に写したものを読み込む（これまでのノートと同じ）。
@@ -2620,6 +2792,12 @@ f^{(1)}\to f^{(1)}+\frac{C_F}{2\pi^2}\bigl[\rho f^{(0)\prime}(\rho)-f^{(0)}(\rho
 \paragraph{手順 (8)。}FeynArts の1ループの頂点 $\{u,\bar u\}\to\gamma$ には、グルーオンの交換と光子の交換の2個の図があり、$g_s$ を含む前者だけを残した。2ループの光子の自己エネルギーも同じく6個のうちグルーオンを含む3個を残した。FCFAConvert は1ループの閉じたクォークのループの色の和（\texttt{SumOver}）を落とすので、$N_c$ を手で掛けた（2ループでは SUNSimplify がトレースから $C_FC_A$ を返す）。Package-X の \texttt{PaXEvaluate} は $1/\epsilon$ を掛けた PaVe 関数を扱わないので、$B_0$、$C_0$ をそれぞれ厳密な形と比べた。AMFlow の \texttt{SolveIntegrals} は、求めた積分より多い積分の値を返すことがあり（5個に対して7個）、値は位置ではなく積分の名前で対応させる。aMC@NLO では、MadGraph5\_aMC@NLO 3.8.1 の NLO の雛形（\texttt{fks\_singular.f}、\texttt{ewsudakov\_functions\_dummy.f}）と \texttt{launch} が $M_Z$、$M_W$ を参照するので、UFO の作業用の複製に値（91.188、80.379）と頂点を持たない Z、W の粒子を加えた（\texttt{ee\_mg5.py}）。既定のジェットのカット $p_{T,j}>10$~GeV は低いエネルギーで位相空間をすべて除くので、\texttt{ptj = 0}、\texttt{etaj = -1} とした。ログの全断面積は4桁なので、全桁の値は \texttt{Events/run\_NN/res\_<k>.txt} の最後の \texttt{Total:} から読んだ。種は \texttt{iseed} で 11、22、33、44 とした。
 
 \paragraph{手順 (9)。}MadGraph5\_aMC@NLO は、始状態にパートンがある NLO の過程を $\hat s$ を固定したビーム（\texttt{lpp = 0}）で計算しない（\texttt{Process has incoming j\_fks, but fixed shat: not allowed for processes generated at NLO}）。$e^+e^-$ の手順 (8) では使えた設定だが、ここではパートンの断面積を直接比べられないので、ハドロンの断面積で比べた。実の放射の2乗振幅は、16個の図の $gg\to Q\bar Qg$ をまとめて FeynCalc でトレースすると、偏極のテンソルとの縮約の段階で 45 分を超えてメモリが 5.7~GB に達したので、図の組ごとに計算した。組ごとでも、開いた6個の添字のままトレースをとってから縮約すると1組に数千秒かかったが、偏極のテンソルを先に掛けてトレースの中で縮約すると、ほとんどの組が数秒、最も重い組でも 25 分で終わった（結果は記号として一致）。$i\ne j$ の組は複素共役を足して $2\,\mathrm{Re}$ にした（色の因子が複素数になる組がある）。$D=4$ の値を倍精度で評価すると、大きな有理式の打ち消しで MadGraph と最大 $10^{-4}$ ずれたが、40桁で評価すると $7\times10^{-15}$ だった。部分分数は、$gg$ の被積分関数全体に一度にかけると 12875 項と 42 の族になったが、図の組ごとにかけると 172 項と 15 の族で済んだ（組ごとの分子は小さく、見かけの分母の組み合わせが生じない）。Kira の優先するマスター積分を指定しないと、切断した伝播関数の2乗（$\delta$ 関数の微分）を含むマスター積分が選ばれたので、各セクターに非切断の線の点か分子を一つ付けた積分を候補として与えた。異なる族のマスター積分は、切断の指数と分母の形とその指数、$k_1\leftrightarrow k_2$、$p_1\leftrightarrow p_2$ の入れ替えで同じものをまとめると、$q\bar q$、$qg$、$gg$ で 12、18、97 個が 6、8、36 個の異なる積分になり、AMFlow で計算する族は 2、2、7 個で済んだ（同じキーの積分の値は AMFlow で $10^{-23}$ 以内で一致した）。AMFlow の \texttt{SolveIntegrals} の3番目の引数は、$\epsilon^{-2L}$ から数えた展開の項の数である（2ループの位相空間の積分を $\epsilon^2$ まで求めるには6）。分岐関数の $+$ 分布は、$P_{gg}$ の $\frac z{(1-z)_+}$ と $[\frac z{1-z}]_+$ が $\delta(1-z)$ だけ違う（$\frac z{(1-z)_+}=[\frac z{1-z}]_+-\delta(1-z)$）。後者で $P_{gg}$ を書いて $\delta(1-z)$ の係数を $\frac{\beta_0}2$ のままにすると、$gg$ の $1/\epsilon$ の極が $2\times(1/\epsilon^2$ の係数$)$ だけ残った。$s$ が大きい点では、マスター積分の係数の $1/(D-4)$ の極どうしが強く打ち消すので、$f^{(1)}$ の有効数字は AMFlow の桁数より10桁ほど少なくなる。ハドロンの断面積の $f^{(1)}$ の補間は、初め $\rho=0.19$ で $\beta$ と $\ln\rho$ のスプラインをつないだが、$\beta=0.8$〜$0.9$ で誤差が大きく、積分の節点で厳密な $f^{(1)}$ と比べると 13 TeV の $\sigma$ を $0.42$~pb（$5\times10^{-4}$。$qg$ の $f^{(1)}$ の寄与の $2.5\%$）ずらしていた。これは $\mu=m$ の aMC@NLO との差（統計誤差の4倍）として見つかり、つなぎ目を $\rho=0.64$ に移して、それぞれのスプラインにつなぎ目の外の2点も使うと $0.007$~pb になった。$\MSbar$ の質量では、式~\eqref{eq:hqmsbar} の $\bar f^{(1)}$ の移動は $\bar m(\mu)$ で書くときのもので、$\bar m(\bar m)$ で書いた断面積に誤って加えると、13 TeV の $\mu=\bar m/2$、$2\bar m$ の NLO が $+20\%$、$-12\%$ ずれ、スケールによる変化を極質量より大きく見積もる。
+
+\paragraph{手順 (10)。}質量のある部分波を $\psi^{\mathrm{free}}=I_{2l+1}(mr)/r$ と比べるとき、\texttt{scipy.special.ive} の比 $I_{\nu+1}/I_\nu$ は $\nu$ が大きく $mr$ が小さいところで0に落ちて \texttt{nan} になったので、自由解の対数微分 $Y=r\psi^{\mathrm{free}\prime}/\psi^{\mathrm{free}}$ も常微分方程式 $\dd Y/\dd\tau=4l(l+1)+m^2r^2-Y^2-2Y$ で一緒に積分した。組の2個の部分波の $\ln R$ は、遠方で $j$ と $l$ が異なるため $\pm\ln(\nu/m)$ 程度の大きさ（$l=400$ で $\pm6$）で、和では打ち消す。このため倍精度の積分の誤差 $10^{-12}$ が縮退度 $\sim4l^2$ で拡大され、$l=400$ の項の誤差は $0.02\%$ になった。そこで、質量のない厳密解 $\psi_0$ に対する補正 $X=\ln(\psi/\psi_0)$ と、遠方の角運動量 $k$ の自由解に対する補正の差 $Q=r\frac{\dd}{\dd r}[X-\ln(\psi^{\mathrm{free}}_k/r^{2k})]$ を
+\begin{equation*}
+\frac{\dd Q}{\dd\tau}=-(2P_f+Q)Q-2(P_0+1)Q-2gP_f,\qquad \frac{\dd P_f}{\dd\tau}=m^2r^2-P_f^2-2(2k+1)P_f,\qquad P_0=r\frac{\psi_0'}{\psi_0}=2k+g(r^2)
+\end{equation*}
+で積分した。大きい数どうしの打ち消しは解析的に済み、残るのは小さい量だけである。$g=P_0-2k$ を $2l-(2l+1)+\cdots$ の形で数値的に計算すると桁落ちが右辺の雑音になり、LSODA の評価回数が $10^6$ を超えたので、$g$ を通分した形（$t=\frac12$ の $(l,l+\frac12)$ では $g=-\frac{(2l+2)+(2l+3)r^2}{[(2l+2)+(2l+1)r^2](1+r^2)}$）で与えた。積分の始点 $r_0$ では $Q=0$ と置かず、級数 $P_f=pr^2$、$Q=qr^2$（$p=\frac{m^2}{4k+4}$、$q=-\frac{g(0)p}{2k+g(0)+2}$）から始めた（$Q=0$ だと $r_0=10^{-3}$ で相対 $10^{-8}$ の誤差）。大きい $l$ の和の残りは、$\frac{T(t)}2\frac{m^2}l$ を除いた項を $l^{-p}$ と $l^{-p}\ln l$ の和に当てはめ、Hurwitz のゼータ関数とその微分で足した。$t=1$ では、組と単独の部分波がそれぞれ $\mp\frac{m^2\ln l}l$ のように振る舞って打ち消し、和に $\frac{\ln l}{l^2}$ が残るので、$\ln l$ の項がないと $L=500$ と1000 の差が $10^{-3}$ になった。部分波を $l$ で切ると $m^2\ln L$ の見かけの発散が現れ、これを打ち消すのが Dunne--Hur--Lee--Min の $m^2$ の対抗項である。小さい質量の展開の $m^2$ の項の $+\frac12$（文献~\cite{hlm09}）は、数値の $2E/m^2-(\ln\frac m2+\gamma_E)$ が $m\to0$ で $\frac12$ に近づく（$m\rho=0.005$ で $0.4995$）ことでも確かめた。Mathematica の検算では、$\sum_{\mu\nu}\tr(D_\mu G_{\mu\nu})^2$ やクローバーの補正の密度は球対称でないので、動径方向だけでなく $S^3$ の角度も積分した。格子では、境界を開いた箱の $O(a)$ の効果を除くため、格子の和を同じプラケットの中心（電荷は同じ格子点）で連続の密度を足したものと比べた。インスタントンの密度の係数 $0.466e^{-1.679N}$ は Pauli--Villars の値で~\cite{np94}、$\MSbar$ では $e^{N/6}$ が掛かる~\cite{np94,fm25}。
 
 \begin{thebibliography}{99}
 \bibitem{phi3note} $\phi^3$ 理論：模型の定義と1ループ・2ループの構造（$d=4,\,6$）（本リポジトリ \nolinkurl{models/phi3/ResearchNote/note.pdf}）。
@@ -2673,6 +2851,19 @@ f^{(1)}\to f^{(1)}+\frac{C_F}{2\pi^2}\bigl[\rho f^{(0)\prime}(\rho)-f^{(0)}(\rho
 \bibitem{bn09} T. Becher, M. Neubert, ``On the Structure of Infrared Singularities of Gauge-Theory Amplitudes,'' JHEP \textbf{06} (2009) 081; Erratum: JHEP \textbf{11} (2013) 024, arXiv:0903.1126。
 \bibitem{bn09m} T. Becher, M. Neubert, ``Infrared Singularities of QCD Amplitudes with Massive Partons,'' Phys. Rev. D \textbf{79}, 125004 (2009); Erratum: Phys. Rev. D \textbf{80}, 109901 (2009), arXiv:0904.1021。
 \bibitem{dhlm05} G. V. Dunne, J. Hur, C. Lee, H. Min, ``Precise Quark Mass Dependence of Instanton Determinant,'' Phys. Rev. Lett. \textbf{94}, 072001 (2005), arXiv:hep-th/0410190。
+\bibitem{dhlm05b} G. V. Dunne, J. Hur, C. Lee, H. Min, ``Calculation of QCD instanton determinant with arbitrary mass,'' Phys. Rev. D \textbf{71}, 085019 (2005), arXiv:hep-th/0502087。
+\bibitem{hlm09} J. Hur, C. Lee, H. Min, ``Analytic Form of the QCD Instanton Determinant for Small Quark Mass,'' Phys. Rev. D \textbf{80}, 105024 (2009), arXiv:0909.5515。
+\bibitem{gy60} I. M. Gel'fand, A. M. Yaglom, ``Integration in functional spaces and its applications in quantum physics,'' J. Math. Phys. \textbf{1}, 48 (1960)。
+\bibitem{cdg76} C. G. Callan, Jr., R. F. Dashen, D. J. Gross, ``The Structure of the Gauge Theory Vacuum,'' Phys. Lett. B \textbf{63}, 334 (1976)。
+\bibitem{jr76} R. Jackiw, C. Rebbi, ``Vacuum Periodicity in a Yang-Mills Quantum Theory,'' Phys. Rev. Lett. \textbf{37}, 172 (1976)。
+\bibitem{vv08} S. Vandoren, P. van Nieuwenhuizen, ``Lectures on instantons,'' arXiv:0802.1862。
+\bibitem{vassilevich03} D. V. Vassilevich, ``Heat kernel expansion: user's manual,'' Phys. Rept. \textbf{388}, 279 (2003), arXiv:hep-th/0306138。
+\bibitem{np94} P. Nason, M. Porrati, ``Small size instanton corrections to the tau hadronic width,'' Nucl. Phys. B \textbf{421}, 518 (1994), arXiv:hep-ph/9302211。
+\bibitem{fm25} K. Fukushima, S. Minato, ``Speed of sound and trace anomaly in a unified treatment of the two-color diquark superfluid, the pion-condensed high-isospin matter, and the 2SC quark matter,'' Phys. Rev. D \textbf{111}, 094006 (2025), arXiv:2411.03781（付録 B）。
+\bibitem{gpgsv94} M. García Pérez, A. González-Arroyo, J. Snippe, P. van Baal, ``Instantons from over-improved cooling,'' Nucl. Phys. B \textbf{413}, 535 (1994), arXiv:hep-lat/9309009。
+\bibitem{ss98} T. Schäfer, E. V. Shuryak, ``Instantons in QCD,'' Rev. Mod. Phys. \textbf{70}, 323 (1998), arXiv:hep-ph/9610451。
+\bibitem{clsw99} S. Capitani, M. Lüscher, R. Sommer, H. Wittig, ``Non-perturbative quark mass renormalization in quenched lattice QCD,'' Nucl. Phys. B \textbf{544}, 669 (1999), arXiv:hep-lat/9810063。
+\bibitem{dgp05} L. Del Debbio, L. Giusti, C. Pica, ``Topological susceptibility in the SU(3) gauge theory,'' Phys. Rev. Lett. \textbf{94}, 032003 (2005), arXiv:hep-th/0407052。
 \end{thebibliography}
 
 \end{document}

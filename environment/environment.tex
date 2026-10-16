@@ -474,6 +474,8 @@ zsh の単語分割（shell） & \texttt{for r in "1 85" ...; do set -- \$r} や
 
 手順 (9) では、重いクォークの対生成の NLO の部分断面積 $f^{(1)}_{ij}$ を reverse unitarity で求めた（\nolinkurl{models/qcd/Src/run_hq_check.sh}）。実の放射の $D$ 次元の2乗振幅を FeynCalc で図の組ごとに求め、切断の上の変数で部分分数にし、Kira 3.1（\texttt{cut\_propagators}）で簡約し、マスター積分を AMFlow 2.0 で求めた。仮想の補正は MadLoop の値に $D$ 次元の極の部分を足した（ノートの式 (mlconv)）。三つのチャンネルの $f^{(1)}$ は Czakon と Mitov の厳密な結果（arXiv:0811.4119 の電子版の Mathematica のファイル）と、$q\bar q$、$qg$ で相対 $4\times10^{-11}$、$gg$ で $2\times10^{-8}$ 以内で一致した。aMC@NLO とのハドロンの断面積の比較では、$pp$ は $0.07\%$ 以内で一致したが、$p\bar p$ は aMC@NLO の側に表~\ref{tab:issues2d} の食い違いが残った。道具の問題は表~\ref{tab:issues2d} にまとめた。
 
+手順 (10) では、インスタントンの 't Hooft の1ループの行列式を Gel'fand--Yaglom の方法で部分波ごとに求めた（\nolinkurl{models/qcd/Src/run_inst_check.sh}）。BPST の解、ゼロモード、動径の方程式、熱核と格子の係数は Mathematica で Pauli 行列と 't Hooft の記号を陽に使って記号として確かめ、FeynCalc は使わなかった。部分波の常微分方程式は SciPy の LSODA で解き、$\alpha(\frac12)$ を閉じた形と、$\alpha(1)$ を大きい質量で定数が残らない条件から $2\times10^{-5}$ で再現した。格子に置いた BPST の作用と位相的電荷は NumPy で計算した。道具と方法の問題は表~\ref{tab:issues2g} にまとめた。
+
 \begin{table}[tbp]
 \centering\footnotesize
 \caption{表~\ref{tab:issues2d} の続き（標準模型のノート~\cite{smnote} の手順 (1)、(2)。SM はそのノートを表す）。}
@@ -510,6 +512,26 @@ FeynHelpers の $A_0$、$B_0$（SM） & \texttt{LToolsEvaluate}、\texttt{PaXEva
 \texttt{ReplaceAll} と \texttt{Conjugate}（SM） & FeynRules の模型の湯川結合の記号が一部だけ残る & \texttt{Conjugate[x\_] :> x} とほかの規則を一度に使うと、外側が先に置き換わり、中身にほかの規則が当たらない & 共役を先に外す（\texttt{//. Conjugate[x\_] :> x} の後でほかの規則） \\
 FormCalc の \texttt{CalcRenConst}（SM） & 繰り込み定数の式に、\texttt{Mf2[4, Gen3]} と \texttt{MB2} のような名前の付いた質量が混ざり、世代の和が \texttt{SumOver[Gen3, 3]} のまま残る。値を入れても \texttt{B0i} が評価されずに残る & \texttt{SM.mod} の質量の定義（\texttt{MQD[3] = MB}）。記号が残ると LoopTools が呼ばれない & \texttt{Mf2[t, g]} と名前の付いた質量（\texttt{ME2}〜\texttt{MB2}）の両方に値を入れ、\texttt{SumOver} を明示的な和にし、\texttt{Finite} を1にする。LoopTools は同じカーネルで \texttt{Install} し、\texttt{SetMudim}、\texttt{SetDelta}、\texttt{SetLambda} を設定する \\
 FeynCalc の \texttt{Pair} の順（SM） & 被積分関数を外の運動量で展開すると、$q\!\cdot\!k$ の置き換えが当たらず、結果が0になった & FeynCalc は \texttt{Pair[Momentum[k, D], Momentum[q, D]]} のように引数を並べ替える & 置き換えの規則に両方の順を入れ、残った \texttt{Pair} を検出して表示する \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2f} の続き（QCD のノートの手順 (10)、インスタントン）。}
+\label{tab:issues2g}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+SciPy の Bessel 関数（QCD） & \texttt{ive(nu, z)} の比 $I_{\nu+1}/I_\nu$ が、$\nu$ が大きく $z$ が小さいところで \texttt{nan} になる & 指数でスケールした値もアンダーフローして0になる & 自由解の対数微分 $r\psi'/\psi$ も常微分方程式（Riccati 形）で一緒に積分する \\
+部分波の和の打ち消し（QCD） & $l\approx400$ の項の誤差が $0.02\%$ になり、和が収束しない & 組の2個の部分波の $\ln R$ が $\pm6$ 程度で打ち消し、倍精度の誤差が縮退度 $4l^2$ で拡大される & 質量のない厳密解を基準にした補正の方程式に書き直す（誤差 $10^{-11}$） \\
+LSODA と右辺の桁落ち（QCD） & 補正の方程式の評価回数が $10^6$ を超え、1本に数十秒かかる & 右辺の係数を $2l-(2l+1)+\cdots$ の形で計算した桁落ちが雑音になり、刻み幅の制御が働かない & 係数を通分した式で与える（1本 0.04 秒）。始点は級数の値から始める \\
+部分波の和の裾（QCD） & isospin 1 で、$L=500$ と1000 の和の差が $10^{-3}$ & 組と単独の部分波の $\mp m^2\ln l/l$ が打ち消し、$\ln l/l^2$ が残る & 裾の当てはめに $l^{-p}\ln l$ を加え、Hurwitz のゼータ関数の微分で足す \\
+部分波の切断（QCD） & 質量の補正の和が $-T(R)\,m^2\ln L$ で発散する & $l$ での切断はゲージ不変な正則化ではない & Dunne--Hur--Lee--Min の $m^2$ の対抗項を加える（isospin 1 は $T(R)$ に比例して4倍） \\
+Mathematica の動径の積分（QCD） & $\sum\mathrm{tr}(D_\mu G_{\mu\nu})^2$ を軸の上の値で動径だけ積分すると誤る & 密度が球対称でない & 対称性を確かめてから動径の積分にし、そうでなければ $S^3$ の角度も積分する \\
+文献の係数の規約（QCD） & インスタントンの密度の係数が文献によって $e^{N/6}$ 違い、クォークの係数に $e^{-1/33}$ を掛けるものもある & Pauli--Villars と $\overline{\mathrm{MS}}$ の値が混在。$\Lambda_{\mathrm{PV}}/\Lambda_{\overline{\mathrm{MS}}}=e^{1/22}$ をクォークにも使う流儀がある & $0.466e^{-1.679N}$ は Pauli--Villars、$\overline{\mathrm{MS}}$ では $e^{N/6}$ 倍。クォークの行列式は両者で同じ \\
+論文の式の要約（QCD） & ウェブの要約で、小さい質量の展開の $m^2$ の項の $+\frac12$ が抜けた & 自動の要約での式の欠落 & 数値（$m\to0$ で $0.4995\to\frac12$）と別の論文（Hur--Lee--Min）で確かめる \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1099,7 +1121,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{url:tsil} TSIL. \url{https://www.niu.edu/spmartin/TSIL/}
 \bibitem{yukawanote} 擬スカラー湯川理論：1ループの構造と検算（本リポジトリ \nolinkurl{models/yukawa_ps/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~Q。
 \bibitem{qednote} スピノル QED：1ループの構造と検算（本リポジトリ \nolinkurl{models/spinor_qed/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
-\bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~M。
+\bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~N。
 \bibitem{smnote} 標準模型：電弱の1ループの繰り込みと検算（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~G。
 \end{thebibliography}
 
