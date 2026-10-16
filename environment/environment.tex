@@ -448,7 +448,7 @@ mpmath と \texttt{NIntegrate}（QED） & Python がトレースバックなし�
 \textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
 \midrule
 aMC@NLO と固定した $\hat s$（QCD） & 始状態にパートンがある NLO を \texttt{lpp = 0} で \texttt{launch} すると \texttt{Process has incoming j\_fks, but fixed shat: not allowed for processes generated at NLO} で止まる & 始状態の共線の対抗項がパートン分布の運動量の割合を変えた値を要る & 同じパートン分布と $\alpha_s$ で自分の部分断面積を畳み込み、ハドロンの断面積で比べる \\
-aMC@NLO の反陽子（QCD） & $p\bar p$ の NLO（1.96 TeV、13 TeV、$\mu=m_t$）が厳密な NLO より $0.5\%$、$0.4\%$ 大きい（$pp$ と LO は一致）。$pp$ と $p\bar p$ で等しいはずの \texttt{P0\_gg\_ttx} が $5$〜$10\sigma$ 違う & 3.8.1 の \texttt{genps\_fks.f}（l.~1001）は、標準の FKS の写像（event projection あり）を選ぶ \texttt{use\_evpr} を $(\texttt{lpp1},\texttt{lpp2})=(1,1)$、$(2,2)$、$(0,0)$ でだけ \texttt{.true.} にし、$(1,-1)$ では common の初期値 \texttt{.false.} のまま、レプトンの衝突（ISR）用の写像を使う & 生成した過程の \texttt{SubProcesses/genps\_fks.f} の条件を、\texttt{abs(lpp(1))} と \texttt{abs(lpp(2))} がともに1のときに効くように直す（\nolinkurl{models/qcd/Src/hq_mg5_fix.sh}）。直すと厳密な NLO と $7\times10^{-4}$ 以内で一致 \\
+aMC@NLO の反陽子（QCD） & $p\bar p$ の NLO（1.96 TeV、13 TeV、$\mu=m_t$）が厳密な NLO より $0.5\%$、$0.4\%$ 大きい（$pp$ と LO は一致）。$pp$ と $p\bar p$ で等しいはずの \texttt{P0\_gg\_ttx} が $5$〜$10\sigma$ 違う & 3.8.1 の \texttt{genps\_fks.f}（l.~1001）は、標準の FKS の写像（event projection あり）を選ぶ \texttt{use\_evpr} を $(\texttt{lpp1},\texttt{lpp2})=(1,1)$、$(2,2)$、$(0,0)$ でだけ \texttt{.true.} にし、$(1,-1)$ では common の初期値 \texttt{.false.} のまま、レプトンの衝突（ISR）用の写像を使う & 生成した過程の \texttt{SubProcesses/genps\_fks.f} の条件を、\texttt{abs(lpp(1))} と \texttt{abs(lpp(2))} がともに1のときに効くように直す（\nolinkurl{models/qcd/Src/hq_mg5_fix.sh}）。直すと厳密な NLO と $7\times10^{-4}$ 以内で一致。MG5 の雛形にも同じ修正を当てた（\ref{app:files}） \\
 FeynCalc の 2→3 の2乗（QCD） & $gg\to t\bar tg$（16個の図）の2乗を一度にトレースすると、偏極のテンソルとの縮約で 45 分を超え 5.7~GB に達する & 開いた6個の添字のままトレースを評価してから縮約する & 図の組ごとに、偏極のテンソルを掛けてトレースの中で縮約してから評価する（1組 数秒〜25分、元の方法の10〜100分の1） \\
 Kira と切断した伝播関数（QCD） & 位相空間の積分（\texttt{cut\_propagators}）のマスター積分に、切断した伝播関数の2乗（$\delta$ 関数の微分）が選ばれる & 積分の順序の既定 & \texttt{preferred\_masters} に、各セクターの非切断の線の点や分子を一つ付けた積分を並べる \\
 AMFlow と位相空間（QCD） & 2ループの位相空間の積分が $\epsilon^{-2}$ の項だけ返る & \texttt{SolveIntegrals} の3番目の引数は $\epsilon^{-2L}$ から数えた項の数 & $\epsilon^2$ まで要るときは6。切断の規格化は標準の位相空間（$D$ 次元の2体と3体の体積で確かめた） \\
@@ -923,7 +923,8 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
   lib/   libooptools.a libcollier.dylib cmake/
   include/  looptools.h clooptools.h collier.mod
   mathematica/  FeynArts-3.12/  FormCalc-9.10/ (MacOSX-ARM64/: ReadForm, form 4.2.1, ...)
-  MG5_aMC_v3_8_1/  (HEPTools/: ninja, oneloop, collier 1.2.9)
+  MG5_aMC_v3_8_1/  (HEPTools/: ninja, oneloop, collier 1.2.9;
+                    Template/NLO/SubProcesses/genps_fks.f patched, *.orig kept)
   opt/Wolfram142 -> /Applications/Wolfram 2.app
   src/   tarballs, build trees, *.log
 ~/Library/Wolfram/Applications/
@@ -1029,6 +1030,9 @@ $\sqrt s=1$~TeV では $A_0=1.14522$ となる。$\pi\alpha^2/(2s)=8.9465\times1
 
 \paragraph{FeynRules の \texttt{Core/Loop.m}（NLOCT）への局所パッチ（\texttt{diff -u}）。}
 \VerbatimInput{files/Loop.m.patch}
+
+\paragraph{MadGraph5\_aMC@NLO の NLO の雛形 \texttt{genps\_fks.f} への局所パッチ（\texttt{diff -u}、2026年10月15日）。}$p\bar p$ でも event projection のある標準の写像を使うようにする（表~\ref{tab:issues2d}）。
+\VerbatimInput{files/genps_fks.f.patch}
 
 \paragraph{ノートブックを開くスクリプト（\texttt{\textasciitilde/hep/bin/wopen}）。}
 \VerbatimInput{files/wopen}

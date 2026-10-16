@@ -1,0 +1,13 @@
+--- MG5_aMC_v3_8_1/Template/NLO/SubProcesses/genps_fks.f.orig
++++ MG5_aMC_v3_8_1/Template/NLO/SubProcesses/genps_fks.f
+@@ -998,7 +998,9 @@
+       ! event-projection if use_evpr is set to false
+       !(note that in e+e- collisions, if tau is generated with a BW
+       ! then use_evpr is set to true)
+-      if ((lpp(1).eq.1.and.lpp(2).eq.1).or.
++c     local fix (2026-10-15): also p pbar (lpp = 1, -1) needs the mapping with
++c     event projection (was lpp(1).eq.1.and.lpp(2).eq.1); see ~/hep/README.md
++      if ((abs(lpp(1)).eq.1.and.abs(lpp(2)).eq.1).or.
+      $   (lpp(1).eq.2.and.lpp(2).eq.2).or.
+      $   (lpp(1).eq.0.and.lpp(2).eq.0)) then
+           use_evpr = .true.
