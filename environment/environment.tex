@@ -563,9 +563,27 @@ NLOCT とベクトルとスカラーの混合（SM） & 重いレプトン（$m_
 \end{tabularx}
 \end{table}
 
-\paragraph{標準模型のノートで分かった問題。}2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)〜(6) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e}、\ref{tab:issues2f}、\ref{tab:issues2h} にまとめる（手順 (6) まで）。
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2h} の続き（標準模型のノート~\cite{smnote} の手順 (6)、MadGraph の電弱 NLO の模型 \texttt{loop\_qcd\_qed\_sm}（$\alpha(M_Z)$）、\texttt{loop\_qcd\_qed\_sm\_Gmu}（$G_\mu$）と、トップ以外のフェルミオンを質量0にした FormCalc の比較）。}
+\label{tab:issues2i}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+MadGraph の電弱 NLO の模型（SM） & \texttt{loop\_qcd\_qed\_sm}、\texttt{loop\_qcd\_qed\_sm\_Gmu} が 3.8.1 の \texttt{models/} にない & 配布物に含まれない & MadGraph のモデルのデータベースから取得する（各 8~MB） \\
+FormCalc と質量0のフェルミオン（SM） & 質量を記号のまま残して後で0にすると、$W$ に \texttt{Indeterminate} が出る & \texttt{PaVeReduce} の部分式の $1/m_e$、$1/p^2$ が $0/0$ になる & 図を作る前に質量を0にし、\texttt{Restrictions -> NoLightFHCoupling} で軽いフェルミオンと Higgs、Goldstone ボソンの結合を除く \\
+wolframscript の引数（SM） & \texttt{-{}-massless} がスクリプトに届かない & \texttt{-{}-} で始まる引数を wolframscript が受け取ってしまう & \texttt{massless} のように \texttt{-{}-} を付けない \\
+LoopTools の Mathematica のインターフェース（SM） & 質量0の組で、$W$ の $\Delta_{\mathrm{UV}}$ の係数が0にならず、$1/\epsilon$ が MadLoop と合わない（有限部分は合う） & 引数がすべて数になったループ関数を、その時の設定（$\Delta=0$、$\lambda^2=0$）でその場で評価する。スケールのない $B_0(0,0,0)$、$B_1(0,0,0)$、$\partial B_{00}(0,0,0)$ の $\Delta_{\mathrm{UV}}-\Delta_{\mathrm{IR}}$ が落ちる & LoopTools を読み込む前にループ関数を評価されない頭（\texttt{fB0i} など）に置き換え、値を求めるときだけ戻す \\
+COLLIER と MadLoop の極の規格化（SM） & 二重極を持つ関数の有限部分が、LoopTools と MadLoop の値と $\frac{\pi^2}6\times$（$1/\epsilon^2$ の係数）違う & 規約の違い。COLLIER は $\Gamma(1+\epsilon)(4\pi)^\epsilon$、LoopTools と MadLoop は $r_\Gamma=\Gamma^2(1-\epsilon)\Gamma(1+\epsilon)/\Gamma(1-2\epsilon)$ & COLLIER のマニュアルの処方 $\Delta^{(2)}_{\mathrm{IR}}\to\Delta^{(2)}_{\mathrm{IR}}+\pi^2/6$ \\
+FormCalc の有理数の項と質量0の外線（SM） & 有限部分が MadLoop と木の $\frac\alpha\pi$ 倍（約 $0.25\%$）違う（極は一致） & 有理数の項を紫外の極からだけとるので、質量0のレプトンの場の繰り込み定数に光子のループの $\frac{\alpha}{4\pi}Q_f^2$ が残る（CDR では、スケールのない $(D-4)B_1(0,0,0)$ の紫外と赤外の分が打ち消して0）。結果は外線について DR の値 & MadFKS の DR から CDR への変換（\texttt{DRtoCDR}、$C_F/2\to Q_f^2/2$）を加える。MadLoop は CDR \\
+\bottomrule
+\end{tabularx}
+\end{table}
 
-手順 (3) では、タドポールと自己エネルギーを Feynman ゲージで手計算の式と \texttt{SM.mod} の両方と記号として比べ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で2点関数の Slavnov--Taylor 恒等式を確かめた。有限部分の $B_0$ は LoopTools、Package-X、COLLIER が30桁の積分と相対 $2.5\times10^{-14}$ 以内で一致した。手順 (4) では、on-shell の12個の対抗項が FormCalc の \texttt{RenConst} と相対 $2\times10^{-15}$ 以内で一致した。手順 (5) では、$\mu$ 崩壊の頂点と箱の図から $\Delta r$ を組み、FormCalc の繰り込み定数から組んだ値と相対 $1.2\times10^{-15}$ で一致した。FormCalc の記号の \texttt{UpValues} のため、FormCalc と外の式の数値は別のカーネルで求めた。手順 (6) では、FeynRules と NLOCT で作った NLO の模型で、$e^+e^-\to\mu^+\mu^-$ の電弱の仮想の補正が MadLoop と FormCalc で相対 $6\times10^{-9}$ 以内で一致した。そのためには表~\ref{tab:issues2h} の問題を避ける必要があった。とくに、NLOCT の閉じた形の対抗項の倍精度での打ち消しと、MadLoop が外線の $m_e^2$ を0にする扱いは、どちらも警告なしに値を桁違いに誤らせる。LoopTools の閾値より下の $C_0$ の誤り（表~\ref{tab:issues}）は、この Mac でも再現した（$C_0(1,1,1;1,1,1)=6.87+34.2i$）。
+\paragraph{標準模型のノートで分かった問題。}2026年10月15日に、標準模型の電弱の1ループの繰り込みのノート~\cite{smnote} の手順 (1)〜(6) を行った。計算機は別の Mac（Apple M4 Max、macOS 15.5）で、本稿の手順で組み直した環境である。ツールの版は本稿と同じ（Mathematica 14.2.1、FeynCalc 10.2.1、FeynRules 2.3.49、MadGraph 3.8.1）である。手順 (1) では、FeynRules に付属の \texttt{SM.fr}（1.4.7）の93個の頂点のクラスを手計算の表と記号として比べ、UFO と FeynArts の模型を書き出して、MadGraph の21個の過程の図の数を確かめた。手順 (2) では、木の振幅の2乗と2体の崩壊幅を FeynCalc で記号として求め、明示的な行列の数値と MadGraph の幅と断面積と比べた。分かった問題を表~\ref{tab:issues2e}、\ref{tab:issues2f}、\ref{tab:issues2h}、\ref{tab:issues2i} にまとめる（手順 (6) まで）。
+
+手順 (3) では、タドポールと自己エネルギーを Feynman ゲージで手計算の式と \texttt{SM.mod} の両方と記号として比べ、一般の $R_\xi$ ゲージ（\texttt{SM.mod}）で2点関数の Slavnov--Taylor 恒等式を確かめた。有限部分の $B_0$ は LoopTools、Package-X、COLLIER が30桁の積分と相対 $2.5\times10^{-14}$ 以内で一致した。手順 (4) では、on-shell の12個の対抗項が FormCalc の \texttt{RenConst} と相対 $2\times10^{-15}$ 以内で一致した。手順 (5) では、$\mu$ 崩壊の頂点と箱の図から $\Delta r$ を組み、FormCalc の繰り込み定数から組んだ値と相対 $1.2\times10^{-15}$ で一致した。FormCalc の記号の \texttt{UpValues} のため、FormCalc と外の式の数値は別のカーネルで求めた。手順 (6) では、FeynRules と NLOCT で作った NLO の模型で、$e^+e^-\to\mu^+\mu^-$ の電弱の仮想の補正が MadLoop と FormCalc で相対 $6\times10^{-9}$ 以内で一致した。そのためには表~\ref{tab:issues2h} の問題を避ける必要があった。とくに、NLOCT の閉じた形の対抗項の倍精度での打ち消しと、MadLoop が外線の $m_e^2$ を0にする扱いは、どちらも警告なしに値を桁違いに誤らせる。LoopTools の閾値より下の $C_0$ の誤り（表~\ref{tab:issues}）は、この Mac でも再現した（$C_0(1,1,1;1,1,1)=6.87+34.2i$）。MadGraph の電弱 NLO の模型（$\alpha(M_Z)$ と $G_\mu$ の処方、トップ以外のフェルミオンは質量0）とも、同じ処方の FormCalc と相対 $7\times10^{-13}$ 以内で一致した。そのためには、表~\ref{tab:issues2i} の二つの規約の違い（COLLIER の極の規格化と、FormCalc の質量0の外線の有理数の項）を直す必要があった。どちらも二重極のある質量0の外線でだけ現れ、極の一致では見つからない。
 
 最も注意が要るのは、符号の規約である。FeynArts の \texttt{SM.mod} と FormCalc は Denner の総説の規約を、FeynRules と MadGraph は Peskin--Schroeder の規約を使い、光子の場の符号と、Higgs 二重項の荷電の成分の位相が違う。場の取り方の違いなので、内線の因子は打ち消し（内線の光子は $(-1)^2$、内線の $G^\pm$ は $(+i)(-i)$）、断面積や崩壊幅などの物理量は変わらない。一方、外線に光子や $G^\pm$ を持つグリーン関数（$\Sigma^{AZ}$、$W$ と $G^\pm$ の混合）と、それから作る対抗項（$\delta Z_{ZA}$、$\delta Z_e$ の式）は符号や位相が変わる。FeynRules の模型の振幅に FormCalc の対抗項を足すような、二つの規約を混ぜた計算は誤る。MadGraph のログの断面積は、今回も有効数字3〜4桁（\texttt{111 +- 0.01131 pb}）で、10万事象の統計誤差より丸めが大きかった（表~\ref{tab:issues2} の「MadGraph の既定のカットと出力」と同じ）。各実行のバナーの \texttt{Integrated weight} を読み、乱数の種を \texttt{iseed} で固定すると、同じ値が再現した。
 

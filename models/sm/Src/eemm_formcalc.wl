@@ -34,6 +34,13 @@
 
 Get["FeynArts`"];
 Get["FormCalc`"];
+(* argument massless: MadGraph's electroweak NLO models (massless fermions but the top).  The masses must vanish before the
+   amplitudes are reduced: with m_e kept symbolic, the reduction of B1(m_e^2; ...) etc. carries 1/m_e^2 and gives 0/0 at
+   m_e = 0.  The scalar couplings of the light fermions are left out (SM.mod's NoLightFHCoupling; their counterterms carry
+   dMf1/Mf).  Without it: the note's point and the heavier leptons. *)
+masslessEF$ = MemberQ[$ScriptCommandLine, "massless"];   (* wolframscript drops arguments that start with "--" *)
+If[masslessEF$, ME = MM = ML = MU = MC = MD = MS = MB = 0; ME2 = MM2 = ML2 = MU2 = MC2 = MD2 = MS2 = MB2 = 0];
+restrEF$ = If[masslessEF$, Restrictions -> NoLightFHCoupling, Restrictions -> {}];
 srcDirEF$ = Which[
    StringQ[$InputFileName] && $InputFileName =!= "", DirectoryName[$InputFileName],
    $Notebooks, NotebookDirectory[],
@@ -48,11 +55,11 @@ procEF$ = {F[2, {1}], -F[2, {1}]} -> {F[2, {2}], -F[2, {2}]};   (* e-(k1) e+(k2)
 
 
 t0EF$ = AbsoluteTime[];
-d0EF$ = Quiet[InsertFields[CreateTopologies[0, 2 -> 2], procEF$, Model -> SM], RuleDelayed::rhs];
-d1EF$ = Quiet[InsertFields[CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}], procEF$, Model -> SM],
-   RuleDelayed::rhs];
+d0EF$ = Quiet[InsertFields[CreateTopologies[0, 2 -> 2], procEF$, Model -> SM, restrEF$], RuleDelayed::rhs];
+d1EF$ = Quiet[InsertFields[CreateTopologies[1, 2 -> 2, ExcludeTopologies -> {Tadpoles, WFCorrections}], procEF$, Model -> SM,
+    restrEF$], RuleDelayed::rhs];
 dctEF$ = Quiet[InsertFields[CreateCTTopologies[1, 2 -> 2, ExcludeTopologies -> {TadpoleCTs, WFCorrectionCTs}], procEF$,
-    Model -> SM], RuleDelayed::rhs];
+    Model -> SM, restrEF$], RuleDelayed::rhs];
 treeEF$ = CalcFeynAmp[CreateFeynAmp[d0EF$], FermionChains -> Chiral];
 loopEF$ = CalcFeynAmp[CreateFeynAmp[d1EF$], Dimension -> D, FermionChains -> Chiral, PaVeReduce -> True];
 ctEF$ = CalcFeynAmp[CreateFeynAmp[dctEF$], FermionChains -> Chiral];
@@ -76,8 +83,17 @@ abbrEF$ = Abbr[]; subEF$ = Subexpr[];
 (* CalcRenConst only now: it clears the abbreviations of the process (the spinor chains F1, F2, ... become Removed[F1]) *)
 rcEF$ = Flatten[Quiet[CalcRenConst[ctEF$]] /. RenConstList[RenConst] -> List];
 Print["(b) renormalization constants: ", rcEF$[[All, 1]]];
-DumpSave[FileNameJoin[{srcDirEF$, "work", "eemm_amp.mx"}],
-  {treeEF$, loopEF$, ctEF$, helEF$, bornEF$, wLoopEF$, wCtEF$, rcEF$, abbrEF$, subEF$}];
+(* the schemes of MadGraph's electroweak NLO models (massless leptons and light quarks; Denner's signs):
+   alpha(MZ):  delta Z_e -> delta Z_e - Delta alpha/2,  Delta alpha = Pi_light(0) - Re Pi_light(MZ^2),
+               Pi_f(k^2) = (alpha/4 Pi)(4/3) Nc Q^2 [B0(k^2, 0, 0) - 1/3] for a massless fermion, Pi_f(0) with B0(0, 0, 0);
+               light = all fermions but the top: sum Nc Q^2 = 20/3;
+   G_mu:       delta Z_e -> delta Z_e - Delta r/2 with Delta r of step (5) (FormCalc's constants, Sirlin's term);
+   the Born has two e vertices, so W -> W - B Delta alpha  or  W - B Delta r. *)
+sW0EF$ = Quiet[SelfEnergy[V[3] -> V[3], 0, ExcludeTopologies -> Internal]];
+dalphaEF$ = Alfa/(4 Pi) (4/3) (20/3) (B0i[bb0, 0, 0, 0] - Re[B0i[bb0, MZ2, 0, 0]] + 1/3);
+drEF$ = (sW0EF$ - dMWsq1)/MW2 + 2 dZe1 - 2 dSW1/SW + dZZA1/(SW CW) + Alfa/(4 Pi SW2) (6 + (7 - 4 SW2)/(2 SW2) Log[CW2]);
+DumpSave[FileNameJoin[{srcDirEF$, "work", If[masslessEF$, "eemm_amp_ml.mx", "eemm_amp.mx"]}],
+  {treeEF$, loopEF$, ctEF$, helEF$, bornEF$, wLoopEF$, wCtEF$, rcEF$, abbrEF$, subEF$, sW0EF$}];
 
 
 (* ::Section:: *)
@@ -91,33 +107,52 @@ massPhysEF$ = <|{2, 1} -> 51099895/10^11, {2, 2} -> 1056583755/10^10, {2, 3} -> 
 (* the cross-check with heavier leptons (m_e = 2, m_mu = 3 GeV): MadLoop's closed-form counterterms of a symbolic UFO
    stay accurate there (nlo_ufo.wl) *)
 massHeavyEF$ = Join[massPhysEF$, <|{2, 1} -> 2, {2, 2} -> 3|>];
+(* MadGraph's electroweak NLO models (restrict_default): all fermions massless but the top *)
+massMlEF$ = Join[massPhysEF$, <|{2, 1} -> 0, {2, 2} -> 0, {2, 3} -> 0, {3, 1} -> 0, {3, 2} -> 0, {4, 1} -> 0, {4, 2} -> 0, {4, 3} -> 0|>];
 massEF$ = massPhysEF$;
 mfEF[1, _] := 0; mfEF[t_, g_] := massEF$[{t, g}];
 cwEF$ = mwEF$/mzEF$; swEF$ = Sqrt[1 - cwEF$^2]; alEF$ = 1000000000/137035999177;
-parOfEF$[] := Join[{Alfa -> alEF$, Alfa2 -> alEF$^2, EL -> Sqrt[4 Pi alEF$], MW -> mwEF$, MW2 -> mwEF$^2, MZ -> mzEF$, MZ2 -> mzEF$^2,
+alMZEF$ = 100/12893;   (* alpha(MZ) scheme: aEWM1 = 128.93 *)
+gfEF$ = 11663788/10^12; alGmuEF$ = Sqrt[2] gfEF$ mwEF$^2 (1 - mwEF$^2/mzEF$^2)/Pi;   (* G_mu scheme *)
+parOfEF$[alEF$_] := Join[{Alfa -> alEF$, Alfa2 -> alEF$^2, EL -> Sqrt[4 Pi alEF$], MW -> mwEF$, MW2 -> mwEF$^2, MZ -> mzEF$, MZ2 -> mzEF$^2,
     MH -> mhEF$, MH2 -> mhEF$^2, SW -> swEF$, CW -> cwEF$, SW2 -> swEF$^2, CW2 -> cwEF$^2},
-   Flatten[MapThread[{#1 -> mfEF @@ #2, ToExpression[ToString[#1] <> "2"] -> (mfEF @@ #2)^2} &,
-     {{ME, MM, ML, MU, MC, MT, MD, MS, MB}, {{2, 1}, {2, 2}, {2, 3}, {3, 1}, {3, 2}, {3, 3}, {4, 1}, {4, 2}, {4, 3}}}]]];
+   (* names as strings: with --massless the symbols ME, ... are 0, and ToString[ME] <> "2" would give the number 2 *)
+   Flatten[MapThread[With[{sym = Symbol[#1], sym2 = Symbol[#1 <> "2"]},
+       If[NumericQ[sym], {}, {sym -> mfEF @@ #2, sym2 -> (mfEF @@ #2)^2}]] &,
+     {{"ME", "MM", "ML", "MU", "MC", "MT", "MD", "MS", "MB"}, {{2, 1}, {2, 2}, {2, 3}, {3, 1}, {3, 2}, {3, 3}, {4, 1}, {4, 2}, {4, 3}}}]]];
 genEF$ = {a_. SumOver[g_, n_, ___] :> Sum[a /. g -> i, {i, n}]};
 mfRulesEF$ = {Mf2[t_, g_?NumericQ] :> mfEF[Round[t], Round[g]]^2, Mf[t_, g_?NumericQ] :> mfEF[Round[t], Round[g]],
    CKM[i_, j_] :> KroneckerDelta[i, j],
    CKMC[i_, j_] :> KroneckerDelta[i, j], Conjugate[CKM[i_, j_]] :> KroneckerDelta[i, j]};
 denRulesEF$ = {IGram[gg_] :> 1/gg, Den[pp_, mm_, dd_] :> 1/(pp - mm)^dd, Den[pp_, mm_] :> 1/(pp - mm)};
-loopFnEF$ = _A0 | _A0i | _B0i | _C0i | _D0i;
+loopFnEF$ = _fA0 | _fA0i | _fB0i | _fC0i | _fD0i;
+(* LoopTools evaluates a loop function as soon as its arguments are numbers, with the settings of the moment (Delta = 0,
+   lambda^2 = 0), which drops the poles: in the massless sets the scaleless B0(0, 0, 0) (photon self-energy) and, once
+   the generation sums turn Mf2[2, 1] into ME2 = 0, B1(0, 0, 0) and DB00(0, 0, 0) of the light-fermion loops in the
+   renormalization constants, all Delta_UV - Delta_IR type.  So the loop functions get inert heads before LoopTools is
+   installed; (d) gives them back their real heads to evaluate them part by part *)
+inertEF$ = {A0 -> fA0, A0i -> fA0i, B0i -> fB0i, C0i -> fC0i, D0i -> fD0i};
+{bornEF$, wLoopEF$, wCtEF$, rcEF$, subEF$, abbrEF$, dalphaEF$, drEF$} =
+  {bornEF$, wLoopEF$, wCtEF$, rcEF$, subEF$, abbrEF$, dalphaEF$, drEF$} /. inertEF$;
+Print["(b) loop functions with numerical arguments already: ",
+  Select[Union[Cases[{wLoopEF$, wCtEF$, rcEF$, subEF$, abbrEF$, dalphaEF$, drEF$}, loopFnEF$, Infinity]],
+    VectorQ[If[Head[#] === fA0, List @@ #, Rest[List @@ #]], NumericQ] &]];
 
 Install[FileNameJoin[{$HomeDirectory, "hep", "bin", "LoopTools"}]];
-(* (c) and (d) for one set of masses: tag "" (the note's point) or "_heavy" *)
-runSetEF$[tag_, masses_] := Block[{massEF$ = masses, parEF$, wAllEF$, bAllEF$, subPrepEF$, lfListEF$, nLfEF$, lfVEF$, lfREF$,
-    lfIEF$, reImSymEF$, lfRulesEF$, helPrepEF$, ptsEF$, coeffRowsEF$, fnsEF$, fnTableEF$, coeffLinesEF$, rcValsEF$},
-   parEF$ = parOfEF$[];
-   Print["(c) masses ", If[tag === "", "of the note's point", "with heavier leptons (m_e = 2, m_mu = 3 GeV)"]];
+(* (c) and (d) for one set: tag "" (the note's point, alpha(0)), "_heavy" (heavier leptons, alpha(0)), "_ml_aMZ" and
+   "_ml_Gmu" (MadGraph's electroweak models: massless fermions but the top, alpha(MZ) or G_mu); shift is added to W *)
+runSetEF$[tag_, masses_, al_, shift_, ptsTag_, label_, amps_] := Block[{massEF$ = masses, parEF$, wAllEF$, bAllEF$, subPrepEF$,
+    lfListEF$, nLfEF$, lfVEF$, lfREF$, lfIEF$, reImSymEF$, lfRulesEF$, helPrepEF$, ptsEF$, coeffRowsEF$, fnsEF$, fnTableEF$,
+    coeffLinesEF$, rcValsEF$},
+   parEF$ = parOfEF$[al];
+   Print["(c) ", label];
    (* symbolic preparation, once: the generation sums, the fermion masses, and the loop functions -> lf[j]; the numbers are
       then put into the helicity matrix elements, the subexpressions and the abbreviations before they are substituted, so
       that W becomes a linear form in the lf[j] without expanding a symbolic expression (that took longer than 30 minutes) *)
    t1EF$ = AbsoluteTime[];
    prepEF$[x_] := (x //. genEF$) /. mfRulesEF$;
-   wAllEF$ = prepEF$[wLoopEF$ + (wCtEF$ //. rcEF$)];
-   bAllEF$ = prepEF$[bornEF$];
+   wAllEF$ = prepEF$[(amps[[2]] + amps[[3]] + shift) //. rcEF$];
+   bAllEF$ = prepEF$[amps[[1]]];
    (* the renormalization constants also sit in the subexpressions of the counterterm amplitude *)
    subPrepEF$ = prepEF$[Join[subEF$, abbrEF$] //. rcEF$];
    lfListEF$ = Union[Cases[{wAllEF$, bAllEF$, subPrepEF$[[All, 2]], helEF$[[All, 2]]}, loopFnEF$, Infinity]];
@@ -136,7 +171,7 @@ runSetEF$[tag_, masses_] := Block[{massEF$ = masses, parEF$, wAllEF$, bAllEF$, s
       factors, and Re[lf[j]], Im[lf[j]] become variables of their own (lfr[j], lfi[j]) *)
    reImEF$ = {Re[x_Plus] :> Re /@ x, Im[x_Plus] :> Im /@ x, Re[c_?NumericQ y_] :> Re[c] Re[y] - Im[c] Im[y],
       Im[c_?NumericQ y_] :> Re[c] Im[y] + Im[c] Re[y]};
-   ptsEF$ = Import[FileNameJoin[{srcDirEF$, "work", "eemm_points" <> tag <> ".csv"}], "CSV"][[2 ;;]];
+   ptsEF$ = Import[FileNameJoin[{srcDirEF$, "work", "eemm_points" <> ptsTag <> ".csv"}], "CSV"][[2 ;;]];
    Print["(c) points (sqrt(s), cos(theta)): ", ptsEF$[[All, 1 ;; 2]]];
    coeffRowsEF$ = {}; fnsEF$ = {};
    Do[Module[{sv = Rationalize[p[[3]], 0], tv = Rationalize[p[[4]], 0], nr, repl, wv, bv, arr, keys, cf, t2 = AbsoluteTime[]},
@@ -164,12 +199,13 @@ runSetEF$[tag_, masses_] := Block[{massEF$ = masses, parEF$, wAllEF$, bAllEF$, s
    (* (d) LoopTools values of the functions and the output *)
    SetMudim[N[mzEF$^2]]; SetDelta[0]; SetLambda[0];
    realHeadEF$ = {fA0 -> A0, fA0i -> A0i, fB0i -> B0i, fC0i -> C0i, fD0i -> D0i};
-   ltEval$[f_] := Module[{fin, uv, ir, g = f /. realHeadEF$},
+   ltEval$[f_] := Module[{fin, uv, ir, ir2, g = f /. realHeadEF$},
       SetLambda[0]; SetUVDiv[1]; SetDelta[0]; fin = g;
       SetDelta[1]; uv = (f /. realHeadEF$) - fin;
       SetDelta[0]; SetLambda[-1]; SetUVDiv[0]; ir = f /. realHeadEF$;
+      SetLambda[-2]; ir2 = f /. realHeadEF$;
       SetLambda[0]; SetUVDiv[1];
-      N[{fin, uv, ir}]];
+      N[{fin, uv, ir, ir2}]];
    keyEF$[f_] := StringReplace[ToString[InputForm[f, NumberMarks -> False]], {"fA0i[" -> "A0i[", "fA0[" -> "A0[", "fB0i[" -> "B0i[",
         "fC0i[" -> "C0i[", "fD0i[" -> "D0i["}];
    headNameEF$ = <|fA0 -> "A0", fA0i -> "A0i", fB0i -> "B0i", fC0i -> "C0i", fD0i -> "D0i"|>;   (* A0 itself is a pure function *)
@@ -183,7 +219,7 @@ runSetEF$[tag_, masses_] := Block[{massEF$ = masses, parEF$, wAllEF$, bAllEF$, s
    Export[FileNameJoin[{srcDirEF$, "results", "eemm_functions" <> tag <> ".csv"}],
      StringRiffle[Prepend[StringRiffle[Join[{"\"" <> #[[1]] <> "\"", #[[2]], #[[3]], "\"" <> StringRiffle[#[[4 ;; -2]], " "] <> "\""},
            strEF$ /@ Flatten[ReIm[Last[#]]]], ","] & /@ fnTableEF$,
-       "key,head,id,args,re_fin_lt,im_fin_lt,re_uv_lt,im_uv_lt,re_ir_lt,im_ir_lt"], "\n"] <> "\n", "Text"];
+       "key,head,id,args,re_fin_lt,im_fin_lt,re_uv_lt,im_uv_lt,re_ir_lt,im_ir_lt,re_ir2_lt,im_ir2_lt"], "\n"] <> "\n", "Text"];
    coeffLinesEF$ = Flatten[Table[Join[
         {StringRiffle[{strEF$[r[[1, 1]]], strEF$[r[[1, 2]]], "\"born\"", strEF$[Re[r[[2]]]], strEF$[Im[r[[2]]]]}, ","],
          StringRiffle[{strEF$[r[[1, 1]]], strEF$[r[[1, 2]]], "\"const\"", strEF$[Re[r[[3]]]], strEF$[Im[r[[3]]]]}, ","]},
@@ -198,15 +234,21 @@ runSetEF$[tag_, masses_] := Block[{massEF$ = masses, parEF$, wAllEF$, bAllEF$, s
    (* the renormalization constants at the point (finite part: Delta = 0, mu = MZ, lambda^2 = 0, i.e. the soft pole of the
       lepton field constants dimensionally regularized), for the comparison with NLOCT in nlo_ufo.wl *)
    rcValsEF$ = Table[Module[{v = Expand[(r[[2]] //. rcEF$) //. genEF$] /. mfRulesEF$ /. parEF$ /. denRulesEF$ /. Finite -> 1},
-        v = N[v, 20] /. (h : A0 | A0i | B0i | C0i | D0i)[args__] :> h @@ (If[NumericQ[#], N[#], #] & /@ {args});
+        v = N[v, 20] /. realHeadEF$ /. (h : A0 | A0i | B0i | C0i | D0i)[args__] :> h @@ (If[NumericQ[#], N[#], #] & /@ {args});
         {ToString[InputForm[r[[1]]]], N[v]}], {r, rcEF$}];
    Print["(d) renormalization constants (Delta = 0, mu = MZ, dimensionally regularized soft poles dropped): ", InputForm[rcValsEF$]];
    Export[FileNameJoin[{srcDirEF$, "results", "eemm_renconst" <> tag <> ".csv"}],
      StringRiffle[Prepend[StringRiffle[{"\"" <> #[[1]] <> "\"", strEF$[Re[#[[2]]]], strEF$[Im[#[[2]]]]}, ","] & /@ rcValsEF$,
        "name,re,im"], "\n"] <> "\n", "Text"];
    ];
-runSetEF$["", massPhysEF$];
-runSetEF$["_heavy", massHeavyEF$];
+ampsEF$ = {bornEF$, wLoopEF$, wCtEF$};
+If[masslessEF$,
+  runSetEF$["_ml_aMZ", massMlEF$, alMZEF$, -bornEF$ dalphaEF$, "_ml", "massless fermions but the top, alpha(MZ) (aEWM1 = 128.93)",
+    ampsEF$];
+  runSetEF$["_ml_Gmu", massMlEF$, alGmuEF$, -bornEF$ drEF$, "_ml", "massless fermions but the top, G_mu (G_F = 1.1663788e-5)",
+    ampsEF$],
+  runSetEF$["", massPhysEF$, alEF$, 0, "", "the note's point, alpha(0)", ampsEF$];
+  runSetEF$["_heavy", massHeavyEF$, alEF$, 0, "_heavy", "heavier leptons (m_e = 2, m_mu = 3 GeV), alpha(0)", ampsEF$]];
 
 
 (* ::Section:: *)

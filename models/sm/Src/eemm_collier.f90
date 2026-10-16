@@ -1,11 +1,12 @@
 ! eemm_collier.f90 -- the loop functions of the one-loop e- e+ -> mu- mu+ amplitude of FormCalc (research note models/sm,
 ! step (6)) from COLLIER: finite part (Delta_UV = Delta_IR = 0), the coefficient of Delta_UV and the coefficient of the
-! soft pole Delta_IR1 (photon massless, dimensional regularization), mu_UV = mu_IR given on the command line.
+! IR poles Delta_IR1 and Delta_IR2 (photon and, for massless fermions, collinear singularities; dimensional regularization),
+! mu_UV = mu_IR given on the command line.
 ! Input (written by eemm_numeric.py): one function per line, "index kind n x_1 ... x_n" with kind
 !   A0 (m^2), B0, B1, B00, B11, DB0, DB1, DB00, DB11 (p^2, m1^2, m2^2), C0 (p1^2, p2^2, (p1+p2)^2, m1^2, m2^2, m3^2),
 !   D0 (p1^2, p2^2, p3^2, p4^2, (p1+p2)^2, (p2+p3)^2, m1^2 .. m4^2)
 ! in LoopTools' order, which is COLLIER's (p10, p21, p20, m02, m12, m22) and (p10, p21, p32, p30, p20, p31, m02 .. m32).
-! Output: index, re/im of the finite part, of the UV coefficient and of the IR coefficient.
+! Output: index, re/im of the finite part, of the UV coefficient and of the coefficients of Delta_IR1 and Delta_IR2.
 ! Build and run from Src/ (run_eemm_check.sh does this):
 !   gfortran -I$HOME/hep/include eemm_collier.f90 -L$HOME/hep/lib -lcollier -o work/eemm_collier
 !   (cd work && ./eemm_collier eemm_collier_in.txt ../results/eemm_collier.csv 8315.25...)
@@ -16,7 +17,7 @@ program eemm_collier
   character(len=8) :: kind
   integer :: r, w, ios, idx, n, nv, k
   double precision :: x(10), mu2
-  double complex :: v(3), f0, f1
+  double complex :: v(4), f0, f1
 
   call get_command_argument(1, infile)
   call get_command_argument(2, outfile)
@@ -27,7 +28,7 @@ program eemm_collier
   call SetMuIR2_cll(mu2)
   open(newunit=r, file=trim(infile), status='old', action='read')
   open(newunit=w, file=trim(outfile), status='replace', action='write')
-  write(w, '(a)') 'index,re_fin,im_fin,re_uv,im_uv,re_ir,im_ir'
+  write(w, '(a)') 'index,re_fin,im_fin,re_uv,im_uv,re_ir,im_ir,re_ir2,im_ir2'
   n = 0
   do
     read(r, *, iostat=ios) idx, kind, nv, (x(k), k = 1, nv)
@@ -43,7 +44,10 @@ program eemm_collier
     call SetDeltaIR_cll(1d0, 0d0)
     f1 = fn(kind, x)
     v(3) = f1 - f0
-    write(w, '(i0,6(",",es24.16e3))') idx, (dble(v(k)), aimag(v(k)), k = 1, 3)
+    call SetDeltaIR_cll(0d0, 1d0)
+    f1 = fn(kind, x)
+    v(4) = f1 - f0
+    write(w, '(i0,8(",",es24.16e3))') idx, (dble(v(k)), aimag(v(k)), k = 1, 4)
     n = n + 1
   end do
   close(r)

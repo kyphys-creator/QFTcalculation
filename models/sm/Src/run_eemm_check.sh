@@ -1,15 +1,21 @@
 #!/bin/bash
 # Step (6) of the SM note: the one-loop e- e+ -> mu- mu+ virtual correction, MadLoop against FormCalc (on-shell, alpha(0)),
-# at the note's point and, as a cross-check, with heavier leptons (m_e = 2, m_mu = 3 GeV; files *_heavy).
+# at the note's point and, as a cross-check, with heavier leptons (m_e = 2, m_mu = 3 GeV; files *_heavy); and MadGraph's own
+# electroweak NLO models loop_qcd_qed_sm (alpha(MZ)) and loop_qcd_qed_sm_Gmu (G_mu) against FormCalc in the same schemes
+# (massless fermions but the top; files *_ml_aMZ, *_ml_Gmu).
 #   0. generate_SM_NLO.sh (once): FeynRules + NLOCT -> generated/SM_NLO_a0_UFO, SM_NLO_a0_heavy_UFO
-#   1. eemm_numeric.py --points: the phase-space points -> work/eemm_points{,_heavy}.csv
-#   2. eemm_formcalc.wl: FormCalc (SM.mod) coefficients and LoopTools values -> results/eemm_{coeffs,functions,renconst}*.csv
+#   1. eemm_numeric.py --points: the phase-space points -> work/eemm_points{,_heavy,_ml}.csv
+#   2. eemm_formcalc.wl [massless]: FormCalc (SM.mod) coefficients and LoopTools values -> results/eemm_{coeffs,functions,
+#      renconst}*.csv; with "massless" the fermions but the top are massless from the start (MadGraph's models)
 #   3. eemm_collier.f90: the same loop functions from COLLIER -> results/eemm_collier*.csv;  eemm_softc0.wl: the soft-photon
 #      C0 from LoopTools, Package-X and COLLIER with a photon mass and dimensionally regularized -> results/eemm_softc0*.csv
 #   4. MadLoop standalone from each NLO UFO -> work/ml_eemm{,_heavy} (param_card set to the point, widths 0; check_sa.f
 #      reads the point from PS.input and mu_R from MU_R.input; at the note's point COLLIER reduction, OSThres = 1e-4 and
-#      a local change of COLLIER_interface.f so that m_e^2 is not set to zero; the heavier leptons with MadLoop's defaults)
-#   5. eemm_numeric.py [--heavy]: MadLoop at the points against FormCalc -> results/eemm_comparison*.csv
+#      a local change of COLLIER_interface.f so that m_e^2 is not set to zero; the heavier leptons with MadLoop's defaults);
+#      MadGraph's models -> work/ml_eemm_ml_{aMZ,Gmu} (MadLoop's defaults)
+#   5. eemm_numeric.py [--heavy | --ml_aMZ | --ml_Gmu]: MadLoop at the points against FormCalc -> results/eemm_comparison*.csv
+#      (COLLIER's poles in MadLoop's normalization r_Gamma; for the massless sets FormCalc's finite part converted from
+#      dimensional reduction on the massless legs to CDR, MadLoop's scheme)
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
 export SDKROOT="${SDKROOT:-$(xcrun --show-sdk-path)}"
@@ -20,14 +26,16 @@ mkdir -p work results
 echo "=== points"
 "$PY" eemm_numeric.py --points
 
-echo "=== FormCalc (SM.mod)"
+echo "=== FormCalc (SM.mod): the note's point and heavier leptons; massless fermions but the top (MadGraph's models)"
 wolframscript -file eemm_formcalc.wl > work/eemm_formcalc.log 2>&1
-grep -E '^\((a|b|c|d)\)' work/eemm_formcalc.log | cut -c1-300
+grep -E '^\((a|b|c|d)\)' work/eemm_formcalc.log | grep -v 'renormalization constants (Delta' | cut -c1-300
+wolframscript -file eemm_formcalc.wl massless > work/eemm_formcalc_ml.log 2>&1
+grep -E '^\((a|b|c|d)\)' work/eemm_formcalc_ml.log | grep -v 'renormalization constants (Delta' | cut -c1-300
 
 echo "=== COLLIER"
 gfortran -I"$HOME/hep/include" eemm_collier.f90 -L"$HOME/hep/lib" -lcollier -o work/eemm_collier || exit 1
-for tag in "" _heavy; do
-  "$PY" eemm_numeric.py --collier-input ${tag:+--heavy}
+for tag in "" _heavy _ml_aMZ _ml_Gmu; do
+  "$PY" eemm_numeric.py --collier-input ${tag:+--${tag#_}}
   (cd work && ./eemm_collier "eemm_collier_in$tag.txt" "../results/eemm_collier$tag.csv" "$MU2" | grep wrote)
 done
 
@@ -35,13 +43,16 @@ echo "=== the soft-photon C0: LoopTools, Package-X, COLLIER (dimensional regular
 wolframscript -file eemm_softc0.wl 2>&1 | grep -E '^\(a\)|difference' | cut -c1-260
 (cd work && ./eemm_collier eemm_softc0_in.txt ../results/eemm_softc0_collier.csv 1.0 | grep wrote && cat ../results/eemm_softc0_collier.csv)
 
-for tag in "" _heavy; do
+for tag in "" _heavy _ml_aMZ _ml_Gmu; do
   echo "=== MadLoop$tag"
-  ufo="SM_NLO_a0${tag}_UFO"
   out="work/ml_eemm$tag"
-  rm -rf "work/$ufo" "$out"
-  cp -r "generated/$ufo" work/
-  printf 'import model ./work/%s\ngenerate e- e+ > mu- mu+ [virt=QED]\noutput standalone ./%s\n' "$ufo" "$out" > "$out.mg5"
+  rm -rf "$out"
+  case "$tag" in
+    _ml_aMZ) model=loop_qcd_qed_sm ;;          # MadGraph's electroweak NLO models (restrict_default: massless fermions
+    _ml_Gmu) model=loop_qcd_qed_sm_Gmu ;;      # but the top), from MadGraph's model database
+    *) ufo="SM_NLO_a0${tag}_UFO"; rm -rf "work/$ufo"; cp -r "generated/$ufo" work/; model="./work/$ufo" ;;
+  esac
+  printf 'import model %s\ngenerate e- e+ > mu- mu+ [virt=QED]\noutput standalone ./%s\n' "$model" "$out" > "$out.mg5"
   mg5_aMC "$out.mg5" > "$out.log" 2>&1
   grep -E 'Contributing diagrams|Error|error' "$out.log" | head -5
   P=$(ls -d "$out"/SubProcesses/P0_* | head -1)
@@ -104,7 +115,8 @@ assert s.count(old) == 1
 open(p, "w").write(s.replace(old, new))
 # param_card: the point of the UFO's counterterms (assumption 7 / step (3)), widths zero
 card, tag = sys.argv[2], sys.argv[3]
-alpha_inv, mz, mw = 137.035999177, 91.1880, 80.3692
+alpha_inv = 128.93 if tag == "_ml_aMZ" else 137.035999177
+mz, mw = 91.1880, 80.3692
 me, mmu = (2.0, 3.0) if tag == "_heavy" else (0.00051099895, 0.1056583755)
 vals = {"aEWM1": alpha_inv, "MZ": mz, "MH": 125.20, "Me": me, "MMU": mmu, "MTA": 1.77686,
         "MU": 0.00216, "MC": 1.2730, "MT": 172.57, "MD": 0.00470, "MS": 0.0935, "MB": 4.183,
@@ -113,6 +125,8 @@ vals = {"aEWM1": alpha_inv, "MZ": mz, "MH": 125.20, "Me": me, "MMU": mmu, "MTA":
         "WZ": 0.0, "WW": 0.0, "WT": 0.0, "WH": 0.0, "MU_R": mz}
 txt = open(card).read()
 names = set(re.findall(r"#\s*(\w+)\s*$", txt, re.M))
+if tag == "_ml_Gmu":   # G_mu scheme: G_F and MW are inputs
+    vals["Gf"] = 1.1663788e-5
 if "MW" in names:
     vals["MW"] = mw
 else:          # MW internal: G_F such that MW comes out at the point
@@ -132,3 +146,5 @@ done
 echo "=== comparison"
 "$PY" eemm_numeric.py
 "$PY" eemm_numeric.py --heavy
+"$PY" eemm_numeric.py --ml_aMZ
+"$PY" eemm_numeric.py --ml_Gmu

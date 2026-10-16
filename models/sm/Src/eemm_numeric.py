@@ -10,7 +10,14 @@
 #                                            and the MadLoop standalone program work/ml_eemm)
 # FormCalc (eemm_formcalc.wl) gives W = sum over spins of M0^* M1 = c_0 + sum_i c_i f_i (f_i the loop functions; the
 # marker Finite of FormCalc's rational terms is 1) and B = sum over spins |M0|^2.  MadLoop returns the spin-averaged
-# born = B/4 and finite = Re W/2, 1eps = Re(IR pole of W)/2 (the UV poles cancel against the counterterms).
+# born = B/4 and finite = Re W/2, 1eps = Re(IR pole of W)/2 (the UV poles cancel against the counterterms), 2eps the
+# double pole (massless fermions), all in the normalization r_Gamma = Gamma^2(1-eps) Gamma(1+eps)/Gamma(1-2 eps) of the
+# poles, which LoopTools shares; COLLIER's Gamma(1+eps) is turned into it by Delta_IR2 -> Delta_IR2 + pi^2/6 (its manual),
+# i.e. the finite part of each function gets pi^2/6 times its double-pole coefficient.
+# Massless sets: FormCalc's lepton field constants keep the rational term (alpha/4 pi) Q^2 of the photon loop (the UV part
+# of (D-4) B1(0, 0, 0)), which in CDR cancels against the IR part of the scaleless integral; its virtual is that of
+# dimensional reduction on the massless legs, and the comparison adds MadFKS' conversion to CDR (BinothLHA.f, DRtoCDR, with
+# C_F -> Q_f^2): -(alpha/2 pi) sum_i Q_i^2/2 born = -(alpha/pi) born, MadLoop's virtual being in CDR.
 # The loop functions: LoopTools (all; its C0 is wrong below threshold in this build), COLLIER (all).
 # Writes results/eemm_comparison.csv.  Interactive: open in VS Code (qft interpreter) and "Run Cell" (# %%).
 
@@ -29,12 +36,19 @@ try:
 except NameError:          # run cell by cell (VS Code interactive window): the working directory is Src/
     HERE = os.getcwd()
 mp.mp.dps = 40
-# --heavy: the cross-check with heavier leptons (m_e = 2, m_mu = 3 GeV; files *_heavy, MadLoop work/ml_eemm_heavy)
-HEAVY = "--heavy" in sys.argv
-TAG = "_heavy" if HEAVY else ""
-MASSES = {"": (mp.mpf("0.00051099895"), mp.mpf("0.1056583755")), "_heavy": (mp.mpf(2), mp.mpf(3))}
-ME, MMU = MASSES[TAG]
+# --heavy: the cross-check with heavier leptons (m_e = 2, m_mu = 3 GeV; files *_heavy, MadLoop work/ml_eemm_heavy);
+# --ml_aMZ, --ml_Gmu: MadGraph's electroweak NLO models (massless fermions but the top; alpha(MZ) or G_mu scheme;
+# files *_ml_aMZ, *_ml_Gmu, MadLoop work/ml_eemm_ml_aMZ, work/ml_eemm_ml_Gmu).  The points: work/eemm_points{,_heavy,_ml}.csv
+TAG = next((t for t in ("_heavy", "_ml_aMZ", "_ml_Gmu") if "--" + t[1:] in sys.argv), "")
+PTAG = "_ml" if TAG.startswith("_ml") else TAG
+MASSES = {"": (mp.mpf("0.00051099895"), mp.mpf("0.1056583755")), "_heavy": (mp.mpf(2), mp.mpf(3)), "_ml": (mp.mpf(0), mp.mpf(0))}
+ME, MMU = MASSES[PTAG]
 MZ = mp.mpf("91.1880")
+MW = mp.mpf("80.3692")
+# alpha of the scheme, for the conversion of the massless sets to CDR (alpha(MZ): aEWM1 = 128.93; G_mu: G_F = 1.1663788e-5)
+ALPHA = {"_ml_aMZ": 1 / mp.mpf("128.93"),
+         "_ml_Gmu": mp.sqrt(2) * mp.mpf("1.1663788e-5") * MW ** 2 * (1 - MW ** 2 / MZ ** 2) / mp.pi}
+ZETA2 = float(mp.pi ** 2 / 6)
 POINTS = [(30, "0.5"), (200, "0.3"), (500, "-0.6")]       # sqrt(s) in GeV, cos(theta) of the mu- against the e-
 
 
@@ -75,15 +89,17 @@ def parse_key(key):
 
 
 def read_functions():
-    """key, kind, args and the LoopTools values (the last six columns: re/im of finite part, UV and IR coefficient)"""
+    """key, kind, args and the LoopTools values (the last eight columns: re/im of the finite part, of the UV coefficient and
+    of the coefficients of the single and double IR poles)"""
     out = []
     with open(os.path.join(HERE, "results", f"eemm_functions{TAG}.csv")) as f:
         rows = list(csv.reader(f))[1:]
     for r in rows:
         kind, args = parse_key(r[0])
-        v = [float(x) for x in r[-6:]]
+        v = [float(x) for x in r[-8:]]
         out.append({"key": r[0], "kind": kind, "args": args,
-                    "lt": {"fin": complex(v[0], v[1]), "uv": complex(v[2], v[3]), "ir": complex(v[4], v[5])}})
+                    "lt": {"fin": complex(v[0], v[1]), "uv": complex(v[2], v[3]), "ir": complex(v[4], v[5]),
+                           "ir2": complex(v[6], v[7])}})
     return out
 
 
@@ -112,7 +128,8 @@ coll = {}
 with open(os.path.join(HERE, "results", f"eemm_collier{TAG}.csv")) as f:
     for r in csv.DictReader(f):
         key = funcs[int(r["index"]) - 1]["key"]
-        coll[key] = {k: complex(float(r[f"re_{k}"]), float(r[f"im_{k}"])) for k in ("fin", "uv", "ir")}
+        coll[key] = {k: complex(float(r[f"re_{k}"]), float(r[f"im_{k}"])) for k in ("fin", "uv", "ir", "ir2")}
+        coll[key]["fin"] += ZETA2 * coll[key]["ir2"]      # Gamma(1+eps) -> r_Gamma (LoopTools, MadLoop)
 coeffs = {}
 with open(os.path.join(HERE, "results", f"eemm_coeffs{TAG}.csv")) as f:
     for r in csv.DictReader(f):
@@ -123,7 +140,7 @@ with open(os.path.join(HERE, "results", f"eemm_coeffs{TAG}.csv")) as f:
 def assemble(pt, lib):
     """W per part: fin (Finite = 1), uv and ir pole coefficients, with the loop functions of lib"""
     c = coeffs[pt]
-    out = {"fin": c["const"] + c.get("Finite", 0), "uv": 0j, "ir": 0j}
+    out = {"fin": c["const"] + c.get("Finite", 0), "uv": 0j, "ir": 0j, "ir2": 0j}
     for key, ci in c.items():
         if key in ("born", "const", "Finite"):
             continue
@@ -140,7 +157,7 @@ def assemble(pt, lib):
     return out
 
 
-# where LoopTools and COLLIER differ (relative 1e-8 on the finite part)
+# where LoopTools and COLLIER differ (relative 1e-8 on the finite part, both in the r_Gamma normalization)
 diff = sorted(((abs(lt[k]["fin"] - coll[k]["fin"]) / max(abs(coll[k]["fin"]), 1e-300), k) for k in lt), reverse=True)
 print(f"{len(lt)} loop functions; LoopTools against COLLIER (finite part), largest relative differences:")
 for d, k in diff[:6]:
@@ -153,7 +170,8 @@ for rs, cs in POINTS:
     for name, lib in (("COLLIER", coll), ("LoopTools", lt)):
         w = assemble(pt, lib)
         print(f"FormCalc with {name:9}: sqrt(s) = {rs:3}, cos = {cs:>4}:  B/4 = {coeffs[pt]['born'].real / 4:.12e}  "
-              f"Re W/2: finite {w['fin'].real / 2:+.12e}, IR pole {w['ir'].real / 2:+.12e}, UV pole {abs(w['uv']):.1e}")
+              f"Re W/2: finite {w['fin'].real / 2:+.12e}, IR poles {w['ir'].real / 2:+.12e} {w['ir2'].real / 2:+.12e}, "
+              f"UV pole {abs(w['uv']):.1e}")
 if not os.path.isdir(os.path.join(HERE, "work", f"ml_eemm{TAG}")):
     sys.exit(0)
 
@@ -175,20 +193,24 @@ def run_madloop(rs, c, mu):
 
 
 rows = []
+if TAG in ALPHA:
+    print("\nFormCalc's finite part converted to CDR: + conv = -(alpha/pi) born")
 print(f"\n{'sqrt(s)':>7} {'cos':>5} {'':10} {'MadLoop':>24} {'FormCalc (COLLIER)':>24} {'rel. diff.':>10} {'FormCalc (LoopTools)':>24}")
 for rs, cs in POINTS:
     pt = (float(rs), float(cs))
     ml = run_madloop(rs, cs, MZ)
     b4 = coeffs[pt]["born"].real / 4
     wc, wl = assemble(pt, coll), assemble(pt, lt)
-    comp = {"born": (ml["born"], b4, b4), "finite": (ml["finite"], wc["fin"].real / 2, wl["fin"].real / 2),
-            "1eps": (ml["1eps"], wc["ir"].real / 2, wl["ir"].real / 2), "2eps": (ml["2eps"], 0.0, 0.0)}
+    conv = -float(ALPHA[TAG] / mp.pi) * b4 if TAG in ALPHA else 0.0
+    comp = {"born": (ml["born"], b4, b4), "finite": (ml["finite"], wc["fin"].real / 2 + conv, wl["fin"].real / 2 + conv),
+            "1eps": (ml["1eps"], wc["ir"].real / 2, wl["ir"].real / 2),
+            "2eps": (ml["2eps"], wc["ir2"].real / 2, wl["ir2"].real / 2)}
     for key, (m, fc, fl) in comp.items():
         rel = abs(m / fc - 1) if fc != 0 else abs(m)
         print(f"{rs:7} {cs:>5} {key:10} {m:24.15e} {fc:24.15e} {rel:10.1e} {fl:24.15e}")
         rows.append([rs, cs, key, m, fc, fl, rel])
     print(f"{'':14} UV pole of W with the counterterms (expect 0): COLLIER {abs(wc['uv']):.1e}, LoopTools {abs(wl['uv']):.1e};"
-          f"  virtual/born = {ml['finite'] / ml['born']:.10f}")
+          f"  virtual/born = {ml['finite'] / ml['born']:.10f}" + (f";  conv = {conv:.12e}" if TAG in ALPHA else ""))
 
 with open(os.path.join(HERE, "results", f"eemm_comparison{TAG}.csv"), "w", newline="") as f:
     w = csv.writer(f)
