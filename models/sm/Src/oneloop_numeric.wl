@@ -35,7 +35,8 @@ KK = 16 Pi^2;
 kk2Rule$ = {SPD[k, k] -> kk2, Pair[Momentum[k, D], Momentum[k, D]] -> kk2, SPD[k] -> kk2};
 uvON$[x_] := Simplify[SeriesCoefficient[(x /. kk2Rule$) /. {B0[__] -> 1/ep, A0[m2_] :> m2/ep} /. D -> 4 - 2 ep,
      {ep, 0, -1}]];
-sw2Rule$ = {MZ -> MW/cw, cw -> Sqrt[1 - sw^2]};
+(* applied in sequence: MZ -> MW/cw introduces cw *)
+sw2Rule$ = Dispatch[{MZ -> MW/Sqrt[1 - sw^2], cw -> Sqrt[1 - sw^2]}];
 cwS$ = Sqrt[1 - sw^2];
 gSq$ = ee^2/sw^2; gpSq$ = ee^2/(1 - sw^2);
 
