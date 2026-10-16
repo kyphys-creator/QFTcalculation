@@ -1,0 +1,7 @@
+Dirac fermion: k_mu k_nu Pi^{mu nu} = 0;  Pi(0) = ((I/12)*TF*(-1 + Epsilon*(EulerGamma - Log[4*Pi]) - Epsilon*Log[ScaleMu^2/M^2]))/(Epsilon*Pi^2)
+    coefficient of ln(mu^2/M^2): ((-1/12*I)*TF)/Pi^2 = (i/16 pi^2) x (-4*TF)/3;  MS-bar remainder at mu = M: 0
+complex scalar: k_mu k_nu Pi^{mu nu} = 0;  Pi(0) = ((I/48)*TF*(-1 + Epsilon*(EulerGamma - Log[4*Pi]) - Epsilon*Log[ScaleMu^2/M^2]))/(Epsilon*Pi^2)
+    coefficient of ln(mu^2/M^2): ((-1/48*I)*TF)/Pi^2 = (i/16 pi^2) x -1/3*TF;  MS-bar remainder at mu = M: 0
+PV vector + ghost (gauge regulator): k_mu k_nu Pi^{mu nu} = 0;  Pi(0) = ((-1/48*I)*CA*(-11 + Epsilon*(-1 + 11*EulerGamma - 11*Log[4*Pi]) - 11*Epsilon*Log[ScaleMu^2/M^2]))/(Epsilon*Pi^2)
+    coefficient of ln(mu^2/M^2): (((11*I)/48)*CA)/Pi^2 = (i/16 pi^2) x (11*CA)/3;  MS-bar remainder at mu = M: ((I/48)*CA)/Pi^2 = (i/16 pi^2) x CA/3 -> shift of ln mu = 1/22
+=> quark loops: PV(M) = MS-bar(mu = M), C_q unchanged; gauge loops: ln mu shifted by 1/22 (Lambda_PV/Lambda_MSbar = e^(1/22) for SU(N) without quarks); with n_f quarks Lambda_PV/Lambda_MSbar = exp[(N/6)/beta0], C_N^MS = C_N^PV e^(N/6)
