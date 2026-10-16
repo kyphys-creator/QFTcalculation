@@ -613,6 +613,8 @@ Mathematica の数値の通分と光子の質量（SM2） & オンシェルの $
 閉じた形の $0/0$（SM2） & $\xi=1$ や質量0のフェルミオンで、1ループの関数が \texttt{Indeterminate} になる & $(A_0(a)-A_0(b))/(a-b)$ の形の項が $a=b$ で $0/0$ になる（$\xi_WM_W^2=M_W^2$、$m_u=m_d=0$） & 数値では $\xi=2,3$ を使い、軽いフェルミオンの質量を0にしない（感度は質量を半分にして見る） \\
 Mathematica の差と \texttt{Expand}（SM2） & CKM の効果を $S(m_b\to m_s)-S$ で求めると、変わらないはずのボソンの項が残り、光子の $1/M_A^2$ で発散する & 式が \texttt{ee\^{}2 (...)} のような積の形だと、差をとっても中の同じ項が自動では打ち消さない & 差をとる前に \texttt{Expand} し、差がゲージパラメータと $M_A$ を含まないことを表示する \\
 論文の式の取り出し（SM2） & 2段組みの PDF（Luo--Wang--Xiao、Buttazzo ら）を \texttt{pdftotext} にかけると、長い2ループの式の分数、添字、行の折り返しが崩れて読めない & PDF のレイアウトをテキストに戻す際に、式の要素の並びが保たれない & arXiv の e-print（LaTeX のソース、\texttt{https://arxiv.org/e-print/<番号>}）から式を取る（改行が \texttt{\textbackslash r} のファイルは \texttt{tr} で直し、\texttt{grep -a} で探す）。転記は独立な計算との数値の比較で確かめる \\
+FeynCalc 10 の \texttt{GA6}、\texttt{GA7}（SM2） & 射影演算子を入れたトレース \texttt{DiracTrace[GA7 . GSD[q] . x]} の結果に \texttt{GA7} が因子として残る & FeynCalc 10 では \texttt{GA5}（$\gamma_5$）は定義されているが、\texttt{GA6}、\texttt{GA7} は定義されていない記号で、可換な因子として扱われる（警告は出ない） & \texttt{GA[6]}、\texttt{GA[7]}（または \texttt{GAD[6]}、\texttt{GAD[7]}）と書く。トレースの結果に \texttt{GA6}、\texttt{GA7} が残っていないことを確かめる \\
+AMFlow 2.0 のキャッシュの場所（SM2） & \texttt{SetDirectory} で作業ディレクトリを移しても、\texttt{cache/} が \texttt{Src} の下にでき、git の管理外のファイルが 7~MB 残る & AMFlow はキャッシュを \texttt{DirectoryName[\$InputFileName]}（スクリプトの場所）の下の \texttt{"CacheName"} に置き、現在のディレクトリを使わない & \texttt{SetAMFOptions["CacheName" -> "work/..."]} で、スクリプトの場所からの相対パスで無視されるディレクトリを指定する \\
 \bottomrule
 \end{tabularx}
 \end{table}

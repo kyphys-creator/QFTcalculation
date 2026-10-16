@@ -7,7 +7,7 @@
 \usepackage{amsmath,amssymb,slashed}
 \usepackage{booktabs,tabularx,array}
 \usepackage[table]{xcolor}
-\usepackage{tikz}
+\usepackage{tikz,ifthen}
 \usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{graphicx}
@@ -53,7 +53,7 @@
 \maketitle
 
 \begin{abstract}
-$\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote,qednote,qcdnote} に続き、標準模型の電弱相互作用の1ループの繰り込みを $d=4$ で調べる。これまでのノートと同じく、紫外発散を次元正則化と $\MSbar$ で処理する。模型は標準模型の CKM 行列を単位行列に置いたもの（標準模型の18個のパラメータのうち CKM の4個を0にした点）で、3世代のフェルミオン（ニュートリノは質量0）、$SU(3)_C\times SU(2)_L\times U(1)_Y$ のゲージ場、Higgs 二重項からなり、一般の $R_\xi$ ゲージ（$\xi_A,\xi_Z,\xi_W$）で Goldstone ボソンとゴーストを残す。$\MSbar$ のパラメータは、破れていないラグランジアンの $g_s,g,g',\lambda,\mu^2,y_f$ で、真空期待値は $v\equiv\sqrt{\mu^2/\lambda}$ とする。タドポールは打ち消さず図として含める（Fleischer--Jegerlehner の処方~\cite{fj81}）。このとき $v$ と $\MSbar$ の質量 $M_W=gv/2$ などはゲージによらず、その対抗項は $\frac{\DUV}2\,\dd M^2/\dd\ln\mu$ と1ループの $\beta$ 関数だけで決まる。共変微分の符号と電荷の割り当ては QED と QCD のノートと同じで、すべての場が $D_\mu=\partial_\mu-ieQA_\mu$ で光子と結合する（$e>0$、$Q_e=-1$）。本ノートではまず、Feynman 則（93個の頂点のクラス、ゴーストとスカラーの結合は反ゴーストのゲージ場の $\xi$ に比例する）、木のレベルの関係と崩壊幅、$\MSbar$ の対抗項と1ループの $\beta$ 関数、$\MSbar$ の質量と $v$ の走り、一般の $R_\xi$ ゲージのタドポール $T$ を手で求めた。$T$ の $\xi$ 依存は Goldstone ボソンのループだけに残り（ベクトル場のループの $\xi$ の部分はゴーストのループが打ち消す）、タドポールを各次数で打ち消す処方の真空期待値 $v+T/M_H^2$ は、その分だけゲージに依存して走る。$\phi^3$ のノートの線形項と違い、標準模型にはタドポールを独立に打ち消すパラメータがない。検算と応用の十の手順を定め、手順 (1)〜(8) を行った。模型ファイル \texttt{SM.fr} は FeynRules に付属のものを使わずに一から書き、ゴーストとスカラーの結合は二重項の BRST 変換から模型ファイルの中で生成した。FeynRules 2.3.49 が出力した93個の頂点のクラスは、すべて手計算の表と記号として一致した（わざと3か所を誤らせた表では3個の差が出た）。MadGraph 3.8.1 が作った21個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。この過程で、自分の模型ファイルの誤り（湯川の項で世代の添字が3回現れ、FeynRules が警告なしに余分な添字を残した）と、ツールの問題を二つ見つけた。FeynRules を読み込んだカーネルでは置き換えの規則の左辺 \texttt{ProjM[\_,\_]} が射影演算子のトレース2に評価され、MadGraph は Feynman ゲージを許さない模型（UFO の \texttt{gauge = [0]}）で、続くコマンドを警告なしに組み込みの標準模型で実行する。手順 (2) では、$W$、$Z$、$H$、$t$ の11個の2体の崩壊と $e^+e^-\to\mu^+\mu^-$ の振幅の2乗が FeynCalc で手計算の式と記号として一致し、$e^+e^-\to\mu^+\mu^-$、$W^+W^-$ はゲージパラメータ $\xi_A$、$\xi_Z$ によらなかった。明示的な行列で組んだ $e^+e^-\to W^+W^-$ は FeynCalc と相対 $2.3\times10^{-14}$ で一致し、縦波の $W$ 対の各図の $s/M_W^2$ に比例する部分は、手で求めた比 $\frac1{2\sw^2}:Q_e:\frac{\cw}{\sw}g_L^e$ で現れて和で打ち消した（30~TeV まで）。MadGraph の25個の部分幅は式と相対 $10^{-15}$ で、断面積は統計誤差の1.4倍以内で一致した。FeynRules が書き出した FeynArts の模型は湯川結合の行列が対角であることを知らず、世代を変える図を挿入する。手順 (3) では、一般の $R_\xi$ ゲージで、タドポール $T$ が手計算の式と $D$ 次元で記号として一致し、$W$、$Z$、$H$ の自己エネルギーにタドポールの付いた図を加えた $\Sigma(M^2)$ の紫外の極が $\frac12\dd M^2/\dd\ln\mu$ と、トップでは $\frac14\dd\ln m_t^2/\dd\ln\mu$ と一致して $\xi$ によらなかった（1PI の部分だけでは $\xi$ による）。極の $k^2$ の形は、共通の $\xi$ で対称な基底の場の繰り込み $\delta Z_W=\frac{g^2}K(\frac16-\xi)$、$\delta Z_B=-\frac{41}6\frac{g'^2}K$ と混合角の繰り込みで決まった。有限部分の1ループの極質量は、六つのゲージで27桁以上一致し（1PI の部分だけでは $M_H^2$ で 52~GeV$^2$ 変わる）、$B_0$ は LoopTools、COLLIER、Package-X が $10^{-14}$ で一致した。FeynArts に付属の \texttt{SMQCD.mod} から求めた $T$ と8個の1PI の関数は、本ノートの模型の値と一般のゲージで記号として一致した。手順 (4) では、BRST 不変性から導いた2点関数の Slavnov--Taylor 恒等式が、タドポールの付いた図を含めると一般の $R_\xi$ ゲージで $D$ 次元で成り立ち（含めないと成り立たない）、標準模型の場を陽に組んだ一般の公式が $\beta$ 関数を相対 $8\times10^{-16}$ で再現した。電荷の繰り込みは $Z_e-1=-\frac12\delta Z_{AA}+\frac{s_W}{2c_W}\delta Z_{ZA}=\frac{11}6\frac{e^2}{K}\DUV$ で、ゲージによらない（混合の項の符号は Denner の式と逆）。2点関数の極だけで $\beta_g,\beta_{g'},\beta_\lambda,\gamma_{\mu^2},\beta_{y_t}$ が一つに決まり、手計算と一致した。手順 (5) では、トップの極質量の QCD の部分が $\frac{\alpha_s}\pi(\frac43+\ln\frac{\mu^2}{m_t^2})$ を再現した。極質量はゲージによらないが、$\beta_t$ の処方で $v_\beta$ から作る「$\MSbar$ の質量」$gv_\beta/2$ などは物理量でなく、基準点でゲージによって $0.09$〜$0.18$~GeV 変わった（その処方の $\MSbar$ のパラメータはゲージを決めて初めて意味を持つ）。FJ の処方の $\MSbar$ の質量は $\mu$ を2倍にすると約 5~GeV 走るが、1ループの極質量の変化は $0.01$〜$0.12$~GeV にとどまった。手順 (6) では、$\mu$ 崩壊の1ループの振幅から $G_F/\sqrt2=(1+\hat\Delta)/(2v^2)$ の $\hat\Delta$ を一般の $R_\xi$ ゲージで求めた。紫外の極は $\frac12\dd\ln v^2/\dd\ln\mu$ に等しく、有限部分は光子の質量の対数を含まず、ゲージによらなかった（基準点で $\hat\Delta=-0.0108$。最も大きい項はトップのループのタドポール）。Feynman ゲージの頂点と箱と外線の和は Sirlin の $\delta_{VB}$ を再現した。光子の2点関数から求めた $e(\mu)/e_{\mathrm{OS}}$ の有限部分もゲージによらず、ボソンの部分は PDG の $\Delta\hat\alpha-\Delta\alpha$ の式の1ループの部分と記号として一致した。PDG~2024 の入力では、トップを除いて $1/\hat\alpha^{(5)}(M_Z)=127.921$（PDG の値 127.930 との差は QCD の補正）、トップを含めて 128.101 である。手順 (7) では、測定値から1ループで $\MSbar$ のパラメータを決めた。Buttazzo らの入力では、彼らの1ループ（NLO）の値を5つの量すべてで示された桁まで再現した。PDG~2024 の入力では $\mu=M_t$ で $\lambda=0.12785$、$y_t=0.94693$（QCD を3ループまで入れると $0.93298$）、$g_2=0.64724$、$g_Y=0.35936$ で、高次を含む文献の値との差（$\lambda$ で $0.0016$）は2ループの大きさである。$\alpha(0)$ から予言した $M_W$ は測定値より 40~MeV 大きい。手順 (8) では、2ループの $\beta$ 関数を一般の公式と標準模型の文献の式の二つの導出で確かめ（相対 $5\times10^{-14}$）、Buttazzo らの NNLO の値から走らせて彼らの $M_{\mathrm{Pl}}$ での値を再現した（彼らの $m(M_{\mathrm{Pl}})$ の式の値は誤植と見られる）。$\lambda$ が0になるスケールは、同じ入力では本ノートの1ループの換算が高次の換算より 0.5 桁ほど高く見積もり、PDG~2024 の入力では $10^{11.4}$~GeV である。FJ の $\MSbar$ の質量は $\lambda$ の零点で発散し、$\beta_t$ の処方の質量は滑らかに走る。CKM 行列を PDG の値にしたときの変化は、本ノートで求める量では相対 $10^{-7}$ 以下である。導出は付録に載せる。
+$\phi^3$ 理論から QCD までのノート~\cite{phi3note,phi34note,yukawanote,qednote,qcdnote} に続き、標準模型の電弱相互作用の1ループの繰り込みを $d=4$ で調べる。これまでのノートと同じく、紫外発散を次元正則化と $\MSbar$ で処理する。模型は標準模型の CKM 行列を単位行列に置いたもの（標準模型の18個のパラメータのうち CKM の4個を0にした点）で、3世代のフェルミオン（ニュートリノは質量0）、$SU(3)_C\times SU(2)_L\times U(1)_Y$ のゲージ場、Higgs 二重項からなり、一般の $R_\xi$ ゲージ（$\xi_A,\xi_Z,\xi_W$）で Goldstone ボソンとゴーストを残す。$\MSbar$ のパラメータは、破れていないラグランジアンの $g_s,g,g',\lambda,\mu^2,y_f$ で、真空期待値は $v\equiv\sqrt{\mu^2/\lambda}$ とする。タドポールは打ち消さず図として含める（Fleischer--Jegerlehner の処方~\cite{fj81}）。このとき $v$ と $\MSbar$ の質量 $M_W=gv/2$ などはゲージによらず、その対抗項は $\frac{\DUV}2\,\dd M^2/\dd\ln\mu$ と1ループの $\beta$ 関数だけで決まる。共変微分の符号と電荷の割り当ては QED と QCD のノートと同じで、すべての場が $D_\mu=\partial_\mu-ieQA_\mu$ で光子と結合する（$e>0$、$Q_e=-1$）。本ノートではまず、Feynman 則（93個の頂点のクラス、ゴーストとスカラーの結合は反ゴーストのゲージ場の $\xi$ に比例する）、木のレベルの関係と崩壊幅、$\MSbar$ の対抗項と1ループの $\beta$ 関数、$\MSbar$ の質量と $v$ の走り、一般の $R_\xi$ ゲージのタドポール $T$ を手で求めた。$T$ の $\xi$ 依存は Goldstone ボソンのループだけに残り（ベクトル場のループの $\xi$ の部分はゴーストのループが打ち消す）、タドポールを各次数で打ち消す処方の真空期待値 $v+T/M_H^2$ は、その分だけゲージに依存して走る。$\phi^3$ のノートの線形項と違い、標準模型にはタドポールを独立に打ち消すパラメータがない。検算と応用の十の手順を定め、手順 (1)〜(8) を行った。模型ファイル \texttt{SM.fr} は FeynRules に付属のものを使わずに一から書き、ゴーストとスカラーの結合は二重項の BRST 変換から模型ファイルの中で生成した。FeynRules 2.3.49 が出力した93個の頂点のクラスは、すべて手計算の表と記号として一致した（わざと3か所を誤らせた表では3個の差が出た）。MadGraph 3.8.1 が作った21個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。この過程で、自分の模型ファイルの誤り（湯川の項で世代の添字が3回現れ、FeynRules が警告なしに余分な添字を残した）と、ツールの問題を二つ見つけた。FeynRules を読み込んだカーネルでは置き換えの規則の左辺 \texttt{ProjM[\_,\_]} が射影演算子のトレース2に評価され、MadGraph は Feynman ゲージを許さない模型（UFO の \texttt{gauge = [0]}）で、続くコマンドを警告なしに組み込みの標準模型で実行する。手順 (2) では、$W$、$Z$、$H$、$t$ の11個の2体の崩壊と $e^+e^-\to\mu^+\mu^-$ の振幅の2乗が FeynCalc で手計算の式と記号として一致し、$e^+e^-\to\mu^+\mu^-$、$W^+W^-$ はゲージパラメータ $\xi_A$、$\xi_Z$ によらなかった。明示的な行列で組んだ $e^+e^-\to W^+W^-$ は FeynCalc と相対 $2.3\times10^{-14}$ で一致し、縦波の $W$ 対の各図の $s/M_W^2$ に比例する部分は、手で求めた比 $\frac1{2\sw^2}:Q_e:\frac{\cw}{\sw}g_L^e$ で現れて和で打ち消した（30~TeV まで）。MadGraph の25個の部分幅は式と相対 $10^{-15}$ で、断面積は統計誤差の1.4倍以内で一致した。FeynRules が書き出した FeynArts の模型は湯川結合の行列が対角であることを知らず、世代を変える図を挿入する。手順 (3) では、一般の $R_\xi$ ゲージで、タドポール $T$ が手計算の式と $D$ 次元で記号として一致し、$W$、$Z$、$H$ の自己エネルギーにタドポールの付いた図を加えた $\Sigma(M^2)$ の紫外の極が $\frac12\dd M^2/\dd\ln\mu$ と、トップでは $\frac14\dd\ln m_t^2/\dd\ln\mu$ と一致して $\xi$ によらなかった（1PI の部分だけでは $\xi$ による）。極の $k^2$ の形は、共通の $\xi$ で対称な基底の場の繰り込み $\delta Z_W=\frac{g^2}K(\frac16-\xi)$、$\delta Z_B=-\frac{41}6\frac{g'^2}K$ と混合角の繰り込みで決まった。有限部分の1ループの極質量は、六つのゲージで27桁以上一致し（1PI の部分だけでは $M_H^2$ で 52~GeV$^2$ 変わる）、$B_0$ は LoopTools、COLLIER、Package-X が $10^{-14}$ で一致した。FeynArts に付属の \texttt{SMQCD.mod} から求めた $T$ と8個の1PI の関数は、本ノートの模型の値と一般のゲージで記号として一致した。手順 (4) では、BRST 不変性から導いた2点関数の Slavnov--Taylor 恒等式が、タドポールの付いた図を含めると一般の $R_\xi$ ゲージで $D$ 次元で成り立ち（含めないと成り立たない）、標準模型の場を陽に組んだ一般の公式が $\beta$ 関数を相対 $8\times10^{-16}$ で再現した。電荷の繰り込みは $Z_e-1=-\frac12\delta Z_{AA}+\frac{s_W}{2c_W}\delta Z_{ZA}=\frac{11}6\frac{e^2}{K}\DUV$ で、ゲージによらない（混合の項の符号は Denner の式と逆）。2点関数の極だけで $\beta_g,\beta_{g'},\beta_\lambda,\gamma_{\mu^2},\beta_{y_t}$ が一つに決まり、手計算と一致した。手順 (5) では、トップの極質量の QCD の部分が $\frac{\alpha_s}\pi(\frac43+\ln\frac{\mu^2}{m_t^2})$ を再現した。極質量はゲージによらないが、$\beta_t$ の処方で $v_\beta$ から作る「$\MSbar$ の質量」$gv_\beta/2$ などは物理量でなく、基準点でゲージによって $0.09$〜$0.18$~GeV 変わった（その処方の $\MSbar$ のパラメータはゲージを決めて初めて意味を持つ）。FJ の処方の $\MSbar$ の質量は $\mu$ を2倍にすると約 5~GeV 走るが、1ループの極質量の変化は $0.01$〜$0.12$~GeV にとどまった。手順 (6) では、$\mu$ 崩壊の1ループの振幅から $G_F/\sqrt2=(1+\hat\Delta)/(2v^2)$ の $\hat\Delta$ を一般の $R_\xi$ ゲージで求めた。紫外の極は $\frac12\dd\ln v^2/\dd\ln\mu$ に等しく、有限部分は光子の質量の対数を含まず、ゲージによらなかった（基準点で $\hat\Delta=-0.0108$。最も大きい項はトップのループのタドポール）。Feynman ゲージの頂点と箱と外線の和は Sirlin の $\delta_{VB}$ を再現した。光子の2点関数から求めた $e(\mu)/e_{\mathrm{OS}}$ の有限部分もゲージによらず、ボソンの部分は PDG の $\Delta\hat\alpha-\Delta\alpha$ の式の1ループの部分と記号として一致した。PDG~2024 の入力では、トップを除いて $1/\hat\alpha^{(5)}(M_Z)=127.921$（PDG の値 127.930 との差は QCD の補正）、トップを含めて 128.101 である。手順 (7) では、測定値から1ループで $\MSbar$ のパラメータを決めた。Buttazzo らの入力では、彼らの1ループ（NLO）の値を5つの量すべてで示された桁まで再現した。PDG~2024 の入力では $\mu=M_t$ で $\lambda=0.12785$、$y_t=0.94693$（QCD を3ループまで入れると $0.93298$）、$g_2=0.64724$、$g_Y=0.35936$ で、高次を含む文献の値との差（$\lambda$ で $0.0016$）は2ループの大きさである。$\alpha(0)$ から予言した $M_W$ は測定値より 40~MeV 大きい。手順 (8) では、ゲージ結合を0にした極限の2ループの $\beta_{y_t}$、$\beta_{g_s}$、$\beta_\lambda$ を、本ノートの模型の2ループの図（2点関数と頂点の281個、$HHHH$ の363個）から求め、文献の式と記号として一致した。$HHHH$ は外線の運動量を0にして補助の質量で赤外を組み替えて求めた。分母だけに質量を入れたクォークの線では、クォークの場の対抗項が裸の場で打ち消さず、$M^2\partial/\partial M^2$ の項（$y_t^6$ の極で $-\frac94$）が残ることが分かった。この2ループの項を1ループの式に加えた本ノートの方程式で走らせると、$\lambda(M_{\mathrm{Pl}})$ は文献の2ループの式の値と $3\times10^{-4}$ の差で合う（残りは $g,g'$ を含む2ループの項）。$\lambda$ が0になるスケールは、PDG~2024 の入力で $10^{11.2}$~GeV（文献の3ループの式では $10^{11.4}$~GeV）で、同じ入力では本ノートの1ループの換算が高次の換算より 0.5 桁ほど高く見積もる。比較に使った文献の2ループの式は、一般の公式を標準模型の場で組んだ実装とも一致した（相対 $5\times10^{-14}$。Buttazzo らの $m(M_{\mathrm{Pl}})$ の式の値は誤植と見られる）。FJ の $\MSbar$ の質量は $\lambda$ の零点で発散し、$\beta_t$ の処方の質量は滑らかに走る。CKM 行列を PDG の値にしたときの変化は、本ノートで求める量では相対 $10^{-7}$ 以下である。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -875,7 +875,13 @@ M_W=M_Zc_W\Bigl[1+\frac12(\delta_Z-\delta_W)\Bigr]
 
 \subsection{繰り込み群の走りと $\lambda$ の零点}\label{sec:running}
 
-\paragraph{2ループの $\beta$ 関数。}2ループの $\beta$ 関数は、Luo--Wang--Xiao の一般の公式~\cite{luo03}（Machacek--Vaughn~\cite{mv1,mv2,mv3} を複素の Weyl フェルミオンについて直したもの）を、手順 (4) と同じく標準模型の場で陽に組んで求め、Buttazzo らの付録 B の標準模型の式~\cite{buttazzo13} と比べる（手順 (8)）。走りには Buttazzo らの式を使う。そのうち3ループの項（$g_1,g_2,g_3,\lambda,m^2,y_t$）と $g_3$ の4ループの純 QCD の項は彼らの式をそのまま使い、本ノートでは独立に確かめていない。1ループの部分は式~\eqref{eq:beta} である。
+\paragraph{2ループの $\beta$ 関数。}2ループの $\beta$ 関数のうち、ゲージ結合を $g=g'=0$ とした極限（$y_b=y_\tau=0$）の部分を、本ノートの模型の2ループの図から求める（手順 (8)）。$\beta$ 関数は質量によらないので、破れていない相（$v=0$、すべての質量0）で求めればよい。$\beta_x=\dd x/\dd\ln\mu$ として
+\begin{align}
+K^2\beta^{(2)}_{y_t}&=y_t\bigl(-12y_t^4-12\lambda y_t^2+6\lambda^2+36g_s^2y_t^2-108g_s^4\bigr),\notag\\
+K^2\beta^{(2)}_{g_s}&=-26g_s^5-2g_s^3y_t^2,\label{eq:beta2}\\
+K^2\beta^{(2)}_\lambda&=-312\lambda^3-144\lambda^2y_t^2-3\lambda y_t^4+30y_t^6+80g_s^2\lambda y_t^2-32g_s^2y_t^4\notag
+\end{align}
+である（$-26$ は6フレーバーの QCD の $102-\frac{38}3n_f$）。Higgs 二重項の場の異常次元は、Landau ゲージで $K^2\gamma_\Phi^{\mathrm L(2)}=6\lambda^2+20g_s^2y_t^2-\frac{27}4y_t^4$ になる。式~\eqref{eq:beta2} は Buttazzo らの付録 B の式~\cite{buttazzo13} の同じ極限と一致する（第~\ref{sec:checks} 節）。走りには、1ループの式~\eqref{eq:beta} に式~\eqref{eq:beta2} を加えた方程式（以下「本ノートの方程式」）を使う。$g,g'$ を含む2ループの項、$m^2$ の2ループの項、3ループ以上の項は求めていない。それらの大きさは、文献の2ループと3ループの式（Buttazzo らの付録 B）で走らせた値との差で見積もる。文献の式はこの比較だけに使う。その2ループの部分は、Luo--Wang--Xiao の一般の公式~\cite{luo03}（Machacek--Vaughn~\cite{mv1,mv2,mv3} を複素の Weyl フェルミオンについて直したもの）を標準模型の場で陽に組んだ実装でも確かめた。3ループの項と $g_3$ の4ループの純 QCD の項は確かめていない。
 
 \paragraph{$\lambda$ の零点と $\MSbar$ の質量。}$\lambda(\mu)=0$ となるスケールを $\Lambda_\lambda$ と書く。$\Lambda_\lambda$ は $\MSbar$ の $\lambda$ の性質で、ゲージにはよらないがスキームによる。物理的な不安定のスケールは有効ポテンシャルで定義し~\cite{buttazzo13}、手順 (10) で扱う。FJ の処方の $v^2=\mu^2/\lambda=m^2/(2\lambda)$ は、$\mu^2$ と $\lambda$ がどちらも滑らかに走るのに対して $\lambda\to0$ で発散し、$\Lambda_\lambda$ より上では負になる。したがって FJ の $\MSbar$ の質量 $M_W=gv/2$ などは、$\Lambda_\lambda$ に近づくと意味を失う。$\beta_t$ の処方の $v_\beta$ は、Landau ゲージでは場の異常次元で走り（式~\eqref{eq:vbeta}）、$\lambda$ の零点で特別なことは起きない。ただし $v_\beta$ はゲージに依存する。
 
@@ -897,6 +903,7 @@ Feynman 則 & \ref{app:rules} & 自前の模型（FeynRules）の頂点と表の
 自己エネルギー、極の $\xi$ 依存 \eqref{eq:dM2}、\eqref{eq:pole}、場の繰り込み \eqref{eq:uvk2} & \ref{app:rg}、\ref{app:tadpole} & 一般の $R_\xi$ で。\texttt{SMQCD.mod}。Slavnov--Taylor 恒等式 & 数値 & — \\
 $\beta$ 関数 \eqref{eq:beta}〜\eqref{eq:vrun}、電荷 \eqref{eq:dZe}、Slavnov--Taylor \eqref{eq:st} & \ref{app:rg}、\ref{app:tadpole} & 2点関数の極。一般の公式（Machacek--Vaughn）の陽な実装 & — & — \\
 $v_\beta$ の走り \eqref{eq:vbeta} & \ref{app:tadpole} & 一般の $R_\xi$ のタドポール & 数値 & — \\
+2ループの $\beta$ 関数（$g=g'=0$）\eqref{eq:beta2} & — & 本ノートの模型の2ループの図。文献の式~\cite{buttazzo13} & Kira、AMFlow & — \\
 極質量、$G_F$ \eqref{eq:GF1}、$\alpha(0)$ \eqref{eq:alphahat} の換算 & 手順 (5)、(6) & 一般の $R_\xi$。FormCalc & 数値 & — \\
 $\MSbar$ のパラメータの決定、走り、真空の安定性 & 手順 (7)〜(10) & — & 常微分方程式、bounce & MadLoop \\
 \bottomrule
@@ -905,7 +912,7 @@ $\MSbar$ のパラメータの決定、走り、真空の安定性 & 手順 (7)�
 
 \paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点で、ツールどうしと手計算の数値が倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。FeynCalc の PaVe 関数の $\epsilon^0$ の係数は、これまでのノートと同じく $\MSbar$ の値に直してから比べる。MadGraph の断面積は、自分で数値積分した値と統計誤差の範囲で一致することを求める。$\xi$ によらないはずの量は、記号として $\xi$ を含まないこと、または $\xi=0,1,3$ で同じ値になることを求める。応用の手順では、比べる値の精度（文献の値の桁数、統計誤差）の範囲で一致することを求め、その精度を各手順に示す。
 
-\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{SM.fr} を一から書き、FeynArts の模型と UFO を書き出して、Feynman 則と MadGraph の図を確かめる。(2) 木の振幅の2乗と崩壊幅を FeynCalc で記号として確かめ、MadGraph の幅と断面積と比べる。$e^+e^-\to W^+W^-$ の縦波の $W$ 対で、三つの図の $s/M_W^2$ に比例して増える部分が打ち消すことを確かめる。(3) タドポールと自己エネルギーを一般の $R_\xi$ ゲージで $D$ 次元で求め、式~\eqref{eq:T} と、タドポールを含めた $\Sigma(M^2)$ の紫外の極が式~\eqref{eq:dM2} に等しく $\xi$ によらないこと、紫外の極の $k^2$ の形が式~\eqref{eq:uvk2} になること、有限部分の極質量が $\xi$ によらないことを確かめる。有限部分を LoopTools、Package-X、COLLIER で比べ、FeynArts の \texttt{SMQCD.mod} の図とも比べる。(4) 2点関数の Slavnov--Taylor 恒等式 \eqref{eq:st} を確かめる。$\beta$ 関数 \eqref{eq:beta} を、2点関数の極（手順 (3) の質量の極と、式~\eqref{eq:dZe} の電荷）と、一般の公式~\cite{mv1,mv2,mv3,luo03} を標準模型の場で陽に組んだ実装の二つで確かめる。式~\eqref{eq:vbeta} の $v_\beta$ の走りを確かめる。(5) $W$、$Z$、$H$、$t$ の1ループの極質量を $\MSbar$ のパラメータで求め、$\xi$ によらないこと、$\mu$ を変えた変化が式~\eqref{eq:vrun} と打ち消すことを確かめる（トップには $O(\alpha_s)$ を含める）。(6) $\mu$ 崩壊の1ループ（頂点と箱の図）から $G_F$ と $\MSbar$ の $v$ の関係を、光子の真空偏極から $\alpha(0)$ と $e(\mu)$ の関係を求め、$\xi$ によらないことを確かめる。(7) 測定値（$G_F$、$M_Z$、$M_W$、$M_H$、$m_t$、$\alpha(0)$ と $\Delta\alpha_{\mathrm{had}}$、$\alpha_s$）から1ループの換算で $\MSbar$ のパラメータを決め、高次の文献の値~\cite{buttazzo13,mr19} と比べる。(8) 1ループと2ループの繰り込み群の方程式で結合を走らせ、$\lambda$ が0になるスケールを求めて文献~\cite{degrassi12,buttazzo13} と比べる。$\MSbar$ の質量の走りを FJ と $\beta_t$ の処方で比べる。(9) $\MSbar$ の対抗項（FJ を対抗項の形にしたもの）で1ループの電弱の振幅を MadLoop と FormCalc で比べる。(10) 繰り込み群で改良した有効ポテンシャルで、真空の崩壊の bounce と寿命を、$\phi^3+\phi^4$ と湯川のノート~\cite{phi34note,yukawanote} の道具で求める。
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{SM.fr} を一から書き、FeynArts の模型と UFO を書き出して、Feynman 則と MadGraph の図を確かめる。(2) 木の振幅の2乗と崩壊幅を FeynCalc で記号として確かめ、MadGraph の幅と断面積と比べる。$e^+e^-\to W^+W^-$ の縦波の $W$ 対で、三つの図の $s/M_W^2$ に比例して増える部分が打ち消すことを確かめる。(3) タドポールと自己エネルギーを一般の $R_\xi$ ゲージで $D$ 次元で求め、式~\eqref{eq:T} と、タドポールを含めた $\Sigma(M^2)$ の紫外の極が式~\eqref{eq:dM2} に等しく $\xi$ によらないこと、紫外の極の $k^2$ の形が式~\eqref{eq:uvk2} になること、有限部分の極質量が $\xi$ によらないことを確かめる。有限部分を LoopTools、Package-X、COLLIER で比べ、FeynArts の \texttt{SMQCD.mod} の図とも比べる。(4) 2点関数の Slavnov--Taylor 恒等式 \eqref{eq:st} を確かめる。$\beta$ 関数 \eqref{eq:beta} を、2点関数の極（手順 (3) の質量の極と、式~\eqref{eq:dZe} の電荷）と、一般の公式~\cite{mv1,mv2,mv3,luo03} を標準模型の場で陽に組んだ実装の二つで確かめる。式~\eqref{eq:vbeta} の $v_\beta$ の走りを確かめる。(5) $W$、$Z$、$H$、$t$ の1ループの極質量を $\MSbar$ のパラメータで求め、$\xi$ によらないこと、$\mu$ を変えた変化が式~\eqref{eq:vrun} と打ち消すことを確かめる（トップには $O(\alpha_s)$ を含める）。(6) $\mu$ 崩壊の1ループ（頂点と箱の図）から $G_F$ と $\MSbar$ の $v$ の関係を、光子の真空偏極から $\alpha(0)$ と $e(\mu)$ の関係を求め、$\xi$ によらないことを確かめる。(7) 測定値（$G_F$、$M_Z$、$M_W$、$M_H$、$m_t$、$\alpha(0)$ と $\Delta\alpha_{\mathrm{had}}$、$\alpha_s$）から1ループの換算で $\MSbar$ のパラメータを決め、高次の文献の値~\cite{buttazzo13,mr19} と比べる。(8) 2ループの $\beta$ 関数のうちゲージ結合を0にした部分を、本ノートの模型の2ループの図から求めて文献の式と比べる。それを1ループの式に加えた方程式で結合を走らせ、$\lambda$ が0になるスケールを求めて文献~\cite{degrassi12,buttazzo13} と比べる。$\MSbar$ の質量の走りを FJ と $\beta_t$ の処方で比べる。(9) $\MSbar$ の対抗項（FJ を対抗項の形にしたもの）で1ループの電弱の振幅を MadLoop と FormCalc で比べる。(10) 繰り込み群で改良した有効ポテンシャルで、真空の崩壊の bounce と寿命を、$\phi^3+\phi^4$ と湯川のノート~\cite{phi34note,yukawanote} の道具で求める。
 
 \section{検算}\label{sec:checks}
 
@@ -1033,28 +1040,157 @@ PDG~2024、$\mu=M_t=172.57$ & $M_W$ を入力 & 0.127853 & 0.946931 & 0.932983 &
 \end{tabular}
 \end{table}
 
-\paragraph{手順 (8)：繰り込み群の走り。}(a) Luo--Wang--Xiao の2ループの一般の公式を、手順 (4) の陽な場（45個の Weyl フェルミオン、4個の実スカラー、群ごとの生成子）で組んだ（\texttt{rg\_twoloop.py}）。半単純群への拡張は彼らの置き換えの規則（$g^4C_2(G)C_2\to\sum_kg_k^4C_2(G_k)C_2^k$、$g^6[\cdots]A\to\sum_{k,l}g_k^4g_l^2[\cdots]_k\Lambda^k\Lambda^l$ など）で行い、$m^2$ は伝播しないダミーのスカラー（$\lambda_{ab\hat d\hat d}=2m^2_{ab}$）の方法で求めた。$t$、$b$、$\tau$ の湯川結合だけを残した任意の2点（一つは $\lambda<0$）で、$g_1$、$g_2$、$g_3$、$\lambda$、$m^2$、$y_t$、$y_b$、$y_\tau$ の1ループと2ループの $\beta$ 関数が Buttazzo らの式と相対 $5\times10^{-14}$ 以内で一致した。2ループの湯川の $\beta$ 関数は湯川の行列の形を保ち、$\lambda_{0000}$ と $\lambda_{0011}$ から求めた $\beta_\lambda$ も一致した。これは二つの独立な導出が一致したことを意味し、Buttazzo らの付録の転記の検算にもなっている。(b) Buttazzo らの NNLO の値（$\mu=M_t=173.34$~GeV）を3ループで $M_{\mathrm{Pl}}=1.22\times10^{19}$~GeV まで走らせると（\texttt{rg\_run.py}、表~\ref{tab:rgrun}）、彼らの $M_{\mathrm{Pl}}$ での値 $g_1=0.6154$、$g_2=0.5055$、$g_3=0.4873$、$y_t=0.3825$ を4桁で、$\lambda=-0.0143$ を $7\times10^{-5}$ の差で再現した。$\Lambda_\lambda=10^{9.79}$~GeV は、彼らの $\Lambda_\lambda\approx2\Lambda_V=10^{9.8}$~GeV と合った。$m(M_{\mathrm{Pl}})$ は 139.4~GeV で、彼らの式の 129.4~GeV と合わない。しかし彼らの図~2 では $m$ が $M_{\mathrm{Pl}}$ で約 0.14~TeV に上がっていて本ノートの値と合うので、式の数値の誤植と考えられる（$m^2$ の1、2ループの $\beta$ 関数は (a) で一般の公式と一致している）。走りの次数を1、2、3ループと上げると、$\lambda(M_{\mathrm{Pl}})$ は $-0.034$、$-0.0151$、$-0.0144$、$\Lambda_\lambda$ は $10^{7.96}$、$10^{9.68}$、$10^{9.79}$~GeV になる。2ループの走りは欠かせず、3ループの効果は $\Lambda_\lambda$ で 0.1 桁である。(c) 手順 (7) の1ループの換算（$y_t$ には QCD を3ループまで入れた）から走らせると、同じ入力でも $\lambda(M_{\mathrm{Pl}})$ は、Buttazzo らの NNLO から走らせた値より $0.0023$、Martin--Robertson の値から走らせた値より $0.0019$ 大きく、$\Lambda_\lambda$ は 0.5 桁ほど高い。$\lambda(M_{\mathrm{Pl}})$ の $\lambda(M_t)$、$y_t(M_t)$、$g_3(M_t)$ への感度はそれぞれ $+1.46$、$-1.14$、$+0.44$ で、差は $\lambda(M_t)$ の2ループの換算（$-0.0017$）でほぼ説明できる。$y_t$ を1ループの換算のままにすると、$\Lambda_\lambda$ は3桁下がる。PDG~2024 の入力では、本ノートの値で $\lambda(M_{\mathrm{Pl}})=-0.0079$、$\Lambda_\lambda=10^{11.4}$~GeV（3ループの走り）である。$M_t=172.57$~GeV が Buttazzo らの 173.34~GeV より小さいぶん、安定に近い。$\Lambda_\lambda$ を桁の精度で見積もるには、$\lambda$ と $y_t$ の2ループの換算が要る。(d) FJ と $\beta_t$ の処方の $\MSbar$ の質量（図~\ref{fig:rg} の右）：FJ の $M_W=gv/2$（$v^2=m^2/(2\lambda)$）は、$\mu=M_t$ の 84.65~GeV から $10^9$~GeV で 293~GeV へ増え、$\Lambda_\lambda$ で発散する。$\beta_t$ の処方（Landau ゲージ）の $v_\beta(M_t)=v+T/M_H^2$ を式~\eqref{eq:T} から1ループで求めると 249.1~GeV で（Martin--Robertson の2ループの値は 246.60~GeV）、それを1ループの $\gamma_\Phi^{\mathrm L}$ で走らせると、$M_W=gv_\beta/2$ は 80.6~GeV から $10^9$~GeV で 68.1~GeV へゆっくり減る。FJ の $v$ を $m^2/(2\lambda)$ から作ると 261.58~GeV で、手順 (7) の $v_G(1+\hat\Delta/2)=261.89$~GeV との差は2ループの大きさである。スクリプトは \texttt{run\_rg2\_check.sh} でまとめて実行できる。
+\paragraph{手順 (8)：2ループの $\beta$ 関数と繰り込み群の走り。}(a) 2点関数と頂点。本ノートの FeynArts の模型（手順 (1)）で $v\to0$、すべての質量を0、$e\to0$（$g=g'=0$）とし、$\lambda$、$y_t$（湯川の行列の $(3,3)$ 成分。ほかの成分は0）、$g_s$ を残した（\texttt{twoloop\_sym\_setup.wl}）。光子、$Z$、$W$ とそのゴースト、レプトンは挿入から除き、グルーオンは Landau ゲージにとった。$H$、$t$、$b$、グルーオン、ゴーストの自己エネルギーと、$H$ の運動量を0にした $\bar ttH$ の頂点の図（1ループで 4、4、2、9、1、3個、2ループで 26、49、23、70、12、101個。図~\ref{fig:twoloop} の (a)〜(e)）を FeynCalc で求め、$-q^2=\mu^2$ の質量0の伝播関数型の積分（QCD のノートの手順 (7) と同じ族）にした。844個の積分を Kira~3.1~\cite{kira3} で、バブルの2乗と sunset の2個のマスター積分に還元した（\texttt{twoloop\_sym\_feyncalc.wl}）。射影と規格化は、1ループで式~\eqref{eq:beta} を再現するように決めた（\texttt{twoloop\_sym\_oneloop.wl}）。$Z_X(1+\Pi_X)$（$X=\Phi$、$t_L$、$t_R$、$b_L$、ゴースト）、$Z_3(1-\Pi_A)$、$Z_{y_t}Z_\Phi^{1/2}Z_{t_L}^{1/2}Z_{t_R}^{1/2}(1+\Lambda)$ が有限になるように $\MSbar$ の $Z$ を決め、Landau ゲージの $Z_{g_s}=1/(\tilde Z_3Z_3^{1/2})$ を使った（\texttt{twoloop\_sym\_eval.wl}）。$\beta_x=(\sum_l\rho_lx_l\partial_l-\rho_x)a_x^{(1)}$（$a_x^{(1)}$ は $xZ_x$ の $1/\epsilon$ の留数。$\rho=1$ は $y_t$、$g_s$、$\rho=2$ は $\lambda$）で求めた $\beta^{(2)}_{y_t}$、$\beta^{(2)}_{g_s}$ は、Buttazzo らの式と記号として一致した。$1/\epsilon^2$ の極は1ループの $\beta$ 関数から決まる値と一致し、2ループでもグルーオンの自己エネルギーは横波で、左右の頂点 $\Lambda_L=\Lambda_R$ と同じ二重項の $Z_{b_L}=Z_{t_L}$ が成り立った。
+
+(b) 4点関数。$\Gamma_{HHHH}$ は外線の運動量をどう流しても運動量0の外線を含むので、質量0の線では赤外で発散しうる。そこで外線の運動量を0にし、すべての伝播関数の分母に共通の補助の質量 $M$（$=\mu$）を入れた（Chetyrkin--Misiak--Münz の赤外の組み替え~\cite{cmm98}。分子のクォークの質量は入れない）。対数発散する図の全体の紫外の対抗項は質量によらず、2次発散する部分図（$\Sigma_H$）の $M^2$ の極は補助のスカラーの質量の対抗項で除く。1ループの $\Sigma_H(0)$（4個）と $\Gamma_{HHHH}$（15個）は $D$ 次元で厳密に求めた。2ループの363個の図（図~\ref{fig:twoloop} の (f)〜(l)。対抗項は (m)〜(o)）は55個の真空積分にして、Kira で tadpole の2乗と等質量の sunset に還元した（\texttt{twoloop\_lambda\_feyncalc.wl}）。sunset は AMFlow~2.0~\cite{amflow,amflow2} で30桁で求めた（\texttt{twoloop\_lambda\_masters.wl}。同じ方法で求めた tadpole の2乗は $\Gamma(-1+\epsilon)^2$ と各次数で29桁以上一致し、sunset の極は1ループあたり $e^{\epsilon\gamma_E}\int\dd^Dl/(i\pi^{D/2})$ の規格化で $\frac3{2\epsilon^2}+\frac9{2\epsilon}$ になった）。$Z_\Phi^2\Gamma_{HHHH}/(-6i)$ が有限になるように $\lambda$ の対抗項を決めると、最初は $y_t^6$ の係数が文献の30でなく21になり、ほかの係数はすべて一致した。原因は、内線のクォークの場の繰り込みが裸の場で打ち消すとした扱いにあった。分母だけに $M$ を入れたクォークの線 $S_M=i\slashed l/(l^2-M^2)$ に運動項の対抗項 $i\delta Z\slashed l$ を挟むと
+\begin{equation}
+S_M\,(i\delta Z\slashed l)\,S_M=-\delta Z\Bigl(1+M^2\frac{\partial}{\partial M^2}\Bigr)S_M
+\label{eq:cmmq}
+\end{equation}
+で、質量0の線の $-\delta Z\,S$ と $M^2$ の項だけ違う。トップの線についての和 $-\bar z_tM^2\partial G_4^{(1)}/\partial M^2$（$\bar z_t=(z_{t_L}+z_{t_R})/2=-\frac34y_t^2/\epsilon$。トレースの $\gamma_5$ の部分は0）は $1/\epsilon$ の極 $-\frac94y_t^6$ を持ち、これを加えると $\beta_\lambda^{(2)}$ が文献の式と記号として一致した（\texttt{twoloop\_lambda\_eval.wl}。$1/\epsilon^2$ の極も RG と一致）。スカラーの線の同じ $M^2$ の項は補助の質量の対抗項に含めてある（$\delta M^2=\mathrm{pole}[\Sigma_H(0)]-z_\Phi M^2$）。Landau ゲージではグルーオンによるクォークの $Z_2$ の1ループの極が0なので、$g_s^2$ の項はこの影響を受けない。独立な確かめとして、$\lambda=0$ では外の $H$ がトップにしか付かず、運動量を $H_1$ から $H_3$ へ流した質量0の伝播関数型の積分が赤外で有限なので、補助の質量なしで $y_t^6$ と $g_s^2y_t^4$ の項を求めた（\texttt{twoloop\_lambda\_massless.wl}。2ループで204個の図、88個の積分）。結果は $30y_t^6-32g_s^2y_t^4$ で、文献の式と一致した。この場合は $S\slashed lS=S$ なので、裸の場の扱いがそのまま正しい。
+
+(c) 本ノートの方程式での走り（\texttt{rg\_run.py}、表~\ref{tab:rgrun}、図~\ref{fig:rg}）。Buttazzo らの NNLO の値（$\mu=M_t=173.34$~GeV）から $M_{\mathrm{Pl}}=1.22\times10^{19}$~GeV まで走らせると、$\lambda(M_{\mathrm{Pl}})$ は1ループの方程式で $-0.0337$、本ノートの方程式で $-0.0148$ になる。文献の2ループの式では $-0.0151$ なので、2ループの走りの効果のほとんどは式~\eqref{eq:beta2} の $y_t$、$g_s$、$\lambda$ の項から来る。残りの $g,g'$ を含む2ループの項は $\lambda(M_{\mathrm{Pl}})$ を $-0.0003$、$y_t(M_{\mathrm{Pl}})$ を $+0.002$ 変え、$\Lambda_\lambda$ は $10^{9.69}$ と $10^{9.68}$~GeV でほとんど変わらない。文献の3ループの式では $\lambda(M_{\mathrm{Pl}})=-0.0144$、$\Lambda_\lambda=10^{9.79}$~GeV で、3ループの効果は $\Lambda_\lambda$ で 0.1 桁である。本ノートの方程式の $m^2$ は1ループで走るので、$m(M_{\mathrm{Pl}})$ は文献の2ループの式より約 0.9~GeV 小さい。PDG~2024 の入力（手順 (7)、$y_t$ は QCD を3ループまで）では、本ノートの方程式で $\lambda(M_{\mathrm{Pl}})=-0.0084$、$\Lambda_\lambda=10^{11.24}$~GeV（文献の2ループの式で $-0.0086$、$10^{11.21}$~GeV、3ループで $-0.0079$、$10^{11.41}$~GeV）である。$M_t=172.57$~GeV が Buttazzo らの 173.34~GeV より小さいぶん、安定に近い。
+
+(d) 換算の次数。同じ入力から手順 (7) の1ループの換算で出発すると、本ノートの方程式での $\lambda(M_{\mathrm{Pl}})$ は、Buttazzo らの NNLO から走らせた値より $0.0023$、Martin--Robertson の値から走らせた値より $0.0019$ 大きく、$\Lambda_\lambda$ は 0.5 桁ほど高い。$\lambda(M_{\mathrm{Pl}})$ の $\lambda(M_t)$、$y_t(M_t)$、$g_3(M_t)$ への感度はそれぞれ $+1.44$、$-1.12$、$+0.43$ で、差は $\lambda(M_t)$ の2ループの換算（$-0.0017$）でほぼ説明できる。$y_t$ を1ループの換算のままにすると、$\Lambda_\lambda$ は約3桁下がる。$\Lambda_\lambda$ を桁の精度で見積もるには、$\lambda$ と $y_t$ の2ループの換算が要る。
+
+(e) 比較に使った文献の式の確かめ。Luo--Wang--Xiao の2ループの一般の公式を、手順 (4) の陽な場（45個の Weyl フェルミオン、4個の実スカラー、群ごとの生成子）で組んだ（\texttt{rg\_twoloop.py}。半単純群への拡張は彼らの置き換えの規則、$m^2$ は伝播しないダミーのスカラーの方法）。$t$、$b$、$\tau$ の湯川結合だけを残した任意の2点（一つは $\lambda<0$）で、すべての結合の1ループと2ループの $\beta$ 関数が Buttazzo らの式と相対 $5\times10^{-14}$ 以内で一致した。これは Buttazzo らの付録の転記の検算になる。文献の3ループの式で Buttazzo らの NNLO の値を走らせると、彼らの $M_{\mathrm{Pl}}$ での値 $g_1=0.6154$、$g_2=0.5055$、$g_3=0.4873$、$y_t=0.3825$ を4桁で、$\lambda=-0.0143$ を $7\times10^{-5}$ の差で、$\Lambda_\lambda\approx2\Lambda_V=10^{9.8}$~GeV を再現した。$m(M_{\mathrm{Pl}})$ は 139.4~GeV で、彼らの式の 129.4~GeV と合わないが、彼らの図~2 では $m$ が $M_{\mathrm{Pl}}$ で約 0.14~TeV に上がっていて本ノートの値と合うので、式の数値の誤植と考えられる。
+
+(f) FJ と $\beta_t$ の処方の $\MSbar$ の質量（図~\ref{fig:rg} の右。PDG~2024 の入力、本ノートの方程式）。FJ の $M_W=gv/2$（$v^2=m^2/(2\lambda)$）は、$\mu=M_t$ の 84.65~GeV から $10^9$~GeV で 291.5~GeV へ増え、$\Lambda_\lambda$ で発散する。$\beta_t$ の処方（Landau ゲージ）の $v_\beta(M_t)=v+T/M_H^2$ を式~\eqref{eq:T} から1ループで求めると 249.1~GeV で（Martin--Robertson の2ループの値は 246.60~GeV）、それを1ループの $\gamma_\Phi^{\mathrm L}$ で走らせると、$M_W=gv_\beta/2$ は 80.6~GeV から $10^9$~GeV で 67.9~GeV へゆっくり減る。FJ の $v$ を $m^2/(2\lambda)$ から作ると 261.58~GeV で、手順 (7) の $v_G(1+\hat\Delta/2)=261.89$~GeV との差は2ループの大きさである。スクリプトは \texttt{run\_rg2\_check.sh} でまとめて実行できる（Kira、AMFlow を含めて約12分）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a)-(e): two-point functions and the H t tbar vertex
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.1,0) -- (-0.5,0); \draw[scalar] (0.5,0) -- (1.1,0);
+  \draw[fermion] (180:0.5) arc (180:90:0.5); \draw[fermion] (90:0.5) arc (90:0:0.5);
+  \draw[fermion] (0:0.5) arc (0:-90:0.5); \draw[fermion] (-90:0.5) arc (-90:-180:0.5);
+  \draw[scalar] (90:0.5) -- (-90:0.5);
+  \foreach \a in {180,0,90,-90} \node[vtx] at (\a:0.5) {};
+  \node[slab] at (0,-1.15) {(a) $H$：$y_t^4$\\内線 $H$、$G^0$、$G^\pm$（$b$）};
+\end{scope}
+\begin{scope}[shift={(3.2,0)}]
+  \draw[scalar] (-1.1,0) -- (-0.5,0); \draw[scalar] (0.5,0) -- (1.1,0);
+  \draw[fermion] (180:0.5) arc (180:90:0.5); \draw[fermion] (90:0.5) arc (90:0:0.5);
+  \draw[fermion] (0:0.5) arc (0:-90:0.5); \draw[fermion] (-90:0.5) arc (-90:-180:0.5);
+  \draw[gluon] (90:0.5) -- (-90:0.5);
+  \foreach \a in {180,0,90,-90} \node[vtx] at (\a:0.5) {};
+  \node[slab] at (0,-1.15) {(b) $H$：$g_s^2y_t^2$};
+\end{scope}
+\begin{scope}[shift={(6.4,0)}]
+  \draw[scalar] (-1.1,0) -- (-0.5,0); \draw[scalar] (0.5,0) -- (1.1,0);
+  \draw[scalar] (-0.5,0) arc (180:0:0.5); \draw[scalar] (0.5,0) arc (0:-180:0.5); \draw[scalar] (-0.5,0) -- (0.5,0);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[slab] at (0,-1.15) {(c) $H$：$\lambda^2$};
+\end{scope}
+\begin{scope}[shift={(9.6,0)}]
+  \draw[fermion] (-1.1,0) -- (-0.7,0); \draw[fermion] (-0.7,0) -- (-0.3,0); \draw[fermion] (-0.3,0) -- (0.3,0);
+  \draw[fermion] (0.3,0) -- (0.7,0); \draw[fermion] (0.7,0) -- (1.1,0);
+  \draw[scalar] (-0.7,0) arc (180:0:0.7); \draw[gluon] (0.3,0) arc (0:-180:0.3);
+  \foreach \x in {-0.7,-0.3,0.3,0.7} \node[vtx] at (\x,0) {};
+  \node[slab] at (0,-1.15) {(d) $t$：$g_s^2y_t^2$、$y_t^4$\\（内線 $H$、$G^0$、$G^\pm$）};
+\end{scope}
+\begin{scope}[shift={(12.8,0)}]
+  \draw[fermion] (-0.9,-0.9) -- (-0.48,-0.63); \draw[fermion] (-0.48,-0.63) -- (0.01,-0.315); \draw[fermion] (0.01,-0.315) -- (0.5,0);
+  \draw[fermion] (0.5,0) -- (0.01,0.315); \draw[fermion] (0.01,0.315) -- (-0.48,0.63); \draw[fermion] (-0.48,0.63) -- (-0.9,0.9);
+  \draw[scalar] (0.5,0) -- (1.1,0);
+  \draw[scalar] (-0.48,-0.63) -- (-0.48,0.63); \draw[gluon] (0.01,-0.315) -- (0.01,0.315);
+  \foreach \p in {(0.5,0),(-0.48,-0.63),(-0.48,0.63),(0.01,-0.315),(0.01,0.315)} \node[vtx] at \p {};
+  \node[font=\scriptsize] at (0.95,0.2) {$H$};
+  \node[slab] at (0,-1.15) {(e) $\bar ttH$（$p_H=0$）};
+\end{scope}
+% (f)-(j): HHHH at zero momenta, one top loop with four external H
+\foreach \x/\lbl/\kind in {0/{(f) $y_t^6$：自己エネルギー型\\$H$、$G^0$、$G^\pm$（$b$）}/se,
+    3.2/{(g) $y_t^6$：頂点型\\$H$、$G^0$}/vx, 6.4/{(h) $y_t^6$：交差型\\$H$、$G^0$}/cr, 9.6/{(i) $g_s^2y_t^4$\\（(f)〜(h) の型）}/gl} {
+  \begin{scope}[shift={(\x,-3.0)}]
+    \foreach \a in {135,45,-45,-135} {\draw[scalar] (\a:0.5) -- (\a:1.15); \node[vtx] at (\a:0.5) {};}
+    \ifthenelse{\equal{\kind}{se}}{
+      \draw[fermion] (-135:0.5) arc (-135:-45:0.5); \draw[thick] (-45:0.5) arc (-45:45:0.5);
+      \draw[fermion] (45:0.5) arc (45:135:0.5); \draw[fermion] (135:0.5) arc (135:225:0.5);
+      \draw[scalar] (16:0.5) .. controls (16:1.3) and (-16:1.3) .. (-16:0.5);
+      \node[vtx] at (16:0.5) {}; \node[vtx] at (-16:0.5) {};}{}
+    \ifthenelse{\equal{\kind}{vx}}{
+      \draw[fermion] (-135:0.5) arc (-135:-45:0.5); \draw[thick] (-45:0.5) arc (-45:-10:0.5); \draw[fermion] (-10:0.5) arc (-10:45:0.5);
+      \draw[fermion] (45:0.5) arc (45:100:0.5); \draw[thick] (100:0.5) arc (100:135:0.5); \draw[fermion] (135:0.5) arc (135:225:0.5);
+      \draw[scalar] (100:0.5) -- (-10:0.5); \node[vtx] at (100:0.5) {}; \node[vtx] at (-10:0.5) {};}{}
+    \ifthenelse{\equal{\kind}{cr}\OR\equal{\kind}{gl}}{
+      \draw[fermion] (-135:0.5) arc (-135:-45:0.5); \draw[fermion] (-45:0.5) arc (-45:45:0.5);
+      \draw[fermion] (45:0.5) arc (45:135:0.5); \draw[fermion] (135:0.5) arc (135:225:0.5);
+      \node[vtx] at (90:0.5) {}; \node[vtx] at (-90:0.5) {};}{}
+    \ifthenelse{\equal{\kind}{cr}}{\draw[scalar] (90:0.5) -- (-90:0.5);}{}
+    \ifthenelse{\equal{\kind}{gl}}{\draw[gluon] (90:0.5) -- (-90:0.5);}{}
+    \node[slab] at (0,-1.35) {\lbl};
+  \end{scope}}
+\begin{scope}[shift={(12.8,-3.0)}]
+  \draw[fermion] (-0.35,0) ++(-90:0.45) arc (-90:90:0.45); \draw[fermion] (-0.35,0) ++(90:0.45) arc (90:270:0.45);
+  \draw[scalar] (-0.35,0) ++(150:0.45) -- ++(150:0.6); \draw[scalar] (-0.35,0) ++(210:0.45) -- ++(210:0.6);
+  \draw[scalar] (-0.35,0) ++(35:0.45) -- (0.6,0); \draw[scalar] (-0.35,0) ++(-35:0.45) -- (0.6,0);
+  \draw[scalar] (0.6,0) -- (1.1,0.5); \draw[scalar] (0.6,0) -- (1.1,-0.5);
+  \foreach \a in {150,210,35,-35} \node[vtx] at ($(-0.35,0)+(\a:0.45)$) {};
+  \node[vtx] at (0.6,0) {};
+  \node[slab] at (0,-1.35) {(j) $\lambda y_t^4$};
+\end{scope}
+% (k), (l): scalar diagrams; (m)-(o): counterterm insertions into one-loop graphs
+\begin{scope}[shift={(0,-6.0)}]
+  \draw[scalar] (-0.6,0) .. controls (-0.5,0.45) .. (-0.25,0.55); \draw[scalar] (0.25,0.55) .. controls (0.5,0.45) .. (0.6,0);
+  \draw[fermion] (0,0.55) ++(180:0.25) arc (180:0:0.25); \draw[fermion] (0,0.55) ++(0:0.25) arc (0:-180:0.25);
+  \draw[scalar] (0.6,0) arc (0:-180:0.6);
+  \draw[scalar] (-0.6,0) -- (-1.1,0.5); \draw[scalar] (-0.6,0) -- (-1.1,-0.5); \draw[scalar] (0.6,0) -- (1.1,0.5); \draw[scalar] (0.6,0) -- (1.1,-0.5);
+  \foreach \p in {(-0.6,0),(0.6,0),(-0.25,0.55),(0.25,0.55)} \node[vtx] at \p {};
+  \node[slab] at (0,-1.35) {(k) $\lambda^2y_t^2$};
+\end{scope}
+\begin{scope}[shift={(3.2,-6.0)}]
+  \draw[scalar] (-0.4,0) circle (0.4); \draw[scalar] (0.4,0) circle (0.4);
+  \draw[scalar] (-0.8,0) -- (-1.15,0.4); \draw[scalar] (-0.8,0) -- (-1.15,-0.4); \draw[scalar] (0.8,0) -- (1.15,0.4); \draw[scalar] (0.8,0) -- (1.15,-0.4);
+  \foreach \x in {-0.8,0,0.8} \node[vtx] at (\x,0) {};
+  \node[slab] at (0,-1.35) {(l) $\lambda^3$};
+\end{scope}
+\foreach \x/\lbl/\kind in {6.4/{(m) 湯川の頂点の\\対抗項}/v, 9.6/{(n) クォークの\\運動項の対抗項\\（式~\eqref{eq:cmmq}）}/q} {
+  \begin{scope}[shift={(\x,-6.0)}]
+    \draw[fermion] (-135:0.5) arc (-135:-45:0.5); \draw[fermion] (-45:0.5) arc (-45:45:0.5);
+    \draw[fermion] (45:0.5) arc (45:135:0.5); \draw[fermion] (135:0.5) arc (135:225:0.5);
+    \foreach \a in {135,45,-45,-135} {\draw[scalar] (\a:0.5) -- (\a:1.15); \node[vtx] at (\a:0.5) {};}
+    \ifthenelse{\equal{\kind}{v}}{\node[ctv] at (45:0.5) {};}{\node[ctv] at (0:0.5) {};}
+    \node[slab] at (0,-1.35) {\lbl};
+  \end{scope}}
+\begin{scope}[shift={(12.8,-6.0)}]
+  \draw[scalar] (-0.5,0) arc (180:0:0.5); \draw[scalar] (0.5,0) arc (0:-180:0.5);
+  \draw[scalar] (-0.5,0) -- (-1.0,0.5); \draw[scalar] (-0.5,0) -- (-1.0,-0.5); \draw[scalar] (0.5,0) -- (1.0,0.5); \draw[scalar] (0.5,0) -- (1.0,-0.5);
+  \node[vtx] at (-0.5,0) {}; \node[vtx] at (0.5,0) {}; \node[ctv] at (0,0.5) {};
+  \node[slab] at (0,-1.35) {(o) スカラーの\\線の対抗項\\（$\delta M^2$、$z_\Phi$）};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (8) の2ループの図の型（$g=g'=0$、破れていない相）。(a)〜(e) は2点関数と $H$ の運動量を0にした $\bar ttH$ の頂点（$-q^2=\mu^2$ の伝播関数型）、(f)〜(l) は外線の運動量を0にした $HHHH$（補助の質量 $M$）の図で、(f)〜(i) では4本の外の $H$ が一つのトップのループに付く（$G^\pm$ の内線ではその間が $b$）。(m)〜(o) は1ループの図に1ループの対抗項（$\otimes$）を挟んだもの。(n) は、分母だけに $M$ を入れた線では $S_M\slashed lS_M\neq S_M$ なので、裸の場で打ち消さない。}
+\label{fig:twoloop}
+\end{figure}
 
 \begin{table}[tbp]
 \centering\footnotesize\setlength{\tabcolsep}{4.5pt}
-\caption{$M_{\mathrm{Pl}}=1.22\times10^{19}$~GeV まで走らせた値と、$\lambda$ が0になるスケール $\Lambda_\lambda$。「本ノートの換算」は手順 (7) の1ループの値（$y_t$ は QCD を3ループまで、$y_t^{(1)}$ は1ループのまま）。$m(M_{\mathrm{Pl}})$ の括弧の値は Buttazzo らの式の値で、彼らの図の値と合わない（本文）。}
+\caption{$M_{\mathrm{Pl}}=1.22\times10^{19}$~GeV まで走らせた値と、$\lambda$ が0になるスケール $\Lambda_\lambda$。方程式の「本ノート、1」は式~\eqref{eq:beta}、「本ノート、1+2」は式~\eqref{eq:beta} に式~\eqref{eq:beta2} を加えたもの（$m^2$ は1ループ）、「文献、2」「文献、3」は比較のための Buttazzo らの式。「本ノートの換算」は手順 (7) の1ループの値（$y_t$ は QCD を3ループまで、$y_t^{(1)}$ は1ループのまま）。$m(M_{\mathrm{Pl}})$ の括弧の値は Buttazzo らの式の値で、彼らの図の値と合わない（本文）。}
 \label{tab:rgrun}
 \begin{tabular}{llcllll}
 \toprule
-出発点 & $\mu_0$ (GeV) & 走りの次数 & $y_t(M_{\mathrm{Pl}})$ & $\lambda(M_{\mathrm{Pl}})$ & $m(M_{\mathrm{Pl}})$ (GeV) & $\log_{10}(\Lambda_\lambda/\mathrm{GeV})$ \\
+出発点 & $\mu_0$ (GeV) & 方程式 & $y_t(M_{\mathrm{Pl}})$ & $\lambda(M_{\mathrm{Pl}})$ & $m(M_{\mathrm{Pl}})$ (GeV) & $\log_{10}(\Lambda_\lambda/\mathrm{GeV})$ \\
 \midrule
-Buttazzo らの NNLO & 173.34 & 1 & 0.4049 & $-0.0337$ & 138.2 & 7.96 \\
- & & 2 & 0.3832 & $-0.0151$ & 139.4 & 9.68 \\
- & & 3 & 0.3825 & $-0.0144$ & 139.4 & 9.79 \\
-Buttazzo らの結果 & & 3 & 0.3825 & $-0.0143$ & (129.4) & $\approx9.8$ \\
-本ノートの換算、同じ入力 & 173.34 & 3 & 0.3824 & $-0.0121$ & 140.8 & 10.35 \\
+Buttazzo らの NNLO & 173.34 & 本ノート、1 & 0.4049 & $-0.0337$ & 138.2 & 7.96 \\
+ & & 本ノート、1+2 & 0.3811 & $-0.0148$ & 138.5 & 9.69 \\
+ & & 文献、2 & 0.3832 & $-0.0151$ & 139.4 & 9.68 \\
+ & & 文献、3 & 0.3825 & $-0.0144$ & 139.4 & 9.79 \\
+Buttazzo らの結果 & & 文献、3 & 0.3825 & $-0.0143$ & (129.4) & $\approx9.8$ \\
+本ノートの換算、同じ入力 & 173.34 & 本ノート、1+2 & 0.3811 & $-0.0125$ & 139.9 & 10.23 \\
+ & & 文献、3 & 0.3824 & $-0.0121$ & 140.8 & 10.35 \\
 \midrule
-Martin--Robertson & 173.1 & 3 & 0.3823 & $-0.0133$ & 139.4 & 10.03 \\
-本ノートの換算、同じ入力 & 173.1 & 3 & 0.3821 & $-0.0114$ & 140.8 & 10.51 \\
+Martin--Robertson & 173.1 & 本ノート、1+2 & 0.3810 & $-0.0137$ & 138.4 & 9.92 \\
+ & & 文献、3 & 0.3823 & $-0.0133$ & 139.4 & 10.03 \\
+本ノートの換算、同じ入力 & 173.1 & 本ノート、1+2 & 0.3808 & $-0.0118$ & 139.8 & 10.38 \\
+ & & 文献、3 & 0.3821 & $-0.0114$ & 140.8 & 10.51 \\
 \midrule
-本ノートの換算、PDG~2024 & 172.57 & 2 & 0.3803 & $-0.0086$ & 141.0 & 11.21 \\
- & & 3 & 0.3797 & $-0.0079$ & 141.0 & 11.41 \\
-同、$y_t^{(1)}$ & 172.57 & 3 & 0.3920 & $-0.0240$ & 140.0 & 8.59 \\
+本ノートの換算、PDG~2024 & 172.57 & 本ノート、1 & 0.4017 & $-0.0273$ & 139.8 & 8.66 \\
+ & & 本ノート、1+2 & 0.3784 & $-0.0084$ & 140.1 & 11.24 \\
+ & & 文献、2 & 0.3803 & $-0.0086$ & 141.0 & 11.21 \\
+ & & 文献、3 & 0.3797 & $-0.0079$ & 141.0 & 11.41 \\
+同、$y_t^{(1)}$ & 172.57 & 本ノート、1+2 & 0.3905 & $-0.0242$ & 139.1 & 8.54 \\
+ & & 文献、3 & 0.3920 & $-0.0240$ & 140.0 & 8.59 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1062,7 +1198,7 @@ Martin--Robertson & 173.1 & 3 & 0.3823 & $-0.0133$ & 139.4 & 10.03 \\
 \begin{figure}[tbp]
 \centering
 \includegraphics[width=\linewidth]{fig_rg.pdf}
-\caption{左：$\lambda(\mu)$ の走り。Buttazzo らの NNLO の値から1、2、3ループの走りで（2ループと3ループはほとんど重なる）、および本ノートの PDG~2024 の値から3ループの走りで、$y_t$ を1ループの換算のままにした場合と QCD を3ループまで入れた場合。右：FJ の処方の $\MSbar$ の $M_W=gv/2$（$v^2=m^2/(2\lambda)$、2ループの走り）と、$\beta_t$ の処方（Landau ゲージ）の $gv_\beta/2$（$v_\beta$ は1ループの $\gamma_\Phi^{\mathrm L}$ で走らせた）。FJ の値は $\Lambda_\lambda=10^{11.2}$~GeV で発散する。}
+\caption{左：$\lambda(\mu)$ の走り。本ノートの PDG~2024 の値（$y_t$ は QCD を3ループまで）から、本ノートの1ループの方程式と、2ループの項 \eqref{eq:beta2} を加えた方程式で、および Buttazzo らの NNLO の値から後者で走らせた。破線は比較のための文献の3ループの式（2ループの文献の式は本ノートの方程式とほとんど重なる）。右：FJ の処方の $\MSbar$ の $M_W=gv/2$（$v^2=m^2/(2\lambda)$、本ノートの方程式）と、$\beta_t$ の処方（Landau ゲージ）の $gv_\beta/2$（$v_\beta$ は1ループの $\gamma_\Phi^{\mathrm L}$ で走らせた）。FJ の値は $\Lambda_\lambda=10^{11.2}$~GeV で発散する。}
 \label{fig:rg}
 \end{figure}
 
@@ -1076,7 +1212,7 @@ Martin--Robertson & 173.1 & 3 & 0.3823 & $-0.0133$ & 139.4 & 10.03 \\
 
 \paragraph{測定値と $\MSbar$ のパラメータ。}手順 (7) で、FJ の処方の1ループの換算（式~\eqref{eq:fit}）が Buttazzo らの NLO と一致し、Lagrangian の結合はタドポールの処方によらないことを具体的に確かめた。FJ の処方では $\delta_W$、$\delta_Z$、$\hat\Delta$ がそれぞれ $\mu=M_t$ で約 $0.12$ と大きいが、$g$、$g'$、$y_t$ と $M_W$ の予言ではタドポールが打ち消す組み合わせだけが入る。1ループの換算の精度は、$\lambda$ で $\pm0.002$〜$0.003$、$g_2$、$g_Y$ で $\pm10^{-4}$ 程度で、$y_t$ では2ループと3ループの QCD（$-0.011$、$-0.003$）が欠かせない。
 
-\paragraph{走り。}手順 (8) で、2ループの $\beta$ 関数を一般の公式から独立に確かめ、文献の $M_{\mathrm{Pl}}$ での値を再現した。$\lambda$ の零点 $\Lambda_\lambda$ には、走りの次数（1ループと2ループで1.7桁）と換算の次数（1ループと2ループで0.5桁、$y_t$ の QCD の高次で3桁）の両方が大きく効く。FJ の処方の $v^2=\mu^2/\lambda$ は $\Lambda_\lambda$ で発散するので、FJ の $\MSbar$ の質量を高いスケールで使うことはできない。これは FJ の処方の弱点で、$\beta_t$ の処方の利点（ゲージを決めれば $v_\beta$ が滑らかに走る）の裏返しである。物理量（有効ポテンシャルの形、崩壊率）にはどちらの処方でも同じ結合 $\lambda,y_t,g$ が入る。
+\paragraph{走り。}手順 (8) で、2ループの $\beta$ 関数のうち $y_t$、$g_s$、$\lambda$ だけの部分（式~\eqref{eq:beta2}）を本ノートの模型の図から求め、文献の式と記号として一致させた。$\lambda(M_{\mathrm{Pl}})$ への2ループの走りの効果（$-0.034$ から $-0.015$）のほとんどはこの部分から来て、$g,g'$ を含む2ループの項は $3\times10^{-4}$ しか効かない。$HHHH$ を補助の質量で求めるときは、クォークの運動項の対抗項を式~\eqref{eq:cmmq} の形で入れる必要がある。Landau ゲージではグルーオンの寄与の極が0なのでこの項は湯川の部分だけに現れ、$\lambda=0$ の質量0の計算との比較で確かめた。$\lambda$ の零点 $\Lambda_\lambda$ には、走りの次数（1ループと2ループで1.7桁）と換算の次数（1ループと2ループで0.5桁、$y_t$ の QCD の高次で3桁）の両方が大きく効く。FJ の処方の $v^2=\mu^2/\lambda$ は $\Lambda_\lambda$ で発散するので、FJ の $\MSbar$ の質量を高いスケールで使うことはできない。これは FJ の処方の弱点で、$\beta_t$ の処方の利点（ゲージを決めれば $v_\beta$ が滑らかに走る）の裏返しである。物理量（有効ポテンシャルの形、崩壊率）にはどちらの処方でも同じ結合 $\lambda,y_t,g$ が入る。
 
 \paragraph{次の手順。}手順 (9) で、$\MSbar$ の対抗項（FJ を対抗項の形にしたもの）で1ループの電弱の振幅を MadLoop と FormCalc で比べる。手順 (10) で真空の崩壊を求める。そこでは $\Lambda_\lambda$ の桁が結果を大きく左右するので、本ノートの1ループの換算ではなく、高次の換算を含む文献の値~\cite{buttazzo13,mr19} から出発し、本ノートの値との違いを不定性として示す。
 
@@ -1207,6 +1343,10 @@ g_{\mu\nu}\Bigl[g^{\mu\nu}-(1-\xi)\frac{k^\mu k^\nu}{k^2-\xi M^2}\Bigr]\frac1{k^
 \bibitem{mr19} S. P. Martin, D. G. Robertson, ``Standard Model parameters in the tadpole-free pure $\overline{\mathrm{MS}}$ scheme,'' Phys. Rev. D \textbf{100}, 073004 (2019), arXiv:1907.02500。
 \bibitem{ssv13} M. Sperling, D. Stöckinger, A. Voigt, ``Renormalization of vacuum expectation values in spontaneously broken gauge theories,'' JHEP \textbf{07}, 132 (2013), arXiv:1305.1548。
 \bibitem{pdg24} S. Navas \textit{et al.} (Particle Data Group), Phys. Rev. D \textbf{110}, 030001 (2024)。$\hat\alpha(M_Z)$ と式 (10.13) は J. Erler, A. Freitas による電弱模型のレビュー（2024年5月の版）。
+\bibitem{cmm98} K. G. Chetyrkin, M. Misiak, M. Münz, ``Beta functions and anomalous dimensions up to three loops,'' Nucl. Phys. B \textbf{518}, 473 (1998), arXiv:hep-ph/9711266。
+\bibitem{kira3} F. Lange, J. Usovitsch, Z. Wu, ``Kira 3: integral reduction with efficient seeding and optimized equation selection,'' Comput. Phys. Commun. \textbf{322}, 109999 (2026), arXiv:2505.20197。
+\bibitem{amflow} X. Liu, Y.-Q. Ma, ``AMFlow: a Mathematica package for Feynman integrals computation via auxiliary mass flow,'' Comput. Phys. Commun. \textbf{283}, 108565 (2023), arXiv:2201.11669。
+\bibitem{amflow2} R.-J. Huang, X. Liu, Y.-Q. Ma, ``AMFlow 2.0: significant algorithmic and software improvements for Feynman integral evaluation,'' arXiv:2607.08477。
 \bibitem{sirlin80} A. Sirlin, ``Radiative corrections in the SU(2)$_L\times$U(1) theory: A simple renormalization framework,'' Phys. Rev. D \textbf{22}, 971 (1980)。
 \bibitem{marquard16} P. Marquard, A. V. Smirnov, V. A. Smirnov, M. Steinhauser, ``Four-loop relation between the $\overline{\mathrm{MS}}$ and on-shell quark mass,'' arXiv:1601.03748 (2016)。
 \bibitem{steinhauser98} M. Steinhauser, ``Leptonic contribution to the effective electromagnetic coupling constant up to three loops,'' Phys. Lett. B \textbf{429}, 158 (1998)。

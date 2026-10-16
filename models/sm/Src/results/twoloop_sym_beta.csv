@@ -1,0 +1,6 @@
+"quantity","expression"
+"K2_beta_yt_two_loop","-108*gS^4*yt + 6*la^2*yt + 36*gS^2*yt^3 - 12*la*yt^3 - 12*yt^5"
+"K2_beta_gS_two_loop","-26*gS^5 - 2*gS^3*yt^2"
+"K2_beta_yt_minus_literature","0"
+"K2_beta_gS_minus_literature","0"
+"K2_gamma_Phi_two_loop_Landau","-2*(-3*la^2 - 10*gS^2*yt^2 + (27*yt^4)/8)"

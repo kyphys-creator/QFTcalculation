@@ -1,0 +1,5 @@
+"quantity","expression"
+"K_beta_la_one_loop","24*la^2 + 12*la*yt^2 - 6*yt^4"
+"K2_beta_la_two_loop","-312*la^3 + 80*gS^2*la*yt^2 - 144*la^2*yt^2 - 32*gS^2*yt^4 - 3*la*yt^4 + 30*yt^6"
+"K2_beta_la_minus_literature","0"
+"double_pole_check","0"
