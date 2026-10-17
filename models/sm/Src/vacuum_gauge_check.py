@@ -13,7 +13,10 @@
 #   4. per level, -1/2 ln det(S, L, G) + ln det(ghost) does not depend on xi (and the general solver at xi = 1 equals the
 #      Cartesian blocks of the Feynman gauge);
 #   5. the Faddeev-Popov factor of the l = 0 threshold mode is sqrt(2 pi)/theta_inf(xi) for every xi (regulator eps M);
-#   6. the renormalized sector (Born terms subtracted per level, the MS-bar second-order term restored) at several xi.
+#   6. the renormalized sector (Born terms subtracted per level, the MS-bar second-order term restored) at several xi;
+#   7. reference: the corrected gauge-sector formula of Baratella-Nemevsek-Shoji-Trailovic-Ubaldi (arXiv:2502.15878, sum
+#      of Fermi-gauge closed forms with d_T = nu (nu + 2) and their subtraction terms) against ours as a function of x_V;
+#      and the closed form of the l = 0 Born terms that the AFS formula lacks, -(pi^2/3 - 2) + (2 pi^2 - 41/2) x + x^2/4.
 # Writes results/vacuum_gauge_check.csv.  Batch: python3 vacuum_gauge_check.py  (about 20 minutes)
 
 # %%
@@ -158,6 +161,31 @@ def threshold_xi(xV, xi, eps=1e-8):
     return out
 
 
+def bnstu_gauge(y, nmax=3000):
+    """their U(1) gauge sector (2502.15878, end of the SM section) without the l = 0 term ln(|lambda|/16 pi) and the pole,
+    MS-bar at mu = 1/R (reference): sum_nu [nu^2 ln R^Da_nu (nu >= 2) + 2 nu (nu+2) ln R^T_nu + sub_nu - 2 sub^gh_nu] + addback;
+    it equals -2 x (our sector) up to an x-independent constant"""
+    import mpmath as mp
+    from scipy.special import zeta as hz
+    mp.mp.dps = 40
+    y = mp.mpf(y)
+    z = (1 - mp.sqrt(1 - 8 * y)) / 2
+    terms = []
+    for nu in range(1, nmax + 1):
+        da = 0 if nu == 1 else mp.re(mp.log(mp.mpf(nu - 1) / (nu + 1)) + mp.loggamma(nu) + mp.loggamma(nu + 1)
+                                     - mp.loggamma(nu + z) - mp.loggamma(nu + 1 - z))
+        tr = mp.re(mp.loggamma(nu + 1) + mp.loggamma(nu + 2) - mp.loggamma(nu + 1 + z) - mp.loggamma(nu + 2 - z))
+        sub = 2 * (nu - y * (5 * nu + 2)) + mp.mpf(2) / (3 * nu) * (1 + 5 * y) * (1 + y)
+        subgh = -2 * y * nu + 2 * y ** 2 / (3 * nu)
+        terms.append(float(nu ** 2 * da + 2 * nu * (nu + 2) * tr + sub - 2 * subgh))
+    t, n = np.array(terms), np.arange(1, nmax + 1, dtype=float)
+    k = nmax // 2
+    c = np.linalg.lstsq(np.vstack([n[k:] ** -2, n[k:] ** -3, n[k:] ** -4]).T, t[k:], rcond=None)[0]
+    S = t.sum() + sum(ci * hz(p, nmax + 1) for ci, p in zip(c, (2, 3, 4)))
+    add = 2 * y + mp.mpf(2) / 3 * y ** 2 - mp.mpf(2) / 3 * (1 + 6 * y + 3 * y ** 2) * (1 + mp.euler - mp.log(2)) - 4 * y
+    return S + float(add)
+
+
 def task(t):
     warnings.simplefilter("ignore")
     kind, x, xi = t
@@ -171,7 +199,7 @@ def task(t):
 def main():
     warnings.simplefilter("ignore")
     t0 = time.time()
-    tasks = [("xi", x, xi) for x in XS for xi in XIS] + [("ref", x, 1.0) for x in XS]
+    tasks = [("xi", x, xi) for x in XS for xi in XIS] + [("ref", x, 1.0) for x in (0.0,) + XS]
     ex = ProcessPoolExecutor(max_workers=len(tasks))
     fut = ex.map(task, sorted(tasks, key=lambda t: t[2]))
 
@@ -205,6 +233,15 @@ def main():
         print("6. x_V = %.1f: renormalized sector, Feynman gauge (ag_sector) %.8f; background R_xi: %s"
               % (x, ref, "  ".join("xi %.1f %.8f" % (xi, val[("xi", x, xi)]) for xi in XIS)))
         rows += [[x, "feynman_ag_sector", "%.10f" % ref]] + [[x, "%g" % xi, "%.10f" % val[("xi", x, xi)]] for xi in XIS]
+    from vacuum_prefactor import l0_born
+    E0 = bnstu_gauge(0.0)
+    for x in XS:
+        d_ours = val[("ref", x, 1.0)] - val[("ref", 0.0, 1.0)]
+        d_ref = -0.5 * (bnstu_gauge(x) - E0)
+        poly = -(math.pi ** 2 / 3 - 2) + (2 * math.pi ** 2 - 41 / 2) * x + x * x / 4
+        print("7. x_V = %.1f: ours(x) - ours(0) %.7f; Baratella et al. formula (reference) %.7f, difference %.1e; l = 0 Born "
+              "terms %.7f, closed form %.7f" % (x, d_ours, d_ref, d_ours - d_ref, l0_born(x), poly), flush=True)
+        rows.append([x, "baratella_et_al_minus_x0", "%.10f" % d_ref])
     with open(RES / "vacuum_gauge_check.csv", "w", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(["x_V", "gauge", "ln_factor_A1"])

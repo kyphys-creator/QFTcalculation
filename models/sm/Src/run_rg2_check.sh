@@ -19,7 +19,8 @@
 #   8. vacuum_prefactor.py (step (10)): the one-loop prefactor (Higgs, W, Z with Goldstones and ghosts, top; bounce_det.py)
 #      and the R integral with the gravitational correction -> results/vacuum_prefactor.csv, vacuum_prefactor_grid.csv
 #   9. vacuum_gauge_check.py (step (10)): the W/Z sector in background R_xi (xi = 0.5 ... 3) and the counting of the
-#      transverse modes from the log divergence of the mode sum -> results/vacuum_gauge_check.csv
+#      transverse modes from the log divergence of the mode sum; as a reference, the corrected formula of Baratella et
+#      al. (arXiv:2502.15878) -> results/vacuum_gauge_check.csv
 # Needs Kira 3.1 and Fermat in ~/hep, AMFlow 2.0 in ~/hep/AMFlow-2.0 (about 65 minutes in all).
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
