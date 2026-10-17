@@ -19,7 +19,8 @@
 #     Fubini profiles in the true potential (stationary in R).
 #   - Decay: Gamma/V = A R^-4 exp(-S) with A = 1 (the one-loop prefactor is not computed; A -> 10^{+-k} changes log10 P by
 #     +-k); P = (Gamma/V) T_U^4 over the age of the universe T_U = 13.8 Gyr, tau = (Gamma/V)^{-1/4}.  The shift of y_t(M_t)
-#     that would make P = 1.  Gravitational corrections are not included.
+#     that would make P = 1.  The gravitational correction and the one-loop prefactor are in vacuum_gravity.py and
+#     vacuum_prefactor.py.
 # The literature starting values and RGEs (Buttazzo et al. NNLO, three-loop running) go through the same steps as a reference.
 # Writes results/vacuum_decay.csv and ../ResearchNote/fig_veff.pdf.  Batch: python3 vacuum_decay.py
 
@@ -258,8 +259,9 @@ for name in ("note", "reference: Buttazzo NNLO start, literature 3-loop running"
 
 # %% [markdown]
 # ## Decay probability and lifetime
-# Gamma/V = A R^-4 exp(-S) with the Fubini radius R of the bounce (A = 1: the one-loop prefactor is not computed; a factor
-# 10^{+-k} in A changes log10 P by +-k, against S/ln 10 ~ 10^3).  P = (Gamma/V) T_U^4 (T_U = 13.8 Gyr); the lifetime
+# Gamma/V = A R^-4 exp(-S) with the Fubini radius R of the bounce (A = 1 here; the one-loop prefactor is in
+# vacuum_prefactor.py.  A factor 10^{+-k} in A changes log10 P by +-k, against S/ln 10 ~ 10^3).  P = (Gamma/V) T_U^4
+# (T_U = 13.8 Gyr); the lifetime
 # tau = (Gamma/V)^{-1/4} = R exp(S/4).  The other cases use the Fubini estimate S = 8 pi^2/(3|lambda_min|) and
 # R = sqrt(8/|lambda_min|)/(2.32 h_min) (the bounce of the main case has phi(0) = h(0)/h_min = 2.32).
 

@@ -14,7 +14,11 @@
 #   6. vacuum_decay.py (step (10)): the RG-improved effective potential (Landau gauge, the note's RGEs from the step (7)
 #      values; symbolic checks against Eq. (beta), gamma_Phi and Eq. (T)), the instability scale, the bounce (shooting) and
 #      the decay probability; the literature start and RGEs as a reference -> results/vacuum_decay.csv, fig_veff.pdf
-# Needs Kira 3.1 and Fermat in ~/hep, AMFlow 2.0 in ~/hep/AMFlow-2.0 (about 12 minutes in all).
+#   7. vacuum_gravity.py (step (10)): the leading gravitational correction to the Fubini bounce (O(4) metric, checked by
+#      graviton exchange) and S(R) with the note's running -> results/vacuum_gravity.csv
+#   8. vacuum_prefactor.py (step (10)): the one-loop prefactor (Higgs, W, Z with Goldstones and ghosts, top; bounce_det.py)
+#      and the R integral with the gravitational correction -> results/vacuum_prefactor.csv, vacuum_prefactor_grid.csv
+# Needs Kira 3.1 and Fermat in ~/hep, AMFlow 2.0 in ~/hep/AMFlow-2.0 (about 40 minutes in all).
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
 export SDKROOT="${SDKROOT:-$(xcrun --show-sdk-path)}"
@@ -29,3 +33,5 @@ python3 rg_twoloop.py 1 | tail -3
 python3 rg_twoloop.py 2 | tail -1
 python3 rg_run.py
 python3 vacuum_decay.py
+python3 vacuum_gravity.py
+python3 vacuum_prefactor.py

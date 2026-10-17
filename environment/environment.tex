@@ -587,7 +587,7 @@ FormCalc の有理数の項と質量0の外線（SM） & 有限部分が MadLoop
 
 最も注意が要るのは、符号の規約である。FeynArts の \texttt{SM.mod} と FormCalc は Denner の総説の規約を、FeynRules と MadGraph は Peskin--Schroeder の規約を使い、光子の場の符号と、Higgs 二重項の荷電の成分の位相が違う。場の取り方の違いなので、内線の因子は打ち消し（内線の光子は $(-1)^2$、内線の $G^\pm$ は $(+i)(-i)$）、断面積や崩壊幅などの物理量は変わらない。一方、外線に光子や $G^\pm$ を持つグリーン関数（$\Sigma^{AZ}$、$W$ と $G^\pm$ の混合）と、それから作る対抗項（$\delta Z_{ZA}$、$\delta Z_e$ の式）は符号や位相が変わる。FeynRules の模型の振幅に FormCalc の対抗項を足すような、二つの規約を混ぜた計算は誤る。MadGraph のログの断面積は、今回も有効数字3〜4桁（\texttt{111 +- 0.01131 pb}）で、10万事象の統計誤差より丸めが大きかった（表~\ref{tab:issues2} の「MadGraph の既定のカットと出力」と同じ）。各実行のバナーの \texttt{Integrated weight} を読み、乱数の種を \texttt{iseed} で固定すると、同じ値が再現した。
 
-\paragraph{$\overline{\mathrm{MS}}$ の標準模型のノートで分かった問題。}2026年10月16日に、標準模型を $\overline{\mathrm{MS}}$ と FJ のタドポールの処方、一般の $R_\xi$ ゲージで作り直したノート~\cite{smmsbarnote} を始めた（上の段落のノートとは別のもの。計算機と版は同じ）。手順 (1) では、模型ファイル \texttt{SM.fr} を一から書き、FeynRules の93個の頂点のクラスを手計算の表と記号として比べ、MadGraph の21個の過程の図の数を両方のゲージで確かめた。手順 (2) では、木の振幅の2乗を FeynCalc で記号として、$e^+e^-\to W^+W^-$ を明示的な行列で求め、MadGraph の部分幅（相対 $10^{-15}$）と断面積（統計誤差の範囲）と比べた。手順 (3) では、一般の $R_\xi$ ゲージのタドポールと自己エネルギーを FeynCalc で $D$ 次元で求め、FeynArts の \texttt{SMQCD.mod} の値と記号として、$B_0$ を LoopTools、COLLIER、Package-X で比べた。手順 (4) では、2点関数の Slavnov--Taylor 恒等式と、一般の公式による $\beta$ 関数を確かめた。手順 (5)、(6) では、極質量と、$\mu$ 崩壊の1ループと光子の2点関数から $G_F$、$\alpha(0)$ の換算を求め、閉じた形を入れた1ループの式を Mathematica で記号として調べた。手順 (7) では、測定値から1ループで $\overline{\mathrm{MS}}$ のパラメータを決め、オンシェルの自己エネルギーを数値で評価した。手順 (8) では、2ループの $\beta$ 関数を一般の公式から陽な場で組み、文献の式と比べて走らせた。手順 (9) では、$2\to2$ の1ループの電弱の振幅を FeynCalc、FormCalc、MadLoop で比べ、FJ の処方の対抗項をすべての頂点に入れた UFO を FeynRules と NLOCT で作って、MadGraph の on-shell の模型と7個の過程で比べた。分かった問題を表~\ref{tab:issues2j} にまとめる。
+\paragraph{$\overline{\mathrm{MS}}$ の標準模型のノートで分かった問題。}2026年10月16日に、標準模型を $\overline{\mathrm{MS}}$ と FJ のタドポールの処方、一般の $R_\xi$ ゲージで作り直したノート~\cite{smmsbarnote} を始めた（上の段落のノートとは別のもの。計算機と版は同じ）。手順 (1) では、模型ファイル \texttt{SM.fr} を一から書き、FeynRules の93個の頂点のクラスを手計算の表と記号として比べ、MadGraph の21個の過程の図の数を両方のゲージで確かめた。手順 (2) では、木の振幅の2乗を FeynCalc で記号として、$e^+e^-\to W^+W^-$ を明示的な行列で求め、MadGraph の部分幅（相対 $10^{-15}$）と断面積（統計誤差の範囲）と比べた。手順 (3) では、一般の $R_\xi$ ゲージのタドポールと自己エネルギーを FeynCalc で $D$ 次元で求め、FeynArts の \texttt{SMQCD.mod} の値と記号として、$B_0$ を LoopTools、COLLIER、Package-X で比べた。手順 (4) では、2点関数の Slavnov--Taylor 恒等式と、一般の公式による $\beta$ 関数を確かめた。手順 (5)、(6) では、極質量と、$\mu$ 崩壊の1ループと光子の2点関数から $G_F$、$\alpha(0)$ の換算を求め、閉じた形を入れた1ループの式を Mathematica で記号として調べた。手順 (7) では、測定値から1ループで $\overline{\mathrm{MS}}$ のパラメータを決め、オンシェルの自己エネルギーを数値で評価した。手順 (8) では、2ループの $\beta$ 関数を一般の公式から陽な場で組み、文献の式と比べて走らせた。手順 (9) では、$2\to2$ の1ループの電弱の振幅を FeynCalc、FormCalc、MadLoop で比べ、FJ の処方の対抗項をすべての頂点に入れた UFO を FeynRules と NLOCT で作って、MadGraph の on-shell の模型と7個の過程で比べた。分かった問題を表~\ref{tab:issues2j} にまとめる。手順 (10) では、真空の崩壊の bounce のまわりの1ループの行列式を Gel'fand--Yaglom の方法で部分波ごとに求め（Higgs、Goldstone とゴーストを含む $W$、$Z$、トップ）、重力の主要な補正を O(4) の計量と重力子の交換の二通りで求めた（\nolinkurl{models/sm/Src/run_rg2_check.sh}）。文献の式との比べで分かったことを含め、表~\ref{tab:issues2k} にまとめる。
 
 \begin{table}[tbp]
 \centering\footnotesize
@@ -624,6 +624,26 @@ MadLoop と2点の UV の頂点（SM2） & UFO の自己共役な場の2点の U
 NLOCT の on-shell の定数（SM2） & UV の頂点（\texttt{SM\_CT.nlo}）から場の定数だけを取り出せない。$G^0G^0$、$G^+G^-$ の頂点には、対抗項のラグランジアン（\texttt{FR\$deltat} を0）にない、運動量によらない項がある。定数は質量の等式と閾値の \texttt{If}（273個の条件）を含み、$m_d=2m_u$ のような点では $0/0$ になる & NLOCT は on-shell の条件を解いた値を代入して頂点を書き出す。UFO の \texttt{cond} は0との比較しか表さない & 記号の対抗項の頂点（\texttt{FR\$CT} の係数の Feynman 則）と2点の頂点の係数を比べて定数を解く（\texttt{nlo\_dz.wl}）。\texttt{If} は軽い質量を0、重い質量を基準点の値にして決める（\texttt{nlo\_ctparams.wl}） \\
 MadGraph の木の standalone の出力（SM2） & \texttt{output standalone} を実行したディレクトリとその親に、\texttt{nsqso\_born.inc} が残る（git の管理下に未追跡のファイルができる） & \texttt{export\_v4.py} が \texttt{nsqso\_born.inc} を現在のディレクトリに書き、\texttt{'..'} へ写す（出力先のディレクトリではない） & 無視されるディレクトリ（\texttt{work/}）の中から MadGraph を実行する \\
 Mathematica の変数と粒子の名前（SM2） & \texttt{Table[..., \{s, list\}]} の中で \texttt{FR\$deltaZ[\{s, s\}, ...]} の \texttt{s}（ストレンジクォーク）が反復の値に置き換わり、$s$ の場の定数だけが解けない。\texttt{b = ...} は再帰の上限で止まる & FeynRules の模型では粒子の名前（\texttt{s}、\texttt{b}、\texttt{c}、\texttt{t}、\texttt{e} など）が大域の記号で、\texttt{Table} の反復変数は \texttt{Block} と同じく式の中の同じ記号を置き換える & 反復変数と作業用の変数は \texttt{Module} の局所変数か、\texttt{\$} の付いた名前にする \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2j} の続き（$\overline{\mathrm{MS}}$ の標準模型のノート~\cite{smmsbarnote} の手順 (10)、真空の崩壊の1ループの前因子と重力の補正。AFS は Andreassen--Frost--Schwartz の arXiv:1707.08124 v4）。}
+\label{tab:issues2k}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+論文の要旨の数値（SM2） & ノートに引いた AFS の寿命が $10^{139}$ 年（95\% で $10^{58}$ 年より長い）で、v4 の要旨と本文の $10^{161}$ 年（$10^{65}$ 年）と違った & ウェブの自動の要約から数値を取った & e-print の LaTeX のソースの要旨と式で確かめる \\
+論文の式の食い違い（SM2） & AFS の大域的な $U(1)$ の Goldstone の行列式が、本文の式では $\sqrt{1/2}\,e^{-1/12+\cdots}$、まとめの節では $\sqrt{3/2}\,e^{-1/12+\cdots}$ である & 不明（転記の誤りと見られる） & 閾値のモードを規格化できる関数で集団座標にした自分の計算が、$\sqrt{1/2}$ の方と $10^{-6}$ で一致することを確かめた \\
+論文のゲージ場の部分（SM2） & AFS の $R_\xi$ のゲージ場と Goldstone の式が自分の値と違い、差は調べたすべての結合（$x_V=10^{-4}$〜8.6）で二つの項の和に $10^{-6}$ 以内で等しい（AFS の点で $W$、$Z$ の部分が8.2桁小さい） & (i) $S^3$ の横波のベクトル調和関数の縮退度は $2s(s+2)$ で、横波とゴーストが打ち消すとする AFS の数え方 $2(s+1)^2$ より2少なく、各 $s\ge1$ で横波のモードが1個残る。(ii) $s=0$ の Born の項（2次の図に含まれる）を $R_0'=1$ から引いていない。同じ論文の大域対称性の式では引いていて、$g\to0$ で二つの式は $\pi^2/3-2$ だけ合わない & 結合のないベクトル場の部分波の和が4個のスカラーに等しいこと（$2s(s+2)$ でだけ成り立つ）で数え方を確かめる。Born の項は零モードのある部分波でも引いて、運動量空間の2次の図で戻す。文献の式は参照にとどめる \\
+論文の引き算の項（SM2） & AFS のフェルミオンの引き算の $y^4$ の項 $8(j+1)(4j^2+1)/(4j^2-1)^2$ が、彼ら自身の $R_{j,\mathrm{diag}}$ の展開 $8j(4j^2-3)/(4j^2-1)^2$ と合わない（差 $8/(2j-1)^2$） & 不明（転記の誤りと見られる） & 引き算は自分の Born の項で行う。文献の式は数値の展開（mpmath の \texttt{taylor}）で確かめてから使う \\
+Dunne--Kirsten の局所項（SM2） & 部分波の和の繰り込みの局所項を記憶から書くと、運動量空間の2次の図の値と合わなかった & 記憶の式の符号の誤り。正しくは $-\frac18\int r^3U^2[\ln(\mu r/2)+\gamma_E+1]\,\mathrm{d}r$ & 二つの方法の一致で確かめてから使う \\
+背景場の Feynman ゲージの $l=0$（SM2） & ゲージ場と Goldstone の $l=0$ のブロックで、Gel'fand--Yaglom の $\det T$ が $r^{-2}$ で0に近づき、比が決まらない & 大域的な回転の純ゲージのモード（$\theta(r)\to\theta_\infty$）が閾値にあり、規格化できない & 規格化できる関数との Faddeev--Popov の方法で集団座標にする（因子 $\sqrt{2\pi}A/\theta_\infty$、$\theta_\infty$ はゴーストの $l=0$ の比で、ゴーストの $l=0$ と打ち消す）。小さい結合で大域対称性の場合につながることを確かめる \\
+倍精度の \texttt{loggamma} の差（SM2） & 閉じた形の和 $\sum_s(s+1)^2[\ln R_s-\cdots]$ を $s=4\times10^5$ まで倍精度で足すと、値が $10^4$ 以上ずれた（警告なし） & $\ln\Gamma$ の差（各項 $10^6$ ほど）の桁落ちが $(s+1)^2$ で拡大される & mpmath（40桁）で $s=3000$ まで足し、$s^{-3}$〜$s^{-5}$ の裾を当てはめて Hurwitz のゼータ関数で足す \\
+SciPy の \texttt{quad} と無限区間（SM2） & 重力子の交換の積分で、無限区間に折れ目を \texttt{points} で渡すとエラーになる & \texttt{points} は有限の区間でだけ使える & 折れ目 $r=s$ で区間を分ける \\
 \bottomrule
 \end{tabularx}
 \end{table}
