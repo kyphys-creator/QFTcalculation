@@ -1,0 +1,70 @@
+# Step (2) of the CKM note: tree-level widths and cross sections from MadGraph 3.8.1 with the UFO of SM_CKM.fr
+# (benchmark parameters of the note; compared with tree_ckm_numeric.py by compare_tree_ckm_mg5.py).
+#  - compute_widths: the two-body widths of W+ and t with all fermion masses and the full CKM matrix (no restriction);
+#    the partial widths are written as comments of the DECAY blocks of work/tree_ckm_widths.dat
+#  - u d~ > e+ ve, u s~ > e+ ve, u u~ > d s~ at sqrt s = 200 GeV with fixed-energy parton beams (lpp = 0),
+#    restrict_massless, no cuts; W width 2.085 GeV of the param card
+#  - u u~ > w+ w- at sqrt s = 500 GeV with this UFO and with the SM note's UFO (V = 1): equal for massless d-type quarks
+set automatic_html_opening False
+import model ./work/SM_CKM_UFO
+compute_widths w+ t --body_decay=2 --output=./work/tree_ckm_widths.dat
+import model ./work/SM_CKM_UFO-massless
+generate u d~ > e+ ve
+output ./work/mg5_udenu -f
+launch ./work/mg5_udenu
+set lpp1 0
+set lpp2 0
+set ebeam1 100
+set ebeam2 100
+set nevents 20000
+set ptl 0
+set etal -1
+set use_syst False
+done
+generate u s~ > e+ ve
+output ./work/mg5_usenu -f
+launch ./work/mg5_usenu
+set lpp1 0
+set lpp2 0
+set ebeam1 100
+set ebeam2 100
+set nevents 20000
+set ptl 0
+set etal -1
+set use_syst False
+done
+generate u u~ > d s~
+output ./work/mg5_uuds -f
+launch ./work/mg5_uuds
+set lpp1 0
+set lpp2 0
+set ebeam1 100
+set ebeam2 100
+set nevents 20000
+set ptj 0
+set etaj -1
+set drjj 0
+set mmjj 0
+set use_syst False
+done
+generate u u~ > w+ w-
+output ./work/mg5_uuww -f
+launch ./work/mg5_uuww
+set lpp1 0
+set lpp2 0
+set ebeam1 250
+set ebeam2 250
+set nevents 20000
+set use_syst False
+done
+import model ./work/SM_UFO-massless
+generate u u~ > w+ w-
+output ./work/mg5_uuww_v1 -f
+launch ./work/mg5_uuww_v1
+set lpp1 0
+set lpp2 0
+set ebeam1 250
+set ebeam2 250
+set nevents 20000
+set use_syst False
+done

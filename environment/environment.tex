@@ -648,20 +648,24 @@ SciPy の \texttt{quad} と無限区間（SM2） & 重力子の交換の積分�
 \end{tabularx}
 \end{table}
 
-\paragraph{CKM 行列を入れた標準模型のノートで分かった問題。}2026年10月17日に、上の $\overline{\mathrm{MS}}$ の標準模型のノートの模型に CKM 行列を入れたノート~\cite{smckmnote} を始めた（\nolinkurl{models/sm_ckm}。計算機と版は同じ）。手順 (1) では、模型ファイル \texttt{SM\_CKM.fr} の93個の頂点のクラスを、CKM 行列を一般の複素行列の記号にした手計算の表と比べ、MadGraph の35個の過程の図の数を両方のゲージで確かめた。分かった問題を表~\ref{tab:issues2l} にまとめる。
+\paragraph{CKM 行列を入れた標準模型のノートで分かった問題。}2026年10月17日に、上の $\overline{\mathrm{MS}}$ の標準模型のノートの模型に CKM 行列を入れたノート~\cite{smckmnote} を始めた（\nolinkurl{models/sm_ckm}。計算機と版は同じ）。手順 (1) では、模型ファイル \texttt{SM\_CKM.fr} の93個の頂点のクラスを、CKM 行列を一般の複素行列の記号にした手計算の表と比べ、MadGraph の35個の過程の図の数を両方のゲージで確かめた。手順 (2) では、CKM 行列を含む木の振幅の2乗を FeynCalc で記号として、明示的な行列で数値として求め、MadGraph の部分幅と断面積と比べた。分かった問題を表~\ref{tab:issues2l} にまとめる。
 
 \begin{table}[tbp]
 \centering\footnotesize
-\caption{表~\ref{tab:issues2k} の続き（CKM 行列を入れた標準模型のノート~\cite{smckmnote} の手順 (1)。CKM はそのノートを表す）。}
+\caption{表~\ref{tab:issues2k} の続き（CKM 行列を入れた標準模型のノート~\cite{smckmnote} の手順 (1)、(2)。CKM はそのノートを表す）。}
 \label{tab:issues2l}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
 \textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
 \midrule
-FeynRules の書き出しの順（CKM） & FeynArts の模型を書き出した後に同じカーネルで \texttt{WriteUFO} を呼ぶと、\texttt{Inner::incom} が出て頂点のクラスが94個になる。94個目は電荷を保存しない $\bar duW$ で、係数に添字が1個の \texttt{CKM[Index[Generation, 2]]} と \texttt{Index[Generation, \{\}]} が現れる（UFO の記録ファイルは「Q conserved」と書く） & \texttt{WriteFeynArtsOutput} がカーネルに残す状態が、\texttt{WriteUFO} の中の世代を展開する \texttt{FeynmanRules} を壊す（新しいカーネルでは93個。二つの添字を持つ複素行列のある模型でだけ起こり、CKM 行列のない模型では起こらない。内部の原因は推論） & UFO を先に書き出す。FeynArts の模型のファイルは順によらず同じ（\texttt{diff} で確かめた）。UFO の記録ファイルからクラスと頂点の数を読んで表示する \\
-FeynRules の並列のサブカーネル（CKM） & UFO の後に FeynArts の模型を書き出すと、サブカーネルが \texttt{Simplify::time} を多数出す。主カーネルの \texttt{\$MessageList} には残らない & FeynRules の中の \texttt{Simplify} の時間制限（0.01 秒）の切れ。出力は変わらない & \texttt{ParallelEvaluate[Off[Simplify::time]]} \\
+FeynRules の書き出しの順（CKM） & FeynArts の模型を書き出した後に同じカーネルで \texttt{WriteUFO} を呼ぶと、\texttt{Inner::incom} が出て頂点のクラスが94個になる。94個目は電荷を保存しない $\bar duW$ で、係数に添字が1個の \texttt{CKM[Index[}\allowbreak\texttt{Generation, 2]]} と \texttt{Index[}\allowbreak\texttt{Generation, \{\}]} が現れる（UFO の記録ファイルは「Q conserved」と書く） & \texttt{WriteFeynArtsOutput} がカーネルに残す状態が、\texttt{WriteUFO} の中の世代を展開する \texttt{FeynmanRules} を壊す（新しいカーネルでは93個。二つの添字を持つ複素行列のある模型でだけ起こり、CKM 行列のない模型では起こらない。内部の原因は推論） & UFO を先に書き出す。FeynArts の模型のファイルは順によらず同じ（\texttt{diff} で確かめた）。UFO の記録ファイルからクラスと頂点の数を読んで表示する \\
+FeynRules の並列のサブカーネル（CKM） & UFO の後に FeynArts の模型を書き出すと、サブカーネルが \texttt{Simplify::time} を多数出す。主カーネルの \texttt{\$MessageList} には残らない & FeynRules の中の \texttt{Simplify} の時間制限（0.01 秒）の切れ。出力は変わらない & \texttt{ParallelEvaluate[}\allowbreak\texttt{Off[Simplify::time]]} \\
 FeynRules と \texttt{Unitary -> True}（CKM） & ユニタリー性の置き換えの規則（$V_{ab}V_{ac}^*\to\delta_{bc}$）を使わないラグランジアン（$VV^*$ の項が12個）からも、中性の頂点が世代について対角に出る & FeynRules の \texttt{FeynmanRules} が、\texttt{Unitary -> True} と宣言した行列のユニタリー性を自分で使う & 規則は冗長だが残す。規則の有無と、標準のパラメータ表示を入れた値の一致で確かめる \\
 MadGraph と図のない過程（CKM） & 世代を変える中性の過程（\texttt{d s\textasciitilde{} > mu+ mu-} など）を \texttt{generate} すると \texttt{NoDiagramException} で、スクリプトの残りのコマンドを実行しない（「command not executed」） & MadGraph の仕様 & 図がないことを確かめる過程は、過程ごとに別の MadGraph のスクリプトで実行する \\
+FeynCalc の \texttt{FCFAConvert} と \texttt{IndexSum}（CKM） & $u\bar u\to d\bar s$ の $\sum|\mathcal M|^2$ に、質量0なら消えるはずの $t$ チャンネルの $G^+$ の図が残り、$\xi_W$ に依存した（\texttt{CKM[1, Ind273]}、\texttt{yd[Ind273, 2]} のような縮約されない添字を含む）。警告 \texttt{FCFAConvert::indexSumWarn} は出るが、エラーにはならない & FeynRules の FeynArts の模型は $G^\pm$ の結合を世代の和 \texttt{IndexSum[...,}\allowbreak\texttt{\{Generation\$1, 1, 3\}]} で書く。\texttt{FCFAConvert} は既定（\texttt{DropIndexSum -> True}）で \texttt{IndexSum} を外し、和の添字を自由な添字の名前に変える & \texttt{DropIndexSum -> False} にし、\texttt{IndexSum} を \texttt{Sum} に置き換えて和を書き出してから、対角の湯川結合を入れる。振幅に \texttt{CKM} と \texttt{IndexSum} が残らないことを表示する \\
+FeynCalc の \texttt{ComplexConjugate} と複素なパラメータ（CKM） & （問題になる前に確かめた）\texttt{ComplexConjugate} は記号を実数として扱う & FeynCalc の仕様（明示的な $i$ と Dirac の構造だけを共役にする） & $V_{ij}$ を実の記号で $v^R_{ij}+iv^I_{ij}$ と書き、$|V_{ij}|^2=(v^R_{ij})^2+(v^I_{ij})^2$ とする。共役が正しいことをスクリプトの最初に表示する \\
+MadGraph の \texttt{compute\_widths} と色のある粒子（CKM） & トップの幅が $t\to bW^+$ だけになり（分岐比1）、$t\to sW^+$、$t\to dW^+$ が幅のファイルにない & MadGraph は、色のある粒子の部分幅が QCD のスケールより小さいと0にする（ログに「partial width of particle t lower than QCD scale: $X$. Set it to zero.」と値を16桁で表示する）。$W$ のような色のない粒子では小さな部分幅（$W\to u\bar b$ の $10^{-5}$~GeV）も残る & ログの表示から値を読んで比べる。MadGraph のトップの全幅は $t\to bW^+$ だけの値である \\
+MadGraph の乱数と二つの模型（CKM） & 同じ run card で別の模型の $u\bar u\to W^+W^-$ を積分すると、断面積と誤差が表示の桁まで同じになる & 乱数の種が既定（\texttt{iseed = 0}）で同じ値になり、被積分関数が等しければ同じ点列で同じ値になる & 誤差を独立とした pull ではなく、値の相対差で比べる \\
 \bottomrule
 \end{tabularx}
 \end{table}
