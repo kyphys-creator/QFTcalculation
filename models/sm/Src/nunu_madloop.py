@@ -11,7 +11,9 @@
 # Inputs: 1/alpha(MZ) = 128, MZ = 91.1876, MW = 80.369, MH = 125.2, MT = ymt = 172.57 GeV; sqrt(s) = 500 GeV, theta = pi/3.
 # (b) MadLoop with the note's own NLO UFO (generated/SM_NLO_FJ_UFO: NLOCT's R2 vertices and the FJ counterterms in
 # counterterm form, nlo_ufo.wl), the same numbers read as the note's MS-bar parameters: finite = Re W(MS-bar)/2.
-# Writes results/nunu_madloop.csv (the rows of (a), then of (b)).  Usage (from Src/): python3 nunu_madloop.py
+# The same UFO restricted to these values (restrict_light0.dat: light masses and widths 0, as MadGraph's no_widths)
+# generates fewer diagrams (the couplings proportional to the light masses are removed) and must give the same value.
+# Writes results/nunu_madloop.csv (the rows of (a), (b), then of the restricted UFO).  Usage (from Src/): python3 nunu_madloop.py
 
 # %%
 import csv
@@ -19,6 +21,7 @@ import math
 import os
 import re
 import subprocess
+import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 INPUT = {"aEWM1": 128.0, "MZ": 91.1876, "MW": 80.369, "MH": 125.2, "MT": 172.57, "ymt": 172.57}
@@ -29,8 +32,9 @@ ML_FJ = os.path.join(HERE, "work", "ml_nunu_fj")       # the note's UFO with the
 LIGHT = {"MD": 0, "MU": 0, "MS": 0, "MC": 0, "MB": 0, "Me": 0, "MMU": 0, "MTA": 0}
 
 
-def set_card(ml, vals, widths=()):
-    path = os.path.join(ml, "Cards", "param_card.dat")
+def set_card(ml, vals, widths=(), src=None, dst=None):
+    """set the values in <ml>/Cards/param_card.dat (or read src and write dst, e.g. a restriction card)"""
+    path = src or os.path.join(ml, "Cards", "param_card.dat")
     s = open(path).read()
     for k, v in vals.items():
         s, n = re.subn(r"(\n\s+\d+\s+)\S+(\s+#\s+%s\s*\n)" % k, lambda m: m.group(1) + "%.10e" % v + m.group(2), s)
@@ -38,7 +42,7 @@ def set_card(ml, vals, widths=()):
     for pdg in widths:
         s, n = re.subn(r"(\nDECAY\s+%d\s+)\S+" % pdg, lambda m: m.group(1) + "0.000000e+00", s)
         assert n == 1, pdg
-    open(path, "w").write(s)
+    open(dst or path, "w").write(s)
 
 
 def run(mu, ml=ML):
@@ -59,6 +63,14 @@ def read(name):
     with open(os.path.join(HERE, "results", name)) as fh:
         return list(csv.DictReader(fh))
 
+
+# the note's UFO: the same numbers read as MS-bar parameters (no ymt in the note's model), light masses and widths 0
+FJ_CARD = ({**{k: v for k, v in INPUT.items() if k != "ymt"}, **LIGHT}, (6, 23, 24, 25))
+ML_FJR = os.path.join(HERE, "work", "ml_nunu_fj_r")   # the same UFO restricted to these values (restrict_light0.dat)
+if len(sys.argv) == 4 and sys.argv[1] == "--restrict":
+    # write the restriction card from a param_card of the note's UFO (run_nunu_check.sh)
+    set_card(None, FJ_CARD[0], FJ_CARD[1], src=sys.argv[2], dst=sys.argv[3])
+    sys.exit(0)
 
 # %%
 set_card(ML, INPUT)
@@ -84,8 +96,7 @@ for mu in MUS:
         print(f"  mu = {mu:8.4f}, FormCalc (Feynman gauge) W(MS-bar) {float(f['re_W_MSbar']):.15e}, converted: "
               f"finite {w_os:.15e} (rel to MadLoop {ml['finite'] / w_os - 1:+.1e});  MadLoop poles {ml['1eps']:.1e}, {ml['2eps']:.1e}")
 # (b): MadLoop with the note's NLO UFO (NLOCT's R2, the FJ counterterms in counterterm form) against W(MS-bar) directly
-# the same numbers read as MS-bar parameters (no ymt in the note's model), light masses and widths 0
-set_card(ML_FJ, {**{k: v for k, v in INPUT.items() if k != "ymt"}, **LIGHT}, widths=(6, 23, 24, 25))
+set_card(ML_FJ, *FJ_CARD)
 print("MadLoop with the note's UFO (FJ counterterms, MS-bar parameters) against Re W(MS-bar)/2")
 for mu in MUS:
     ml = run(mu, ML_FJ)
@@ -96,6 +107,12 @@ for mu in MUS:
         print(f"  mu = {mu:8.4f}, (xiZ, xiW) = ({r['xiZ']}, {r['xiW']}): finite {ml['finite']:.15e} vs {w:.15e} "
               f"(rel {ml['finite'] / w - 1:+.1e});  born rel {ml['born'] / float(r['born_over_4']) - 1:+.1e};  poles {ml['1eps']:.1e}, {ml['2eps']:.1e}")
         rows.append([mu, r["xiZ"], r["xiW"], ml["born"], float(r["born_over_4"]), ml["finite"], w, ml["1eps"], ml["2eps"]])
+# the note's UFO restricted (light masses and widths 0 removed from the model, as MadGraph's no_widths): fewer diagrams,
+# the same value
+for mu in MUS:
+    ml, mr = run(mu, ML_FJ), run(mu, ML_FJR)
+    print(f"  mu = {mu:8.4f}: restricted UFO finite {mr['finite']:.15e} (rel to the unrestricted {mr['finite'] / ml['finite'] - 1:+.1e})")
+    rows.append([mu, "restricted", "", mr["born"], ml["born"], mr["finite"], ml["finite"], mr["1eps"], mr["2eps"]])
 with open(os.path.join(HERE, "results", "nunu_madloop.csv"), "w", newline="") as fh:
     w = csv.writer(fh)
     w.writerow(["mu", "xiZ", "xiW", "ml_born", "note_born", "ml_finite", "note_finite", "ml_1eps", "ml_2eps"])

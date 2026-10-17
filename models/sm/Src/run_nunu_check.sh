@@ -13,7 +13,8 @@
 #   5. (9b) the note's own NLO UFO: nlo_renormalize.wl (FeynRules + NLOCT, renormalized model, Feynman gauge),
 #      nlo_writect.wl (FeynArts + NLOCT: R2 vertices -> generated/SM_R2.m; SM_CT.nlo is not in git),
 #      nlo_fjct.wl (FeynCalc: the FJ counterterms in counterterm form), nlo_ufo.wl (FeynRules WriteUFO ->
-#      generated/SM_NLO_FJ_UFO); MadLoop with it -> work/ml_nunu_fj
+#      generated/SM_NLO_FJ_UFO); MadLoop with it -> work/ml_nunu_fj, and with it restricted to light masses and widths
+#      0 (restrict_light0.dat) -> work/ml_nunu_fj_r
 #   6. nunu_madloop.py sets the param_cards, runs mu_R = MZ and 500 GeV and compares -> results/nunu_madloop.csv
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
@@ -47,6 +48,16 @@ printf 'import model ./work/SM_NLO_FJ_UFO\ngenerate ve ve~ > vm vm~ [virt=QED]\n
 mg5_aMC work/ml_nunu_fj.mg5 > work/ml_nunu_fj.log 2>&1
 grep -E 'Contributing diagrams' work/ml_nunu_fj.log
 P=$(ls -d work/ml_nunu_fj/SubProcesses/P0_* | head -1)
+python3 patch_check_sa.py "$P/check_sa.f"
+(cd "$P" && make check > make.log 2>&1) || { echo "compilation failed, see $P/make.log"; exit 1; }
+# the same UFO with a restriction card (light masses and widths 0, as MadGraph's no_widths)
+rm -rf work/SM_NLO_FJ_UFO_r work/ml_nunu_fj_r
+cp -r generated/SM_NLO_FJ_UFO work/SM_NLO_FJ_UFO_r
+python3 nunu_madloop.py --restrict work/ml_nunu_fj/Cards/param_card.dat work/SM_NLO_FJ_UFO_r/restrict_light0.dat
+printf 'import model ./work/SM_NLO_FJ_UFO_r-light0\ngenerate ve ve~ > vm vm~ [virt=QED]\noutput standalone ./work/ml_nunu_fj_r\n' > work/ml_nunu_fj_r.mg5
+mg5_aMC work/ml_nunu_fj_r.mg5 > work/ml_nunu_fj_r.log 2>&1
+grep -E 'Contributing diagrams' work/ml_nunu_fj_r.log
+P=$(ls -d work/ml_nunu_fj_r/SubProcesses/P0_* | head -1)
 python3 patch_check_sa.py "$P/check_sa.f"
 (cd "$P" && make check > make.log 2>&1) || { echo "compilation failed, see $P/make.log"; exit 1; }
 python3 nunu_madloop.py

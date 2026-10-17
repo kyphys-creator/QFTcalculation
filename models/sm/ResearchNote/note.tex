@@ -1203,7 +1203,7 @@ Martin--Robertson & 173.1 & 本ノート、1+2 & 0.3810 & $-0.0137$ & 138.4 & 9.
 \label{fig:rg}
 \end{figure}
 
-\paragraph{手順 (9)：1ループの電弱の振幅と MadLoop。}(a) MadGraph の電弱 NLO の模型との比較。過程は $\nu_e(p_1)\bar\nu_e(p_2)\to\nu_\mu(p_3)\bar\nu_\mu(p_4)$ で、外線に光子が付かないので赤外で有限である。木は $s$ チャンネルの $Z$ だけで、1ループでは $Z$ の自己エネルギーに FJ のタドポールが入る。トップ以外のフェルミオンの質量と幅を0とし、$1/\alpha(M_Z)=128$、$M_Z=91.1876$、$M_W=80.369$、$M_H=125.2$、$M_t=172.57$~GeV、$\sqrt s=500$~GeV、散乱角 $\pi/3$ の点で、木と1ループの干渉 $W=\sum_{\mathrm{spins}}\mathcal M_0^*\mathcal M_1$ を比べた（表~\ref{tab:nunu}）。本ノートの模型で、FeynCalc（一般の $R_\xi$。\texttt{nunu\_feyncalc.wl}）と、パッチのない FeynArts と FormCalc（Feynman ゲージ。\texttt{nunu\_formcalc.wl}）で独立に求めた。図は木1個、頂点22個と $s$ チャンネルの自己エネルギー24個（模型が湯川と同じく対角性を知らずに挿入する、世代を変える0の図を含む）、運動量0の $H$ の線で付くタドポール17個、箱25個である。外線のニュートリノには足ごとに LSZ の因子 $1-\Sigma^L_\nu(0)/2$ を掛けた。紫外で発散する部分は $D$ 次元で木の構造 $[\bar v_2\gamma^\mu P_Lu_1][\bar u_3\gamma_\mu P_Lv_4]$ に直し、有限な箱は4次元のスピン和で求めた。$\MSbar$ の振幅は裸の振幅で $\DUV\to0$ としたもので、その紫外の極は $\MSbar$ の対抗項（下の換算の極）と $10^{-18}$ まで打ち消した。比較の相手は MadGraph に付属の \texttt{loop\_qcd\_qed\_sm}（\texttt{no\_widths}）で、on-shell の $M_W$、$M_Z$、$M_H$、$M_t$ と $\alpha(M_Z)$ のスキーム、Feynman ゲージ、MadGraph 側の R2 と対抗項による独立な実装である（トップの湯川結合の質量 \texttt{ymt} は $M_t$ にした）。MadLoop は1ループの図26個（ほかに7個）、R2 17個、UV 6個から値を求め、極は0、有限部分は $\mu_R=30$、$M_Z$、500~GeV で14桁同じだった。
+\paragraph{手順 (9)：1ループの電弱の振幅と MadLoop。}(a) MadGraph の電弱 NLO の模型との比較。過程は $\nu_e(p_1)\bar\nu_e(p_2)\to\nu_\mu(p_3)\bar\nu_\mu(p_4)$ で、外線に光子が付かないので赤外で有限である。木は $s$ チャンネルの $Z$ だけで、1ループでは $Z$ の自己エネルギーに FJ のタドポールが入る。トップ以外のフェルミオンの質量と幅を0とし、$1/\alpha(M_Z)=128$、$M_Z=91.1876$、$M_W=80.369$、$M_H=125.2$、$M_t=172.57$~GeV、$\sqrt s=500$~GeV、散乱角 $\pi/3$ の点で、木と1ループの干渉 $W=\sum_{\mathrm{spins}}\mathcal M_0^*\mathcal M_1$ を比べた（表~\ref{tab:nunu}）。本ノートの模型で、FeynCalc（一般の $R_\xi$。\texttt{nunu\_feyncalc.wl}）と、パッチのない FeynArts と FormCalc（Feynman ゲージ。\texttt{nunu\_formcalc.wl}）で独立に求めた。図は木1個、頂点22個と $s$ チャンネルの自己エネルギー24個（模型が湯川と同じく対角性を知らずに挿入する、世代を変える0の図を含む）、運動量0の $H$ の線で付くタドポール17個、箱25個である。外線のニュートリノには足ごとに LSZ の因子 $1-\Sigma^L_\nu(0)/2$ を掛けた。紫外で発散する部分は $D$ 次元で木の構造 $[\bar v_2\gamma^\mu P_Lu_1][\bar u_3\gamma_\mu P_Lv_4]$ に直し、有限な箱は4次元のスピン和で求めた。$\MSbar$ の振幅は裸の振幅で $\DUV\to0$ としたもので、その紫外の極は $\MSbar$ の対抗項（下の換算の極）と $10^{-18}$ まで打ち消した。比較の相手は MadGraph に付属の \texttt{loop\_qcd\_qed\_sm}~\cite{mg5ew}（\texttt{no\_widths}）で、on-shell の $M_W$、$M_Z$、$M_H$、$M_t$ と $\alpha(M_Z)$ のスキーム、Feynman ゲージ、MadGraph 側の R2 と対抗項による独立な実装である（トップの湯川結合の質量 \texttt{ymt} は $M_t$ にした）。MadLoop は1ループの図26個（ほかに7個）、R2 17個、UV 6個から値を求め、極は0、有限部分は $\mu_R=30$、$M_Z$、500~GeV で14桁同じだった。
 
 換算は次のとおりである。同じ数値を on-shell の値と見て、本ノートのパラメータとの差を
 \begin{equation}
@@ -1222,6 +1222,9 @@ Z\nu\bar\nu:\ (\text{木の頂点})\times\Bigl[\frac{\delta e}{e}-\frac{\delta c
 \label{eq:fjct}
 \end{equation}
 $\delta M_Z^2$、$\delta e$、$\delta c_W^2=\delta M_W^2/M_Z^2-M_W^2\delta M_Z^2/M_Z^4$ は $\MSbar$ の極（$\delta M^2$ はタドポールを含む $\Sigma_T(M^2)$ の極）、$\Sigma^{ZZ}_{\mathrm{tad}}$ は運動量0の $H$ の線で付くタドポールの図（極と有限部分。MadLoop が作らない図をそのまま頂点にしたもの）、$\delta Z^L_\nu=-\Sigma^L_\nu(0)$ は外線のための on-shell の場の定数で、$Z$ の場は繰り込まない。$K\,\delta e/e=\frac{11}6e^2$ を再現した。この UFO で MadLoop に同じ数値を本ノートの $\MSbar$ のパラメータとして与えると（図は1ループ42個、R2 28個、UV 6個）、有限部分は $\mu=M_Z$ で $-1.1737308938221\times10^{-4}$、500~GeV で $+1.4427406016860\times10^{-5}$ になり、FeynCalc の $\re W(\MSbar)/2$ と相対 $2\times10^{-14}$、$2\times10^{-13}$ で一致した（極は0）。$\MSbar$ の振幅の $\mu$ による大きな変化も、FJ を対抗項の形にした UFO がそのまま再現する。式~\eqref{eq:fjct} は FJ の処方の UV の頂点の一般形（$\MSbar$ の極、タドポールの有限な頂点、外線の on-shell の場の定数）の、この過程に要る部分である。
+
+(c) 二つの UFO の違い（表~\ref{tab:ufo}）。MadGraph に付属の \texttt{loop\_qcd\_qed\_sm} は、Shao らが電弱の NLO の自動化のために作った模型~\cite{mg5ew}で、R2 と UV の頂点を閉じた形で手で書いてある。本ノートの UFO は、本ノートの \texttt{SM.fr} から FeynRules の \texttt{WriteUFO} で書き出し、R2 の頂点は NLOCT~\cite{nloct} で同じ模型から求め、UV の頂点は式~\eqref{eq:fjct} を本ノートの自己エネルギーから書いた。物理的な違いは繰り込みのスキームにある。公式の模型ではパラメータが on-shell の質量と $\alpha(M_Z)$ で、タドポールを対抗項 $\delta t$ で打ち消す（$\beta_t$ の処方に当たる。\texttt{HiggsTadpole\_UV\_EW} が頂点の対抗項に入る）。本ノートの UFO ではパラメータが FJ の $\MSbar$ の値で、タドポールの図をそのまま ZZ の頂点に入れる。そのため、同じ param\_card の数値でも二つの模型の振幅は違う量であり、$\mu_R$ への依存も違う（公式の模型では $\mu_R$ によらず、本ノートの UFO では $\MSbar$ の振幅と同じく $\mu_R$ による）。両者は式~\eqref{eq:convOS} の有限な換算だけでつながり、(a) と (b) の結果はその関係を数値で確かめたことになる。もう一つの違いは範囲で、公式の模型はすべての頂点の対抗項（500個）を持ちどの過程にも使えるが、本ノートの UFO の UV の頂点はこの過程に要る4個だけである。MadLoop の図の数の違い（1ループ 26 (+7) と 42 (+2)）は、本ノートの UFO が軽いフェルミオンの質量をパラメータとして残し、質量に比例する $H$、$G^0$、$G^\pm$ とレプトンの結合（値は0）の図も作るためで、軽い質量と幅を0にする制限カードを与えると 26 (+7) になり、有限部分は14桁同じだった。R2 の数（17 と 18）の違いは、R2 の結合を内線の粒子ごとにどう分けるかの違い（対抗項の振幅の数 23 と 24）で、ループの図そのものは同じである。
+
 
 \begin{table}[tbp]
 \centering\footnotesize
@@ -1245,6 +1248,26 @@ finite、MadLoop（$\mu_R$） & $-7.198030470003718\times10^{-4}$ & $-7.19803047
 (b) finite、MadLoop（本ノートの FJ の UFO） & $-1.1737308938221\times10^{-4}$ & $+1.4427406016860\times10^{-5}$ \\
 \bottomrule
 \end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{手順 (9) で MadLoop に与えた二つの UFO（$\nu_e\bar\nu_e\to\nu_\mu\bar\nu_\mu$、Feynman ゲージ）。}
+\label{tab:ufo}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+ & MadGraph の \texttt{loop\_qcd\_qed\_sm}（\texttt{no\_widths}） & 本ノートの \texttt{SM\_NLO\_FJ\_UFO} \\
+\midrule
+作り方 & Shao らが手で書いた電弱 NLO の模型~\cite{mg5ew} & 本ノートの \texttt{SM.fr} から \texttt{WriteUFO}。R2 は NLOCT~\cite{nloct}、UV は本ノートの自己エネルギーから（式~\eqref{eq:fjct}） \\
+パラメータの意味 & on-shell の $M_W$、$M_Z$、$M_H$、$M_t$、$\alpha(M_Z)$。トップの湯川の質量 \texttt{ymt} は別のパラメータ & FJ の $\MSbar$ の値（$g,g',\lambda,\mu^2,y_f$ と同じ数の組）。湯川結合は質量から \\
+タドポール & 対抗項 $\delta t$ で打ち消す（$\beta_t$ の処方） & タドポールの図を ZZ の頂点 $-\Sigma^{ZZ}_{\mathrm{tad}}$ として入れる（FJ） \\
+場の繰り込み & すべての場を on-shell（$\gamma Z$ の混合を含む） & 外線のニュートリノだけ on-shell（$\delta Z^L_\nu$）。$Z$ は繰り込まない \\
+対抗項の頂点 & 500個（R2 258、UV 217）、どの過程にも使える & 167個（R2 163、UV 4：3世代の $Z\nu\bar\nu$ と ZZ）、この過程だけ \\
+$\mu_R$ への依存 & なし（$\mu_R=30$、$M_Z$、500~GeV で14桁同じ） & あり（$\MSbar$ の振幅） \\
+MadLoop の図 & 1ループ 26 (+7)、R2 17、UV 6 & 1ループ 42 (+2)、R2 28、UV 6。軽い質量と幅を0にする制限カードで 26 (+7)、R2 18、UV 6 \\
+有限部分 & $-7.198030470003718\times10^{-4}$（on-shell の振幅） & $-1.1737308938221\times10^{-4}$（$\mu=M_Z$）、$+1.4427406016860\times10^{-5}$（500~GeV） \\
+\bottomrule
+\end{tabularx}
 \end{table}
 
 \section{議論と今後}\label{sec:discussion}
@@ -1394,6 +1417,8 @@ g_{\mu\nu}\Bigl[g^{\mu\nu}-(1-\xi)\frac{k^\mu k^\nu}{k^2-\xi M^2}\Bigr]\frac1{k^
 \bibitem{kira3} F. Lange, J. Usovitsch, Z. Wu, ``Kira 3: integral reduction with efficient seeding and optimized equation selection,'' Comput. Phys. Commun. \textbf{322}, 109999 (2026), arXiv:2505.20197。
 \bibitem{amflow} X. Liu, Y.-Q. Ma, ``AMFlow: a Mathematica package for Feynman integrals computation via auxiliary mass flow,'' Comput. Phys. Commun. \textbf{283}, 108565 (2023), arXiv:2201.11669。
 \bibitem{amflow2} R.-J. Huang, X. Liu, Y.-Q. Ma, ``AMFlow 2.0: significant algorithmic and software improvements for Feynman integral evaluation,'' arXiv:2607.08477。
+\bibitem{mg5ew} R. Frederix, S. Frixione, V. Hirschi, D. Pagani, H.-S. Shao, M. Zaro, ``The automation of next-to-leading order electroweak calculations,'' JHEP \textbf{07}, 185 (2018), arXiv:1804.10017。
+\bibitem{nloct} C. Degrande, ``Automatic evaluation of UV and R2 terms for beyond the Standard Model Lagrangians: a proof-of-principle,'' Comput. Phys. Commun. \textbf{197}, 239 (2015), arXiv:1406.3030。
 \bibitem{sirlin80} A. Sirlin, ``Radiative corrections in the SU(2)$_L\times$U(1) theory: A simple renormalization framework,'' Phys. Rev. D \textbf{22}, 971 (1980)。
 \bibitem{marquard16} P. Marquard, A. V. Smirnov, V. A. Smirnov, M. Steinhauser, ``Four-loop relation between the $\overline{\mathrm{MS}}$ and on-shell quark mass,'' arXiv:1601.03748 (2016)。
 \bibitem{steinhauser98} M. Steinhauser, ``Leptonic contribution to the effective electromagnetic coupling constant up to three loops,'' Phys. Lett. B \textbf{429}, 158 (1998)。
