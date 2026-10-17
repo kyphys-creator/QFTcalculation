@@ -40,6 +40,9 @@
   lab/.style={font=\small,align=center},
   slab/.style={font=\scriptsize,align=center},
   mom/.style={-{Stealth[length=1.6mm]},thin},
+  ctv/.style={circle,draw=black,fill=white,inner sep=0pt,minimum size=7pt,path picture={
+      \draw (path picture bounding box.north west) -- (path picture bounding box.south east)
+            (path picture bounding box.south west) -- (path picture bounding box.north east);}},
   blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
 }
 
@@ -227,7 +230,118 @@ $\bar d_ju_iG^-$ & $\dfrac{\sqrt2}{v}V_{ij}^*\bigl(m_{d_j}P_L-m_{u_i}P_R\bigr)$ 
 \end{gathered}
 \label{eq:qqbar}
 \end{equation}
-である（$t=(p_1-k_1)^2$、$u=(p_1-k_2)^2$。和はスピンと色について）。前者のスピンと色の平均の断面積は $\sigma=g^4|V_{ij}|^2s/(576\pi|s-M_W^2+iM_W\Gamma_W|^2)$ である。$e^+$ は $\bar d_j$ の向きに出やすい（$u^2\propto(1+\cos\theta)^2$、$\theta$ は $u_i$ と $\nu_e$ の角）。$t$ チャンネルに下型のクォークが入る $u\bar u\to W^+W^-$ では、振幅が $\sum_k|V_{uk}|^2A(m_{d_k})$ になり、$d_k$ が質量0なら $V=1$ の振幅に等しい。$u\bar u\to d\bar s$ のような $t$ チャンネルの $W$ の交換は $V_{ud}^*V_{us}$ に比例する（入る $u$ を消して $d$ を作るのは $\bar d u\bar W$ の頂点で $V_{ud}^*$、入る $\bar u$ を消して $\bar s$ を作るのは $\bar usW$ の頂点で $V_{us}$。$t\to d_jW^+$ の振幅は $V_{tj}^*$ に比例する）。木のレベルでは、CP で移り合う過程（$t\to d_jW^+$ と $\bar t\to\bar d_jW^-$）の振幅の2乗が等しく、CP の破れは現れない。崩壊幅の CP の非対称には、位相の違う二つの振幅と吸収的な部分（ループの虚部）が要る。
+である（$t=(p_1-k_1)^2$、$u=(p_1-k_2)^2$。和はスピンと色について）。前者のスピンと色の平均の断面積は $\sigma=g^4|V_{ij}|^2s/(576\pi|s-M_W^2+iM_W\Gamma_W|^2)$ である。$e^+$ は $\bar d_j$ の向きに出やすい（$u^2\propto(1+\cos\theta)^2$、$\theta$ は $u_i$ と $\nu_e$ の角）。$t$ チャンネルに下型のクォークが入る $u\bar u\to W^+W^-$ では、振幅が $\sum_k|V_{uk}|^2A(m_{d_k})$ になり、$d_k$ が質量0なら $V=1$ の振幅に等しい。$u\bar u\to d\bar s$ のような $t$ チャンネルの $W$ の交換は $V_{ud}^*V_{us}$ に比例する（入る $u$ を消して $d$ を作るのは $\bar d u\bar W$ の頂点で $V_{ud}^*$、入る $\bar u$ を消して $\bar s$ を作るのは $\bar usW$ の頂点で $V_{us}$。$t\to d_jW^+$ の振幅は $V_{tj}^*$ に比例する）。木のレベルでは、CP で移り合う過程（$t\to d_jW^+$ と $\bar t\to\bar d_jW^-$）の振幅の2乗が等しく、CP の破れは現れない。崩壊幅の CP の非対称には、位相の違う二つの振幅と吸収的な部分（ループの虚部）が要る。これらの過程の図と、振幅に掛かる CKM の因子を図~\ref{fig:treeckm} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) W+ -> u_i dbar_j
+\begin{scope}[shift={(0.6,0)}]
+  \draw[photon] (-1.0,0) -- (0,0); \draw[fermion] (0,0) -- (0.85,0.6); \draw[fermion] (0.85,-0.6) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$u_i$}; \node[font=\scriptsize,anchor=west] at (0.85,-0.6) {$\bar d_j$};
+  \node[slab] at (0,-1.2) {(a) $W^+\to u_i\bar d_j$\\$\propto V_{ij}$};
+\end{scope}
+% (b) t -> d_j W+
+\begin{scope}[shift={(4.0,0)}]
+  \draw[fermion] (-1.0,0) -- (0,0); \draw[fermion] (0,0) -- (0.85,0.6); \draw[photon] (0,0) -- (0.85,-0.6);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.25) {$t$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$d_j$}; \node[font=\scriptsize,anchor=west] at (0.85,-0.6) {$W^+$};
+  \node[slab] at (0,-1.2) {(b) $t\to d_jW^+$\\$\propto V_{tj}^*$};
+\end{scope}
+% (c) u_i dbar_j -> nu_e e+
+\begin{scope}[shift={(7.3,0)}]
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \draw[photon] (0,0) -- (1.3,0);
+  \draw[fermion] (1.3,0) -- (2.2,0.65); \draw[fermion] (2.2,-0.65) -- (1.3,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.3,0) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.65) {$u_i$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {$\bar d_j$};
+  \node[font=\scriptsize,anchor=west] at (2.2,0.65) {$\nu_e$}; \node[font=\scriptsize,anchor=west] at (2.2,-0.65) {$e^+$};
+  \node[font=\scriptsize] at (0.65,0.32) {$W^+$};
+  \node[slab] at (0.65,-1.2) {(c) $u_i\bar d_j\to\nu_ee^+$\\$\propto V_{ij}^*$};
+\end{scope}
+% (d) u ubar -> d sbar (t-channel W)
+\begin{scope}[shift={(1.2,-3.4)}]
+  \draw[fermion] (-1.0,0.55) -- (0,0.55); \draw[fermion] (0,0.55) -- (1.0,0.55);
+  \draw[fermion] (0,-0.55) -- (-1.0,-0.55); \draw[fermion] (1.0,-0.55) -- (0,-0.55);
+  \draw[photon] (0,0.55) -- (0,-0.55);
+  \node[vtx] at (0,0.55) {}; \node[vtx] at (0,-0.55) {};
+  \node[font=\scriptsize,anchor=east] at (-1.0,0.55) {$u$}; \node[font=\scriptsize,anchor=west] at (1.0,0.55) {$d$};
+  \node[font=\scriptsize,anchor=east] at (-1.0,-0.55) {$\bar u$}; \node[font=\scriptsize,anchor=west] at (1.0,-0.55) {$\bar s$};
+  \node[font=\scriptsize] at (0.38,0) {$W$};
+  \node[slab] at (0,-1.2) {(d) $u\bar u\to d\bar s$\\$\propto V_{ud}^*V_{us}$};
+\end{scope}
+% (e1) u ubar -> W+ W-: s-channel gamma, Z
+\begin{scope}[shift={(4.6,-3.4)}]
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \draw[photon] (0,0) -- (1.2,0);
+  \draw[photon] (1.2,0) -- (2.0,0.65); \draw[photon] (1.2,0) -- (2.0,-0.65);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.2,0) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.65) {$u$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {$\bar u$};
+  \node[font=\scriptsize,anchor=west] at (2.0,0.65) {$W^+$}; \node[font=\scriptsize,anchor=west] at (2.0,-0.65) {$W^-$};
+  \node[font=\scriptsize] at (0.6,0.32) {$A$、$Z$};
+  \node[slab] at (0.6,-1.2) {(e) $u\bar u\to W^+W^-$\\$s$ の $\gamma$、$Z$};
+\end{scope}
+% (e2) t-channel d_k
+\begin{scope}[shift={(9.0,-3.4)}]
+  \draw[fermion] (-0.8,-0.95) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0,0.5); \draw[fermion] (0,0.5) -- (-0.8,0.95);
+  \draw[photon] (0,-0.5) -- (1.0,-0.95); \draw[photon] (0,0.5) -- (1.0,0.95);
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {};
+  \node[font=\scriptsize,anchor=east] at (-0.8,-0.95) {$u$}; \node[font=\scriptsize,anchor=east] at (-0.8,0.95) {$\bar u$};
+  \node[font=\scriptsize,anchor=west] at (1.0,-0.95) {$W^+$}; \node[font=\scriptsize,anchor=west] at (1.0,0.95) {$W^-$};
+  \node[font=\scriptsize] at (0.3,0) {$d_k$};
+  \node[slab] at (0.1,-1.45) {$t$ の $d_k$（$k=d,s,b$）\\$\propto|V_{uk}|^2$};
+\end{scope}
+% (f1) t sbar -> W+ H: s-channel W
+\begin{scope}[shift={(0.6,-6.9)}]
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \draw[photon] (0,0) -- (1.1,0);
+  \draw[photon] (1.1,0) -- (1.85,0.65); \draw[scalar] (1.1,0) -- (1.85,-0.65);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.1,0) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.65) {$t$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {$\bar s$};
+  \node[font=\scriptsize,anchor=west] at (1.85,0.65) {$W^+$}; \node[font=\scriptsize,anchor=west] at (1.85,-0.65) {$H$};
+  \node[font=\scriptsize] at (0.55,0.32) {$W^+$};
+  \node[slab] at (0.55,-1.2) {(f) $t\bar s\to W^+H$\\$s$ の $W$（$\xi_W$）};
+\end{scope}
+% (f2) s-channel G+
+\begin{scope}[shift={(5.1,-6.9)}]
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \draw[scalar] (0,0) -- (1.1,0);
+  \draw[photon] (1.1,0) -- (1.85,0.65); \draw[scalar] (1.1,0) -- (1.85,-0.65);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.1,0) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.65) {$t$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {$\bar s$};
+  \node[font=\scriptsize,anchor=west] at (1.85,0.65) {$W^+$}; \node[font=\scriptsize,anchor=west] at (1.85,-0.65) {$H$};
+  \node[font=\scriptsize] at (0.55,0.3) {$G^+$};
+  \node[slab] at (0.55,-1.2) {$s$ の $G^+$（$\xi_W$）\\$R_\xi$ だけ};
+\end{scope}
+% (f3) t-channel top
+\begin{scope}[shift={(9.4,-6.9)}]
+  \draw[fermion] (-0.9,0.55) -- (0,0.55); \draw[scalar] (0,0.55) -- (0.9,0.55);
+  \draw[fermion] (0,0.55) -- (0,-0.55);
+  \draw[fermion] (0,-0.55) -- (-0.9,-0.55); \draw[photon] (0,-0.55) -- (0.9,-0.55);
+  \node[vtx] at (0,0.55) {}; \node[vtx] at (0,-0.55) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,0.55) {$t$}; \node[font=\scriptsize,anchor=west] at (0.9,0.55) {$H$};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.55) {$\bar s$}; \node[font=\scriptsize,anchor=west] at (0.9,-0.55) {$W^+$};
+  \node[font=\scriptsize] at (0.22,0) {$t$};
+  \node[slab] at (0,-1.2) {$t$ チャンネルの $t$};
+\end{scope}
+% (f4) u-channel s
+\begin{scope}[shift={(12.4,-6.9)}]
+  \draw[fermion] (-0.9,0.55) -- (0,0.55); \draw[photon] (0,0.55) -- (0.9,0.55);
+  \draw[fermion] (0,0.55) -- (0,-0.55);
+  \draw[fermion] (0,-0.55) -- (-0.9,-0.55); \draw[scalar] (0,-0.55) -- (0.9,-0.55);
+  \node[vtx] at (0,0.55) {}; \node[vtx] at (0,-0.55) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,0.55) {$t$}; \node[font=\scriptsize,anchor=west] at (0.9,0.55) {$W^+$};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.55) {$\bar s$}; \node[font=\scriptsize,anchor=west] at (0.9,-0.55) {$H$};
+  \node[font=\scriptsize] at (0.22,0) {$s$};
+  \node[slab] at (0,-1.2) {$u$ チャンネルの $s$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (2) で求めた木の過程の図と、振幅に掛かる CKM の因子。(a)、(b) は式~\eqref{eq:widthsckm} の崩壊、(c)、(d) は式~\eqref{eq:qqbar}、(e) は $u\bar u\to W^+W^-$ の5個の図で、$t$ チャンネルの3個は $|V_{uk}|^2$ を持ち、$d_k$ が質量0なら和が $V=1$ の1個の図に等しい。(f) は $t\bar s\to W^+H$ の4個の図で、どれも $V_{ts}^*$ を持つ。一般の $R_\xi$ ゲージでは $s$ チャンネルの $W$ の伝播関数の縦の部分と $G^+$ の図が $\xi_W$ を含み、和で打ち消す（$H$ の線が $s$ に付く $u$ チャンネルの図は $m_s$ に比例する）。矢印はフェルミオン数の流れで、左の端で外向きの矢印は入射する反粒子（$\bar d_j$、$\bar u$、$\bar s$）である。}
+\label{fig:treeckm}
+\end{figure}
 
 \subsection{湯川行列の $\MSbar$ の繰り込みと CKM 行列の走り}\label{sec:rg}
 
@@ -277,7 +391,46 @@ V_0=V+\delta V,\qquad \delta V=\frac{\DUV}2\,\frac{\dd V}{\dd\ln\mu}
 \Gamma^q_{ij}\supset i\bigl[\slashed pP_L\Sigma^L_{ij}(p^2)+\slashed pP_R\Sigma^R_{ij}(p^2)+\bigl(m_iP_L+m_jP_R\bigr)\Sigma^S_{ij}(p^2)\bigr]
 \label{eq:Gammaq}
 \end{equation}
-と書く（Denner の形~\cite{denner93}。本ノートの模型の1ループでは、スカラーの部分がこの形になる）。$d$ 型のクォークでは、中性の場（$A$、$Z$、$G$、$H$、$G^0$）のループとタドポールの付いた図は世代について対角で、非対角の成分は $W^\pm$、$G^\pm$ と内線の $u_k$ のループ（図~\ref{fig:ckmdiag} (c)）だけから来て、$\sum_k\lambda^{(ij)}_kF(m_{u_k}^2)$ の形になる。$u$ 型では $V$ と $V^\dagger$ の役割を入れ替える。
+と書く（Denner の形~\cite{denner93}。本ノートの模型の1ループでは、スカラーの部分がこの形になる）。$d$ 型のクォークでは、中性の場（$A$、$Z$、$G$、$H$、$G^0$）のループとタドポールの付いた図は世代について対角で、非対角の成分は $W^\pm$、$G^\pm$ と内線の $u_k$ のループ（図~\ref{fig:ckmdiag} (c)）だけから来て、$\sum_k\lambda^{(ij)}_kF(m_{u_k}^2)$ の形になる。$u$ 型では $V$ と $V^\dagger$ の役割を入れ替える。図の型を図~\ref{fig:seckm} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.88]
+\foreach \x/\sty/\inl/\arc/\lbl in {
+    0/photon/u_k/{$W^-$}/{(a) $W^\pm$：$\lambda^{(ij)}_k$\\極は $m_{u_k}$ によらない},
+    3.1/scalar/u_k/{$G^-$}/{(b) $G^\pm$：$\lambda^{(ij)}_k$\\極は $\lambda^{(ij)}_ky_{u_k}^2$},
+    6.2/photon/d_i/{$A$、$Z$、$G$}/{(c) 中性のゲージ場\\対角（$i=j$）},
+    9.3/scalar/d_i/{$H$、$G^0$}/{(d) $H$、$G^0$\\対角（$i=j$）}} {
+  \begin{scope}[shift={(\x,0)}]
+    \draw[fermion] (-1.1,0) -- (-0.55,0); \draw[fermion] (-0.55,0) -- (0.55,0); \draw[fermion] (0.55,0) -- (1.1,0);
+    \draw[\sty] (-0.55,0) arc (180:0:0.55);
+    \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+    \node[font=\scriptsize] at (0,-0.22) {$\inl$};
+    \node[font=\scriptsize] at (-0.95,0.22) {$d_j$}; \node[font=\scriptsize] at (0.95,0.22) {$d_i$};
+    \node[font=\scriptsize] at (0,0.82) {\arc};
+    \node[slab] at (0,-0.85) {\lbl};
+  \end{scope}}
+% (e) tadpole
+\begin{scope}[shift={(12.2,0)}]
+  \draw[fermion] (-1.1,0) -- (0,0); \draw[fermion] (0,0) -- (1.1,0);
+  \draw[scalar] (0,0) -- (0,0.55);
+  \node[blob,minimum size=0.5cm] at (0,0.8) {$T$};
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (0.25,0.3) {$H$};
+  \node[font=\scriptsize] at (-0.95,0.22) {$d_j$}; \node[font=\scriptsize] at (0.95,0.22) {$d_i$};
+  \node[slab] at (0,-0.85) {(e) タドポール\\対角（$i=j$）};
+\end{scope}
+% (f) counterterm
+\begin{scope}[shift={(15.0,0)}]
+  \draw[fermion] (-1.1,0) -- (0,0); \draw[fermion] (0,0) -- (1.1,0);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.95,0.22) {$d_j$}; \node[font=\scriptsize] at (0.95,0.22) {$d_i$};
+  \node[slab] at (0,-0.85) {(f) 対抗項\\$\delta Z^{L,R}_{ij}$、$\delta M_{ij}$};
+\end{scope}
+\end{tikzpicture}
+\caption{下型のクォークの自己エネルギーの行列 $\Sigma_{ij}$（式~\eqref{eq:Gammaq}、$d_j$ が入り $d_i$ が出る）の図。世代を変えるのは $W^\pm$ と $G^\pm$ のループ (a)、(b) だけで、内線の $u_k$ について $\lambda^{(ij)}_k=V_{ki}^*V_{kj}$ を掛けて足す。(a) の紫外の極は $m_{u_k}$ によらず、ユニタリー性で非対角の成分が消える。非対角の紫外の極は (b) の $m_{u_k}^2$ に比例する部分だけで、$\xi_W$ によらない（式~\eqref{eq:uvoff}）。$\xi_W$ はどちらの有限部分にも入る。中性の場のループ (c)、(d) とタドポールの付いた図 (e) は対角で、SM ノートの図~4 のトップの (i)〜(n) と同じ形である。(f) は $\MSbar$ の対抗項で、非対角の成分は場の繰り込みと質量の対抗項 $\delta M_{ij}=-\frac34\frac{\DUV}K(V^\dagger D_uV)_{ij}m_{d_j}$（\ref{app:rg}）からなる。上型のクォークでは $V$ と $V^\dagger$、$u$ と $d$ を入れ替える。}
+\label{fig:seckm}
+\end{figure}
 
 \paragraph{紫外の極。}$\MSbar$ のエルミートな場の繰り込みと $\delta Y$（\ref{app:rg}）から、非対角の成分（$i\ne j$）の紫外の極は
 \begin{equation}
@@ -297,7 +450,83 @@ X=\begin{cases}V^\dagger D_uV&(d\ \text{型})\\ VD_dV^\dagger&(u\ \text{型})\en
 \delta V^{\mathrm{DS}}=\frac14\Bigl[\bigl(\delta Z^{u,L}-\delta Z^{u,L\dagger}\bigr)V-V\bigl(\delta Z^{d,L}-\delta Z^{d,L\dagger}\bigr)\Bigr]
 \label{eq:dVds}
 \end{equation}
-とした。式~\eqref{eq:uvoff} を式~\eqref{eq:dZos}、\eqref{eq:dVds} に入れると、$\delta V^{\mathrm{DS}}$ の紫外の極は式~\eqref{eq:dV} の $\MSbar$ の $\delta V$（式~\eqref{eq:Vrun} の位相の約束）にちょうど等しい（\ref{app:rg}）。違いは有限部分で、$\delta V^{\mathrm{DS}}$ の有限部分は自己エネルギーの非対角の有限部分を通じて $\xi_W$ に依存する~\cite{ggm99,yamada01}。$\MSbar$ では、外線の世代の混合は、$\MSbar$ で繰り込んだ自己エネルギーから式~\eqref{eq:dZos} の形で作る有限の場の定数で扱い、それと頂点の補正の和が $\xi$ によらないはずである（手順 (5) で確かめる）。
+とした。式~\eqref{eq:uvoff} を式~\eqref{eq:dZos}、\eqref{eq:dVds} に入れると、$\delta V^{\mathrm{DS}}$ の紫外の極は式~\eqref{eq:dV} の $\MSbar$ の $\delta V$（式~\eqref{eq:Vrun} の位相の約束）にちょうど等しい（\ref{app:rg}）。違いは有限部分で、$\delta V^{\mathrm{DS}}$ の有限部分は自己エネルギーの非対角の有限部分を通じて $\xi_W$ に依存する~\cite{ggm99,yamada01}。$\MSbar$ では、外線の世代の混合は、$\MSbar$ で繰り込んだ自己エネルギーから式~\eqref{eq:dZos} の形で作る有限の場の定数で扱い、それと頂点の補正の和が $\xi$ によらないはずである（手順 (5) で確かめる）。$W^+\to u_i\bar d_j$ のどの図に世代の混合が入るかを図~\ref{fig:wud} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.88]
+% (a) neutral exchange between the outgoing quarks
+\begin{scope}[shift={(0.6,0)}]
+  \draw[photon] (-1.0,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0.42); \draw[fermion] (0.6,0.42) -- (1.2,0.84);
+  \draw[fermion] (1.2,-0.84) -- (0.6,-0.42); \draw[fermion] (0.6,-0.42) -- (0,0);
+  \draw[photon] (0.6,0.42) -- (0.6,-0.42);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.42) {}; \node[vtx] at (0.6,-0.42) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize,anchor=west] at (1.2,0.84) {$u_i$}; \node[font=\scriptsize,anchor=west] at (1.2,-0.84) {$\bar d_j$};
+  \node[font=\scriptsize,anchor=west] at (0.72,0) {$\gamma$、$Z$、$G$};
+  \node[slab] at (0.2,-1.35) {(a) 中性の場の交換\\（$H$、$G^0$ も）：$V_{ij}$};
+\end{scope}
+% (b) boson triangle
+\begin{scope}[shift={(4.1,0)}]
+  \draw[photon] (-1.0,0) -- (0,0);
+  \draw[photon] (0,0) -- (0.75,0.5); \draw[photon] (0,0) -- (0.75,-0.5);
+  \draw[fermion] (1.3,-0.85) -- (0.75,-0.5); \draw[fermion] (0.75,-0.5) -- (0.75,0.5); \draw[fermion] (0.75,0.5) -- (1.3,0.85);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0.5) {}; \node[vtx] at (0.75,-0.5) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize,anchor=west] at (1.3,0.85) {$u_i$}; \node[font=\scriptsize,anchor=west] at (1.3,-0.85) {$\bar d_j$};
+  \node[font=\scriptsize] at (1.0,0) {$d_j$};
+  \node[font=\scriptsize] at (0.1,0.55) {$W^+$};
+  \node[font=\scriptsize] at (0.1,-0.58) {$\gamma$、$Z$};
+  \node[slab] at (0.2,-1.35) {(b) ボソンの三角\\（$G^+$、$H$ も）：$V_{ij}$};
+\end{scope}
+% (c) off-diagonal self-energy on the u leg
+\begin{scope}[shift={(7.6,0)}]
+  \draw[photon] (-1.0,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.55,0.385); \draw[fermion] (0.75,0.525) -- (1.25,0.875);
+  \draw[fermion] (1.25,-0.875) -- (0,0);
+  \node[blob,minimum size=0.32cm] at (0.65,0.455) {};
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize] at (0.12,0.42) {$u_k$};
+  \node[font=\scriptsize,anchor=west] at (1.25,0.875) {$u_i$}; \node[font=\scriptsize,anchor=west] at (1.25,-0.875) {$\bar d_j$};
+  \node[slab] at (0.2,-1.35) {(c) 外線の混合\\$\Sigma^u_{ik}V_{kj}$};
+\end{scope}
+% (d) off-diagonal self-energy on the dbar leg
+\begin{scope}[shift={(11.0,0)}]
+  \draw[photon] (-1.0,0) -- (0,0);
+  \draw[fermion] (0,0) -- (1.25,0.875);
+  \draw[fermion] (1.25,-0.875) -- (0.75,-0.525); \draw[fermion] (0.55,-0.385) -- (0,0);
+  \node[blob,minimum size=0.32cm] at (0.65,-0.455) {};
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize] at (0.12,-0.45) {$d_k$};
+  \node[font=\scriptsize,anchor=west] at (1.25,0.875) {$u_i$}; \node[font=\scriptsize,anchor=west] at (1.25,-0.875) {$\bar d_j$};
+  \node[slab] at (0.2,-1.35) {(d) 外線の混合\\$V_{ik}\Sigma^d_{kj}$};
+\end{scope}
+% (e) W self-energy on the external W
+\begin{scope}[shift={(14.3,0)}]
+  \draw[photon] (-1.2,0) -- (-0.75,0); \draw[photon] (-0.35,0) -- (0,0);
+  \node[blob,minimum size=0.4cm] at (-0.55,0) {};
+  \draw[fermion] (0,0) -- (0.85,0.6); \draw[fermion] (0.85,-0.6) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.95,0.3) {$W^+$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$u_i$}; \node[font=\scriptsize,anchor=west] at (0.85,-0.6) {$\bar d_j$};
+  \node[slab] at (-0.1,-1.35) {(e) $\Sigma^{WW}$\\$V_{ij}$};
+\end{scope}
+% (f) counterterm
+\begin{scope}[shift={(17.0,0)}]
+  \draw[photon] (-1.0,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.85,0.6); \draw[fermion] (0.85,-0.6) -- (0,0);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$u_i$}; \node[font=\scriptsize,anchor=west] at (0.85,-0.6) {$\bar d_j$};
+  \node[slab] at (0,-1.35) {(f) 対抗項\\$\delta V_{ij}$ と $\delta Z$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (5) で求める $W^+\to u_i\bar d_j$ の1ループの図の型。(a)、(b) の頂点の補正では、$W^+$ に付く荷電の頂点が一つで、残りは中性の対角な結合なので、$V_{ij}$ に比例する（荷電のボソンを2本含む頂点の補正はない）。(e) の $W$ の自己エネルギーも $V_{ij}$ に比例する。世代の混合が入るのは、外線の自己エネルギーの非対角の成分 (c)、(d)（図~\ref{fig:seckm} (a)、(b)）と CKM の対抗項 (f) だけで、(c) と (d) は内線の世代 $k$ について足す。$\MSbar$ の振幅では、(c)、(d) は $\MSbar$ で繰り込んだ自己エネルギーから作る有限の場の定数（式~\eqref{eq:dZos} の形）になり、それと (a)、(b) の $\xi$ 依存の和が $\xi$ によらないはずである。$\delta V$ を $\delta V^{\mathrm{DS}}$ に替えると $\xi$ 依存が残ると指摘されている~\cite{ggm99,yamada01}。}
+\label{fig:wud}
+\end{figure}
 
 \subsection{世代を変える1ループの過程}\label{sec:fcnc}
 
@@ -306,7 +535,97 @@ $d_j\to d_i$（$i\ne j$）の中性の遷移は1ループで初めて現れ、�
 \mathcal A(d_j\to d_i)=\sum_k\lambda^{(ij)}_kF(x_k)=\sum_k\lambda^{(ij)}_k\bigl[F(x_k)-F(0)\bigr]
 \label{eq:gim}
 \end{equation}
-の形になる（$x_k=m_{u_k}^2/M_W^2$。2つ目の等号は $\sum_k\lambda^{(ij)}_k=0$）。$F$ の定数の部分は打ち消し、質量の差だけが残る（GIM の機構~\cite{gim70}）。基準点の $b\to s$ では $\lambda_t=-0.04107+0.00076i$、$\lambda_c=0.04072$、$|\lambda_u|=8.4\times10^{-4}$ で、ほぼ $\lambda_t[F(x_t)-F(x_c)]$ になる。$\Delta F=2$ の箱の図（図~\ref{fig:ckmdiag} (e)）は二つの内線の和 $\sum_{k,l}\lambda_k\lambda_lS(x_k,x_l)$ になる。本ノートで求めるのは、(a) $b\to s\gamma$ の on-shell の双極子の振幅、(b) on-shell の $Z\to b\bar s$ の振幅（外線の世代の混合を含む）、(c) 外線の運動量を0にした $\Delta F=2$ の箱の図の和である。どれも個々の図は $\xi$ に依存し、和が $\xi$ によらないはずである。文献の Inami--Lim の関数~\cite{il81} は、本ノートの図から求めた値と比べる参照にとどめる。(c) から $K$、$B$ 中間子の質量差と $\epsilon_K$ を出すには、ハドロンの行列要素（格子 QCD）と QCD の補正の因子が要り、それらは文献の値を入力として明示して使う。
+の形になる（$x_k=m_{u_k}^2/M_W^2$。2つ目の等号は $\sum_k\lambda^{(ij)}_k=0$）。$F$ の定数の部分は打ち消し、質量の差だけが残る（GIM の機構~\cite{gim70}）。基準点の $b\to s$ では $\lambda_t=-0.04107+0.00076i$、$\lambda_c=0.04072$、$|\lambda_u|=8.4\times10^{-4}$ で、ほぼ $\lambda_t[F(x_t)-F(x_c)]$ になる。$\Delta F=2$ の箱の図（図~\ref{fig:ckmdiag} (e)）は二つの内線の和 $\sum_{k,l}\lambda_k\lambda_lS(x_k,x_l)$ になる。本ノートで求めるのは、(a) $b\to s\gamma$ の on-shell の双極子の振幅、(b) on-shell の $Z\to b\bar s$ の振幅（外線の世代の混合を含む）、(c) 外線の運動量を0にした $\Delta F=2$ の箱の図の和である。どれも個々の図は $\xi$ に依存し、和が $\xi$ によらないはずである。文献の Inami--Lim の関数~\cite{il81} は、本ノートの図から求めた値と比べる参照にとどめる。(c) から $K$、$B$ 中間子の質量差と $\epsilon_K$ を出すには、ハドロンの行列要素（格子 QCD）と QCD の補正の因子が要り、それらは文献の値を入力として明示して使う。それぞれの図の型を図~\ref{fig:fcncdiag} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a), (b): photon from the internal u_k with a W or a G loop
+\foreach \x/\sty/\arc/\lbl in {0/photon/{$W^-$}/{(a) $\gamma$ が $u_k$ に付く\\$W$ のループ}, 3.3/scalar/{$G^-$}/{(b) $\gamma$ が $u_k$ に付く\\$G^\pm$ のループ}} {
+  \begin{scope}[shift={(\x,0)}]
+    \draw[fermion] (-1.25,0) -- (-0.65,0); \draw[fermion] (-0.65,0) -- (0,0); \draw[fermion] (0,0) -- (0.65,0); \draw[fermion] (0.65,0) -- (1.25,0);
+    \draw[\sty] (-0.65,0) arc (180:0:0.65);
+    \draw[photon] (0,0) -- (0,-0.7);
+    \node[vtx] at (-0.65,0) {}; \node[vtx] at (0.65,0) {}; \node[vtx] at (0,0) {};
+    \node[font=\scriptsize] at (-1.1,0.22) {$b$}; \node[font=\scriptsize] at (1.1,0.22) {$s$};
+    \node[font=\scriptsize] at (-0.36,-0.22) {$u_k$}; \node[font=\scriptsize] at (0,0.92) {\arc};
+    \node[font=\scriptsize] at (0.25,-0.62) {$\gamma$};
+    \node[slab] at (0,-1.25) {\lbl};
+  \end{scope}}
+% (c), (d): photon from the boson line
+\foreach \x/\sty/\arc/\lbl in {6.6/photon/{$W^-$}/{(c) $\gamma W^+W^-$}, 9.9/scalar/{$G^-$}/{(d) $\gamma G^+G^-$}} {
+  \begin{scope}[shift={(\x,0)}]
+    \draw[fermion] (-1.25,0) -- (-0.65,0); \draw[fermion] (-0.65,0) -- (0.65,0); \draw[fermion] (0.65,0) -- (1.25,0);
+    \draw[\sty] (-0.65,0) arc (180:0:0.65);
+    \draw[photon] (0,0.65) -- (0,1.25);
+    \node[vtx] at (-0.65,0) {}; \node[vtx] at (0.65,0) {}; \node[vtx] at (0,0.65) {};
+    \node[font=\scriptsize] at (-1.1,0.22) {$b$}; \node[font=\scriptsize] at (1.1,0.22) {$s$};
+    \node[font=\scriptsize] at (0,-0.22) {$u_k$}; \node[font=\scriptsize] at (-0.72,0.62) {\arc};
+    \node[font=\scriptsize] at (0.25,1.15) {$\gamma$};
+    \node[slab] at (0,-1.25) {\lbl};
+  \end{scope}}
+% (e): the gamma W G vertex
+\begin{scope}[shift={(13.2,0)}]
+  \draw[fermion] (-1.25,0) -- (-0.65,0); \draw[fermion] (-0.65,0) -- (0.65,0); \draw[fermion] (0.65,0) -- (1.25,0);
+  \draw[photon] (-0.65,0) arc (180:90:0.65); \draw[scalar] (0,0.65) arc (90:0:0.65);
+  \draw[photon] (0,0.65) -- (0,1.25);
+  \node[vtx] at (-0.65,0) {}; \node[vtx] at (0.65,0) {}; \node[vtx] at (0,0.65) {};
+  \node[font=\scriptsize] at (-1.1,0.22) {$b$}; \node[font=\scriptsize] at (1.1,0.22) {$s$};
+  \node[font=\scriptsize] at (0,-0.22) {$u_k$};
+  \node[font=\scriptsize] at (-0.75,0.6) {$W^-$}; \node[font=\scriptsize] at (0.75,0.6) {$G^-$};
+  \node[font=\scriptsize] at (0.25,1.15) {$\gamma$};
+  \node[slab] at (0,-1.25) {(e) $\gamma W^\mp G^\pm$\\（逆の組も）};
+\end{scope}
+% (f): photon from the external leg and the off-diagonal self-energy
+\begin{scope}[shift={(0.3,-3.5)}]
+  \draw[fermion] (-1.3,0) -- (-0.7,0); \draw[fermion] (-0.7,0) -- (0.05,0); \draw[fermion] (0.45,0) -- (1.1,0);
+  \node[blob,minimum size=0.4cm] at (0.25,0) {};
+  \draw[photon] (-0.7,0) -- (-0.7,-0.7);
+  \node[vtx] at (-0.7,0) {};
+  \node[font=\scriptsize] at (-1.15,0.22) {$b$}; \node[font=\scriptsize] at (-0.3,0.22) {$b$}; \node[font=\scriptsize] at (0.95,0.22) {$s$};
+  \node[font=\scriptsize] at (0.25,0.4) {$\Sigma_{sb}$};
+  \node[font=\scriptsize] at (-0.45,-0.62) {$\gamma$};
+  \node[slab] at (0,-1.25) {(f) 外線の混合\\（$s$ の側に $\gamma$ も）};
+\end{scope}
+% (g) box with vertical bosons
+\begin{scope}[shift={(4.4,-3.3)}]
+  \draw[fermion] (-1.1,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (0.55,0.55); \draw[fermion] (0.55,0.55) -- (1.1,0.55);
+  \draw[fermion] (1.1,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (-0.55,-0.55); \draw[fermion] (-0.55,-0.55) -- (-1.1,-0.55);
+  \draw[photon] (-0.55,0.55) -- (-0.55,-0.55); \draw[photon] (0.55,0.55) -- (0.55,-0.55);
+  \node[vtx] at (-0.55,0.55) {}; \node[vtx] at (0.55,0.55) {}; \node[vtx] at (-0.55,-0.55) {}; \node[vtx] at (0.55,-0.55) {};
+  \node[font=\scriptsize] at (-1.0,0.78) {$b$}; \node[font=\scriptsize] at (1.0,0.78) {$s$};
+  \node[font=\scriptsize] at (-1.0,-0.78) {$s$}; \node[font=\scriptsize] at (1.0,-0.78) {$b$};
+  \node[font=\scriptsize] at (0,0.78) {$u_k$}; \node[font=\scriptsize] at (0,-0.78) {$u_l$};
+  \node[slab] at (0,-1.45) {(g) $\Delta F=2$ の箱\\縦の線が $W$ か $G^\pm$};
+\end{scope}
+% (h) box with horizontal bosons
+\begin{scope}[shift={(8.2,-3.3)}]
+  \draw[fermion] (-1.1,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55); \draw[fermion] (-0.55,-0.55) -- (-1.1,-0.55);
+  \draw[fermion] (1.1,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (0.55,0.55); \draw[fermion] (0.55,0.55) -- (1.1,0.55);
+  \draw[photon] (-0.55,0.55) -- (0.55,0.55); \draw[photon] (-0.55,-0.55) -- (0.55,-0.55);
+  \node[vtx] at (-0.55,0.55) {}; \node[vtx] at (0.55,0.55) {}; \node[vtx] at (-0.55,-0.55) {}; \node[vtx] at (0.55,-0.55) {};
+  \node[font=\scriptsize] at (-1.0,0.78) {$b$}; \node[font=\scriptsize] at (1.0,0.78) {$s$};
+  \node[font=\scriptsize] at (-1.0,-0.78) {$s$}; \node[font=\scriptsize] at (1.0,-0.78) {$b$};
+  \node[font=\scriptsize] at (-0.8,0) {$u_k$}; \node[font=\scriptsize] at (0.8,0) {$u_l$};
+  \node[slab] at (0,-1.45) {(h) もう一つの箱\\横の線が $W$ か $G^\pm$};
+\end{scope}
+% (i) Z -> b sbar: Z coupling to the W loop and to u_k
+\begin{scope}[shift={(12.2,-3.5)}]
+  \draw[photon] (-1.2,0) -- (-0.55,0);
+  \draw[fermion] (-0.55,0) -- (0.25,0.6); \draw[fermion] (0.25,0.6) -- (0.95,1.0);
+  \draw[fermion] (0.95,-1.0) -- (0.25,-0.6); \draw[fermion] (0.25,-0.6) -- (-0.55,0);
+  \draw[photon] (0.25,0.6) -- (0.25,-0.6);
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.25,0.6) {}; \node[vtx] at (0.25,-0.6) {};
+  \node[font=\scriptsize] at (-0.95,0.25) {$Z$};
+  \node[font=\scriptsize,anchor=west] at (0.95,1.0) {$b$}; \node[font=\scriptsize,anchor=west] at (0.95,-1.0) {$\bar s$};
+  \node[font=\scriptsize] at (-0.3,0.45) {$u_k$}; \node[font=\scriptsize] at (-0.3,-0.45) {$u_k$};
+  \node[font=\scriptsize,anchor=west] at (0.32,0) {$W$、$G^\pm$};
+  \node[slab] at (0.1,-1.45) {(i) $Z\to b\bar s$ の一つ\\（$Z$ が $W$、$G^\pm$ に付く図も）};
+\end{scope}
+\end{tikzpicture}
+\caption{世代を変える1ループの過程の図（第~\ref{sec:fcnc} 節）。(a)〜(f) は $b\to s\gamma$ の図の型で、内線の $u_k$ について $\lambda^{(sb)}_k=V_{ks}^*V_{kb}$ を掛けて足す。$\gamma$ はループの $u_k$（(a)、(b)）、荷電のボソン（(c)、(d)）、$\gamma W^\mp G^\pm$ の頂点（(e)、$eM_W$ に比例）に付き、外線の $b$、$s$ に付く図 (f) には非対角の自己エネルギー（図~\ref{fig:seckm} (a)、(b)）が入る。$\xi_W$ は個々の図に入り、on-shell の振幅の和で打ち消すはずである（手順 (7)）。(g)、(h) は $B_s$ の混合（$b\bar s\to s\bar b$）の二つの位相の箱の図で、縦（(g)）または横（(h)）の2本が $(W,W)$、$(W,G^\pm)$、$(G^\pm,W)$、$(G^\pm,G^\pm)$ の4通りあり、$\sum_{k,l}\lambda_k\lambda_l$ を掛ける（手順 (8)）。(i) は $Z\to b\bar s$ の図の一つで、$Z$ は内線の $u_k$ のほか、$W$ と $G^\pm$ にも付き、外線の混合の図も加わる。$K$ と $B_d$ では $s,b$ を $d,s$、$d,b$ に替える。}
+\label{fig:fcncdiag}
+\end{figure}
 
 \section{検算の計画}\label{sec:plan}
 
@@ -333,7 +652,7 @@ $V$ と $J$ の高いスケールまでの走り & 手順 (10) & — & 常微分
 
 \paragraph{一致の基準。}SM ノートと同じである。発散部分と対抗項は $1/\epsilon$ の係数が記号として完全に一致することを、有限部分は基準点で倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。$\xi$ によらないはずの量は、記号として $\xi$ を含まないこと、または $\xi=0,1,3$ で同じ値になることを求める。$V$ を含む式は、$V$ を一般の複素行列の記号のまま比べるか、標準のパラメータ表示 \eqref{eq:Vstd} を入れてユニタリー性を使って比べる。応用の手順では、比べる値の精度の範囲で一致することを求め、その精度を各手順に示す。
 
-\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{SM\_CKM.fr} を SM ノートの \texttt{SM.fr} から作り、FeynArts の模型と UFO を書き出す。93個の頂点を $V$ を一般の複素行列とした表と比べ、ユニタリー性の規則を標準のパラメータ表示で確かめ、$V=1$ で SM ノートの頂点と比べる。MadGraph の図の数を、$V$ の非対角の成分を要する過程を含めて手で数えた数と比べる。(2) 木の振幅の2乗を FeynCalc で記号として確かめ、式~\eqref{eq:widthsckm} と、ユニタリー性による和（$\sum_j\Gamma(t\to d_jW)$、$W$ のハドロンへの幅、$u\bar u\to W^+W^-$）を確かめ、MadGraph の幅と断面積と比べる。(3) クォークの自己エネルギーを世代の行列として一般の $R_\xi$ ゲージで $D$ 次元で求め、非対角の紫外の極が式~\eqref{eq:uvoff} で $\xi$ によらないこと、$V=1$ で SM ノートの値になること、有限部分の $\xi$ 依存を確かめる。$\delta V^{\mathrm{DS}}$ の紫外の極が $\MSbar$ の $\delta V$ に等しいことと、その有限部分が $\xi_W$ に依存することを求める。$V$ を厳密に入れた $W$ とトップの極質量と $\hat\Delta$ の変化を、SM ノートの見積もり（\texttt{ckm\_estimate.wl}）と比べる。(4) 湯川行列の $\beta$ 関数 \eqref{eq:betaY} を、2点関数（と $\bar u dG^+$ の頂点）の極と、一般の公式~\cite{mv1,mv2,luo03} を行列のまま組んだ実装の二つで確かめ、式~\eqref{eq:yrun}、\eqref{eq:Vrun} を導く。(5) $W^+\to u_i\bar d_j$ の1ループの電弱の振幅を、$\MSbar$ の $V$ と外線の世代の混合の有限な場の定数で一般の $R_\xi$ ゲージで求め、紫外で有限で $\xi$ によらないことを確かめる。$\delta V^{\mathrm{DS}}$ を使うと $\xi$ に依存することを示し、Feynman ゲージで FormCalc（\texttt{SM.mod} の Denner--Sack の対抗項）と比べる。(6) 外線の運動量を0にした $d_j\to u_ie\bar\nu_e$ の1ループの4フェルミの振幅を $\mu$ 崩壊（SM ノートの手順 (6)）と比べ、セミレプトニックな崩壊で測る $|V_{ij}|$ と $\MSbar$ の $V(\mu)$ の関係を求め、PDG の $|V_{ij}|$ から $V(M_Z)$、$V(M_t)$ を決める。(7) $b\to s\gamma$ の on-shell の双極子の振幅と on-shell の $Z\to b\bar s$ の振幅を一般の $R_\xi$ ゲージで求め、$\xi$ によらないこと、GIM の機構 \eqref{eq:gim} を確かめ、Inami--Lim の関数~\cite{il81} と比べる。(8) $\Delta F=2$ の箱の図の和を外線の運動量を0にして一般の $R_\xi$ ゲージで求め、GIM の後で $\xi$ によらないことを確かめる。ハドロンの入力（明示した文献の値）で $B_d$、$B_s$ の質量差と $\epsilon_K$ を求め、測定値と比べる。(9) 本ノートの UFO と NLOCT の R2 の頂点で、MadLoop の世代を変えるループの振幅を手順 (7) の値と比べる。SM ノートの FJ の対抗項の UFO に CKM の対抗項を加え、$W\to u_i\bar d_j$ を手順 (5) と比べる。(10) 手順 (4) の本ノートの方程式で $V$ と $J$ を $M_{\mathrm{Pl}}$ まで走らせ、文献の値と比べる（文献の値は参照にとどめる）。
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{SM\_CKM.fr} を SM ノートの \texttt{SM.fr} から作り、FeynArts の模型と UFO を書き出す。93個の頂点を $V$ を一般の複素行列とした表と比べ、ユニタリー性の規則を標準のパラメータ表示で確かめ、$V=1$ で SM ノートの頂点と比べる。MadGraph の図の数を、$V$ の非対角の成分を要する過程を含めて手で数えた数と比べる。(2) 木の振幅の2乗を FeynCalc で記号として確かめ、式~\eqref{eq:widthsckm} と、ユニタリー性による和（$\sum_j\Gamma(t\to d_jW)$、$W$ のハドロンへの幅、$u\bar u\to W^+W^-$）を確かめ、MadGraph の幅と断面積と比べる。(3) クォークの自己エネルギーを世代の行列として一般の $R_\xi$ ゲージで $D$ 次元で求め（図~\ref{fig:seckm}）、非対角の紫外の極が式~\eqref{eq:uvoff} で $\xi$ によらないこと、$V=1$ で SM ノートの値になること、有限部分の $\xi$ 依存を確かめる。$\delta V^{\mathrm{DS}}$ の紫外の極が $\MSbar$ の $\delta V$ に等しいことと、その有限部分が $\xi_W$ に依存することを求める。$V$ を厳密に入れた $W$ とトップの極質量と $\hat\Delta$ の変化を、SM ノートの見積もり（\texttt{ckm\_estimate.wl}）と比べる。(4) 湯川行列の $\beta$ 関数 \eqref{eq:betaY} を、2点関数（と $\bar u dG^+$ の頂点）の極と、一般の公式~\cite{mv1,mv2,luo03} を行列のまま組んだ実装の二つで確かめ、式~\eqref{eq:yrun}、\eqref{eq:Vrun} を導く。(5) $W^+\to u_i\bar d_j$ の1ループの電弱の振幅（図~\ref{fig:wud}）を、$\MSbar$ の $V$ と外線の世代の混合の有限な場の定数で一般の $R_\xi$ ゲージで求め、紫外で有限で $\xi$ によらないことを確かめる。$\delta V^{\mathrm{DS}}$ を使うと $\xi$ に依存することを示し、Feynman ゲージで FormCalc（\texttt{SM.mod} の Denner--Sack の対抗項）と比べる。(6) 外線の運動量を0にした $d_j\to u_ie\bar\nu_e$ の1ループの4フェルミの振幅を $\mu$ 崩壊（SM ノートの手順 (6)）と比べ、セミレプトニックな崩壊で測る $|V_{ij}|$ と $\MSbar$ の $V(\mu)$ の関係を求め、PDG の $|V_{ij}|$ から $V(M_Z)$、$V(M_t)$ を決める。(7) $b\to s\gamma$ の on-shell の双極子の振幅と on-shell の $Z\to b\bar s$ の振幅を一般の $R_\xi$ ゲージで求め（図~\ref{fig:fcncdiag} (a)〜(f)、(i)）、$\xi$ によらないこと、GIM の機構 \eqref{eq:gim} を確かめ、Inami--Lim の関数~\cite{il81} と比べる。(8) $\Delta F=2$ の箱の図（図~\ref{fig:fcncdiag} (g)、(h)）の和を外線の運動量を0にして一般の $R_\xi$ ゲージで求め、GIM の後で $\xi$ によらないことを確かめる。ハドロンの入力（明示した文献の値）で $B_d$、$B_s$ の質量差と $\epsilon_K$ を求め、測定値と比べる。(9) 本ノートの UFO と NLOCT の R2 の頂点で、MadLoop の世代を変えるループの振幅を手順 (7) の値と比べる。SM ノートの FJ の対抗項の UFO に CKM の対抗項を加え、$W\to u_i\bar d_j$ を手順 (5) と比べる。(10) 手順 (4) の本ノートの方程式で $V$ と $J$ を $M_{\mathrm{Pl}}$ まで走らせ、文献の値と比べる（文献の値は参照にとどめる）。
 
 \section{検算}\label{sec:checks}
 
@@ -369,7 +688,7 @@ $d\bar s\to\mu^+\mu^-$、$s\bar b\to Z$、$b\bar s\to\gamma g$、$u\bar c\to e^+
 \end{tabularx}
 \end{table}
 
-\paragraph{手順 (2)：木の振幅の2乗と崩壊幅。}スクリプト \texttt{tree\_ckm\_feyncalc.wl} は、本ノートの FeynArts の模型で13個の振幅の2乗を FeynCalc で求め、手計算の式とすべて記号として一致させた。$V_{ij}$ は実の記号で $v^R_{ij}+iv^I_{ij}$ と書いた。FeynCalc の \texttt{ComplexConjugate} は記号を実数として扱い、明示的な $i$ だけを反転するので、こう書くと $|V_{ij}|^2=(v^R_{ij})^2+(v^I_{ij})^2$ が正しく出る。内訳は次の通りである。(i) $W^+\to u_i\bar d_j$ の4個（$u\bar d$、$u\bar s$、$c\bar b$ と、閾値より上の質量を入れた $t\bar d$）が式~\eqref{eq:widthsckm} の $|V_{ij}|^2$ 倍の式に、$t\to d_jW^+$ の3個が $|V_{tj}|^2$ 倍の式に一致した。(ii) $\bar t\to\bar bW^-$ の2乗は $t\to bW^+$ と等しく、木のレベルで CP が破れないことを確かめた。(iii) 質量0の $u_i\bar d_j\to\nu_ee^+$ の3個（$u\bar d$、$u\bar s$、$c\bar b$）と $u\bar u\to d\bar s$ が式~\eqref{eq:qqbar} に一致し、$\xi$ を含まなかった。(iv) $u\bar u\to W^+W^-$ の2乗は $\xi_A,\xi_Z,\xi_W$ によらず、$V_{uk}$ の6個の実の記号を含む。そこに標準のパラメータ表示を記号の角度で入れると、$V=1$ の値に記号として等しくなった（$\sum_k|V_{uk}|^2=1$）。(v) トップと $s$ の質量を残した $t\bar s\to W^+H$（$s$ チャンネルの $W$ と $G^+$、$t$ チャンネルのトップ、$u$ チャンネルの $s$）は、振幅が $\xi_W$ を含むが、2乗は $\xi_W$ によらず、$|V_{ts}|^2$ で割ると CKM の記号を含まなかった。$G^+$ の図と $W$ の伝播関数の $\xi_W$ の部分が打ち消すには、$G^+$ の頂点が $W$ の頂点と同じ $V_{ts}^*$ を持つ必要がある。$W$ と $G^\pm$ の頂点の CKM 行列の整合を、ゲージ不変性で確かめたことになる。
+\paragraph{手順 (2)：木の振幅の2乗と崩壊幅。}スクリプト \texttt{tree\_ckm\_feyncalc.wl} は、本ノートの FeynArts の模型で13個の振幅の2乗を FeynCalc で求め、手計算の式とすべて記号として一致させた。$V_{ij}$ は実の記号で $v^R_{ij}+iv^I_{ij}$ と書いた。FeynCalc の \texttt{ComplexConjugate} は記号を実数として扱い、明示的な $i$ だけを反転するので、こう書くと $|V_{ij}|^2=(v^R_{ij})^2+(v^I_{ij})^2$ が正しく出る。内訳は次の通りである（図は図~\ref{fig:treeckm}）。(i) $W^+\to u_i\bar d_j$ の4個（$u\bar d$、$u\bar s$、$c\bar b$ と、閾値より上の質量を入れた $t\bar d$）が式~\eqref{eq:widthsckm} の $|V_{ij}|^2$ 倍の式に、$t\to d_jW^+$ の3個が $|V_{tj}|^2$ 倍の式に一致した。(ii) $\bar t\to\bar bW^-$ の2乗は $t\to bW^+$ と等しく、木のレベルで CP が破れないことを確かめた。(iii) 質量0の $u_i\bar d_j\to\nu_ee^+$ の3個（$u\bar d$、$u\bar s$、$c\bar b$）と $u\bar u\to d\bar s$ が式~\eqref{eq:qqbar} に一致し、$\xi$ を含まなかった。(iv) $u\bar u\to W^+W^-$ の2乗は $\xi_A,\xi_Z,\xi_W$ によらず、$V_{uk}$ の6個の実の記号を含む。そこに標準のパラメータ表示を記号の角度で入れると、$V=1$ の値に記号として等しくなった（$\sum_k|V_{uk}|^2=1$）。(v) トップと $s$ の質量を残した $t\bar s\to W^+H$（$s$ チャンネルの $W$ と $G^+$、$t$ チャンネルのトップ、$u$ チャンネルの $s$。FeynArts は世代を変える $H$ の結合を持つ図も含めて8個を作り、その4個は対角の湯川結合で0になる）は、振幅が $\xi_W$ を含むが、2乗は $\xi_W$ によらず、$|V_{ts}|^2$ で割ると CKM の記号を含まなかった。$G^+$ の図と $W$ の伝播関数の $\xi_W$ の部分が打ち消すには、$G^+$ の頂点が $W$ の頂点と同じ $V_{ts}^*$ を持つ必要がある。$W$ と $G^\pm$ の頂点の CKM 行列の整合を、ゲージ不変性で確かめたことになる。
 
 最初の実行では $u\bar u\to d\bar s$ だけが合わず、差は $9t^2(\cdots)/(t-\xi_WM_W^2)^2$ の形で、質量0では消えるはずの $t$ チャンネルの $G^+$ の図が残った。FeynArts の模型は $G^\pm$ の結合を世代の和（\texttt{IndexSum}）で書くが、FeynCalc の \texttt{FCFAConvert} は既定でこれを外し、和の添字を縮約されない添字（\texttt{CKM[1, Ind273]}、\texttt{yd[Ind273, 2]}）として残していた。対角の湯川結合の置き換えが効かず、$G^+$ の結合が0にならなかった。\texttt{DropIndexSum -> False} にして和を書き出して直し、振幅に \texttt{CKM} と \texttt{IndexSum} が残らないことを表示するようにした。
 

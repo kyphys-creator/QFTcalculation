@@ -105,6 +105,21 @@ gTC$ = ee/sw;
 Print["ComplexConjugate[(vR + I vI) GA[mu]] = ", ComplexConjugate[(vR[1, 2] + I vI[1, 2]) GA[mu]], "  (expect vR - I vI)"];
 
 
+(* ::Subsubsection:: *)
+(*Inspect: the diagrams evaluated below (note Fig. treeckm)*)
+
+
+paintTC$[d_] := Show /@ Render[Paint[d, DisplayFunction -> Identity]];
+If[$Notebooks, paintTC$ /@ {
+   diagsTC$[{V[3]}, {F[3, {1}], -F[4, {2}]}],                    (* W+ -> u sbar *)
+   diagsTC$[{F[3, {3}]}, {F[4, {2}], V[3]}],                     (* t -> s W+ *)
+   diagsTC$[{F[3, {1}], -F[4, {2}]}, {F[1, {1}], -F[2, {1}]}],   (* u sbar -> nu_e e+ *)
+   diagsTC$[{F[3, {1}], -F[3, {1}]}, {F[4, {1}], -F[4, {2}]}],   (* u ubar -> d sbar *)
+   diagsTC$[{F[3, {1}], -F[3, {1}]}, {V[3], -V[3]}],             (* u ubar -> W+ W- *)
+   diagsTC$[{F[3, {3}], -F[4, {2}]}, {V[3], S[1]}]}              (* t sbar -> W+ H *)
+]
+
+
 (* ::Section:: *)
 (*Two-body decays*)
 
