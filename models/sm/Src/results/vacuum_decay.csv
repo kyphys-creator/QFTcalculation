@@ -1,0 +1,11 @@
+case,start,rge,kappa,log10_Lambda_lambda_GeV,log10_Lambda_I_GeV,lambda_eff_min_xi,log10_h_min_xi_GeV,lambda_hat_min,log10_h_min_GeV,S,log10_invR_GeV,log10_P,log10_tau_yr
+note,B_note_PDG_yt_QCD3,note 2,1.0,11.2373,12.0355,-0.00719701,18.9683,-0.00822129,18.3863,3204.96,17.259,-1155.58,299.034
+"note, kappa = 1/2",B_note_PDG_yt_QCD3,note 2,0.5,11.2373,12.0772,-0.00715837,18.9874,-0.0082174,18.4196,3202.83,17.2909,-1154.52,298.771
+"note, kappa = 2",B_note_PDG_yt_QCD3,note 2,2.0,11.2373,11.9757,-0.00725209,18.9435,-0.00824397,18.3451,3192.51,17.2171,-1150.34,297.724
+"note, one-loop running",B_note_PDG_yt_QCD3,note 1,1.0,8.65981,9.35612,-0.0221968,19.0867,-0.0269485,18.585,976.637,17.7142,-186.009,56.6421
+"note, yt one-loop matching",B_note_PDG_yt_one_loop,note 2,1.0,8.53889,9.23329,-0.0202122,19.0867,-0.0241455,17.9683,1090.02,17.0736,-237.811,69.5926
+note matching of the Buttazzo inputs (M_t = 173.34 GeV),A_note_at_Buttazzo_inputs_yt_QCD3,note 2,1.0,10.2328,10.9898,-0.0106971,19.0713,-0.0123464,18.251,2131.72,17.2108,-689.667,182.557
+"reference: note start, literature 3-loop running",B_note_PDG_yt_QCD3,lit 3,1.0,11.4068,12.219,-0.00676358,18.9947,-0.0077192,18.4378,3409.54,17.2955,-1244.28,321.21
+"reference: Buttazzo NNLO start, literature 3-loop running",A_Buttazzo_NNLO,lit 3,1.0,9.79239,10.5397,-0.0123464,19.0683,-0.0142694,18.1308,1845.75,17.1237,-565.821,151.595
+P_equals_1,,,,,,,,-0.0483676,,544.144
+delta_yt_for_P_equals_1,,,,0.0342143

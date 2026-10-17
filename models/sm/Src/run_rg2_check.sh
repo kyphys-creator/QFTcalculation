@@ -1,5 +1,6 @@
 #!/bin/bash
-# Step (8) of the SM note: two-loop beta functions from the note's model and the running of the couplings.
+# Steps (8) and (10) of the SM note: two-loop beta functions from the note's model, the running of the couplings and the
+# decay of the electroweak vacuum.
 #   1. twoloop_sym_oneloop.wl: one-loop calibration of the normalizations (symmetric, gaugeless limit)
 #   2. twoloop_sym_feyncalc.wl, twoloop_sym_eval.wl: two-loop H, t, b, gluon, ghost two-point functions and the H t tbar vertex
 #      -> Z factors, beta_yt^(2), beta_gS^(2), gamma_Phi^(2) (Landau gauge)
@@ -10,6 +11,9 @@
 #   5. rg_run.py: running to M_Pl with the note's RGEs (one loop + the two-loop gaugeless terms of 2, 3) and, for comparison,
 #      the literature RGEs, from Buttazzo et al., Martin-Robertson and the step (7) values (needs results/msbar_fit.csv from
 #      run_fit_check.sh); zero of lambda; FJ versus beta_t masses; fig_rg.pdf
+#   6. vacuum_decay.py (step (10)): the RG-improved effective potential (Landau gauge, the note's RGEs from the step (7)
+#      values; symbolic checks against Eq. (beta), gamma_Phi and Eq. (T)), the instability scale, the bounce (shooting) and
+#      the decay probability; the literature start and RGEs as a reference -> results/vacuum_decay.csv, fig_veff.pdf
 # Needs Kira 3.1 and Fermat in ~/hep, AMFlow 2.0 in ~/hep/AMFlow-2.0 (about 12 minutes in all).
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
@@ -24,3 +28,4 @@ done
 python3 rg_twoloop.py 1 | tail -3
 python3 rg_twoloop.py 2 | tail -1
 python3 rg_run.py
+python3 vacuum_decay.py
