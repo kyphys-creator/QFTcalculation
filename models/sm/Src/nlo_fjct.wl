@@ -12,7 +12,7 @@
 (*  Z nu nubar: the tree vertex times [de/e - (1/2) dcw2 (1/cw^2 - 1/sw^2) + dZnu]  (de, dcw2 = dMW2/MZ^2 - MW^2 dMZ2/MZ^4 the*)
 (*              MS-bar poles; dZnu = -Sigma^L_nu(0) on shell, for the external legs; no Z field renormalization);*)
 (*the note's MS-bar parameters and the poles as 1/FR$Eps (NLOCT's convention: 1/FR$Eps = Delta_UV), the scale FR$MU.*)
-(*Writes results/nlo_fjct.m for nlo_ufo.wl.  Batch: wolframscript -file nlo_fjct.wl*)
+(*Writes results/nlo_fjct.m (the checks of nlo_fjdelta.wl; the note's Eq. (fjct)).  Batch: wolframscript -file nlo_fjct.wl*)
 
 
 (* ::Section:: *)

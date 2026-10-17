@@ -12,9 +12,10 @@
 #      and MU_R from MU_R.input
 #   5. (9b) the note's own NLO UFO: nlo_renormalize.wl (FeynRules + NLOCT, renormalized model, Feynman gauge),
 #      nlo_writect.wl (FeynArts + NLOCT: R2 vertices -> generated/SM_R2.m; SM_CT.nlo is not in git),
-#      nlo_fjct.wl (FeynCalc: the FJ counterterms in counterterm form), nlo_ufo.wl (FeynRules WriteUFO ->
-#      generated/SM_NLO_FJ_UFO); MadLoop with it -> work/ml_nunu_fj, and with it restricted to light masses and widths
-#      0 (restrict_light0.dat) -> work/ml_nunu_fj_r
+#      nlo_fjct.wl (FeynCalc: the FJ counterterms of this process), and the general FJ counterterms of step (9d):
+#      nlo_ctrules.wl, nlo_dz.wl, nlo_fjdelta.wl, nlo_ctparams.wl, nlo_ufo.wl (FeynRules WriteUFO ->
+#      generated/SM_NLO_FJ_UFO; other processes: run_fj_check.sh); MadLoop with it -> work/ml_nunu_fj, and with it
+#      restricted to light masses and widths 0 (restrict_light0.dat) -> work/ml_nunu_fj_r
 #   6. nunu_madloop.py sets the param_cards, runs mu_R = MZ and 500 GeV and compares -> results/nunu_madloop.csv
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
@@ -37,7 +38,7 @@ python3 patch_check_sa.py "$P/check_sa.f"
 (cd "$P" && make check > make.log 2>&1) || { echo "compilation failed, see $P/make.log"; exit 1; }
 
 echo "== (9b) the note's NLO UFO with the FJ counterterms"
-for f in nlo_renormalize nlo_writect nlo_fjct nlo_ufo; do
+for f in nlo_renormalize nlo_writect nlo_fjct nlo_ctrules nlo_dz nlo_fjdelta nlo_ctparams nlo_ufo; do
   echo "== $f"
   wolframscript -file "$f.wl" > "work/$f.log" 2>&1 || { echo "$f failed (work/$f.log)"; exit 1; }
   grep -E '^\([a-z]\) |^renormalized|^written|^NLOCT|^FJ|^decimal' "work/$f.log" | cut -c1-300

@@ -35,6 +35,13 @@ else:
    all_form_factors = form_factors.all_form_factors
 
 try:
+   import CT_parameters
+except ImportError:
+   pass
+else:
+   all_CTparameters = CT_parameters.all_CTparameters
+
+try:
    import CT_vertices
 except ImportError:
    pass

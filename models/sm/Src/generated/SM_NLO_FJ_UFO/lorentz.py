@@ -1,6 +1,6 @@
 # This file was automatically created by FeynRules 2.3.49
 # Mathematica version: 14.2.1 for Mac OS X ARM (64-bit) (March 16, 2025)
-# Date: Fri 16 Oct 2026 20:08:44
+# Date: Fri 16 Oct 2026 22:08:07
 
 
 from object_library import all_lorentz, Lorentz
@@ -16,6 +16,10 @@ S1 = Lorentz(name = 'S1',
              spins = [ 1 ],
              structure = '1')
 
+UU1 = Lorentz(name = 'UU1',
+              spins = [ -1, -1 ],
+              structure = '1')
+
 SS1 = Lorentz(name = 'SS1',
               spins = [ 1, 1 ],
               structure = '1')
@@ -26,6 +30,10 @@ SS2 = Lorentz(name = 'SS2',
 
 SS3 = Lorentz(name = 'SS3',
               spins = [ 1, 1 ],
+              structure = 'P(-1,1)*P(-1,2)')
+
+SS4 = Lorentz(name = 'SS4',
+              spins = [ 1, 1 ],
               structure = 'P(-1,2)**2')
 
 FF1 = Lorentz(name = 'FF1',
@@ -34,19 +42,27 @@ FF1 = Lorentz(name = 'FF1',
 
 FF2 = Lorentz(name = 'FF2',
               spins = [ 2, 2 ],
-              structure = 'ProjM(2,1)')
+              structure = 'Identity(2,1)')
 
 FF3 = Lorentz(name = 'FF3',
               spins = [ 2, 2 ],
-              structure = 'P(-1,1)*Gamma(-1,2,-2)*ProjM(-2,1)')
+              structure = 'ProjM(2,1)')
 
 FF4 = Lorentz(name = 'FF4',
               spins = [ 2, 2 ],
-              structure = 'ProjP(2,1)')
+              structure = 'P(-1,1)*Gamma(-1,2,-2)*ProjM(-2,1)')
 
 FF5 = Lorentz(name = 'FF5',
               spins = [ 2, 2 ],
+              structure = 'ProjP(2,1)')
+
+FF6 = Lorentz(name = 'FF6',
+              spins = [ 2, 2 ],
               structure = 'P(-1,1)*Gamma(-1,2,-2)*ProjP(-2,1)')
+
+VS1 = Lorentz(name = 'VS1',
+              spins = [ 3, 1 ],
+              structure = 'P(1,2)')
 
 VV1 = Lorentz(name = 'VV1',
               spins = [ 3, 3 ],
@@ -65,6 +81,10 @@ VV4 = Lorentz(name = 'VV4',
               structure = 'P(1,1)*P(2,1) - (3*P(-1,1)**2*Metric(1,2))/2.')
 
 VV5 = Lorentz(name = 'VV5',
+              spins = [ 3, 3 ],
+              structure = 'P(1,2)*P(2,1) - P(-1,1)*P(-1,2)*Metric(1,2)')
+
+VV6 = Lorentz(name = 'VV6',
               spins = [ 3, 3 ],
               structure = 'P(1,2)*P(2,2) - (3*P(-1,2)**2*Metric(1,2))/2.')
 

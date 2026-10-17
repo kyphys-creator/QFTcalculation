@@ -1,18 +1,24 @@
 (* ::Package:: *)
 
 (* ::Title:: *)
-(*Step (9b), 3 of 3: the note's NLO UFO with NLOCT's R2 vertices and the FJ counterterms in counterterm form*)
+(*Step (9b, d): the note's NLO UFO with NLOCT's R2 vertices and all the FJ counterterm vertices in counterterm form*)
 
 
 (* ::Text:: *)
-(*FeynRules: R2 vertices from Src/generated/SM_R2.m (NLOCT, the note's own model, Feynman gauge); UV counterterm*)
-(*vertices from results/nlo_fjct.m (nlo_fjct.wl), for nu nubar -> nu nubar (MadLoop has no tadpole diagrams and no*)
-(*self-energies on external legs):*)
-(*  Z Z:        I g^{mu nu} (dMZ2 - Sigma_tad^ZZ)                (MS-bar mass pole; the tadpole diagrams as a counterterm);*)
-(*  Z f fbar:   the tree vertex times [de/e - (1/2) dcw2 (1/cw^2 - 1/sw^2) + dZnu]   (f = ve, vm, vt; MS-bar poles; dZnu on*)
-(*              shell, -Sigma^L_nu(0), for the external legs; no Z field renormalization).*)
-(*Poles are 1/FR$Eps, the scale FR$MU (the UFO's MU_R).  The parameters of the UFO are then the note's MS-bar parameters.*)
-(*Writes Src/generated/SM_NLO_FJ_UFO (overwritten).  Batch: wolframscript -file nlo_ufo.wl  (after nlo_writect.wl, nlo_fjct.wl)*)
+(*FeynRules: R2 vertices from Src/generated/SM_R2.m (NLOCT, the note's own model, Feynman gauge); UV counterterm vertices*)
+(*  - of the counterterm Lagrangian (SM_CTsym.m, nlo_ctrules.wl) with the renormalization constants replaced by the CT*)
+(*    parameters of nlo_ctparams.wl: the MS-bar parameter constants of the FJ scheme and NLOCT's on-shell field constants*)
+(*    (the LSZ factors of the external legs, which MadLoop does not dress with self-energies);*)
+(*  - plus the tadpole vertices of dL/dH times dvT = T/MH^2 (two and three legs): MadLoop generates no tadpole diagrams,*)
+(*    and the tadpole attached to the lines and vertices is the shift H -> H + dvT (the one-leg term, the tadpole itself,*)
+(*    is left out).*)
+(*The UFO's parameters are then the note's MS-bar parameters at the scale MU_R; the counterterms are for massless light*)
+(*fermions (nlo_ctparams.wl).  The CT parameters are declared to FeynRules as parameters (generated/SM_FJct.fr) and*)
+(*afterwards moved to CT_parameters.py, the couplings being linear in them (MadGraph's CTParameter); the UV vertices get*)
+(*empty loop_particles, so that MadLoop attaches each of them once to every loop of its topology (a two-point vertex of*)
+(*a self-conjugate field, "UVmass", would otherwise need the particle content of the loop).*)
+(*Writes Src/generated/SM_NLO_FJ_UFO (overwritten).  Batch: wolframscript -file nlo_ufo.wl*)
+(*(after nlo_writect.wl, nlo_ctrules.wl, nlo_dz.wl, nlo_fjdelta.wl, nlo_ctparams.wl)*)
 
 
 srcDirNU$ = DirectoryName[$InputFileName];
@@ -20,28 +26,54 @@ $FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}]
 SetDirectory[$FeynRulesPath];
 Get["FeynRules`"];
 SetDirectory[srcDirNU$];
-LoadModel["SM.fr"];
+LoadModel["SM.fr", FileNameJoin[{"generated", "SM_FJct.fr"}]];
 SetDirectory[FileNameJoin[{srcDirNU$, "generated"}]];
 R2$vertlist = Get["SM_R2.m"];
 FR$InteractionOrderPerturbativeExpansion = {{QCD, 1}, {QED, 1}};   (* as in SM_CT.nlo *)
 Print["NLOCT R2 vertices: ", Length[R2$vertlist], "  (NLOCT's on-shell UV vertices are not used)"];
 
-ct$ = Get[FileNameJoin[{srcDirNU$, "results", "nlo_fjct.m"}]];
-(* d/FR$Eps for the pole coefficients, {pole, finite} lists for the Laurent pairs *)
-pole$[x_] := x/FR$Eps;
-laur$[{p_, f_}] := p/FR$Eps + f;
-dcw2$ = ct$["dMW2"]/MZ^2 - MW^2 ct$["dMZ2"]/MZ^4;
-dlng$ = pole$[ct$["de"] - dcw2$/2 (1/cw^2 - 1/sw^2)];
-gamPL$ = TensDot[Ga[Index[Lorentz, Ext[3]]], ProjM][Index[Spin, Ext[1]], Index[Spin, Ext[2]]];
-treeZnn$ = I ee (cw^2 + sw^2)/(2 cw sw) gamPL$;
-uvFJ$ = Join[
-   Table[{{{anti[f], 1}, {f, 2}, {Z, 3}}, treeZnn$ (dlng$ + laur$[ct$["dZnuL"]]) IPL[{e, W}]}, {f, {ve, vm, vt}}],
-   {{{{Z, 1}, {Z, 2}}, I (pole$[ct$["dMZ2"]] - laur$[ct$["tadZZ"]]) ME[Index[Lorentz, Ext[1]], Index[Lorentz, Ext[2]]] IPL[{W}]}}];
-Print["FJ counterterm vertices: ", uvFJ$[[All, 1, All, 1]]];
+symNU$ = Get["SM_CTsym.m"];
+parNU$ = Get["SM_FJctpar.m"];
+ctNU$ = DeleteCases[{#[[1]], Expand[#[[2]] /. parNU$["rules"]]} & /@ symNU$["ctSym"], {_, 0}];
+tadNU$ = {#[[1]], FJdvT #[[2]]} & /@ Select[symNU$["tadSym"], Length[#[[1]]] >= 2 &];
+uvFJ$ = {#[[1]], #[[2]] IPL[{W}]} & /@ MergeVertices[ctNU$, tadNU$];
+Print["FJ counterterm vertices: ", Length[uvFJ$], " (counterterm Lagrangian ", Length[ctNU$], ", tadpole ", Length[tadNU$],
+  ");  legs ", Union[Length /@ uvFJ$[[All, 1]]]];
+If[!FreeQ[uvFJ$, FR$delta | FR$deltaZ], Print["renormalization constants left in the vertices"]; Abort[]];
 
 FeynmanGauge = True;
 If[DirectoryQ["SM_NLO_FJ_UFO"], DeleteDirectory["SM_NLO_FJ_UFO", DeleteContents -> True]];
 WriteUFO[LSM, UVCounterterms -> uvFJ$, R2Vertices -> R2$vertlist, Output -> "SM_NLO_FJ_UFO"];
+
+(* the CT parameters: out of parameters.py (block FJCT), into CT_parameters.py *)
+ufoNU$ = FileNameJoin[{Directory[], "SM_NLO_FJ_UFO"}];
+editNU$[file_, f_] := Export[FileNameJoin[{ufoNU$, file}], f[Import[FileNameJoin[{ufoNU$, file}], "Text"]], "Text"];
+namesNU$ = parNU$["values"][[All, 1]];
+editNU$["parameters.py", Function[txt, Module[{new = StringReplace[txt,
+       RegularExpression["\\n(FJ\\w+) = Parameter\\(name = '\\1',[^)]*lhablock = 'FJCT',[^)]*\\)\\n"] -> "\n"]},
+     If[StringContainsQ[new, "FJCT"] || StringCount[txt, "lhablock = 'FJCT'"] != Length[namesNU$], Print["parameters.py: FJCT not removed"]; Abort[]];
+     new]]];
+pyNU$[x_] := PythonForm[x];
+ctParNU$ = "# This file was generated by nlo_ctparams.wl and nlo_ufo.wl: the counterterm parameters of the FJ scheme\n" <>
+   "# (MS-bar parameter constants, on-shell field constants, dvT; poles in 1/eps and finite parts at the scale MU_R)\n\n" <>
+   "from object_library import all_CTparameters, CTParameter\n\n" <>
+   "from function_library import complexconjugate, re, im, csc, sec, acsc, asec, cot\n\n" <>
+   StringJoin[Function[nv, Module[{pole = nv[[2, 1]], fin = nv[[2, 2]], d},
+        d = StringRiffle[Join[If[pole =!= 0, {"-1:'" <> pyNU$[pole] <> "'"}, {}], If[fin =!= 0, {"0:'" <> pyNU$[fin] <> "'"}, {}]], ","];
+        nv[[1]] <> " = CTParameter(name = '" <> nv[[1]] <> "',\n    type = 'complex',\n    value = {" <> d <>
+         "},\n    texname = '" <> nv[[1]] <> "')\n\n"]] /@ parNU$["values"]];
+Export[FileNameJoin[{ufoNU$, "CT_parameters.py"}], ctParNU$, "Text"];
+editNU$["__init__.py", StringReplace[#, "try:\n   import CT_vertices" ->
+     "try:\n   import CT_parameters\nexcept ImportError:\n   pass\nelse:\n   all_CTparameters = CT_parameters.all_CTparameters\n\ntry:\n   import CT_vertices"] &];
+(* the couplings written with CT parameters are strings, not Laurent dictionaries (MadGraph's convention) *)
+editNU$["CT_couplings.py", Function[txt, Module[{new = StringReplace[txt,
+       RegularExpression["value = \\{0:'([^']*FJ[^']*)'\\}"] -> "value = '$1'"]},
+     If[StringContainsQ[new, RegularExpression["\\{[^}]*FJ"]], Print["CT_couplings.py: CT parameters left in a dictionary"]; Abort[]];
+     new]]];
+editNU$["CT_vertices.py", StringReplace[#, RegularExpression["(type = 'UV',\\n(?:[^\\n]*\\n){3}\\s*loop_particles = )\\[ \\[ \\[P\\.W__plus__\\] \\] \\]"] ->
+     "$1[ [ [] ] ]"] &];
+Print["UV vertices with empty loop_particles: ", StringCount[Import[FileNameJoin[{ufoNU$, "CT_vertices.py"}], "Text"], "[ [ [] ] ]"],
+  " of ", StringCount[Import[FileNameJoin[{ufoNU$, "CT_vertices.py"}], "Text"], "type = 'UV'"]];
 (* MadGraph writes decimals with 7 digits in Fortran: rational coefficients back to ratios (spinor QED note, nlo_ufo.wl) *)
 exactUFO$[file_] := Module[{txt = Import[file, "Text"], new},
    new = StringReplace[txt, RegularExpression["(?<![\\w.])(\\d+\\.\\d{7,})"] :>
@@ -49,5 +81,5 @@ exactUFO$[file_] := Module[{txt = Import[file, "Text"], new},
          If[Head[r] === Rational, "(" <> ToString[Numerator[r]] <> "./" <> ToString[Denominator[r]] <> ".)", "$1"]]];
    Export[file, new, "Text"];
    Length[StringCases[txt, RegularExpression["(?<![\\w.])\\d+\\.\\d{7,}"]]]];
-Print["decimal coefficients made exact: ", exactUFO$[FileNameJoin[{Directory[], "SM_NLO_FJ_UFO", #}]] & /@ {"couplings.py", "CT_couplings.py"}];
-Print["written: ", FileNames["SM_NLO_FJ_UFO"]];
+Print["decimal coefficients made exact: ", exactUFO$[FileNameJoin[{ufoNU$, #}]] & /@ {"couplings.py", "CT_couplings.py", "CT_parameters.py"}];
+Print["written: ", FileNames["SM_NLO_FJ_UFO"], " (CT parameters: ", Length[namesNU$], ")"];

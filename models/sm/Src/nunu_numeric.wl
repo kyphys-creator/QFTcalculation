@@ -14,7 +14,7 @@
 (*  (c) W(MS-bar) for two gauges (xiZ, xiW) = (1, 1), (2, 3);  dln M0 (finite) the same in both gauges;*)
 (*  (d) W_OS = W + B4 dln M0 at mu = MZ and mu = 500 GeV against MadLoop's finite = Re W_OS/2.*)
 (*Inputs (as the MadLoop param_card): 1/alpha(MZ) = 128, MZ = 91.1876, MW = 80.369, MH = 125.2, MT = 172.57 GeV;*)
-(*sqrt(s) = 500 GeV, scattering angle pi/3.  Writes results/nunu_numeric.csv.  Batch: wolframscript -file nunu_numeric.wl*)
+(*sqrt(s) = 500 GeV, scattering angle pi/3.  Writes results/nunu_numeric.csv and the conversion results/nunu_conv.csv.  Batch: wolframscript -file nunu_numeric.wl*)
 
 
 srcDir$ = DirectoryName[$InputFileName];
@@ -102,7 +102,7 @@ wLau$ = lau$[(r$["rVS"] + Lookup[r$, "rSE", 0] + r$["rTad"]) b4$ + r$["wBox"]];
 legLau$ = {Coefficient[-2 sLnuLau$, ep, -1], Coefficient[-2 sLnuLau$, ep, 0]} b4$;
 born$ = N[num$[b4$, gauges$[[1]]]];
 Print["(a) B4/4 = ", NumberForm[born$/4, 16]];
-rows$ = {};
+rows$ = {}; convRows$ = {};
 Do[Module[{g = gauges$[[ig]], wPole, wFin, cv, wOS},
     {wPole, wFin} = evL$[wLau$, g, mu0] + N[num$[legLau$ /. mu -> mu0, g]];
     cv = conv$[g, mu0];
@@ -110,7 +110,10 @@ Do[Module[{g = gauges$[[ig]], wPole, wFin, cv, wOS},
     Print["(b,c,d) gauge ", {xiZ, xiW} /. g, ", mu = ", mu0, ":  pole[W] + B4 pole[dln M0] = ", wPole + born$ cv["dlnM0"][[1]],
       " (W pole ", wPole, ");  W(MS) = ", wFin, ";  dln M0 = ", cv["dlnM0"][[2]], " (de ", cv["de"][[2]], ", dMW2 ",
       cv["dMW2"][[2]], ", dMZ2 ", cv["dMZ2"][[2]], ");  Re W_OS/2 = ", NumberForm[Re[wOS]/2, 16]];
-    AppendTo[rows$, {xiZ /. g, xiW /. g, mu0, Re[wFin], Im[wFin], cv["dlnM0"][[2]], Re[wOS]/2, born$/4}]],
+    AppendTo[rows$, {xiZ /. g, xiW /. g, mu0, Re[wFin], Im[wFin], cv["dlnM0"][[2]], Re[wOS]/2, born$/4}];
+    AppendTo[convRows$, {xiZ /. g, xiW /. g, mu0, cv["de"][[2]], cv["dMW2"][[2]], cv["dMZ2"][[2]]}]],
   {ig, 2}, {mu0, {N[911876/10000], 500.}}];
 Export[FileNameJoin[{srcDir$, "results", "nunu_numeric.csv"}],
   Prepend[rows$, {"xiZ", "xiW", "mu", "re_W_MSbar", "im_W_MSbar", "dlnM0_fin", "re_W_OS_over_2", "born_over_4"}], "CSV"];
+(* the finite parts of the conversion p(MS-bar) - p(OS) (note Eq. (convOS)) for the other processes (fj_madloop.py) *)
+Export[FileNameJoin[{srcDir$, "results", "nunu_conv.csv"}], Prepend[convRows$, {"xiZ", "xiW", "mu", "de", "dMW2", "dMZ2"}], "CSV"];

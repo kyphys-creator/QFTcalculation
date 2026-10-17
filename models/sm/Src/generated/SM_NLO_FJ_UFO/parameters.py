@@ -1,6 +1,6 @@
 # This file was automatically created by FeynRules 2.3.49
 # Mathematica version: 14.2.1 for Mac OS X ARM (64-bit) (March 16, 2025)
-# Date: Fri 16 Oct 2026 20:08:44
+# Date: Fri 16 Oct 2026 22:08:07
 
 
 
@@ -26,6 +26,44 @@ MU_R = Parameter(name = 'MU_R',
                  lhacode = [1])
 
 # User-defined parameters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 xiA = Parameter(name = 'xiA',
                 nature = 'external',
                 type = 'real',
@@ -315,4 +353,3 @@ muH2 = Parameter(name = 'muH2',
                  type = 'real',
                  value = 'lam*vev**2',
                  texname = '\\mu _H^2')
-

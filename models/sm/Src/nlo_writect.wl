@@ -8,7 +8,7 @@
 (*Unpatched FeynArts 3.12 + NLOCT 1.02 in a kernel without FeynRules: WriteCT computes the one-loop UV counterterms of*)
 (*Src/generated/SM_ren (NLOCT's on-shell conditions) and the R2 vertices in Feynman gauge, at order QED (electroweak),*)
 (*and writes Src/generated/SM_CT.nlo (not in git) and its R2 vertices to Src/generated/SM_R2.m.  nlo_ufo.wl uses the R2*)
-(*vertices; the UV counterterms of the FJ scheme are the note's own.  Batch: wolframscript -file nlo_writect.wl  (after nlo_renormalize.wl; long)*)
+(*vertices, nlo_dz.wl NLOCT's on-shell field constants from its UV vertices; the UV counterterms of the FJ scheme are the note's own.  Batch: wolframscript -file nlo_writect.wl  (after nlo_renormalize.wl; long)*)
 
 
 srcDirNC$ = DirectoryName[$InputFileName];
