@@ -174,9 +174,13 @@ def _free_massive(k, m, r):
     return math.exp(lnphi) if lnphi < 700 else float("inf"), dln, lnphi
 
 
-def gy_block_massive(ks, E, eps, rmax=None, rtol=1e-11):
+def gy_block_massive(ks, E, eps, rmax=None, rtol=1e-11, Minv=None):
     """ln det[(O + eps)/(O_0 + eps)] for a matrix block: Psi = diag(phi_k) T, phi_k the massive free solutions,
-    T_i'' + (2 phi_i'/phi_i + 3/r) T_i' = sum_j (phi_j/phi_i) E_ij T_j, T(0) = 1"""
+    T_i'' + (2 phi_i'/phi_i + 3/r) T_i' = sum_j (phi_j/phi_i) E_ij T_j, T(0) = 1.  With Minv, the block is
+    O = M(-d^2 - 3/r d + k(k+2)/r^2) + E regulated by eps M (the non-minimal l = 0 block of background R_xi):
+    the same equations with E -> Minv E."""
+    if Minv is not None:
+        E0, E = E, (lambda r: Minv @ E0(r))
     ks = np.asarray(ks, dtype=float)
     n = len(ks)
     m = math.sqrt(eps)
@@ -202,9 +206,12 @@ def gy_block_massive(ks, E, eps, rmax=None, rtol=1e-11):
     return ld, sign
 
 
-def green_inner_matrix(ks, E, f, eps, rmax=None, n=8000):
+def green_inner_matrix(ks, E, f, eps, rmax=None, n=8000, Minv=None):
     """<f, (O + eps)^-1 f> = int r^3 f.g dr for a matrix block (f(r) -> vector), with the matrix Green's function from the
-    regular solutions (r^k e_j at 0) and the decaying ones (K_{k+1}(m r)/r e_j at rmax)"""
+    regular solutions (r^k e_j at 0) and the decaying ones (K_{k+1}(m r)/r e_j at rmax).  With Minv as in
+    gy_block_massive: (O + eps M)^-1 f = (Minv O + eps)^-1 Minv f."""
+    if Minv is not None:
+        E0, E = E, (lambda r: Minv @ E0(r))
     from scipy.special import kve
     ks = np.asarray(ks, dtype=float)
     nc = len(ks)
@@ -234,6 +241,7 @@ def green_inner_matrix(ks, E, f, eps, rmax=None, n=8000):
     Yd = s2.y[: nc * nc][:, ::-1].T.reshape(-1, nc, nc)
     dYd = s2.y[nc * nc:][:, ::-1].T.reshape(-1, nc, nc)
     F = np.array([f(r) for r in rs])                       # (n, nc)
+    Fs = F if Minv is None else F @ Minv.T                 # the source Minv f
     # G(r, s) = Yd(r) A(s) (r > s), Yr(r) B(s) (r < s);  Yd A - Yr B = 0,  Yd' A - Yr' B = -1/s^3
     A = np.zeros((len(rs), nc, nc))
     B = np.zeros((len(rs), nc, nc))
@@ -242,8 +250,8 @@ def green_inner_matrix(ks, E, f, eps, rmax=None, n=8000):
         rhsM = np.vstack([np.zeros((nc, nc)), -np.eye(nc) / s ** 3])
         X = np.linalg.solve(M, rhsM)
         A[i], B[i] = X[:nc], X[nc:]
-    wA = np.einsum("ijk,ik->ij", A, F) * rs[:, None] ** 3
-    wB = np.einsum("ijk,ik->ij", B, F) * rs[:, None] ** 3
+    wA = np.einsum("ijk,ik->ij", A, Fs) * rs[:, None] ** 3
+    wB = np.einsum("ijk,ik->ij", B, Fs) * rs[:, None] ** 3
     dr = np.diff(rs)
     cA = np.vstack([np.zeros(nc), np.cumsum(0.5 * dr[:, None] * (wA[1:] + wA[:-1]), axis=0)])
     cBrev = np.cumsum((0.5 * dr[:, None] * (wB[1:] + wB[:-1]))[::-1], axis=0)[::-1]
@@ -284,3 +292,108 @@ def top_sector(xt, lmax=200):
     S, w, c = sector_sum(lambda k: top_blocks(xt, k), lmax)
     A2 = A2_from(lambda p: top_trEE(xt, p))
     return 1.5 * (S + A2), {"sum": S, "A2": A2, "tail": c}
+
+
+# ---- background R_xi with xi != 1: the non-minimal vector operator ----
+def ag_blocks_xi(xV, l, xi):
+    """one real vector with its Goldstone in background R_xi (F = d.A - xi e h G): the (S, L, G) block at scalar-harmonic
+    level l >= 1 ((S, G) for l = 0) in the radial components a (x_mu/r Y), b (r d_mu Y/sqrt(l(l+2))), g (Y), written as
+    O = -M d^2 - (C/r) d + D/r^2 + E(r) with constant M, C, D (derived symbolically in vacuum_gauge_check.py).  E holds
+    e^2 h^2 on a, b, (lambda + xi e^2) h^2 on g and the mixing 2 e h' between a and g.  Returns (M, C, D, E, cols) with
+    cols the free regular solutions (power p, vector v): r^(l-1) (l, L, 0) = grad(r^l Y), the solution with divergence
+    r^l Y (power l + 1), and r^l for g.  The transverse modes (-Delta_l + e^2 h^2) and the ghost (-Delta_l + xi e^2 h^2)
+    are scalar channels."""
+    q = 1 - 1 / xi
+    uv = lambda r: 8 * xV / (1 + r * r) ** 2
+    ug = lambda r: -8.0 / (1 + r * r) ** 2
+    mx = lambda r: -4 * math.sqrt(8 * xV) * r / (1 + r * r) ** 2
+    if l == 0:
+        M, C, D = np.diag([1 / xi, 1.0]), np.diag([3 / xi, 3.0]), np.diag([3 / xi, 0.0])
+        E = lambda r: np.array([[uv(r), mx(r)], [mx(r), ug(r) + xi * uv(r)]])
+        return M, C, D, E, [(1, np.array([1.0, 0.0])), (0, np.array([0.0, 1.0]))]
+    L = math.sqrt(l * (l + 2))
+    M = np.diag([1 / xi, 1.0, 1.0])
+    C = np.array([[3 / xi, q * L, 0.0], [-q * L, 3.0, 0.0], [0.0, 0.0, 3.0]])
+    D = np.array([[L * L + 3 / xi, -(1 + 1 / xi) * L, 0.0], [(1 - 3 / xi) * L, L * L / xi - 1, 0.0], [0.0, 0.0, L * L]])
+    beta, gamma = np.linalg.solve(np.array([[l + 4.0, 2.0 * l], [2.0, 4.0 * l + 4]]), [1.0, q])   # A = beta x D + gamma r^2 dD
+    cols = [(l - 1, np.array([float(l), L, 0.0])), (l + 1, np.array([beta + gamma * l, gamma * L, 0.0])),
+            (l, np.array([0.0, 0.0, 1.0]))]
+    E = lambda r: np.array([[uv(r), 0.0, mx(r)], [0.0, uv(r), 0.0], [mx(r), 0.0, ug(r) + xi * uv(r)]])
+    return M, C, D, E, cols
+
+
+def gy_block_general(M, C, D, E, cols, rmax, rtol=1e-11, atol=1e-13):
+    """Gel'fand-Yaglom for O = -M d^2 - (C/r) d + D/r^2 + E(r): Psi = V diag(r^p) T with (p, v) the free regular columns,
+    T'' = (R^-1 Et R) T - (R^-1 W R) T'/r, Et = V^-1 M^-1 E V, W = 2P + V^-1 M^-1 C V, R = diag(r^p), T(0) = 1, and the
+    first two Born orders as in gy_block.  Returns (ln det T, B1, B2, sign) at rmax."""
+    n = len(cols)
+    p = np.array([c[0] for c in cols], dtype=float)
+    V = np.array([c[1] for c in cols]).T
+    Vi, Mi = np.linalg.inv(V), np.linalg.inv(M)
+    for pj, v in cols:                       # the free columns solve the characteristic equation (relative test)
+        scale = (abs(pj * (pj - 1)) * np.abs(M).max() + abs(pj) * np.abs(C).max() + np.abs(D).max()) * np.abs(v).max()
+        assert np.abs((-pj * (pj - 1) * M - pj * C + D) @ v).max() < 1e-12 * scale, "not a free solution"
+    W = 2 * np.diag(p) + Vi @ Mi @ C @ V
+    dp = p[None, :] - p[:, None]
+    r0 = 1e-4 / (2 + p.max())
+    I = np.eye(n)
+
+    def rhs(t, y):
+        r = math.exp(t)
+        Y = y.reshape(6, n, n)
+        sc = np.power(r, dp)
+        Et = sc * (Vi @ Mi @ (r * r * E(r)) @ V)
+        Wt = sc * W - I                       # in t = ln r: X_tt = r^2 Et X - (W - 1) X_t
+        srcs = (Y[0], I, Y[2])
+        out = []
+        for k in range(3):
+            out += [Y[2 * k + 1], Et @ srcs[k] - Wt @ Y[2 * k + 1]]
+        return np.concatenate([o.ravel() for o in out])
+    Z = np.zeros((n, n))
+    sol = solve_ivp(rhs, (math.log(r0), math.log(rmax)), np.concatenate([I.ravel()] + [Z.ravel()] * 5),
+                    method="DOP853", rtol=rtol, atol=atol)
+    Y = sol.y[:, -1].reshape(6, n, n)
+    sign, ld = np.linalg.slogdet(Y[0])
+    return ld, float(np.trace(Y[2])), float(np.trace(Y[4]) - 0.5 * np.trace(Y[2] @ Y[2])), sign
+
+
+def A2_ag_xi(xV, xi, pmax=200.0):
+    """MS-bar second-order terms -1/2 Tr[(K^-1 E)^2] (mu = 1/R) of the vector-Goldstone system with the R_xi propagator
+    (delta - (1 - xi) k k/k^2)/k^2, and of the ghost.  The d-dimensional bubbles (in 1/(16 pi^2), a = 1 - xi, P = p^2):
+    vector-vector 6 - 4a + a^2/2 - (4 - 2a + a^2) ln P, mixing P[(2 - a) - (1 - a/4) ln P], scalar 2 - ln P (derived in
+    vacuum_gauge_check.py).  Returns (A2_AG, A2_ghost)."""
+    a = 1 - xi
+
+    def f_ag(p):
+        Lp = math.log(p * p)
+        uv, ug = 8 * xV * fourier_hb2(p), (-8 + 8 * xi * xV) * fourier_hb2(p)
+        return p ** 3 * (uv * uv * (6 - 4 * a + a * a / 2 - (4 - 2 * a + a * a) * Lp) + ug * ug * (2 - Lp)
+                         + 8 * 8 * xV * fourier_hb(p) ** 2 * p * p * ((2 - a) - (1 - a / 4) * Lp))
+
+    def f_gh(p):
+        return p ** 3 * (8 * xi * xV * fourier_hb2(p)) ** 2 * (2 - math.log(p * p))
+    norm = -0.5 / (8 * math.pi ** 2) / K16
+    integ = lambda f: quad(f, 0, 1, limit=400)[0] + quad(f, 1, pmax, limit=800)[0]
+    return norm * integ(f_ag), norm * integ(f_gh)
+
+
+def ag_sector_xi(xV, xi, lmax=120):
+    """ag_sector in background R_xi: -1/2 ln det'_AG + ln det_gh (MS-bar, mu = 1/R, A = 1) with the l = 0 threshold
+    mode as in ag_sector (factor sqrt(2 pi) A/theta_inf, theta_inf = R_0 of the ghost -d^2 + xi e^2 h^2)"""
+    UVm = lambda r: np.array([[8 * xV / (1 + r * r) ** 2]])
+    Ugh = lambda r: np.array([[8 * xi * xV / (1 + r * r) ** 2]])
+    w, wg = [], []
+    for l in range(lmax + 1):
+        if l == 0:
+            _, b1, b2, _ = gy_block_general(*ag_blocks_xi(xV, 0, xi), rmax=1e6)
+            w.append(-math.log(2 * math.pi) + 2 * math.log(ghost_R0(xi * xV)) - b1 - b2)
+        else:
+            ld, b1, b2, _ = gy_block_general(*ag_blocks_xi(xV, l, xi), rmax=4000.0 * (l + 3))
+            lt, t1, t2 = gy_block([l], UVm)
+            w.append((l + 1) ** 2 * (ld - b1 - b2) + 2 * l * (l + 2) * (lt - t1 - t2))
+        lg, g1, g2 = gy_block([l], Ugh)
+        wg.append((l + 1) ** 2 * (lg - g1 - g2))
+    S, Sg = tail_sum(w, (lmax // 3, lmax))[0], tail_sum(wg, (lmax // 3, lmax))[0]
+    A2, A2g = A2_ag_xi(xV, xi)
+    return -0.5 * (S + A2) + Sg + A2g
+
