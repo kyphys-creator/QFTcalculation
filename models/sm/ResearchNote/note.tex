@@ -714,7 +714,56 @@ k^2\Sigma^{ZZ}_L+iM_Zk^2\bigl(\Sigma^{G^0Z}-\Sigma^{ZG^0}\bigr)-M_Z^2\Sigma^{G^0
 \end{gathered}
 \label{eq:st}
 \end{equation}
-が、くりこまない2点関数（タドポールの付いた図を含める）で一般の $R_\xi$ ゲージで成り立つ。$\langle W^+_\mu G^-\rangle$ は $G^+\to W^+$ の遷移なので $\Sigma^{GW}$ が、$\langle G^+W^-_\nu\rangle$ には $\Sigma^{WG}$ が入る。各 $\xi$ の因子は、木の伝播関数の縦の部分 $-i\xi/(k^2-\xi M^2)$ と Goldstone ボソンの $i/(k^2-\xi M^2)$ の積から共通に括り出される。
+が、くりこまない2点関数（タドポールの付いた図を含める）で一般の $R_\xi$ ゲージで成り立つ（図~\ref{fig:st}）。$\langle W^+_\mu G^-\rangle$ は $G^+\to W^+$ の遷移なので $\Sigma^{GW}$ が、$\langle G^+W^-_\nu\rangle$ には $\Sigma^{WG}$ が入る。各 $\xi$ の因子は、木の伝播関数の縦の部分 $-i\xi/(k^2-\xi M^2)$ と Goldstone ボソンの $i/(k^2-\xi M^2)$ の積から共通に括り出される。
+
+\begin{figure}[tbp]
+\centering
+\newcommand{\stterm}[6]{% x, left style, right style, left label, right label, label under the blob
+  \begin{scope}[shift={(#1,0)}]
+    \draw[#2] (0,0) -- (0.75,0); \draw[#3] (1.25,0) -- (2.0,0);
+    \node[blob,minimum size=0.5cm] at (1.0,0) {};
+    \node[font=\scriptsize] at (0.25,0.32) {#4}; \node[font=\scriptsize] at (1.75,0.32) {#5};
+    \node[font=\scriptsize] at (1.0,-0.46) {#6};
+  \end{scope}}
+\begin{tikzpicture}[scale=0.9]
+% W
+\begin{scope}[shift={(0,0)}]
+  \node at (-0.4,0) {$k^2$};
+  \stterm{0}{photon}{photon}{$W^+$}{$W^+$}{$L$}
+  \draw[mom] (0.3,0.68) -- (1.7,0.68); \node[font=\scriptsize] at (1.0,0.9) {$k$};
+  \node at (3.15,0) {$+\,iM_Wk^2\Bigl($};
+  \stterm{4.25}{scalar}{photon}{$G^+$}{$W^+$}{}
+  \node at (6.55,0) {$-$};
+  \stterm{6.85}{photon}{scalar}{$W^+$}{$G^+$}{}
+  \node at (9.85,0) {$\Bigr)\,-\,M_W^2$};
+  \stterm{10.85}{scalar}{scalar}{$G^+$}{$G^+$}{}
+  \node at (13.35,0) {$=0$};
+\end{scope}
+% Z
+\begin{scope}[shift={(0,-1.6)}]
+  \node at (-0.4,0) {$k^2$};
+  \stterm{0}{photon}{photon}{$Z$}{$Z$}{$L$}
+  \node at (3.15,0) {$+\,iM_Zk^2\Bigl($};
+  \stterm{4.25}{scalar}{photon}{$G^0$}{$Z$}{}
+  \node at (6.55,0) {$-$};
+  \stterm{6.85}{photon}{scalar}{$Z$}{$G^0$}{}
+  \node at (9.85,0) {$\Bigr)\,-\,M_Z^2$};
+  \stterm{10.85}{scalar}{scalar}{$G^0$}{$G^0$}{}
+  \node at (13.35,0) {$=0$};
+\end{scope}
+% photon
+\begin{scope}[shift={(0,-3.2)}]
+  \stterm{0}{photon}{photon}{$A$}{$A$}{$L$}
+  \node at (2.5,0) {$=0$};
+  \stterm{5.0}{photon}{photon}{$A$}{$Z$}{$L$}
+  \node at (7.8,0) {$+\,iM_Z$};
+  \stterm{8.6}{scalar}{photon}{$G^0$}{$A$}{}
+  \node at (11.1,0) {$=0$};
+\end{scope}
+\end{tikzpicture}
+\caption{Slavnov--Taylor 恒等式 \eqref{eq:st} を図で書いたもの。灰色の円は、タドポールの付いた図（図~\ref{fig:tadpole} の右）を含む、くりこまない1ループの2点関数で、左の脚から入り右の脚へ出る（運動量 $k$）。$L$ はゲージ場の2点関数の縦の部分 $\Sigma_L$、ゲージ場と Goldstone ボソンの混合は $ik_\mu\Sigma^{WG}$ などである。光子のゲージ固定の関数 $\partial\cdot A$ は Goldstone ボソンを含まないので、$AA$ の縦の部分はそれだけで0になる（$AZ$ には $G^0A$ の混合が入る）。}
+\label{fig:st}
+\end{figure}
 
 \paragraph{$\beta_t$ の処方との関係。}ループで補正したポテンシャルの最小点は $v+\Delta v$ である（\ref{app:tadpole}）。$\beta_t$ の処方はこの点のまわりで展開してタドポールの図を除き、その代わりに $v_\beta=v+\Delta v|_{\MSbar}$ を真空期待値とする。1ループでは、FJ のタドポールの付いた図（式~\eqref{eq:tadins}）が、$\beta_t$ の処方の木の質量の $v_\beta$ と $v$ の差にちょうど置き換わり、物理量はどちらでも同じである。違いは $v_\beta$（と $g v_\beta/2$ などの「$\MSbar$ の質量」）がゲージに依存することである。式~\eqref{eq:T} の $A_0$ の $\ln\mu^2$ と式~\eqref{eq:vrun} から
 \begin{equation}
@@ -828,7 +877,7 @@ K\Bigl[\delta_V+\delta_B-\frac12\sum_f\Sigma^L_f(0)\Bigr]=\frac{e^2}{\sw^2}\Bigl
 \label{fig:mudecay}
 \end{figure}
 
-\paragraph{電荷。}Thomson 極限の電荷を $e_{\mathrm{OS}}$（$\alpha(0)=e_{\mathrm{OS}}^2/(4\pi)$）とすると、$\MSbar$ の $e(\mu)$ との関係は、on-shell の電荷の繰り込み定数の有限部分で
+\paragraph{電荷。}Thomson 極限の電荷を $e_{\mathrm{OS}}$（$\alpha(0)=e_{\mathrm{OS}}^2/(4\pi)$）とすると、$\MSbar$ の $e(\mu)$ との関係は、on-shell の電荷の繰り込み定数の有限部分で（図~\ref{fig:charge}）
 \begin{equation}
 \frac{e(\mu)}{e_{\mathrm{OS}}}=1+\delta_e,\qquad
 \delta_e=\Bigl[\frac12\Pi^{AA}(0)+\frac\sw\cw\frac{\Sigma^{AZ}_T(0)}{M_Z^2}\Bigr]_{\MSbar},\qquad
@@ -842,6 +891,55 @@ K\Bigl[\delta_V+\delta_B-\frac12\sum_f\Sigma^L_f(0)\Bigr]=\frac{e^2}{\sw^2}\Bigl
 \label{eq:alphahat}
 \end{equation}
 である（$\hat\alpha=e(\mu)^2/(4\pi)$、$\Delta\hat\alpha=2\delta_e$。1ループの $1/\alpha$ の走りが線形なので、PDG と同じく $1/\hat\alpha$ を線形に書く）。括弧の $\frac{100}{27}-\frac{20}9\ln$ は8個の軽いフェルミオン（$\sum N_cQ_f^2=\frac{20}3$）、$-\frac16-\frac74\ln$ は $W$ とその Goldstone ボソン、ゴーストのループ、最後の項はトップの寄与である。トップを除いて $\mu=M_Z$ に置くと、PDG の電弱のレビューの $\Delta\hat\alpha(M_Z)-\Delta\alpha(M_Z)$ の式~\cite{pdg24} の1ループの部分になる。$\mu$ への依存は $\dd(1/\hat\alpha)/\dd\ln\mu=-\frac{11}{6\pi}$ で、式~\eqref{eq:erun} と合う。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% (a) photon self-energy on the external photon
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (0,-1.0) -- (0,0); \draw[fermion] (0,0) -- (0,1.0);
+  \draw[photon] (0,0) -- (0.72,0); \draw[photon] (1.18,0) -- (1.9,0);
+  \node[blob,minimum size=0.46cm] at (0.95,0) {};
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.25,-0.85) {$f$}; \node[font=\scriptsize] at (-0.25,0.85) {$f$};
+  \node[font=\scriptsize] at (0.38,0.3) {$A$}; \node[font=\scriptsize] at (1.6,0.3) {$A$};
+  \node[font=\scriptsize] at (0.95,-0.5) {$\Pi^{AA}(0)$};
+  \node[slab] at (0.85,-1.45) {(a) 外線の光子};
+\end{scope}
+% (b) photon-Z mixing
+\begin{scope}[shift={(3.9,0)}]
+  \draw[fermion] (0,-1.0) -- (0,0); \draw[fermion] (0,0) -- (0,1.0);
+  \draw[photon] (0,0) -- (0.72,0); \draw[photon] (1.18,0) -- (1.9,0);
+  \node[blob,minimum size=0.46cm] at (0.95,0) {};
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.25,-0.85) {$f$}; \node[font=\scriptsize] at (-0.25,0.85) {$f$};
+  \node[font=\scriptsize] at (0.38,0.3) {$Z$}; \node[font=\scriptsize] at (1.6,0.3) {$A$};
+  \node[font=\scriptsize] at (0.95,-0.5) {$\Sigma^{AZ}_T(0)$};
+  \node[slab] at (0.85,-1.45) {(b) $\gamma Z$ の混合\\（$Z$ の伝播関数 $1/M_Z^2$）};
+\end{scope}
+% (c) vertex
+\begin{scope}[shift={(7.8,0)}]
+  \draw[fermion] (0,-1.0) -- (0,-0.24); \draw[fermion] (0,0.24) -- (0,1.0);
+  \draw[photon] (0.24,0) -- (1.9,0);
+  \node[blob,minimum size=0.48cm] at (0,0) {};
+  \node[font=\scriptsize] at (-0.25,-0.85) {$f$}; \node[font=\scriptsize] at (-0.25,0.85) {$f$};
+  \node[font=\scriptsize] at (1.6,0.3) {$A$};
+  \node[slab] at (0.85,-1.45) {(c) 頂点};
+\end{scope}
+% (d) external fermion
+\begin{scope}[shift={(11.7,0)}]
+  \draw[thick] (0,-1.0) -- (0,-0.78); \draw[fermion] (0,-0.32) -- (0,0); \draw[fermion] (0,0) -- (0,1.0);
+  \node[blob,minimum size=0.46cm] at (0,-0.55) {};
+  \draw[photon] (0,0) -- (1.9,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (0.45,-0.55) {$\Sigma_f$};
+  \node[font=\scriptsize] at (1.6,0.3) {$A$};
+  \node[slab] at (0.85,-1.45) {(d) 外線のフェルミオン};
+\end{scope}
+\end{tikzpicture}
+\caption{Thomson 極限（光子の運動量 $q\to0$）の電荷を決める1ループの図（式~\eqref{eq:deltae}）。(a) は外線の光子の LSZ の因子 $\frac12\Pi^{AA}(0)$、(b) は光子が $\gamma Z$ の混合を通して運動量0の $Z$ でフェルミオンにつく図で、$\Sigma^{AZ}_T(0)/M_Z^2$ に比例する。$q\to0$ では、(c) の頂点の補正と (d) の外線のフェルミオンの補正の和が、Ward 恒等式によって (b) の $Z$ の結合の $T^3_f$ に比例する部分（$W$ のループの図から来る）だけを残し、それが (b) のその部分と打ち消す。電荷の換算 $\delta_e$ には (a) と (b) の $Q_f$ に比例する部分だけが残り、フェルミオンの種類によらない。}
+\label{fig:charge}
+\end{figure}
 
 \subsection{測定値から決める $\MSbar$ のパラメータ}\label{sec:fit}
 
@@ -1203,7 +1301,105 @@ Martin--Robertson & 173.1 & 本ノート、1+2 & 0.3810 & $-0.0137$ & 138.4 & 9.
 \label{fig:rg}
 \end{figure}
 
-\paragraph{手順 (9)：1ループの電弱の振幅と MadLoop。}(a) MadGraph の電弱 NLO の模型との比較。過程は $\nu_e(p_1)\bar\nu_e(p_2)\to\nu_\mu(p_3)\bar\nu_\mu(p_4)$ で、外線に光子が付かないので赤外で有限である。木は $s$ チャンネルの $Z$ だけで、1ループでは $Z$ の自己エネルギーに FJ のタドポールが入る。トップ以外のフェルミオンの質量と幅を0とし、$1/\alpha(M_Z)=128$、$M_Z=91.1876$、$M_W=80.369$、$M_H=125.2$、$M_t=172.57$~GeV、$\sqrt s=500$~GeV、散乱角 $\pi/3$ の点で、木と1ループの干渉 $W=\sum_{\mathrm{spins}}\mathcal M_0^*\mathcal M_1$ を比べた（表~\ref{tab:nunu}）。本ノートの模型で、FeynCalc（一般の $R_\xi$。\texttt{nunu\_feyncalc.wl}）と、パッチのない FeynArts と FormCalc（Feynman ゲージ。\texttt{nunu\_formcalc.wl}）で独立に求めた。図は木1個、頂点22個と $s$ チャンネルの自己エネルギー24個（模型が湯川と同じく対角性を知らずに挿入する、世代を変える0の図を含む）、運動量0の $H$ の線で付くタドポール17個、箱25個である。外線のニュートリノには足ごとに LSZ の因子 $1-\Sigma^L_\nu(0)/2$ を掛けた。紫外で発散する部分は $D$ 次元で木の構造 $[\bar v_2\gamma^\mu P_Lu_1][\bar u_3\gamma_\mu P_Lv_4]$ に直し、有限な箱は4次元のスピン和で求めた。$\MSbar$ の振幅は裸の振幅で $\DUV\to0$ としたもので、その紫外の極は $\MSbar$ の対抗項（下の換算の極）と $10^{-18}$ まで打ち消した。比較の相手は MadGraph に付属の \texttt{loop\_qcd\_qed\_sm}~\cite{mg5ew}（\texttt{no\_widths}）で、on-shell の $M_W$、$M_Z$、$M_H$、$M_t$ と $\alpha(M_Z)$ のスキーム、Feynman ゲージ、MadGraph 側の R2 と対抗項による独立な実装である（トップの湯川結合の質量 \texttt{ymt} は $M_t$ にした）。MadLoop は1ループの図26個（ほかに7個）、R2 17個、UV 6個から値を求め、極は0、有限部分は $\mu_R=30$、$M_Z$、500~GeV で14桁同じだった。
+\paragraph{手順 (9)：1ループの電弱の振幅と MadLoop。}(a) MadGraph の電弱 NLO の模型との比較。過程は $\nu_e(p_1)\bar\nu_e(p_2)\to\nu_\mu(p_3)\bar\nu_\mu(p_4)$ で、外線に光子が付かないので赤外で有限である。木は $s$ チャンネルの $Z$ だけで、1ループでは $Z$ の自己エネルギーに FJ のタドポールが入る。トップ以外のフェルミオンの質量と幅を0とし、$1/\alpha(M_Z)=128$、$M_Z=91.1876$、$M_W=80.369$、$M_H=125.2$、$M_t=172.57$~GeV、$\sqrt s=500$~GeV、散乱角 $\pi/3$ の点で、木と1ループの干渉 $W=\sum_{\mathrm{spins}}\mathcal M_0^*\mathcal M_1$ を比べた（表~\ref{tab:nunu}）。本ノートの模型で、FeynCalc（一般の $R_\xi$。\texttt{nunu\_feyncalc.wl}）と、パッチのない FeynArts と FormCalc（Feynman ゲージ。\texttt{nunu\_formcalc.wl}）で独立に求めた。図は木1個、頂点22個と $s$ チャンネルの自己エネルギー24個（模型が湯川と同じく対角性を知らずに挿入する、世代を変える0の図を含む）、運動量0の $H$ の線で付くタドポール17個、箱25個である（型は図~\ref{fig:nunu}）。外線のニュートリノには足ごとに LSZ の因子 $1-\Sigma^L_\nu(0)/2$ を掛けた。紫外で発散する部分は $D$ 次元で木の構造 $[\bar v_2\gamma^\mu P_Lu_1][\bar u_3\gamma_\mu P_Lv_4]$ に直し、有限な箱は4次元のスピン和で求めた。$\MSbar$ の振幅は裸の振幅で $\DUV\to0$ としたもので、その紫外の極は $\MSbar$ の対抗項（下の換算の極）と $10^{-18}$ まで打ち消した。比較の相手は MadGraph に付属の \texttt{loop\_qcd\_qed\_sm}~\cite{mg5ew}（\texttt{no\_widths}）で、on-shell の $M_W$、$M_Z$、$M_H$、$M_t$ と $\alpha(M_Z)$ のスキーム、Feynman ゲージ、MadGraph 側の R2 と対抗項による独立な実装である（トップの湯川結合の質量 \texttt{ymt} は $M_t$ にした）。MadLoop は1ループの図26個（ほかに7個）、R2 17個、UV 6個から値を求め、極は0、有限部分は $\mu_R=30$、$M_Z$、500~GeV で14桁同じだった。
+
+\begin{figure}[tbp]
+\centering
+\newcommand{\nnleft}{% incoming nu_e nubar_e meeting at (0,0)
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.65) {$\nu_e$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {$\bar\nu_e$};}
+\newcommand{\nnright}[1]{% outgoing nu_mu nubar_mu from (#1,0)
+  \draw[fermion] (#1,0) -- ++(0.9,0.65); \draw[fermion] ($(#1,0)+(0.9,-0.65)$) -- (#1,0);
+  \node[font=\scriptsize,anchor=west] at ($(#1,0)+(0.9,0.65)$) {$\nu_\mu$}; \node[font=\scriptsize,anchor=west] at ($(#1,0)+(0.9,-0.65)$) {$\bar\nu_\mu$};
+  \node[vtx] at (#1,0) {};}
+\newcommand{\trileft}{% incoming legs to the triangle vertices A=(0,-0.45), B=(0,0.45)
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.45); \draw[fermion] (0,0.45) -- (-0.9,0.8);
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.8) {$\nu_e$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.8) {$\bar\nu_e$};
+  \node[vtx] at (0,-0.45) {}; \node[vtx] at (0,0.45) {}; \node[vtx] at (0.8,0) {};}
+\newcommand{\boxlines}{% two fermion lines of a box diagram, left nu_e line, right nu_mu line
+  \draw[fermion] (0,-1.0) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0,0.5); \draw[fermion] (0,0.5) -- (0,1.0);
+  \draw[fermion] (1.6,-1.0) -- (1.6,-0.5); \draw[fermion] (1.6,-0.5) -- (1.6,0.5); \draw[fermion] (1.6,0.5) -- (1.6,1.0);
+  \node[font=\scriptsize] at (-0.3,-0.92) {$\nu_e$}; \node[font=\scriptsize] at (-0.3,0.92) {$\bar\nu_e$};
+  \node[font=\scriptsize] at (1.92,0.92) {$\nu_\mu$}; \node[font=\scriptsize] at (1.92,-0.92) {$\bar\nu_\mu$};
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {}; \node[vtx] at (1.6,-0.5) {}; \node[vtx] at (1.6,0.5) {};}
+\begin{tikzpicture}[scale=0.88]
+% (a) tree
+\begin{scope}[shift={(0,0)}]
+  \nnleft \draw[photon] (0,0) -- (1.3,0); \node[vtx] at (0,0) {}; \nnright{1.3}
+  \node[font=\scriptsize] at (0.65,0.3) {$Z$};
+  \node[slab] at (0.65,-1.35) {(a) 木};
+\end{scope}
+% (b) Z self-energy
+\begin{scope}[shift={(4.4,0)}]
+  \nnleft \draw[photon] (0,0) -- (0.42,0); \draw[photon] (0.88,0) -- (1.3,0);
+  \node[blob,minimum size=0.46cm] at (0.65,0) {}; \node[vtx] at (0,0) {}; \nnright{1.3}
+  \node[slab] at (0.65,-1.35) {(b) $Z$ の自己エネルギー};
+\end{scope}
+% (c) tadpole on the Z line
+\begin{scope}[shift={(8.8,0)}]
+  \nnleft \draw[photon] (0,0) -- (0.65,0); \draw[photon] (0.65,0) -- (1.3,0);
+  \draw[scalar] (0.65,0) -- (0.65,0.5); \node[blob,minimum size=0.5cm] at (0.65,0.78) {$T$};
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.65,0) {}; \nnright{1.3}
+  \node[font=\scriptsize] at (0.88,0.3) {$H$};
+  \node[slab] at (0.65,-1.35) {(c) タドポール};
+\end{scope}
+% (d) vertex: e line, two W
+\begin{scope}[shift={(13.2,0)}]
+  \trileft \draw[fermion] (0,-0.45) -- (0,0.45);
+  \draw[photon] (0,-0.45) -- (0.8,0); \draw[photon] (0,0.45) -- (0.8,0); \draw[photon] (0.8,0) -- (1.7,0); \nnright{1.7}
+  \node[font=\scriptsize] at (-0.18,0) {$e$}; \node[font=\scriptsize] at (0.5,0.5) {$W$}; \node[font=\scriptsize] at (0.5,-0.5) {$W$};
+  \node[font=\scriptsize] at (1.25,0.28) {$Z$};
+  \node[slab] at (0.65,-1.35) {(d) 頂点（$W$、$W$）};
+\end{scope}
+% (e) vertex: two e lines, W
+\begin{scope}[shift={(0,-3.2)}]
+  \trileft \draw[photon] (0,-0.45) -- (0,0.45);
+  \draw[fermion] (0,-0.45) -- (0.8,0); \draw[fermion] (0.8,0) -- (0,0.45); \draw[photon] (0.8,0) -- (1.7,0); \nnright{1.7}
+  \node[font=\scriptsize] at (-0.25,0) {$W$}; \node[font=\scriptsize] at (0.5,0.48) {$e$}; \node[font=\scriptsize] at (0.5,-0.48) {$e$};
+  \node[font=\scriptsize] at (1.25,0.28) {$Z$};
+  \node[slab] at (0.65,-1.35) {(e) 頂点（$e$、$e$）};
+\end{scope}
+% (f) vertex: two nu lines, Z
+\begin{scope}[shift={(4.8,-3.2)}]
+  \trileft \draw[photon] (0,-0.45) -- (0,0.45);
+  \draw[fermion] (0,-0.45) -- (0.8,0); \draw[fermion] (0.8,0) -- (0,0.45); \draw[photon] (0.8,0) -- (1.7,0); \nnright{1.7}
+  \node[font=\scriptsize] at (-0.25,0) {$Z$}; \node[font=\scriptsize] at (0.5,0.5) {$\nu_e$}; \node[font=\scriptsize] at (0.5,-0.5) {$\nu_e$};
+  \node[font=\scriptsize] at (1.25,0.28) {$Z$};
+  \node[slab] at (0.65,-1.35) {(f) 頂点（$Z$）};
+\end{scope}
+% (g) box ZZ
+\begin{scope}[shift={(9.7,-3.2)}]
+  \boxlines \draw[photon] (0,0.5) -- (1.6,0.5); \draw[photon] (0,-0.5) -- (1.6,-0.5);
+  \node[font=\scriptsize] at (0.8,0.78) {$Z$}; \node[font=\scriptsize] at (0.8,-0.22) {$Z$};
+  \node[slab] at (0.8,-1.35) {(g) 箱（$Z$、$Z$）};
+\end{scope}
+% (h) crossed box ZZ
+\begin{scope}[shift={(13.8,-3.2)}]
+  \boxlines \draw[photon] (0,0.5) -- (1.6,-0.5); \draw[photon] (0,-0.5) -- (1.6,0.5);
+  \node[font=\scriptsize] at (0.35,0.64) {$Z$}; \node[font=\scriptsize] at (0.35,-0.64) {$Z$};
+  \node[slab] at (0.8,-1.35) {(h) 交差した箱（$Z$、$Z$）};
+\end{scope}
+% (i) crossed box WW
+\begin{scope}[shift={(4.6,-6.4)}]
+  \boxlines \draw[photon] (0,0.5) -- (1.6,-0.5); \draw[photon] (0,-0.5) -- (1.6,0.5);
+  \node[font=\scriptsize] at (0.35,0.64) {$W$}; \node[font=\scriptsize] at (0.35,-0.64) {$W$};
+  \node[font=\scriptsize] at (-0.2,0) {$e$}; \node[font=\scriptsize] at (1.82,0) {$\mu$};
+  \node[slab] at (0.8,-1.35) {(i) 箱（$W$、$W$）};
+\end{scope}
+% (j) external leg
+\begin{scope}[shift={(9.8,-6.4)}]
+  \draw[thick] (-1.0,-0.72) -- (-0.82,-0.59); \draw[fermion] (-0.46,-0.33) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \node[blob,minimum size=0.44cm] at (-0.64,-0.46) {};
+  \node[font=\scriptsize,anchor=east] at (-1.0,-0.72) {$\nu_e$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {$\bar\nu_e$};
+  \node[font=\scriptsize] at (-0.25,-0.85) {$\Sigma^L_\nu$};
+  \draw[photon] (0,0) -- (1.3,0); \node[vtx] at (0,0) {}; \nnright{1.3}
+  \node[font=\scriptsize] at (0.65,0.3) {$Z$};
+  \node[slab] at (0.65,-1.35) {(j) 外線};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (9) の $\nu_e\bar\nu_e\to\nu_\mu\bar\nu_\mu$ の1ループの図の型（Feynman ゲージ、時間は左から右）。(b) の灰色の円は図~\ref{fig:se} の (a)〜(g) の $Z$ の自己エネルギー、(c) は図~\ref{fig:tadpole} のタドポールを $Z$ の線につないだ図である。(d)〜(f) は $Z\nu_e\bar\nu_e$ の頂点の補正で、右の $Z\nu_\mu\bar\nu_\mu$ の頂点にも同じ図がある。Goldstone ボソンと $H$ は質量0のレプトンと結合しないので、(b)、(c) の中にだけ現れる。$Z$ の箱は (g)、(h) の二つの向きがあり、$W$ の箱は電荷の流れのため交差した (i) の形だけで、内線は $e$ と $\mu$ である。(j) の外線の補正は、4本の脚に LSZ の因子 $1-\Sigma^L_\nu(0)/2$ として入る。}
+\label{fig:nunu}
+\end{figure}
 
 換算は次のとおりである。同じ数値を on-shell の値と見て、本ノートのパラメータとの差を
 \begin{equation}
@@ -1215,7 +1411,7 @@ M_V^2(\MSbar)=M_V^2(\mathrm{OS})+\re\Sigma_T^{VV}(M_V^2),\qquad
 
 途中で FeynCalc の問題を二つ見つけた（計算環境の記録~\cite{env}）。FeynArts の運動量の流し方で $u(p_1)$ の隣の運動量が $p_3+p_4-p_2-q$ になると、\texttt{DiracSimplify} は運動量の保存を知らないので $p_1$ の Dirac 方程式を使えず、入射の鎖の3個の頂点の図だけが、出射の鎖の鏡像の図と FormCalc の値から（有限な $B_0-B_0-M^2C_0$ の組み合わせで）ずれた。図ごとの比較で見つけ、ループのある鎖ごとに運動量をその鎖の外線で書き直して一致させた。また FeynCalc は $D$ 次元の $\gamma_5$ のトレースを評価しないので、$Z$ の自己エネルギーのフェルミオンのループの $\gamma_5$ の部分（$\epsilon(p_3,\mu,p_4,\rho)$ の対で打ち消す）は4次元で評価した。
 
-(b) FJ を対抗項の形にした本ノートの UFO。MadLoop はタドポールの図と外線の自己エネルギーを作らないので、FJ の処方は対抗項の頂点として入れる必要がある。本ノートの模型（\texttt{SM.fr}、Feynman ゲージ）を NLOCT で繰り込んだ模型から \texttt{WriteCT} で R2 の頂点（163個）を求め（\texttt{nlo\_renormalize.wl}、\texttt{nlo\_writect.wl}。タドポールの定数の1点の頂点は FeynArts の一般の模型にないので0とした）、NLOCT の on-shell の UV の頂点は使わずに、UV の頂点を自分で書いた。この過程に要るのは次の頂点で、初めはこれだけを本ノートの自己エネルギー（\texttt{nlo\_fjct.wl}）から書いた UFO で確かめた：
+(b) FJ を対抗項の形にした本ノートの UFO。MadLoop はタドポールの図と外線の自己エネルギーを作らないので、FJ の処方は対抗項の頂点として入れる必要がある。本ノートの模型（\texttt{SM.fr}、Feynman ゲージ）を NLOCT で繰り込んだ模型から \texttt{WriteCT} で R2 の頂点（163個）を求め（\texttt{nlo\_renormalize.wl}、\texttt{nlo\_writect.wl}。タドポールの定数の1点の頂点は FeynArts の一般の模型にないので0とした）、NLOCT の on-shell の UV の頂点は使わずに、UV の頂点を自分で書いた。この過程に要るのは次の頂点（図~\ref{fig:fjct} の (f)、(g)）で、初めはこれだけを本ノートの自己エネルギー（\texttt{nlo\_fjct.wl}）から書いた UFO で確かめた：
 \begin{equation}
 ZZ:\ ig^{\mu\nu}\bigl(\delta M_Z^2-\Sigma_{\mathrm{tad}}^{ZZ}\bigr),\qquad
 Z\nu\bar\nu:\ (\text{木の頂点})\times\Bigl[\frac{\delta e}{e}-\frac{\delta c_W^2}2\Bigl(\frac1{c_W^2}-\frac1{s_W^2}\Bigr)+\delta Z_\nu^L\Bigr].
@@ -1223,9 +1419,77 @@ Z\nu\bar\nu:\ (\text{木の頂点})\times\Bigl[\frac{\delta e}{e}-\frac{\delta c
 \end{equation}
 $\delta M_Z^2$、$\delta e$、$\delta c_W^2=\delta M_W^2/M_Z^2-M_W^2\delta M_Z^2/M_Z^4$ は $\MSbar$ の極（$\delta M^2$ はタドポールを含む $\Sigma_T(M^2)$ の極）、$\Sigma^{ZZ}_{\mathrm{tad}}$ は運動量0の $H$ の線で付くタドポールの図（極と有限部分。MadLoop が作らない図をそのまま頂点にしたもの）、$\delta Z^L_\nu=-\Sigma^L_\nu(0)$ は外線のための on-shell の場の定数で、$Z$ の場は繰り込まない。$K\,\delta e/e=\frac{11}6e^2$ を再現した。式~\eqref{eq:fjct} は FJ の処方の UV の頂点の一般形（$\MSbar$ の極、タドポールの有限な頂点、外線の on-shell の場の定数）の、この過程に要る部分で、(d) ですべての頂点に広げた。その UFO で MadLoop に同じ数値を本ノートの $\MSbar$ のパラメータとして与えると（図は1ループ42個、R2 28個、UV 6個）、有限部分は $\mu=M_Z$ で $-1.1737308938221\times10^{-4}$、500~GeV で $+1.4427406016859\times10^{-5}$ になり、FeynCalc の $\re W(\MSbar)/2$ と相対 $2\times10^{-14}$、$1\times10^{-13}$ で一致した（極は0。式~\eqref{eq:fjct} の頂点だけの UFO とも相対 $3\times10^{-14}$ で同じ）。$\MSbar$ の振幅の $\mu$ による大きな変化も、FJ を対抗項の形にした UFO がそのまま再現する。
 
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% (a) tadpole on a line = two-point vertex dvT
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (-0.9,0) -- (0,0); \draw[photon] (0,0) -- (0.9,0);
+  \draw[scalar] (0,0) -- (0,0.5); \node[blob,minimum size=0.5cm] at (0,0.78) {$T$};
+  \node[vtx] at (0,0) {}; \node[font=\scriptsize] at (0.22,0.3) {$H$};
+  \node[font=\scriptsize] at (-0.7,-0.28) {$V$}; \node[font=\scriptsize] at (0.7,-0.28) {$V$};
+  \node at (1.3,0) {$=$};
+  \draw[photon] (1.7,0) -- (2.45,0); \draw[photon] (2.75,0) -- (3.5,0);
+  \node[ctv] at (2.6,0) {}; \node[font=\scriptsize] at (2.6,0.36) {$\delta v_T$};
+  \node[slab] at (1.3,-1.1) {(a) 線につくタドポール};
+\end{scope}
+% (b) tadpole at a vertex = three-point vertex dvT
+\begin{scope}[shift={(5.6,0)}]
+  \draw[photon] (-0.8,-0.55) -- (0,0); \draw[photon] (-0.8,0.55) -- (0,0); \draw[scalar] (0,0) -- (0.9,0);
+  \draw[scalar] (0,0) -- (0,0.5); \node[blob,minimum size=0.5cm] at (0,0.78) {$T$};
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.95,-0.62) {$V$}; \node[font=\scriptsize] at (-0.95,0.62) {$V$}; \node[font=\scriptsize] at (0.75,-0.25) {$H$};
+  \node at (1.35,0) {$=$};
+  \draw[photon] (1.8,-0.55) -- (2.5,-0.06); \draw[photon] (1.8,0.55) -- (2.5,0.06); \draw[scalar] (2.66,0) -- (3.5,0);
+  \node[ctv] at (2.6,0) {}; \node[font=\scriptsize] at (2.6,0.36) {$\delta v_T$};
+  \node[slab] at (1.3,-1.1) {(b) 頂点につくタドポール};
+\end{scope}
+% (c) the one-point term, left out
+\begin{scope}[shift={(11.6,0)}]
+  \draw[scalar] (0,-0.75) -- (0,0.1); \node[blob,minimum size=0.5cm] at (0,0.38) {$T$};
+  \node[font=\scriptsize] at (0.22,-0.45) {$H$};
+  \node at (0.75,-0.1) {$+$};
+  \draw[scalar] (1.5,-0.75) -- (1.5,0.06); \node[ctv] at (1.5,0.2) {};
+  \node[font=\scriptsize] at (1.5,0.55) {$-iM_H^2\delta v_T$};
+  \node[slab] at (0.75,-1.1) {(c) 1点の頂点（入れない）};
+\end{scope}
+% (d) loop
+\begin{scope}[shift={(0.3,-2.9)}]
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.45); \draw[fermion] (0,0.45) -- (-0.9,0.8);
+  \draw[fermion] (0,-0.45) -- (0,0.45); \draw[photon] (0,-0.45) -- (0.8,0); \draw[photon] (0,0.45) -- (0.8,0); \draw[photon] (0.8,0) -- (1.6,0);
+  \node[vtx] at (0,-0.45) {}; \node[vtx] at (0,0.45) {}; \node[vtx] at (0.8,0) {};
+  \node[slab] at (0.35,-1.1) {(d) ループの図};
+\end{scope}
+% (e) R2 vertex
+\begin{scope}[shift={(4.3,-2.9)}]
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65); \draw[photon] (0,0) -- (1.1,0);
+  \node[rectangle,fill=black,inner sep=0pt,minimum size=6pt] at (0,0) {};
+  \node[font=\scriptsize] at (0.25,0.32) {$R_2$};
+  \node[slab] at (0.1,-1.1) {(e) R2 の頂点};
+\end{scope}
+% (f) UV vertex Z nu nu
+\begin{scope}[shift={(8.0,-2.9)}]
+  \draw[fermion] (-0.9,-0.65) -- (-0.1,-0.07); \draw[fermion] (-0.1,0.07) -- (-0.9,0.65); \draw[photon] (0.12,0) -- (1.1,0);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.65) {$\nu$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {$\bar\nu$}; \node[font=\scriptsize] at (0.8,0.3) {$Z$};
+  \node[slab] at (0.1,-1.1) {(f) UV の頂点 $Z\nu\bar\nu$};
+\end{scope}
+% (g) UV vertex ZZ
+\begin{scope}[shift={(11.8,-2.9)}]
+  \draw[photon] (-0.9,0) -- (-0.15,0); \draw[photon] (0.15,0) -- (0.9,0);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.7,0.3) {$Z$}; \node[font=\scriptsize] at (0.7,0.3) {$Z$};
+  \node[font=\scriptsize] at (0,-0.42) {$ig^{\mu\nu}(\delta M_Z^2-\Sigma^{ZZ}_{\mathrm{tad}})$};
+  \node[slab] at (0,-1.1) {(g) UV の頂点 $ZZ$};
+\end{scope}
+\end{tikzpicture}
+\caption{FJ の処方を対抗項の形にしたもの（手順 (9b)、(9d)）。上の段：運動量0の $H$ の伝播関数 $i/(-M_H^2)$ と1点の関数 $iT$ の積は $\delta v_T=T/M_H^2$ を掛けることに等しいので、タドポールを線につないだ図 (a) と頂点につないだ図 (b) は、$\mathcal L$ の $H\to H+\delta v_T$ の1次の項 $\delta v_T\,\partial\mathcal L/\partial H$ の2点と3点の頂点（$\otimes$）になる。(c) のタドポールそのものと1点の頂点 $-iM_H^2\delta v_T=-iT$ は入れない（入れると (a)、(b) を打ち消し、タドポールを除いた1PI だけの値になる）。下の段：MadLoop の1ループの振幅は、ループの図 (d)、R2 の頂点 (e)、UV の対抗項の頂点 (f)、(g) の和である。本ノートの UFO の R2 の頂点は NLOCT（163個）、UV の頂点は対抗項のラグランジアンと (a)、(b) の頂点（173個）で、(f)、(g) は $\nu_e\bar\nu_e\to\nu_\mu\bar\nu_\mu$ に要る頂点（式~\eqref{eq:fjct}）である。}
+\label{fig:fjct}
+\end{figure}
+
 (c) 二つの UFO の違い（表~\ref{tab:ufo}）。MadGraph に付属の \texttt{loop\_qcd\_qed\_sm} は、Shao らが電弱の NLO の自動化のために作った模型~\cite{mg5ew}で、R2 と UV の頂点を閉じた形で手で書いてある。本ノートの UFO は、本ノートの \texttt{SM.fr} から FeynRules の \texttt{WriteUFO} で書き出し、R2 の頂点は NLOCT~\cite{nloct} で同じ模型から求め、UV の頂点は (d) の対抗項のラグランジアンとタドポールの頂点である。物理的な違いは繰り込みのスキームにある。公式の模型ではパラメータが on-shell の質量と $\alpha(M_Z)$ で、タドポールを対抗項 $\delta t$ で打ち消す（$\beta_t$ の処方に当たる。\texttt{HiggsTadpole\_UV\_EW} が頂点の対抗項に入る）。本ノートの UFO ではパラメータが FJ の $\MSbar$ の値で、タドポールの図をそのまま頂点に入れる。そのため、同じ param\_card の数値でも二つの模型の振幅は違う量であり、$\mu_R$ への依存も違う（$\nu_e\bar\nu_e\to\nu_\mu\bar\nu_\mu$ では、公式の模型では $\mu_R$ によらず、本ノートの UFO では $\MSbar$ の振幅と同じく $\mu_R$ による）。両者は式~\eqref{eq:convOS} の有限な換算だけでつながり、(a)、(b)、(d) の結果はその関係を数値で確かめたことになる。範囲の違いは、本ノートの UFO の対抗項が軽いフェルミオンの質量0の場合だけで正しいことである（公式の模型は軽い質量を残す制限カードにも使える）。MadLoop の図の数の違い（1ループ 26 (+7) と 42 (+2)）は、本ノートの UFO が軽いフェルミオンの質量をパラメータとして残し、質量に比例する $H$、$G^0$、$G^\pm$ とレプトンの結合（値は0）の図も作るためで、軽い質量と幅を0にする制限カードを与えると 26 (+7) になり、有限部分は14桁同じだった。R2 の数（17 と 18）の違いは、R2 の結合を内線の粒子ごとにどう分けるかの違い（対抗項の振幅の数 23 と 24）で、ループの図そのものは同じである。
 
-(d) すべての頂点の FJ の対抗項。(b) の UV の頂点を、軽いフェルミオンが質量0のどの過程にも使える形に広げた（\texttt{nlo\_ctrules.wl}、\texttt{nlo\_dz.wl}、\texttt{nlo\_fjdelta.wl}、\texttt{nlo\_ctparams.wl}、\texttt{nlo\_ufo.wl}）。UV の頂点は二つの部分の和である。一つは、NLOCT の \texttt{OnShellRenormalization} で繰り込んだ本ノートのラグランジアン（Feynman ゲージ）の対抗項の部分の Feynman 則（181個の頂点。パラメータの定数 $\delta p$ と場の定数 $\delta Z$ について線形）である。もう一つは、$H\to H+\delta v_T$ の1次の項 $\delta v_T\,\partial\mathcal L/\partial H$ の Feynman 則（2点と3点の29個）である。後者は運動量0の $H$ の線でタドポールを線と頂点につないだ図で、$\delta v_T=T/M_H^2$（手順 (3) の $T$）とすると、MadLoop の作らないタドポールの図をすべて与える（1点の項、つまりタドポールそのものは入れない。$ZZ$ の頂点は式~\eqref{eq:fjct} の $-\Sigma^{ZZ}_{\mathrm{tad}}$ と、軽い質量を $10^{-12}$~GeV にした数値で $10^{-52}$~GeV$^2$ まで一致した）。定数は次のとおりである。
+(d) すべての頂点の FJ の対抗項。(b) の UV の頂点を、軽いフェルミオンが質量0のどの過程にも使える形に広げた（\texttt{nlo\_ctrules.wl}、\texttt{nlo\_dz.wl}、\texttt{nlo\_fjdelta.wl}、\texttt{nlo\_ctparams.wl}、\texttt{nlo\_ufo.wl}）。UV の頂点は二つの部分の和である。一つは、NLOCT の \texttt{OnShellRenormalization} で繰り込んだ本ノートのラグランジアン（Feynman ゲージ）の対抗項の部分の Feynman 則（181個の頂点。パラメータの定数 $\delta p$ と場の定数 $\delta Z$ について線形）である。もう一つは、$H\to H+\delta v_T$ の1次の項 $\delta v_T\,\partial\mathcal L/\partial H$ の Feynman 則（2点と3点の29個）である。後者は運動量0の $H$ の線でタドポールを線と頂点につないだ図（図~\ref{fig:fjct} の (a)、(b)）で、$\delta v_T=T/M_H^2$（手順 (3) の $T$）とすると、MadLoop の作らないタドポールの図をすべて与える（1点の項、つまりタドポールそのものは入れない。$ZZ$ の頂点は式~\eqref{eq:fjct} の $-\Sigma^{ZZ}_{\mathrm{tad}}$ と、軽い質量を $10^{-12}$~GeV にした数値で $10^{-52}$~GeV$^2$ まで一致した）。定数は次のとおりである。
 \begin{itemize}
 \item パラメータの定数は FJ の $\MSbar$ の極 $\delta p=\frac{\DUV}2\,\dd p/\dd\ln\mu$ で、UFO の外部パラメータ $1/\alpha$、$\alpha_s$、$M_Z$、$M_W$、$M_H$、$m_f$ の走りを式~\eqref{eq:beta} から連鎖律で求めた（$v^2=\mu^2/\lambda$ の $1/\lambda$ の項を含む）。$K\,\delta e/e=\frac{11}6e^2$ を再現し、$\delta M_Z^2$、$\delta M_W^2$、$\delta e$ の極は (b) の FeynCalc の値と記号として一致した。
 \item 場の定数は外線の LSZ の因子で、NLOCT の on-shell の値を使う。MadLoop は外線の自己エネルギーを作らないので外線の場の定数は on-shell でなければならず、内線の場の定数は振幅の中で打ち消す。NLOCT は定数を代入した UV の頂点しか書き出さないので、その2点の頂点（21個）と、対抗項のラグランジアンの記号の頂点の係数を比べて、31個の定数を取り出した。複数の頂点から出る定数は互いに一致し、$\delta Z^L_\nu$ は (b) の FeynCalc の $-\Sigma^L_\nu(0)$ と18桁、$u,d,e,\mu,\nu_e$ の定数は MadGraph の模型の独立な値（\texttt{Wcft\_UV\_EW}）と15桁一致した。Goldstone ボソンは内線にしか現れないので、その場の定数は0にした（NLOCT の $G^0G^0$、$G^+G^-$ の頂点には、対抗項のラグランジアンにない定数の項がある）。
@@ -1233,12 +1497,172 @@ $\delta M_Z^2$、$\delta e$、$\delta c_W^2=\delta M_W^2/M_Z^2-M_W^2\delta M_Z^2
 \end{itemize}
 定数は38個の CT パラメータ（電弱の部分と QCD の部分は別のパラメータにし、結合の次数は $\delta Z$、$\delta p$ が QED 2 または QCD 2、$\delta v_T$ が QED 1）として UFO の \texttt{CT\_parameters.py} に入れ、頂点の結合をそれらについて線形に書いた（MadGraph の \texttt{CTParameter}。FeynRules には外部パラメータとして渡し、書き出した後で移した）。UV の頂点は173個である。MadLoop は UV の頂点のうち、自己共役な場の2点の頂点（$AA$、$ZZ$、$HH$ など）を、R2 と同じく \texttt{loop\_particles} と同じ粒子の組のループを持つ図にだけ付ける。そこで、すべての UV の頂点の \texttt{loop\_particles} を空にし、その位置のループごとに1回ずつ付くようにした。
 
-この UFO を、外線がすべて質量0の7個の過程で MadGraph の模型と比べた（表~\ref{tab:fjall}。\texttt{run\_fj\_check.sh}、\texttt{fj\_madloop.py}。点と入力は (a) と同じ）。二つの模型のループの図は同じ（数も同じ）で、違うのは対抗項だけであり、それは繰り込み定数について線形である。場の定数は同じなので、同じ数値 $p$ を on-shell と $\MSbar$ の値と見ると、$\MSbar$ のパラメータ $p$ は on-shell の $p-\delta p$（$\delta p=p(\MSbar)-p(\mathrm{OS})$、式~\eqref{eq:convOS} の有限部分）に当たる。したがって1ループで厳密に
+この UFO を、外線がすべて質量0の7個の過程で MadGraph の模型と比べた（表~\ref{tab:fjall}。木の図は図~\ref{fig:fjtree}、$e^+e^-\to\mu^+\mu^-$ の1ループの図の型は図~\ref{fig:eemm}。\texttt{run\_fj\_check.sh}、\texttt{fj\_madloop.py}。点と入力は (a) と同じ）。二つの模型のループの図は同じ（数も同じ）で、違うのは対抗項だけであり、それは繰り込み定数について線形である。場の定数は同じなので、同じ数値 $p$ を on-shell と $\MSbar$ の値と見ると、$\MSbar$ のパラメータ $p$ は on-shell の $p-\delta p$（$\delta p=p(\MSbar)-p(\mathrm{OS})$、式~\eqref{eq:convOS} の有限部分）に当たる。したがって1ループで厳密に
 \begin{equation}
 \mathrm{finite}(\mathrm{MG})-\mathrm{finite}(\mathrm{FJ})=\sum_{p=1/\alpha,\,M_Z,\,M_W}\frac{\partial\,\mathrm{born}}{\partial p}\,\delta p,\qquad\delta(1/\alpha)=-\frac{2\,\delta e}{\alpha}
 \label{eq:fjdiff}
 \end{equation}
 となる。born の微分は MadGraph の模型の数値の差分（5点の公式を刻み $2\times10^{-4}$ と $4\times10^{-4}$ で求め、Richardson で外挿）で求め、$\delta p$ は (a) の値を使った。式~\eqref{eq:fjdiff} の両辺の差は、七つの過程の二つの $\mu$ で born の $7\times10^{-13}$ 以下で、極は二つの模型で $10^{-18}$ まで同じだった。両辺の相対の差は最大 $4\times10^{-10}$ である（$\mu=500$~GeV では $M_Z$ と $M_W$ の項が和の約30倍の大きさで打ち消すので、差分の丸めが効く）。$\nu_e\bar\nu_e\to\nu_\mu\bar\nu_\mu$ では、解析的な微分を使うと両辺が相対 $5\times10^{-15}$ で一致した。$e^+e^-\to\gamma\gamma$ では外線の光子の定数 $\delta Z_{AA}$、$\delta Z_{ZA}$ を、$u\bar u$、$d\bar d$ では外線のクォークの定数を含めて確かめたことになる。途中で、MadGraph の param\_card の読み込みが値を20文字で切ることが分かった（有効数字16桁の \texttt{1.725700000000000e+02} は $1.7257$ と読まれ、警告は出ない）。
+
+\begin{figure}[tbp]
+\centering
+\newcommand{\schan}[5]{% s channel: in-particle, in-antiparticle, out-particle, out-antiparticle, boson label
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \draw[photon] (0,0) -- (1.3,0);
+  \draw[fermion] (1.3,0) -- (2.2,0.65); \draw[fermion] (2.2,-0.65) -- (1.3,0);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.3,0) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.65) {#1}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {#2};
+  \node[font=\scriptsize,anchor=west] at (2.2,0.65) {#3}; \node[font=\scriptsize,anchor=west] at (2.2,-0.65) {#4};
+  \node[font=\scriptsize] at (0.65,0.3) {#5};}
+\newcommand{\tchan}[5]{% exchange between the lower line (#1 -> #2) and the upper line (#3 -> #4), boson #5
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0.9,-0.8);
+  \draw[fermion] (-0.9,0.8) -- (0,0.5); \draw[fermion] (0,0.5) -- (0.9,0.8);
+  \draw[photon] (0,-0.5) -- (0,0.5);
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.8) {#1}; \node[font=\scriptsize,anchor=west] at (0.9,-0.8) {#2};
+  \node[font=\scriptsize,anchor=east] at (-0.9,0.8) {#3}; \node[font=\scriptsize,anchor=west] at (0.9,0.8) {#4};
+  \node[font=\scriptsize] at (0.3,0) {#5};}
+\begin{tikzpicture}[scale=0.86]
+\begin{scope}[shift={(0,0)}]
+  \schan{$\nu_e$}{$\bar\nu_e$}{$\nu_\mu$}{$\bar\nu_\mu$}{$Z$}
+  \node[slab] at (0.65,-1.35) {(a) $\nu_e\bar\nu_e\to\nu_\mu\bar\nu_\mu$};
+\end{scope}
+\begin{scope}[shift={(4.6,0)}]
+  \schan{$e^-$}{$e^+$}{$\mu^-$}{$\mu^+$}{$A$、$Z$}
+  \node[slab] at (0.65,-1.35) {(b) $e^+e^-\to\mu^+\mu^-$};
+\end{scope}
+\begin{scope}[shift={(9.35,0)}]
+  \schan{$q$}{$\bar q$}{$\ell^-$}{$\ell^+$}{$A$、$Z$}
+  \node[slab] at (0.65,-1.35) {(c) $u\bar u\to e^+e^-$、$d\bar d\to\mu^+\mu^-$};
+\end{scope}
+\begin{scope}[shift={(14.1,0)}]
+  \schan{$e^-$}{$e^+$}{$\nu_e$}{$\bar\nu_e$}{$Z$}
+  \node[slab] at (0.65,-1.35) {(d) $e^+e^-\to\nu_e\bar\nu_e$（$s$）};
+\end{scope}
+% e+ e- -> nu nubar, W in the t channel: e- -> nu_e below, nubar_e out <- e+ in above (fermion arrows reversed above)
+\begin{scope}[shift={(0.6,-3.2)}]
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0.9,-0.8);
+  \draw[fermion] (0,0.5) -- (-0.9,0.8); \draw[fermion] (0.9,0.8) -- (0,0.5);
+  \draw[photon] (0,-0.5) -- (0,0.5);
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.8) {$e^-$}; \node[font=\scriptsize,anchor=west] at (0.9,-0.8) {$\nu_e$};
+  \node[font=\scriptsize,anchor=east] at (-0.9,0.8) {$e^+$}; \node[font=\scriptsize,anchor=west] at (0.9,0.8) {$\bar\nu_e$};
+  \node[font=\scriptsize] at (0.3,0) {$W$};
+  \node[slab] at (0,-1.35) {(e) $e^+e^-\to\nu_e\bar\nu_e$（$t$）};
+\end{scope}
+\begin{scope}[shift={(4.4,-3.2)}]
+  \tchan{$\nu_e$}{$\nu_e$}{$e^-$}{$e^-$}{$Z$}
+  \node[slab] at (0,-1.35) {(f) $\nu_ee^-\to\nu_ee^-$（$Z$）};
+\end{scope}
+\begin{scope}[shift={(8.2,-3.2)}]
+  \tchan{$\nu_e$}{$e^-$}{$e^-$}{$\nu_e$}{$W$}
+  \node[slab] at (0,-1.35) {(g) $\nu_ee^-\to\nu_ee^-$（$W$）};
+\end{scope}
+% e+ e- -> gamma gamma
+\begin{scope}[shift={(12.0,-3.2)}]
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0,0.5); \draw[fermion] (0,0.5) -- (-0.9,0.8);
+  \draw[photon] (0,-0.5) -- (0.9,-0.8); \draw[photon] (0,0.5) -- (0.9,0.8);
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.8) {$e^-$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.8) {$e^+$};
+  \node[font=\scriptsize,anchor=west] at (0.9,-0.8) {$\gamma$}; \node[font=\scriptsize,anchor=west] at (0.9,0.8) {$\gamma$};
+  \node[font=\scriptsize] at (-0.2,0) {$e$};
+  \node[slab] at (0,-1.35) {(h) $e^+e^-\to\gamma\gamma$};
+\end{scope}
+\begin{scope}[shift={(15.4,-3.2)}]
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0,0.5); \draw[fermion] (0,0.5) -- (-0.9,0.8);
+  \draw[photon] (0,-0.5) -- (0.9,0.8); \draw[photon] (0,0.5) -- (0.9,-0.8);
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {};
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.8) {$e^-$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.8) {$e^+$};
+  \node[font=\scriptsize,anchor=west] at (0.9,-0.8) {$\gamma$}; \node[font=\scriptsize,anchor=west] at (0.9,0.8) {$\gamma$};
+  \node[font=\scriptsize] at (-0.2,0) {$e$};
+  \node[slab] at (0,-1.35) {(i) 交差した図};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (9d) で比べた7個の過程の木の図（外線はすべて質量0）。(c) は $u\bar u\to e^+e^-$ と $d\bar d\to\mu^+\mu^-$ を一つにまとめた。$H$、$G^0$、$G^\pm$ は質量0のフェルミオンと結合しないので木には現れない。(e)、(g) の $W$ の交換と (d)、(f) の $Z$ の交換は同じ過程の二つの図で、干渉する。}
+\label{fig:fjtree}
+\end{figure}
+
+\begin{figure}[tbp]
+\centering
+\newcommand{\eeright}[2]{% outgoing mu- mu+ from (#1,0), s-channel boson label #2 at the middle of the last segment
+  \draw[fermion] (#1,0) -- ++(0.9,0.65); \draw[fermion] ($(#1,0)+(0.9,-0.65)$) -- (#1,0);
+  \node[font=\scriptsize,anchor=west] at ($(#1,0)+(0.9,0.65)$) {$\mu^-$}; \node[font=\scriptsize,anchor=west] at ($(#1,0)+(0.9,-0.65)$) {$\mu^+$};
+  \node[vtx] at (#1,0) {};}
+\newcommand{\eetri}{% incoming e- e+ to A=(0,-0.45), B=(0,0.45), third vertex C=(0.8,0)
+  \draw[fermion] (-0.9,-0.8) -- (0,-0.45); \draw[fermion] (0,0.45) -- (-0.9,0.8);
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.8) {$e^-$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.8) {$e^+$};
+  \node[vtx] at (0,-0.45) {}; \node[vtx] at (0,0.45) {}; \node[vtx] at (0.8,0) {};}
+\newcommand{\eeleft}{%
+  \draw[fermion] (-0.9,-0.65) -- (0,0); \draw[fermion] (0,0) -- (-0.9,0.65);
+  \node[font=\scriptsize,anchor=east] at (-0.9,-0.65) {$e^-$}; \node[font=\scriptsize,anchor=east] at (-0.9,0.65) {$e^+$}; \node[vtx] at (0,0) {};}
+\newcommand{\eebox}{%
+  \draw[fermion] (0,-1.0) -- (0,-0.5); \draw[fermion] (0,-0.5) -- (0,0.5); \draw[fermion] (0,0.5) -- (0,1.0);
+  \draw[fermion] (1.6,-1.0) -- (1.6,-0.5); \draw[fermion] (1.6,-0.5) -- (1.6,0.5); \draw[fermion] (1.6,0.5) -- (1.6,1.0);
+  \node[font=\scriptsize] at (-0.3,-0.92) {$e^-$}; \node[font=\scriptsize] at (-0.3,0.92) {$e^+$};
+  \node[font=\scriptsize] at (1.92,0.92) {$\mu^-$}; \node[font=\scriptsize] at (1.92,-0.92) {$\mu^+$};
+  \node[vtx] at (0,-0.5) {}; \node[vtx] at (0,0.5) {}; \node[vtx] at (1.6,-0.5) {}; \node[vtx] at (1.6,0.5) {};}
+\begin{tikzpicture}[scale=0.86]
+% (a) vertex: photon or Z exchange between e- and e+
+\begin{scope}[shift={(0,0)}]
+  \eetri \draw[photon] (0,-0.45) -- (0,0.45);
+  \draw[fermion] (0,-0.45) -- (0.8,0); \draw[fermion] (0.8,0) -- (0,0.45); \draw[photon] (0.8,0) -- (1.7,0); \eeright{1.7}{}
+  \node[font=\scriptsize] at (-0.42,0) {$A,Z$}; \node[font=\scriptsize] at (1.25,0.3) {$A,Z$};
+  \node[slab] at (0.65,-1.35) {(a) 頂点（$A$、$Z$）};
+\end{scope}
+% (b) vertex: nu line, two W
+\begin{scope}[shift={(4.8,0)}]
+  \eetri \draw[fermion] (0,-0.45) -- (0,0.45);
+  \draw[photon] (0,-0.45) -- (0.8,0); \draw[photon] (0,0.45) -- (0.8,0); \draw[photon] (0.8,0) -- (1.7,0); \eeright{1.7}{}
+  \node[font=\scriptsize] at (-0.22,0) {$\nu_e$}; \node[font=\scriptsize] at (0.5,0.5) {$W$}; \node[font=\scriptsize] at (0.5,-0.5) {$W$};
+  \node[font=\scriptsize] at (1.25,0.3) {$A,Z$};
+  \node[slab] at (0.65,-1.35) {(b) 頂点（$W$、$W$）};
+\end{scope}
+% (c) vertex: two nu lines, W
+\begin{scope}[shift={(9.6,0)}]
+  \eetri \draw[photon] (0,-0.45) -- (0,0.45);
+  \draw[fermion] (0,-0.45) -- (0.8,0); \draw[fermion] (0.8,0) -- (0,0.45); \draw[photon] (0.8,0) -- (1.7,0); \eeright{1.7}{}
+  \node[font=\scriptsize] at (-0.25,0) {$W$}; \node[font=\scriptsize] at (0.5,0.5) {$\nu_e$}; \node[font=\scriptsize] at (0.5,-0.5) {$\nu_e$};
+  \node[font=\scriptsize] at (1.25,0.3) {$Z$};
+  \node[slab] at (0.65,-1.35) {(c) 頂点（$\nu$、$\nu$）};
+\end{scope}
+% (d) s-channel self-energy
+\begin{scope}[shift={(14.4,0)}]
+  \eeleft \draw[photon] (0,0) -- (0.42,0); \draw[photon] (0.88,0) -- (1.3,0);
+  \node[blob,minimum size=0.46cm] at (0.65,0) {}; \eeright{1.3}{}
+  \node[font=\scriptsize] at (0.2,0.3) {$A,Z$}; \node[font=\scriptsize] at (1.12,0.3) {$A,Z$};
+  \node[slab] at (0.65,-1.35) {(d) $AA$、$AZ$、$ZZ$};
+\end{scope}
+% (e) tadpole on the Z line
+\begin{scope}[shift={(0.2,-3.2)}]
+  \eeleft \draw[photon] (0,0) -- (0.65,0); \draw[photon] (0.65,0) -- (1.3,0);
+  \draw[scalar] (0.65,0) -- (0.65,0.5); \node[blob,minimum size=0.5cm] at (0.65,0.78) {$T$};
+  \node[vtx] at (0.65,0) {}; \eeright{1.3}{}
+  \node[font=\scriptsize] at (0.3,-0.28) {$Z$}; \node[font=\scriptsize] at (1.0,-0.28) {$Z$};
+  \node[slab] at (0.65,-1.35) {(e) タドポール};
+\end{scope}
+% (f) box A, Z
+\begin{scope}[shift={(5.0,-3.2)}]
+  \eebox \draw[photon] (0,0.5) -- (1.6,0.5); \draw[photon] (0,-0.5) -- (1.6,-0.5);
+  \node[font=\scriptsize] at (0.8,0.8) {$A,Z$}; \node[font=\scriptsize] at (0.8,-0.2) {$A,Z$};
+  \node[slab] at (0.8,-1.35) {(f) 箱（$A$、$Z$）};
+\end{scope}
+% (g) crossed box A, Z
+\begin{scope}[shift={(9.6,-3.2)}]
+  \eebox \draw[photon] (0,0.5) -- (1.6,-0.5); \draw[photon] (0,-0.5) -- (1.6,0.5);
+  \node[font=\scriptsize] at (0.42,0.68) {$A,Z$}; \node[font=\scriptsize] at (0.42,-0.68) {$A,Z$};
+  \node[slab] at (0.8,-1.35) {(g) 交差した箱（$A$、$Z$）};
+\end{scope}
+% (h) crossed box W
+\begin{scope}[shift={(14.1,-3.2)}]
+  \eebox \draw[photon] (0,0.5) -- (1.6,-0.5); \draw[photon] (0,-0.5) -- (1.6,0.5);
+  \node[font=\scriptsize] at (0.35,0.64) {$W$}; \node[font=\scriptsize] at (0.35,-0.64) {$W$};
+  \node[font=\scriptsize] at (-0.25,0) {$\nu_e$}; \node[font=\scriptsize] at (1.88,0) {$\nu_\mu$};
+  \node[slab] at (0.8,-1.35) {(h) 箱（$W$、$W$）};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (9d) の過程の代表として、$e^+e^-\to\mu^+\mu^-$ の1ループの図の型（Feynman ゲージ、時間は左から右）。(a)〜(c) は始状態の頂点の補正で、終状態の頂点にも同じ図がある。(b) の $W$ の三角形は光子にも $Z$ にもつき、(c) は $Z$ にだけつく。(d) は $AA$、$AZ$、$ZZ$ の自己エネルギー（図~\ref{fig:se}）、(e) は $Z$ の線のタドポールで、本ノートの UFO では図~\ref{fig:fjct} の (a) の頂点になる。光子の付く (a) と (f)、(g) が赤外の極を持ち、それは二つの模型で同じである。$W$ の箱は、電荷の流れのため交差した (h) の形だけである。外線の補正は on-shell の場の定数に入る。}
+\label{fig:eemm}
+\end{figure}
 
 
 \begin{table}[tbp]
