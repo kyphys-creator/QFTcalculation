@@ -1,0 +1,17 @@
+quantity,value
+general_vs_note_betaY_generic_rel,1.802595e-15
+general_vs_note_betaY_bench_rel,5.902657e-16
+beta_lambda_vs_V1_generic_rel,3.299253e-16
+gamma_mu2_vs_V1_generic_rel,4.459209e-16
+Vrun_abs_rel_bench_50digits,4.470536e-15
+yrun_up_rel_bench,6.647037e-13
+yrun_down_rel_bench,3.060169e-13
+Vrun_abs_rel_bench,8.043498e-07
+Vrun_J_rel_bench,2.890462e-11
+rephasing_rel_bench,2.242725e-15
+yrun_up_rel_big,3.607172e-13
+yrun_down_rel_big,3.836901e-13
+Vrun_abs_rel_big,5.940038e-09
+Vrun_J_rel_big,2.228607e-12
+rephasing_rel_big,9.725539e-16
+KdlnJ_bench,2.754639e+00
