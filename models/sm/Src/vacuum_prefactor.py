@@ -19,7 +19,9 @@
 # ours by exactly two terms, (i) one transverse mode per level s >= 1 (the S^3 transverse vector
 # harmonics number 2 s (s + 2), not 2 (s + 1)^2, so the ghosts do not cancel them) and (ii) the l = 0 Born terms, which
 # the diagrams contain and which their gauge formula does not subtract from R_0' = 1 (their global-symmetry Goldstone
-# formula does).  Then log10(Gamma/V), P = (Gamma/V) T_U^4 and tau = (Gamma/V)^(-1/4), without and with gravity, for the
+# formula does).  Reference (Chigusa-Moroi-Shoji, arXiv:1803.03902): their Fermi-gauge formula differs from ours by (i)
+# alone (they use the same transverse basis, but subtract the l = 0 Born terms).  Then log10(Gamma/V),
+# P = (Gamma/V) T_U^4 and tau = (Gamma/V)^(-1/4), without and with gravity, for the
 # note's start and, as a reference, the literature start and three-loop running.
 # Writes results/vacuum_prefactor.csv and results/vacuum_prefactor_grid.csv.  Batch: python3 vacuum_prefactor.py
 # (the 75 sector determinants run in 13 parallel processes; about 25 minutes)
@@ -142,6 +144,21 @@ def afs_gauge(xV, smax=3000):
     return -1.5 * Sfp - 0.5 * SfGp + mSl + 0.5 * Sd
 
 
+def cms_gauge(xV):
+    """Chigusa-Moroi-Shoji (arXiv:1803.03902, Fermi gauge, angular-momentum regularization converted to MS-bar) for one
+    real vector with its Goldstone: ln A' - ln A at mu = 1/R, with their S_sigma from its t-integral (reference)"""
+    z = -(1 - mp.sqrt(1 - 8 * mp.mpf(xV))) / 2
+    H = mp.harmonic
+    S = mp.quad(lambda t: (-z + z ** 2 * (-mp.mpf(53) / 36 + t + (1 - t) * H(t * z - z) / 6 + t * H(t * z) / 6)
+                           + z ** 3 / 12 * (-7 + 14 * t + 6 * (1 - t) ** 2 * H(t * z - z) + 6 * t ** 2 * H(t * z))
+                           + z ** 4 / 9 * (-1 + 3 * (1 - t) * t + 3 * (1 - t) ** 3 * H(t * z - z) + 3 * t ** 3 * H(t * z))),
+                [0, 1])
+    x, L = mp.mpf(xV), -mp.log(2)
+    val = ((mp.mpf(1) / 3 + 2 * x + x ** 2) * (1 + mp.euler + L) - 1 - x ** 2 * (mp.mpf(31) / 3 - mp.pi ** 2) + mp.mpf(3) / 4
+           - mp.euler / 3 - 2 * mp.log(mp.glaisher) + mp.log(mp.pi) / 2 - 1.5 * S - 1.5 * (mp.loggamma(1 - z) + mp.loggamma(2 + z)))
+    return float(mp.re(val))
+
+
 def transverse_residual(xV, smax=3000):
     """(i): sum_{s>=1} [ln R_s - its x, x^2 terms], the one transverse mode per level left over by the ghosts"""
     return _tail([afs_lnR(s, xV / 3) - afs_lnR_sub(s, xV / 3) for s in range(1, smax + 1)])
@@ -248,6 +265,11 @@ def main():
                                         ours - ref - 0.5 * math.log(2 * math.pi) - i - ii))
     print("   x -> 0: (ii) = %.6f, -(pi^2/3 - 2) = %.6f (their gauge formula at g -> 0 against their global one)"
           % (l0_born(0.0), -(math.pi ** 2 / 3 - 2)))
+    for x in (0.0, xA_W, xA_Z):
+        ours, ref = val[("ag", x)], cms_gauge(x)
+        i = transverse_residual(x) if x > 0 else 0.0
+        print("gauge sector x = %.4f: ours %.6f; Chigusa-Moroi-Shoji formula (reference) %.6f; ours - that %.6f, (i) %.6f"
+              % (x, ours, ref, ours - ref, i))
     for l in (1, 2, 5):
         blk = ag_blocks(xA_Z, l)[0]
         ld = gy_block(blk[1], blk[2])[0]
