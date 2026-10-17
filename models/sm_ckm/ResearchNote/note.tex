@@ -54,7 +54,7 @@
 \maketitle
 
 \begin{abstract}
-標準模型のノート~\cite{smnote}（以下 SM ノート）は、CKM 行列を単位行列に置いた点で電弱の1ループの繰り込みを調べ、CKM 行列を入れたときの変化をそのノートの量について見積もった（相対 $10^{-7}$ 以下）。本ノートでは CKM 行列を模型に入れ、SM ノートでは扱えなかった CKM 行列そのものの繰り込みと走り、$V=1$ では0になる世代を変える過程を、SM ノートと同じ処方（$\MSbar$、Fleischer--Jegerlehner（FJ）のタドポール、一般の $R_\xi$ ゲージ、$d=4$）と同じ道具で調べる。模型は SM ノートの模型の湯川結合を世代の $3\times3$ の複素行列にしたもので、質量の基底では CKM 行列 $V$（標準のパラメータ表示の角度3個と位相1個）が $W$ と $G^\pm$ のクォークの結合にだけ現れ、ほかの93個の頂点のクラスの式は SM ノートと同じである。手計算では、Feynman 則、$|V_{ij}|^2$ を含む木の崩壊幅、湯川行列の $\MSbar$ の $\beta$ 関数から質量の基底への回転の摂動で導いた $V$ の走り（$K\,\dd V/\dd\ln\mu$ の閉じた式。$K=(4\pi)^2$）、クォークの自己エネルギーの世代の非対角の成分の紫外の極を求めた。$V$ の走りの式は、行列の $\beta$ 関数を数値で積分して対角化した値と相対 $4\times10^{-8}$ 以内で一致し、基準点では $|V_{ub}|$、$|V_{cb}|$、$|V_{td}|$、$|V_{ts}|$ が $K\,\dd\ln|V|/\dd\ln\mu\simeq\frac32(y_t^2+y_b^2)=1.38$ で、Jarlskog 不変量がその2倍で増える。$\MSbar$ の CKM の対抗項は $\delta V=\frac{\DUV}2\dd V/\dd\ln\mu$ で、湯川行列の $\beta$ 関数だけで決まるのでゲージによらない（$V$ は $v$ によらないので FJ のタドポールも入らない）。自己エネルギーの非対角の紫外の極は、GIM の機構で $W$ のループの部分が打ち消し、$G^\pm$ のループの $m_{u_k}^2$ に比例する部分だけが残るので $\xi$ によらない。その値から作った Denner--Sack の on-shell の対抗項の紫外の極は $\MSbar$ の $\delta V$ に等しい。検算と応用の十の手順を定め、手順 (1)、(2) を行った。模型ファイル \texttt{SM\_CKM.fr} の FeynRules 2.3.49 の93個の頂点のクラスは、$V$ を一般の複素行列とした手計算の表と9個の世代の成分すべてで記号として一致し（わざと5か所を誤らせた表では5個の差）、標準のパラメータ表示を入れた値はユニタリー性の規則によらず、$V=1$ では SM ノートの模型の頂点と93個すべてで一致した。MadGraph 3.8.1 は35個の過程（SM ノートの21個と、$V$ の非対角の成分を要する14個）の木の図を、ユニタリーゲージと Feynman ゲージの両方で手で数えた数だけ作り、世代を変える中性の5個の過程には図を作らなかった。手順 (2) では、$W^+\to u_i\bar d_j$、$t\to d_jW^+$ などの13個の振幅の2乗が FeynCalc で手計算の式と記号として一致し、木のレベルで CP が破れないこと、$u\bar u\to W^+W^-$ が標準のパラメータ表示で $V=1$ の値に戻ること、$t\bar s\to W^+H$ が一般の $R_\xi$ で $\xi_W$ によらず $|V_{ts}|^2$ に比例すること（$W$ と $G^+$ の頂点の CKM 行列の整合）を確かめた。明示的な行列（$t\bar s\to W^+H$ はユニタリーゲージ）とは相対 $6\times10^{-15}$ 以内、MadGraph の12個の部分幅とは $10^{-15}$、断面積とは統計誤差の0.9倍以内で一致した。手順 (1) で FeynRules の問題を一つ見つけた。CKM 行列のある模型で FeynArts の模型を書き出した後に同じカーネルで UFO を書き出すと、UFO のための Feynman 則の計算が、電荷を保存しない壊れたクラス $\bar duW$（添字が1個の CKM 行列）を94個目として作る。導出は付録に載せる。
+標準模型のノート~\cite{smnote}（以下 SM ノート）は、CKM 行列を単位行列に置いた点で電弱の1ループの繰り込みを調べ、CKM 行列を入れたときの変化をそのノートの量について見積もった（相対 $10^{-7}$ 以下）。本ノートでは CKM 行列を模型に入れ、SM ノートでは扱えなかった CKM 行列そのものの繰り込みと走り、$V=1$ では0になる世代を変える過程を、SM ノートと同じ処方（$\MSbar$、Fleischer--Jegerlehner（FJ）のタドポール、一般の $R_\xi$ ゲージ、$d=4$）と同じ道具で調べる。模型は SM ノートの模型の湯川結合を世代の $3\times3$ の複素行列にしたもので、質量の基底では CKM 行列 $V$（標準のパラメータ表示の角度3個と位相1個）が $W$ と $G^\pm$ のクォークの結合にだけ現れ、ほかの93個の頂点のクラスの式は SM ノートと同じである。手計算では、Feynman 則、$|V_{ij}|^2$ を含む木の崩壊幅、湯川行列の $\MSbar$ の $\beta$ 関数から質量の基底への回転の摂動で導いた $V$ の走り（$K\,\dd V/\dd\ln\mu$ の閉じた式。$K=(4\pi)^2$）、クォークの自己エネルギーの世代の非対角の成分の紫外の極を求めた。$V$ の走りの式は、行列の $\beta$ 関数を数値で積分して対角化した値と相対 $4\times10^{-8}$ 以内で一致し、基準点では $|V_{ub}|$、$|V_{cb}|$、$|V_{td}|$、$|V_{ts}|$ が $K\,\dd\ln|V|/\dd\ln\mu\simeq\frac32(y_t^2+y_b^2)=1.38$ で、Jarlskog 不変量がその2倍で増える。$\MSbar$ の CKM の対抗項は $\delta V=\frac{\DUV}2\dd V/\dd\ln\mu$ で、湯川行列の $\beta$ 関数だけで決まるのでゲージによらない（$V$ は $v$ によらないので FJ のタドポールも入らない）。自己エネルギーの非対角の紫外の極は、GIM の機構で $W$ のループの部分が打ち消し、$G^\pm$ のループの $m_{u_k}^2$ に比例する部分だけが残るので $\xi$ によらない。その値から作った Denner--Sack の on-shell の対抗項の紫外の極は $\MSbar$ の $\delta V$ に等しい。検算と応用の十の手順を定め、手順 (1)〜(3) を行った。模型ファイル \texttt{SM\_CKM.fr} の FeynRules 2.3.49 の93個の頂点のクラスは、$V$ を一般の複素行列とした手計算の表と9個の世代の成分すべてで記号として一致し（わざと5か所を誤らせた表では5個の差）、標準のパラメータ表示を入れた値はユニタリー性の規則によらず、$V=1$ では SM ノートの模型の頂点と93個すべてで一致した。MadGraph 3.8.1 は35個の過程（SM ノートの21個と、$V$ の非対角の成分を要する14個）の木の図を、ユニタリーゲージと Feynman ゲージの両方で手で数えた数だけ作り、世代を変える中性の5個の過程には図を作らなかった。手順 (2) では、$W^+\to u_i\bar d_j$、$t\to d_jW^+$ などの13個の振幅の2乗が FeynCalc で手計算の式と記号として一致し、木のレベルで CP が破れないこと、$u\bar u\to W^+W^-$ が標準のパラメータ表示で $V=1$ の値に戻ること、$t\bar s\to W^+H$ が一般の $R_\xi$ で $\xi_W$ によらず $|V_{ts}|^2$ に比例すること（$W$ と $G^+$ の頂点の CKM 行列の整合）を確かめた。明示的な行列（$t\bar s\to W^+H$ はユニタリーゲージ）とは相対 $6\times10^{-15}$ 以内、MadGraph の12個の部分幅とは $10^{-15}$、断面積とは統計誤差の0.9倍以内で一致した。手順 (3) では、クォークの自己エネルギーを $3\times3$ の世代の行列として一般の $R_\xi$ ゲージで求めた。非対角の紫外の極は手計算の式に記号として一致して $\xi$ によらず、対角の極は CKM 行列を含む質量の走りに一致し、FeynArts の \texttt{SMQCD.mod}（\texttt{\$CKM = True}）の値とも記号として一致した。Denner--Sack の対抗項の紫外の極は $\MSbar$ の $\delta V$ と30桁で一致し、有限部分は $\xi_W$ に依存するが、その $|V_{ij}|$ への効果は $2\times10^{-6}$ 以下で、二つの処方の差 $2.3\times10^{-3}$（$|V_{cb}|$ など、$\mu=M_Z$）より3桁小さい。$V$ を入れた $W$ とトップの自己エネルギーから求めた SM ノートの量の変化は、SM ノートの見積もりと相対 $3\times10^{-12}$ 以内で一致した。手順 (1) で FeynRules の問題を一つ見つけた。CKM 行列のある模型で FeynArts の模型を書き出した後に同じカーネルで UFO を書き出すと、UFO のための Feynman 則の計算が、電荷を保存しない壊れたクラス $\bar duW$（添字が1個の CKM 行列）を94個目として作る。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -438,7 +438,7 @@ K\Sigma^L_{ij}\big|_{\mathrm{UV}}=\frac12X_{ij}\DUV,\qquad K\Sigma^R_{ij}\big|_{
 X=\begin{cases}V^\dagger D_uV&(d\ \text{型})\\ VD_dV^\dagger&(u\ \text{型})\end{cases}
 \label{eq:uvoff}
 \end{equation}
-になるはずである。$X_{ij}=\sum_k\lambda^{(ij)}_ky_{u_k}^2$（$d$ 型）は、$G^\pm$ のループの $m_{u_k}^2$ に比例する部分で、これは $\xi$ によらない（$\xi_W$ は $G^\pm$ の伝播関数の質量にだけ入る）。$W$ のループの紫外の極は内線の質量によらないので、ユニタリー性 $\sum_k\lambda^{(ij)}_k=\delta_{ij}$ で非対角の成分が0になる。$W$ の伝播関数の縦の部分 $(1-\xi_W)k_\mu k_\nu/[(k^2-M_W^2)(k^2-\xi_WM_W^2)]$ の極も $1/M_W^2$ を持たないので質量によらず、同じく打ち消す。したがって非対角の紫外の極はゲージによらず、$\xi$ に依存するのは有限部分だけである。$\Sigma^R$ に非対角の極がないのは、$d_R$ の場の繰り込み $Y_d^\dagger Y_d=D_d$ が質量の基底で対角だからである。対角の成分の極は、SM ノートの式~(26) の条件（$\Sigma^V+\Sigma^S$ の極が $\frac14\dd\ln m^2/\dd\ln\mu$）を式~\eqref{eq:yrun} で満たすはずである（手順 (3)）。
+になるはずである（手順 (3) で記号として確かめた）。$X_{ij}=\sum_k\lambda^{(ij)}_ky_{u_k}^2$（$d$ 型）は、$G^\pm$ のループの $m_{u_k}^2$ に比例する部分で、これは $\xi$ によらない（$\xi_W$ は $G^\pm$ の伝播関数の質量にだけ入る）。$W$ のループの紫外の極は内線の質量によらないので、ユニタリー性 $\sum_k\lambda^{(ij)}_k=\delta_{ij}$ で非対角の成分が0になる。$W$ の伝播関数の縦の部分 $(1-\xi_W)k_\mu k_\nu/[(k^2-M_W^2)(k^2-\xi_WM_W^2)]$ の極も $1/M_W^2$ を持たないので質量によらず、同じく打ち消す。したがって非対角の紫外の極はゲージによらず、$\xi$ に依存するのは有限部分だけである。$\Sigma^R$ に非対角の極がないのは、$d_R$ の場の繰り込み $Y_d^\dagger Y_d=D_d$ が質量の基底で対角だからである。対角の成分の極は、SM ノートの式~(26) の条件（$\Sigma^V+\Sigma^S$ の極が $\frac14\dd\ln m^2/\dd\ln\mu$）を式~\eqref{eq:yrun} で満たす（手順 (3) で確かめた）。
 
 \paragraph{on-shell の対抗項との関係。}on-shell の処方では、外線の世代の混合を消す非対角の場の定数
 \begin{equation}
@@ -450,7 +450,7 @@ X=\begin{cases}V^\dagger D_uV&(d\ \text{型})\\ VD_dV^\dagger&(u\ \text{型})\en
 \delta V^{\mathrm{DS}}=\frac14\Bigl[\bigl(\delta Z^{u,L}-\delta Z^{u,L\dagger}\bigr)V-V\bigl(\delta Z^{d,L}-\delta Z^{d,L\dagger}\bigr)\Bigr]
 \label{eq:dVds}
 \end{equation}
-とした。式~\eqref{eq:uvoff} を式~\eqref{eq:dZos}、\eqref{eq:dVds} に入れると、$\delta V^{\mathrm{DS}}$ の紫外の極は式~\eqref{eq:dV} の $\MSbar$ の $\delta V$（式~\eqref{eq:Vrun} の位相の約束）にちょうど等しい（\ref{app:rg}）。違いは有限部分で、$\delta V^{\mathrm{DS}}$ の有限部分は自己エネルギーの非対角の有限部分を通じて $\xi_W$ に依存する~\cite{ggm99,yamada01}。$\MSbar$ では、外線の世代の混合は、$\MSbar$ で繰り込んだ自己エネルギーから式~\eqref{eq:dZos} の形で作る有限の場の定数で扱い、それと頂点の補正の和が $\xi$ によらないはずである（手順 (5) で確かめる）。$W^+\to u_i\bar d_j$ のどの図に世代の混合が入るかを図~\ref{fig:wud} に示す。
+とした。式~\eqref{eq:uvoff} を式~\eqref{eq:dZos}、\eqref{eq:dVds} に入れると、$\delta V^{\mathrm{DS}}$ の紫外の極は式~\eqref{eq:dV} の $\MSbar$ の $\delta V$（式~\eqref{eq:Vrun} の位相の約束）にちょうど等しい（\ref{app:rg}）。違いは有限部分で、$\delta V^{\mathrm{DS}}$ の有限部分は自己エネルギーの非対角の有限部分を通じて $\xi_W$ に依存する~\cite{ggm99,yamada01}（手順 (3)、表~\ref{tab:ckmct}）。$\MSbar$ では、外線の世代の混合は、$\MSbar$ で繰り込んだ自己エネルギーから式~\eqref{eq:dZos} の形で作る有限の場の定数で扱い、それと頂点の補正の和が $\xi$ によらないはずである（手順 (5) で確かめる）。$W^+\to u_i\bar d_j$ のどの図に世代の混合が入るかを図~\ref{fig:wud} に示す。
 
 \begin{figure}[tbp]
 \centering
@@ -656,7 +656,7 @@ $V$ と $J$ の高いスケールまでの走り & 手順 (10) & — & 常微分
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}（約1分）、手順 (2) は \texttt{run\_tree\_check.sh}（約6分）でまとめて再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}（約1分）、手順 (2) は \texttt{run\_tree\_check.sh}（約6分）、手順 (3) は \texttt{run\_oneloop\_check.sh}（約20分）でまとめて再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}模型ファイル \texttt{Src/SM\_CKM.fr} は SM ノートの \texttt{Src/SM.fr} を写し、三か所だけを変えた。外部パラメータ $s_{12}$、$s_{23}$、$s_{13}$、$\delta$（ブロック \texttt{CKMBLOCK}）と、内部パラメータの複素行列 \texttt{CKM}（\texttt{Unitary -> True}、値は式~\eqref{eq:Vstd}）を加えた。左巻きの二重項の下の成分を $(Vd_L)_f=\texttt{CKM[f, f2]}\,d_{L,f2}$ にした。湯川の項を $-\bar Q_L(V\hat y_d)\Phi d_R$ にした（$\hat y_d$ は SM ノートと同じ対角の行列で、どの世代の添字も2回だけ現れる）。運動項と湯川の項を添字について展開した後、和をとる添字を持つ積 $V_{ab}V_{ac}^*$、$V_{ba}V_{ca}^*$ を $\delta_{bc}$ に置き換える規則を加えた。
 
@@ -722,6 +722,33 @@ $\sigma(u\bar u\to W^+W^-)$、$\sqrt s=500$~GeV & 2.45025 & $2.45025\pm0.00667$ 
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (3)：クォークの自己エネルギーの行列と CKM の対抗項。}スクリプト \texttt{oneloop\_ckm\_feyncalc.wl} は、SM ノートの手順 (3) と同じ処方（FeynArts の模型の写しで光子とそのゴーストに質量 $M_A$ を与え、タドポールの付いた図は $H$ の線のものだけを残す）で、下型と上型のクォークの自己エネルギーを $3\times3$ の世代の行列として、一般の $R_\xi$ ゲージで $D$ 次元で求めた（18個の成分、図~\ref{fig:seckm}）。対角の成分の1PI の図は15個（内線の3世代の $W^\pm$、$G^\pm$ の6個、$A$、$Z$、$G$ の3個、$H$、$G^0$ の6個。そのうち世代を変える $H$、$G^0$ の4個は0）、非対角の成分は12個（$W^\pm$、$G^\pm$ の6個と、0になる $H$、$G^0$ の6個）で、タドポールの付いた図は対角の成分にだけ残る。式~\eqref{eq:Gammaq} の関数は、TID と \texttt{DiracSimplify} の後で $\slashed pP_L$、$\slashed pP_R$、$P_L$、$P_R$ の係数として読み取った。$\gamma_5$ を含むトレースは使わない。結果は次の通りである。(i) 18個の成分の1PI とタドポールの部分の36個すべてで、$P_L$ と $P_R$ のスカラーの部分が一つの関数になり、式~\eqref{eq:Gammaq} の Denner の形が成り立った。(ii) 非対角の12個の成分の紫外の極は、標準のパラメータ表示を記号の角度で入れると、式~\eqref{eq:uvoff} と記号として一致した。$\Sigma^L_{ij}$ の極は、ユニタリー性を使う前には $\xi_W$ を含み（$W$ の伝播関数の縦の部分の、$\sum_k\lambda^{(ij)}_k$ に比例する項）、使った後には含まない。(iii) 対角の6個のクォークで、タドポールを含めた $\Sigma^V+\Sigma^S$ の $p^2=m_i^2$ での極が、$|V_{ik}|^2y_{d_k}^2$ の重みを含めて式~\eqref{eq:yrun} の $\frac14\dd\ln m_i^2/\dd\ln\mu$ に等しかった。(iv) $V=1$ のトップの $\Sigma^V$、$\Sigma^S$（1PI とタドポールの部分）は、SM ノートの値と記号として一致した。(v) CKM 行列を含む $\Sigma^{WW}_T(M_W^2)$ の極（タドポールを含む）は、ユニタリー性で $V=1$ の値と同じになり、SM ノートの値とも一致した。独立な確かめとして、スクリプト \texttt{oneloop\_ckm\_smmod.wl} で FeynArts に付属の \texttt{SMQCD.mod}（Denner の規約）を \texttt{\$CKM = True} にして同じ18個の1PI の成分を求めた。光子の符号、$G^\pm$ の位相、クォークとグルーオンの頂点の符号の違いは自己エネルギーでは打ち消すので、4個の関数の72個すべてが一般の $R_\xi$ ゲージで記号として一致した。\texttt{SMQCD.mod} は湯川結合を対角に作るので、非対角の成分の図は6個、対角の成分は11個である。
+
+有限部分の数値（\texttt{oneloop\_ckm\_numeric.wl}、LoopTools、基準点、$\mu=M_Z$）を表~\ref{tab:ckmct} に示す。非対角の成分の有限部分は $\xi_W$ で大きく変わり、$K\Sigma^L_{sb}(m_b^2)$ は $\xi_W=\frac12$ から 10 で $6.0\times10^{-3}$ から $9.7\times10^{-2}$ になる。それから式~\eqref{eq:dZos}、\eqref{eq:dVds} で作った Denner--Sack の対抗項は、9個の成分すべてで紫外の極が $\MSbar$ の $\delta V$（式~\eqref{eq:dV}、\eqref{eq:Vrun}）と30桁で一致し、$\xi_W$ によらず、$V^\dagger\delta V+\delta V^\dagger V=0$ を満たした（有限部分も $4\times10^{-20}$ 以内）。有限部分は $\xi_W$ に依存し、$K|\delta V^{\mathrm{DS}}_{\mathrm{fin}}(\xi_W)-\delta V^{\mathrm{DS}}_{\mathrm{fin}}(\frac12)|$ の最大は $\xi_W=3$ で $1.3\times10^{-5}$ である（$K|\delta V^{\mathrm{DS}}_{\mathrm{fin}}|$ の最大は $1.5\times10^{-2}$）。Gambino らと Yamada の指摘したゲージ依存~\cite{ggm99,yamada01} は本ノートの模型でも現れるが、$|V_{ij}|$ と $J$ への効果は小さい。$V_0=V^{\MSbar}(\mu)+\delta V=V^{\mathrm{DS}}+\delta V^{\mathrm{DS}}$ で紫外の極が等しいので、$V^{\mathrm{DS}}=V^{\MSbar}(\mu)-\delta V^{\mathrm{DS}}_{\mathrm{fin}}$ である。$\mu=M_Z$ では、on-shell の $|V_{ub}|$、$|V_{cb}|$、$|V_{td}|$、$|V_{ts}|$ が $\MSbar$ の値より相対 $2.30\times10^{-3}$ 大きく、$J$ は $4.60\times10^{-3}$ 大きい。$\xi_W=\frac12$〜10 での変化は、$|V|$ で $1.9\times10^{-6}$、$J$ で $3.9\times10^{-6}$ にとどまる。二つの処方の差は、$\MSbar$ の $V$ が $\mu$ を $e$ 倍にしたときに走る量（$0.9\%$、式~\eqref{eq:Vhier}）の4分の1ほどである。
+
+最後に、本ノートの模型で $V$ を基準点の値にした $W$ とトップの自己エネルギーから、SM ノートの量への CKM 行列の効果を厳密に求めた。$V=1$ の値との差は、$\Delta\hat\Delta=-7.4129\times10^{-8}$、$\Delta M_{W,\mathrm p}=2.1815\times10^{-7}$~GeV、$\Delta m_{t,\mathrm p}=-4.3205\times10^{-8}$~GeV（$\xi_W=1$、3 で同じ）である。SM ノートの見積もり（\texttt{ckm\_estimate.wl}、第~\ref{sec:intro} 節）とは相対 $3\times10^{-12}$ 以内で一致した。見積もりは $V=1$ の式の内線の質量を $|V_{ij}|^2$ の重みで入れ替えたもので、この一致は本ノートの模型の自己エネルギーがちょうどその形であることを示す。トップの差の紫外の極は $-\frac34\sum_j(|V_{tj}|^2-\delta_{j3})y_{d_j}^2=3.652\times10^{-7}$ に等しかった。スクリプトは \texttt{oneloop\_ckm\_feyncalc.wl}（約10分）、\texttt{oneloop\_ckm\_smmod.wl}、\texttt{oneloop\_ckm\_numeric.wl} で、\texttt{run\_oneloop\_check.sh} でまとめて実行できる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (3) の数値（基準点、$\mu=M_Z$、$\MSbar$ の有限部分の実部）。上の3行は1PI の非対角の成分（$s\leftarrow b$ は $p^2=m_b^2$、$c\leftarrow t$ は $p^2=m_t^2$）、下の5行は Denner--Sack の対抗項の有限部分による $\delta|V_{ij}|/|V_{ij}|=\re(V_{ij}^*\delta V^{\mathrm{DS}}_{\mathrm{fin},ij})/|V_{ij}|^2$ と $\delta J/J$ である。on-shell の値と $\MSbar$ の値の差はこれの符号を変えたもので（$V^{\mathrm{DS}}=V^{\MSbar}-\delta V^{\mathrm{DS}}_{\mathrm{fin}}$）。下の5行の $\xi_W$ への依存は $2\times10^{-6}$ 以下（$\delta J/J$ では $4\times10^{-6}$ 以下）である。}
+\label{tab:ckmct}
+\begin{tabular}{lrrrr}
+\toprule
+量 & $\xi_W=\frac12$ & $\xi_W=2$ & $\xi_W=3$ & $\xi_W=10$ \\
+\midrule
+$K\Sigma^L_{sb}(m_b^2)$ & $6.021\times10^{-3}$ & $3.506\times10^{-2}$ & $4.758\times10^{-2}$ & $9.681\times10^{-2}$ \\
+$K\Sigma^S_{sb}(m_b^2)$ & $-1.794\times10^{-2}$ & $-3.246\times10^{-2}$ & $-3.872\times10^{-2}$ & $-6.333\times10^{-2}$ \\
+$K\Sigma^L_{ct}(m_t^2)$ & $1.086\times10^{-5}$ & $2.056\times10^{-5}$ & $2.634\times10^{-5}$ & $-1.683\times10^{-5}$ \\
+\midrule
+$\delta|V_{us}|/|V_{us}|$ & $-2.44036\times10^{-6}$ & $-2.44002\times10^{-6}$ & $-2.43980\times10^{-6}$ & $-2.43995\times10^{-6}$ \\
+$\delta|V_{ub}|/|V_{ub}|$ & $-2.29848\times10^{-3}$ & $-2.29967\times10^{-3}$ & $-2.30042\times10^{-3}$ & $-2.29991\times10^{-3}$ \\
+$\delta|V_{cb}|/|V_{cb}|$ & $-2.29844\times10^{-3}$ & $-2.29963\times10^{-3}$ & $-2.30038\times10^{-3}$ & $-2.29987\times10^{-3}$ \\
+$\delta|V_{td}|/|V_{td}|$ & $-2.30063\times10^{-3}$ & $-2.30182\times10^{-3}$ & $-2.30257\times10^{-3}$ & $-2.30206\times10^{-3}$ \\
+$\delta J/J$ & $-4.59479\times10^{-3}$ & $-4.59716\times10^{-3}$ & $-4.59866\times10^{-3}$ & $-4.59763\times10^{-3}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{現時点で分かったこと。}CKM 行列は、二重項の下の成分を $Vd_L$ にするだけで模型に入り、頂点の式が変わるのは荷電のクォークの4個のクラスだけである。中性の結合が対角になることは、FeynRules の出力、標準のパラメータ表示を入れた値、MadGraph が世代を変える中性の過程に図を作らないことの三つで確かめた。$V=1$ で SM ノートの模型に戻るので、SM ノートの結果のうち $V$ によらないものは、本ノートの模型でもそのまま成り立つ。
@@ -730,7 +757,9 @@ $\sigma(u\bar u\to W^+W^-)$、$\sqrt s=500$~GeV & 2.45025 & $2.45025\pm0.00667$ 
 
 木のレベルでは、振幅の2乗が $|V_{ij}|^2$ だけで書け、CP が破れず、ユニタリー性で $V=1$ の値に戻る過程があることを、FeynCalc、明示的な行列、MadGraph の三つで確かめた（手順 (2)）。$t\bar s\to W^+H$ が $\xi_W$ によらないことは、$W$ と $G^\pm$ の頂点の CKM 行列が整合していることのゲージ不変性による確かめである。
 
-\paragraph{残る手順。}手順 (3)〜(10) はまだ行っていない。とくに、非対角の自己エネルギーの有限部分の $\xi$ 依存と $\delta V^{\mathrm{DS}}$ のゲージ依存（手順 (3)）、$\MSbar$ の $V$ で $W\to u_i\bar d_j$ がゲージによらないこと（手順 (5)）、世代を変える過程の振幅のゲージ不変性（手順 (7)、(8)）が、本ノートの中心の確かめである。本ノートで扱わないのは、ニュートリノの質量と PMNS 行列、世代を変える過程の QCD の補正の繰り込み群による改良（$b\to s\gamma$ の大きな QCD の補正）と、ハドロンの行列要素の計算である。
+\paragraph{自己エネルギーと CKM の対抗項。}手順 (3) で、第~\ref{sec:se} 節の構造がすべて確かめられた。世代を変える自己エネルギーの紫外の極は $G^\pm$ のループの $m_{u_k}^2$ の部分だけで、$\xi$ によらず、$\MSbar$ の CKM の対抗項は湯川行列の $\beta$ 関数で決まる。有限部分は $\xi_W$ で大きく変わり（$\Sigma^L_{sb}$ は $\xi_W=\frac12$ と 10 で16倍違う）、それから作る Denner--Sack の対抗項の有限部分も $\xi_W$ による。ただしその依存は対抗項の大きさの0.1\% 程度で、$|V_{ij}|$ では $2\times10^{-6}$ 以下である。on-shell の処方の不整合は原理の問題で、数値としては、$\MSbar$ と on-shell の処方の差（$|V_{cb}|$ で $2.3\times10^{-3}$）や現在の測定の誤差（$|V_{cb}|$ で約3\%~\cite{pdg24}）より十分小さい。
+
+\paragraph{残る手順。}手順 (4)〜(10) はまだ行っていない。とくに、非対角の自己エネルギーの有限部分の $\xi$ 依存と $\delta V^{\mathrm{DS}}$ のゲージ依存（手順 (3)）、$\MSbar$ の $V$ で $W\to u_i\bar d_j$ がゲージによらないこと（手順 (5)）、世代を変える過程の振幅のゲージ不変性（手順 (7)、(8)）が、本ノートの中心の確かめである。本ノートで扱わないのは、ニュートリノの質量と PMNS 行列、世代を変える過程の QCD の補正の繰り込み群による改良（$b\to s\gamma$ の大きな QCD の補正）と、ハドロンの行列要素の計算である。
 
 \appendix
 
