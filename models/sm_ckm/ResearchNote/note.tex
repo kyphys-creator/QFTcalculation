@@ -1,0 +1,444 @@
+% note.tex — 標準模型と CKM 行列：MS-bar の繰り込みと世代を変える過程（FJ のタドポール、一般の R_xi ゲージ、d = 4）
+% コンパイル: lualatex note.tex（目次と参照の解決のため2〜3回）
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}
+\usepackage{amsmath,amssymb,slashed}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage{tikz,ifthen}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={The Standard Model with the CKM matrix: MS-bar renormalization and flavour-changing processes with Fleischer-Jegerlehner tadpoles},pdfauthor={}}
+
+\setlength{\emergencystretch}{3em}
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\MSbar}{\overline{\mathrm{MS}}}
+\newcommand{\DUV}{\Delta_{\mathrm{UV}}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\sw}{s_W}
+\newcommand{\cw}{c_W}
+\newcommand{\re}{\mathrm{Re}\,}
+\newcommand{\im}{\mathrm{Im}\,}
+
+\tikzset{
+  photon/.style={thick,decorate,decoration={snake,amplitude=1.1pt,segment length=4.6pt}},
+  gluon/.style={thick,decorate,decoration={coil,amplitude=2.3pt,segment length=3.6pt,aspect=0.75}},
+  fermion/.style={thick,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
+  scalar/.style={thick,dashed},
+  ghost/.style={thick,densely dotted,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
+  vtx/.style={circle,fill=black,inner sep=1.3pt},
+  lab/.style={font=\small,align=center},
+  slab/.style={font=\scriptsize,align=center},
+  mom/.style={-{Stealth[length=1.6mm]},thin},
+  blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
+}
+
+\title{標準模型と CKM 行列：$\MSbar$ の繰り込みと世代を変える過程\\（FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）}
+\author{}
+\date{2026年10月17日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+標準模型のノート~\cite{smnote}（以下 SM ノート）は、CKM 行列を単位行列に置いた点で電弱の1ループの繰り込みを調べ、CKM 行列を入れたときの変化をそのノートの量について見積もった（相対 $10^{-7}$ 以下）。本ノートでは CKM 行列を模型に入れ、SM ノートでは扱えなかった CKM 行列そのものの繰り込みと走り、$V=1$ では0になる世代を変える過程を、SM ノートと同じ処方（$\MSbar$、Fleischer--Jegerlehner（FJ）のタドポール、一般の $R_\xi$ ゲージ、$d=4$）と同じ道具で調べる。模型は SM ノートの模型の湯川結合を世代の $3\times3$ の複素行列にしたもので、質量の基底では CKM 行列 $V$（標準のパラメータ表示の角度3個と位相1個）が $W$ と $G^\pm$ のクォークの結合にだけ現れ、ほかの93個の頂点のクラスの式は SM ノートと同じである。手計算では、Feynman 則、$|V_{ij}|^2$ を含む木の崩壊幅、湯川行列の $\MSbar$ の $\beta$ 関数から質量の基底への回転の摂動で導いた $V$ の走り（$K\,\dd V/\dd\ln\mu$ の閉じた式。$K=(4\pi)^2$）、クォークの自己エネルギーの世代の非対角の成分の紫外の極を求めた。$V$ の走りの式は、行列の $\beta$ 関数を数値で積分して対角化した値と相対 $4\times10^{-8}$ 以内で一致し、基準点では $|V_{ub}|$、$|V_{cb}|$、$|V_{td}|$、$|V_{ts}|$ が $K\,\dd\ln|V|/\dd\ln\mu\simeq\frac32(y_t^2+y_b^2)=1.38$ で、Jarlskog 不変量がその2倍で増える。$\MSbar$ の CKM の対抗項は $\delta V=\frac{\DUV}2\dd V/\dd\ln\mu$ で、湯川行列の $\beta$ 関数だけで決まるのでゲージによらない（$V$ は $v$ によらないので FJ のタドポールも入らない）。自己エネルギーの非対角の紫外の極は、GIM の機構で $W$ のループの部分が打ち消し、$G^\pm$ のループの $m_{u_k}^2$ に比例する部分だけが残るので $\xi$ によらない。その値から作った Denner--Sack の on-shell の対抗項の紫外の極は $\MSbar$ の $\delta V$ に等しい。検算と応用の十の手順を定め、手順 (1) を行った。模型ファイル \texttt{SM\_CKM.fr} の FeynRules 2.3.49 の93個の頂点のクラスは、$V$ を一般の複素行列とした手計算の表と9個の世代の成分すべてで記号として一致し（わざと5か所を誤らせた表では5個の差）、標準のパラメータ表示を入れた値はユニタリー性の規則によらず、$V=1$ では SM ノートの模型の頂点と93個すべてで一致した。MadGraph 3.8.1 は35個の過程（SM ノートの21個と、$V$ の非対角の成分を要する14個）の木の図を、ユニタリーゲージと Feynman ゲージの両方で手で数えた数だけ作り、世代を変える中性の5個の過程には図を作らなかった。この過程で FeynRules の問題を一つ見つけた。CKM 行列のある模型で FeynArts の模型を書き出した後に同じカーネルで UFO を書き出すと、UFO のための Feynman 則の計算が、電荷を保存しない壊れたクラス $\bar duW$（添字が1個の CKM 行列）を94個目として作る。導出は付録に載せる。
+\end{abstract}
+
+\tableofcontents
+
+\section{目的と問い}\label{sec:intro}
+
+本ノートの問いは三つである。\textbf{第一に、CKM 行列は $\MSbar$ と FJ のタドポールの処方でどう繰り込まれ、その対抗項と走りはゲージによらないか。第二に、$V=1$ では0になる世代を変える過程の1ループの振幅は本ノートの模型でどうなり、GIM の機構とゲージによらないことがどう現れるか。第三に、CKM 行列と Jarlskog 不変量は高いスケールまでどう走るか。}
+
+第一の問いを立てる理由は、SM ノート~\cite{smnote} が CKM 行列を単位行列に置き、その繰り込みを扱っていないからである。SM ノートは、$V=1$ が繰り込み群で保たれ、それ自体でくりこみ可能な理論であることを前提の理由とし、$V$ を入れたときの変化をそのノートの量について見積もった。$V\ne1$ では湯川結合が世代の行列になり、質量の基底への回転そのものが繰り込みを受ける。on-shell の処方では、外線の場の繰り込みの反エルミートの部分で CKM の対抗項を決める Denner と Sack の処方~\cite{ds90} がよく使われるが、一般の $R_\xi$ ゲージでは物理的な振幅をゲージに依存させることが指摘され~\cite{ggm99,yamada01}、ゲージによらない on-shell の処方がいくつも提案された~\cite{dkr04,ks06}。$\MSbar$ では、CKM の対抗項は湯川行列の $\beta$ 関数から決まり、$V$ は質量の基底に回した湯川行列の関数として走る~\cite{babu87,bhmp99}。SM ノートの処方（$\MSbar$ のパラメータは破れていないラグランジアンのもの、タドポールは FJ）に CKM 行列がどう入るか、自己エネルギーのどの部分がゲージに依存し、どの部分が依存しないかを、SM ノートと同じく一般の $R_\xi$ ゲージで具体的に確かめる。
+
+第二の問いを立てる理由は、世代を変える中性の過程（$b\to s\gamma$、$Z\to b\bar s$、$K$ と $B$ 中間子の混合）が、$V\ne1$ で初めて現れ、しかも1ループで初めて現れるからである。これらの振幅は内線の上型のクォークについての和 $\sum_kV_{ki}^*V_{kj}F(m_{u_k}^2)$ で、ユニタリー性で $F$ の定数の部分が打ち消す（GIM の機構~\cite{gim70}）。個々の図は $\xi$ に依存するので、on-shell の振幅がゲージによらないことは、模型とツールの強い検算になる。クォークの CP の破れ（Jarlskog 不変量 $J$~\cite{jarlskog85}）が現れるのもこれらの過程である。第三の問いは、SM ノートの手順 (8) の走りを CKM 行列に広げるものである。
+
+求める量は五つである。(i) CKM 行列を含む Feynman 則。(ii) $|V_{ij}|^2$ を含む木の崩壊幅と断面積。(iii) 湯川行列の $\MSbar$ の対抗項と $\beta$ 関数、そこから導く質量と $V$ と $J$ の走り、クォークの自己エネルギーの行列の紫外の極、CKM の対抗項。(iv) $W\to u_i\bar d_j$ と、セミレプトニックな崩壊を通じた $|V_{ij}|$ と $\MSbar$ の $V(\mu)$ の関係。(v) 世代を変える1ループの過程（$b\to s\gamma$、$Z\to b\bar s$、$\Delta F=2$ の箱の図）と、高いスケールまでの $V$ と $J$ の走り。$V$ によらない SM ノートの結果（タドポール、$Z$ と光子と $H$ の自己エネルギー、ゲージ結合と $\lambda$ の1ループの $\beta$ 関数など）は求め直さず、引用する。$V$ が入る SM ノートの量（$W$ とトップの自己エネルギー、湯川結合の $\beta$ 関数）は本ノートの模型で $V$ を入れたまま求め直し、SM ノートの見積もりと比べる。一致の基準は SM ノートと同じである。
+
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で (i)〜(iii) の手計算の結果と、(iv)、(v) で求める量の形を述べる。第~\ref{sec:plan} 節でそれらをツールと突き合わせる計画を定め、第~\ref{sec:checks} 節で手順 (1) の結果を示す。第~\ref{sec:discussion} 節で現時点の結果と残る手順をまとめる。導出は\ref{app:rules}〜\ref{app:rg} に、検算の細部は\ref{app:details} にある。
+
+\section{設定}\label{sec:setup}
+
+模型は SM ノートの模型の湯川の項を、世代の行列で書いたものに置き換えたものである。ゲージ固定とゴーストの項を除いたラグランジアン密度は、SM ノートの式~(1) の湯川の項を
+\begin{equation}
+\mathcal L_Y=-\bigl(\bar Q_LY_d\Phi d_R+\bar Q_LY_u\tilde\Phi u_R+\bar L_LY_\ell\Phi\ell_R+\mathrm{h.c.}\bigr)
+\label{eq:Y}
+\end{equation}
+に置き換えたものである。$Y_u$、$Y_d$、$Y_\ell$ は $3\times3$ の複素行列で、世代の添字は $\bar Q_{Li}(Y_d)_{ij}\Phi d_{Rj}$ のように縮約する。ゲージ群、場と電荷、Higgs 二重項の書き方 $\Phi=(-iG^+,(v+H+iG^0)/\sqrt2)$、ゲージ場の組み替え、ゲージ固定、Faddeev--Popov の項、伝播関数、裸の量の定義は SM ノートの式~(1)〜(8) と同じで、共変微分の符号と電荷の割り当て（$D_\mu=\partial_\mu-ieQA_\mu$、$e>0$、$Q_e=-1$）も同じである。
+
+\paragraph{質量の基底と CKM 行列。}湯川行列を特異値分解して $Y_u=U^u_L\hat y_uU^{u\dagger}_R$、$Y_d=U^d_L\hat y_dU^{d\dagger}_R$ と書く（$\hat y$ は正の対角行列）。ゲージ群の変換と交換する世代の回転 $Q_L\to U^u_LQ_L$、$u_R\to U^u_Ru_R$、$d_R\to U^d_Rd_R$ で運動項とゲージ相互作用は変わらないので、場をこう回すと
+\begin{equation}
+Y_u=\hat y_u,\qquad Y_d=V\hat y_d,\qquad V\equiv U^{u\dagger}_LU^d_L,\qquad
+Q_L=\begin{pmatrix}u_L\\ Vd_L\end{pmatrix}
+\label{eq:QL}
+\end{equation}
+になる。$u$、$d$ は質量の固有状態で、$m_f=y_fv/\sqrt2$ は SM ノートの式~(4) と同じである。$V$ は CKM 行列~\cite{cabibbo63,km73} で、行が上型、列が下型のクォークの世代である。ニュートリノは質量0なので、$L_L$ と $\ell_R$ を回して $Y_\ell$ を対角にでき、レプトンは混合しない。パラメータを数えると、$Y_u$、$Y_d$ の36個の実数のうち、三つの $U(3)$ の回転の27個からバリオン数（$Y$ を変えない共通の位相）を除いた26個が場の定義に吸収され、6個の質量と CKM の4個（角度3個と位相1個）が残る。$V$ はクォークの場の位相の付け替え $u_i\to e^{i\alpha_i}u_i$、$d_j\to e^{i\beta_j}d_j$ で $V_{ij}\to e^{-i\alpha_i}V_{ij}e^{i\beta_j}$ と変わる。物理量はこれによらない $|V_{ij}|$ と $J$ だけで書ける。本ノートでは標準のパラメータ表示~\cite{ck84,pdg24}
+\begin{equation}
+V=\begin{pmatrix}
+c_{12}c_{13} & s_{12}c_{13} & s_{13}e^{-i\delta}\\
+-s_{12}c_{23}-c_{12}s_{23}s_{13}e^{i\delta} & c_{12}c_{23}-s_{12}s_{23}s_{13}e^{i\delta} & s_{23}c_{13}\\
+s_{12}s_{23}-c_{12}c_{23}s_{13}e^{i\delta} & -c_{12}s_{23}-s_{12}c_{23}s_{13}e^{i\delta} & c_{23}c_{13}
+\end{pmatrix}
+\label{eq:Vstd}
+\end{equation}
+を使い（$c_{ij}=\sqrt{1-s_{ij}^2}$）、Jarlskog 不変量を
+\begin{equation}
+J=\im\bigl(V_{us}V_{cb}V_{ub}^*V_{cs}^*\bigr)=c_{12}c_{23}c_{13}^2s_{12}s_{23}s_{13}\sin\delta
+\label{eq:J}
+\end{equation}
+とする。一般には $\im(V_{ij}V_{kl}V_{il}^*V_{kj}^*)=J\sum_{m,n}\epsilon_{ikm}\epsilon_{jln}$ である。$J\ne0$ がクォークの CP の破れの条件である~\cite{jarlskog85}。
+
+\paragraph{前提。}SM ノートの前提 1〜7 をそのまま使い、2 だけを次のように変える。
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item フェルミオンは3世代で、クォークは CKM 行列 \eqref{eq:QL}、\eqref{eq:Vstd} で混合する。ニュートリノは質量0の左巻きだけの場で、レプトンは混合しない。$V$ のパラメータ $(s_{12},s_{23},s_{13},\delta)$ も $\MSbar$ のパラメータで、破れていないラグランジアンの湯川行列 $Y_u$、$Y_d$ の関数である。
+\end{enumerate}
+数値の基準点は SM ノートの基準点（$\MSbar$ のパラメータで $\alpha^{-1}=128$、$M_W=80$~GeV、$M_Z=91$~GeV、$M_H=125$~GeV、$m_t=165$~GeV など、$\mu=M_Z$）に、$\mu=M_Z$ の $\MSbar$ の値として
+\begin{equation}
+s_{12}=0.22501,\qquad s_{23}=0.04183,\qquad s_{13}=0.003732,\qquad \delta=1.147
+\label{eq:bench}
+\end{equation}
+を加えたものとする。値は PDG 2024 の大域的な当てはめ~\cite{pdg24} から取ったが、$\MSbar$ の値として決めたものではない（その関係は手順 (6) で求める）。このとき
+\begin{equation*}
+|V|=\begin{pmatrix}0.974350 & 0.225008 & 0.003732\\ 0.224876 & 0.973489 & 0.041830\\ 0.008583 & 0.041109 & 0.999118\end{pmatrix},\qquad J=3.1170\times10^{-5}
+\end{equation*}
+である。本ノートで新たに使う記号を表~\ref{tab:notation} にまとめる。それ以外の記号は SM ノートの表~1 と同じである。
+
+\begin{table}[tbp]
+\centering\small
+\caption{本ノートで新たに使う記号（ほかは SM ノートの表~1 と同じ）。}
+\label{tab:notation}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.1cm}X}
+\toprule
+\textbf{記号} & \textbf{意味} \\
+\midrule
+$Y_u$, $Y_d$, $Y_\ell$ & 湯川行列（式~\eqref{eq:Y}）。質量の基底では $Y_u=\hat y_u$、$Y_d=V\hat y_d$ \\
+$V$, $V_{ij}$ & CKM 行列（模型ファイル \texttt{Src/SM\_CKM.fr} の \texttt{CKM[i, j]}、$i$ は上型、$j$ は下型の世代）。$V_{ud}$ などとも書く \\
+$s_{ij}$, $c_{ij}$, $\delta$ & 標準のパラメータ表示の角度の正弦と余弦、位相（\texttt{s12}、\texttt{s23}、\texttt{s13}、\texttt{dCKM}）。式~\eqref{eq:Vstd} \\
+$J$ & Jarlskog 不変量（式~\eqref{eq:J}） \\
+$D_u$, $D_d$ & $\mathrm{diag}(y_u^2,y_c^2,y_t^2)$、$\mathrm{diag}(y_d^2,y_s^2,y_b^2)$ \\
+$\lambda^{(ij)}_k$ & $V_{ki}^*V_{kj}$（下型の $d_j\to d_i$ の遷移で、内線の上型のクォーク $u_k$ に付く因子） \\
+$x_k$ & $m_{u_k}^2/M_W^2$ \\
+$\Sigma^L_{ij}$, $\Sigma^R_{ij}$, $\Sigma^S_{ij}$ & クォークの自己エネルギーの世代の行列（式~\eqref{eq:Gammaq}） \\
+$\delta V$, $\delta V^{\mathrm{DS}}$ & $\MSbar$ の CKM の対抗項（式~\eqref{eq:dV}）と Denner--Sack の on-shell の対抗項（式~\eqref{eq:dVds}） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{結果}\label{sec:results}
+
+\subsection{Feynman 則}\label{sec:rules}
+
+式~\eqref{eq:QL} を SM ノートのラグランジアンに入れると、頂点のクラスは SM ノートと同じ93個で、そのうち CKM 行列が入るのは表~\ref{tab:rules-ckm} の4個だけである（\ref{app:rules}）。荷電のクォークの電流 $\bar Q_L\gamma^\mu W^\pm Q_L$ は上と下の成分を結ぶので $V$ を1個含み、湯川の項の $G^\pm$ の部分は $\bar u_LV\hat y_dd_R$ と $\bar d_LV^\dagger\hat y_uu_R$ を含む。中性の電流（$A$、$Z$、$G$）と $H$、$G^0$ の結合は、二重項の下の成分どうしを結ぶので $V^\dagger V=1$ を含み、世代について対角になる。ほかの89個のクラスの式は SM ノートの表~2〜5 と同じである。したがって木のレベルには世代を変える中性の過程がない。図~\ref{fig:ckmdiag} の (a)、(b) が表の頂点、(c)〜(e) が第~\ref{sec:fcnc} 節の1ループの図の型である。
+
+\begin{table}[tbp]
+\centering\small\renewcommand{\arraystretch}{1.75}
+\caption{CKM 行列を含む頂点（4個）。$i$ は上型、$j$ は下型のクォークの世代で、色の $\delta$ は省いた。ほかの89個のクラス（レプトンの荷電の頂点を含む）は SM ノートの表~2〜5 と同じで、世代について対角である。}
+\label{tab:rules-ckm}
+\begin{tabular}{ll}
+\toprule
+頂点 & Feynman 則 \\
+\midrule
+$\bar u_id_jW_\mu$ & $\dfrac{ie}{\sqrt2\sw}V_{ij}\gamma^\mu P_L$ \\
+$\bar d_ju_i\bar W_\mu$ & $\dfrac{ie}{\sqrt2\sw}V_{ij}^*\gamma^\mu P_L$ \\
+$\bar u_id_jG^+$ & $\dfrac{\sqrt2}{v}V_{ij}\bigl(m_{u_i}P_L-m_{d_j}P_R\bigr)$ \\
+$\bar d_ju_iG^-$ & $\dfrac{\sqrt2}{v}V_{ij}^*\bigl(m_{d_j}P_L-m_{u_i}P_R\bigr)$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% (a) W vertex
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-0.85,-0.6) -- (0,0); \draw[fermion] (0,0) -- (-0.85,0.6); \draw[photon] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.05,-0.75) {$d_j$}; \node[font=\scriptsize] at (-1.05,0.75) {$u_i$}; \node[font=\scriptsize] at (1.35,0.25) {$W$};
+  \node[slab] at (0.15,-1.35) {(a) $\bar u_id_jW$\\$\propto V_{ij}$};
+\end{scope}
+% (b) G+ vertex
+\begin{scope}[shift={(3.2,0)}]
+  \draw[fermion] (-0.85,-0.6) -- (0,0); \draw[fermion] (0,0) -- (-0.85,0.6); \draw[scalar] (0,0) -- (1.1,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.05,-0.75) {$d_j$}; \node[font=\scriptsize] at (-1.05,0.75) {$u_i$}; \node[font=\scriptsize] at (1.35,0.25) {$G^+$};
+  \node[slab] at (0.15,-1.35) {(b) $\bar u_id_jG^+$\\$\propto V_{ij}(m_{u_i}P_L-m_{d_j}P_R)$};
+\end{scope}
+% (c) off-diagonal self-energy
+\begin{scope}[shift={(6.6,0)}]
+  \draw[fermion] (-1.15,0) -- (-0.55,0); \draw[fermion] (-0.55,0) -- (0.55,0); \draw[fermion] (0.55,0) -- (1.15,0);
+  \draw[photon] (-0.55,0) arc (180:0:0.55);
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.55,0) {};
+  \node[font=\scriptsize] at (-1.0,0.22) {$d_j$}; \node[font=\scriptsize] at (1.0,0.22) {$d_i$};
+  \node[font=\scriptsize] at (0,-0.22) {$u_k$}; \node[font=\scriptsize] at (0,0.82) {$W^-$、$G^-$};
+  \node[slab] at (0,-1.0) {(c) $\Sigma_{ij}$：$\lambda^{(ij)}_k=V_{ki}^*V_{kj}$};
+\end{scope}
+% (d) penguin
+\begin{scope}[shift={(10.2,0)}]
+  \draw[fermion] (-1.25,0) -- (-0.65,0); \draw[fermion] (-0.65,0) -- (0.65,0); \draw[fermion] (0.65,0) -- (1.25,0);
+  \draw[photon] (-0.65,0) arc (180:0:0.65);
+  \draw[photon] (0,0) -- (0,-0.75);
+  \node[vtx] at (-0.65,0) {}; \node[vtx] at (0.65,0) {}; \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.1,0.22) {$b$}; \node[font=\scriptsize] at (1.1,0.22) {$s$};
+  \node[font=\scriptsize] at (-0.35,-0.22) {$u_k$}; \node[font=\scriptsize] at (0,0.92) {$W^-$、$G^-$};
+  \node[font=\scriptsize] at (0.35,-0.65) {$\gamma$、$Z$};
+  \node[slab] at (0,-1.25) {(d) $b\to s\gamma$、$Z\to b\bar s$};
+\end{scope}
+% (e) box
+\begin{scope}[shift={(13.9,0)}]
+  \draw[fermion] (-1.1,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (0.55,0.55); \draw[fermion] (0.55,0.55) -- (1.1,0.55);
+  \draw[fermion] (1.1,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (-0.55,-0.55); \draw[fermion] (-0.55,-0.55) -- (-1.1,-0.55);
+  \draw[photon] (-0.55,0.55) -- (-0.55,-0.55); \draw[photon] (0.55,0.55) -- (0.55,-0.55);
+  \node[vtx] at (-0.55,0.55) {}; \node[vtx] at (0.55,0.55) {}; \node[vtx] at (-0.55,-0.55) {}; \node[vtx] at (0.55,-0.55) {};
+  \node[font=\scriptsize] at (-1.0,0.78) {$b$}; \node[font=\scriptsize] at (1.0,0.78) {$s$};
+  \node[font=\scriptsize] at (-1.0,-0.78) {$s$}; \node[font=\scriptsize] at (1.0,-0.78) {$b$};
+  \node[font=\scriptsize] at (0,0.78) {$u_k$}; \node[font=\scriptsize] at (0,-0.78) {$u_l$};
+  \node[slab] at (0,-1.25) {(e) $\Delta F=2$ の箱\\$W$、$G^\pm$ の組};
+\end{scope}
+\end{tikzpicture}
+\caption{CKM 行列の入る頂点（(a)、(b)、表~\ref{tab:rules-ckm}）と、世代を変える1ループの図の型。(c) は下型のクォークの自己エネルギーの世代の非対角の成分（$d_j$ が入り $d_i$ が出る）で、$W^\pm$、$G^\pm$ と内線の上型のクォーク $u_k$ のループに $\lambda^{(ij)}_k=V_{ki}^*V_{kj}$ が掛かる。(d) は $b\to s\gamma$ と $Z\to b\bar s$ の頂点の図の一つで、光子と $Z$ はループの $u_k$ にも $W^\pm$、$G^\pm$ にも付く。(e) は $B_s$ の混合の箱の図（$b\bar s\to s\bar b$。下の線は反クォークで、左から $\bar s$ が入り右へ $\bar b$ が出る）で、縦の線は $W^\pm$ か $G^\pm$ である。運動量は左から右へ、矢印はフェルミオン数の流れである。}
+\label{fig:ckmdiag}
+\end{figure}
+
+\subsection{木のレベルの崩壊幅と断面積}\label{sec:tree}
+
+木のレベルの振幅は、荷電の頂点ごとに $V_{ij}$ か $V_{ij}^*$ を1個持つ。$W$ が1本の過程の振幅の2乗は $|V_{ij}|^2$ に比例し、場の位相の付け替えによらない。SM ノートの式~(11) の $W$ とトップの崩壊幅は（\ref{app:tree}）
+\begin{equation}
+\Gamma(W^+\to u_i\bar d_j)=|V_{ij}|^2\,\Gamma_{V=1}(W^+\to u_i\bar d_j),\qquad
+\Gamma(t\to d_jW^+)=|V_{tj}|^2\,\Gamma_{V=1}(t\to d_jW^+)
+\label{eq:widthsckm}
+\end{equation}
+になる。$\Gamma_{V=1}$ は SM ノートの式~(11) に終状態の質量 $m_{u_i}$、$m_{d_j}$ を入れたものである。下型のクォークの質量を0にすると、行のユニタリー性 $\sum_j|V_{ij}|^2=1$ から $\sum_j\Gamma(t\to d_jW^+)$ は $V=1$ の $\Gamma(t\to bW^+)$ に等しく、$W$ のハドロンへの崩壊幅は、開いている $u$、$c$ の2行で $2N_c\Gamma(W\to\ell\nu)$ になる。$u_i\bar d_j\to e^+\nu_e$ の断面積は $|V_{ij}|^2$ 倍になる。$t$ チャンネルに下型のクォークが入る $u\bar u\to W^+W^-$ では、振幅が $\sum_k|V_{uk}|^2A(m_{d_k})$ になり、$d_k$ が質量0なら $V=1$ の振幅に等しい。$u\bar u\to d\bar s$ のような $t$ チャンネルの $W$ の交換は $V_{ud}^*V_{us}$ に比例する（入る $u$ を消して $d$ を作るのは $\bar d u\bar W$ の頂点で $V_{ud}^*$、入る $\bar u$ を消して $\bar s$ を作るのは $\bar usW$ の頂点で $V_{us}$。$t\to d_jW^+$ の振幅は $V_{tj}^*$ に比例する）。木のレベルでは、CP で移り合う過程（$t\to d_jW^+$ と $\bar t\to\bar d_jW^-$）の振幅の2乗が等しく、CP の破れは現れない。崩壊幅の CP の非対称には、位相の違う二つの振幅と吸収的な部分（ループの虚部）が要る。
+
+\subsection{湯川行列の $\MSbar$ の繰り込みと CKM 行列の走り}\label{sec:rg}
+
+\paragraph{行列の $\beta$ 関数。}湯川行列の裸の量を $Y_0=\mu^\epsilon(Y+\delta Y)$ と書く。SM ノートの式~(14) と同じく、1ループの $\MSbar$ では $\delta Y=\frac{\DUV}2\beta_Y$ で、$\beta_Y$ は4次元の1ループの $\beta$ 関数
+\begin{equation}
+\begin{aligned}
+K\beta_{Y_u}&=\Bigl[\frac32\bigl(Y_uY_u^\dagger-Y_dY_d^\dagger\bigr)+\mathcal T-8g_s^2-\frac94g^2-\frac{17}{12}g'^2\Bigr]Y_u,\\
+K\beta_{Y_d}&=\Bigl[\frac32\bigl(Y_dY_d^\dagger-Y_uY_u^\dagger\bigr)+\mathcal T-8g_s^2-\frac94g^2-\frac5{12}g'^2\Bigr]Y_d
+\end{aligned}
+\label{eq:betaY}
+\end{equation}
+である~\cite{mv2,arason92}（\ref{app:rg}）。$\mathcal T=\tr(3Y_uY_u^\dagger+3Y_dY_d^\dagger+Y_\ell Y_\ell^\dagger)$ で、ゲージ結合と $\mathcal T$ の項は単位行列に比例する。場の繰り込みを世代のエルミートな行列にとったもので、$\MSbar$ の $\beta$ 関数なのでゲージによらない。$V=1$ では SM ノートの式~(15) の $\beta_{y_u}$、$\beta_{y_d}$ になる。ゲージ結合、$\lambda$、$\mu^2$ の1ループの $\beta$ 関数は湯川行列を $\tr Y_uY_u^\dagger=\sum y_u^2$、$\tr(Y_uY_u^\dagger)^2=\sum y_u^4$ などの形でだけ含むので $V$ によらず、SM ノートの式~(15) のままである（2ループでは $\tr(Y_uY_u^\dagger Y_dY_d^\dagger)=\sum_{ij}|V_{ij}|^2y_{u_i}^2y_{d_j}^2$ などが入る）。
+
+\paragraph{質量と CKM 行列の走り。}$H_u=Y_uY_u^\dagger$、$H_d=Y_dY_d^\dagger$ は二重項の世代の空間のエルミートな行列で、上型の質量の基底では $H_u=D_u$、$H_d=VD_dV^\dagger$ である。式~\eqref{eq:betaY} から $H_u$、$H_d$ の走りを求め、固有値と固有ベクトルの摂動を使うと（\ref{app:rg}）
+\begin{equation}
+\begin{aligned}
+K\frac{\dd\ln y_{u_i}}{\dd\ln\mu}&=\frac32y_{u_i}^2-\frac32\sum_k|V_{ik}|^2y_{d_k}^2+\mathcal T-8g_s^2-\frac94g^2-\frac{17}{12}g'^2,\\
+K\frac{\dd\ln y_{d_j}}{\dd\ln\mu}&=\frac32y_{d_j}^2-\frac32\sum_k|V_{kj}|^2y_{u_k}^2+\mathcal T-8g_s^2-\frac94g^2-\frac5{12}g'^2
+\end{aligned}
+\label{eq:yrun}
+\end{equation}
+と
+\begin{equation}
+K\frac{\dd V_{ij}}{\dd\ln\mu}=\frac32\Biggl[\sum_{k\ne i}\frac{y_{u_i}^2+y_{u_k}^2}{y_{u_k}^2-y_{u_i}^2}\bigl(VD_dV^\dagger\bigr)_{ik}V_{kj}
+-\sum_{k\ne j}V_{ik}\frac{y_{d_k}^2+y_{d_j}^2}{y_{d_j}^2-y_{d_k}^2}\bigl(V^\dagger D_uV\bigr)_{kj}\Biggr]
+\label{eq:Vrun}
+\end{equation}
+を得る。ゲージ結合と $\mathcal T$ の項は湯川行列を単位行列の倍に変えるだけなので $V$ を回さず、$V$ の走りは $\frac32(H_u-H_d)$ の項だけから来る。式~\eqref{eq:Vrun} は固有ベクトルの位相を変えない約束（回転の生成子の対角の成分を0）によるもので、ほかの約束とは場の位相の付け替えだけ違い、$|V_{ij}|$ と $J$ の走りは同じである。$V=1$ では右辺が0になり、$V=1$ が保たれる。質量の階層 $y_t\gg y_c,y_u$、$y_b\gg y_s,y_d$ で主要な項をとると、
+\begin{equation}
+K\frac{\dd\ln|V_{ub}|}{\dd\ln\mu}\simeq K\frac{\dd\ln|V_{cb}|}{\dd\ln\mu}\simeq K\frac{\dd\ln|V_{td}|}{\dd\ln\mu}\simeq K\frac{\dd\ln|V_{ts}|}{\dd\ln\mu}\simeq\frac32\bigl(y_t^2+y_b^2\bigr),\qquad
+K\frac{\dd\ln J}{\dd\ln\mu}\simeq3\bigl(y_t^2+y_b^2\bigr)
+\label{eq:Vhier}
+\end{equation}
+で、ほかの成分の走りはこれより $|V_{cb}|^2$ 程度小さい。標準模型ではこれらの成分は高いスケールで大きくなる（式~\eqref{eq:betaY} の $-\frac32Y_dY_d^\dagger$ の符号による。超対称な模型では符号が逆になる~\cite{babu87,bhmp99}）。基準点では $y_t=0.9588$、$y_b=0.01662$ で、式~\eqref{eq:Vrun} から $K\,\dd\ln|V_{ub}|/\dd\ln\mu=1.37798$、$K\,\dd\ln|V_{cb}|/\dd\ln\mu=1.37786$、$K\,\dd\ln|V_{td}|/\dd\ln\mu=1.37926$、$K\,\dd\ln|V_{ts}|/\dd\ln\mu=1.37780$、$K\,\dd\ln J/\dd\ln\mu=2.7546$ で、式~\eqref{eq:Vhier} の $1.37935$、$2.7587$ とよく合う。$|V_{us}|$ の走りは $K\,\dd\ln|V_{us}|/\dd\ln\mu=1.55\times10^{-3}$ である。式~\eqref{eq:Vrun} は、式~\eqref{eq:betaY} を $Y_u$、$Y_d$ の行列のまま数値で積分し、各点で対角化して求めた $|V_{ij}|$ と $J$ の微分と、相対 $4\times10^{-8}$ 以内（中心差分の誤差）で一致した（湯川結合を大きくして全項が効くようにした点で。\texttt{Src/ckm\_rg\_handcheck.py}、この段落の数値もこのスクリプトの出力）。
+
+\paragraph{CKM の対抗項。}$V$ は $Y_u$、$Y_d$ だけの関数で、$v$ によらない。裸の $V_0$ は裸の湯川行列 $Y_0=Y+\frac{\DUV}2\beta_Y$ から同じ回転で作るので、1ループでは
+\begin{equation}
+V_0=V+\delta V,\qquad \delta V=\frac{\DUV}2\,\frac{\dd V}{\dd\ln\mu}
+\label{eq:dV}
+\end{equation}
+で、$\dd V/\dd\ln\mu$ は式~\eqref{eq:Vrun} である。これは SM ノートの式~(18) の質量の対抗項 $\delta M^2=\frac{\DUV}2\dd M^2/\dd\ln\mu$ と同じ形で、FJ の処方のタドポールは $v$ にしか入らないので $\delta V$ に入らない。$\delta V$ は $\MSbar$ の $\beta$ 関数だけで決まるので、ゲージによらない。場の位相の付け替えの自由度は、場の繰り込みの反エルミートな対角の部分と打ち消し合う。
+
+\subsection{クォークの自己エネルギーの行列と CKM の対抗項}\label{sec:se}
+
+\paragraph{世代の行列。}SM ノートの式~(24) を世代の行列に広げ、クォーク $q$（$u$ 型または $d$ 型）の1PI の2点関数の1ループの部分を、$q_j$ が入り $q_i$ が出るものとして
+\begin{equation}
+\Gamma^q_{ij}\supset i\bigl[\slashed pP_L\Sigma^L_{ij}(p^2)+\slashed pP_R\Sigma^R_{ij}(p^2)+\bigl(m_iP_L+m_jP_R\bigr)\Sigma^S_{ij}(p^2)\bigr]
+\label{eq:Gammaq}
+\end{equation}
+と書く（Denner の形~\cite{denner93}。本ノートの模型の1ループでは、スカラーの部分がこの形になる）。$d$ 型のクォークでは、中性の場（$A$、$Z$、$G$、$H$、$G^0$）のループとタドポールの付いた図は世代について対角で、非対角の成分は $W^\pm$、$G^\pm$ と内線の $u_k$ のループ（図~\ref{fig:ckmdiag} (c)）だけから来て、$\sum_k\lambda^{(ij)}_kF(m_{u_k}^2)$ の形になる。$u$ 型では $V$ と $V^\dagger$ の役割を入れ替える。
+
+\paragraph{紫外の極。}$\MSbar$ のエルミートな場の繰り込みと $\delta Y$（\ref{app:rg}）から、非対角の成分（$i\ne j$）の紫外の極は
+\begin{equation}
+K\Sigma^L_{ij}\big|_{\mathrm{UV}}=\frac12X_{ij}\DUV,\qquad K\Sigma^R_{ij}\big|_{\mathrm{UV}}=0,\qquad K\Sigma^S_{ij}\big|_{\mathrm{UV}}=-X_{ij}\DUV,\qquad
+X=\begin{cases}V^\dagger D_uV&(d\ \text{型})\\ VD_dV^\dagger&(u\ \text{型})\end{cases}
+\label{eq:uvoff}
+\end{equation}
+になるはずである。$X_{ij}=\sum_k\lambda^{(ij)}_ky_{u_k}^2$（$d$ 型）は、$G^\pm$ のループの $m_{u_k}^2$ に比例する部分で、これは $\xi$ によらない（$\xi_W$ は $G^\pm$ の伝播関数の質量にだけ入る）。$W$ のループの紫外の極は内線の質量によらないので、ユニタリー性 $\sum_k\lambda^{(ij)}_k=\delta_{ij}$ で非対角の成分が0になる。$W$ の伝播関数の縦の部分 $(1-\xi_W)k_\mu k_\nu/[(k^2-M_W^2)(k^2-\xi_WM_W^2)]$ の極も $1/M_W^2$ を持たないので質量によらず、同じく打ち消す。したがって非対角の紫外の極はゲージによらず、$\xi$ に依存するのは有限部分だけである。$\Sigma^R$ に非対角の極がないのは、$d_R$ の場の繰り込み $Y_d^\dagger Y_d=D_d$ が質量の基底で対角だからである。対角の成分の極は、SM ノートの式~(26) の条件（$\Sigma^V+\Sigma^S$ の極が $\frac14\dd\ln m^2/\dd\ln\mu$）を式~\eqref{eq:yrun} で満たすはずである（手順 (3)）。
+
+\paragraph{on-shell の対抗項との関係。}on-shell の処方では、外線の世代の混合を消す非対角の場の定数
+\begin{equation}
+\delta Z^L_{ij}=\frac2{m_i^2-m_j^2}\,\widetilde{\re}\bigl[m_j^2\Sigma^L_{ij}(m_j^2)+m_im_j\Sigma^R_{ij}(m_j^2)+(m_i^2+m_j^2)\Sigma^S_{ij}(m_j^2)\bigr]\qquad(i\ne j)
+\label{eq:dZos}
+\end{equation}
+（$\widetilde{\re}$ はループの積分の実部だけをとる。$\delta Z^R$ も同様~\cite{denner93}）を使う。Denner と Sack~\cite{ds90} は CKM の対抗項を
+\begin{equation}
+\delta V^{\mathrm{DS}}=\frac14\Bigl[\bigl(\delta Z^{u,L}-\delta Z^{u,L\dagger}\bigr)V-V\bigl(\delta Z^{d,L}-\delta Z^{d,L\dagger}\bigr)\Bigr]
+\label{eq:dVds}
+\end{equation}
+とした。式~\eqref{eq:uvoff} を式~\eqref{eq:dZos}、\eqref{eq:dVds} に入れると、$\delta V^{\mathrm{DS}}$ の紫外の極は式~\eqref{eq:dV} の $\MSbar$ の $\delta V$（式~\eqref{eq:Vrun} の位相の約束）にちょうど等しい（\ref{app:rg}）。違いは有限部分で、$\delta V^{\mathrm{DS}}$ の有限部分は自己エネルギーの非対角の有限部分を通じて $\xi_W$ に依存する~\cite{ggm99,yamada01}。$\MSbar$ では、外線の世代の混合は、$\MSbar$ で繰り込んだ自己エネルギーから式~\eqref{eq:dZos} の形で作る有限の場の定数で扱い、それと頂点の補正の和が $\xi$ によらないはずである（手順 (5) で確かめる）。
+
+\subsection{世代を変える1ループの過程}\label{sec:fcnc}
+
+$d_j\to d_i$（$i\ne j$）の中性の遷移は1ループで初めて現れ、振幅は
+\begin{equation}
+\mathcal A(d_j\to d_i)=\sum_k\lambda^{(ij)}_kF(x_k)=\sum_k\lambda^{(ij)}_k\bigl[F(x_k)-F(0)\bigr]
+\label{eq:gim}
+\end{equation}
+の形になる（$x_k=m_{u_k}^2/M_W^2$。2つ目の等号は $\sum_k\lambda^{(ij)}_k=0$）。$F$ の定数の部分は打ち消し、質量の差だけが残る（GIM の機構~\cite{gim70}）。基準点の $b\to s$ では $\lambda_t=-0.04107+0.00076i$、$\lambda_c=0.04072$、$|\lambda_u|=8.4\times10^{-4}$ で、ほぼ $\lambda_t[F(x_t)-F(x_c)]$ になる。$\Delta F=2$ の箱の図（図~\ref{fig:ckmdiag} (e)）は二つの内線の和 $\sum_{k,l}\lambda_k\lambda_lS(x_k,x_l)$ になる。本ノートで求めるのは、(a) $b\to s\gamma$ の on-shell の双極子の振幅、(b) on-shell の $Z\to b\bar s$ の振幅（外線の世代の混合を含む）、(c) 外線の運動量を0にした $\Delta F=2$ の箱の図の和である。どれも個々の図は $\xi$ に依存し、和が $\xi$ によらないはずである。文献の Inami--Lim の関数~\cite{il81} は、本ノートの図から求めた値と比べる参照にとどめる。(c) から $K$、$B$ 中間子の質量差と $\epsilon_K$ を出すには、ハドロンの行列要素（格子 QCD）と QCD の補正の因子が要り、それらは文献の値を入力として明示して使う。
+
+\section{検算の計画}\label{sec:plan}
+
+第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、SM ノートと同じである。一般の $R_\xi$ ゲージの計算は、本ノートの模型ファイルから書き出した FeynArts の模型（\texttt{GaugeXi} を残す）と FeynCalc で行う。FeynArts の \texttt{SM.mod} は CKM 行列と Denner--Sack の対抗項を持つので、Feynman ゲージではそれと FormCalc とも、外線の因子で規約を直して比べる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{各量と、それを計算して突き合わせる手段。「—」はその手段を使わないことを表す。}
+\label{tab:plan}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{2.1cm}}
+\toprule
+\textbf{量} & \textbf{手計算} & \textbf{FeynCalc + FeynArts、FormCalc} & \textbf{数値} & \textbf{MadGraph} \\
+\midrule
+Feynman 則（表~\ref{tab:rules-ckm}） & \ref{app:rules} & 自前の模型の頂点と表の差。ユニタリー性の規則、$V=1$ で SM ノートの頂点 & — & UFO と図の数 \\
+木の幅と断面積 \eqref{eq:widthsckm} & \ref{app:tree} & 振幅の2乗を記号として & 陽な行列 & 幅と断面積 \\
+湯川行列の $\beta$ 関数 \eqref{eq:betaY}、$V$ の走り \eqref{eq:Vrun} & \ref{app:rg} & 2点関数の極。一般の公式の陽な実装 & 行列のまま積分 & — \\
+自己エネルギーの行列 \eqref{eq:uvoff}、$\delta V$ \eqref{eq:dV}、$\delta V^{\mathrm{DS}}$ \eqref{eq:dVds} & \ref{app:rg} & 一般の $R_\xi$ で。\texttt{SM.mod}（CKM） & LoopTools & — \\
+$W\to u_i\bar d_j$、$|V_{ij}|$ と $V(\mu)$ & 手順 (5)、(6) & 一般の $R_\xi$。FormCalc & 数値 & MadLoop \\
+$b\to s\gamma$、$Z\to b\bar s$、$\Delta F=2$ \eqref{eq:gim} & 手順 (7)、(8) & 一般の $R_\xi$ & LoopTools、Package-X & MadLoop \\
+$V$ と $J$ の高いスケールまでの走り & 手順 (10) & — & 常微分方程式 & — \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{一致の基準。}SM ノートと同じである。発散部分と対抗項は $1/\epsilon$ の係数が記号として完全に一致することを、有限部分は基準点で倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。$\xi$ によらないはずの量は、記号として $\xi$ を含まないこと、または $\xi=0,1,3$ で同じ値になることを求める。$V$ を含む式は、$V$ を一般の複素行列の記号のまま比べるか、標準のパラメータ表示 \eqref{eq:Vstd} を入れてユニタリー性を使って比べる。応用の手順では、比べる値の精度の範囲で一致することを求め、その精度を各手順に示す。
+
+\paragraph{手順。}次の順に進める。(1) 模型ファイル \texttt{SM\_CKM.fr} を SM ノートの \texttt{SM.fr} から作り、FeynArts の模型と UFO を書き出す。93個の頂点を $V$ を一般の複素行列とした表と比べ、ユニタリー性の規則を標準のパラメータ表示で確かめ、$V=1$ で SM ノートの頂点と比べる。MadGraph の図の数を、$V$ の非対角の成分を要する過程を含めて手で数えた数と比べる。(2) 木の振幅の2乗を FeynCalc で記号として確かめ、式~\eqref{eq:widthsckm} と、ユニタリー性による和（$\sum_j\Gamma(t\to d_jW)$、$W$ のハドロンへの幅、$u\bar u\to W^+W^-$）を確かめ、MadGraph の幅と断面積と比べる。(3) クォークの自己エネルギーを世代の行列として一般の $R_\xi$ ゲージで $D$ 次元で求め、非対角の紫外の極が式~\eqref{eq:uvoff} で $\xi$ によらないこと、$V=1$ で SM ノートの値になること、有限部分の $\xi$ 依存を確かめる。$\delta V^{\mathrm{DS}}$ の紫外の極が $\MSbar$ の $\delta V$ に等しいことと、その有限部分が $\xi_W$ に依存することを求める。$V$ を厳密に入れた $W$ とトップの極質量と $\hat\Delta$ の変化を、SM ノートの見積もり（\texttt{ckm\_estimate.wl}）と比べる。(4) 湯川行列の $\beta$ 関数 \eqref{eq:betaY} を、2点関数（と $\bar u dG^+$ の頂点）の極と、一般の公式~\cite{mv1,mv2,luo03} を行列のまま組んだ実装の二つで確かめ、式~\eqref{eq:yrun}、\eqref{eq:Vrun} を導く。(5) $W^+\to u_i\bar d_j$ の1ループの電弱の振幅を、$\MSbar$ の $V$ と外線の世代の混合の有限な場の定数で一般の $R_\xi$ ゲージで求め、紫外で有限で $\xi$ によらないことを確かめる。$\delta V^{\mathrm{DS}}$ を使うと $\xi$ に依存することを示し、Feynman ゲージで FormCalc（\texttt{SM.mod} の Denner--Sack の対抗項）と比べる。(6) 外線の運動量を0にした $d_j\to u_ie\bar\nu_e$ の1ループの4フェルミの振幅を $\mu$ 崩壊（SM ノートの手順 (6)）と比べ、セミレプトニックな崩壊で測る $|V_{ij}|$ と $\MSbar$ の $V(\mu)$ の関係を求め、PDG の $|V_{ij}|$ から $V(M_Z)$、$V(M_t)$ を決める。(7) $b\to s\gamma$ の on-shell の双極子の振幅と on-shell の $Z\to b\bar s$ の振幅を一般の $R_\xi$ ゲージで求め、$\xi$ によらないこと、GIM の機構 \eqref{eq:gim} を確かめ、Inami--Lim の関数~\cite{il81} と比べる。(8) $\Delta F=2$ の箱の図の和を外線の運動量を0にして一般の $R_\xi$ ゲージで求め、GIM の後で $\xi$ によらないことを確かめる。ハドロンの入力（明示した文献の値）で $B_d$、$B_s$ の質量差と $\epsilon_K$ を求め、測定値と比べる。(9) 本ノートの UFO と NLOCT の R2 の頂点で、MadLoop の世代を変えるループの振幅を手順 (7) の値と比べる。SM ノートの FJ の対抗項の UFO に CKM の対抗項を加え、$W\to u_i\bar d_j$ を手順 (5) と比べる。(10) 手順 (4) の本ノートの方程式で $V$ と $J$ を $M_{\mathrm{Pl}}$ まで走らせ、文献の値と比べる（文献の値は参照にとどめる）。
+
+\section{検算}\label{sec:checks}
+
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh} でまとめて再実行できる（約1分）。
+
+\paragraph{手順 (1)：模型ファイル。}模型ファイル \texttt{Src/SM\_CKM.fr} は SM ノートの \texttt{Src/SM.fr} を写し、三か所だけを変えた。外部パラメータ $s_{12}$、$s_{23}$、$s_{13}$、$\delta$（ブロック \texttt{CKMBLOCK}）と、内部パラメータの複素行列 \texttt{CKM}（\texttt{Unitary -> True}、値は式~\eqref{eq:Vstd}）を加えた。左巻きの二重項の下の成分を $(Vd_L)_f=\texttt{CKM[f, f2]}\,d_{L,f2}$ にした。湯川の項を $-\bar Q_L(V\hat y_d)\Phi d_R$ にした（$\hat y_d$ は SM ノートと同じ対角の行列で、どの世代の添字も2回だけ現れる）。運動項と湯川の項を添字について展開した後、和をとる添字を持つ積 $V_{ab}V_{ac}^*$、$V_{ba}V_{ca}^*$ を $\delta_{bc}$ に置き換える規則を加えた。
+
+スクリプト \texttt{generate\_SM\_CKM.wl} は四つのことを確かめた（出力の (a)〜(d)）。(a) FeynRules のチェックでは、エルミート性が通り、警告は SM ノートと同じ二つだけで、頂点のクラスは93個だった。(b) 93個のクラスを、表~\ref{tab:rules-ckm} と SM ノートの表~2〜5 の式と比べた。フェルミオンの頂点は世代の9個の成分ごとに比べ、$V$ は一般の複素行列の記号 \texttt{CKM[i, j]} とその複素共役のまま残した。荷電のクォークの頂点は $V_{ij}$、$V_{ij}^*$ を正しい添字の順で含み、ほかの頂点は対角で、93個すべての差が記号として0になった。$\bar u_id_jG^+$ の頂点は FeynRules の出力では和をとる世代の添字（$V_{ia}(\hat y_d)_{aj}$）を含み、それを項ごとに足してから比べた。比べ方が誤りを見逃さないことを確かめるため、SM ノートの3か所の誤り（$AW\bar W$ の符号、$G^0G^0H$ の2倍、$\bar u^Zu^ZH$ の $\xi_Z$ の欠落）に CKM の2か所（$\bar udW$ で $V$ を転置、$\bar duG^-$ で複素共役の欠落）を加えた表とも比べ、ちょうど5個の差が出た。(c) ユニタリー性の規則を確かめるため、規則を使わないラグランジアンからも頂点を作った。規則を使わないラグランジアンには $V_{ab}V_{ac}^*$ の形の項が12個あり、使ったものには0個である。標準のパラメータ表示を記号の角度で入れると（$V^\dagger V=1$ も記号として確かめた）、23個のフェルミオンの頂点の9個の成分が両方で一致した。規則を使わないラグランジアンでも中性の頂点は CKM 行列を含まず、FeynRules は \texttt{Unitary -> True} の行列のユニタリー性を自分で使っている。規則は冗長だが、誤りでもない。(d) $V=1$ を入れた93個のクラスが、SM ノートの FeynRules の出力（\texttt{models/sm/Src/generated/FeynmanRules\_SM.m}）と、フェルミオンでは成分ごとにすべて一致した。UFO の書き出しでは、93個のクラスから 163 個の世代を展開した頂点ができた。SM ノートの UFO の 139 個に、$\bar udW$、$\bar du\bar W$、$\bar udG^+$、$\bar duG^-$ の非対角の6個ずつを足した数である。FeynArts の模型では、$V$ は \texttt{CKM[i, j]} と \texttt{Conjugate[CKM[i, j]]} として、$G^\pm$ の結合では世代の和 \texttt{IndexSum} の中に現れる。
+
+この過程で FeynRules の問題を一つ見つけた。SM ノートと同じ順に FeynArts の模型を書き出した後で UFO を書き出すと、UFO のための Feynman 則の計算が \texttt{Inner::incom} のメッセージを出し、94個のクラスを作った。94個目は電荷を保存しない $\bar duW$（電荷 $+2$）で、係数は添字が1個の \texttt{CKM[Index[Generation, 2]]} と \texttt{Index[Generation, \{\}]} を含む壊れた式だった。同じ計算を新しいカーネルで行うと93個でメッセージも出ず、FeynArts の模型を書き出すことだけが原因である。FeynArts の書き出しが残す状態が、二つの添字を持つ複素行列の世代の展開を壊すと見られるが、原因は特定していない。CKM 行列のない SM ノートの模型では起こらない。UFO を先に書き出すと、どちらも93個になり、FeynArts の模型のファイルは書き出しの順によらず同じだった（\texttt{diff} で確かめた。FeynArts の書き出しの並列のサブカーネルが \texttt{Simplify::time} を出すが、FeynRules の中の \texttt{Simplify} の時間切れで、結果は変わらない）。スクリプトはこの順にし、UFO の記録ファイルからクラスの数と頂点の数を読んで表示する。
+
+UFO の制限カード \texttt{restrict\_massless.dat}（トップ以外のフェルミオンを質量0にし、CKM のパラメータは値を残す）は SM ノートのスクリプト \texttt{make\_restrict.py} で作った。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の木の図を、ユニタリーゲージと Feynman ゲージの両方で生成し、35個の過程すべてで手で数えた数と一致した。SM ノートの21個の過程は $u\bar u\to W^+W^-$ を除いて SM ノートと同じ数で、$u\bar u\to W^+W^-$ は $t$ チャンネルに $s$、$b$ が加わって3個から5個になった。残りの14個は $V$ の非対角の成分を要する過程で、$V=1$ では図がないか（$u\bar s\to W^+H$、$t\to sW^+$ など）、図が少ない（$t\bar t\to W^+W^-$ は $V=1$ では4個）。Feynman ゲージで図が増えるのは、$t\bar s\to W^+H$ の $s$ チャンネルの $G^+$（$\bar t sG^+$ の結合は $V_{ts}m_t$）だけである。世代を変える中性の過程 $d\bar s\to\mu^+\mu^-$、$s\bar b\to Z$、$b\bar s\to\gamma g$、$u\bar c\to e^+e^-$、$c\bar u\to ZH$ には、MadGraph は図を作らなかった（\texttt{NoDiagramException}。同じ設定で $u\bar s\to e^+\nu_e$ には1個の図を作った）。木のレベルに世代を変える中性の結合がないことの確かめである。MadGraph は図のない過程でスクリプトを止めるので、これらは過程ごとに別に実行した。スクリプトは \texttt{generate\_SM\_CKM.wl}（FeynRules）、\texttt{model\_mg5.mg5}（MadGraph）、\texttt{run\_model\_check.sh}（まとめと図のない過程）である。分かったツールの問題は計算環境の記録~\cite{env} の表 17 にまとめた。
+
+\begin{table}[tbp]
+\centering\small
+\caption{MadGraph 3.8.1 が本ノートの UFO（トップ以外のフェルミオンは質量0、CKM のパラメータは式~\eqref{eq:bench}）から生成した木の図の数（ユニタリーゲージ / Feynman ゲージ）のうち、$V$ の非対角の成分を要する過程と、その内訳。SM ノートの表~7 の21個の過程も同じ実行で確かめ、$u\bar u\to W^+W^-$（下の表）を除いて SM ノートと同じ数だった。どれも手で数えた数と一致した。内訳の括弧は振幅に掛かる CKM の因子である。}
+\label{tab:diagrams}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{5.6cm}>{\raggedright\arraybackslash}p{1.6cm}X}
+\toprule
+過程 & 図の数 & 内訳 \\
+\midrule
+$u\bar u\to W^+W^-$、$d\bar d\to W^+W^-$ & 5 / 5 & $s$ チャンネルの $\gamma$、$Z$、$t$ チャンネルの $d,s,b$（$u,c,t$） \\
+$t\bar t\to W^+W^-$ & 6 / 6 & $s$ の $\gamma$、$Z$、$H$、$t$ の $d,s,b$ \\
+$u\bar s\to W^+H$ & 1 / 1 & $s$ の $W$（$V_{us}^*$） \\
+$t\bar s\to W^+H$ & 2 / 3 & $s$ の $W$、$t$ の $t$（Feynman ゲージでは $s$ の $G^+$ が加わる） \\
+$t\to sW^+$、$t\to dW^+$、$\bar t\to\bar bW^-$ & 1 / 1 & （$V_{ts}^*$、$V_{td}^*$、$V_{tb}$） \\
+$u\bar s\to e^+\nu_e$、$u\bar b\to e^+\nu_e$、$c\bar d\to e^+\nu_e$ & 1 / 1 & $s$ の $W$ \\
+$u\bar d\to c\bar s$、$u\bar s\to c\bar d$ & 1 / 1 & $s$ の $W$（$V_{ud}^*V_{cs}$、$V_{us}^*V_{cd}$） \\
+$u\bar u\to d\bar s$、$u\bar c\to d\bar s$ & 1 / 1 & $t$ の $W$（$V_{ud}^*V_{us}$、$V_{ud}^*V_{cs}$） \\
+\midrule
+$d\bar s\to\mu^+\mu^-$、$s\bar b\to Z$、$b\bar s\to\gamma g$、$u\bar c\to e^+e^-$、$c\bar u\to ZH$ & 0 & 世代を変える中性の結合がない \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{議論と今後}\label{sec:discussion}
+
+\paragraph{現時点で分かったこと。}CKM 行列は、二重項の下の成分を $Vd_L$ にするだけで模型に入り、頂点の式が変わるのは荷電のクォークの4個のクラスだけである。中性の結合が対角になることは、FeynRules の出力、標準のパラメータ表示を入れた値、MadGraph が世代を変える中性の過程に図を作らないことの三つで確かめた。$V=1$ で SM ノートの模型に戻るので、SM ノートの結果のうち $V$ によらないものは、本ノートの模型でもそのまま成り立つ。
+
+手計算では、$\MSbar$ の CKM の対抗項が湯川行列の $\beta$ 関数だけで決まり（式~\eqref{eq:dV}）、FJ のタドポールが入らないことが分かった。SM ノートの質量の対抗項がタドポールを通じて $1/\lambda$ の大きな項を持ったのと違い、CKM 行列の走りには $v$ の走りが入らない。自己エネルギーの非対角の紫外の極は $G^\pm$ のループの $m_{u_k}^2$ の部分だけで、$\xi$ によらない（式~\eqref{eq:uvoff}）。on-shell の Denner--Sack の対抗項の紫外の極は $\MSbar$ の $\delta V$ と同じで、二つの処方の違いは有限部分にあり、そこに $\xi$ 依存が入る。$V$ の走り（式~\eqref{eq:Vrun}）は、基準点で $|V_{ub}|$、$|V_{cb}|$、$|V_{td}|$、$|V_{ts}|$ を $\mu$ が $e$ 倍になるごとに $1.38/K\approx0.9\%$ 大きくする。
+
+\paragraph{残る手順。}手順 (2)〜(10) はまだ行っていない。とくに、非対角の自己エネルギーの有限部分の $\xi$ 依存と $\delta V^{\mathrm{DS}}$ のゲージ依存（手順 (3)）、$\MSbar$ の $V$ で $W\to u_i\bar d_j$ がゲージによらないこと（手順 (5)）、世代を変える過程の振幅のゲージ不変性（手順 (7)、(8)）が、本ノートの中心の確かめである。本ノートで扱わないのは、ニュートリノの質量と PMNS 行列、世代を変える過程の QCD の補正の繰り込み群による改良（$b\to s\gamma$ の大きな QCD の補正）と、ハドロンの行列要素の計算である。
+
+\appendix
+
+\section{Feynman 則の導出}\label{app:rules}
+
+\paragraph{荷電の電流。}SM ノートの付録~A のとおり、共変微分の荷電の部分は $T^1W^1+T^2W^2=\frac1{\sqrt2}(\sigma^+W^++\sigma^-W^-)$ である。式~\eqref{eq:QL} の二重項では $\bar Q_L\gamma^\mu\sigma^+Q_L=\bar u_L\gamma^\mu Vd_L$ なので、$\bar u_i\gamma^\mu d_jW^+_\mu$ の係数は $\frac g{\sqrt2}V_{ij}$ で、頂点は $\frac{ie}{\sqrt2\sw}V_{ij}\gamma^\mu P_L$ になる。エルミート共役から $\bar d_j\gamma^\mu u_iW^-_\mu$ の係数は $\frac g{\sqrt2}V_{ij}^*$ である。中性の部分（$T^3$、$Y$、$T^a_{\mathrm{color}}$）は二重項の各成分の中で閉じ、下の成分では $\overline{(Vd_L)}\gamma^\mu(Vd_L)=\bar d_LV^\dagger V\gamma^\mu d_L=\bar d_L\gamma^\mu d_L$ になる。
+
+\paragraph{湯川結合。}式~\eqref{eq:Y} に $Y_d=V\hat y_d$、$Y_u=\hat y_u$ を入れる。$d$ 型の項は、二重項の上の成分から $-\bar u_{Li}(V\hat y_d)_{ij}(-iG^+)d_{Rj}=iV_{ij}y_{d_j}\bar u_{Li}d_{Rj}G^+$、下の成分から $-\overline{(Vd_L)}V\hat y_d\frac{v+H+iG^0}{\sqrt2}d_R=-\bar d_L\hat y_d\frac{v+H+iG^0}{\sqrt2}d_R$（$V^\dagger V=1$）で、中性の部分は SM ノートと同じ対角の式になる。$u$ 型の項は $\tilde\Phi=((v+H-iG^0)/\sqrt2,-iG^-)$ の下の成分から $-\overline{(Vd_L)}\hat y_u(-iG^-)u_R=iG^-\bar d_{Lj}V_{ij}^*y_{u_i}u_{Ri}$ を与える。したがって $\bar u_id_jG^+$ の係数は、$d$ 型の項の $iV_{ij}y_{d_j}P_R$ と、$u$ 型の項のエルミート共役 $-iV_{ij}y_{u_i}P_L$ の和で、頂点（$i$ を掛ける）は $V_{ij}(y_{u_i}P_L-y_{d_j}P_R)=\frac{\sqrt2}vV_{ij}(m_{u_i}P_L-m_{d_j}P_R)$ になる。$\bar d_ju_iG^-$ はそのエルミート共役から $\frac{\sqrt2}vV_{ij}^*(m_{d_j}P_L-m_{u_i}P_R)$ である。
+
+\section{木のレベルの導出}\label{app:tree}
+
+$W^+\to u_i\bar d_j$ と $t\to d_jW^+$ の振幅は、SM ノートの付録~B の振幅に $V_{ij}$（$V_{tj}$）を掛けたものである。スピンと偏極の和の中で $V$ は $|V_{ij}|^2$ としてだけ現れるので、式~\eqref{eq:widthsckm} になる。$u\bar u\to W^+W^-$ の $t$ チャンネルの図は、$u\to d_kW^+$ の頂点 $V_{uk}$ と $\bar u\to\bar d_kW^-$ の頂点 $V_{uk}^*$ を持ち、内線の $d_k$ の伝播関数 $i(\slashed q+m_{d_k})/(q^2-m_{d_k}^2)$ を挟む。$m_{d_k}=0$ では内線によらないので、三つの図の和は $\sum_k|V_{uk}|^2=1$ 倍の1個の図に等しい。
+
+\section{湯川行列の繰り込みと CKM 行列の走りの導出}\label{app:rg}
+
+\paragraph{行列の $\beta$ 関数。}SM ノートの付録~C の湯川結合の導出を行列に広げる。場の異常次元は $\Phi$ で $\mathcal T$、$Q_L$ で $\frac12(Y_uY_u^\dagger+Y_dY_d^\dagger)$（左から掛かる）、$u_R$ で $Y_u^\dagger Y_u$（右から掛かる）、$d_R$ で $Y_d^\dagger Y_d$ である（いずれも $K$ で割る。一般の公式の $\frac12Y_2(F)$~\cite{mv1}）。$\Phi$ の内線が $Q_L$ を $d_R$ に変えて $\tilde\Phi$ の頂点を挟む図は $-2Y_dY_d^\dagger Y_u$ を与える。和は
+\begin{equation*}
+\frac12\bigl(H_u+H_d\bigr)Y_u+Y_u\bigl(Y_u^\dagger Y_u\bigr)+\mathcal TY_u-2H_dY_u=\Bigl[\frac32\bigl(H_u-H_d\bigr)+\mathcal T\Bigr]Y_u
+\end{equation*}
+で（$Y_uY_u^\dagger Y_u=H_uY_u$）、ゲージ場の部分は SM ノートと同じく単位行列の倍である。これが式~\eqref{eq:betaY} の1行目で、2行目は $u$ と $d$ を入れ替えたものである。
+
+\paragraph{質量と $V$ の走り。}$H_u=Y_uY_u^\dagger$ の走りは $\dd H_u/\dd\ln\mu=\beta_{Y_u}Y_u^\dagger+Y_u\beta_{Y_u}^\dagger$ で、式~\eqref{eq:betaY} から
+\begin{equation*}
+K\frac{\dd H_u}{\dd\ln\mu}=3H_u^2-\frac32\bigl(H_dH_u+H_uH_d\bigr)+2a_uH_u,\qquad
+K\frac{\dd H_d}{\dd\ln\mu}=3H_d^2-\frac32\bigl(H_uH_d+H_dH_u\bigr)+2a_dH_d
+\end{equation*}
+である（$a_u$、$a_d$ はゲージ結合と $\mathcal T$ の項）。$H_u=U\,D_u\,U^\dagger$ と書き、$\dd U/\dd\ln\mu=UA_u$（$A_u$ は反エルミート、対角の成分は0とする）とすると、$U^\dagger(\dd H_u/\dd\ln\mu)U=\dd D_u/\dd\ln\mu+[A_u,D_u]$ なので、上型の質量の基底（$U=1$、$H_d=VD_dV^\dagger$）で対角の成分から
+\begin{equation*}
+K\frac{\dd y_{u_i}^2}{\dd\ln\mu}=3y_{u_i}^4-3y_{u_i}^2(VD_dV^\dagger)_{ii}+2a_uy_{u_i}^2
+\end{equation*}
+が、非対角の成分から $(A_u)_{ik}=-\frac3{2K}\frac{y_{u_i}^2+y_{u_k}^2}{y_{u_k}^2-y_{u_i}^2}(VD_dV^\dagger)_{ik}$（$i\ne k$）が出る。下型の質量の基底では同様に $(A_d)_{kj}=-\frac3{2K}\frac{y_{d_k}^2+y_{d_j}^2}{y_{d_j}^2-y_{d_k}^2}(V^\dagger D_uV)_{kj}$ である。$V=U_u^\dagger U_d$ から $\dd V/\dd\ln\mu=-A_uV+VA_d$ で、式~\eqref{eq:yrun}、\eqref{eq:Vrun} になる。式~\eqref{eq:Vhier} は、$V_{cb}$ なら1項目の $k=t$ の項 $\frac32|V_{tb}|^2y_b^2V_{cb}$ と、2項目の $k=d,s$ の項 $-\frac32y_t^2V_{tb}(V_{cd}V_{td}^*+V_{cs}V_{ts}^*)=\frac32y_t^2|V_{tb}|^2V_{cb}$（行のユニタリー性）から来る。
+
+\paragraph{自己エネルギーの紫外の極。}対称な相の $\MSbar$ の場の繰り込みをエルミートにとると、湯川の部分は $\delta Z_Q=-\frac{\DUV}{2K}(H_u+H_d)$、$\delta Z_{u_R}=-\frac{\DUV}KY_u^\dagger Y_u$、$\delta Z_{d_R}=-\frac{\DUV}KY_d^\dagger Y_d$ で、ゲージ場の部分は単位行列の倍である。下型の質量の基底では $d_L$ の場の定数は $V^\dagger\delta Z_QV$ の下の成分で、その非対角の成分は $-\frac{\DUV}{2K}(V^\dagger D_uV)_{ij}$、$d_R$ の非対角の成分は0である。質量の項の対抗項は $\frac v{\sqrt2}V^\dagger\delta Y_d$ で、式~\eqref{eq:betaY} から非対角の成分は $-\frac34\frac{\DUV}K(V^\dagger D_uV)_{ij}m_{d_j}$ になる。式~\eqref{eq:Gammaq} の自己エネルギーにこれらの対抗項を加えたものが有限であるという条件から
+\begin{equation*}
+\Sigma^L_{ij}\big|_{\mathrm{UV}}=-\delta Z^L_{ij},\qquad
+m_j\Sigma^S_{ij}\big|_{\mathrm{UV}}=\delta M_{ij}+\frac12\delta Z^{L\dagger}_{ij}m_j+\frac12m_i\delta Z^R_{ij}=-\frac{\DUV}K(V^\dagger D_uV)_{ij}m_j
+\end{equation*}
+で、式~\eqref{eq:uvoff} になる（$P_L$ の側も同じ $\Sigma^S$ を与える）。$G^\pm$ のループを直接求めると、$\Sigma_{ij}=-\frac2{v^2K}\sum_k\lambda^{(ij)}_k\bigl[\slashed pP_Lm_{u_k}^2B_1+\slashed pP_Rm_{d_i}m_{d_j}B_1+(m_{d_i}P_L+m_{d_j}P_R)m_{u_k}^2B_0\bigr]$（$B$ の引数は $(p^2,m_{u_k}^2,\xi_WM_W^2)$）で、$B_1|_{\mathrm{UV}}=-\DUV/2$、$B_0|_{\mathrm{UV}}=\DUV$ から同じ式になる（$\slashed pP_R$ の極はユニタリー性で非対角の成分が0）。
+
+\paragraph{$\delta V^{\mathrm{DS}}$ の紫外の極。}式~\eqref{eq:uvoff} を式~\eqref{eq:dZos} に入れると、$i\ne j$ で $\delta Z^L_{ij}|_{\mathrm{UV}}=-\frac{m_j^2+2m_i^2}{m_i^2-m_j^2}X_{ij}\frac{\DUV}K$、$X$ がエルミートなので $(\delta Z^L-\delta Z^{L\dagger})_{ij}|_{\mathrm{UV}}=-3\frac{m_i^2+m_j^2}{m_i^2-m_j^2}X_{ij}\frac{\DUV}K$ である。式~\eqref{eq:dVds} の $d$ 型の部分は $\frac34\frac{\DUV}K\sum_{k\ne j}V_{ik}\frac{m_{d_k}^2+m_{d_j}^2}{m_{d_k}^2-m_{d_j}^2}(V^\dagger D_uV)_{kj}$ で、これは $\frac{\DUV}2(VA_d)_{ij}$ に等しい。$u$ 型の部分も同様に $-\frac{\DUV}2(A_uV)_{ij}$ になり、和が式~\eqref{eq:dV} である。
+
+\section{検算の細部}\label{app:details}
+
+\paragraph{模型ファイルのパラメータ。}\texttt{SM\_CKM.fr} の外部パラメータは、SM ノートの \texttt{SM.fr} のもの（ブロック \texttt{SMINPUTS}、\texttt{MASS}、\texttt{DECAY}、\texttt{GAUGE}）に、ブロック \texttt{CKMBLOCK} の \texttt{s12}（1番）、\texttt{s23}（2番）、\texttt{s13}（3番）、\texttt{dCKM}（4番）を加えたものである。内部パラメータ \texttt{c12}、\texttt{c23}、\texttt{c13} は $\sqrt{1-s^2}$、\texttt{CKM} は式~\eqref{eq:Vstd} の複素行列で、UFO では \texttt{CKM1x1}〜\texttt{CKM3x3}（\texttt{cmath.exp} を含む複素数）になる。結合の次数、粒子の名前と PDG の番号は SM ノートと同じである。
+
+\paragraph{手計算の数値の確かめ。}第~\ref{sec:rg} 節の式~\eqref{eq:Vrun} の確かめと基準点の数値（$|V|$、$J$、$K\,\dd\ln|V_{ij}|/\dd\ln\mu$、$\lambda^{(ij)}_k$）は \texttt{ckm\_rg\_handcheck.py}（numpy だけを使う）が出し、\texttt{results/ckm\_rg\_handcheck.csv} に書く。模型ファイルは使わない（式~\eqref{eq:betaY} を模型から導くのは手順 (4)）。
+
+\paragraph{比べ方。}\texttt{generate\_SM\_CKM.wl} は SM ノートの \texttt{generate\_SM.wl} と同じく、Dirac 構造、計量、運動量、色の行列を評価されない記号に置き換えてから表と比べる。フェルミオンの頂点は、外線の世代の添字に $1,2,3$ を入れ、和をとる世代の添字（\texttt{Index[Generation, Generation\$1]} の形）を項ごとに足してから比べる（その添字を持たない項を3倍しないため）。標準のパラメータ表示の値は \texttt{ComplexExpand} で角度と位相を実数として整理する。
+
+\begin{thebibliography}{99}
+\bibitem{smnote} 標準模型：$\MSbar$ の電弱の1ループの繰り込みと検算（$V_{\mathrm{CKM}}=1$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}、2026年10月17日の版）。式、表、手順の番号はこの版のもの。
+\bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}）。
+\bibitem{cabibbo63} N. Cabibbo, ``Unitary symmetry and leptonic decays,'' Phys. Rev. Lett. \textbf{10}, 531 (1963)。
+\bibitem{km73} M. Kobayashi, T. Maskawa, ``CP-violation in the renormalizable theory of weak interaction,'' Prog. Theor. Phys. \textbf{49}, 652 (1973)。
+\bibitem{gim70} S. L. Glashow, J. Iliopoulos, L. Maiani, ``Weak interactions with lepton-hadron symmetry,'' Phys. Rev. D \textbf{2}, 1285 (1970)。
+\bibitem{ck84} L.-L. Chau, W.-Y. Keung, ``Comments on the parametrization of the Kobayashi-Maskawa matrix,'' Phys. Rev. Lett. \textbf{53}, 1802 (1984)。
+\bibitem{jarlskog85} C. Jarlskog, ``Commutator of the quark mass matrices in the standard electroweak model and a measure of maximal CP nonconservation,'' Phys. Rev. Lett. \textbf{55}, 1039 (1985)。
+\bibitem{il81} T. Inami, C. S. Lim, ``Effects of superheavy quarks and leptons in low-energy weak processes $K_L\to\mu\bar\mu$, $K^+\to\pi^+\nu\bar\nu$ and $K^0\leftrightarrow\bar K^0$,'' Prog. Theor. Phys. \textbf{65}, 297 (1981)。
+\bibitem{ds90} A. Denner, T. Sack, ``Renormalization of the quark mixing matrix,'' Nucl. Phys. B \textbf{347}, 203 (1990)。
+\bibitem{ggm99} P. Gambino, P. A. Grassi, F. Madricardo, ``Fermion mixing renormalization and gauge invariance,'' Phys. Lett. B \textbf{454}, 98 (1999), arXiv:hep-ph/9811470。
+\bibitem{yamada01} Y. Yamada, ``Gauge dependence of the on-shell renormalized mixing matrices,'' Phys. Rev. D \textbf{64}, 036008 (2001), arXiv:hep-ph/0103046。
+\bibitem{dkr04} A. Denner, E. Kraus, M. Roth, ``Physical renormalization condition for the quark-mixing matrix,'' Phys. Rev. D \textbf{70}, 033002 (2004), arXiv:hep-ph/0402130。
+\bibitem{ks06} B. A. Kniehl, A. Sirlin, ``Simple approach to renormalize the Cabibbo-Kobayashi-Maskawa matrix,'' Phys. Rev. Lett. \textbf{97}, 221801 (2006), arXiv:hep-ph/0608306。
+\bibitem{babu87} K. S. Babu, ``Renormalization-group analysis of the Kobayashi-Maskawa matrix,'' Z. Phys. C \textbf{35}, 69 (1987)。
+\bibitem{bhmp99} C. Balzereit, T. Hansmann, T. Mannel, B. Plümper, ``The renormalization group evolution of the CKM matrix,'' Eur. Phys. J. C \textbf{9}, 197 (1999), arXiv:hep-ph/9810350。
+\bibitem{denner93} A. Denner, ``Techniques for the calculation of electroweak radiative corrections at the one-loop level and results for W-physics at LEP200,'' Fortsch. Phys. \textbf{41}, 307 (1993), arXiv:0709.1075。
+\bibitem{mv1} M. E. Machacek, M. T. Vaughn, ``Two-loop renormalization group equations in a general quantum field theory (I). Wave function renormalization,'' Nucl. Phys. B \textbf{222}, 83 (1983)。
+\bibitem{mv2} M. E. Machacek, M. T. Vaughn, ``(II). Yukawa couplings,'' Nucl. Phys. B \textbf{236}, 221 (1984)。
+\bibitem{luo03} M.-X. Luo, H.-W. Wang, Y. Xiao, ``Two-loop renormalization group equations in general gauge field theories,'' Phys. Rev. D \textbf{67}, 065019 (2003), arXiv:hep-ph/0211440。
+\bibitem{arason92} H. Arason \textit{et al.}, ``Renormalization-group study of the standard model and its extensions: The standard model,'' Phys. Rev. D \textbf{46}, 3945 (1992)。
+\bibitem{pdg24} S. Navas \textit{et al.} (Particle Data Group), Phys. Rev. D \textbf{110}, 030001 (2024)。CKM 行列のレビュー（標準のパラメータ表示と大域的な当てはめ）。
+\end{thebibliography}
+
+\end{document}

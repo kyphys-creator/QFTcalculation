@@ -44,7 +44,7 @@
 
 \title{ループ計算環境の構築記録\\[2pt]{\large \texttt{\textasciitilde/hep} に組んだ1ループ計算スタック（Apple M3・Mathematica 14.2）}}
 \author{}
-\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日）}
+\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17日）}
 
 \begin{document}
 \maketitle
@@ -648,6 +648,24 @@ SciPy の \texttt{quad} と無限区間（SM2） & 重力子の交換の積分�
 \end{tabularx}
 \end{table}
 
+\paragraph{CKM 行列を入れた標準模型のノートで分かった問題。}2026年10月17日に、上の $\overline{\mathrm{MS}}$ の標準模型のノートの模型に CKM 行列を入れたノート~\cite{smckmnote} を始めた（\nolinkurl{models/sm_ckm}。計算機と版は同じ）。手順 (1) では、模型ファイル \texttt{SM\_CKM.fr} の93個の頂点のクラスを、CKM 行列を一般の複素行列の記号にした手計算の表と比べ、MadGraph の35個の過程の図の数を両方のゲージで確かめた。分かった問題を表~\ref{tab:issues2l} にまとめる。
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2k} の続き（CKM 行列を入れた標準模型のノート~\cite{smckmnote} の手順 (1)。CKM はそのノートを表す）。}
+\label{tab:issues2l}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+FeynRules の書き出しの順（CKM） & FeynArts の模型を書き出した後に同じカーネルで \texttt{WriteUFO} を呼ぶと、\texttt{Inner::incom} が出て頂点のクラスが94個になる。94個目は電荷を保存しない $\bar duW$ で、係数に添字が1個の \texttt{CKM[Index[Generation, 2]]} と \texttt{Index[Generation, \{\}]} が現れる（UFO の記録ファイルは「Q conserved」と書く） & \texttt{WriteFeynArtsOutput} がカーネルに残す状態が、\texttt{WriteUFO} の中の世代を展開する \texttt{FeynmanRules} を壊す（新しいカーネルでは93個。二つの添字を持つ複素行列のある模型でだけ起こり、CKM 行列のない模型では起こらない。内部の原因は推論） & UFO を先に書き出す。FeynArts の模型のファイルは順によらず同じ（\texttt{diff} で確かめた）。UFO の記録ファイルからクラスと頂点の数を読んで表示する \\
+FeynRules の並列のサブカーネル（CKM） & UFO の後に FeynArts の模型を書き出すと、サブカーネルが \texttt{Simplify::time} を多数出す。主カーネルの \texttt{\$MessageList} には残らない & FeynRules の中の \texttt{Simplify} の時間制限（0.01 秒）の切れ。出力は変わらない & \texttt{ParallelEvaluate[Off[Simplify::time]]} \\
+FeynRules と \texttt{Unitary -> True}（CKM） & ユニタリー性の置き換えの規則（$V_{ab}V_{ac}^*\to\delta_{bc}$）を使わないラグランジアン（$VV^*$ の項が12個）からも、中性の頂点が世代について対角に出る & FeynRules の \texttt{FeynmanRules} が、\texttt{Unitary -> True} と宣言した行列のユニタリー性を自分で使う & 規則は冗長だが残す。規則の有無と、標準のパラメータ表示を入れた値の一致で確かめる \\
+MadGraph と図のない過程（CKM） & 世代を変える中性の過程（\texttt{d s\textasciitilde{} > mu+ mu-} など）を \texttt{generate} すると \texttt{NoDiagramException} で、スクリプトの残りのコマンドを実行しない（「command not executed」） & MadGraph の仕様 & 図がないことを確かめる過程は、過程ごとに別の MadGraph のスクリプトで実行する \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \paragraph{Package-X。}Package-X の結果を \texttt{Simplify[..., qq < 0]} のように空間的な $q^2$ を仮定して簡約すると、対数と平方根の閾値より上の枝が $+i0$ の処方と合わないことがある。時間的な $q^2$ では、有理数の $q^2$ を代入した式に \texttt{PaXEvaluate} を呼び、枝の選び方を Package-X に任せる（スピノル QED のノートの手順 (9)）。Package-X の数値関数 \texttt{ScalarC0}、\texttt{ScalarD0} は、内線の質量の2乗ではなく質量を引数にとる（湯川のノートの手順 (3)）。
 
 \paragraph{倍精度で桁を落とすところ。}倍精度のツール（LoopTools、COLLIER、FormCalc、MadLoop）は、大きな打ち消しのある領域で桁を落とす。真空偏極を PaVe 関数で書いた $(1+2m^2/q^2)B_0(q^2)-(2m^2/q^2)B_0(0)$ は、小さい $|q^2|$ で約 $\log_{10}(m^2/|q^2|)$ 桁を失う。$q^2\to0$ までの積分（異常磁気モーメントへの真空偏極の寄与など）では、級数か、Package-X を有理数の入力で30桁で評価した値を使う。光子--光子散乱の振幅は低エネルギーで $s^2$ のように小さくなるが、それは $O(1)$ の項の打ち消しで作られるので、倍精度のツールの値は $s=0.01m^2$ で $10^{-5}$ ほどずれる。COLLIER では、ある点（$s=0.01m^2$、$\cos\theta=0.872$）でループの二つの向きの値が相対 $3\times10^{-6}$ ずれ、振幅は Euler--Heisenberg の値から $34\%$ ずれた。そこでの基準には、有理数の運動学で Package-X を80桁で評価した値を使った。重いクォークの脱結合でも同じことが起こる（QCD のノートの手順 (6)）。$\Pi_t(k^2)-\Pi_t(0)\propto k^2/(5m^2)$ を $(1+2m^2/k^2)B_0(k^2)-(2m^2/k^2)B_0(0)$ の形で評価すると、$|k^2|=10^{-3}$〜$10^{-2}m^2$ で LoopTools は相対 $4\times10^{-10}$、COLLIER は $7\times10^{-8}$ ずれた（COLLIER は $|k^2|=10^{-2}m^2$ の方が $10^{-3}m^2$ よりずれが大きい）。MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与（$\propto s/m_t^2$）は、$m_t^2/s=10^5$ で $0.65\%$ ずれ、$m_t$ によらないはずの極の係数も $6\times10^{-10}$ 揺れた。
@@ -1234,6 +1252,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{qcdnote} QCD：1ループの構造と検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。ツールとの照合は第5節と付録~N。
 \bibitem{smnote} 標準模型：電弱の1ループの繰り込みと検算（本リポジトリの \nolinkurl{models/sm/ResearchNote/note.pdf}。2026年10月16日に \nolinkurl{models/sm} ごと削除した。最後の版はコミット 201985b にある）。ツールとの照合は第5節と付録~G。
 \bibitem{smmsbarnote} 標準模型：$\overline{\mathrm{MS}}$ の電弱の1ループの繰り込みと検算（FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm/ResearchNote/note.pdf}。上の \cite{smnote} を削除した後に同じ場所に作り直したもの）。
+\bibitem{smckmnote} 標準模型と CKM 行列：$\overline{\mathrm{MS}}$ の繰り込みと世代を変える過程（FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm_ckm/ResearchNote/note.pdf}）。
 \end{thebibliography}
 
 \end{document}
