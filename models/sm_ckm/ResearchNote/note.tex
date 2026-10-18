@@ -54,7 +54,7 @@
 \maketitle
 
 \begin{abstract}
-標準模型のノート~\cite{smnote}（以下 SM ノート）は、CKM 行列を単位行列に置いた点で電弱の1ループの繰り込みを調べ、CKM 行列を入れたときの変化をそのノートの量について見積もった（相対 $10^{-7}$ 以下）。本ノートでは CKM 行列を模型に入れ、SM ノートでは扱えなかった CKM 行列そのものの繰り込みと走り、$V=1$ では0になる世代を変える過程を、SM ノートと同じ処方（$\MSbar$、Fleischer--Jegerlehner（FJ）のタドポール、一般の $R_\xi$ ゲージ、$d=4$）と同じ道具で調べる。模型は SM ノートの模型の湯川結合を世代の $3\times3$ の複素行列にしたもので、質量の基底では CKM 行列 $V$（標準のパラメータ表示の角度3個と位相1個）が $W$ と $G^\pm$ のクォークの結合にだけ現れ、ほかの93個の頂点のクラスの式は SM ノートと同じである。手計算では、Feynman 則、$|V_{ij}|^2$ を含む木の崩壊幅、湯川行列の $\MSbar$ の $\beta$ 関数から質量の基底への回転の摂動で導いた $V$ の走り（$K\,\dd V/\dd\ln\mu$ の閉じた式。$K=(4\pi)^2$）、クォークの自己エネルギーの世代の非対角の成分の紫外の極を求めた。$V$ の走りの式は、行列の $\beta$ 関数を数値で積分して対角化した値と相対 $4\times10^{-8}$ 以内で一致し、基準点では $|V_{ub}|$、$|V_{cb}|$、$|V_{td}|$、$|V_{ts}|$ が $K\,\dd\ln|V|/\dd\ln\mu\simeq\frac32(y_t^2+y_b^2)=1.38$ で、Jarlskog 不変量がその2倍で増える。$\MSbar$ の CKM の対抗項は $\delta V=\frac{\DUV}2\dd V/\dd\ln\mu$ で、湯川行列の $\beta$ 関数だけで決まるのでゲージによらない（$V$ は $v$ によらないので FJ のタドポールも入らない）。自己エネルギーの非対角の紫外の極は、GIM の機構で $W$ のループの部分が打ち消し、$G^\pm$ のループの $m_{u_k}^2$ に比例する部分だけが残るので $\xi$ によらない。その値から作った Denner--Sack の on-shell の対抗項の紫外の極は $\MSbar$ の $\delta V$ に等しい。検算と応用の十の手順を定め、手順 (1)〜(7) を行った。模型ファイル \texttt{SM\_CKM.fr} の FeynRules 2.3.49 の93個の頂点のクラスは、$V$ を一般の複素行列とした手計算の表と9個の世代の成分すべてで記号として一致し（わざと5か所を誤らせた表では5個の差）、標準のパラメータ表示を入れた値はユニタリー性の規則によらず、$V=1$ では SM ノートの模型の頂点と93個すべてで一致した。MadGraph 3.8.1 は35個の過程（SM ノートの21個と、$V$ の非対角の成分を要する14個）の木の図を、ユニタリーゲージと Feynman ゲージの両方で手で数えた数だけ作り、世代を変える中性の5個の過程には図を作らなかった。手順 (2) では、$W^+\to u_i\bar d_j$、$t\to d_jW^+$ などの13個の振幅の2乗が FeynCalc で手計算の式と記号として一致し、木のレベルで CP が破れないこと、$u\bar u\to W^+W^-$ が標準のパラメータ表示で $V=1$ の値に戻ること、$t\bar s\to W^+H$ が一般の $R_\xi$ で $\xi_W$ によらず $|V_{ts}|^2$ に比例すること（$W$ と $G^+$ の頂点の CKM 行列の整合）を確かめた。明示的な行列（$t\bar s\to W^+H$ はユニタリーゲージ）とは相対 $6\times10^{-15}$ 以内、MadGraph の12個の部分幅とは $10^{-15}$、断面積とは統計誤差の0.9倍以内で一致した。手順 (3) では、クォークの自己エネルギーを $3\times3$ の世代の行列として一般の $R_\xi$ ゲージで求めた。非対角の紫外の極は手計算の式に記号として一致して $\xi$ によらず、対角の極は CKM 行列を含む質量の走りに一致し、FeynArts の \texttt{SMQCD.mod}（\texttt{\$CKM = True}）の値とも記号として一致した。Denner--Sack の対抗項の紫外の極は $\MSbar$ の $\delta V$ と30桁で一致し、有限部分は $\xi_W$ に依存するが、その $|V_{ij}|$ への効果は $2\times10^{-6}$ 以下で、二つの処方の差 $2.3\times10^{-3}$（$|V_{cb}|$ など、$\mu=M_Z$）より3桁小さい。$V$ を入れた $W$ とトップの自己エネルギーから求めた SM ノートの量の変化は、SM ノートの見積もりと相対 $3\times10^{-12}$ 以内で一致した。手順 (4) では、$\bar u_id_jG^+$ の頂点の極と場の繰り込みから湯川行列の $\MSbar$ の対抗項を本ノートの模型で解き、式~\eqref{eq:betaY} の18個の成分と記号として一致させた（$\xi$ によらない）。頂点の補正は $V_{ij}$ に比例するだけで、世代を混ぜる構造はすべてクォークの場の繰り込みの非対角の成分から来る。一般の公式を複素の湯川行列で組んだ実装とも $2\times10^{-15}$ で一致し、質量、$|V_{ij}|$、$J$ の走りの式は行列の方程式を積分した値と一致した（$|V_{ij}|$ は50桁の計算で $5\times10^{-15}$）。手順 (5) では、$W^+\to u_i\bar d_j$ の1ループの電弱の振幅を一般の $R_\xi$ ゲージで求め、$\MSbar$ の $V$ と外線の世代を混ぜる on-shell の場の定数で組んだ。紫外の極は記号として消え（非対角の場の定数を除くと残る）、$\xi_Z$、$\xi_W$ を変えたときの差は木の振幅の $2\times10^{-11}$ 以下だった（$\xi_A$ の差は光子の質量の2乗に比例して0に向かう）。$\delta V$ を Denner--Sack の対抗項に替えると、差は $u\bar b$、$c\bar b$ で $1.5\times10^{-6}$ になる。FeynArts の \texttt{SM.mod} と FormCalc（on-shell の処方、Feynman ゲージ）とは、頂点の寄与が $2\times10^{-15}$、対抗項の寄与が $1\times10^{-9}$ で一致した。手順 (6) では、外線の運動量を0にした $d_j\to u_ie\bar\nu_e$ と $\mu$ 崩壊の1ループの振幅の比を一般の $R_\xi$ ゲージで求め、紫外で有限でゲージによらないこと、トップの質量を0にした極限で Sirlin の $\frac\alpha\pi\ln\frac{M_Z}{M_A}$ にちょうど一致することを確かめた。トップによる部分は、すべてのチャンネルで一つのゲージによらない関数 $G(\mu)$ と CKM の因子の積になり（$G(M_Z)=2.30\times10^{-3}$）、Denner--Sack の on-shell の $V$ とそのゲージ依存の範囲で一致する。PDG の値から求めた $\MSbar$ の $|V_{ub}|$、$|V_{cb}|$ は、$M_Z$ で $0.23\%$ 小さい。手順 (7) では、$b\to s\gamma$ と $Z\to b\bar s$ の on-shell の1ループの振幅を一般の $R_\xi$ ゲージで求め、外線の世代の混合を入れて、紫外で有限なこと、電磁気のゲージ不変性、$\xi$ によらないこと、GIM の機構を確かめた。双極子と運動量0の $Z$ ペンギンは、Inami--Lim の関数に $m_b^2/M_W^2$ の補正の範囲で一致した。右巻きの非対角の場の定数は、$\Sigma^S$ の係数が左巻きと違う（$2m_im_j$）。手順 (1) で FeynRules の問題を一つ見つけた。CKM 行列のある模型で FeynArts の模型を書き出した後に同じカーネルで UFO を書き出すと、UFO のための Feynman 則の計算が、電荷を保存しない壊れたクラス $\bar duW$（添字が1個の CKM 行列）を94個目として作る。導出は付録に載せる。
+標準模型のノート~\cite{smnote}（以下 SM ノート）は、CKM 行列を単位行列に置いた点で電弱の1ループの繰り込みを調べ、CKM 行列を入れたときの変化をそのノートの量について見積もった（相対 $10^{-7}$ 以下）。本ノートでは CKM 行列を模型に入れ、SM ノートでは扱えなかった CKM 行列そのものの繰り込みと走り、$V=1$ では0になる世代を変える過程を、SM ノートと同じ処方（$\MSbar$、Fleischer--Jegerlehner（FJ）のタドポール、一般の $R_\xi$ ゲージ、$d=4$）と同じ道具で調べる。模型は SM ノートの模型の湯川結合を世代の $3\times3$ の複素行列にしたもので、質量の基底では CKM 行列 $V$（標準のパラメータ表示の角度3個と位相1個）が $W$ と $G^\pm$ のクォークの結合にだけ現れ、ほかの93個の頂点のクラスの式は SM ノートと同じである。手計算では、Feynman 則、$|V_{ij}|^2$ を含む木の崩壊幅、湯川行列の $\MSbar$ の $\beta$ 関数から質量の基底への回転の摂動で導いた $V$ の走り（$K\,\dd V/\dd\ln\mu$ の閉じた式。$K=(4\pi)^2$）、クォークの自己エネルギーの世代の非対角の成分の紫外の極を求めた。$V$ の走りの式は、行列の $\beta$ 関数を数値で積分して対角化した値と相対 $4\times10^{-8}$ 以内で一致し、基準点では $|V_{ub}|$、$|V_{cb}|$、$|V_{td}|$、$|V_{ts}|$ が $K\,\dd\ln|V|/\dd\ln\mu\simeq\frac32(y_t^2+y_b^2)=1.38$ で、Jarlskog 不変量がその2倍で増える。$\MSbar$ の CKM の対抗項は $\delta V=\frac{\DUV}2\dd V/\dd\ln\mu$ で、湯川行列の $\beta$ 関数だけで決まるのでゲージによらない（$V$ は $v$ によらないので FJ のタドポールも入らない）。自己エネルギーの非対角の紫外の極は、GIM の機構で $W$ のループの部分が打ち消し、$G^\pm$ のループの $m_{u_k}^2$ に比例する部分だけが残るので $\xi$ によらない。その値から作った Denner--Sack の on-shell の対抗項の紫外の極は $\MSbar$ の $\delta V$ に等しい。検算と応用の十の手順を定め、手順 (1)〜(8) を行った。模型ファイル \texttt{SM\_CKM.fr} の FeynRules 2.3.49 の93個の頂点のクラスは、$V$ を一般の複素行列とした手計算の表と9個の世代の成分すべてで記号として一致し（わざと5か所を誤らせた表では5個の差）、標準のパラメータ表示を入れた値はユニタリー性の規則によらず、$V=1$ では SM ノートの模型の頂点と93個すべてで一致した。MadGraph 3.8.1 は35個の過程（SM ノートの21個と、$V$ の非対角の成分を要する14個）の木の図を、ユニタリーゲージと Feynman ゲージの両方で手で数えた数だけ作り、世代を変える中性の5個の過程には図を作らなかった。手順 (2) では、$W^+\to u_i\bar d_j$、$t\to d_jW^+$ などの13個の振幅の2乗が FeynCalc で手計算の式と記号として一致し、木のレベルで CP が破れないこと、$u\bar u\to W^+W^-$ が標準のパラメータ表示で $V=1$ の値に戻ること、$t\bar s\to W^+H$ が一般の $R_\xi$ で $\xi_W$ によらず $|V_{ts}|^2$ に比例すること（$W$ と $G^+$ の頂点の CKM 行列の整合）を確かめた。明示的な行列（$t\bar s\to W^+H$ はユニタリーゲージ）とは相対 $6\times10^{-15}$ 以内、MadGraph の12個の部分幅とは $10^{-15}$、断面積とは統計誤差の0.9倍以内で一致した。手順 (3) では、クォークの自己エネルギーを $3\times3$ の世代の行列として一般の $R_\xi$ ゲージで求めた。非対角の紫外の極は手計算の式に記号として一致して $\xi$ によらず、対角の極は CKM 行列を含む質量の走りに一致し、FeynArts の \texttt{SMQCD.mod}（\texttt{\$CKM = True}）の値とも記号として一致した。Denner--Sack の対抗項の紫外の極は $\MSbar$ の $\delta V$ と30桁で一致し、有限部分は $\xi_W$ に依存するが、その $|V_{ij}|$ への効果は $2\times10^{-6}$ 以下で、二つの処方の差 $2.3\times10^{-3}$（$|V_{cb}|$ など、$\mu=M_Z$）より3桁小さい。$V$ を入れた $W$ とトップの自己エネルギーから求めた SM ノートの量の変化は、SM ノートの見積もりと相対 $3\times10^{-12}$ 以内で一致した。手順 (4) では、$\bar u_id_jG^+$ の頂点の極と場の繰り込みから湯川行列の $\MSbar$ の対抗項を本ノートの模型で解き、式~\eqref{eq:betaY} の18個の成分と記号として一致させた（$\xi$ によらない）。頂点の補正は $V_{ij}$ に比例するだけで、世代を混ぜる構造はすべてクォークの場の繰り込みの非対角の成分から来る。一般の公式を複素の湯川行列で組んだ実装とも $2\times10^{-15}$ で一致し、質量、$|V_{ij}|$、$J$ の走りの式は行列の方程式を積分した値と一致した（$|V_{ij}|$ は50桁の計算で $5\times10^{-15}$）。手順 (5) では、$W^+\to u_i\bar d_j$ の1ループの電弱の振幅を一般の $R_\xi$ ゲージで求め、$\MSbar$ の $V$ と外線の世代を混ぜる on-shell の場の定数で組んだ。紫外の極は記号として消え（非対角の場の定数を除くと残る）、$\xi_Z$、$\xi_W$ を変えたときの差は木の振幅の $2\times10^{-11}$ 以下だった（$\xi_A$ の差は光子の質量の2乗に比例して0に向かう）。$\delta V$ を Denner--Sack の対抗項に替えると、差は $u\bar b$、$c\bar b$ で $1.5\times10^{-6}$ になる。FeynArts の \texttt{SM.mod} と FormCalc（on-shell の処方、Feynman ゲージ）とは、頂点の寄与が $2\times10^{-15}$、対抗項の寄与が $1\times10^{-9}$ で一致した。手順 (6) では、外線の運動量を0にした $d_j\to u_ie\bar\nu_e$ と $\mu$ 崩壊の1ループの振幅の比を一般の $R_\xi$ ゲージで求め、紫外で有限でゲージによらないこと、トップの質量を0にした極限で Sirlin の $\frac\alpha\pi\ln\frac{M_Z}{M_A}$ にちょうど一致することを確かめた。トップによる部分は、すべてのチャンネルで一つのゲージによらない関数 $G(\mu)$ と CKM の因子の積になり（$G(M_Z)=2.30\times10^{-3}$）、Denner--Sack の on-shell の $V$ とそのゲージ依存の範囲で一致する。PDG の値から求めた $\MSbar$ の $|V_{ub}|$、$|V_{cb}|$ は、$M_Z$ で $0.23\%$ 小さい。手順 (7) では、$b\to s\gamma$ と $Z\to b\bar s$ の on-shell の1ループの振幅を一般の $R_\xi$ ゲージで求め、外線の世代の混合を入れて、紫外で有限なこと、電磁気のゲージ不変性、$\xi$ によらないこと、GIM の機構を確かめた。双極子と運動量0の $Z$ ペンギンは、Inami--Lim の関数に $m_b^2/M_W^2$ の補正の範囲で一致した。右巻きの非対角の場の定数は、$\Sigma^S$ の係数が左巻きと違う（$2m_im_j$）。手順 (8) では、$B_s$、$B_d$、$K$ の混合の箱の図を外線の運動量0で一般の $R_\xi$ ゲージで求めた。個々の図のゲージ依存は二つの内線の質量について分かれた形をしていて、GIM の機構による和で消え、引いた後の関数は Inami--Lim の $S_0$ に記号として等しかった。文献のハドロンの入力で求めた $\Delta m_d$、$\Delta m_s$、$|\epsilon_K|$ は、測定値と誤差の範囲で一致した。手順 (1) で FeynRules の問題を一つ見つけた。CKM 行列のある模型で FeynArts の模型を書き出した後に同じカーネルで UFO を書き出すと、UFO のための Feynman 則の計算が、電荷を保存しない壊れたクラス $\bar duW$（添字が1個の CKM 行列）を94個目として作る。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -661,7 +661,7 @@ $V$ と $J$ の高いスケールまでの走り & 手順 (10) & — & 常微分
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}（約1分）、手順 (2) は \texttt{run\_tree\_check.sh}（約6分）、手順 (3) は \texttt{run\_oneloop\_check.sh}（約20分）、手順 (4) は \texttt{run\_rg\_check.sh}（約10分）、手順 (5) は \texttt{run\_wud\_check.sh}（約10分）、手順 (6) は \texttt{run\_sl\_check.sh}（約12分）、手順 (7) は \texttt{run\_fcnc\_check.sh}（約4分）でまとめて再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}（約1分）、手順 (2) は \texttt{run\_tree\_check.sh}（約6分）、手順 (3) は \texttt{run\_oneloop\_check.sh}（約20分）、手順 (4) は \texttt{run\_rg\_check.sh}（約10分）、手順 (5) は \texttt{run\_wud\_check.sh}（約10分）、手順 (6) は \texttt{run\_sl\_check.sh}（約12分）、手順 (7) は \texttt{run\_fcnc\_check.sh}（約4分）、手順 (8) は \texttt{run\_df2\_check.sh}（約10分）でまとめて再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}模型ファイル \texttt{Src/SM\_CKM.fr} は SM ノートの \texttt{Src/SM.fr} を写し、三か所だけを変えた。外部パラメータ $s_{12}$、$s_{23}$、$s_{13}$、$\delta$（ブロック \texttt{CKMBLOCK}）と、内部パラメータの複素行列 \texttt{CKM}（\texttt{Unitary -> True}、値は式~\eqref{eq:Vstd}）を加えた。左巻きの二重項の下の成分を $(Vd_L)_f=\texttt{CKM[f, f2]}\,d_{L,f2}$ にした。湯川の項を $-\bar Q_L(V\hat y_d)\Phi d_R$ にした（$\hat y_d$ は SM ノートと同じ対角の行列で、どの世代の添字も2回だけ現れる）。運動項と湯川の項を添字について展開した後、和をとる添字を持つ積 $V_{ab}V_{ac}^*$、$V_{ba}V_{ca}^*$ を $\delta_{bc}$ に置き換える規則を加えた。
 
@@ -1109,6 +1109,84 @@ C_0(x)=\frac x8\Bigl[\frac{x-6}{x-1}+\frac{(3x+2)\ln x}{(x-1)^2}\Bigr]
 
 この手順で、式~\eqref{eq:dZRos} の右巻きの場の定数の形の誤りに気づいた。最初は $\delta Z^R$ も $\delta Z^L$ と同じ形（$\Sigma^S$ の係数 $m_i^2+m_j^2$）と思い込み、$b\to s\gamma$ の右巻きの脚が0にならずに電磁気のゲージ不変性が 31\% 破れ、$Z\to b\bar s$ に $\xi_W$ 依存（$7\times10^{-6}$）が残った。on-shell の条件を解き直すと係数は $2m_im_j$ で、$m_s=0$ では $\delta Z^R_{bs}=0$ になる。手順 (3)〜(6) は $\delta Z^L$ だけを使ったので影響を受けない。スクリプトは \texttt{fcnc\_ckm\_feyncalc.wl}（2個の過程を並列に約2分）、\texttt{fcnc\_ckm\_numeric.wl} で、\texttt{run\_fcnc\_check.sh} でまとめて実行できる（約4分）。
 
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a)-(c): the box with vertical bosons, W W, W G, G G
+\foreach \x/\styL/\styR/\lL/\lR/\lbl in {0/photon/photon/{$W$}/{$W$}/{(a) $(W,W)$}, 3.6/photon/scalar/{$W$}/{$G^\pm$}/{(b) $(W,G^\pm)$\\（$(G^\pm,W)$ も）}, 7.2/scalar/scalar/{$G^\pm$}/{$G^\pm$}/{(c) $(G^\pm,G^\pm)$\\$\propto m_{u_k}^2m_{u_l}^2$}} {
+  \begin{scope}[shift={(\x,0)}]
+    \draw[fermion] (-1.1,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (0.55,0.55); \draw[fermion] (0.55,0.55) -- (1.1,0.55);
+    \draw[fermion] (1.1,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (-0.55,-0.55); \draw[fermion] (-0.55,-0.55) -- (-1.1,-0.55);
+    \draw[\styL] (-0.55,0.55) -- (-0.55,-0.55); \draw[\styR] (0.55,0.55) -- (0.55,-0.55);
+    \node[vtx] at (-0.55,0.55) {}; \node[vtx] at (0.55,0.55) {}; \node[vtx] at (-0.55,-0.55) {}; \node[vtx] at (0.55,-0.55) {};
+    \node[font=\scriptsize] at (-1.0,0.78) {$b$}; \node[font=\scriptsize] at (1.0,0.78) {$s$};
+    \node[font=\scriptsize] at (-1.0,-0.78) {$s$}; \node[font=\scriptsize] at (1.0,-0.78) {$b$};
+    \node[font=\scriptsize] at (0,0.78) {$u_k$}; \node[font=\scriptsize] at (0,-0.78) {$u_l$};
+    \node[font=\scriptsize,anchor=east] at (-0.6,0) {\lL}; \node[font=\scriptsize,anchor=west] at (0.6,0) {\lR};
+    \node[slab] at (0,-1.45) {\lbl};
+  \end{scope}}
+% (d): the other topology, horizontal bosons
+\begin{scope}[shift={(10.8,0)}]
+  \draw[fermion] (-1.1,0.55) -- (-0.55,0.55); \draw[fermion] (-0.55,0.55) -- (-0.55,-0.55); \draw[fermion] (-0.55,-0.55) -- (-1.1,-0.55);
+  \draw[fermion] (1.1,-0.55) -- (0.55,-0.55); \draw[fermion] (0.55,-0.55) -- (0.55,0.55); \draw[fermion] (0.55,0.55) -- (1.1,0.55);
+  \draw[photon] (-0.55,0.55) -- (0.55,0.55); \draw[photon] (-0.55,-0.55) -- (0.55,-0.55);
+  \node[vtx] at (-0.55,0.55) {}; \node[vtx] at (0.55,0.55) {}; \node[vtx] at (-0.55,-0.55) {}; \node[vtx] at (0.55,-0.55) {};
+  \node[font=\scriptsize] at (-1.0,0.78) {$b$}; \node[font=\scriptsize] at (1.0,0.78) {$s$};
+  \node[font=\scriptsize] at (-1.0,-0.78) {$s$}; \node[font=\scriptsize] at (1.0,-0.78) {$b$};
+  \node[font=\scriptsize,anchor=east] at (-0.6,0) {$u_k$}; \node[font=\scriptsize,anchor=west] at (0.6,0) {$u_l$};
+  \node[font=\scriptsize] at (0,0.78) {$W$}; \node[font=\scriptsize] at (0,-0.78) {$W$};
+  \node[slab] at (0,-1.45) {(d) もう一つの位相\\（4通りの $W$、$G^\pm$）};
+\end{scope}
+% (e): the local operator after matching
+\begin{scope}[shift={(14.2,0)}]
+  \draw[fermion] (-1.0,0.6) -- (0,0); \draw[fermion] (0,0) -- (1.0,0.6);
+  \draw[fermion] (1.0,-0.6) -- (0,0); \draw[fermion] (0,0) -- (-1.0,-0.6);
+  \node[blob,minimum size=0.36cm] at (0,0) {};
+  \node[font=\scriptsize] at (-1.0,0.82) {$b$}; \node[font=\scriptsize] at (1.0,0.82) {$s$};
+  \node[font=\scriptsize] at (-1.0,-0.82) {$s$}; \node[font=\scriptsize] at (1.0,-0.82) {$b$};
+  \node[slab] at (0,-1.45) {(e) 運動量0の照合\\$\sum\lambda_k\lambda_lS_0(x_k,x_l)$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (8) の $\Delta F=2$ の箱の図（$B_s$ の混合 $b\bar s\to s\bar b$。$B_d$、$K$ では外線の世代を替える）。荷電の2本の線は $W$（波線）か $G^\pm$（破線）で、縦の2本の位相 (a)〜(c) と横の2本の位相 (d) がそれぞれ4通りあり、内線の上型のクォーク $u_k$、$u_l$ の9通りについて $\lambda_k\lambda_l$ を掛けて足す（一般の $R_\xi$ で0でない図は72個）。$G^\pm$ の結合は内線の $u_k$ の質量に比例し（外線のクォークは質量0）、(c) は $m_{u_k}^2m_{u_l}^2$ に比例する。個々の図は $\xi_W$ に依存するが、その依存は $h(m_k)+h(m_l)$ の形で、ユニタリー性による和（GIM の機構）で消える。外線の運動量を0にした和が、(e) の局所的な4フェルミの演算子の係数（式~\eqref{eq:df2norm}）を与える。}
+\label{fig:df2diag}
+\end{figure}
+
+\paragraph{手順 (8)：$\Delta F=2$ の箱の図と、$B$ の質量差と $\epsilon_K$。}スクリプト \texttt{df2\_ckm\_feyncalc.wl} は、本ノートの FeynArts の模型で、$b\bar s\to s\bar b$（$B_s$ の混合）、$b\bar d\to d\bar b$（$B_d$）、$s\bar d\to d\bar s$（$K$）の1ループの振幅を、外線の運動量を0、外線のクォークの質量を0にして、一般の $R_\xi$ ゲージで求めた（グルーオンは除く。図~\ref{fig:df2diag}）。木のレベルに世代を変える中性の結合がないので、1ループで世代を2だけ変えるのは箱の図だけで、どの過程でも0でない図は72個だった。二つの Dirac の鎖を4次元のトレースで $\gamma^\mu P_L\otimes\gamma_\mu P_L$ に射影し、鎖の組み方が交差した図は、行列の Fierz の恒等式 $(\gamma^\mu P_L)_{ab}(\gamma_\mu P_L)_{cd}=-(\gamma^\mu P_L)_{ad}(\gamma_\mu P_L)_{cb}$（明示的な Dirac 行列で確かめた）で同じ形に直した。運動量0の積分はすべて真空の積分で、閉じた形になるので、以下の確かめはすべて記号として行った（\texttt{df2\_ckm\_check.wl}）。
+
+結果は次の通りである。(a) 3個の過程の振幅は $\sum_{k,l}\lambda_k\lambda_lF(m_{u_k},m_{u_l})$（$\lambda_k=V^*_{kq}V_{kQ}$）の形で、$F$ は3個の過程で同じで、二つの質量について対称だった。(b) $F$ は紫外で有限である。(c) $F$ は $\xi_W$ に依存するが、その依存は $h(m_k)+h(m_l)$ の形で、ユニタリー性 $\sum_k\lambda_k=0$ による和で消える。GIM の機構で引いた $S(m_k,m_l)=F_{kl}-F_{k0}-F_{0l}+F_{00}$（0 は質量0の極限）は $\xi_W$ にも $\mu$ にもよらない。(d) $S$ は Inami と Lim の関数 $S_0(x)$、$S_0(x_i,x_j)$~\cite{il81,bbl96} に記号として等しく、
+\begin{equation}
+KF=-\frac{g^4}{2M_W^2}\sum_{k,l}\lambda_k\lambda_lS_0(x_k,x_l),\qquad
+\mathcal H_{\mathrm{eff}}=\frac{G_F^2M_W^2}{16\pi^2}\sum_{k,l}\lambda_k\lambda_l\eta_{kl}S_0(x_k,x_l)\,(\bar qQ)_{V-A}(\bar qQ)_{V-A}
+\label{eq:df2norm}
+\end{equation}
+になった（$F$ は FeynArts の振幅の単位）。左の式の規格は、右の有効ハミルトニアンの $b\bar s\to s\bar b$ の行列要素（4個の縮約）にちょうど等しい（$\eta_{kl}$ は QCD の補正の因子）。手順 (7) の運動量0の $Z$ ペンギンはゲージに依存したが、$\Delta F=2$ では箱の図だけでゲージによらない量になる。
+
+本ノートの $S$ を、$\MSbar$ の $m_t(m_t)=162.5$~GeV、$m_c(m_c)=1.2730$~GeV と $M_W=80.3692$~GeV（PDG~2024~\cite{pdg24}）で求めると、$S(x_t)=2.3006$、$S(x_c)=2.508\times10^{-4}$、$S(x_c,x_t)=2.218\times10^{-3}$ である。これを使い、QCD の補正の因子とハドロンの行列要素は文献の値を入力として（本ノートでは計算しない）、
+\begin{equation}
+\begin{split}
+\Delta m_q&=\frac{G_F^2}{6\pi^2}M_W^2m_{B_q}f_{B_q}^2\hat B_{B_q}\eta_B|V_{tb}V_{tq}^*|^2S(x_t),\\
+|\epsilon_K|&=\kappa_\epsilon\frac{G_F^2f_K^2m_KM_W^2\hat B_K}{12\sqrt2\pi^2\Delta m_K}\Bigl|\im\bigl[\lambda_c^{*2}\eta_{cc}S(x_c)+\lambda_t^{*2}\eta_{tt}S(x_t)+2\lambda_c^*\lambda_t^*\eta_{ct}S(x_c,x_t)\bigr]\Bigr|
+\end{split}
+\label{eq:dmeps}
+\end{equation}
+（$\lambda_i=V^*_{is}V_{id}$。式~\eqref{eq:df2norm} の行列要素 $\langle\bar B_q|(\bar qb)_{V-A}^2|B_q\rangle=\frac83f_{B_q}^2\hat B_{B_q}m_{B_q}^2$ から）を求めた（\texttt{df2\_physics.py}、表~\ref{tab:df2}）。入力は、FLAG~2024~\cite{flag24} の $f_{B_d}\sqrt{\hat B_{B_d}}=210.6(5.5)$~MeV、$f_{B_s}\sqrt{\hat B_{B_s}}=256.1(5.7)$~MeV（$N_f=2+1+1$）、$\hat B_K=0.7533(91)$、$f_K=155.7(7)$~MeV（$N_f=2+1$）、$\eta_B=0.551(7)$ と $\eta_{tt}=0.5765(65)$（NLO~\cite{bjw90}。値は文献~\cite{swme15} の表から）、$\eta_{ct}=0.496(47)$~\cite{bg10}、$\eta_{cc}=1.87(76)$~\cite{bg12}、$\kappa_\epsilon=0.94(2)$~\cite{bgi10} で、CKM 行列は PDG の値（$V^{\mathrm{phys}}$）である。三つとも測定値と誤差の範囲で一致した（$0.4\sigma$、$0.8\sigma$、$0.7\sigma$）。誤差は、$B$ の質量差では $f_B\sqrt{\hat B_B}$ が、$\epsilon_K$ では $|V_{cb}|^4$ と $\eta_{cc}$ が主である。$\epsilon_K$ への寄与は $tt$ が $1.57\times10^{-3}$、$ct$ が $0.88\times10^{-3}$、$cc$ が $-0.38\times10^{-3}$ である。CKM 行列を手順 (6) の $\MSbar$ の $V(M_Z)$ に替えると、値は $-0.46\%$、$-0.46\%$、$-0.80\%$ 変わる。これは誤差よりずっと小さいが、$\MSbar$ の $V$ で照合した有効ハミルトニアンを使うならこの換算が要る。スクリプトは \texttt{df2\_ckm\_feyncalc.wl}（約7分）、\texttt{df2\_ckm\_check.wl}（約2分）、\texttt{df2\_physics.py} で、\texttt{run\_df2\_check.sh} でまとめて実行できる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (8) の $B$ の質量差と $\epsilon_K$（\texttt{df2\_physics.py}）。本ノートの値は、本ノートの模型の箱の図から求めた $S$ に、文献のハドロンの行列要素と QCD の補正の因子（本文）を入れたもの。誤差はそれらの入力と CKM のパラメータの誤差から。測定値は PDG~2024~\cite{pdg24}。}
+\label{tab:df2}
+\begin{tabular}{llll}
+\toprule
+量 & 本ノート & 測定値 & 主な誤差 \\
+\midrule
+$\Delta m_d$ [ps$^{-1}$] & $0.492\pm0.034$ & $0.5069\pm0.0021$ & $f_{B_d}\sqrt{\hat B_{B_d}}$、$|V_{td}|$ \\
+$\Delta m_s$ [ps$^{-1}$] & $16.97\pm0.99$ & $17.765\pm0.006$ & $f_{B_s}\sqrt{\hat B_{B_s}}$、$|V_{ts}|$ \\
+$\Delta m_s/\Delta m_d$ & 34.49 & 35.05 & \\
+$|\epsilon_K|$ [$10^{-3}$] & $2.07\pm0.22$ & $2.228\pm0.011$ & $|V_{cb}|^4$、$\eta_{cc}$、$\hat B_K$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{現時点で分かったこと。}CKM 行列は、二重項の下の成分を $Vd_L$ にするだけで模型に入り、頂点の式が変わるのは荷電のクォークの4個のクラスだけである。中性の結合が対角になることは、FeynRules の出力、標準のパラメータ表示を入れた値、MadGraph が世代を変える中性の過程に図を作らないことの三つで確かめた。$V=1$ で SM ノートの模型に戻るので、SM ノートの結果のうち $V$ によらないものは、本ノートの模型でもそのまま成り立つ。
@@ -1127,7 +1205,9 @@ C_0(x)=\frac x8\Bigl[\frac{x-6}{x-1}+\frac{(3x+2)\ln x}{(x-1)^2}\Bigr]
 
 \paragraph{世代を変える過程。}手順 (7) で、$b\to s\gamma$ と $Z\to b\bar s$ の on-shell の振幅が、外線の世代の混合を入れると紫外で有限で、ゲージによらず、GIM の機構で上型のクォークの質量の差だけによることを確かめた。$b\to s\gamma$ では外線の項は電荷の形状因子だけに入り、双極子は1PI の図だけで決まって、Inami--Lim の関数に $m_b^2/M_W^2$ の補正の範囲で一致する。$Z\to b\bar s$ では、運動量0の Inami--Lim の関数は Feynman ゲージの外れた量で、ゲージによらない on-shell の振幅とは $24\%$ 違う。外線の混合を on-shell の場の定数で扱うとき、右巻きの定数（式~\eqref{eq:dZRos}）は左巻きと形が違い、それを間違えると電磁気のゲージ不変性が破れる。
 
-\paragraph{残る手順。}手順 (8)〜(10) はまだ行っていない。とくに、$\Delta F=2$ の箱の図の和のゲージ不変性（手順 (8)）が、本ノートの中心の確かめとして残る。本ノートで扱わないのは、ニュートリノの質量と PMNS 行列、世代を変える過程の QCD の補正の繰り込み群による改良（$b\to s\gamma$ の大きな QCD の補正）と、ハドロンの行列要素の計算である。
+\paragraph{$\Delta F=2$。}手順 (8) で、$B_s$、$B_d$、$K$ の混合の箱の図が、外線の運動量0で、個々にはゲージに依存しながら、GIM の機構による和でゲージによらなくなることを記号として確かめた。ゲージの依存は二つの内線の質量について分かれた形 $h(m_k)+h(m_l)$ で、ユニタリー性がそれを消す。引いた後の関数は Inami--Lim の $S_0$ に記号として等しく、文献のハドロンの入力で $B$ の質量差と $\epsilon_K$ を測定値と誤差の範囲で再現する。$\MSbar$ の $V$ と物理的な $V$ の差（手順 (6)）は、これらの量で $0.5$〜$0.8\%$ で、今の誤差（5〜10\%）より小さい。
+
+\paragraph{残る手順。}手順 (9)、(10) はまだ行っていない。本ノートで扱わないのは、ニュートリノの質量と PMNS 行列、世代を変える過程の QCD の補正の繰り込み群による改良（$b\to s\gamma$ の大きな QCD の補正）と、ハドロンの行列要素の計算である。
 
 \appendix
 
@@ -1207,6 +1287,12 @@ m_j\Sigma^S_{ij}\big|_{\mathrm{UV}}=\delta M_{ij}+\frac12\delta Z^{L\dagger}_{ij
 \bibitem{sirlin78} A. Sirlin, ``Current algebra formulation of radiative corrections in gauge theories and the universality of the weak interactions,'' Rev. Mod. Phys. \textbf{50}, 573 (1978)。
 \bibitem{sirlin82} A. Sirlin, ``Large $m_W$, $m_Z$ behaviour of the $O(\alpha)$ corrections to semileptonic processes mediated by $W$,'' Nucl. Phys. B \textbf{196}, 83 (1982)。
 \bibitem{bbl96} G. Buchalla, A. J. Buras, M. E. Lautenbacher, ``Weak decays beyond leading logarithms,'' Rev. Mod. Phys. \textbf{68}, 1125 (1996), arXiv:hep-ph/9512380。
+\bibitem{flag24} Y. Aoki \textit{et al.} (Flavour Lattice Averaging Group), ``FLAG Review 2024,'' arXiv:2411.04268。
+\bibitem{bjw90} A. J. Buras, M. Jamin, P. H. Weisz, ``Leading and next-to-leading QCD corrections to $\epsilon$-parameter and $B^0$--$\bar B^0$ mixing in the presence of a heavy top quark,'' Nucl. Phys. B \textbf{347}, 491 (1990)。
+\bibitem{swme15} J. A. Bailey \textit{et al.} (SWME), ``Standard Model evaluation of $\varepsilon_K$ using lattice QCD inputs for $\hat B_K$ and $V_{cb}$,'' Phys. Rev. D \textbf{92}, 034510 (2015), arXiv:1503.05388。
+\bibitem{bg10} J. Brod, M. Gorbahn, ``$\epsilon_K$ at next-to-next-to-leading order: the charm-top-quark contribution,'' Phys. Rev. D \textbf{82}, 094026 (2010), arXiv:1007.0684。
+\bibitem{bg12} J. Brod, M. Gorbahn, ``Next-to-next-to-leading-order charm-quark contribution to the CP violation parameter $\epsilon_K$ and $\Delta M_K$,'' Phys. Rev. Lett. \textbf{108}, 121801 (2012), arXiv:1108.2036。
+\bibitem{bgi10} A. J. Buras, D. Guadagnoli, G. Isidori, ``On $\epsilon_K$ beyond lowest order in the operator product expansion,'' Phys. Lett. B \textbf{688}, 309 (2010), arXiv:1002.3612。
 \bibitem{pdg24} S. Navas \textit{et al.} (Particle Data Group), Phys. Rev. D \textbf{110}, 030001 (2024)。CKM 行列のレビュー（標準のパラメータ表示と大域的な当てはめ）。
 \end{thebibliography}
 
