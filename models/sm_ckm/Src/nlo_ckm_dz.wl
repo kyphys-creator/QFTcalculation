@@ -38,8 +38,16 @@ ownKey$[FR$deltaZ[{f1_, f2_}, {{}}, ch_]] /; KeyExistsQ[gen2$, f1] && KeyExistsQ
 ownKey$[FR$deltaZ[{W, W}, {{}}]] := "W";
 ownKey$[_] := None;
 (* {EW pole, EW finite, QCD pole, QCD finite} at 91 GeV *)
-dZown$ = Table[k -> {own$[ownKey$[k]][[1]], own$[ownKey$[k]][[2]], 0, 0}, {k, Select[need$, ownKey$[#] =!= None &]}];
-Print["this note's constants (quarks, W): ", Length[dZown$]];
+(* the QCD part of the diagonal quark constants (QCD does not mix the generations): on-shell, Feynman gauge,
+   eps_UV = eps_IR, dZ^L = dZ^R = -(alpha_s C_F/(4 Pi)) (3/eps + 4 + 3 ln(mu^2/m^2)) at alpha_s = 0.118 (as the other
+   QCD parts of the UFO); 0 for a massless quark (a scaleless integral) *)
+massQ$ = <|u -> 127/10000, c -> 619/1000, t -> 165, d -> 271/10000, s -> If[ms0DZ$, 0, 546/10000], b -> 286/100|>;
+aQ$ = N[118/1000 (4/3)/(4 Pi), 40];
+qcdQ$[FR$deltaZ[{f_, f_}, {{}}, _]] /; KeyExistsQ[massQ$, f] :=
+  If[massQ$[f] == 0, {0, 0}, {-3 aQ$, -aQ$ (4 + 3 Log[91^2/massQ$[f]^2])}];
+qcdQ$[_] := {0, 0};
+dZown$ = Table[k -> Join[own$[ownKey$[k]][[1 ;; 2]], qcdQ$[k]], {k, Select[need$, ownKey$[#] =!= None &]}];
+Print["this note's constants (quarks, W): ", Length[dZown$], ";  with a QCD part: ", Count[dZown$, _ -> {_, _, p_, _} /; p != 0]];
 
 (* NLOCT's constants of the model without quark mixing, from its two-point UV vertices (SM note, nlo_dz.wl) *)
 dZnlo$ = {};
@@ -127,12 +135,16 @@ If[haveNLO$,
    self-energies (nlo_ckm_dzown.wl), checked against NLOCT's on-shell constants of the SM note (models/sm, V = 1:
    generated/SM_dZ.m of its nlo_dz.wl, expressions in the external parameters), evaluated at this point; the leptons,
    the neutrinos and the gluon from NLOCT (the SM note checked the lepton ones against MadGraph's model to 15 digits).
-   The needed expressions are kept in generated/SM_CKM_dZsm.m (SM_dZ.m is not in git). *)
+   The needed expressions are kept in generated/SM_CKM_dZsm.m (SM_dZ.m is not in git); with them the diagonal quark
+   constants, whose QCD part (the same at V = 1) is compared with this note's analytic one above. *)
 smFile$ = FileNameJoin[{ParentDirectory[srcDirDZ$], "..", "sm", "Src", "generated", "SM_dZ.m"}];
 subFile$ = FileNameJoin[{srcDirDZ$, "generated", "SM_CKM_dZsm.m"}];
-smKeys$ = Select[need$, MatchQ[#, FR$deltaZ[{(A | Z | H | G | e | mu | ta | ve | vm | vt), _}, ___]] &];
+quarkDiag$ = Select[need$, MatchQ[#, FR$deltaZ[{q_, q_}, {{}}, _] /; KeyExistsQ[massQ$, q]] &];
+smKeys$ = Join[Select[need$, MatchQ[#, FR$deltaZ[{(A | Z | H | G | e | mu | ta | ve | vm | vt), _}, ___]] &], quarkDiag$];
 If[FileExistsQ[smFile$], Put[Select[Get[smFile$]["dZ"], MemberQ[smKeys$, #[[1]]] &], subFile$]];
 smDZ$ = Association[Get[subFile$]];
+smQ$ = KeyTake[smDZ$, quarkDiag$];
+smDZ$ = KeyDrop[smDZ$, quarkDiag$];
 ptSM$ = {ee -> Sqrt[4 Pi/128], MZ -> 91, MW -> 80, MH -> 125, MT -> 165, MB -> 286/100, MC -> 619/1000, MS -> If[ms0DZ$, 0, 546/10000],
    MD -> 271/10000, MU -> 127/10000, MTA -> 1746/1000, MMU -> 1027/10000, Me -> 487/1000000};
 laurSM$[x_] := Module[{y = N[(x /. IPL[_] -> 1 /. gs -> gsSym$) /. ptSM$ /. FR$MU -> 91, 40], ew, qcd},
@@ -141,6 +153,11 @@ laurSM$[x_] := Module[{y = N[(x /. IPL[_] -> 1 /. gs -> gsSym$) /. ptSM$ /. FR$M
    {Coefficient[ew, FR$Eps, -1], Coefficient[ew, FR$Eps, 0], Coefficient[qcd, FR$Eps, -1], Coefficient[qcd, FR$Eps, 0]}];
 smNum$ = Association[KeyValueMap[#1 -> laurSM$[#2] &, smDZ$]];
 Print["NLOCT's constants of the SM note (V-independent fields) evaluated at this point: ", Length[smNum$]];
+(* at the main point only: NLOCT's expressions are those of the SM note's point (m_s != 0) *)
+qcmp$ = If[ms0DZ$, {}, Table[k -> laurSM$[smQ$[k]][[3 ;; 4]] - Association[dZown$][k][[3 ;; 4]], {k, Keys[smQ$]}]];
+If[qcmp$ =!= {}, Print["QCD part of the diagonal quark constants against NLOCT's (SM note), ", Length[qcmp$], " constants: max |difference| of ",
+  "{pole, finite} ", CForm /@ N[Max /@ Transpose[Abs[Values[qcmp$]]], 3], "  (b: ",
+  CForm /@ N[First[Cases[dZown$, (FR$deltaZ[{b, b}, {{}}, _] -> v_) :> v[[3 ;; 4]]]], 8], ")"]];
 (* this note's bosons; the A-Z mixing: the two signs of FeynRules' convention (A0 = (1 + dZ_AA/2) A + dZ_AZ/2 Z, ...)
    fixed against NLOCT *)
 ownB$ = <|FR$deltaZ[{Z, Z}, {{}}] -> own$["Z"], FR$deltaZ[{A, A}, {{}}] -> own$["A"], FR$deltaZ[{H, H}, {{}}] -> own$["H"]|>;

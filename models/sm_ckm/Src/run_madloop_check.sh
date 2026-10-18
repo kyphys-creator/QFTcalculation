@@ -16,6 +16,8 @@
 #      -> results/ckm_madloop_mg5.csv
 #   5. the field constants of the bosons and leptons and the four-point R2 vertices: ext_formcalc.wl (SM.mod + FormCalc),
 #      the outputs of ckm_madloop_ext.py --outputs, then ckm_madloop_ext.py -> results/ckm_madloop_ext.csv
+#   6. the QCD part (the QCD parts of the quark field constants): [virt=QCD] colour-singlet decays into quarks with the
+#      note's UFO and loop_qcd_qed_sm, ckm_madloop_qcd.py -> results/ckm_madloop_qcd.csv
 # Usage: ./run_madloop_check.sh [--no-ufo]
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
@@ -24,7 +26,7 @@ mkdir -p work/ml results
 wl() {   # script, argument, log name
   echo "== $1 $2"
   wolframscript -file "$1.wl" $2 > "work/$3.log" 2>&1 || { echo "$1 failed (work/$3.log)"; exit 1; }
-  grep -E '^(renormalized|written|counterterm|CKM|check|tadpole|K de|V = 1|constants|field|solved|finite|NLOCT|largest|off-diag|this note|CT param|  dV|  dvT|UV |decimal|four|photon|   FR|\(a\)|\(b\)|\(c\)|\(mg5\)|mu = |   [a-z][a-z_]*: |   [a-z][a-z_]* *mu)' "work/$3.log" | cut -c1-300
+  grep -E '^(renormalized|written|split|counterterm|CKM|check|tadpole|K de|V = 1|constants|field|solved|finite|NLOCT|largest|off-diag|this note|CT param|  dV|  dvT|UV |decimal|four|photon|   FR|\(a\)|\(b\)|\(c\)|\(mg5\)|mu = |   [a-z][a-z_]*: |   [a-z][a-z_]* *mu)' "work/$3.log" | cut -c1-300
 }
 if [ "$1" != "--no-ufo" ]; then
   wl nlo_ckm_renormalize nomix nlo_ckm_renormalize0
@@ -84,3 +86,9 @@ while IFS='|' read -r name model procs; do
   build "$name" "$model" "$procs" ckm_madloop_ext.py
 done < work/ml/outputs_ext.txt
 python3 ckm_madloop_ext.py
+echo "== QCD: [virt=QCD] with the note's UFO and loop_qcd_qed_sm"
+python3 ckm_madloop_qcd.py --outputs > work/ml/outputs_qcd.txt
+while IFS='|' read -r name model procs; do
+  build "$name" "$model" "$procs" ckm_madloop_qcd.py
+done < work/ml/outputs_qcd.txt
+python3 ckm_madloop_qcd.py

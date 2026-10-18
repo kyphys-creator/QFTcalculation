@@ -82,5 +82,9 @@ exactUFO$[file_] := Module[{txt = Import[file, "Text"], new},
    Export[file, new, "Text"];
    Length[StringCases[txt, RegularExpression["(?<![\\w.])\\d+\\.\\d{7,}"]]]];
 Print["decimal coefficients made exact: ", exactUFO$[FileNameJoin[{ufoNU$, #}]] & /@ {"couplings.py", "CT_couplings.py"}];
+(* the UV couplings that mix electroweak and QCD CT parameters: split by order (nlo_ckm_ufo_split.py) *)
+splitNU$ = RunProcess[{"python3", FileNameJoin[{srcDirNU$, "nlo_ckm_ufo_split.py"}], ufoNU$}];
+Print[StringTrim[splitNU$["StandardOutput"]]];
+If[splitNU$["ExitCode"] =!= 0, Print[splitNU$["StandardError"]]; Abort[]];
 Print["written: ", FileNames["SM_CKM_NLO_UFO"], " (CT parameters: ", StringCount[Import[FileNameJoin[{ufoNU$, "CT_parameters.py"}], "Text"], "CTParameter("],
   ", four-point R2 parameters: ", StringCount[Import[FileNameJoin[{ufoNU$, "R2four_parameters.py"}], "Text"], "= Parameter("], ")"];
