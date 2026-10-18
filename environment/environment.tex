@@ -44,7 +44,7 @@
 
 \title{ループ計算環境の構築記録\\[2pt]{\large \texttt{\textasciitilde/hep} に組んだ1ループ計算スタック（Apple M3・Mathematica 14.2）}}
 \author{}
-\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17日）}
+\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17、18日）}
 
 \begin{document}
 \maketitle
@@ -670,6 +670,53 @@ FeynCalc の \texttt{FCFAConvert} と \texttt{IndexSum}（CKM） & $u\bar u\to d
 FeynCalc の \texttt{ComplexConjugate} と複素なパラメータ（CKM） & （問題になる前に確かめた）\texttt{ComplexConjugate} は記号を実数として扱う & FeynCalc の仕様（明示的な $i$ と Dirac の構造だけを共役にする） & $V_{ij}$ を実の記号で $v^R_{ij}+iv^I_{ij}$ と書き、$|V_{ij}|^2=(v^R_{ij})^2+(v^I_{ij})^2$ とする。共役が正しいことをスクリプトの最初に表示する \\
 MadGraph の \texttt{compute\_widths} と色のある粒子（CKM） & トップの幅が $t\to bW^+$ だけになり（分岐比1）、$t\to sW^+$、$t\to dW^+$ が幅のファイルにない & MadGraph は、色のある粒子の部分幅が QCD のスケールより小さいと0にする（ログに「partial width of particle t lower than QCD scale: $X$. Set it to zero.」と値を16桁で表示する）。$W$ のような色のない粒子では小さな部分幅（$W\to u\bar b$ の $10^{-5}$~GeV）も残る & ログの表示から値を読んで比べる。MadGraph のトップの全幅は $t\to bW^+$ だけの値である \\
 MadGraph の乱数と二つの模型（CKM） & 同じ run card で別の模型の $u\bar u\to W^+W^-$ を積分すると、断面積と誤差が表示の桁まで同じになる & 乱数の種が既定（\texttt{iseed = 0}）で同じ値になり、被積分関数が等しければ同じ点列で同じ値になる & 誤差を独立とした pull ではなく、値の相対差で比べる \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+手順 (3)〜(9)（10月17、18日）では、クォークの自己エネルギーの世代の行列、湯川行列の $\beta$ 関数、$W^+\to u_i\bar d_j$ の1ループの振幅（FeynCalc と FormCalc）、セミレプトニックな崩壊、世代を変える過程（$b\to s\gamma$、$Z\to b\bar s$、$\Delta F=2$ の箱の図）を求め、最後にそのノートの模型から作った NLO の UFO で MadLoop と比べた。分かった問題を表~\ref{tab:issues2m}、\ref{tab:issues2n} にまとめる。手順 (4) では、運動量0の辺を持つ $C_0$ を FeynCalc の還元が残す既知の問題（表~\ref{tab:issues2}）にも再び出会った。
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2l} の続き（CKM 行列を入れた標準模型のノート~\cite{smckmnote} の手順 (3)〜(8)）。}
+\label{tab:issues2m}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+FeynArts の振幅の位相（CKM） & $W^+\to u\bar d$ の1ループの補正の符号が逆になり、$F_L$ に頂点の極の2倍が残った。FormCalc の値とは大きさが同じで符号が逆 & FeynArts の木の振幅と Feynman 則の表の比が過程によって違う（$W^+\to u\bar d$ では $i$、$d\,G^+\to u$ では $-i$）。別の過程の比をそのまま使った & 1ループの補正は、同じ外線の配置の FeynArts の木の振幅に対する比として決める \\
+光子の質量とゲージ依存（CKM） & 光子とそのゴーストに質量 $M_A$ を与えた模型で、$W^+\to u_i\bar d_j$ の振幅が $\xi_Z$、$\xi_W$ に $M_A^2$ の程度で依存した & $\xi_Z$、$\xi_W$ の依存を打ち消す恒等式に光子の逆伝播関数が入り、その質量の項を補う頂点がない & $\xi_A$ は光子の質量を入れたまま、$\xi_Z$、$\xi_W$ は $M_A\to0$ を積分の係数ごとにとり、赤外発散を LoopTools の $\lambda$ で抑えて確かめる \\
+FormCalc の \texttt{CalcRenConst}（CKM） & くりこみ定数を数値にすると記号が残る & 結果が \texttt{RenConstList} に包まれ、\texttt{dSW1} が \texttt{dMWsq1}、\texttt{dMZsq1} で、\texttt{dZe1} が \texttt{dZAA1}、\texttt{dZZA1} で、\texttt{dCKM1} が \texttt{dZfL1} で書かれる & 包みを外し、規則を互いに代入しきってから数値にする \\
+FormCalc の CKM 行列（CKM） & 数値を入れた後に \texttt{CKMC} と \texttt{SumOver} が残る & \texttt{SM.mod} の $V^*$ は記号 \texttt{CKMC}、対抗項の頂点の世代の和は \texttt{SumOver} & \texttt{CKMC} を $V$ の複素共役にし、\texttt{SumOver} を和に直してから数値を入れる \\
+\texttt{CForm} と CSV（CKM） & CSV に書いたリストの値を読み戻せない & \texttt{ToString[CForm[\{a, b\}]]} は \texttt{List(a,b)} と書く & 読むときに \texttt{List(} を \texttt{\{} に置き換える。値は要素ごとに書く方がよい \\
+運動量0の極限（CKM） & 外線の運動量を0にした振幅に $1/k^2$ の項が残り、$k^2=0$ を代入すると \texttt{Indeterminate} になる & PaVe の還元が $1/k^2$ の係数を作り、それは $B_0(0;0,m^2)=A_0(m^2)/m^2$ などの恒等式で初めて打ち消す & 恒等式を記号で使う（手順 (6)）か、$k^2=10^{-16}M_Z^2$ を60桁で計算する（手順 (7)） \\
+LoopTools と小さな Gram 行列式（CKM） & on-shell の $b\to s\gamma$（$p_2^2=q^2=0$）の形状因子が、LoopTools では6桁ほどしか合わない & PaVe の還元の Gram 行列式が $m_b^4$ に比例し、倍精度で打ち消しが起こる & $C_0$ を1次元の Feynman パラメータの積分にして40桁で求める（LoopTools と相対 $4\times10^{-11}$ で一致） \\
+右巻きの非対角の場の定数（CKM） & $b\to s\gamma$ の電磁気のゲージ不変性 $F_L+\frac{m_b}2H_R=0$ が31\% 破れ、on-shell の $Z\to b\bar s$ に $\xi_W$ の依存（$7\times10^{-6}$）が残った & $\delta Z^R_{ij}$ を $\delta Z^L_{ij}$ の $L\leftrightarrow R$ で書いた。on-shell の条件の右巻きの部分では $\Sigma^S$ の係数は $m_i^2+m_j^2$ ではなく $2m_im_j$ である & 条件 $\hat\Sigma_{ij}(p)u_j(p)=0$ を解き直す。電磁気のゲージ不変性で確かめる \\
+FeynCalc の Dirac のトレースと次元（CKM） & $D$ 次元で還元した箱の図の鎖を切り出して4次元のトレースで射影すると、$D$ 次元と4次元の $\gamma$ 行列が混ざり、正しく評価されない & \texttt{TID} の結果は $D$ 次元で、射影に使う $\gamma^\beta$ は4次元 & 鎖を切り出す前に \texttt{ChangeDimension[x, 4]} とする（箱の図は紫外で有限） \\
+Feynman ゲージの係数（CKM） & 箱の図の係数に $1/(\xi_W-1)$ があり、$\xi_W=1$ を代入すると \texttt{Indeterminate} になる & 縦の部分の還元が作る係数 & $\xi_W=1+10^{-20}$ を80桁で評価する（CKM の和の後はゲージによらず、$\xi_W=2$ と一致） \\
+zsh の単語分割（CKM） & \texttt{set -- \$a} で引数を分けたつもりが、別の過程のスクリプトを起動した & zsh は引用符のない変数を単語に分けない（bash と違う） & 引数を明示して書くか、\texttt{\$\{=a\}}、配列を使う \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2m} の続き（CKM 行列を入れた標準模型のノート~\cite{smckmnote} の手順 (9)、そのノートの模型から作った NLO の UFO と MadLoop）。}
+\label{tab:issues2n}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+NLOCT とクォークの世代の混合（CKM） & \texttt{OnShellRenormalization} にクォークの混合を許した模型で、\texttt{WriteCT} がフェルミオンの2点の頂点の on-shell の条件を47分たっても解き終わらない & 複素の CKM 行列のために非対角の場の定数が複素になり、その複素共役を含む連立方程式を \texttt{Solve} で解く（推論） & R2 の頂点は繰り込みの処方によらないので、混合を許さない模型を \texttt{WriteCT[..., MSbar -> True]} で処理し、R2 の頂点だけを使う（72分、259個）。非対角の場の定数は自分の自己エネルギーから作る \\
+NLOCT と非対角の2点の頂点（CKM） & 混合を許さなくても、on-shell のモードでは非対角のクォークの2点の頂点1個に約8分かかり、「no counterterms for this vertex」とともに数 MB の式を出力する & 打ち消す定数のない紫外の極が、CKM 行列の和を展開した式になる & 同上（$\overline{\mathrm{MS}}$ のモードでは止まらない） \\
+\texttt{WriteUFO} と4点の R2 の頂点（CKM） & R2 の頂点を全部渡すと、Python の書き出しの頂点の分割に1時間以上かかって終わらない（14個のサブカーネルのうち1個だけが動く） & CKM 行列の和を含む4点の R2 の頂点が大きい（$W^+W^-G^+G^-$ は4万の葉） & 使う過程に入らない4点の R2 の頂点を外す（2点と3点の212個で約35分） \\
+FeynRules と宣言していない記号（CKM） & $V\to V+\delta V$ の頂点を木の頂点の微分と比べると差が残る & \texttt{FeynmanRules} は宣言していない添字付きの記号も \texttt{dV[Index[}\allowbreak\texttt{Generation, i], ...]} と書き、宣言した \texttt{CKM} も同じ形で出る。\texttt{D[x, CKM[...]]} は \texttt{Conjugate[CKM[...]]} を関数として微分し \texttt{Conjugate'} を作る & \texttt{Index} の形で微分し、$V$ と $V^*$ を別の変数に置き換えてから微分する \\
+軽いクォークの質量と UFO の対抗項（CKM） & 軽いクォークを質量0にすると、非対角の on-shell の場の定数が決まらない & $d,s,b$ が縮退すると、Denner の非対角の定数の分母 $m_i^2-m_j^2$ が0になる & 定数を一つの点の数値（40桁）にし、極と $\mu_R$ での有限部分の CT パラメータとして UFO に入れる。UFO はその点の param\_card でだけ使う \\
+CT パラメータの $\mu_R$ 依存（CKM） & MadLoop の $W\to u_i\bar d_j$ の $\mu_R$ への依存が、自分の $\overline{\mathrm{MS}}$ の振幅と $2\,\delta g/g$ の極の分だけ違った & $\overline{\mathrm{MS}}$ のパラメータの対抗項にも、ループの積分で求めた定数と同じく有限部分 $(\text{極})\times\ln(\mu_R^2/\mu_0^2)$ を付けた。$\overline{\mathrm{MS}}$ の対抗項はどのスケールでも純粋な極である & 場の定数と $\delta v_T$ にだけ \texttt{reglog(MU\_R**2/...)} の項を付ける。MadGraph は \texttt{MU\_R} によるCT の結合を点ごとに計算し直す（\texttt{COUP3}） \\
+MadLoop と外線の世代の混合（CKM） & MadLoop は外線の自己エネルギーの図を、世代を変えるもの（$b\to s$ の後の $s\to s\gamma$ など）も作らない & \texttt{is\_wf\_correction} が外線に付く泡を粒子によらず除く（\texttt{madgraph/loop}） & 非対角の on-shell の場の定数を UV の頂点に入れ、外線の LSZ の因子にする \\
+MadLoop のループで誘起される過程（CKM） & \texttt{[sqrvirt=QED]} の出力は有限部分だけで、極を出さない（「all loops are expected to be UV-finite」）。UV の頂点を含む UFO では、$Z\to b\bar s$ の値が1PI の図だけの値と合わず、$\mu_R$ によらなかった & 木のない過程にも、\texttt{loop\_particles} を空にした UV の頂点は R2 の頂点と同じくループの図に付く。非対角の場の定数の頂点が外線の世代の混合の代わりになり、値は on-shell の振幅（1PI と外線） & 比べる値を on-shell の振幅にする（$Z\to b\bar s$ で相対 $2\times10^{-13}$ で一致）。$\mu_R$ を変えて紫外で有限なことを確かめる \\
+MadGraph の模型の読み込み（CKM） & \texttt{import model} に1回3分かかる & R2 の結合を含む \texttt{CT\_couplings.py} が9.5 MB & 同じ模型の過程は \texttt{add process} で一つの出力にまとめる（各 \texttt{P*} の \texttt{check} を別に走らせる） \\
+Mathematica のコメントの \texttt{*)}（CKM） & スクリプトの途中から先が実行されず、\texttt{ToExpression::sntxi: Incomplete expression} が出る & コメントの中の \texttt{Re(d c\^{}*)} の \texttt{*)} がコメントを閉じる & コメントに \texttt{*)} の並びを書かない \\
 \bottomrule
 \end{tabularx}
 \end{table}
