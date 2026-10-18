@@ -1,6 +1,6 @@
 # This file was automatically created by FeynRules 2.3.49
 # Mathematica version: 14.2.1 for Mac OS X ARM (64-bit) (March 16, 2025)
-# Date: Sat 17 Oct 2026 23:23:48
+# Date: Sun 18 Oct 2026 13:09:52
 
 
 from object_library import all_vertices, Vertex
@@ -228,7 +228,7 @@ V_36 = Vertex(name = 'V_36',
 V_37 = Vertex(name = 'V_37',
               particles = [ P.g, P.g, P.g, P.g ],
               color = [ 'f(-1,1,2)*f(3,4,-1)', 'f(-1,1,3)*f(2,4,-1)', 'f(-1,1,4)*f(2,3,-1)' ],
-              lorentz = [ L.VVVV3, L.VVVV6, L.VVVV7 ],
+              lorentz = [ L.VVVV4, L.VVVV7, L.VVVV8 ],
               couplings = {(1,1):C.GC_12,(0,0):C.GC_12,(2,2):C.GC_12})
 
 V_38 = Vertex(name = 'V_38',
@@ -324,7 +324,7 @@ V_52 = Vertex(name = 'V_52',
 V_53 = Vertex(name = 'V_53',
               particles = [ P.a, P.a, P.W__minus__, P.W__plus__ ],
               color = [ '1' ],
-              lorentz = [ L.VVVV5 ],
+              lorentz = [ L.VVVV6 ],
               couplings = {(0,0):C.GC_5})
 
 V_54 = Vertex(name = 'V_54',
@@ -336,7 +336,7 @@ V_54 = Vertex(name = 'V_54',
 V_55 = Vertex(name = 'V_55',
               particles = [ P.W__minus__, P.W__minus__, P.W__plus__, P.W__plus__ ],
               color = [ '1' ],
-              lorentz = [ L.VVVV5 ],
+              lorentz = [ L.VVVV6 ],
               couplings = {(0,0):C.GC_53})
 
 V_56 = Vertex(name = 'V_56',
@@ -648,7 +648,7 @@ V_106 = Vertex(name = 'V_106',
 V_107 = Vertex(name = 'V_107',
                particles = [ P.a, P.W__minus__, P.W__plus__, P.Z ],
                color = [ '1' ],
-               lorentz = [ L.VVVV1, L.VVVV2, L.VVVV4 ],
+               lorentz = [ L.VVVV2, L.VVVV3, L.VVVV5 ],
                couplings = {(0,0):C.GC_75,(0,1):C.GC_74,(0,2):C.GC_74})
 
 V_108 = Vertex(name = 'V_108',
@@ -678,7 +678,7 @@ V_111 = Vertex(name = 'V_111',
 V_112 = Vertex(name = 'V_112',
                particles = [ P.W__minus__, P.W__plus__, P.Z, P.Z ],
                color = [ '1' ],
-               lorentz = [ L.VVVV1, L.VVVV2, L.VVVV4 ],
+               lorentz = [ L.VVVV2, L.VVVV3, L.VVVV5 ],
                couplings = {(0,0):C.GC_54,(0,1):C.GC_54,(0,2):C.GC_55})
 
 V_113 = Vertex(name = 'V_113',

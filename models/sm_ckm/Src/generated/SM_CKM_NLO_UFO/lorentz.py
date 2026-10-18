@@ -1,6 +1,6 @@
 # This file was automatically created by FeynRules 2.3.49
 # Mathematica version: 14.2.1 for Mac OS X ARM (64-bit) (March 16, 2025)
-# Date: Sat 17 Oct 2026 23:23:48
+# Date: Sun 18 Oct 2026 13:09:52
 
 
 from object_library import all_lorentz, Lorentz
@@ -29,6 +29,10 @@ SS2 = Lorentz(name = 'SS2',
               structure = 'P(-1,1)**2')
 
 SS3 = Lorentz(name = 'SS3',
+              spins = [ 1, 1 ],
+              structure = 'P(-1,1)*P(-1,2)')
+
+SS4 = Lorentz(name = 'SS4',
               spins = [ 1, 1 ],
               structure = 'P(-1,2)**2')
 
@@ -150,29 +154,33 @@ VVSS1 = Lorentz(name = 'VVSS1',
 
 VVVV1 = Lorentz(name = 'VVVV1',
                 spins = [ 3, 3, 3, 3 ],
-                structure = 'Metric(1,4)*Metric(2,3)')
+                structure = 'Epsilon(1,2,3,4)')
 
 VVVV2 = Lorentz(name = 'VVVV2',
                 spins = [ 3, 3, 3, 3 ],
-                structure = 'Metric(1,3)*Metric(2,4)')
+                structure = 'Metric(1,4)*Metric(2,3)')
 
 VVVV3 = Lorentz(name = 'VVVV3',
                 spins = [ 3, 3, 3, 3 ],
-                structure = 'Metric(1,4)*Metric(2,3) - Metric(1,3)*Metric(2,4)')
+                structure = 'Metric(1,3)*Metric(2,4)')
 
 VVVV4 = Lorentz(name = 'VVVV4',
                 spins = [ 3, 3, 3, 3 ],
-                structure = 'Metric(1,2)*Metric(3,4)')
+                structure = 'Metric(1,4)*Metric(2,3) - Metric(1,3)*Metric(2,4)')
 
 VVVV5 = Lorentz(name = 'VVVV5',
                 spins = [ 3, 3, 3, 3 ],
-                structure = 'Metric(1,4)*Metric(2,3) + Metric(1,3)*Metric(2,4) - 2*Metric(1,2)*Metric(3,4)')
+                structure = 'Metric(1,2)*Metric(3,4)')
 
 VVVV6 = Lorentz(name = 'VVVV6',
                 spins = [ 3, 3, 3, 3 ],
-                structure = 'Metric(1,4)*Metric(2,3) - Metric(1,2)*Metric(3,4)')
+                structure = 'Metric(1,4)*Metric(2,3) + Metric(1,3)*Metric(2,4) - 2*Metric(1,2)*Metric(3,4)')
 
 VVVV7 = Lorentz(name = 'VVVV7',
+                spins = [ 3, 3, 3, 3 ],
+                structure = 'Metric(1,4)*Metric(2,3) - Metric(1,2)*Metric(3,4)')
+
+VVVV8 = Lorentz(name = 'VVVV8',
                 spins = [ 3, 3, 3, 3 ],
                 structure = 'Metric(1,3)*Metric(2,4) - Metric(1,2)*Metric(3,4)')
 

@@ -11,7 +11,10 @@
 (*  diagonal: dZ^L = -Sigma^L - m^2 (Sigma^L' + Sigma^R' + 2 Sigma^S'), dZ^R likewise with L <-> R (Denner); the IR*)
 (*  divergent B0' with the photon mass lambda^2 = mu^2 (dimensional regularization at mu) and its IR pole from the*)
 (*  coefficient of ln lambda^2;*)
-(*and dZ_W = -Sigma_T^WW'(MW^2).  The tadpole is momentum independent and diagonal: it does not enter.  The loop integrals*)
+(*dZ_W = -Sigma_T^WW'(MW^2), and the bosons that do not depend on V at one loop, from the SM note's step (3)*)
+(*(models/sm/Src/results/oneloop_sigma.m): dZ_ZZ = -Sigma_T^ZZ'(MZ^2), dZ_AA = -Sigma_T^AA'(0), dZ_HH = -Sigma^HH'(MH^2), and*)
+(*the photon-Z mixing Sigma_T^AZ(0)/MZ^2, Sigma_T^AZ(MZ^2)/MZ^2 (combined into dZ_AZ, dZ_ZA with the convention of the*)
+(*FeynRules counterterm Lagrangian in nlo_ckm_dz.wl, which matches it against NLOCT).  The tadpole is momentum independent and diagonal: it does not enter.  The loop integrals*)
 (*are taken real (Re-tilde): the quark self-energies at p^2 = m_j^2 of the light quarks have no threshold; for the top*)
 (*(p^2 = m_t^2 > (MW + m_b)^2) the real part is the on-shell condition used by MadLoop's LSZ factor only through dZ_tj,*)
 (*which no process here has on an external leg.  The point is that of nlo_ckm_dz.wl.  Numbers {pole (UV + IR), finite*)
@@ -53,7 +56,16 @@ dZZO$[sec_, ch_, i_, j_] := Module[{ms = If[sec === "U", upZO$, dnZO$], mi, mj, 
 symZO$ = Join[
    Flatten[Table[{"U", ch, i, j} -> dZZO$["U", ch, i, j], {ch, {"L", "R"}}, {i, 3}, {j, 3}], 2],
    Flatten[Table[{"D", ch, i, j} -> dZZO$["D", ch, i, j], {ch, {"L", "R"}}, {i, 3}, {j, 3}], 2],
-   {"W" -> limitZO$[-D[Total[sig3ZO$["WW"]] /. kRuleZO$ /. toCKZO$, kk2] /. kk2 -> MW^2]}];
+   {"W" -> limitZO$[-D[Total[sig3ZO$["WW"]] /. kRuleZO$ /. toCKZO$, kk2] /. kk2 -> MW^2]},
+   (* the SM note's boson self-energies (K times, 1PI + tadpole; V does not enter) *)
+   Module[{sm = Association[Get[FileNameJoin[{ParentDirectory[srcDirZO$], "..", "sm", "Src", "results", "oneloop_sigma.m"}]]] /. renZO$,
+      tot},
+     tot[key_] := Total[sm[key]] /. kRuleZO$;
+     (* at k^2 = 0 the photon self-energies have 1/k^2 terms (the reduction): kept as functions of kk2 here, expanded
+        in numZO$ (the closed Taylor coefficients of B0, as wud_renormalized.wl) *)
+     {"Z" -> limitZO$[-D[tot["ZZ"], kk2] /. kk2 -> MZ^2], "A" -> smallK$[limitZO$[tot["AA"]], 1, -1],
+      "H" -> limitZO$[-D[tot["HH"], kk2] /. kk2 -> MH^2],
+      "AZ0" -> smallK$[limitZO$[tot["AZ"]]/MZ^2, 0, 1], "AZMZ" -> limitZO$[tot["AZ"] /. kk2 -> MZ^2]/MZ^2}]];
 Print["constants built: ", Length[symZO$], ";  ", Round[AbsoluteTime[] - t0ZO$], " s"];
 
 (* the point *)
@@ -75,6 +87,18 @@ valZO$[x_, lam2_] := (SetLambda[N[lam2]]; x /. {a0f$[m2_] :> If[m2 == 0, 0, m2 (
      db0f$[pp_, a_, b_] :> Re[LoopTools`DB0[pp, a, b]], c0f$[a__] :> Re[LoopTools`C0[a]]});
 (* {pole (UV + IR), finite at 91 GeV} of K dZ, divided by K *)
 numZO$[0] := {0, 0};
+(* sign times the coefficient of kk2^order of a k^2 -> 0 expansion: B0(k^2; a, b) = B0(0; a, b) + sum_n c_n k^(2n),
+   c_n = int (x(1-x))^n/(x a + (1-x) b)^n dx / n *)
+cnZO$[n_, a_, b_] := Which[a == b, (n!)^2/((2 n + 1)! n a^n), n == 1, (a^2 - b^2 - 2 a b Log[a/b])/(2 (a - b)^3),
+   True, NIntegrate[(x (1 - x))^n/(x a + (1 - x) b)^n, {x, 0, 1}, WorkingPrecision -> 40]/n];
+(* exact until the series is taken: the 1/k^2 terms cancel, and floating point would lose half the digits *)
+numZO$[smallK$[x_, order_, sign_]] := Module[{y = x /. pointZO$, s},
+   y = y /. fB0$[kk_, a_, b_] /; ! FreeQ[kk, kk2] :> fB0$[0, a, b] + Sum[kk^n cnZO$[n, a, b], {n, 1, 3}];
+   y = y /. {fA0$[m2_] :> If[m2 == 0, 0, m2 (1/ep + 1 - Log[m2/91^2])],
+       fB0$[0, a_, b_] :> Which[a == 0 && b == 0, 0, a == b, 1/ep - Log[a/91^2], True, 1/ep + 1 - (a Log[a/91^2] - b Log[b/91^2])/(a - b)]} /.
+     D -> 4 - 2 ep;
+   s = Normal[Series[y, {kk2, 0, order}]];
+   N[sign {SeriesCoefficient[Coefficient[s, kk2, order], {ep, 0, -1}], SeriesCoefficient[Coefficient[s, kk2, order], {ep, 0, 0}]}/KK, 40]];
 numZO$[x_] := Module[{l = laurZO$[N[x /. vRulesZO$ /. pointZO$, 30]], f1, f2},
    f1 = valZO$[l[[2]], 91^2]; f2 = valZO$[l[[2]], 2 91^2];
    {l[[1]] + (f2 - f1)/Log[2], f1}/KK];

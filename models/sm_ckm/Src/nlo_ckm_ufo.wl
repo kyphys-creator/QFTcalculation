@@ -25,17 +25,17 @@ Get["FeynRules`"];
 SetDirectory[srcDirNU$];
 LoadModel["SM_CKM.fr", FileNameJoin[{"generated", "SM_CKM_FJct.fr"}]];
 SetDirectory[FileNameJoin[{srcDirNU$, "generated"}]];
-(* the two- and three-point R2 vertices only: the four-point ones (W W G+ G-, W W W W, ...: with the CKM sums up to 4e4
-   leaves) keep WriteUFO for more than an hour in splitting the vertices, and no process of step (9) has them (W -> u dbar
-   and the flavour-changing processes need the R2 vertices f fbar V, f fbar S and the two-point ones; there is no
-   four-fermion R2 vertex) *)
+(* the two- and three-point R2 vertices as NLOCT wrote them; the four-point ones (W W G+ G-, W W W W, ...: with the CKM sums
+   up to 4e4 leaves, which WriteUFO did not finish splitting in more than an hour) as numbers at the point, sums of
+   internal parameters FJRtwo... times the structures (nlo_ckm_ctparams.wl) *)
+parNU$ = Get["SM_CKM_FJctpar.m"];
 r2AllNU$ = Get["SM_CKM_R2.m"];
-R2$vertlist = Select[r2AllNU$, Length[#[[1]]] <= 3 &];
+R2$vertlist = Join[Select[r2AllNU$, Length[#[[1]]] <= 3 &], parNU$["r2four"]];
 FR$InteractionOrderPerturbativeExpansion = {{QCD, 1}, {QED, 1}};
-Print["NLOCT R2 vertices: ", Length[r2AllNU$], ";  used (two and three points): ", Length[R2$vertlist]];
+Print["NLOCT R2 vertices: ", Length[r2AllNU$], ";  two and three points as written: ", Count[r2AllNU$, v_ /; Length[v[[1]]] <= 3],
+  ", four points with numerical parameters: ", Length[parNU$["r2four"]]];
 
 symNU$ = Get["SM_CKM_CTsym.m"];
-parNU$ = Get["SM_CKM_FJctpar.m"];
 ctNU$ = DeleteCases[{#[[1]], Expand[#[[2]] /. parNU$["rules"]]} & /@ symNU$["ctSym"], {_, 0}];
 dvNU$ = DeleteCases[{#[[1]], Expand[#[[2]] /. parNU$["rules"]]} & /@ symNU$["dvSym"], {_, 0}];
 tadNU$ = {#[[1]], (FJdvT /. parNU$["rules"]) #[[2]]} & /@ Select[symNU$["tadSym"], Length[#[[1]]] >= 2 &];
@@ -49,7 +49,9 @@ FeynmanGauge = True;
 If[DirectoryQ["SM_CKM_NLO_UFO"], DeleteDirectory["SM_CKM_NLO_UFO", DeleteContents -> True]];
 WriteUFO[LSM, UVCounterterms -> uvFJ$, R2Vertices -> R2$vertlist, Output -> "SM_CKM_NLO_UFO"];
 
-(* the CT parameters: out of parameters.py (block FJCT), into CT_parameters.py *)
+(* the numbers of the point: out of parameters.py (block FJCT), into CT_parameters.py (the counterterm constants) and
+   R2four_parameters.py (the four-point R2 coefficients, internal parameters: MadGraph searches every CT coupling for the
+   name of every CT parameter when it loads the UFO) *)
 ufoNU$ = FileNameJoin[{Directory[], "SM_CKM_NLO_UFO"}];
 editNU$[file_, f_] := Export[FileNameJoin[{ufoNU$, file}], f[Import[FileNameJoin[{ufoNU$, file}], "Text"]], "Text"];
 namesNU$ = parNU$["values"][[All, 1]];
@@ -58,6 +60,9 @@ editNU$["parameters.py", Function[txt, Module[{new = StringReplace[txt,
      If[StringContainsQ[new, "FJCT"] || StringCount[txt, "lhablock = 'FJCT'"] != Length[namesNU$], Print["parameters.py: FJCT not removed"]; Abort[]];
      new]]];
 CopyFile[FileNameJoin[{srcDirNU$, "generated", "SM_CKM_CT_parameters.py"}], FileNameJoin[{ufoNU$, "CT_parameters.py"}], OverwriteTarget -> True];
+(* the four-point R2 numbers: internal parameters in their own module, imported after parameters.py *)
+CopyFile[FileNameJoin[{srcDirNU$, "generated", "SM_CKM_R2four_parameters.py"}], FileNameJoin[{ufoNU$, "R2four_parameters.py"}], OverwriteTarget -> True];
+editNU$["__init__.py", StringReplace[#, "import parameters\n" -> "import parameters\nimport R2four_parameters\n"] &];
 editNU$["__init__.py", StringReplace[#, "try:\n   import CT_vertices" ->
      "try:\n   import CT_parameters\nexcept ImportError:\n   pass\nelse:\n   all_CTparameters = CT_parameters.all_CTparameters\n\ntry:\n   import CT_vertices"] &];
 (* the couplings written with CT parameters are strings, not Laurent dictionaries (MadGraph's convention) *)
@@ -77,4 +82,5 @@ exactUFO$[file_] := Module[{txt = Import[file, "Text"], new},
    Export[file, new, "Text"];
    Length[StringCases[txt, RegularExpression["(?<![\\w.])\\d+\\.\\d{7,}"]]]];
 Print["decimal coefficients made exact: ", exactUFO$[FileNameJoin[{ufoNU$, #}]] & /@ {"couplings.py", "CT_couplings.py"}];
-Print["written: ", FileNames["SM_CKM_NLO_UFO"], " (CT parameters: ", Length[namesNU$], ")"];
+Print["written: ", FileNames["SM_CKM_NLO_UFO"], " (CT parameters: ", StringCount[Import[FileNameJoin[{ufoNU$, "CT_parameters.py"}], "Text"], "CTParameter("],
+  ", four-point R2 parameters: ", StringCount[Import[FileNameJoin[{ufoNU$, "R2four_parameters.py"}], "Text"], "= Parameter("], ")"];

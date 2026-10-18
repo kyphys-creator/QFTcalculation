@@ -12,10 +12,9 @@
 (*two-point fermion vertices), so:*)
 (*  - the quark constants (diagonal and off-diagonal, L and R) and dZ_W are this note's (nlo_ckm_dzown.wl: step (3)*)
 (*    self-energies, Eqs. (dZos), (dZRos), Denner's diagonal constants), electroweak;*)
-(*  - the other fields (A, Z, A-Z, H, leptons, neutrinos) take NLOCT's on-shell constants of the model without quark*)
-(*    mixing (SM_CKM_CT0.nlo of nlo_ckm_writect.wl nomix), recovered from its two-point UV vertices as in the SM note's*)
-(*    nlo_dz.wl, if that file exists; otherwise 0 (then the UFO is only for processes whose external particles are*)
-(*    quarks, W and photons or Z bosons of loop-induced processes, which get no counterterm);*)
+(*  - the bosons Z, A, the A-Z mixing and H are this note's too (the SM note's self-energies; they do not depend on V),*)
+(*    checked against NLOCT's on-shell constants of the SM note; the leptons, neutrinos and the gluon are NLOCT's of the SM*)
+(*    note (V-independent);*)
 (*  - where both exist (the diagonal quark constants, dZ_W), NLOCT's are compared with this note's.*)
 (*Numbers at the point of nlo_ckm_dzown.wl, 40 digits, the scale 91 GeV ({pole, finite}; each pole comes with ln mu^2).*)
 (*Writes Src/generated/SM_CKM_dZ.m.  Batch: wolframscript -file nlo_ckm_dz.wl  (after nlo_ckm_ctrules.wl, nlo_ckm_dzown.wl)*)
@@ -124,13 +123,46 @@ If[haveNLO$,
         "   (finite ", N[o[[2]], 8], ")"]] &, cmp$];
   ];
 
-(* the constants of the UFO: this note's for the quarks and W, NLOCT's for the others, 0 for the Goldstone bosons *)
+(* the fields that do not depend on V at one loop: the bosons Z, A (and the A-Z mixing), H from this note's (SM note's)
+   self-energies (nlo_ckm_dzown.wl), checked against NLOCT's on-shell constants of the SM note (models/sm, V = 1:
+   generated/SM_dZ.m of its nlo_dz.wl, expressions in the external parameters), evaluated at this point; the leptons,
+   the neutrinos and the gluon from NLOCT (the SM note checked the lepton ones against MadGraph's model to 15 digits).
+   The needed expressions are kept in generated/SM_CKM_dZsm.m (SM_dZ.m is not in git). *)
+smFile$ = FileNameJoin[{ParentDirectory[srcDirDZ$], "..", "sm", "Src", "generated", "SM_dZ.m"}];
+subFile$ = FileNameJoin[{srcDirDZ$, "generated", "SM_CKM_dZsm.m"}];
+smKeys$ = Select[need$, MatchQ[#, FR$deltaZ[{(A | Z | H | G | e | mu | ta | ve | vm | vt), _}, ___]] &];
+If[FileExistsQ[smFile$], Put[Select[Get[smFile$]["dZ"], MemberQ[smKeys$, #[[1]]] &], subFile$]];
+smDZ$ = Association[Get[subFile$]];
+ptSM$ = {ee -> Sqrt[4 Pi/128], MZ -> 91, MW -> 80, MH -> 125, MT -> 165, MB -> 286/100, MC -> 619/1000, MS -> If[ms0DZ$, 0, 546/10000],
+   MD -> 271/10000, MU -> 127/10000, MTA -> 1746/1000, MMU -> 1027/10000, Me -> 487/1000000};
+laurSM$[x_] := Module[{y = N[(x /. IPL[_] -> 1 /. gs -> gsSym$) /. ptSM$ /. FR$MU -> 91, 40], ew, qcd},
+   y = Normal[Series[y, {FR$Eps, 0, 0}]];
+   ew = y /. gsSym$ -> 0; qcd = Expand[y - ew] /. gsSym$ -> Sqrt[4 Pi 118/1000];
+   {Coefficient[ew, FR$Eps, -1], Coefficient[ew, FR$Eps, 0], Coefficient[qcd, FR$Eps, -1], Coefficient[qcd, FR$Eps, 0]}];
+smNum$ = Association[KeyValueMap[#1 -> laurSM$[#2] &, smDZ$]];
+Print["NLOCT's constants of the SM note (V-independent fields) evaluated at this point: ", Length[smNum$]];
+(* this note's bosons; the A-Z mixing: the two signs of FeynRules' convention (A0 = (1 + dZ_AA/2) A + dZ_AZ/2 Z, ...)
+   fixed against NLOCT *)
+ownB$ = <|FR$deltaZ[{Z, Z}, {{}}] -> own$["Z"], FR$deltaZ[{A, A}, {{}}] -> own$["A"], FR$deltaZ[{H, H}, {{}}] -> own$["H"]|>;
+azCand$ = Flatten[Table[{sa, sz} -> {FR$deltaZ[{A, Z}, {{}}] -> 2 sa own$["AZMZ"], FR$deltaZ[{Z, A}, {{}}] -> 2 sz own$["AZ0"]}, {sa, {1, -1}}, {sz, {1, -1}}], 1];
+azDiff$[c_] := Max[Abs[Flatten[(#[[2]] - smNum$[#[[1]]][[1 ;; 2]]) & /@ c]]];
+azBest$ = First[SortBy[azCand$, azDiff$[#[[2]]] &]];
+Print["photon-Z mixing: dZ_AZ = ", 2 azBest$[[1, 1]], " Sigma_T^AZ(MZ^2)/MZ^2, dZ_ZA = ", 2 azBest$[[1, 2]], " Sigma_T^AZ(0)/MZ^2 (Re); the other signs differ by ",
+  CForm[N[Min[azDiff$[#[[2]]] & /@ Rest[SortBy[azCand$, azDiff$[#[[2]]] &]]], 3]]];
+ownB$ = Join[ownB$, Association[azBest$[[2]]]];
+Print["this note's bosons against NLOCT (|difference| of pole, finite):"];
+KeyValueMap[Print["   ", #1, ":  ", CForm[N[Abs[#2[[1]] - smNum$[#1][[1]]], 3]], ",  ", CForm[N[Abs[#2[[2]] - smNum$[#1][[2]]], 3]],
+    "   (finite ", CForm[N[#2[[2]], 10]], ")"] &, ownB$];
+
+(* the constants of the UFO: this note's for the quarks, W and the bosons, NLOCT's for the leptons, the neutrinos and
+   the gluon, 0 for the Goldstone bosons (internal only) *)
 dZ$ = Table[k -> Which[ownKey$[k] =!= None, Association[dZown$][k],
-     KeyExistsQ[Association[dZnlo$], k], Association[dZnlo$][k],
+     KeyExistsQ[ownB$, k], Join[ownB$[k], {0, 0}],
+     KeyExistsQ[smNum$, k], smNum$[k],
      True, {0, 0, 0, 0}], {k, need$}];
-Print["field constants of the UFO: ", Length[dZ$], ";  this note's ", Length[dZown$], ", NLOCT's ",
-  Count[need$, k_ /; ownKey$[k] === None && KeyExistsQ[Association[dZnlo$], k]], ", zero: ",
-  Select[need$, ownKey$[#] === None && ! KeyExistsQ[Association[dZnlo$], #] &]];
+Print["field constants of the UFO: ", Length[dZ$], ";  this note's ", Length[dZown$] + Length[ownB$], ", NLOCT's (SM note) ",
+  Count[need$, k_ /; ownKey$[k] === None && ! KeyExistsQ[ownB$, k] && KeyExistsQ[smNum$, k]], ", zero: ",
+  Select[need$, ownKey$[#] === None && ! KeyExistsQ[ownB$, #] && ! KeyExistsQ[smNum$, #] &]];
 outDZ$ = If[ms0DZ$, "SM_CKM_dZ_ms0.m", "SM_CKM_dZ.m"];
 Put[<|"dZ" -> dZ$, "mu0" -> 91|>, FileNameJoin[{srcDirDZ$, "generated", outDZ$}]];
 Print["written: generated/", outDZ$, ";  ", Round[AbsoluteTime[] - t0DZ$], " s"];

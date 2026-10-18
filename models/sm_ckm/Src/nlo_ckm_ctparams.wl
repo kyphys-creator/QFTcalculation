@@ -90,6 +90,50 @@ Print["CT parameters: ", Length[parsCP$], " (", Count[parsCP$[[All, 2, 1]], QCD]
 Print["  dV poles (K x): ", N[KK numCP$[fdCP$["dV"]] FR$Eps // Simplify, 6] // MatrixForm // ToString];
 Print["  dvT: pole ", N[dvtCP$[[1]], 10], ", finite (91 GeV) ", N[dvtCP$[[2]], 10]];
 
+(* the four-point R2 vertices of NLOCT (generated/SM_CKM_R2.m) as numbers at the point: FeynRules' WriteUFO does not finish
+   splitting them symbolically (the largest, W W G+ G-, expands to 3e6 leaves in 64 loop-particle sets).  Each vertex is
+   written as sum over (loop particles IPL, structure ME/IndexDelta/Eps, coupling order) of a complex CT parameter FJR2...
+   times that structure; the order (QED a, QCD b) is read off from the powers of ee, the Yukawa couplings, lam (QED) and
+   gs (QCD; gs^b is kept in the vertex, the parameter carries the QED order).  R2 terms are finite and do not depend on
+   MU_R. *)
+(* N must not turn the integers of Index[Gluon, Ext[1]] into reals (MadGraph then reads the colour structure
+   Identity(1.,2.) and stops; environment notes, SM) *)
+SetAttributes[{Index, Ext}, NHoldAll];
+r2allCP$ = Get[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_R2.m"}]];
+r2fourCP$ = Select[r2allCP$, Length[#[[1]]] == 4 &];
+vevCP$ = 2 MW sw/ee;
+r2NumRules$ = Join[{yup -> Sqrt[2] MU/vevCP$, yc -> Sqrt[2] MC/vevCP$, yt -> Sqrt[2] MT/vevCP$, ydo -> Sqrt[2] MD/vevCP$,
+    ys -> Sqrt[2] MS/vevCP$, yb -> Sqrt[2] MB/vevCP$, ye -> Sqrt[2] Me/vevCP$, ym -> Sqrt[2] MMU/vevCP$, ytau -> Sqrt[2] MTA/vevCP$,
+    lam -> MH^2/(2 vevCP$^2), gs -> Sqrt[4 Pi 118/1000], s12 -> 22501/100000, s23 -> 4183/100000, s13 -> 3732/1000000, dCKM -> 1147/1000},
+   Flatten[Table[ToExpression["CKM" <> ToString[i] <> "x" <> ToString[j]] -> vStdCP$[[i, j]], {i, 3}, {j, 3}]]];
+structQ$[x_] := MatchQ[x, (IPL | ME | IndexDelta | Eps)[__] | Power[(IPL | ME | IndexDelta | Eps)[__], _]];
+r2fourOut$ = {};
+r2fourCount$ = 0;
+r2keys$ = {};
+(* the names follow the groups of the main point (generated/SM_CKM_FJctpar.m, "r2keys"); with ms0 the same names are used *)
+r2mainKeys$ = If[ms0CP$, Association[Reverse /@ Get[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_FJctpar.m"}]]["r2keys"]], <||>];
+Do[Module[{x = v[[2]], xs, terms, groups, newExpr = 0},
+   (* scale the couplings to read off the orders, then numbers *)
+   xs = x /. {ee -> tt$ ee, yup -> tt$ yup, yc -> tt$ yc, yt -> tt$ yt, ydo -> tt$ ydo, ys -> tt$ ys, yb -> tt$ yb, ye -> tt$ ye,
+       ym -> tt$ ym, ytau -> tt$ ytau, lam -> tt$^2 lam, gs -> uu$ gs};
+   xs = Expand[N[xs //. r2NumRules$ /. {sw -> Sqrt[1 - MW^2/MZ^2], cw -> MW/MZ} /. extCP$, 30]];
+   terms = If[Head[xs] === Plus, List @@ xs, {xs}];
+   groups = GroupBy[terms, Function[tm, Module[{f = If[Head[tm] === Times, List @@ tm, {tm}]},
+        {Times @@ Select[f, structQ$], {Exponent[tm, tt$], Exponent[tm, uu$]}}]] -> Function[tm,
+       tm /. {(IPL | ME | IndexDelta | Eps)[__] -> 1, tt$ -> 1, uu$ -> 1}], Total];
+   KeyValueMap[Function[{key, c}, Module[{cc = Chop[c, 10^-28], name},
+       If[cc != 0,
+        r2fourCount$++;
+        name = If[ms0CP$, Lookup[r2mainKeys$, Key[{v[[1]], key}], Print["   an R2 group that the main point does not have: ", v[[1, All, 1]]]; Abort[]],
+          "FJRtwo" <> ToString[r2fourCount$]];
+        AppendTo[r2keys$, name -> {v[[1]], key}];
+        (* the QCD order is carried by gs^b kept in the vertex, the QED order by the parameter *)
+        AppendTo[parsCP$, {name, {QED, key[[2, 1]]}, 0, cc/N[Sqrt[4 Pi 118/1000], 30]^key[[2, 2]], False, key[[2]]}];
+        newExpr += ToExpression[name] gs^key[[2, 2]] key[[1]]]]], groups];
+   AppendTo[r2fourOut$, {v[[1]], newExpr}]], {v, r2fourCP$}];
+Print["four-point R2 vertices: ", Length[r2fourCP$], " -> CT parameters ", r2fourCount$, " (orders ",
+  Union[Select[parsCP$, StringStartsQ[#[[1]], "FJRtwo"] &][[All, 6]]], ")"];
+
 (* numbers as sums of 7-digit integers times powers of ten (MadGraph keeps 7 significant digits of each number) *)
 pyNum$[x_] := Module[{y = N[x, 30], e, m, a, b, c},
    If[y == 0, Return["0."]];
@@ -97,6 +141,8 @@ pyNum$[x_] := Module[{y = N[x, 30], e, m, a, b, c},
    m = Round[Abs[y]/10^e];                      (* 17 digits *)
    {a, b, c} = {Quotient[m, 10^10], Quotient[Mod[m, 10^10], 10^3], Mod[m, 10^3]};
    "(" <> If[y < 0, "-", ""] <> "(" <> StringRiffle[MapThread[ToString[#1] <> ".*1e" <> ToString[#2] &, {{a, b, c}, e + {10, 3, 0}}], " + "] <> "))"];
+pyNumC$[z_] := If[Im[z] == 0, pyNum$[Re[z]], "(" <> pyNum$[Re[z]] <> " + complex(0,1)*" <> pyNum$[Im[z]] <> ")"];
+valueCP$[p_] /; StringStartsQ[p[[1]], "FJRtwo"] := "{0:'" <> pyNumC$[p[[4]]] <> "'}";
 valueCP$[p_] := Module[{pole = p[[3]], fin = p[[4]], runs = p[[5]], d},
    d = {};
    If[pole != 0, AppendTo[d, "-1:'" <> pyNum$[pole] <> "'"]];
@@ -104,7 +150,7 @@ valueCP$[p_] := Module[{pole = p[[3]], fin = p[[4]], runs = p[[5]], d},
        " + " <> pyNum$[pole] <> "*reglog(MU_R**2/" <> ToString[mu0CP$^2] <> ".)", ""] <> "'"]];
    "{" <> StringRiffle[d, ","] <> "}"];
 Print["  check of the 7-digit split: ", Max[Abs[(ToExpression[StringReplace[pyNum$[#], {"e" -> "*^", ".*" -> "*"}]] - #)/#] & /@
-     Select[Flatten[parsCP$[[All, 3 ;; 4]]], # != 0 &]] // N];
+     Select[Flatten[Re[parsCP$[[All, 3 ;; 4]]]], # != 0 &]] // N];
 
 (* the UFO's CT_parameters.py *)
 ctParText$[vals_] := "# This file was generated by nlo_ckm_ctparams.wl: the counterterm parameters of the CKM NLO UFO\n" <>
@@ -114,12 +160,27 @@ ctParText$[vals_] := "# This file was generated by nlo_ckm_ctparams.wl: the coun
    "from function_library import complexconjugate, re, im, csc, sec, acsc, asec, cot, reglog\n\n" <>
    StringJoin[(#[[1]] <> " = CTParameter(name = '" <> #[[1]] <> "',\n    type = 'real',\n    value = " <> #[[2]] <>
         ",\n    texname = '" <> #[[1]] <> "')\n\n") & /@ vals];
+(* the four-point R2 numbers are finite and do not depend on MU_R: they are ordinary internal parameters of the UFO
+   (R2four_parameters.py), not CT parameters (MadGraph's UFO reader scans every CT coupling against every CT parameter
+   with a regular expression; with 1137 more CT parameters it did not finish loading the model in 48 minutes) *)
+r2ParText$[vals_] := "# This file was generated by nlo_ckm_ctparams.wl: the four-point R2 vertices of NLOCT as numbers at the note's point" <>
+   If[ms0CP$, " with m_s = 0", ""] <> "\n# (internal parameters of the UFO, used by CT_couplings.py)\n\n" <>
+   "from object_library import all_parameters, Parameter\n\n" <>
+   StringJoin[(#[[1]] <> " = Parameter(name = '" <> #[[1]] <> "',\n    nature = 'internal',\n    type = 'complex',\n    value = '" <> #[[2]] <>
+        "',\n    texname = '" <> #[[1]] <> "')\n\n") & /@ vals];
+isR2$[name_] := StringStartsQ[name, "FJRtwo"];
+valueR2$[p_] := pyNumC$[p[[4]]];
 If[ms0CP$,
   (* the names of the main point; the values of this one, 0 where this point has none *)
-  Module[{main = Get[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_FJctpar.m"}]]["values"][[All, 1]], here = Association[(#[[1]] -> valueCP$[#]) & /@ parsCP$]},
+  Module[{main = Get[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_FJctpar.m"}]]["values"][[All, 1]],
+    here = Association[(#[[1]] -> If[isR2$[#[[1]]], valueR2$[#], valueCP$[#]]) & /@ parsCP$]},
    If[! SubsetQ[main, Keys[here]], Print["   names that the main point does not have: ", Complement[Keys[here], main]]; Abort[]];
-   Export[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_CT_parameters_ms0.py"}], ctParText$[(# -> Lookup[here, #, "{0:'0.'}"]) & /@ main /. Rule -> List], "Text"];
-   Print["written: generated/SM_CKM_CT_parameters_ms0.py (", Length[main], " parameters, ", Length[main] - Length[here], " zero here)"]];
+   Export[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_CT_parameters_ms0.py"}],
+    ctParText$[(# -> Lookup[here, #, "{0:'0.'}"]) & /@ Select[main, ! isR2$[#] &] /. Rule -> List], "Text"];
+   Export[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_R2four_parameters_ms0.py"}],
+    r2ParText$[(# -> Lookup[here, #, "0."]) & /@ Select[main, isR2$] /. Rule -> List], "Text"];
+   Print["written: generated/SM_CKM_CT_parameters_ms0.py, SM_CKM_R2four_parameters_ms0.py (", Length[main], " parameters, ",
+     Length[main] - Length[here], " zero here)"]];
   Abort[]];
 
 (* FeynRules: the parameters as external real parameters with their coupling orders (block FJCT; moved to CT_parameters.py
@@ -130,7 +191,9 @@ frCP$ = "(* generated by nlo_ckm_ctparams.wl: the counterterm parameters of the 
        ",\n    Value -> " <> ToString[i[[1]]] <> "/1000,\n    InteractionOrder -> {" <> ToString[p[[2, 1]]] <> ", " <>
        ToString[p[[2, 2]]] <> "},\n    Description -> \"FJ counterterm parameter\"}"], parsCP$], ",\n"] <> "\n};\n";
 Export[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_FJct.fr"}], frCP$, "Text"];
-Put[<|"rules" -> rulesCP$, "values" -> ((#[[1]] -> valueCP$[#]) & /@ parsCP$), "numbers" -> parsCP$, "mu0" -> mu0CP$|>,
+Put[<|"rules" -> rulesCP$, "values" -> ((#[[1]] -> valueCP$[#]) & /@ parsCP$), "numbers" -> parsCP$, "mu0" -> mu0CP$, "r2four" -> r2fourOut$,
+   "r2keys" -> r2keys$|>,
   FileNameJoin[{srcDirCP$, "generated", "SM_CKM_FJctpar.m"}]];
-Export[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_CT_parameters.py"}], ctParText$[{#[[1]], valueCP$[#]} & /@ parsCP$], "Text"];
-Print["written: generated/SM_CKM_FJct.fr, generated/SM_CKM_FJctpar.m, generated/SM_CKM_CT_parameters.py"];
+Export[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_CT_parameters.py"}], ctParText$[{#[[1]], valueCP$[#]} & /@ Select[parsCP$, ! isR2$[#[[1]]] &]], "Text"];
+Export[FileNameJoin[{srcDirCP$, "generated", "SM_CKM_R2four_parameters.py"}], r2ParText$[{#[[1]], valueR2$[#]} & /@ Select[parsCP$, isR2$[#[[1]]] &]], "Text"];
+Print["written: generated/SM_CKM_FJct.fr, generated/SM_CKM_FJctpar.m, generated/SM_CKM_CT_parameters.py, generated/SM_CKM_R2four_parameters.py"];

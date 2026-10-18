@@ -3,6 +3,7 @@ import particles
 import couplings
 import lorentz
 import parameters
+import R2four_parameters
 import vertices
 import coupling_orders
 #import write_param_card

@@ -6,10 +6,40 @@ from object_library import all_CTparameters, CTParameter
 
 from function_library import complexconjugate, re, im, csc, sec, acsc, asec, cot, reglog
 
+FJdZAAre = CTParameter(name = 'FJdZAAre',
+    type = 'real',
+    value = {-1:'(-(4766358.*1e-9 + 9728041.*1e-16 + 572.*1e-19))',0:'(-(7687136.*1e-8 + 5179177.*1e-15 + 851.*1e-18)) + (-(4766358.*1e-9 + 9728041.*1e-16 + 572.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZAAre')
+
+FJdZAZre = CTParameter(name = 'FJdZAZre',
+    type = 'real',
+    value = {-1:'((7282039.*1e-9 + 7112868.*1e-16 + 640.*1e-19))',0:'((2170370.*1e-9 + 6822457.*1e-16 + 460.*1e-19)) + ((7282039.*1e-9 + 7112868.*1e-16 + 640.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZAZre')
+
+FJdZGGqcdre = CTParameter(name = 'FJdZGGqcdre',
+    type = 'real',
+    value = {-1:'(-(3756056.*1e-8 + 6569687.*1e-15 + 299.*1e-18))',0:'(-(4040281.*1e-7 + 9939447.*1e-14 + 397.*1e-17)) + (-(3756056.*1e-8 + 6569687.*1e-15 + 299.*1e-18))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZGGqcdre')
+
+FJdZHHre = CTParameter(name = 'FJdZHHre',
+    type = 'real',
+    value = {-1:'(-(1296283.*1e-8 + 1722306.*1e-15 + 582.*1e-18))',0:'((2877815.*1e-8 + 6219472.*1e-15 + 92.*1e-18)) + (-(1296283.*1e-8 + 1722306.*1e-15 + 582.*1e-18))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZHHre')
+
 FJdZWWre = CTParameter(name = 'FJdZWWre',
     type = 'real',
     value = {-1:'(-(3524227.*1e-9 + 9546389.*1e-16 + 712.*1e-19))',0:'((1985032.*1e-9 + 1341111.*1e-16 + 660.*1e-19)) + (-(3524227.*1e-9 + 9546389.*1e-16 + 712.*1e-19))*reglog(MU_R**2/8281.)'},
     texname = 'FJdZWWre')
+
+FJdZZAre = CTParameter(name = 'FJdZZAre',
+    type = 'real',
+    value = {-1:'(-(4587074.*1e-9 + 55185.*1e-16 + 835.*1e-19))',0:'(-(1181931.*1e-9 + 8349743.*1e-16 + 751.*1e-19)) + (-(4587074.*1e-9 + 55185.*1e-16 + 835.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZZAre')
+
+FJdZZZre = CTParameter(name = 'FJdZZZre',
+    type = 'real',
+    value = {-1:'(-(3011342.*1e-9 + 4726435.*1e-16 + 128.*1e-19))',0:'((4049914.*1e-9 + 4711.*1e-16 + 984.*1e-19)) + (-(3011342.*1e-9 + 4726435.*1e-16 + 128.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZZZre')
 
 FJdZbbLre = CTParameter(name = 'FJdZbbLre',
     type = 'real',
@@ -161,6 +191,26 @@ FJdZdsRim = CTParameter(name = 'FJdZdsRim',
     value = {-1:'(-(1635221.*1e-12 + 7814531.*1e-19 + 928.*1e-22))',0:'((8625039.*1e-13 + 3505961.*1e-20 + 984.*1e-23)) + (-(1635221.*1e-12 + 7814531.*1e-19 + 928.*1e-22))*reglog(MU_R**2/8281.)'},
     texname = 'FJdZdsRim')
 
+FJdZeeLre = CTParameter(name = 'FJdZeeLre',
+    type = 'real',
+    value = {-1:'(-(3497250.*1e-9 + 127731.*1e-16 + 977.*1e-19))',0:'(-(4730082.*1e-8 + 4218790.*1e-15 + 893.*1e-18)) + (-(3497250.*1e-9 + 127731.*1e-16 + 977.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZeeLre')
+
+FJdZeeRre = CTParameter(name = 'FJdZeeRre',
+    type = 'real',
+    value = {-1:'(-(2047818.*1e-9 + 2100850.*1e-16 + 429.*1e-19))',0:'(-(4767292.*1e-8 + 5071164.*1e-15 + 758.*1e-18)) + (-(2047818.*1e-9 + 2100850.*1e-16 + 429.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZeeRre')
+
+FJdZmumuLre = CTParameter(name = 'FJdZmumuLre',
+    type = 'real',
+    value = {-1:'(-(3497251.*1e-9 + 1403997.*1e-16 + 964.*1e-19))',0:'(-(2733942.*1e-8 + 7765341.*1e-15 + 496.*1e-18)) + (-(3497251.*1e-9 + 1403997.*1e-16 + 964.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZmumuLre')
+
+FJdZmumuRre = CTParameter(name = 'FJdZmumuRre',
+    type = 'real',
+    value = {-1:'(-(2047820.*1e-9 + 4653382.*1e-16 + 402.*1e-19))',0:'(-(2771152.*1e-8 + 8789047.*1e-15 + 709.*1e-18)) + (-(2047820.*1e-9 + 4653382.*1e-16 + 402.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZmumuRre')
+
 FJdZsbLre = CTParameter(name = 'FJdZsbLre',
     type = 'real',
     value = {-1:'(-(2393228.*1e-10 + 1582736.*1e-17 + 80.*1e-20))',0:'((7468368.*1e-11 + 3948586.*1e-18 + 144.*1e-21)) + (-(2393228.*1e-10 + 1582736.*1e-17 + 80.*1e-20))*reglog(MU_R**2/8281.)'},
@@ -261,6 +311,16 @@ FJdZtuRim = CTParameter(name = 'FJdZtuRim',
     value = {-1:'(-(1372535.*1e-18 + 6236344.*1e-25 + 974.*1e-28))',0:'(-(2848304.*1e-18 + 2759259.*1e-25 + 476.*1e-28)) + (-(1372535.*1e-18 + 6236344.*1e-25 + 974.*1e-28))*reglog(MU_R**2/8281.)'},
     texname = 'FJdZtuRim')
 
+FJdZtataLre = CTParameter(name = 'FJdZtataLre',
+    type = 'real',
+    value = {-1:'(-(3497575.*1e-9 + 9414961.*1e-16 + 984.*1e-19))',0:'(-(1677158.*1e-8 + 2131204.*1e-15 + 545.*1e-18)) + (-(3497575.*1e-9 + 9414961.*1e-16 + 984.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZtataLre')
+
+FJdZtataRre = CTParameter(name = 'FJdZtataRre',
+    type = 'real',
+    value = {-1:'(-(2048470.*1e-9 + 675310.*1e-16 + 443.*1e-19))',0:'(-(1714373.*1e-8 + 2462182.*1e-15 + 543.*1e-18)) + (-(2048470.*1e-9 + 675310.*1e-16 + 443.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZtataRre')
+
 FJdZucLre = CTParameter(name = 'FJdZucLre',
     type = 'real',
     value = {-1:'((2177766.*1e-16 + 1051888.*1e-23 + 100.*1e-26))',0:'((8144937.*1e-16 + 7904425.*1e-23 + 520.*1e-26)) + ((2177766.*1e-16 + 1051888.*1e-23 + 100.*1e-26))*reglog(MU_R**2/8281.)'},
@@ -310,6 +370,21 @@ FJdZuuRre = CTParameter(name = 'FJdZuuRre',
     type = 'real',
     value = {-1:'(-(9101414.*1e-10 + 6150558.*1e-17 + 704.*1e-20))',0:'(-(1578151.*1e-8 + 7835427.*1e-15 + 558.*1e-18)) + (-(9101414.*1e-10 + 6150558.*1e-17 + 704.*1e-20))*reglog(MU_R**2/8281.)'},
     texname = 'FJdZuuRre')
+
+FJdZveveLre = CTParameter(name = 'FJdZveveLre',
+    type = 'real',
+    value = {-1:'(-(2253852.*1e-9 + 198677.*1e-16 + 654.*1e-19))',0:'((7743109.*1e-10 + 6096596.*1e-17 + 239.*1e-20)) + (-(2253852.*1e-9 + 198677.*1e-16 + 654.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZveveLre')
+
+FJdZvmvmLre = CTParameter(name = 'FJdZvmvmLre',
+    type = 'real',
+    value = {-1:'(-(2253853.*1e-9 + 1474943.*1e-16 + 641.*1e-19))',0:'((7743123.*1e-10 + 6181119.*1e-17 + 689.*1e-20)) + (-(2253853.*1e-9 + 1474943.*1e-16 + 641.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZvmvmLre')
+
+FJdZvtvtLre = CTParameter(name = 'FJdZvtvtLre',
+    type = 'real',
+    value = {-1:'(-(2254177.*1e-9 + 9485907.*1e-16 + 661.*1e-19))',0:'((7747139.*1e-10 + 6138881.*1e-17 + 205.*1e-20)) + (-(2254177.*1e-9 + 9485907.*1e-16 + 661.*1e-19))*reglog(MU_R**2/8281.)'},
+    texname = 'FJdZvtvtLre')
 
 FJdlnere = CTParameter(name = 'FJdlnere',
     type = 'real',

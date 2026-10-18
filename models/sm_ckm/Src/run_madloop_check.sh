@@ -11,6 +11,11 @@
 #   2. the references: wud_madloop_ref.wl (W+ -> u_i dbar_j, step (5)), fcnc_madloop_ref.wl (steps (7), (8))
 #   3. MadLoop standalone for the outputs of ckm_madloop.py --outputs (work/ml/<name>), then ckm_madloop.py
 #      -> results/ckm_madloop.csv
+#   4. MadGraph's electroweak NLO model loop_qcd_qed_sm-full (its own CKM matrix, Wolfenstein form): the references
+#      fcnc_madloop_ref.wl mg5, the outputs of ckm_madloop_mg5.py --outputs, then ckm_madloop_mg5.py
+#      -> results/ckm_madloop_mg5.csv
+#   5. the field constants of the bosons and leptons and the four-point R2 vertices: ext_formcalc.wl (SM.mod + FormCalc),
+#      the outputs of ckm_madloop_ext.py --outputs, then ckm_madloop_ext.py -> results/ckm_madloop_ext.csv
 # Usage: ./run_madloop_check.sh [--no-ufo]
 cd "$(dirname "$0")"
 export PATH="$HOME/hep/bin:$PATH"
@@ -19,7 +24,7 @@ mkdir -p work/ml results
 wl() {   # script, argument, log name
   echo "== $1 $2"
   wolframscript -file "$1.wl" $2 > "work/$3.log" 2>&1 || { echo "$1 failed (work/$3.log)"; exit 1; }
-  grep -E '^(renormalized|written|counterterm|CKM|check|tadpole|K de|V = 1|constants|field|solved|finite|NLOCT|largest|off-diag|this note|CT param|  dV|  dvT|UV |decimal|\(a\)|\(b\)|\(c\)|mu = |   [a-z][a-z]:)' "work/$3.log" | cut -c1-300
+  grep -E '^(renormalized|written|counterterm|CKM|check|tadpole|K de|V = 1|constants|field|solved|finite|NLOCT|largest|off-diag|this note|CT param|  dV|  dvT|UV |decimal|four|photon|   FR|\(a\)|\(b\)|\(c\)|\(mg5\)|mu = |   [a-z][a-z_]*: |   [a-z][a-z_]* *mu)' "work/$3.log" | cut -c1-300
 }
 if [ "$1" != "--no-ufo" ]; then
   wl nlo_ckm_renormalize nomix nlo_ckm_renormalize0
@@ -36,22 +41,23 @@ if [ "$1" != "--no-ufo" ]; then
 fi
 wl wud_madloop_ref "" wud_madloop_ref
 wl fcnc_madloop_ref "" fcnc_madloop_ref
-# the UFO, and a copy with the CT parameters of m_s = 0 for the flavour-changing processes (nlo_ckm_ctparams.wl ms0)
+# the UFO, and a copy with the CT and four-point R2 parameters of m_s = 0 for the flavour-changing processes (nlo_ckm_ctparams.wl ms0)
 rm -rf work/ml/SM_CKM_NLO_UFO work/ml/SM_CKM_NLO_UFO_ms0
 cp -r generated/SM_CKM_NLO_UFO work/ml/
 cp -r generated/SM_CKM_NLO_UFO work/ml/SM_CKM_NLO_UFO_ms0
 cp generated/SM_CKM_CT_parameters_ms0.py work/ml/SM_CKM_NLO_UFO_ms0/CT_parameters.py
-build() {   # output name, model, processes separated by |
+cp generated/SM_CKM_R2four_parameters_ms0.py work/ml/SM_CKM_NLO_UFO_ms0/R2four_parameters.py
+build() {   # output name, model, processes separated by |, driver script
   local out="work/ml/$1"
   rm -rf "$out"
-  { echo "import model ./work/ml/$2"
+  { case "$2" in loop_qcd_qed_sm*) echo "import model $2";; *) echo "import model ./work/ml/$2";; esac
     IFS='|' read -ra ps <<< "$3"
     echo "generate ${ps[0]}"
     for p in "${ps[@]:1}"; do echo "add process $p"; done
     echo "output standalone ./$out"; } > "$out.mg5"
   mg5_aMC "$out.mg5" < /dev/null > "$out.log" 2>&1
   grep -E 'Contributing diagrams' "$out.log" | sed 's/^/  /'
-  python3 ckm_madloop.py --card "$out/Cards/param_card.dat" "$1" || exit 1
+  python3 "${4:-ckm_madloop.py}" --card "$out/Cards/param_card.dat" "$1" || exit 1
   for P in "$out"/SubProcesses/P*_*; do
     [ -f "$P/check_sa.f" ] || continue
     python3 ../../sm/Src/patch_check_sa.py "$P/check_sa.f"
@@ -64,3 +70,17 @@ while IFS='|' read -r name model procs; do
   build "$name" "$model" "$procs"
 done < work/ml/outputs.txt
 python3 ckm_madloop.py
+echo "== MadGraph's loop_qcd_qed_sm"
+wl fcnc_madloop_ref mg5 fcnc_madloop_ref_mg5
+python3 ckm_madloop_mg5.py --outputs > work/ml/outputs_mg5.txt
+while IFS='|' read -r name model procs; do
+  build "$name" "$model" "$procs" ckm_madloop_mg5.py
+done < work/ml/outputs_mg5.txt
+python3 ckm_madloop_mg5.py
+echo "== the extended UFO: external leptons and Z, gamma gamma -> Z Z"
+wl ext_formcalc "" ext_formcalc
+python3 ckm_madloop_ext.py --outputs > work/ml/outputs_ext.txt
+while IFS='|' read -r name model procs; do
+  build "$name" "$model" "$procs" ckm_madloop_ext.py
+done < work/ml/outputs_ext.txt
+python3 ckm_madloop_ext.py
