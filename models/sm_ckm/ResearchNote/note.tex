@@ -353,7 +353,7 @@ K\beta_{Y_d}&=\Bigl[\frac32\bigl(Y_dY_d^\dagger-Y_uY_u^\dagger\bigr)+\mathcal T-
 \end{aligned}
 \label{eq:betaY}
 \end{equation}
-である~\cite{mv2,arason92}（\ref{app:rg}。手順 (4) で本ノートの模型から導いた）。$\mathcal T=\tr(3Y_uY_u^\dagger+3Y_dY_d^\dagger+Y_\ell Y_\ell^\dagger)$ で、ゲージ結合と $\mathcal T$ の項は単位行列に比例する。場の繰り込みを世代のエルミートな行列にとったもので、$\MSbar$ の $\beta$ 関数なのでゲージによらない。$V=1$ では SM ノートの式~(15) の $\beta_{y_u}$、$\beta_{y_d}$ になる。ゲージ結合、$\lambda$、$\mu^2$ の1ループの $\beta$ 関数は湯川行列を $\tr Y_uY_u^\dagger=\sum y_u^2$、$\tr(Y_uY_u^\dagger)^2=\sum y_u^4$ などの形でだけ含むので $V$ によらず、SM ノートの式~(15) のままである（2ループでは $\tr(Y_uY_u^\dagger Y_dY_d^\dagger)=\sum_{ij}|V_{ij}|^2y_{u_i}^2y_{d_j}^2$ などが入る）。
+である~\cite{mv2,arason92}（\ref{app:rg}、図~\ref{fig:rgdiag} の上の段。手順 (4) で本ノートの模型から導いた）。$\mathcal T=\tr(3Y_uY_u^\dagger+3Y_dY_d^\dagger+Y_\ell Y_\ell^\dagger)$ で、ゲージ結合と $\mathcal T$ の項は単位行列に比例する。場の繰り込みを世代のエルミートな行列にとったもので、$\MSbar$ の $\beta$ 関数なのでゲージによらない。$V=1$ では SM ノートの式~(15) の $\beta_{y_u}$、$\beta_{y_d}$ になる。ゲージ結合、$\lambda$、$\mu^2$ の1ループの $\beta$ 関数は湯川行列を $\tr Y_uY_u^\dagger=\sum y_u^2$、$\tr(Y_uY_u^\dagger)^2=\sum y_u^4$ などの形でだけ含むので $V$ によらず、SM ノートの式~(15) のままである（2ループでは $\tr(Y_uY_u^\dagger Y_dY_d^\dagger)=\sum_{ij}|V_{ij}|^2y_{u_i}^2y_{d_j}^2$ などが入る）。
 
 \paragraph{質量と CKM 行列の走り。}$H_u=Y_uY_u^\dagger$、$H_d=Y_dY_d^\dagger$ は二重項の世代の空間のエルミートな行列で、上型の質量の基底では $H_u=D_u$、$H_d=VD_dV^\dagger$ である。式~\eqref{eq:betaY} から $H_u$、$H_d$ の走りを求め、固有値と固有ベクトルの摂動を使うと（\ref{app:rg}）
 \begin{equation}
@@ -382,7 +382,112 @@ K\frac{\dd\ln J}{\dd\ln\mu}\simeq3\bigl(y_t^2+y_b^2\bigr)
 V_0=V+\delta V,\qquad \delta V=\frac{\DUV}2\,\frac{\dd V}{\dd\ln\mu}
 \label{eq:dV}
 \end{equation}
-で、$\dd V/\dd\ln\mu$ は式~\eqref{eq:Vrun} である。これは SM ノートの式~(18) の質量の対抗項 $\delta M^2=\frac{\DUV}2\dd M^2/\dd\ln\mu$ と同じ形で、FJ の処方のタドポールは $v$ にしか入らないので $\delta V$ に入らない。$\delta V$ は $\MSbar$ の $\beta$ 関数だけで決まるので、ゲージによらない。場の位相の付け替えの自由度は、場の繰り込みの反エルミートな対角の部分と打ち消し合う。
+で、$\dd V/\dd\ln\mu$ は式~\eqref{eq:Vrun} である（図~\ref{fig:rgdiag} の下の段）。これは SM ノートの式~(18) の質量の対抗項 $\delta M^2=\frac{\DUV}2\dd M^2/\dd\ln\mu$ と同じ形で、FJ の処方のタドポールは $v$ にしか入らないので $\delta V$ に入らない。$\delta V$ は $\MSbar$ の $\beta$ 関数だけで決まるので、ゲージによらない。場の位相の付け替えの自由度は、場の繰り込みの反エルミートな対角の部分と打ち消し合う。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.86,wl/.style={slab,anchor=north,text width=3.6cm}]
+% (0) tree vertex
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-1.4,0) -- (0,0); \draw[fermion] (0,0) -- (1.4,0); \draw[scalar] (0,0) -- (0,-0.8);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.22) {$u_R$}; \node[font=\scriptsize] at (1.2,0.22) {$Q_L$};
+  \node[font=\scriptsize] at (0.25,-0.62) {$\tilde\Phi$};
+  \node[wl] at (0,-1.25) {(0) 木の頂点 $-\bar Q_LY_u\tilde\Phi u_R$};
+\end{scope}
+% (a) Phi self-energy
+\begin{scope}[shift={(4.3,0)}]
+  \draw[fermion] (-1.4,0) -- (0,0); \draw[fermion] (0,0) -- (1.4,0);
+  \draw[scalar] (0,0) -- (0,-0.22); \draw[scalar] (0,-0.82) -- (0,-1.05);
+  \draw[fermion] (0,-0.22) arc (90:-90:0.3); \draw[fermion] (0,-0.82) arc (270:90:0.3);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0,-0.22) {}; \node[vtx] at (0,-0.82) {};
+  \node[font=\scriptsize] at (-1.2,0.22) {$u_R$}; \node[font=\scriptsize] at (1.2,0.22) {$Q_L$};
+  \node[font=\scriptsize] at (0.52,-0.52) {$f$};
+  \node[wl] at (0,-1.25) {(a) $\tilde\Phi$ の場の繰り込み（$f$ は $Q_L$、$u_R$、$d_R$、$L$、$\ell_R$）：$\mathcal TY_u$};
+\end{scope}
+% (b) Q_L self-energy
+\begin{scope}[shift={(8.6,0)}]
+  \draw[fermion] (-1.5,0) -- (-0.8,0); \draw[fermion] (-0.8,0) -- (-0.1,0); \draw[fermion] (-0.1,0) -- (0.8,0); \draw[fermion] (0.8,0) -- (1.5,0);
+  \draw[scalar] (-0.1,0) arc (180:0:0.45); \draw[scalar] (-0.8,0) -- (-0.8,-0.8);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (-0.1,0) {}; \node[vtx] at (0.8,0) {};
+  \node[font=\scriptsize] at (-1.3,0.22) {$u_R$}; \node[font=\scriptsize] at (1.3,0.22) {$Q_L$};
+  \node[font=\scriptsize] at (0.35,-0.22) {$u_R$, $d_R$}; \node[font=\scriptsize] at (0.35,0.67) {$\tilde\Phi$, $\Phi$};
+  \node[font=\scriptsize] at (-0.55,-0.62) {$\tilde\Phi$};
+  \node[wl] at (0,-1.25) {(b) $Q_L$ の場の繰り込み：$\frac12(H_u+H_d)Y_u$（左から）};
+\end{scope}
+% (c) u_R self-energy
+\begin{scope}[shift={(12.9,0)}]
+  \draw[fermion] (-1.5,0) -- (-0.8,0); \draw[fermion] (-0.8,0) -- (0.1,0); \draw[fermion] (0.1,0) -- (0.8,0); \draw[fermion] (0.8,0) -- (1.5,0);
+  \draw[scalar] (-0.8,0) arc (180:0:0.45); \draw[scalar] (0.8,0) -- (0.8,-0.8);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0.1,0) {}; \node[vtx] at (0.8,0) {};
+  \node[font=\scriptsize] at (-1.3,0.22) {$u_R$}; \node[font=\scriptsize] at (1.3,0.22) {$Q_L$};
+  \node[font=\scriptsize] at (-0.35,-0.22) {$Q_L$}; \node[font=\scriptsize] at (-0.35,0.67) {$\tilde\Phi$};
+  \node[font=\scriptsize] at (1.05,-0.62) {$\tilde\Phi$};
+  \node[wl] at (0,-1.25) {(c) $u_R$ の場の繰り込み：$Y_u(Y_u^\dagger Y_u)$（右から）};
+\end{scope}
+% (d) vertex with internal Phi
+\begin{scope}[shift={(0,-3.5)}]
+  \draw[fermion] (-1.5,0) -- (-0.8,0); \draw[fermion] (-0.8,0) -- (0,0); \draw[fermion] (0,0) -- (0.8,0); \draw[fermion] (0.8,0) -- (1.5,0);
+  \draw[scalar] (-0.8,0) arc (180:0:0.8); \draw[scalar] (0,0) -- (0,-0.8);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.8,0) {};
+  \node[font=\scriptsize] at (-1.3,0.22) {$u_R$}; \node[font=\scriptsize] at (1.3,0.22) {$Q_L$};
+  \node[font=\scriptsize] at (-0.4,0.22) {$Q_L$}; \node[font=\scriptsize] at (0.4,0.22) {$d_R$};
+  \node[font=\scriptsize] at (0,1.02) {$\Phi$}; \node[font=\scriptsize] at (0.25,-0.62) {$\tilde\Phi$};
+  \node[wl] at (0,-1.25) {(d) 頂点の補正（$\Phi$ の内線）：$-2H_dY_u$};
+\end{scope}
+% (e) gauge fields
+\begin{scope}[shift={(4.3,-3.5)}]
+  \draw[fermion] (-1.5,0) -- (-0.8,0); \draw[fermion] (-0.8,0) -- (0,0); \draw[fermion] (0,0) -- (0.8,0); \draw[fermion] (0.8,0) -- (1.5,0);
+  \draw[photon] (-0.8,0) arc (180:0:0.8); \draw[scalar] (0,0) -- (0,-0.8);
+  \node[vtx] at (-0.8,0) {}; \node[vtx] at (0,0) {}; \node[vtx] at (0.8,0) {};
+  \node[font=\scriptsize] at (-1.3,0.22) {$u_R$}; \node[font=\scriptsize] at (1.3,0.22) {$Q_L$};
+  \node[font=\scriptsize] at (0,1.05) {$G$, $W$, $B$}; \node[font=\scriptsize] at (0.25,-0.62) {$\tilde\Phi$};
+  \node[wl] at (0,-1.25) {(e) ゲージ場の図（と脚の繰り込み）：単位行列の倍};
+\end{scope}
+% the sum
+\node[draw,rounded corners=2pt,align=center,font=\footnotesize,inner sep=5pt] at (10.75,-3.55)
+  {(a)〜(e) の和\\[2pt] $K\beta_{Y_u}=\Bigl[\frac32\bigl(H_u-H_d\bigr)+\mathcal T-8g_s^2-\frac94g^2-\frac{17}{12}g'^2\Bigr]Y_u$\\[2pt]（$V$ を回すのは $\frac32(H_u-H_d)$ だけ）};
+% (f) counterterm in the symmetric phase
+\begin{scope}[shift={(0,-7.0)}]
+  \draw[fermion] (-1.4,0) -- (-0.1,0); \draw[fermion] (0.1,0) -- (1.4,0); \draw[scalar] (0,-0.1) -- (0,-0.8);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-1.2,0.22) {$u_R$}; \node[font=\scriptsize] at (1.2,0.22) {$Q_L$};
+  \node[font=\scriptsize] at (0.25,-0.62) {$\tilde\Phi$};
+  \node[wl] at (0,-1.25) {(f) 対称な相の対抗項\\$\delta Y_u=\frac{\DUV}2\beta_{Y_u}$};
+\end{scope}
+\draw[-{Stealth[length=2.2mm]},thick] (1.8,-7.0) -- (3.6,-7.0);
+\node[slab] at (2.7,-6.62) {$Y_0=Y+\delta Y$ を};
+\node[slab] at (2.7,-7.38) {同じ回転で対角化};
+% (g) W counterterm vertex
+\begin{scope}[shift={(5.5,-7.0)}]
+  \draw[photon] (-1.0,0) -- (-0.12,0); \draw[fermion] (0.08,0.08) -- (0.85,0.6); \draw[fermion] (0.85,-0.6) -- (0.08,-0.08);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$u_i$}; \node[font=\scriptsize,anchor=west] at (0.85,-0.6) {$\bar d_j$};
+  \node[wl] at (0,-1.25) {(g) $W^+\bar u_id_j$：$\frac g{\sqrt2}\delta V_{ij}\gamma^\mu P_L$};
+\end{scope}
+% (h) G+ counterterm vertex
+\begin{scope}[shift={(9.5,-7.0)}]
+  \draw[scalar] (-1.0,0) -- (-0.12,0); \draw[fermion] (0.08,0.08) -- (0.85,0.6); \draw[fermion] (0.85,-0.6) -- (0.08,-0.08);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$G^+$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$u_i$}; \node[font=\scriptsize,anchor=west] at (0.85,-0.6) {$\bar d_j$};
+  \node[wl] at (0,-1.25) {(h) $G^+\bar u_id_j$：$W$ と同じ $\delta V_{ij}$ と、$\delta y$};
+\end{scope}
+% (i) FJ tadpole: only v
+\begin{scope}[shift={(13.4,-7.0)}]
+  \draw[fermion] (-1.2,0) -- (0,0); \draw[fermion] (0,0) -- (1.2,0);
+  \draw[scalar] (0,0) -- (0,0.55);
+  \node[blob,minimum size=0.5cm] at (0,0.8) {$T$};
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (0.25,0.3) {$H$};
+  \node[font=\scriptsize] at (-1.0,0.22) {$d_j$}; \node[font=\scriptsize] at (1.0,0.22) {$d_j$};
+  \node[wl] at (0,-1.25) {(i) FJ のタドポール：$v$ だけに入り、$\delta V$ には入らない};
+\end{scope}
+\end{tikzpicture}
+\caption{湯川行列の $\MSbar$ の繰り込みの図（第~\ref{sec:rg} 節、\ref{app:rg}）。上の2段：対称な相の頂点 (0) の紫外の極を与える1ループの図の型と、それぞれが $K\beta_{Y_u}$ に与える行列。場の繰り込み (a)〜(c) は湯川行列に左右から掛かり、頂点の補正 (d) では $\Phi$ の内線が $Q_L$ を $d_R$ に変え、外線の $\tilde\Phi$ の頂点を挟む（$\tilde\Phi$ の内線の頂点の図は、$\tilde\Phi\tilde\Phi$ の伝播関数がないので0）。ゲージ場の図 (e) は単位行列の倍で、$V$ を回さない。和が式~\eqref{eq:betaY} の1行目で、$u$ と $d$ を入れ替えると2行目になる。下の段：対称な相の対抗項 (f) を、裸の湯川行列 $Y_0=Y+\delta Y$ を対角化する回転で質量の基底に移すと、$W^\pm$ と $G^\pm$ の頂点 (g)、(h) に同じ $\delta V=\frac{\DUV}2\dd V/\dd\ln\mu=\frac{\DUV}2(-A_uV+VA_d)$（式~\eqref{eq:dV}）が現れる。$A_u$、$A_d$ は回転の生成子（\ref{app:rg}）で、$\frac32(H_u-H_d)$ の非対角の成分から来る。FJ のタドポール (i) は $v$ を通じて質量にだけ入り、$V$ は $v$ によらないので $\delta V$ には入らない。}
+\label{fig:rgdiag}
+\end{figure}
 
 \subsection{クォークの自己エネルギーの行列と CKM の対抗項}\label{sec:se}
 
@@ -1280,9 +1385,114 @@ MadLoop は、外線の自己エネルギーの図を、世代を変えるもの
 \item[(a)] $W^+\to u_i\bar d_j$ の6個のチャンネル（図は1ループ18個、R2 8個、UV 2個）。仮想の補正と木の比を、手順 (5) の振幅を MadLoop の規約（Feynman ゲージ、赤外は次元正則化、$\mu=\mu_R$）に直した値（\texttt{wud\_madloop\_ref.wl}）と比べた。テンソルの還元を COLLIER で行うと、差は $\mu_R=91$~GeV で $10^{-15}$ 以下、500~GeV で $6\times10^{-12}$ 以下（比は0.04〜0.17）、赤外の単極の係数の差は $5\times10^{-16}$ 以下だった。木のある過程で MadLoop が既定で先に使う Ninja では、差は $2\times10^{-8}$、単極の差は $6\times10^{-9}$ まで大きくなった（$c\bar b$ だけは $10^{-15}$）。CutTools は COLLIER と $6\times10^{-11}$ 以内で一致したので、これは軽いクォークでの Ninja の精度の問題である。比の $\mu$ への依存（$u\bar d$ で 0.110 から 0.174）は、$\MSbar$ の $g$、$V$ の走りと赤外の対数の和で、MadLoop がそのまま再現した。
 \item[(b)] $Z\to b\bar s$ と $b\to s\gamma$ の $|\mathcal M|^2$（図は1ループ18個、R2 6個、UV 2個）。手順 (7) の1PI の形状因子と外線の項の和（\texttt{fcnc\_madloop\_ref.wl}）と、それぞれ相対 $2\times10^{-13}$、$2\times10^{-8}$ で一致した（$b\to s\gamma$ は GIM の打ち消しのため倍精度で8桁ほど）。紫外の極を持つ1PI だけの値とは一致しない。
 \item[(c)] $b\bar s\to s\bar b$ の $|\mathcal M|^2$（1ループ72個で、手順 (8) と同じ数。R2 と UV の頂点はない）。手順 (8) の運動量0の箱の図から作った値（direct と crossed の対は大きさが等しく符号が逆）に、$s$ に比例して近づいた。差は $\sqrt s=2$、1、0.5、0.1~GeV で相対 $1.2\times10^{-3}$、$3.0\times10^{-4}$、$7.0\times10^{-5}$、$2.7\times10^{-6}$ で、$s\to0$ への外挿は $-5\times10^{-8}$ だった（$s$ の係数 $2.8\times10^{-4}$~GeV$^{-2}$ はチャームの項の $s/m_c^2$ の程度）。
-\item[(d)] 外線の場の定数と4点の R2 の頂点（\texttt{ext\_formcalc.wl}、\texttt{ckm\_madloop\_ext.py}）。木のある $W^+\to\tau^+\nu_\tau$、$W^+\to\mu^+\nu_\mu$（図は1ループ10個、R2 4個、UV 2個）、$Z\to\nu_\tau\bar\nu_\tau$（7、3、2個）、$Z\to\tau^-\tau^+$（14、6、2個）、$Z\to b\bar b$（26、10、2個）は、手順 (5)〜(8) で使わなかった $Z$、光子と $Z$ の混合、レプトン、ニュートリノの場の定数と、CKM 行列を含む対角のクォークの定数を外線に要する。仮想の補正と木の比を、FeynArts の \texttt{SM.mod}（\texttt{\$CKM = True}）と FormCalc で頂点と対抗項から求めた値と比べた。\texttt{SM.mod} の対抗項は Denner の on-shell の処方なので、結合の定数 $\delta Z_e$、$\delta s_W$ を0にして結合を $\MSbar$ にし（その対抗項は純粋な極で、LoopTools の $\Delta=0$ では有限部分が0）、本ノートの UFO と同じ処方にした。場の定数は \texttt{SM.mod} 自身の on-shell の値で、赤外は (a) と同じく $\lambda^2=\mu^2$ とした。COLLIER で差は $2\times10^{-15}$ 以下、赤外の単極の係数の差は $2\times10^{-16}$ 以下だった。Ninja では $W^+\to\mu^+\nu_\mu$ だけが $\mu_R=91$、500~GeV で $-1.5\times10^{-7}$、$-2.4\times10^{-7}$（単極で $-2.5\times10^{-8}$）ずれた。この過程では CutTools も倍精度と4倍精度で COLLIER と相対 $3\times10^{-10}$ 以内で一致したので、(a) と同じく軽いフェルミオンでの Ninja の精度の問題である。ループで誘起される $\gamma\gamma\to ZZ$（紫外で有限で $V$ によらない。図は1ループ260個）は4点の R2 の頂点 $AAZZ$ を要し、\texttt{loop\_qcd\_qed\_sm} の値と相対 $1.2\times10^{-15}$ 以内で一致した。R2 の図は本ノートの UFO で21個、この模型で20個である（$AAH$ の R2 の頂点のボソンのループを、本ノートの UFO は2組に分ける）。
+\item[(d)] 外線の場の定数と4点の R2 の頂点（\texttt{ext\_formcalc.wl}、\texttt{ckm\_madloop\_ext.py}、図~\ref{fig:mlext}）。木のある $W^+\to\tau^+\nu_\tau$、$W^+\to\mu^+\nu_\mu$（図は1ループ10個、R2 4個、UV 2個）、$Z\to\nu_\tau\bar\nu_\tau$（7、3、2個）、$Z\to\tau^-\tau^+$（14、6、2個）、$Z\to b\bar b$（26、10、2個）は、手順 (5)〜(8) で使わなかった $Z$、光子と $Z$ の混合、レプトン、ニュートリノの場の定数と、CKM 行列を含む対角のクォークの定数を外線に要する。仮想の補正と木の比を、FeynArts の \texttt{SM.mod}（\texttt{\$CKM = True}）と FormCalc で頂点と対抗項から求めた値と比べた。\texttt{SM.mod} の対抗項は Denner の on-shell の処方なので、結合の定数 $\delta Z_e$、$\delta s_W$ を0にして結合を $\MSbar$ にし（その対抗項は純粋な極で、LoopTools の $\Delta=0$ では有限部分が0）、本ノートの UFO と同じ処方にした。場の定数は \texttt{SM.mod} 自身の on-shell の値で、赤外は (a) と同じく $\lambda^2=\mu^2$ とした。COLLIER で差は $2\times10^{-15}$ 以下、赤外の単極の係数の差は $2\times10^{-16}$ 以下だった。Ninja では $W^+\to\mu^+\nu_\mu$ だけが $\mu_R=91$、500~GeV で $-1.5\times10^{-7}$、$-2.4\times10^{-7}$（単極で $-2.5\times10^{-8}$）ずれた。この過程では CutTools も倍精度と4倍精度で COLLIER と相対 $3\times10^{-10}$ 以内で一致したので、(a) と同じく軽いフェルミオンでの Ninja の精度の問題である。ループで誘起される $\gamma\gamma\to ZZ$（紫外で有限で $V$ によらない。図は1ループ260個）は4点の R2 の頂点 $AAZZ$ を要し、\texttt{loop\_qcd\_qed\_sm} の値と相対 $1.2\times10^{-15}$ 以内で一致した。R2 の図は本ノートの UFO で21個、この模型で20個である（$AAH$ の R2 の頂点のボソンのループを、本ノートの UFO は2組に分ける）。
 \end{itemize}
 計画では NLOCT の非対角の on-shell の場の定数を式~\eqref{eq:dZos}、\eqref{eq:dZRos} と比べるつもりだったが、NLOCT がその条件を解き終わらなかったのでできなかった。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9,wl/.style={slab,anchor=north,text width=3.6cm}]
+% (a) loop diagram of W -> tau nu
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (-1.0,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0.42); \draw[fermion] (0.6,0.42) -- (1.2,0.84);
+  \draw[fermion] (1.2,-0.84) -- (0.6,-0.42); \draw[fermion] (0.6,-0.42) -- (0,0);
+  \draw[photon] (0.6,0.42) -- (0.6,-0.42);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.42) {}; \node[vtx] at (0.6,-0.42) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize,anchor=west] at (1.2,0.84) {$\nu_\tau$}; \node[font=\scriptsize,anchor=west] at (1.2,-0.84) {$\tau^+$};
+  \node[font=\scriptsize] at (0.85,0) {$Z$};
+  \node[wl] at (0.1,-1.15) {(a) ループの図（10個。$Z$ の交換と、$W$ と $A$、$Z$ の三角）};
+\end{scope}
+% (b) UV vertex W tau nu
+\begin{scope}[shift={(4.6,0)}]
+  \draw[photon] (-1.0,0) -- (-0.12,0); \draw[fermion] (0.08,0.08) -- (0.85,0.6); \draw[fermion] (0.85,-0.6) -- (0.08,-0.08);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$W^+$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$\nu_\tau$}; \node[font=\scriptsize,anchor=west] at (0.85,-0.6) {$\tau^+$};
+  \node[wl] at (0,-1.15) {(b) UV の頂点：$\frac{\delta g}g+\frac12\bigl(\delta Z_W+\delta Z^{\tau,L}+\delta Z^{\nu_\tau}\bigr)$};
+\end{scope}
+% (c) UV vertex Z f fbar
+\begin{scope}[shift={(9.2,0)}]
+  \draw[photon] (-1.0,0) -- (-0.12,0); \draw[fermion] (0.08,0.08) -- (0.85,0.6); \draw[fermion] (0.85,-0.6) -- (0.08,-0.08);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$Z$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$f$}; \node[font=\scriptsize,anchor=west] at (0.85,-0.6) {$\bar f$};
+  \node[wl] at (0,-1.15) {(c) UV の頂点：$\frac12\delta Z_{ZZ}$、光子の結合に掛かる $\frac12\delta Z_{AZ}$、$\delta Z^{f,L}$、$\delta Z^{f,R}$};
+\end{scope}
+% (d) external Z-A mixing, not generated
+\begin{scope}[shift={(2.3,-3.6)}]
+  \draw[photon] (-1.2,0) -- (-0.62,0); \node[blob,minimum size=0.42cm] at (-0.4,0) {};
+  \draw[photon] (-0.18,0) -- (0.4,0);
+  \draw[fermion] (0.4,0) -- (1.1,0.55); \draw[fermion] (1.1,-0.55) -- (0.4,0);
+  \node[vtx] at (0.4,0) {};
+  \node[font=\scriptsize] at (-0.95,0.3) {$Z$}; \node[font=\scriptsize] at (0.1,0.3) {$A$};
+  \node[font=\scriptsize,anchor=west] at (1.1,0.55) {$f$}; \node[font=\scriptsize,anchor=west] at (1.1,-0.55) {$\bar f$};
+  \draw[thick,black!45] (-1.2,-0.7) -- (1.2,0.7); \draw[thick,black!45] (-1.2,0.7) -- (1.2,-0.7);
+  \node[wl] at (0,-1.15) {(d) 外線の $Z$ と光子の混合（MadLoop は作らず、(c) の $\delta Z_{AZ}$ が代わる）};
+\end{scope}
+% (e) CKM loop on the b leg, not generated
+\begin{scope}[shift={(6.9,-3.6)}]
+  \draw[photon] (-1.0,0) -- (0,0); \draw[fermion] (0,0) -- (0.85,0.6);
+  \draw[fermion] (0.55,-0.39) -- (0,0); \draw[fermion] (1.25,-0.88) -- (0.55,-0.39);
+  \draw[fermion] (1.65,-1.16) -- (1.25,-0.88);
+  \draw[photon] (0.55,-0.39) .. controls (0.75,0.05) and (1.35,-0.35) .. (1.25,-0.88);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.55,-0.39) {}; \node[vtx] at (1.25,-0.88) {};
+  \node[font=\scriptsize] at (-0.6,0.3) {$Z$};
+  \node[font=\scriptsize,anchor=west] at (0.85,0.6) {$b$}; \node[font=\scriptsize,anchor=west] at (1.65,-1.16) {$\bar b$};
+  \node[font=\scriptsize] at (0.62,-0.82) {$\bar u_k$}; \node[font=\scriptsize,anchor=west] at (1.42,-0.3) {$W$, $G^\pm$};
+  \draw[thick,black!45] (-0.4,-1.1) -- (1.7,0.55); \draw[thick,black!45] (-0.4,0.55) -- (1.7,-1.1);
+  \node[wl] at (0.3,-1.4) {(e) $b$ の脚の CKM 行列を含むループ（$\sum_k|V_{kb}|^2$ の形で対角の $\delta Z^b$ に入る）};
+\end{scope}
+% (f) fermion box of gamma gamma -> Z Z
+\begin{scope}[shift={(0.2,-7.6)}]
+  \draw[fermion] (-0.45,0.45) -- (0.45,0.45); \draw[fermion] (0.45,0.45) -- (0.45,-0.45);
+  \draw[fermion] (0.45,-0.45) -- (-0.45,-0.45); \draw[fermion] (-0.45,-0.45) -- (-0.45,0.45);
+  \draw[photon] (-1.15,0.85) -- (-0.45,0.45); \draw[photon] (-1.15,-0.85) -- (-0.45,-0.45);
+  \draw[photon] (0.45,0.45) -- (1.15,0.85); \draw[photon] (0.45,-0.45) -- (1.15,-0.85);
+  \foreach \p in {(-0.45,0.45),(0.45,0.45),(0.45,-0.45),(-0.45,-0.45)} \node[vtx] at \p {};
+  \node[font=\scriptsize,anchor=east] at (-1.15,0.85) {$A$}; \node[font=\scriptsize,anchor=east] at (-1.15,-0.85) {$A$};
+  \node[font=\scriptsize,anchor=west] at (1.15,0.85) {$Z$}; \node[font=\scriptsize,anchor=west] at (1.15,-0.85) {$Z$};
+  \node[font=\scriptsize] at (0,0) {$f$};
+  \node[wl] at (0,-1.15) {(f) フェルミオンの箱（クォーク、荷電レプトン）};
+\end{scope}
+% (g) W box
+\begin{scope}[shift={(4.3,-7.6)}]
+  \draw[photon] (-0.45,0.45) -- (0.45,0.45); \draw[photon] (0.45,0.45) -- (0.45,-0.45);
+  \draw[photon] (0.45,-0.45) -- (-0.45,-0.45); \draw[photon] (-0.45,-0.45) -- (-0.45,0.45);
+  \draw[photon] (-1.15,0.85) -- (-0.45,0.45); \draw[photon] (-1.15,-0.85) -- (-0.45,-0.45);
+  \draw[photon] (0.45,0.45) -- (1.15,0.85); \draw[photon] (0.45,-0.45) -- (1.15,-0.85);
+  \foreach \p in {(-0.45,0.45),(0.45,0.45),(0.45,-0.45),(-0.45,-0.45)} \node[vtx] at \p {};
+  \node[font=\scriptsize,anchor=east] at (-1.15,0.85) {$A$}; \node[font=\scriptsize,anchor=east] at (-1.15,-0.85) {$A$};
+  \node[font=\scriptsize,anchor=west] at (1.15,0.85) {$Z$}; \node[font=\scriptsize,anchor=west] at (1.15,-0.85) {$Z$};
+  \node[font=\scriptsize] at (0,0) {$W$};
+  \node[wl] at (0,-1.15) {(g) $W$ の箱（$G^\pm$、ゴースト、三角と2点のループも。全部で260個）};
+\end{scope}
+% (h) four-point R2 vertex AAZZ
+\begin{scope}[shift={(8.4,-7.6)}]
+  \draw[photon] (-1.0,0.75) -- (0,0); \draw[photon] (-1.0,-0.75) -- (0,0);
+  \draw[photon] (0,0) -- (1.0,0.75); \draw[photon] (0,0) -- (1.0,-0.75);
+  \node[rectangle,fill=black,inner sep=0pt,minimum size=6pt] at (0,0) {};
+  \node[font=\scriptsize] at (0,0.38) {$R_2$};
+  \node[font=\scriptsize,anchor=east] at (-1.0,0.75) {$A$}; \node[font=\scriptsize,anchor=east] at (-1.0,-0.75) {$A$};
+  \node[font=\scriptsize,anchor=west] at (1.0,0.75) {$Z$}; \node[font=\scriptsize,anchor=west] at (1.0,-0.75) {$Z$};
+  \node[wl] at (0,-1.15) {(h) 4点の R2 の頂点 $AAZZ$（点の数値の内部のパラメータ）};
+\end{scope}
+% (i) R2 vertex AAH and tree HZZ
+\begin{scope}[shift={(12.7,-7.6)}]
+  \draw[photon] (-1.3,0.7) -- (-0.5,0); \draw[photon] (-1.3,-0.7) -- (-0.5,0);
+  \draw[scalar] (-0.5,0) -- (0.5,0);
+  \draw[photon] (0.5,0) -- (1.3,0.7); \draw[photon] (0.5,0) -- (1.3,-0.7);
+  \node[rectangle,fill=black,inner sep=0pt,minimum size=6pt] at (-0.5,0) {}; \node[vtx] at (0.5,0) {};
+  \node[font=\scriptsize] at (-0.5,0.38) {$R_2$}; \node[font=\scriptsize] at (0,0.22) {$H$};
+  \node[font=\scriptsize,anchor=east] at (-1.3,0.7) {$A$}; \node[font=\scriptsize,anchor=east] at (-1.3,-0.7) {$A$};
+  \node[font=\scriptsize,anchor=west] at (1.3,0.7) {$Z$}; \node[font=\scriptsize,anchor=west] at (1.3,-0.7) {$Z$};
+  \node[wl] at (0,-1.15) {(i) R2 の頂点 $AAH$ と木の頂点 $HZZ$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (9)(d) の外線の場の定数と4点の R2 の頂点の検算の図。上の2段：木のある $W^+\to\tau^+\nu_\tau$（$\mu^+\nu_\mu$ も同じ）と $Z\to f\bar f$（$f=\nu_\tau,\tau,b$）は、ループの図 (a)、R2 の頂点（図~\ref{fig:mlckm} (b) と同じ形）、木の図に付く UV の頂点 (b)、(c) の和である。MadLoop は外線の自己エネルギーの図を作らないので、外線の $Z$ と光子の混合 (d) の代わりを (c) の $\frac12\delta Z_{AZ}$ の項が、$b$ の脚の CKM 行列を含むループ (e) の代わりを対角の $\delta Z^b$ が務める。これらは手順 (5)〜(8) で使わなかった場の定数で、FeynArts の \texttt{SM.mod} と FormCalc の値と比べた（表~\ref{tab:mlckm}）。下の段：ループで誘起される $\gamma\gamma\to ZZ$ は、紫外で有限な箱の図 (f)、(g) などと、R2 の頂点 (h)、(i) の和である（木の図と UV の頂点はない）。R2 の頂点はループの粒子の組ごとに分かれていて、MadLoop の R2 の図の数は、本ノートの UFO で21個（$AAZZ$ が10個、$AAH$ が11個）、\texttt{loop\_qcd\_qed\_sm} で20個（$AAH$ のボソンのループを1組にまとめる）である。}
+\label{fig:mlext}
+\end{figure}
 
 \paragraph{MadGraph の電弱 NLO の模型との比較。}MadGraph に付属の電弱 NLO の模型 \texttt{loop\_qcd\_qed\_sm}~\cite{mg5ew}（制限なしの \texttt{-full}）にも CKM 行列があり、$W$ と $G^\pm$ の木の結合と、その R2 の頂点は一般の CKM 行列で書かれている。ただし CKM 行列は Wolfenstein の形の $\lambda^3$ までで、ユニタリーではない（$\lambda=0.2253$ で $VV^\dagger-1$ の成分は最大 $2.3\times10^{-3}$）。UV の対抗項は、$W u_i\bar d_j$ の頂点では $V_{ij}$ に $\delta e$、$\delta s_W$、$\delta Z_W$ と対角の場の定数を掛けたものだけで、$\delta V$ と非対角の場の定数はない（$Z\bar sb$、$\gamma\bar sb$ の UV の頂点はあるが、値は0）。そのため CKM 行列の繰り込みに関わる $W\to u_i\bar d_j$ は比べられないが、対抗項を含まない二つの量は比べられる。本ノートの振幅は $V$ の成分の多項式で、Feynman 則はどの $V$ でも同じ形なので、本ノートの振幅にこの模型の $V$ を入れて比べた（\texttt{fcnc\_madloop\_ref.wl mg5}、\texttt{ckm\_madloop\_mg5.py}）。質量は本ノートの点にし、湯川結合は質量にそろえ、Feynman ゲージで比べた。$V$ がユニタリーでないので GIM の機構は効かず、振幅はゲージに依存する。
 \begin{itemize}
@@ -1381,7 +1591,7 @@ i\mathcal M=\Bigl(\frac{ig}{\sqrt2}\Bigr)^2V_{ij}^*\frac{-i}{s-M_W^2}\bigl[\bar 
 
 \section{湯川行列の繰り込みと CKM 行列の走りの導出}\label{app:rg}
 
-\paragraph{行列の $\beta$ 関数。}SM ノートの付録~C の湯川結合の導出を行列に広げる。場の異常次元は $\Phi$ で $\mathcal T$、$Q_L$ で $\frac12(Y_uY_u^\dagger+Y_dY_d^\dagger)$（左から掛かる）、$u_R$ で $Y_u^\dagger Y_u$（右から掛かる）、$d_R$ で $Y_d^\dagger Y_d$ である（いずれも $K$ で割る。一般の公式の $\frac12Y_2(F)$~\cite{mv1}）。$\Phi$ の内線が $Q_L$ を $d_R$ に変えて $\tilde\Phi$ の頂点を挟む図は $-2Y_dY_d^\dagger Y_u$ を与える。和は
+\paragraph{行列の $\beta$ 関数。}SM ノートの付録~C の湯川結合の導出を行列に広げる（図~\ref{fig:rgdiag} (a)〜(d)）。場の異常次元は $\Phi$ で $\mathcal T$、$Q_L$ で $\frac12(Y_uY_u^\dagger+Y_dY_d^\dagger)$（左から掛かる）、$u_R$ で $Y_u^\dagger Y_u$（右から掛かる）、$d_R$ で $Y_d^\dagger Y_d$ である（いずれも $K$ で割る。一般の公式の $\frac12Y_2(F)$~\cite{mv1}）。$\Phi$ の内線が $Q_L$ を $d_R$ に変えて $\tilde\Phi$ の頂点を挟む図は $-2Y_dY_d^\dagger Y_u$ を与える。和は
 \begin{equation*}
 \frac12\bigl(H_u+H_d\bigr)Y_u+Y_u\bigl(Y_u^\dagger Y_u\bigr)+\mathcal TY_u-2H_dY_u=\Bigl[\frac32\bigl(H_u-H_d\bigr)+\mathcal T\Bigr]Y_u
 \end{equation*}
