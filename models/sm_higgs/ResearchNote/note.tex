@@ -1,0 +1,258 @@
+% note.tex — 標準模型のヒッグスの崩壊：NLO の部分幅と分岐比（MS-bar、FJ のタドポール、一般の R_xi ゲージ、d = 4）
+% コンパイル: lualatex note.tex（目次と参照の解決のため2〜3回）
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}
+\usepackage{amsmath,amssymb,slashed}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage{tikz,ifthen}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={Higgs boson decays in the Standard Model at NLO: partial widths and branching ratios in the MS-bar scheme with Fleischer-Jegerlehner tadpoles},pdfauthor={}}
+
+\setlength{\emergencystretch}{3em}
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\MSbar}{\overline{\mathrm{MS}}}
+\newcommand{\DUV}{\Delta_{\mathrm{UV}}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\sw}{s_W}
+\newcommand{\cw}{c_W}
+\newcommand{\re}{\mathrm{Re}\,}
+\newcommand{\im}{\mathrm{Im}\,}
+
+\tikzset{
+  photon/.style={thick,decorate,decoration={snake,amplitude=1.1pt,segment length=4.6pt}},
+  gluon/.style={thick,decorate,decoration={coil,amplitude=2.3pt,segment length=3.6pt,aspect=0.75}},
+  fermion/.style={thick,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
+  scalar/.style={thick,dashed},
+  ghost/.style={thick,densely dotted,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
+  vtx/.style={circle,fill=black,inner sep=1.3pt},
+  lab/.style={font=\small,align=center},
+  slab/.style={font=\scriptsize,align=center},
+  mom/.style={-{Stealth[length=1.6mm]},thin},
+  ctv/.style={circle,draw=black,fill=white,inner sep=0pt,minimum size=7pt,path picture={
+      \draw (path picture bounding box.north west) -- (path picture bounding box.south east)
+            (path picture bounding box.south west) -- (path picture bounding box.north east);}},
+  blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
+}
+
+
+\title{標準模型のヒッグスの崩壊：NLO の部分幅と分岐比\\（$\MSbar$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）}
+\author{}
+\date{2026年10月19日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote} は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、1ループの繰り込みと、$Z$、$W$、$t$ の崩壊の NLO の幅を求めた。本ノートでは、同じ模型ファイル、処方、道具で、ヒッグスの崩壊 $H\to f\bar f$、$WW^*$、$ZZ^*$、$\gamma\gamma$、$Z\gamma$、$gg$ の NLO の部分幅、全幅、分岐比を求める計画を立てる。手計算では、木の幅と1ループで誘起される崩壊の振幅、$H\to q\bar q$ の QCD の補正で $\MSbar$ の湯川結合が $\ln(m_q^2/M_H^2)$ を吸収すること、$H\to f\bar f$ にはタドポールが入らないが $H\to VV^*$ には $HHVV$ の頂点を通して入ること、$H\to gg$ の重いトップの有効理論での NLO を述べ、八つの手順の計画を定めた。$\mu=M_H$ の $\MSbar$ の湯川結合で書いた木の $\Gamma(H\to b\bar b)=1.85$~MeV は、極質量で書いた値の3分の1である。LO の部分幅の和は $3.28$~MeV である。
+\end{abstract}
+
+\tableofcontents
+
+\section{目的と問い}\label{sec:intro}
+
+本ノートの問いは三つである。\textbf{第一に、$\MSbar$ の湯川結合で書いた $H\to f\bar f$ の NLO の幅は、質量のあるクォークの大きな対数を吸収し、光子と弱い補正を含めてゲージによらず有限になるか。第二に、木のない $H\to\gamma\gamma$、$Z\gamma$、$gg$ の1ループの振幅は、対抗項なしで紫外で有限で、一般の $R_\xi$ ゲージでゲージによらないか。$H\to gg$ の大きな NLO の QCD の補正はどれだけか。第三に、FJ の処方の $\MSbar$ の $v$ はタドポールのために物理的な $v$ より約 $6\%$ 大きいが、それで書いた $H\to WW^*$、$ZZ^*$ の木の幅は1ループでどう正されるか。全幅と分岐比はいくらになるか。}
+
+第一の問いを立てる理由は、$H\to b\bar b$ が全幅の半分以上を占め、その幅が湯川結合の2乗に比例するからである。$b$ の極質量 $4.78$~GeV で書いた湯川結合と、$\mu=M_H$ の $\MSbar$ の湯川結合（$m_b$ にして約 $2.75$~GeV）では、木の幅が3倍違う。この差は、極質量で書いた QCD の補正に現れる $\ln(m_b^2/M_H^2)\approx-6.5$ の大きな対数である。$\MSbar$ の湯川結合は本ノートの模型のラグランジアンのパラメータそのもので、FJ の処方でもタドポールによらない。NLO ノートの手順 (2)、(3) の赤外の扱いを、スカラーの流れに広げて確かめる。
+
+第二の問いは、ヒッグスの発見の過程である $H\to\gamma\gamma$ と生成の $gg\to H$ に関わる。これらは1ループで初めて起こるので、繰り込みの対抗項がなく、紫外の極が図の和で消えることと、$W$ のループ（Goldstone とゴーストを含む）がゲージによらないことが、模型の確かめになる。$H\to gg$ の NLO の QCD の補正は大きい。重いトップの極限の係数（文献~\cite{spira95}、参照）を本ノートの $\alpha_s(M_H)$ で使うと $+64\%$ になる。
+
+第三の問いは、FJ の処方に特有のものである。FJ の処方では、$\MSbar$ の $v$ と質量 $M_W=gv/2$ がゲージによらないかわりに、タドポールの大きな寄与を含む（$\mu=M_t$ で $v_{\mathrm{FJ}}=261.9$~GeV、$G_F$ からの $v_G=246.2$~GeV）。$H\to f\bar f$ を湯川結合で書くとタドポールは入らないが、$HVV$ の結合 $g^2v/2$ には入る。$HHVV$ の頂点に付いたタドポールの図が、この差をどう打ち消すかを確かめる。
+
+求める量は五つである。(i) 木の幅（$H\to f\bar f$、$H\to VV^*$）と1ループで誘起される崩壊の LO の幅。(ii) $H\to q\bar q$、$\ell^+\ell^-$ の QCD と QED の NLO の補正（質量0と質量あり）。(iii) $H\to f\bar f$ の電弱の補正。(iv) $H\to gg$ の NLO の QCD の補正。(v) 全幅と分岐比と、その $\mu$ と処方への依存。SM ノート、CKM ノート、NLO ノートの結果（自己エネルギー、$\MSbar$ のパラメータ、UFO、赤外の扱いの道具）は求め直さず、引用して使う。一致の基準はそれらのノートと同じである。
+
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型、処方、入力を定める。第~\ref{sec:results} 節で手計算の結果を述べる。第~\ref{sec:plan} 節でツールと突き合わせる計画を定める。第~\ref{sec:checks} 節に各手順の結果を、第~\ref{sec:discussion} 節にまとめを書く。導出は\ref{app:lo} にある。
+
+\section{設定}\label{sec:setup}
+
+\paragraph{模型と処方。}模型は CKM ノートの模型ファイル \texttt{SM\_CKM.fr} を \texttt{Src/} に写したものである（中身は同じで、頭の注記と読み込む場所だけを替えた。NLO ノートと同じ）。パラメータは破れていないラグランジアンの $\MSbar$ のもの（$g'$、$g$、$g_s$、$\lambda$、$\mu^2$、湯川行列）で、タドポールは FJ の処方で扱う。ゲージは一般の $R_\xi$、次元正則化は $d=4-2\epsilon$ で、紫外と赤外の発散をともに次元正則化で扱う。$K=(4\pi)^2$ と書く。
+
+\paragraph{入力。}パラメータは NLO ノートの入力（\texttt{models/sm\_nlo/Src/nlo\_inputs.py}。SM ノートの手順 (7) の $M_W$ の処方の値を $\mu=M_t$ から1ループの方程式で走らせたもの）を使う。$\mu=M_H$ では $g=0.64900$、$g'=0.35871$、$g_s=1.18853$（$\alpha_s=0.11241$）、$\lambda=0.13435$、$y_t=0.94871$、$y_b=0.015822$、$y_c=0.003416$、$y_\tau=0.009970$ である（$m=yv_G/\sqrt2$ にすると $m_b=2.755$、$m_c=0.595$、$m_\tau=1.736$~GeV）。崩壊するヒッグスと運動学の質量は極質量（PDG 2024~\cite{pdg24} の $M_H=125.20$~GeV など）とする。$\mu$ は既定で $M_H$ とし、$M_H/2$、$2M_H$ に変えた変化を NLO の不定性の目安にする。
+
+\paragraph{崩壊幅の定義。}NLO ノートと同じく、$\Gamma=\frac1{2M_H}\int\dd\Phi\,\overline{|\mathcal M|^2}$、$\Gamma_{\mathrm{NLO}}=\Gamma_0+\Gamma_V+\Gamma_R$ とし、$\mathcal M_1$ は裸の頂点に on-shell の LSZ の因子を掛け、$\MSbar$ の対抗項を足したものである。ヒッグスは安定とみなす（$\Gamma_H/M_H\approx3\times10^{-5}$）。
+
+\section{結果}\label{sec:results}
+
+\subsection{木の崩壊幅}\label{sec:lo}
+
+$Hf\bar f$ の頂点を $-i\frac{y_f}{\sqrt2}$、$HVV$ の頂点を $ig_{HVV}g^{\mu\nu}$（$g_{HWW}=\frac{g^2v}2$、$g_{HZZ}=\frac{g_Z^2v}2$、$g_Z=\sqrt{g^2+g'^2}$）と書くと、木の幅は（\ref{app:lo}）
+\begin{equation}
+\Gamma_0(H\to f\bar f)=N_c\frac{y_f^2M_H}{16\pi}\beta_f^3,\qquad \beta_f=\sqrt{1-\frac{4m_f^2}{M_H^2}},
+\label{eq:lo}
+\end{equation}
+\begin{equation}
+\begin{gathered}
+\Gamma_0(H\to VV^*)=\frac{3g_{HVV}^2g_V^2M_H}{512\pi^3M_V^2}\,\delta'_V\,R_T\Bigl(\frac{M_V^2}{M_H^2}\Bigr),\\
+R_T(x)=\frac{3(1-8x+20x^2)}{\sqrt{4x-1}}\arccos\frac{3x-1}{2x^{3/2}}-\frac{(1-x)(2-13x+47x^2)}{2x}-\frac32(1-6x+4x^2)\ln x
+\end{gathered}
+\label{eq:vv}
+\end{equation}
+である（$g_W=g$、$\delta'_W=1$、$\delta'_Z=\frac7{12}-\frac{10}9s^2+\frac{40}{27}s^4$。$V^*$ は $f\bar f'$ に崩壊する仮想の $V$ で、$WW^*$ は $W^+W^{-*}$ と $W^{+*}W^-$ の和）。式~\eqref{eq:vv} は Keung--Marciano の式~\cite{km84,djouadi08} を本ノートの結合で書いたもので、木の関係 $g_{HVV}=g_VM_V$ では $3G_F^2M_V^4M_H\delta'_VR_T/(16\pi^3)$ になる。手順 (1) で確かめる。湯川結合は $\mu$ での $\MSbar$ の値、運動学の質量は極質量である。$\mu=M_H$ の $\MSbar$ の $y_b$ で書いた $\Gamma_0(H\to b\bar b)=1.854$~MeV は、極質量 $y=\sqrt2m_b/v_G$ で書いた値 $5.58$~MeV の $0.33$ 倍で、$c\bar c$ では $0.13$ 倍、$\tau^+\tau^-$ では $0.95$ 倍である。$G_F$ と極質量で書いた式~\eqref{eq:vv} は $\Gamma(H\to WW^*)=0.797$~MeV、$\Gamma(H\to ZZ^*)=0.087$~MeV になる（on-shell の $s^2=1-M_W^2/M_Z^2$）。木の図を図~\ref{fig:lo} に示す。
+
+\subsection{1ループで誘起される崩壊}\label{sec:loop}
+
+$H\to\gamma\gamma$ と $H\to gg$ の振幅は、フェルミオンと $W$ のループで初めて現れる。$\tau_i=M_H^2/(4m_i^2)$ として~\cite{ellis76,svvz79,djouadi08}
+\begin{equation}
+\begin{gathered}
+\Gamma(H\to\gamma\gamma)=\frac{\alpha^2M_H^3}{256\pi^3v^2}\Bigl|\sum_fN_cQ_f^2A_{1/2}(\tau_f)+A_1(\tau_W)\Bigr|^2,\qquad
+\Gamma(H\to gg)=\frac{\alpha_s^2M_H^3}{72\pi^3v^2}\Bigl|\frac34\sum_qA_{1/2}(\tau_q)\Bigr|^2,\\
+A_{1/2}(\tau)=\frac{2[\tau+(\tau-1)f(\tau)]}{\tau^2},\qquad A_1(\tau)=-\frac{2\tau^2+3\tau+3(2\tau-1)f(\tau)}{\tau^2},\qquad f(\tau)=\arcsin^2\sqrt\tau\quad(\tau\le1)
+\end{gathered}
+\label{eq:loop}
+\end{equation}
+になる（$\tau>1$ では $f=-\frac14[\ln\frac{1+\sqrt{1-1/\tau}}{1-\sqrt{1-1/\tau}}-i\pi]^2$）。重い粒子の極限 $\tau\to0$ で $A_{1/2}\to\frac43$、$A_1\to-7$ で、ループの粒子の質量によらない（低エネルギーの定理）。$W$ とトップの寄与は逆の符号で、$A_1(\tau_W)=-8.33$、$3\cdot\frac49A_{1/2}(\tau_t)=1.84$（$A_{1/2}(\tau_t)=1.377$）である。$\alpha(0)$ と $v_G$ では $\Gamma(H\to\gamma\gamma)=9.2\times10^{-3}$~MeV、$\alpha_s(M_H)$ では $\Gamma(H\to gg)=0.195$~MeV（トップだけ）になる。木の頂点がないので1ループの振幅には対抗項がなく、紫外の極は図の和で消えなければならない。$W$ のループは Goldstone とゴーストを含め、$\xi$ によらないはずである。$H\to Z\gamma$ も同じ型で、$Z$ の結合 $\hat v_f$ と二変数の関数 $I_1$、$I_2$ を使う~\cite{djouadi08}。式~\eqref{eq:loop} の $v$ と $\alpha$ をどの処方の値にするかは LO の不定性で、手順 (2) と (8) で扱う。
+
+\subsection{$H\to q\bar q$ の QCD の補正と $\MSbar$ の湯川結合}\label{sec:hqq}
+
+質量0のクォークの極限で、$\MSbar$ の湯川結合 $\bar y_q(\mu)$ で書いた NLO の QCD の補正は
+\begin{equation}
+\Gamma(H\to q\bar q)=\Gamma_0(\bar y_q(\mu))\Bigl[1+C_F\frac{\alpha_s}\pi\Bigl(\frac{17}4+\frac32\ln\frac{\mu^2}{M_H^2}\Bigr)\Bigr]
+\label{eq:hqq}
+\end{equation}
+である~\cite{bl80}（$C_F\frac{17}4=\frac{17}3$。光子では $C_F\alpha_s\to Q_f^2\alpha$）。$\ln\mu^2$ の係数は $\bar y_q^2$ の走り $\dd\ln\bar y_q^2/\dd\ln\mu^2=-\frac32C_F\alpha_s/\pi$ と打ち消す。極質量 $m_q$ との関係 $\bar y_q(\mu)=y_q^{\mathrm{pole}}[1-C_F\frac{\alpha_s}\pi(1+\frac34\ln\frac{\mu^2}{m_q^2})]$ を入れると、$m_q\ll M_H$ で
+\begin{equation}
+\Gamma(H\to q\bar q)=\Gamma_0(y_q^{\mathrm{pole}})\Bigl[1+C_F\frac{\alpha_s}\pi\Bigl(\frac94+\frac32\ln\frac{m_q^2}{M_H^2}\Bigr)\Bigr]
+\label{eq:hqqpole}
+\end{equation}
+になり、$b$ では括弧の中が $\frac94-9.8$ の大きな負の値になる。$\MSbar$ の湯川結合はこの対数を走りとして吸収するので、式~\eqref{eq:hqq} の補正は $\mu=M_H$ で $+20.3\%$ にとどまる。質量のある場合の補正は、NLO ノートの手順 (3) の方法（Package-X の仮想の補正、$d$ 次元の軟らかい放射、数値の硬い放射）を、ベクトルの流れからスカラーの流れに替えて求める。赤外の極の構造（質量0の二重極、質量のある放射体の軟い単極）はベクトルの場合と同じである。
+
+\subsection{電弱の補正とタドポール}\label{sec:ew}
+
+$H\to f\bar f$ の S 行列要素は、形状因子を $\mathcal M=-\frac i{\sqrt2}\bar u(p_1)(F_SP_L+F_S^*P_R)v(p_2)$（$P_L$、$P_R$ の係数は $CP$ の保存で共役）と書くと、
+\begin{equation}
+F_S=y_f\Bigl[1+F^{\mathrm{vtx}}+\tfrac12\delta Z_H+\tfrac12\bigl(\delta Z^L_f+\delta Z^R_f\bigr)\Bigr]+\delta y_f^{\MSbar},\qquad \delta Z_H=-\Sigma_H'(M_H^2)
+\label{eq:hffren}
+\end{equation}
+である（$\delta Z^{L,R}_f$ は NLO ノートの on-shell の形、$\delta y_f^{\MSbar}$ は湯川行列の $\beta$ 関数の極）。光子の部分（光子の交換と光子による場の定数、実の光子の放射）は、ヒッグスが電荷を持たないので、$Z$ の崩壊と同じく単独でゲージによらない組をなし、式~\eqref{eq:hqq} の QED の形になる。標準模型には $HHf\bar f$ の頂点がないので、$H\to f\bar f$ の頂点の補正にタドポールの図はない。$\Sigma_H$ のタドポールの部分は $p^2$ によらないので $\delta Z_H$ にも入らず、タドポールは質量（運動学の極質量）を通してしか入らない。湯川結合で書いた $H\to f\bar f$ は、FJ の処方でもタドポールによらない。
+
+一方、$H\to VV^*$ の $HVV$ の結合 $g_{HVV}=g_V^2v/2$ は $v$ を含み、FJ の処方の $\MSbar$ の $v_{\mathrm{FJ}}$ はタドポールのために $G_F$ からの $v_G$ より大きい（$\mu=M_t$ で $(v_{\mathrm{FJ}}/v_G)^2=1.131$）。$\MSbar$ の $g(M_H)$、$v_{\mathrm{FJ}}$ と極質量 $M_W$ で書いた木の $H\to WW^*$ は、$G_F$ で書いた木より $9\%$ 大きい。ラグランジアンの $\frac{g^2}4(v+H)^2W^+W^-$ には $HHWW$ の頂点があり、それに付いたタドポールの図が $HVV$ の頂点の1ループの補正に入る。この図は $p^2$ によらない定数で、$g_{HVV}$ の $v_{\mathrm{FJ}}$ を $M_W$ の極質量に合う $v$ に近づける向きに働き、木の差を打ち消すはずである（手順 (7) で確かめる）。完全な電弱の NLO（$H\to4f$ の1ループ）は本ノートの範囲の外に置き、$HVV$ の頂点の普遍的な部分（タドポール、$\delta Z_H$、$\delta Z_V$、$\MSbar$ の対抗項）で処方の違いを確かめる。
+
+\subsection{$H\to gg$ の NLO の QCD の補正}\label{sec:hgg}
+
+$m_t\to\infty$ の有効理論 $\mathcal L_{\mathrm{eff}}=\frac{\alpha_s}{12\pi}\frac Hv\bigl(1+\frac{11}4\frac{\alpha_s}\pi\bigr)G^a_{\mu\nu}G^{a\mu\nu}$ では、仮想の補正と実の放射 $H\to ggg$、$gq\bar q$ の和は
+\begin{equation}
+\Gamma(H\to gg)=\Gamma_0(H\to gg)\Bigl[1+\Bigl(\frac{95}4-\frac76N_F\Bigr)\frac{\alpha_s}\pi\Bigr]\qquad(\mu=M_H)
+\label{eq:hgg}
+\end{equation}
+になる~\cite{spira95}（参照。$N_F=5$、本ノートの $\alpha_s(M_H)=0.1124$ で $+64\%$）。$\Gamma_0$ にはトップとボトムの質量による式~\eqref{eq:loop} の厳密な形を使い、補正の因子を有効理論から付ける。$gq\bar q$ の終状態は、$H\to q\bar q g$ と重なる部分の扱いを手順 (6) で決める。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) H -> f fbar
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.2,0) -- (0,0); \draw[fermion] (0,0) -- (1.0,0.7); \draw[fermion] (1.0,-0.7) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$H$}; \node[font=\scriptsize] at (1.2,0.8) {$f$}; \node[font=\scriptsize] at (1.2,-0.8) {$\bar f$};
+  \node[slab] at (0,-1.45) {(a) $-i\frac{y_f}{\sqrt2}$};
+\end{scope}
+% (b) H -> V V* -> V f fbar'
+\begin{scope}[shift={(3.4,0)}]
+  \draw[scalar] (-1.2,0) -- (0,0); \draw[photon] (0,0) -- (1.1,0.7); \draw[photon] (0,0) -- (0.6,-0.4);
+  \draw[fermion] (0.6,-0.4) -- (1.25,-0.15); \draw[fermion] (1.25,-0.95) -- (0.6,-0.4);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,-0.4) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$H$}; \node[font=\scriptsize] at (1.3,0.8) {$V$}; \node[font=\scriptsize] at (0.12,-0.45) {$V^*$};
+  \node[font=\scriptsize] at (1.45,-0.12) {$f$}; \node[font=\scriptsize] at (1.45,-1.0) {$\bar f'$};
+  \node[slab] at (0,-1.45) {(b) $ig_{HVV}g^{\mu\nu}$};
+\end{scope}
+% (c) H -> gamma gamma, top loop
+\begin{scope}[shift={(6.8,0)}]
+  \draw[scalar] (-1.2,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.85,0.55); \draw[fermion] (0.85,0.55) -- (0.85,-0.55); \draw[fermion] (0.85,-0.55) -- (0,0);
+  \draw[photon] (0.85,0.55) -- (1.55,0.9); \draw[photon] (0.85,-0.55) -- (1.55,-0.9);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.85,0.55) {}; \node[vtx] at (0.85,-0.55) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$H$}; \node[font=\scriptsize] at (1.08,0) {$t$};
+  \node[font=\scriptsize] at (1.75,0.95) {$\gamma$}; \node[font=\scriptsize] at (1.75,-0.95) {$\gamma$};
+  \node[slab] at (0.1,-1.45) {(c) $H\to\gamma\gamma$（$t$）};
+\end{scope}
+% (d) H -> gamma gamma, W loop
+\begin{scope}[shift={(10.2,0)}]
+  \draw[scalar] (-1.2,0) -- (0,0);
+  \draw[photon] (0,0) -- (0.85,0.55); \draw[photon] (0.85,0.55) -- (0.85,-0.55); \draw[photon] (0.85,-0.55) -- (0,0);
+  \draw[photon] (0.85,0.55) -- (1.55,0.9); \draw[photon] (0.85,-0.55) -- (1.55,-0.9);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.85,0.55) {}; \node[vtx] at (0.85,-0.55) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$H$}; \node[font=\scriptsize] at (1.15,0) {$W$};
+  \node[font=\scriptsize] at (1.75,0.95) {$\gamma$}; \node[font=\scriptsize] at (1.75,-0.95) {$\gamma$};
+  \node[slab] at (0.1,-1.45) {(d) $H\to\gamma\gamma$（$W$）};
+\end{scope}
+% (e) H -> g g, top loop
+\begin{scope}[shift={(13.6,0)}]
+  \draw[scalar] (-1.2,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.85,0.55); \draw[fermion] (0.85,0.55) -- (0.85,-0.55); \draw[fermion] (0.85,-0.55) -- (0,0);
+  \draw[gluon] (0.85,0.55) -- (1.55,0.9); \draw[gluon] (0.85,-0.55) -- (1.55,-0.9);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.85,0.55) {}; \node[vtx] at (0.85,-0.55) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$H$}; \node[font=\scriptsize] at (1.08,0) {$t$};
+  \node[font=\scriptsize] at (1.75,0.95) {$g$}; \node[font=\scriptsize] at (1.75,-0.95) {$g$};
+  \node[slab] at (0.1,-1.45) {(e) $H\to gg$（$t$）};
+\end{scope}
+\end{tikzpicture}
+\caption{ヒッグスの崩壊の LO の図。(a) 湯川の頂点（$\MSbar$ の $y_f$）、(b) $H\to VV^*$ の $HVV$ の頂点（$g_{HVV}=g_V^2v/2$。FJ の処方の $v$ はタドポールを含む）、(c)〜(e) は1ループで初めて起こる崩壊（ループの向きの逆の図と、(d) では Goldstone とゴースト、4点の $WW\gamma\gamma$ の頂点の図もある）。破線はヒッグス場、波線はゲージ場、巻いた線はグルーオン。}
+\label{fig:lo}
+\end{figure}
+
+\section{検算の計画}\label{sec:plan}
+
+第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、NLO ノートと同じである。測定値と文献の値は参照として並べ、比べる量は本ノートの模型で求めたものにする。
+
+\begin{table}[htbp]
+\centering\small
+\caption{各量と、それを計算して突き合わせる手段。}
+\label{tab:plan}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.6cm}}
+\toprule
+\textbf{量} & \textbf{手計算} & \textbf{FeynCalc + FeynArts、Package-X} & \textbf{MadGraph} \\
+\midrule
+木の幅 \eqref{eq:lo}、\eqref{eq:vv} & \ref{app:lo} & 振幅の2乗を記号として、3体の位相空間 & 木の幅、$H\to4f$ \\
+$H\to\gamma\gamma$、$Z\gamma$、$gg$ \eqref{eq:loop} & 第~\ref{sec:loop} 節 & 一般の $R_\xi$ の1ループの振幅 & ループで誘起される過程 \\
+$H\to q\bar q$ の QCD \eqref{eq:hqq} & 第~\ref{sec:hqq} 節 & $d$ 次元の3体、仮想の補正、硬い放射 & MadLoop と木の3体 \\
+$H\to f\bar f$ の電弱 \eqref{eq:hffren} & 第~\ref{sec:ew} 節 & 一般の $R_\xi$、LSZ、$\MSbar$ の対抗項 & MadLoop \\
+$H\to gg$ の NLO \eqref{eq:hgg} & 第~\ref{sec:hgg} 節 & 有効理論の1ループと実の放射 & — \\
+全幅と分岐比 & — & $\mu$ と処方の依存 & — \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{一致の基準。}NLO ノートと同じである。発散部分は $1/\epsilon$ の係数が記号として一致すること（仮想と実の放射の極の打ち消し、1ループで誘起される振幅の紫外の極の打ち消しは記号として0になること）を、有限部分は倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。数値の積分では精度を明示する。ゲージによらないはずの量は、記号として $\xi$ を含まないこと、または異なる $\xi$ で同じ値になることを求める。測定値とは、本ノートで計算しない高次の補正の大きさの範囲で比べる。
+
+\paragraph{手順。}次の順に進める。(1) 写した模型ファイルから FeynArts の模型と UFO を書き出して NLO ノートのものと同一であることを確かめ、$H\to f\bar f$ の振幅の2乗を式~\eqref{eq:lo} と、$H\to Vf\bar f'$ の3体の幅を式~\eqref{eq:vv} と比べる。MadGraph の木の $H\to f\bar f$ と $H\to4f$ の幅と比べ、$\MSbar$ の湯川結合と極質量の湯川結合で木の幅を求める。(2) $H\to\gamma\gamma$、$Z\gamma$、$gg$ の1ループの振幅を一般の $R_\xi$ ゲージで求め、紫外の極が対抗項なしで消えること、$\xi$ によらないこと、式~\eqref{eq:loop} とその極限に一致することを確かめ、MadGraph のループで誘起される過程と比べる。(3) 質量0のクォークの $H\to q\bar q$ の QCD の補正を $d$ 次元で $\epsilon$ について厳密に求め、極の打ち消しと式~\eqref{eq:hqq} を確かめる（NLO ノートの手順 (2) のスカラーの流れ版）。(4) 質量のある $H\to b\bar b$、$c\bar c$、$\tau^+\tau^-$ の QCD と QED の補正を、NLO ノートの手順 (3) の方法で求め、式~\eqref{eq:hqqpole} の対数と、$\MSbar$ の湯川結合での補正を確かめ、MadLoop と比べる。(5) $H\to f\bar f$ の電弱の補正を一般の $R_\xi$ ゲージで求め、紫外の有限性、ゲージによらないこと、タドポールが入らないことを確かめ、MadLoop の電弱の仮想の補正と比べる。(6) $H\to gg$ の NLO の QCD の補正を重いトップの有効理論で求め、式~\eqref{eq:hgg} を確かめる。(7) $H\to WW^*$、$ZZ^*$ で、FJ の $v$ で書いた木と $G_F$ で書いた木の差が、$HHVV$ の頂点のタドポールを含む $HVV$ の頂点の普遍的な1ループの補正で打ち消すことを確かめ、$W$、$Z$ のハドロンへの崩壊に NLO ノートの QCD の因子を付ける。(8) 全幅と分岐比をまとめ、$\mu$ と処方の依存から不定性を見積もって、文献の値と測定値（参照）と比べる。
+
+\section{検算}\label{sec:checks}
+
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} に置く。
+
+\section{議論と今後}\label{sec:discussion}
+
+\paragraph{現在の状態。}手計算の結果と計画を定めた。手順 (1)〜(8) はこれから行う。
+
+\appendix
+
+\section{木の崩壊幅の導出}\label{app:lo}
+
+$H\to f\bar f$ の振幅 $-i\frac{y_f}{\sqrt2}\bar uv$ の2乗をスピンと色で和をとると、$\sum|\mathcal M|^2=N_c\frac{y_f^2}2\cdot2(M_H^2-4m_f^2)=N_cy_f^2M_H^2\beta_f^2$ になる。2体の位相空間 $\int\dd\Phi_2=\beta_f/(8\pi)$ と $1/(2M_H)$ を掛けると、式~\eqref{eq:lo} になる。$H\to VV^*$ では、$V^*\to f\bar f'$ の不変質量 $q^2$ について $\Gamma=\int\frac{\dd q^2}\pi\frac{\sqrt{q^2}\,\Gamma_{V\to f\bar f'}(q^2)}{(q^2-M_V^2)^2}\Gamma(H\to VV(q^2))$（$\Gamma_{V\to f\bar f'}(q^2)$、$\Gamma(H\to VV(q^2))$ は一方の $V$ の質量を $\sqrt{q^2}$ にした幅）と書き、$\Gamma_V\ll M_V$ の幅を落として $q^2$ と角度を積分すると、関数 $R_T$ になる~\cite{km84}。
+
+\begin{thebibliography}{99}
+\bibitem{smnote} 標準模型：$\MSbar$ の電弱の1ループの繰り込みと検算（$V_{\mathrm{CKM}}=1$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}）。
+\bibitem{ckmnote} 標準模型と CKM 行列：$\MSbar$ の繰り込みと世代を変える過程（FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm_ckm/ResearchNote/note.pdf}）。
+\bibitem{nlonote} 標準模型の NLO の物理量：実の放射を含む崩壊幅と電弱の精密測定（$\MSbar$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm_nlo/ResearchNote/note.pdf}、2026年10月19日の版）。式、表、手順の番号はこの版のもの。
+\bibitem{pdg24} S. Navas \textit{et al.} (Particle Data Group), Phys. Rev. D \textbf{110}, 030001 (2024)。
+\bibitem{djouadi08} A. Djouadi, ``The anatomy of electroweak symmetry breaking. Tome I: The Higgs boson in the Standard Model,'' Phys. Rept. \textbf{457}, 1 (2008), arXiv:hep-ph/0503172。
+\bibitem{km84} W.-Y. Keung, W. J. Marciano, ``Higgs scalar decays: $H\to W^\pm X$,'' Phys. Rev. D \textbf{30}, 248 (1984)。
+\bibitem{bl80} E. Braaten, J. P. Leveille, ``Higgs-boson decay and the running mass,'' Phys. Rev. D \textbf{22}, 715 (1980)。
+\bibitem{ellis76} J. Ellis, M. K. Gaillard, D. V. Nanopoulos, ``A phenomenological profile of the Higgs boson,'' Nucl. Phys. B \textbf{106}, 292 (1976)。
+\bibitem{svvz79} M. A. Shifman, A. I. Vainshtein, M. B. Voloshin, V. I. Zakharov, ``Low-energy theorems for Higgs boson couplings to photons,'' Sov. J. Nucl. Phys. \textbf{30}, 711 (1979)。
+\bibitem{spira95} M. Spira, A. Djouadi, D. Graudenz, P. M. Zerwas, ``Higgs boson production at the LHC,'' Nucl. Phys. B \textbf{453}, 17 (1995), arXiv:hep-ph/9504378。
+\bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}）。
+\end{thebibliography}
+
+\end{document}
