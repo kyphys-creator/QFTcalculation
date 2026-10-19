@@ -1,0 +1,23 @@
+(* HggEFT.fr: the heavy-top effective operator of the Higgs note, step (6), loaded after SM_CKM.fr:
+     LoadModel["SM_CKM.fr", "HggEFT.fr"]
+   L_eff = -(1/4) cHgg (H/vev) G^a_{mu nu} G^{a mu nu},  with cHgg = -(alpha_s/(3 pi)) (1 + (11/4) alpha_s/pi) for the top
+   integrated out (so that L_eff = (alpha_s/(12 pi)) (H/v) G G (1 + ...)).  cHgg is a new external parameter with the
+   interaction order HIG; SM_CKM.fr itself is unchanged.  Research note models/sm_higgs. *)
+
+M$InteractionOrderHierarchy = {
+  {HIG, 1}
+};
+
+M$Parameters = {
+  cHgg == {
+    ParameterType    -> External,
+    BlockName        -> HEFT,
+    OrderBlock       -> 1,
+    Value            -> 1.,
+    InteractionOrder -> {HIG, 1},
+    TeX              -> Subscript[c, Hgg],
+    Description      -> "coefficient of -(1/4) (H/v) G G"
+  }
+};
+
+LHgg := Block[{mu, nu, aa}, ExpandIndices[-1/4 cHgg/vev H FS[G, mu, nu, aa] FS[G, mu, nu, aa]]];
