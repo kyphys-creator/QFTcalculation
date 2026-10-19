@@ -1190,9 +1190,9 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 
 \section{LHC の現象論の道具の追加}\label{sec:lhc}
 
-2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）を記録する。
+2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）と段階 2（Pythia 8 と HepMC）を記録する。
 
-段階 1 は Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
+どちらの段階も Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
 
 \begin{table}[htbp]
 \centering\small
@@ -1212,6 +1212,8 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 \end{tabularx}
 \end{table}
 
+\subsection{段階 1：LHAPDF と PDF の組}\label{sec:lhc1}
+
 \begin{table}[htbp]
 \centering\small
 \caption{段階 1 で入れたものの版、配置、入手元。配置の \texttt{L} は \pth{hep/MG5_aMC_v3_8_1/HEPTools/lhapdf6_py3}。PDF の組の数字は LHAPDF の番号と組の数、括弧の中は展開した大きさと取得した tarball の大きさ。}
@@ -1226,6 +1228,7 @@ NNPDF40\_nlo\_as\_\allowbreak 01180 & 331700、101 & \texttt{L/share/LHAPDF}（1
 CT18NNLO & 14000、59 & 同上（67 MB、18.7 MB） & 同上~\cite{ct18} \\
 PDF4LHC21\_40 & 93100、41 & 同上（31 MB、9.8 MB） & 同上~\cite{pdf4lhc21} \\
 NNPDF23\_lo\_as\_\allowbreak 0130\_qed、NNPDF23\_nlo\_as\_\allowbreak 0119\_qed & 247000、244800 & 承認外の取得物なので、tarball とともにゴミ箱へ移した（2か所の計 493 MB） & 同上。installer が \MGaMC{} の既定の組として自動で取得した（27.6、28.5 MB） \\
+\nolinkurl{package_info.dat}、\nolinkurl{HEPToolsInstaller_V168.tar.gz} & — & \MGaMC{} が installer の置き場所と installer 一式に使う（\pth{hep/MG5_aMC_v3_8_1/HEPTools/HEPToolsInstallers}） & madgraph.mi.infn.it（\texttt{install} のたびに取得、1.4 KB、35.8 KB）。導入の前の承認の一覧に入れ忘れ、段階 2 で気づいた \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1284,13 +1287,83 @@ clang++ -shared -fPIC -undefined dynamic_lookup -O2 -std=c++11 -o $L/lib/python3
 cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage1.sh
 \end{Verbatim}
 
+\subsection{段階 2：Pythia 8 と HepMC}\label{sec:lhc2}
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 2 で入れたものの版、配置、入手元。配置の \texttt{H} は \pth{hep/MG5_aMC_v3_8_1/HEPTools}。大きさは取得した tarball のもの。}
+\label{tab:lhc2}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{1.2cm}X>{\raggedright\arraybackslash}p{4.0cm}}
+\toprule
+\textbf{もの} & \textbf{版} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+Pythia & 8.317 & \texttt{H/pythia8}（LHAPDF 6、HepMC 2、gzip とつないで構築） & pythia.org~\cite{pythia83,url:pythia}（31.3 MB） \\
+HepMC & 2.06.09 & \texttt{H/hepmc} & madgraph.phys.ucl.ac.be~\cite{hepmc}（3.8 MB） \\
+zlib & 1.3.2 & \texttt{H/zlib} & zlib.net（1.5 MB） \\
+MG5aMC\_PY8\_interface & 1.3 & \texttt{H/MG5aMC\_PY8\_interface} & madgraph.phys.ucl.ac.be（20 KB） \\
+\nolinkurl{package_info.dat}、\nolinkurl{HEPToolsInstaller_V168.tar.gz} & — & 段階 1 と同じ & madgraph.phys.ucl.ac.be（1.4 KB、35.8 KB） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{導入。}\MGaMC{} の \texttt{install pythia8} を、段階 1 と同じく \MGaMC{} のディレクトリから \texttt{CC} と \texttt{CXX} を clang に固定して起動した（約20分）。installer は HepMC、zlib、Pythia の順に入れ、そのあと MG5aMC\_PY8\_interface を自動で入れた。取得したのは導入の前に承認を得た6つだけだが、installer 一式と MG5aMC\_PY8\_interface は、示した madgraph.mi.infn.it ではなく、同じものを置く madgraph.phys.ucl.ac.be から取った。\MGaMC{} は利用者の設定に \texttt{pythia8\_path} と \texttt{mg5amc\_py8\_interface\_path} を書く。
+
+\paragraph{検証。}結果を表~\ref{tab:lhc2tests} にまとめる（\nolinkurl{tests/lhc/run_stage2.sh}、約20分、\texttt{out/} は 2.3 GB）。シャワー、事象の記録、マッチングの集計は正しく動いた。一方、MLM のマッチング~\cite{mlm}の DJR（$k_T$ のクラスタリングで $n+1$ 個のジェットが $n$ 個になる目盛り）は、0 と 1 のジェットの境目（d01）で、マッチングの目盛り qCut を境に 35〜40\% 落ちた。\MGaMC{} は run\_card の PDF を Pythia に渡さないので、行列要素は NNPDF4.0（$\alpha_s=0.118$）で、シャワーの ISR は Pythia の既定の NNPDF2.3 LO で計算される。PDF をどちらかにそろえると段差は 20\% 前後に縮み、シャワーの $\alpha_s$ をそろえても変わらなかった。残りの段差は統計の $2\sigma$ ほどで、原因は分かっていない。マッチングの後の断面積が xqcut で 6.4\% 動くのも、同じ食い違いの表れと考えられる。後の段階で MLM を使うときは、行列要素とシャワーの PDF をそろえ、DJR を毎回確かめる。
+
+自分の DJR は、事象を LHE のジェットの数で分けて \texttt{main164} でパートンの段階でシャワーをかけ直し、終状態のパートンを自分の排他的な $k_T$ のクラスタリング（$R=1$、$d_{ij}=\min(p_{Ti}^2,p_{Tj}^2)\Delta R_{ij}^2$、$d_{iB}=p_{Ti}^2$）で求めた。形はマッチング自身の DJR（MG5aMC\_PY8\_interface の \texttt{getDJR}）に近いが、統計の範囲では一致せず、d12 の段差は自分の DJR にだけ出る。b クォークを除いても変わらず、原因は分かっていない。段差の判定には、マッチング自身の DJR を使った。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 2 の検証の結果。$pp\to e^+e^-$（13 TeV、$60<m_{ee}<120$~GeV）、MLM は $pp\to e^+e^-+0,1,2$ ジェット、qCut $=1.5\,$xqcut、20000 事象ずつ。段差は、DJR の和の $\log$ を qCut の両側で直線に当てはめ、qCut での二つの直線の比（なめらかなら1）。}
+\label{tab:lhc2tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & シャワーと断面積（10000 事象） & Pythia の断面積が LHE の値に等しい & 14 の並列の仕事がすべて 1689.922000~pb（LHE と同じ）、10000 事象すべてを受け入れ & 一致 \\
+2 & 保存則（10000 事象、終状態は平均392個） & 終状態の和が $(0,0,0,\sqrt s)$、電荷 $+2$、バリオン数 2 & 運動量は $1.8\times10^{-6}$（HepMC の表示の桁）、電荷とバリオン数はすべての事象で 2 & 一致 \\
+3 & マッチングの集計 & \MGaMC{} の値が $\sigma_{\mathrm{LHE}}\sum n_{\mathrm{acc}}/\sum n_{\mathrm{try}}$ に等しい & 1563.02、1605.12、1665.89、1436.55~pb（\MGaMC{} は4桁で 1563、1605、1666、1436~pb） & 一致 \\
+4 & マッチングの断面積（NNPDF4.0） & xqcut によらない & xqcut 15、20、30~GeV で 1563、1605、1666~pb（6.4\%） & 一致しない \\
+5 & DJR のつながり（マッチング自身の DJR） & 段差 1 & d01：NNPDF4.0 で 0.63、0.66、0.61（$\pm0.06$〜0.07）、nn23lo1 で $0.83\pm0.08$。d12：0.96〜1.09（$\pm0.16$〜0.23）、$0.90\pm0.15$ & d01 は一致しない \\
+6 & シャワーを行列要素にそろえる（NNPDF4.0、xqcut 20~GeV） & 段差が1に近づく & Pythia の PDF を NNPDF4.0 にすると d01 は $0.79\pm0.08$、さらにシャワーの $\alpha_s$ を 0.118（2ループ）にすると $0.82\pm0.08$ & 改善（残り約 $2\sigma$） \\
+7 & 自分の DJR & マッチング自身の DJR に一致 & 形は近いが $\chi^2$/ビン数 $=3.2$〜4.7。d12 の段差は自分の DJR にだけ出る & 一致しない \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}導入と照合の途中で、次のことが分かった。
+\begin{itemize}
+\item \MGaMC{} 3.8.1 は、LO の事象のシャワーに MG5aMC\_PY8\_interface ではなく Pythia 8.317 の \texttt{main164} を使う（installer の注記では、新しい世代の MadGraph への移行の一部）。\texttt{main164} は DJR のヒストグラムを書かないので、\MGaMC{} は \texttt{Cross-sections could not be read from theXML node 'xsection'} と出し、DJR の図を作らない。DJR は MG5aMC\_PY8\_interface を直接走らせて得る（\texttt{HistFile:name}、\texttt{LHEFInputs:nSubruns = 1}、\texttt{Main:subrun = 0} を指定する）。
+\item \MGaMC{} は \texttt{main164} を並列の仕事（この Mac では14）に分けて走らせる。ログには仕事ごとの Pythia::stat の表が並び、各表に、ジェットの数ごと（user classification code 0、1、2）の試行と受け入れの数がある。\texttt{Matched cross-section} は4桁しか表示しないので、受け入れの数から求め直せる。
+\item \texttt{main164} を単独で走らせると、\texttt{Main:numberOfEvents = -1} を受け付けない（\MGaMC{} は事象の数を書き入れてから走らせる）。
+\item \MGaMC{} の Pythia の card は \texttt{PDF:pSet} を設定しないので、シャワーの ISR は run\_card の PDF によらず Pythia の既定の NNPDF2.3 LO を使う。MLM のマッチングでは、行列要素の PDF と食い違うと DJR に段差が出る（表~\ref{tab:lhc2tests} の 5、6）。
+\item MPI とハドロン化を入れた HepMC の出力は、gzip で 10000 事象あたり 0.79 GB になる。使わないときは Pythia の card で \texttt{HEPMCoutput:file = /dev/null} にする。
+\item \MGaMC{} の \texttt{install} は、そのたびに \texttt{package\_info.dat} と installer 一式を取得し、置き場所（madgraph.mi.infn.it、madgraph.phys.ucl.ac.be）はそのときによって変わる。
+\end{itemize}
+
+\paragraph{使い方。}\MGaMC{} の \texttt{launch} の最初の問いで \texttt{shower=Pythia8} とする。MLM は run\_card の \texttt{ickkw = 1} と \texttt{xqcut}、Pythia の card の \texttt{JetMatching:qCut} で指定する。照合は \nolinkurl{tests/lhc/run_stage2.sh} で実行し直す（約20分）。
+\begin{Verbatim}
+launch <proc>
+shower=Pythia8
+done
+set ickkw 1
+set xqcut 20
+set JetMatching:qCut 30
+set HEPMCoutput:file /dev/null            # no HepMC (0.79 GB per 10^4 events otherwise)
+set PDF:pSet LHAPDF6:NNPDF40_nlo_as_01180  # the shower's PDF = the matrix elements' (tried only in the interface's card)
+done
+# DJRs of the matching itself (main164, which MG5 uses, writes none):
+~/hep/MG5_aMC_v3_8_1/HEPTools/MG5aMC_PY8_interface/MG5aMC_PY8_interface run.cmnd   # writes <HistFile:name>djrs.dat
+cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage2.sh
+\end{Verbatim}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO の断面積の計算（\texttt{[QCD]}、実の放射を含む \texttt{[QED]}）、Mathematica 14.1.0 での動作である。はじめ確かめていなかった NLOCT の対抗項と NLO 用 UFO は、その後 $\phi^3$、擬スカラー湯川、スピノル QED のノート~\cite{phi3note,yukawanote,qednote} で、手計算の対抗項と記号として一致し、MadLoop の値も手計算の式と倍精度の範囲で一致した（第~\ref{sec:issues} 節の回避策のもとで）。FormCalc の記号の計算と LoopTools の組、MadLoop のループで誘起される過程（\texttt{[sqrvirt=QED]}）と MadEvent（\texttt{[noborn=QED]}）も、スピノル QED のノートで確かめた。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。
 
 \paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
 
-\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1 だけを入れた（第~\ref{sec:lhc} 節）。
+\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1、2 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR に、行列要素とシャワーの PDF の食い違いによる段差が見つかった。PDF をそろえても残る約 $2\sigma$ の段差と、自分の DJR がマッチング自身の DJR と統計の範囲で合わない理由は、まだ分かっていない。
 
 \appendix
 
@@ -1469,6 +1542,10 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{nnpdf40} R. D. Ball \textit{et al.} (NNPDF), ``The path to proton structure at 1\% accuracy,'' Eur.Phys.J.C \textbf{82} (2022) 428, \href{https://arxiv.org/abs/2109.02653}{arXiv:2109.02653}.
 \bibitem{ct18} T.-J. Hou \textit{et al.}, ``New CTEQ global analysis of quantum chromodynamics with high-precision data from the LHC,'' Phys.Rev.D \textbf{103} (2021) 014013, \href{https://arxiv.org/abs/1912.10053}{arXiv:1912.10053}.
 \bibitem{pdf4lhc21} R. D. Ball \textit{et al.} (PDF4LHC Working Group), ``The PDF4LHC21 combination of global PDF fits for the LHC Run III,'' J.Phys.G \textbf{49} (2022) 080501, \href{https://arxiv.org/abs/2203.05506}{arXiv:2203.05506}.
+\bibitem{pythia83} C. Bierlich \textit{et al.}, ``A comprehensive guide to the physics and usage of PYTHIA 8.3,'' SciPost Phys.Codeb. \textbf{2022} (2022) 8, \href{https://arxiv.org/abs/2203.11601}{arXiv:2203.11601}.
+\bibitem{url:pythia} PYTHIA. \url{https://pythia.org/}
+\bibitem{hepmc} M. Dobbs, J. B. Hansen, ``The HepMC C++ Monte Carlo event record for High Energy Physics,'' Comput.Phys.Commun. \textbf{134} (2001) 41.
+\bibitem{mlm} M. L. Mangano, M. Moretti, F. Piccinini, M. Treccani, ``Matching matrix elements and shower evolution for top-quark production in hadronic collisions,'' JHEP \textbf{01} (2007) 013, \href{https://arxiv.org/abs/hep-ph/0611129}{arXiv:hep-ph/0611129}.
 \bibitem{url:feynmaster} D. Fontes, J. C. Rom\~ao, FeynMaster Manual v2（Mathematica 14 での FeynRules の \texttt{MatrixSymbol} の扱い）. \url{https://porthos.tecnico.ulisboa.pt/FeynMaster/Manual/Manual-v2.pdf}
 \bibitem{phi34thermal} $\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波（本リポジトリ \nolinkurl{models/phi34_thermal/ResearchNote/note.pdf}）。熱的な道具との照合は第7節と付録~H。
 \bibitem{cosmotransitions} C. L. Wainwright, ``CosmoTransitions: computing cosmological phase transition temperatures and bubble profiles with multiple fields,'' Comput.Phys.Commun. \textbf{183} (2012) 2006, \href{https://arxiv.org/abs/1109.4189}{arXiv:1109.4189}.

@@ -7,7 +7,8 @@
 #   --twoloop re-runs the two-loop check of models/phi3 (environment.pdf, Sec. 8): Kira, FIRE, AMFlow, TSIL,
 #   pySecDec, feyntrop on the d = 4 two-loop self-energy (about 12 minutes).
 #   --lhc re-runs the checks of the LHC tools (environment.pdf, Sec. 9) in ./lhc: stage 1, LHAPDF and the PDF sets
-#   (sum rules; p p -> e+ e- and g g -> H in MG5 against own integrals; about 1 minute).
+#   (sum rules; p p -> e+ e- and g g -> H in MG5 against own integrals; about 1 minute); stage 2, Pythia 8 and HepMC
+#   (shower, conservation laws, MLM matching and DJRs; about 20 minutes, 2.3 GB in lhc/out).
 # Test files are named test_*: a file called formcalc.wl in the working directory would
 # shadow the FormCalc package (macOS file names are case-insensitive).
 cd "$(dirname "$0")"
@@ -70,5 +71,7 @@ fi
 if [ "$LHC" = 1 ]; then
   step "LHC tools, stage 1: LHAPDF 6.5.5 and the PDF sets (sum rules, MG5 p p -> e+ e-, g g -> H)"
   ./lhc/run_stage1.sh 2>&1 | tee -a "$log"
+  step "LHC tools, stage 2: Pythia 8.317 and HepMC 2.06.09 (shower, conservation, MLM matching, DJRs)"
+  ./lhc/run_stage2.sh 2>&1 | tee -a "$log"
 fi
 echo "done; full log in $log"
