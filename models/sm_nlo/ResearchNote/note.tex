@@ -71,7 +71,7 @@
 
 求める量は五つである。(i) $\MSbar$ の結合と極質量の運動学で書いた木の崩壊幅。(ii) 仮想と実の放射の赤外の極の打ち消しと、包括的な QED と QCD の補正（質量0と質量のあるフェルミオン）。(iii) $Z\to f\bar f$、$W^+\to f\bar f'$、$t\to bW^+$ の電弱と QCD の NLO の幅。(iv) $Z$ の有効結合、$\sin^2\theta_{\mathrm{eff}}^\ell$、$\Gamma_Z$、$R_\ell$、$R_b$、$\sigma^0_{\mathrm{had}}$。(v) $\Delta\rho$ と、$G_F$ からの $M_W$ の予言。SM ノートと CKM ノートの結果（自己エネルギー、頂点、対抗項、$\MSbar$ のパラメータ、UFO）は求め直さず、引用して使う。一致の基準は SM ノートと同じである。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型、処方、入力と量の定義を定める。第~\ref{sec:results} 節で手計算の結果を述べる。第~\ref{sec:plan} 節でそれらをツールと突き合わせる計画を定める。第~\ref{sec:checks} 節に各手順の結果を、第~\ref{sec:discussion} 節にまとめを書く。導出は\ref{app:lo}、\ref{app:ir} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型、処方、入力と量の定義を定める。第~\ref{sec:results} 節で手計算の結果（木の幅、赤外の構造、繰り込んだ S 行列要素、$\Delta\rho$ と $M_W$、$Z$ 極の有効結合、処方の換算）と、手順で得た NLO の予言のまとめを述べる。第~\ref{sec:plan} 節でそれらをツールと突き合わせる計画を定める。第~\ref{sec:checks} 節に各手順の結果を、第~\ref{sec:discussion} 節にまとめを書く。導出は\ref{app:lo}、\ref{app:ir} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -166,6 +166,34 @@ C=C_F=\tfrac43\ (\text{グルーオン}：1+\tfrac{\alpha_s}\pi),\qquad C=Q_f^2\
 \label{eq:inclusive}
 \end{equation}
 になる（\ref{app:ir}）。有限部分の $\pm\pi^2$ は $N_\epsilon$ の $\epsilon^2$ の項の取り方で変わるが、二つで符号が逆なので和にはよらない。ベクトルと軸性ベクトルの結合は質量0では同じ補正を受ける。NLO の図を図~\ref{fig:ir} に示す。$W^+\to\ell^+\nu$ では光子が $W$ にも付くので、光子の部分だけを取り出した補正は単独ではゲージによらず、弱い補正と合わせて初めて意味を持つ。
+
+\paragraph{電荷を持つ崩壊する粒子。}$W^\pm$ やトップのように崩壊する粒子も電荷を持つと、光子はそれにも付く。粒子 $i$ の電荷を $e_i$（陽子の電荷の単位）、入る粒子で $\eta_i=-1$、出る粒子で $\eta_i=+1$ とすると（電荷の保存は $\sum_i\eta_ie_i=0$）、eikonal 因子 \eqref{eq:eikonal} は
+\begin{equation}
+\overline{|\mathcal M_R|^2}\to-e^2\sum_{i,j}\eta_i\eta_je_ie_j\frac{p_i\cdot p_j}{(p_i\cdot k)(p_j\cdot k)}\overline{|\mathcal M_0|^2}
+\label{eq:eikonalQ}
+\end{equation}
+になる（放射体が二つで $e_1=-e_2$ なら式~\eqref{eq:eikonal} の QED の形に戻る）。崩壊する粒子の静止系で $E<\Delta E=\delta E_{\max}$ の光子を $d$ 次元で積分すると
+\begin{equation}
+\frac{\Gamma_S}{\Gamma_0}=\frac\alpha\pi K_S,\quad K_S=-\frac1{4\epsilon}\Bigl(\frac{4\pi\mu^2}{\Delta E^2}\Bigr)^\epsilon\frac{\Sigma(\epsilon)}{\Gamma(1-\epsilon)},\quad
+\Sigma=-\sum_{i,j}\eta_i\eta_je_ie_jA_{ij},\quad A_{ij}=\int_{-1}^1\dd c\,\frac{(1-c^2)^{-\epsilon}\,p_i\cdot p_j}{(E_i-\vec p_i\cdot\hat n)(E_j-\vec p_j\cdot\hat n)}
+\label{eq:softQ}
+\end{equation}
+で、仮想の補正の単極は $+\frac\alpha{4\pi}\Sigma(0)/\epsilon$ でなければならない。崩壊する粒子（添字0）が静止し、二つの終状態が背中合わせ（速さ $b_1$、$b_2$）のとき、$A=A^{(0)}-\epsilon A^{(1)}$ と書くと
+\begin{equation}
+\begin{gathered}
+A_{00}=2-\epsilon(4\ln2-4),\qquad A_{0i}=J_1(b_i)-\epsilon I_1(b_i),\qquad A_{ii}=(1-b_i^2)\bigl[J_2(b_i)-\epsilon I_2(b_i)\bigr],\\
+A_{12}=\frac{1+b_1b_2}{b_1+b_2}\bigl\{b_1\bigl[J_1(b_1)-\epsilon I_1(b_1)\bigr]+b_2\bigl[J_1(b_2)-\epsilon I_1(b_2)\bigr]\bigr\},\\
+J_1(b)=\frac1b\ln\frac{1+b}{1-b},\quad J_2(b)=\frac2{1-b^2},\quad I_2(b)=\frac{4(\operatorname{artanh}b-b\ln2)}{b^3-b},\\
+I_1(b)=\frac1b\re\Bigl[\bigl(i\pi+2\ln b-\ln(1-b^2)\bigr)\ln\frac{1-b}{1+b}-\mathrm{Li}_2\frac{1+b}{1-b}+\mathrm{Li}_2\frac{1-b}{1+b}\Bigr]
+\end{gathered}
+\label{eq:Aij}
+\end{equation}
+である（$J_n$、$I_n$ は $\int\dd c\,(1-bc)^{-n}$ と、それに $\ln(1-c^2)$ を掛けた積分。$A_{12}$ は部分分数 $\frac1{(1-b_1c)(1+b_2c)}=\frac1{b_1+b_2}[\frac{b_1}{1-b_1c}+\frac{b_2}{1+b_2c}]$ による）。軽い荷電フェルミオン（質量 $m$、電荷 $e_f$）の共線の対数は、硬い光子の側で
+\begin{equation}
+\frac{\Gamma_H}{\Gamma_0}\ni\frac\alpha\pi e_f^2\Bigl(-\ln\delta'-\frac34\Bigr)\ln\frac{M^2}{m^2},\qquad\delta'=\frac{\Delta E}{E_{f\gamma}}
+\label{eq:collin}
+\end{equation}
+になる（分裂関数 $\frac{1+z^2}{1-z}$ の $z<1-\delta'$ の積分の半分。$E_{f\gamma}$ はフェルミオンと光子の対のエネルギー）。仮想と軟らかい部分がその逆を持つので、光子について包括的な幅は $m\to0$ で $m$ によらない（KLN）。手順 (4b)、(4c) ではこれをレプトンと $b$ の質量で確かめる。
 
 \begin{figure}[tbp]
 \centering
@@ -267,6 +295,26 @@ C=C_F=\tfrac43\ (\text{グルーオン}：1+\tfrac{\alpha_s}\pi),\qquad C=Q_f^2\
 \label{fig:ir}
 \end{figure}
 
+\subsection{繰り込んだ S 行列要素}\label{sec:smatrix}
+
+S 行列要素は、SM ノートと CKM ノートと同じく、$\MSbar$ の結合で書いた裸の切断された頂点に、外線の on-shell の LSZ の因子（繰り込んだ自己エネルギーの極での留数）を掛け、$\MSbar$ の対抗項を足したものである。形状因子を
+$\mathcal M\propto\bar u(p_1)[\slashed\varepsilon(F_LP_L+F_RP_R)+(\varepsilon\cdot p_1)(H_LP_L+H_RP_R)]v(p_2)$ と書く（$Z$ では $g_Z$、$W$ とトップでは $e/(\sqrt2\hat s)$ の単位）。$Z\to f\bar f$ では
+\begin{equation}
+F_L=F_L^{(0)}+F_L^{\mathrm{vtx}}+F_L^{(0)}\Bigl[-\tfrac12\Sigma^{ZZ\prime}_T(M_Z^2)+\delta Z^L_f\Bigr]-\frac{\Sigma^{AZ}_T(M_Z^2)}{M_Z^2}F_L^{\gamma}+\delta F_L^{\MSbar}
+\label{eq:zren}
+\end{equation}
+で、$F_R$ も同じ形である。$F^{(0)}_L=T_3-Q\hat s^2$、$F^{(0)}_R=-Q\hat s^2$ は木の値、$\delta Z^L_f=-\Sigma^L-m^2(\Sigma^{L\prime}+\Sigma^{R\prime}+2\Sigma^{S\prime})$（Denner の on-shell の形）は二つの脚の和である。$F^\gamma$ は混合 $Z\to\gamma^*\to f\bar f$ の光子の木の振幅で、同じ単位では $Q\hat s\hat c$ になる。$\delta F^{\MSbar}$ は $g$、$g'$ の $\MSbar$ の対抗項（$\beta$ 関数の極。$K\delta g/g=\frac\Delta2(-\frac{19}6)g^2$、$K\delta g'/g'=\frac\Delta2\frac{41}6g'^2$）である。FJ のタドポールは質量をずらすだけで、この S 行列要素には入らない。$Z$ の留数 $-\frac12\Sigma^{ZZ\prime}_T(M_Z^2)$ は $F_L$ と $F_R$ に共通である。$W^+\to u_i\bar d_j$ では
+\begin{equation}
+F_L=V_{ij}+F_L^{\mathrm{vtx}}-\tfrac12V_{ij}\Sigma^{WW\prime}_T(M_W^2)+\tfrac12\bigl[(\delta Z^{uL})^\dagger V+V\delta Z^{dL}\bigr]_{ij}+V_{ij}\frac{\delta g}g+\delta V_{ij}
+\label{eq:wren}
+\end{equation}
+で、$F_R$、$H_L$、$H_R$ は頂点だけからなる。$\delta Z^{fL}$ の対角は上の形で、非対角は $p^2=m_j^2$ で $\delta Z^L_{ij}=\frac2{m_i^2-m_j^2}[m_j^2\Sigma^L_{ij}+m_im_j\Sigma^R_{ij}+(m_i^2+m_j^2)\Sigma^S_{ij}]$ である。$\delta V$ は CKM ノートの式 (10) の $\MSbar$ の対抗項である。$\Sigma^{WW\prime}_T(M_W^2)$ は光子と $W$ のループの $B_0'(M_W^2;0,M_W^2)$ を含み、赤外で発散する（次元正則化で $-\frac1{2M_W^2}[\frac1\epsilon+\ln\frac{\mu^2}{M_W^2}+2]$。$\MSbar$ の規格化）。$t\to d_jW^+$ はそのエルミート共役の形
+\begin{equation}
+F_L=V^*_{tj}+F_L^{\mathrm{vtx}}-\tfrac12V^*_{tj}\Sigma^{WW\prime}_T(M_W^2)+\tfrac12\bigl[(\delta Z^{dL})^\dagger V^\dagger+V^\dagger\delta Z^{uL}\bigr]_{jt}+V^*_{tj}\frac{\delta g}g+\delta V^*_{tj}
+\label{eq:tren}
+\end{equation}
+である（$\dagger$ は結合の位相だけを共役にとる）。崩壊するトップの自己エネルギーには $t\to bW^+$ の吸収部分があり（一般の $R_\xi$ では $\sqrt{\xi_W}M_W<m_t$ の非物理的な閾値の部分もある）、幅には木との干渉の実部をとる。紫外と赤外の発散は同じ $\epsilon$ に入るので、光子を含む電弱の補正では、仮想の補正の単極が式~\eqref{eq:softQ} の軟らかい光子の極と打ち消すことが、紫外の有限性の確かめも兼ねる。
+
 \subsection{$\rho$ パラメータ}\label{sec:rho}
 
 ゲージ場の自己エネルギーの横の部分を $\Sigma_T$ と書き、$\Delta\rho\equiv\hat\Sigma^{ZZ}_T(0)/M_Z^2-\hat\Sigma^{WW}_T(0)/M_W^2$ とする。トップとボトムの二重項の寄与は、$m_b\to0$ で
@@ -274,7 +322,24 @@ C=C_F=\tfrac43\ (\text{グルーオン}：1+\tfrac{\alpha_s}\pi),\qquad C=Q_f^2\
 \Delta\rho=\frac{N_cy_t^2}{2K}=\frac{3y_t^2}{32\pi^2}\qquad\Bigl(=\frac{3G_Fm_t^2}{8\sqrt2\pi^2}\Bigr)
 \label{eq:drho}
 \end{equation}
-である~\cite{veltman77}。紫外の極は custodial 対称性のために $Z$ と $W$ の間で打ち消す。FJ の処方のタドポールは $\Sigma^{ZZ}_T(0)$、$\Sigma^{WW}_T(0)$ にそれぞれ $M_Z^2$、$M_W^2$ に比例する同じ係数で入るので、$\Delta\rho$ からは消える。$G_F$ と $\MSbar$ の $v$ の関係（SM ノートの手順 (6) の $\mu$ 崩壊）と $\Delta\rho$ から、$M_W$ の予言（手順 (6)）を組む。
+である~\cite{veltman77}。紫外の極は custodial 対称性のために $Z$ と $W$ の間で打ち消す。FJ の処方のタドポールは $\Sigma^{ZZ}_T(0)$、$\Sigma^{WW}_T(0)$ にそれぞれ $M_Z^2$、$M_W^2$ に比例する同じ係数で入るので、$\Delta\rho$ からは消える。$m_b$ を残すと
+\begin{equation}
+\Delta\rho_{tb}=\frac{N_cg^2}{4M_W^2K}F_0(m_t^2,m_b^2),\qquad F_0(a,b)=a+b-\frac{2ab}{a-b}\ln\frac ab
+\label{eq:drhof0}
+\end{equation}
+で、$F_0\to a$（$b\to0$）で式~\eqref{eq:drho} に戻り、縮退 $a=b$ で0になる。ボソンのループでは $g'$ が custodial 対称性を破るので、すべてのループを含む $\Delta\rho$ は紫外の極を残し、ゲージによる。$\Delta\rho$ そのものは物理量ではなく、物理量は $M_W$ である。
+
+タドポールの部分は $\Sigma^{WW}_T(k^2)/M_W^2$ と $\Sigma^{ZZ}_T(k^2)/M_Z^2$ で同じなので、$dV=\re\hat\Sigma^{VV}_T(M_V^2)/M_V^2$ の差 $dZ-dW$ からも消える。$\alpha(0)$、$G_F$、$M_Z$ からの $M_W$ の予言は、SM ノートの当てはめ（その手順 (7)）と同じく、この組について線形に
+\begin{equation}
+M_W=M_Z\hat c(\mu)\Bigl[1+\tfrac12\bigl(dZ-dW\bigr)\Bigr]
+\label{eq:mwpred}
+\end{equation}
+と書く（$\hat c(\mu)$ は $\alpha(0)$ を入力にした $\MSbar$ の結合から作る）。$\Delta\rho$ に高次の補正 $\delta\Delta\rho$ が加わると、$M_W$、$M_Z$ を固定した処方では $\delta\sin^2\theta_{\mathrm{eff}}=c_W^2\,\delta\Delta\rho$、$\alpha$、$G_F$、$M_Z$ を固定した処方では
+\begin{equation}
+\delta\sin^2\theta_{\mathrm{eff}}=-\frac{s_W^2c_W^2}{c_W^2-s_W^2}\,\delta\Delta\rho,\qquad \frac{\delta M_W}{M_W}=\frac{c_W^2}{2(c_W^2-s_W^2)}\,\delta\Delta\rho
+\label{eq:drhosens}
+\end{equation}
+だけ予言が動く（$c_W^2/(c_W^2-s_W^2)\approx1.4$ の因子で大きくなる）。トップの $\Delta\rho$ の $O(\alpha\alpha_s)$ の補正は $\delta\Delta\rho=-\frac23(1+\frac{\pi^2}3)\frac{\alpha_s}\pi\Delta\rho$ である~\cite{dv87}（参照）。
 
 \subsection{$Z$ 極の有効結合}\label{sec:zpole}
 
@@ -283,18 +348,36 @@ $Z\to f\bar f$ の繰り込んだ1ループの振幅を、$p^2=M_Z^2$ で
 \mathcal M=-i\frac{g_Z}2\sqrt{\hat Z_Z}\,\bar u(p_1)\gamma^\mu\bigl(\mathcal V_f-\mathcal A_f\gamma_5\bigr)v(p_2)\,\varepsilon_\mu
 \label{eq:effcoup}
 \end{equation}
-と書き（$\hat Z_Z$ は $Z$ の留数、$\mathcal V_f$、$\mathcal A_f$ は複素の有効結合）、
+と書く（$\hat Z_Z$ は $Z$ の留数、$\mathcal V_f$、$\mathcal A_f$ は複素の有効結合）。式~\eqref{eq:zren} の形状因子では $\mathcal V_f=F_L+F_R$、$\mathcal A_f=F_L-F_R$（$g_Z/2$ の単位。木では $T_3-2Q\hat s^2$、$T_3$）で、$Z$ の留数は $F_L$ と $F_R$ に共通なので、比 $\mathcal V_f/\mathcal A_f$ からは消える。光子とグルーオンの終状態の補正は、質量0のフェルミオンでは $\mathcal V_f$ と $\mathcal A_f$ に同じ因子を掛けるだけなので含めず、$O(m_f)$ の $H_L$、$H_R$ も含めない（LEP の有効結合の定義）。
 \begin{equation}
 \sin^2\theta^f_{\mathrm{eff}}\equiv\frac1{4|Q_f|}\Bigl(1-\re\frac{\mathcal V_f}{\mathcal A_f}\Bigr)=\hat\kappa_f(\mu)\,\hat s^2(\mu)
 \label{eq:s2eff}
 \end{equation}
-と定める。木では $\hat\kappa_f=1$ で、1ループの $\hat\kappa_f-1$ は、$Z$ と光子の混合（$\re\hat\Sigma^{AZ}_T(M_Z^2)/M_Z^2$。光子の頂点 $-ieQ_f\gamma^\mu$ を通じて $\mathcal V_f$ だけをずらす）と、頂点と外線の補正からなる。部分幅は $|\mathcal V_f|^2$、$|\mathcal A_f|^2$ に式~\eqref{eq:lo} の形で入り、QED と QCD の補正 \eqref{eq:inclusive} がほぼ掛け算で付く。$R_\ell=\Gamma_{\mathrm{had}}/\Gamma_\ell$、$R_b=\Gamma_{b\bar b}/\Gamma_{\mathrm{had}}$、$\sigma^0_{\mathrm{had}}=12\pi\Gamma_e\Gamma_{\mathrm{had}}/(M_Z^2\Gamma_Z^2)$ はこれらの比と積である。$Z b\bar b$ の頂点には $W$ と $G^\pm$ と内線のトップのループが入り、$|V_{tb}|^2$ と $y_t^2$ に比例する非普遍的な補正になる。符号と細部は手順 (5) で SM ノートの規約に合わせて求める。
+と定め、$x_f=\re\mathcal V_f/\mathcal A_f=1-4|Q_f|\sin^2\theta^f_{\mathrm{eff}}$ で極の非対称度を
+\begin{equation}
+A_f=\frac{2x_f}{1+x_f^2},\qquad A^{0,f}_{\mathrm{FB}}=\frac34A_eA_f
+\label{eq:asym}
+\end{equation}
+とする（光子の交換、終状態の補正、クォークの質量を除いたもの）。木では $\hat\kappa_f=1$ で、1ループの $\hat\kappa_f-1$ は、$Z$ と光子の混合（$\re\hat\Sigma^{AZ}_T(M_Z^2)/M_Z^2$。光子の頂点 $-ieQ_f\gamma^\mu$ を通じて $\mathcal V_f$ だけをずらす。図~\ref{fig:znlo}(c)）と、頂点と脚の補正からなる。レプトンではこの二つがほぼ打ち消す（手順 (5)）。部分幅は $|\mathcal V_f|^2$、$|\mathcal A_f|^2$ に式~\eqref{eq:lo} の形で入り、QED と QCD の補正 \eqref{eq:inclusive} がほぼ掛け算で付く。$R_\ell=\Gamma_{\mathrm{had}}/\Gamma_\ell$、$R_b=\Gamma_{b\bar b}/\Gamma_{\mathrm{had}}$、$\sigma^0_{\mathrm{had}}=12\pi\Gamma_e\Gamma_{\mathrm{had}}/(M_Z^2\Gamma_Z^2)$ はこれらの比と積である。$Z b\bar b$ の頂点には $W$ と $G^\pm$ と内線のトップのループが入り（図~\ref{fig:znlo}(f)(g)）、$|V_{tb}|^2$ と $y_t^2$ に比例する非普遍的な補正になる。
+
+\subsection{処方の換算}\label{sec:scheme}
+
+$\MSbar$ の結合と、on-shell の $G_\mu$ の処方の木の結合 $g_0^2=4\sqrt2G_FM_W^2$、$G_0^2=4\sqrt2G_FM_Z^2$、$c_0^2=M_W^2/M_Z^2$ は、SM ノートの手順 (7) の1ループの関係
+\begin{equation}
+g(\mu)^2=g_0^2(1+dW-\hat\Delta),\quad g(\mu)^2+g'(\mu)^2=G_0^2(1+dZ-\hat\Delta),\quad \hat c^2(\mu)=c_0^2(1+dW-dZ)
+\label{eq:convOS}
+\end{equation}
+で結ばれる（$\hat\Delta$ は $\mu$ 崩壊の補正。図~\ref{fig:gfdecay}）。$dV$ と $\hat\Delta$ のタドポールの部分は、この組で消える。これを使うと、1ループの幅は $G_\mu$ の処方で $\Gamma=\Gamma_0(g_0,s_0^2)[1+\delta(\mu)+C(\mu)]$ と書ける。$\delta(\mu)$ は $\MSbar$ の結合で求めた補正、$C$ は木の結合を $(g_0,s_0^2)$ から $(g(\mu),\hat s^2(\mu))$ に替えたときの木の1ループの変化である。$Z\to\nu\bar\nu$ では $C=dZ-\hat\Delta$、ベクトル結合を持つ $Z\to f\bar f$ ではさらに $\hat s^2$ の変化 $-c_0^2(dW-dZ)$ の分が付き、$W$ とトップの崩壊では $C=dW-\hat\Delta$ である。$G_\mu$ の木は $\mu$ を含まないので、$\delta+C$ は $O(\alpha)$ で $\mu$ によらず、二つの処方の差は $O(\alpha^2)$ になる（手順 (7)）。
+
+\subsection{NLO の予言}\label{sec:nlo}
+
+手順 (4)〜(8) の結果をまとめる（求め方と検算は第~\ref{sec:checks} 節、予言と不定性の一覧は表~\ref{tab:summary}）。$\mu=M$ の $\MSbar$ の結合で、電弱の補正は $Z\to f\bar f$ で $-0.01$〜$+0.28\%$（$Z\to b\bar b$ は $-1.44\%$）、$W^+\to f\bar f'$ で $+0.01$〜$-0.04\%$（$b$ を含むチャネルは $+0.76\%$）、$t\to bW^+$ で $+3.28\%$（$G_\mu$ の処方では $+1.64\%$）である。結合 $g(\mu)$ が補正の大部分をすでに含むので小さく、$\mu$ を $M/2$、$2M$ にすると補正は $0.5$〜$1.4\%$ 変わって、木の幅の走りを打ち消す。QCD の補正は質量0のクォークで $\alpha_s/\pi$、トップで $-8.51\%$ である。NLO の予言は、$\Gamma_Z=2.4918$~GeV、$R_\ell=20.702$、$R_b=0.21610$、$\sigma^0_{\mathrm{had}}=41.498$~nb、$\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.23242$（$\alpha(0)$ を入力にした結合では $0.23167$）、$\Gamma_W=2.0859$~GeV、$\mathrm{BR}(W\to\ell\nu)=10.844\%$、$\Gamma_t=1.3776$~GeV、$M_W=80.368$~GeV（極質量。Breit--Wigner の質量で $80.395$~GeV）である。$\mu$ の依存、処方の差、既知の高次の項から見積もった理論の不定性を入れると、23個の量のうち20個は測定値と $1.5\sigma$ 以内で合う。$\sin^2\theta_{\mathrm{eff}}$ と $M_W$ では理論の不定性（$7.5\times10^{-4}$、$56$~MeV）が実験の誤差の4〜7倍あり、式~\eqref{eq:drhosens} の $\Delta\rho$ の高次が主な原因である。
 
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、SM ノート、CKM ノートと同じである。仮想の補正は本ノートの模型ファイル \texttt{SM\_CKM.fr} から書き出した FeynArts の模型（\texttt{GaugeXi} を残す）と FeynCalc で求め、実の放射は木の3体の振幅を FeynCalc で記号として求めて、位相空間を解析的に（質量0）または数値で（質量あり）積分する。MadGraph では、同じ模型ファイルから作った CKM ノートの UFO（電弱と QCD の対抗項を点の数値で持つもの）で MadLoop の仮想の補正を、木の3体の過程で実の放射を求める。測定値と文献の値は参照として並べ、比べる量は本ノートの模型で求めたものにする。
 
-\begin{table}[tbp]
+\begin{table}[htbp]
 \centering\small
 \caption{各量と、それを計算して突き合わせる手段。「—」はその手段を使わないことを表す。}
 \label{tab:plan}
@@ -434,7 +517,7 @@ $\Gamma_W$（QCD だけ） & 2.034973（$-2.40\%$） & 2.086368（$+0.07\%$） &
 K_S=-\frac1{4\epsilon}\Bigl(\frac{4\pi\mu^2}{\Delta E^2}\Bigr)^\epsilon\frac{\Sigma(\epsilon)}{\Gamma(1-\epsilon)},\qquad
 \Sigma=2A_{12}-A_{11}-A_{22},\qquad A_{ij}=\int_{-1}^1\dd c\,(1-c^2)^{-\epsilon}\frac{p_i\cdot p_j}{(E_i-\vec p_i\cdot\hat n)(E_j-\vec p_j\cdot\hat n)}
 \end{equation*}
-になる（$|\vec k|$ の積分が $1/\epsilon$ を与える）。$O(\epsilon)$ の項は40桁の数値積分で求めた。$K_V+K_S$ の極はすべての過程で $10^{-38}$ 以下まで消え、$\mu$ への依存も $10^{-22}$ 以下だった。
+になる（$|\vec k|$ の積分が $1/\epsilon$ を与える。式~\eqref{eq:softQ} の二つの放射体の場合）。$O(\epsilon)$ の項は40桁の数値積分で求めた。$K_V+K_S$ の極はすべての過程で $10^{-38}$ 以下まで消え、$\mu$ への依存も $10^{-22}$ 以下だった。
 
 (c) 硬い放射。\texttt{ir\_massive\_real.wl} は、実の放射の振幅の2乗 $R=\sum|\mathcal M_R|^2/(g^2C)$ を4次元で求める（$Z$ と $W$ の偏極の和は $-g+kk/M^2$、グルーオンは $-g$）。$R$ は本ノートの FeynArts の模型の $Z\to b\bar bg$ と $t\to bW^+g$ と記号として一致した。$E\to0$ では木と eikonal 因子の積に近づいた（差は $E^2$ に比例し、$E=10^{-6}E_{\max}$ で $10^{-13}$）。\texttt{ir\_massive\_mg5.py} では、MadGraph の木の $|\mathcal M|^2$（$Z\to b\bar bg$、$Z\to\tau^-\tau^+\gamma$、$t\to bW^+g$）と Dalitz の平面の21点で比べ、相対 $8\times10^{-12}$ 以内で一致した（手の式は PS.input に書いた運動量の不変量で40桁で評価）。$E>\Delta E$ の積分は、$x=M^2-s_{12}=2ME$ と $2p_i\cdot p_3$ の対数を変数にして、Gauss--Legendre の公式で求めた（図~\ref{fig:dalitz}）。初めは積分の精度が出なかった。原因は二つあった。一つは、$R$ を $s_{12}$、$s_{13}$ の式で評価すると、軟らかい端で大きな数の差になって桁を落とすことである。もう一つは、硬い端（$s_{12}\to(m_1+m_2)^2$）で Dalitz の領域の幅が $\sqrt{x_{\max}-x}$ で縮み、その平方根が公式の収束を損なうことである。$R$ を $x$ と $2p_1\cdot p_3$ で厳密に書き直し、硬い側を $x=x_{\max}-\frac{x_{\max}}2t^2$ で写した。パネルの数を16から24にしたときの差は $10^{-14}$ 程度（$m/M=10^{-5}$ の試験で $10^{-8}$）になった。
 
@@ -634,12 +717,7 @@ $\Gamma_t$ & 1.453649（$+2.37\%$） & — & 1.329919（$-6.34\%$） & $1.42^{+0
 
 (a) 振幅。\texttt{zff\_feyncalc.wl} は、本ノートの FeynArts の模型で、光子とグルーオンを除いた 1PI の頂点を一般の $R_\xi$ ゲージで求める（図はニュートリノで11個、荷電レプトンで25個、クォークで33個。例を図~\ref{fig:znlo} に示す）。形状因子は $\mathcal M=g_Z\bar u[\slashed\varepsilon(F_LP_L+F_RP_R)+(\varepsilon\cdot p_1)(H_LP_L+H_RP_R)]v$ と書く（木では $F_L=T_3-Q\hat s^2$、$F_R=-Q\hat s^2$）。同じスクリプトで、そのフェルミオンの弱い自己エネルギー（5〜13個の図）も求める。$t$ を除く11個のフェルミオンを並列に計算する（約6分）。
 
-(b) S 行列要素。\texttt{zweak.wl} は、SM ノートと CKM ノートと同じく、裸の切断された頂点に on-shell の LSZ の因子を掛けて S 行列要素にする。
-\begin{equation}
-F_L=F_L^{(0)}+F_L^{\mathrm{vtx}}+F_L^{(0)}\Bigl[-\tfrac12\Sigma^{ZZ\prime}_T(M_Z^2)+\delta Z^L_f\Bigr]-\frac{\Sigma^{AZ}_T(M_Z^2)}{M_Z^2}F_L^{\gamma}+\delta F_L^{\MSbar}
-\label{eq:zren}
-\end{equation}
-で、$F_R$ も同じ形である。$\delta Z^L_f=-\Sigma^L-m^2(\Sigma^{L\prime}+\Sigma^{R\prime}+2\Sigma^{S\prime})$ は二つの脚の和である。$F^\gamma$ は混合 $Z\to\gamma^*\to f\bar f$ の光子の木の振幅で、同じ単位では $Q\hat s\hat c$ になる（模型の符号ごと求めた）。$\delta F^{\MSbar}$ は $g$、$g'$ の $\MSbar$ の対抗項（$\beta$ 関数の極）である。$\Sigma^{ZZ}$、$\Sigma^{AZ}$ には SM ノートの手順 (3) のものを使った（一般の $R_\xi$、すべてのフェルミオンの質量を含み、1ループでは $V$ によらない）。FJ のタドポールは質量をずらすだけで、この S 行列要素には入らない。
+(b) S 行列要素。\texttt{zweak.wl} は、式~\eqref{eq:zren}（第~\ref{sec:smatrix} 節）の S 行列要素を組む。$F^\gamma$ は模型の符号ごと FeynArts の木の振幅から求めた。$\Sigma^{ZZ}$、$\Sigma^{AZ}$ には SM ノートの手順 (3) のものを使った（一般の $R_\xi$、すべてのフェルミオンの質量を含み、1ループでは $V$ によらない）。
 
 (c) 紫外の有限性。11個のフェルミオンで、$F_L$、$F_R$ の紫外の極は記号として消えた（質量とゲージの母数は記号のまま、$V$ は CKM ノートの有理数のユニタリーな行列）。混合の項を除くか、光子の木の符号を逆にすると、8個の荷電フェルミオンで極が残る。
 
@@ -753,14 +831,9 @@ $\sigma^0_{\mathrm{had}}$ & 42.0751（$+1.43\%$） & 41.5147（$+0.08\%$） & 41
 
 (a) 振幅。\texttt{wsig\_feyncalc.wl} は、$W$ の自己エネルギー（29個の 1PI の図。光子は質量0）を横の部分に射影して求める。$V=1$、$\xi_A=1$ では、SM ノートの手順 (3) の $\Sigma^{WW}_T$（光子の質量 $M_A$ を入れたもの）の $M_A\to0$ と記号として一致した。\texttt{wff\_feyncalc.wl} は、グルーオンを除いた 1PI の頂点を一般の $R_\xi$ ゲージで求める。形状因子は $\mathcal M=\frac{e}{\sqrt2\hat s}\bar u[\slashed\varepsilon(F_LP_L+F_RP_R)+(\varepsilon\cdot p_1)(H_LP_L+H_RP_R)]v$ と書き（木では $F_L=V_{ij}$、レプトンでは1）、$F_R$、$H_L$、$H_R$ の紫外の極が記号として0であることを確かめた。9個のチャネルを並列に計算する（約11分）。
 
-(b) S 行列要素。\texttt{wweak.wl} は、手順 (4a) と同じく、裸の頂点に on-shell の LSZ の因子を掛ける。
-\begin{equation}
-F_L=V_{ij}+F_L^{\mathrm{vtx}}-\tfrac12V_{ij}\Sigma^{WW\prime}_T(M_W^2)+\tfrac12\bigl[(\delta Z^{uL})^\dagger V+V\delta Z^{dL}\bigr]_{ij}+V_{ij}\frac{\delta g}g+\delta V_{ij}
-\label{eq:wren}
-\end{equation}
-で、$F_R$、$H_L$、$H_R$ は頂点だけからなる。$\Sigma^{WW\prime}_T(M_W^2)$ は図~\ref{fig:wnlo}(e) の $B_0'(M_W^2;0,M_W^2)$ を含み、赤外で発散する（次元正則化で $-\frac1{2M_W^2}[\frac1\epsilon+\ln\frac{\mu^2}{M_W^2}+2]$。$\MSbar$ の規格化）。$\delta Z^{fL}$ の対角は手順 (4a) の弱い部分と手順 (3) の光子の部分（赤外の極を残す）の和で、非対角は CKM ノートのクォークの自己エネルギーから Denner の形で作った。質量0のニュートリノの脚では $p^2\to0$ の $p^0$ の係数をとる。$\delta g/g$ は $g$ の $\MSbar$ の対抗項（$\beta$ 関数の極）、$\delta V$ は CKM ノートの式 (10) の $\MSbar$ の対抗項である。$u$、$d$、$s$ には CKM ノートの基準の質量（1.27、2.71、54.6~MeV）を与えた。共線の対数を切るためで（包括的な幅では消える）、非対角の場の定数にも異なる質量が要る。木の幅は質量0のままである。
+(b) S 行列要素。\texttt{wweak.wl} は式~\eqref{eq:wren}（第~\ref{sec:smatrix} 節）を組む。$\Sigma^{WW\prime}_T(M_W^2)$ の赤外の極は図~\ref{fig:wnlo}(e) の光子のループから来る。$\delta Z^{fL}$ の対角は手順 (4a) の弱い部分と手順 (3) の光子の部分（赤外の極を残す）の和で、非対角は CKM ノートのクォークの自己エネルギーから作った。質量0のニュートリノの脚では $p^2\to0$ の $p^0$ の係数をとる。$u$、$d$、$s$ には CKM ノートの基準の質量（1.27、2.71、54.6~MeV）を与えた。共線の対数を切るためで（包括的な幅では消える）、非対角の場の定数にも異なる質量が要る。木の幅は質量0のままである。
 
-(c) 紫外と赤外の極。紫外と赤外の発散は同じ $\epsilon$ に入るので、仮想の補正の単極が軟らかい光子の極と打ち消すことが、紫外の有限性の確かめも兼ねる。軟らかい光子は手順 (3) の $K_S$ で、$\Sigma$ を $W$ の電荷まで広げて $\Sigma=-\sum_{ij}\eta_i\eta_je_ie_jA_{ij}$ とする（入る $W$ は $\eta=-1$、出る $f$、$\bar f'$ は $+1$。$e_i$ は電荷で、$e_W=e_f+e_{\bar f'}$）。$A_{ij}$ は $W$ の静止系の角度の積分で、$O(\epsilon)$ の項を閉じた形にした（$\int_{-1}^1\dd c\,\ln(1-c^2)/(1-bc)$ と $\ln(1-c^2)/(1-bc)^2$。$1-b=8\times10^{-11}$ まで数値の積分と $10^{-30}$ で一致）。9個のチャネルと $\mu=M_W/2$、$M_W$、$2M_W$ で、極の和は $3\times10^{-15}$ 以下だった。
+(c) 紫外と赤外の極。紫外と赤外の発散は同じ $\epsilon$ に入るので、仮想の補正の単極が軟らかい光子の極と打ち消すことが、紫外の有限性の確かめも兼ねる。軟らかい光子は $W$ の電荷を含む式~\eqref{eq:softQ} で（入る $W$ は $\eta=-1$、出る $f$、$\bar f'$ は $+1$、$e_W=e_f+e_{\bar f'}$）、$A_{ij}$ の $O(\epsilon)$ の項の閉じた形 \eqref{eq:Aij} は、$1-b=8\times10^{-11}$ まで数値の積分と $10^{-30}$ で一致した。9個のチャネルと $\mu=M_W/2$、$M_W$、$2M_W$ で、極の和は $3\times10^{-15}$ 以下だった。
 
 (d) ゲージによらないこと。$(\xi_Z,\xi_W)=(1+10^{-10},1+10^{-10})$、$(2,3)$、$(1/2,4)$（$\xi_A=1$）で、仮想の補正の有限部分はレプトンで表示した全桁、クォークで $1.3\times10^{-12}$ 以内（CKM 行列の倍精度）で一致した。Feynman ゲージを $\xi=1$ で直接置けないのは、縦波の部分の還元が $1/(\xi_W-1)$ を残すからで、$1+10^{-10}$ を80桁で使う。初めは $1+10^{-20}$ にしていたが、ニュートリノの脚の $p^2\to0$ の展開で80桁が尽き、レプトンの仮想の補正が $2$〜$6\%$ ずれた（Mathematica は警告を出さず、$1+10^{-30}$ では Indeterminate になる）。このずれは $\ln m_\ell^2$ に比例し、下の (g) の KLN の確かめで見つかった。
 
@@ -768,7 +841,7 @@ F_L=V_{ij}+F_L^{\mathrm{vtx}}-\tfrac12V_{ij}\Sigma^{WW\prime}_T(M_W^2)+\tfrac12\
 
 (f) 実の光子。\texttt{wreal.wl} は、木の $W^+\to f\bar f'\gamma$（Feynman ゲージ。レプトンで3個、クォークで4個の図）の $R=\sum|\mathcal M_R|^2/(e^2\sum|\mathcal M_0|^2)$ を FeynCalc で記号として求める。光子の偏極を $p_3$ に替えた Ward 恒等式は記号として0で、$E\to0$ の $R$ は3個の電荷の eikonal 因子に近づいた（$E=10^{-4}E_{\max}$、$10^{-6}E_{\max}$ で相対 $2.5\times10^{-9}$、$2.5\times10^{-13}$）。硬い部分 $E>\Delta E=\delta E_{\max}$ は手順 (3) と同じく対数の変数の Gauss--Legendre で積分した（図~\ref{fig:dalitz}。質量0で中性のニュートリノの縁では $w$ を線形の変数にする）。\texttt{wreal\_mg5.py} では、MadGraph の木の $W^+\to\nu_ee^+\gamma$、$\nu_\tau\tau^+\gamma$、$u\bar d\gamma$、$c\bar b\gamma$（ユニタリーゲージ）の振幅の2乗と9個の Dalitz の点で比べた。レプトンでは $3\times10^{-9}$ 以内（共線の端から $10^{-6}$ の点。他の点では $4\times10^{-12}$ 以内）で一致した。クォークでは初め最大 $5\times10^{-6}$ ずれた。原因は MadGraph の側にあった。UFO の $d$ 型のクォークの光子の結合 $-0.3333333333333333\,e$ を、MadGraph は Fortran に $-3.333333\mathrm{D}{-}01\,e$ と7桁で書き出す（模型の Fortran の中で厳密でない数はこれだけ）。そのため $Q_d$ が相対 $10^{-7}$ ずれ、$\bar d$ に沿う光子では $|\mathcal M|^2$ が $2\times10^{-7}$ ずれる（振幅が打ち消す点ではもっと大きい）。この数を $1/3$ に直して模型の Fortran を作り直すと、$8\times10^{-10}$ 以内で一致した。
 
-(g) $\delta$ によらないことと KLN。$\delta=10^{-4}$〜$10^{-8}$ で $\delta_{\mathrm{EW}}$ の変化は $O(\delta)$ だけで（$\delta=10^{-4}$ で $6\times10^{-6}$）、手順 (3) と同じく $\delta\to0$ に外挿した。レプトンの質量は共線の対数を切るだけなので、光子について包括的な幅は $m_\ell\to0$ で有限で、$\delta_{\mathrm{EW}}$ は $m_\ell$ によらないはずである（KLN）。$e$ と $\mu$ では、硬い放射の $K_H$（$\Gamma_H/\Gamma_0=\frac\alpha\pi K_H$）は $188.425$ 違い、共線の分裂関数から予想される $(-\ln\delta-\frac34)\ln(m_\mu^2/m_e^2)=188.426$ と合う（$\delta=10^{-8}$）。仮想と軟らかい部分はその逆に変わり、$\delta_{\mathrm{EW}}$ の差は $-1.2\times10^{-7}$ だった（各部分の変化 $0.47$ の $3\times10^{-7}$）。$\tau$ と $\mu$ の差 $1.9\times10^{-5}$ は $m_\tau^2/M_W^2$ の大きさである。軽いクォークの4個のチャネル（$u\bar d$、$u\bar s$、$c\bar d$、$c\bar s$）の $\delta_{\mathrm{EW}}$ も $1.4\times10^{-5}$ 以内でそろった。
+(g) $\delta$ によらないことと KLN。$\delta=10^{-4}$〜$10^{-8}$ で $\delta_{\mathrm{EW}}$ の変化は $O(\delta)$ だけで（$\delta=10^{-4}$ で $6\times10^{-6}$）、手順 (3) と同じく $\delta\to0$ に外挿した。レプトンの質量は共線の対数を切るだけなので、光子について包括的な幅は $m_\ell\to0$ で有限で、$\delta_{\mathrm{EW}}$ は $m_\ell$ によらないはずである（KLN）。$e$ と $\mu$ では、硬い放射の $K_H$（$\Gamma_H/\Gamma_0=\frac\alpha\pi K_H$）は $188.425$ 違い、共線の分裂関数から予想される $(-\ln\delta-\frac34)\ln(m_\mu^2/m_e^2)=188.426$（式~\eqref{eq:collin}）と合う（$\delta=10^{-8}$）。仮想と軟らかい部分はその逆に変わり、$\delta_{\mathrm{EW}}$ の差は $-1.2\times10^{-7}$ だった（各部分の変化 $0.47$ の $3\times10^{-7}$）。$\tau$ と $\mu$ の差 $1.9\times10^{-5}$ は $m_\tau^2/M_W^2$ の大きさである。軽いクォークの4個のチャネル（$u\bar d$、$u\bar s$、$c\bar d$、$c\bar s$）の $\delta_{\mathrm{EW}}$ も $1.4\times10^{-5}$ 以内でそろった。
 
 (h) $\mu$ への依存。結合を $\mu=M_W/2$、$2M_W$ に走らせると、木の幅の $+1.19\%$、$-1.17\%$ の変化は、$\Gamma_0(1+\delta_{\mathrm{EW}})$ ではレプトンの幅で $-0.016\%$、$-0.012\%$、ハドロンの幅で $-0.016\%$、$-0.011\%$ になった。QCD の因子まで入れると、ハドロンの幅に $+0.40\%$、$-0.36\%$ が残る。手順 (4a) と同じく、QCD の因子の $\alpha_s(\mu)$ の走りである。
 
@@ -877,12 +950,7 @@ $\Gamma_{\tau\nu}/\Gamma_{e\nu}$ & 0.999267 & 0.999267 & 0.999286 & — & $0.00$
 
 (a) 振幅。\texttt{tff\_feyncalc.wl} は、$t\to d_jW^+$ の 1PI の頂点（グルーオンを除く。46個の図）を一般の $R_\xi$ ゲージで求める。形状因子は $\mathcal M=\frac{e}{\sqrt2\hat s}\bar u(p_1)[\slashed\varepsilon^*(F_LP_L+F_RP_R)+(\varepsilon^*\cdot p_1)(H_LP_L+H_RP_R)]u(p_t)$ と書き、木では $F_L=V_{tj}^*$ になった。$F_R$、$H_L$、$H_R$ の紫外の極は記号として0だった。トップの弱い自己エネルギー（13個の図）は、手順 (4a) の \texttt{zff\_feyncalc.wl} で求めた（$\Sigma^{SL}=\Sigma^{SR}$）。
 
-(b) S 行列要素。\texttt{tweak.wl} は、式~\eqref{eq:wren} のエルミート共役の形
-\begin{equation}
-F_L=V^*_{tj}+F_L^{\mathrm{vtx}}-\tfrac12V^*_{tj}\Sigma^{WW\prime}_T(M_W^2)+\tfrac12\bigl[(\delta Z^{dL})^\dagger V^\dagger+V^\dagger\delta Z^{uL}\bigr]_{jt}+V^*_{tj}\frac{\delta g}g+\delta V^*_{tj}
-\label{eq:tren}
-\end{equation}
-で S 行列要素を作る（場の定数と対抗項は手順 (4b) と同じもの。トップの場の定数は弱い部分と光子の部分の和）。トップは不安定なので、その自己エネルギーには $t\to bW^+$ の吸収部分がある（一般の $R_\xi$ では、$\sqrt{\xi_W}M_W<m_t$ の非物理的な閾値の吸収部分もある）。幅には、$W$ と同じく木との干渉の実部をとる。
+(b) S 行列要素。\texttt{tweak.wl} は式~\eqref{eq:tren}（第~\ref{sec:smatrix} 節）を組む（場の定数と対抗項は手順 (4b) と同じもの。トップの場の定数は弱い部分と光子の部分の和）。
 
 (c) 極とゲージ。軟らかい光子は、静止したトップ（$\eta=-1$）と、背中合わせの $d_j$ と $W^+$ の三つの電荷の $\Sigma$ で、手順 (4b) の $A_{ij}$ をそのまま使う（崩壊する粒子の電荷は $e_{d_j}+e_W=\frac23$）。仮想の補正の極との和は、$t\to bW^+$ で $1\times10^{-16}$、$sW^+$ で $3\times10^{-14}$、$dW^+$ で $3\times10^{-12}$ だった。$(\xi_Z,\xi_W)=(1+10^{-10},1+10^{-10})$、$(2,3)$、$(1/2,4)$ の間の差も、$1\times10^{-17}$、$7\times10^{-14}$、$3\times10^{-12}$ だった（$t\to dW^+$ で桁が少ないのは、$|V_{td}|$ が小さく、CKM 行列の倍精度の値の打ち消しが大きいため）。$\xi_W=3$、$4$ では上の非物理的な閾値が開いているが、それを含めてゲージによらなかった。
 
@@ -890,7 +958,7 @@ F_L=V^*_{tj}+F_L^{\mathrm{vtx}}-\tfrac12V^*_{tj}\Sigma^{WW\prime}_T(M_W^2)+\tfra
 
 (e) 実の光子。\texttt{treal.wl} は、木の $t\to d_jW^+\gamma$（Feynman ゲージで4個の図）の $R=\sum|\mathcal M_R|^2/(e^2\sum|\mathcal M_0|^2)$ を求める。光子の偏極を $p_3$ に替えた振幅の2乗（$W$ の偏極は和をとる）は記号として0で、$E\to0$ では三つの電荷の eikonal 因子に近づいた（$E=10^{-4}E_{\max}$、$10^{-6}E_{\max}$ で相対 $6\times10^{-9}$、$6\times10^{-13}$）。硬い部分の積分は手順 (4b) と同じである。\texttt{treal\_mg5.py} で MadGraph の木の $t\to bW^+\gamma$ と9個の Dalitz の点で比べると、生成したままでは $2\times10^{-7}$ ずれ（手順 (4b) と同じく $b$ の電荷の7桁）、それを $1/3$ に直すと $2\times10^{-10}$ 以内で一致した（$b$ に沿う共線の端から $10^{-6}$ の点。他の点では $6\times10^{-12}$ 以内）。
 
-(f) $\delta$ と $m_b$ によらないこと。$\delta=10^{-4}$〜$10^{-8}$ で $\delta_{\mathrm{EW}}$ の変化は $O(\delta)$（$t\to bW^+$ で $\delta=10^{-4}$ のとき $5\times10^{-7}$）だった。$b$ の質量は共線の対数を切るだけなので、$\delta_{\mathrm{EW}}$ は $m_b\to0$ で $m_b$ によらない値に近づくはずである（KLN）。$m_b$ を $1/3$、$1/10$ にすると、硬い放射の $K_H$ は $4.345$、$9.069$ 増え（$\frac\alpha\pi K_H$ で $0.011$、$0.023$）、共線の係数 $Q_b^2(-\ln\delta'-\frac34)\ln f^2=4.317$、$9.044$（$\delta'=\Delta E/E_{b\gamma}$、$E_{b\gamma}$ は $b$ と光子の対のエネルギー）と $0.6\%$、$0.3\%$ で合う（差は物理的な $m_b$ での $K_H$ の $m_b^2/m_t^2$ の補正）。仮想と軟らかい部分はその逆に変わり、$\delta_{\mathrm{EW}}$ の変化は $-3.6\times10^{-5}$、$-4.1\times10^{-5}$ にとどまった。$m_b/3$ から $m_b/10$ の間の変化は $4\times10^{-6}$ で、$m_b^2/m_t^2$ のべきで頭打ちになっている。軽い $d$、$s$ の二つのチャネルの $\delta_{\mathrm{EW}}$ も $1.2\times10^{-5}$ 以内でそろった。
+(f) $\delta$ と $m_b$ によらないこと。$\delta=10^{-4}$〜$10^{-8}$ で $\delta_{\mathrm{EW}}$ の変化は $O(\delta)$（$t\to bW^+$ で $\delta=10^{-4}$ のとき $5\times10^{-7}$）だった。$b$ の質量は共線の対数を切るだけなので、$\delta_{\mathrm{EW}}$ は $m_b\to0$ で $m_b$ によらない値に近づくはずである（KLN）。$m_b$ を $1/3$、$1/10$ にすると、硬い放射の $K_H$ は $4.345$、$9.069$ 増え（$\frac\alpha\pi K_H$ で $0.011$、$0.023$）、式~\eqref{eq:collin} の共線の係数 $Q_b^2(-\ln\delta'-\frac34)\ln f^2=4.317$、$9.044$と $0.6\%$、$0.3\%$ で合う（差は物理的な $m_b$ での $K_H$ の $m_b^2/m_t^2$ の補正）。仮想と軟らかい部分はその逆に変わり、$\delta_{\mathrm{EW}}$ の変化は $-3.6\times10^{-5}$、$-4.1\times10^{-5}$ にとどまった。$m_b/3$ から $m_b/10$ の間の変化は $4\times10^{-6}$ で、$m_b^2/m_t^2$ のべきで頭打ちになっている。軽い $d$、$s$ の二つのチャネルの $\delta_{\mathrm{EW}}$ も $1.2\times10^{-5}$ 以内でそろった。
 
 (g) $\mu$ への依存。結合を $\mu=m_t/2$、$2m_t$ に走らせると、木の幅の $+1.18\%$、$-1.15\%$ の変化は、$\Gamma_0(1+\delta_{\mathrm{EW}})$ では $+0.06\%$、$-0.08\%$ になった。QCD の因子まで入れると $-0.87\%$、$+0.70\%$ が残る。これは QCD の因子の $\alpha_s(\mu)$ の走りで、$O(\alpha_s^2)$ の補正が打ち消すはずの分である。
 
@@ -925,13 +993,13 @@ $\mathrm{BR}(t\to bW^+)$ & 0.998222 & 0.998222 & 0.998234 & — & $0.00$ & $0.00
 \end{table}
 
 \FloatBarrier
-\paragraph{手順 (5)：$Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$。}式~\eqref{eq:effcoup} の有効結合は、手順 (4a) の繰り込んだ弱い形状因子（式~\eqref{eq:zren}）から $\mathcal V_f=F_L+F_R$、$\mathcal A_f=F_L-F_R$（$g_Z/2$ の単位。木では $T_3-2Q\hat s^2$、$T_3$）で与えられる。$Z$ の留数 $\frac12\delta Z_{ZZ}$ は $F_L$、$F_R$ に共通なので比 $\mathcal V_f/\mathcal A_f$ からは消える。光子とグルーオンの終状態の補正は、質量0のフェルミオンでは $\mathcal V_f$ と $\mathcal A_f$ に同じ因子を掛けるだけなので含めない。$H_L$、$H_R$ は $O(m_f)$ である。これは LEP の有効結合の定義と同じである。\texttt{zeff.wl} は比を $O(\alpha)$（1ループの部分について線形）でとり、式~\eqref{eq:s2eff} の $\sin^2\theta^f_{\mathrm{eff}}$ を求める。比をそのままとった値との差は $-5\times10^{-5}$ で、$O(\alpha^2)$ の大きさの目安になる。\texttt{zpole.py} は $x_f=1-4|Q_f|\sin^2\theta^f_{\mathrm{eff}}$ から $A_f=2x_f/(1+x_f^2)$、$A^{0,f}_{\mathrm{FB}}=\frac34A_eA_f$ を求める。
+\paragraph{手順 (5)：$Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$。}第~\ref{sec:zpole} 節の有効結合 $\mathcal V_f=F_L+F_R$、$\mathcal A_f=F_L-F_R$ を、手順 (4a) の繰り込んだ弱い形状因子（式~\eqref{eq:zren}）から求める。\texttt{zeff.wl} は比を $O(\alpha)$（1ループの部分について線形）でとり、式~\eqref{eq:s2eff} の $\sin^2\theta^f_{\mathrm{eff}}$ を求める。比をそのままとった値との差は $-5\times10^{-5}$ で、$O(\alpha^2)$ の大きさの目安になる。\texttt{zpole.py} は式~\eqref{eq:asym} の非対称度を求める。
 
 (a) ゲージと $\mu$ によらないこと。$(\xi_Z,\xi_W)=(1,1)$、$(2,3)$、$(1/2,4)$ で、8個の荷電フェルミオンの $\sin^2\theta^f_{\mathrm{eff}}$ は $10^{-18}$ 以内で一致した。結合を $\mu=M_Z/2$、$M_Z$、$2M_Z$ に走らせると、$\hat s^2(\mu)=0.228958$、$0.232420$、$0.235903$ は $\pm1.5\%$ 変わる。一方 $\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.232448$、$0.232423$、$0.232376$ の変化は $\pm3\times10^{-5}$ にとどまり、$\hat\kappa_f(\mu)$ が $\hat s^2(\mu)$ の走りを打ち消す。
 
 (b) 内訳。$\mu=M_Z$ で $\sin^2\theta_{\mathrm{eff}}-\hat s^2(M_Z)$ を部分に分けると、レプトンでは $Z$--光子の混合（図~\ref{fig:znlo}(c)）が $-5.22\times10^{-4}$、頂点が $+5.69\times10^{-4}$、フェルミオンの脚が $-0.43\times10^{-4}$ で、和は $+0.04\times10^{-4}$（$\hat\kappa_\ell=1.000016$）だった。$Z$ の脚と $\MSbar$ の対抗項の寄与は $10^{-14}$ で、上の通り消える。$b$ では頂点が $+26.6\times10^{-4}$、脚が $-7.2\times10^{-4}$ で、$\hat\kappa_b=1.0061$ になる。手順 (4a) の $Zb\bar b$ と同じく、トップのループによる $b$ に固有の補正である。値を表~\ref{tab:zeff} に示す。
 
-(c) 測定値との比較。本ノートの入力（SM ノートの手順 (7) の $M_W$ の処方）では $\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.232423$ で、LEP と SLD の値 $0.23153\pm0.00016$~\cite{lepewwg06}（参照）より $8.9\times10^{-4}$（$+5.6\sigma$）大きい。同じ1ループの計算に、SM ノートの $\alpha$ の処方（$M_W$ の代わりに $\alpha(0)$ を入力にし、$M_W$ は予言になる）の結合を入れると、$\hat s^2(M_Z)=0.231658$、$\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.231670$（$+0.9\sigma$）になる（表~\ref{tab:zasym}）。二つの処方は1ループでは同等で、差の $7.5\times10^{-4}$ は1ループで決めた結合に残る高次の項の大きさである。これは測定の誤差の約5倍で、$\sin^2\theta_{\mathrm{eff}}$ の精度は本ノートの NLO の範囲を超えている。$M_W$ の処方では $\hat s^2$ が $M_W/M_Z$ に $\Delta\rho$ を通じて結びつき、$\sin^2\theta_{\mathrm{eff}}$ は $c_W^2\Delta\rho$ だけずれる。$\Delta\rho$ の $O(\alpha\alpha_s)$ の補正 $-\frac23(1+\frac{\pi^2}3)\frac{\alpha_s}\pi\Delta\rho$（文献~\cite{dv87} の係数、参照）を式~\eqref{eq:drho} の $\Delta\rho$（極質量の $m_t$ で $0.00933$）に当てると、$M_W$ の処方で $-7.1\times10^{-4}$、$\alpha$ の処方で $+2.9\times10^{-4}$（$-\hat s^2\hat c^2/(\hat c^2-\hat s^2)\cdot\delta\Delta\rho$）になる。処方の差と同じ大きさである。非対称度のうち、$A^{0,b}_{\mathrm{FB}}$ は $M_W$ の処方で $-0.7\sigma$、SLD の $A_\ell$ は $\alpha$ の処方の方が近い（$-2.6\sigma$）。この二つの測定が $\sin^2\theta_{\mathrm{eff}}$ について約 $3\sigma$ 食い違うことはよく知られている~\cite{lepewwg06}（参照）。$A_b$、$A_c$ は誤差が大きく、どちらの処方でも $0.6\sigma$ 以内で合う。
+(c) 測定値との比較。本ノートの入力（SM ノートの手順 (7) の $M_W$ の処方）では $\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.232423$ で、LEP と SLD の値 $0.23153\pm0.00016$~\cite{lepewwg06}（参照）より $8.9\times10^{-4}$（$+5.6\sigma$）大きい。同じ1ループの計算に、SM ノートの $\alpha$ の処方（$M_W$ の代わりに $\alpha(0)$ を入力にし、$M_W$ は予言になる）の結合を入れると、$\hat s^2(M_Z)=0.231658$、$\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.231670$（$+0.9\sigma$）になる（表~\ref{tab:zasym}）。二つの処方は1ループでは同等で、差の $7.5\times10^{-4}$ は1ループで決めた結合に残る高次の項の大きさである。これは測定の誤差の約5倍で、$\sin^2\theta_{\mathrm{eff}}$ の精度は本ノートの NLO の範囲を超えている。$M_W$ の処方では $\hat s^2$ が $M_W/M_Z$ に $\Delta\rho$ を通じて結びつき、$\sin^2\theta_{\mathrm{eff}}$ は $c_W^2\Delta\rho$ だけずれる。$\Delta\rho$ の $O(\alpha\alpha_s)$ の補正 $-\frac23(1+\frac{\pi^2}3)\frac{\alpha_s}\pi\Delta\rho$（文献~\cite{dv87} の係数、参照）を式~\eqref{eq:drho} の $\Delta\rho$（極質量の $m_t$ で $0.00933$）に当てると、式~\eqref{eq:drhosens} から $M_W$ の処方で $-7.1\times10^{-4}$、$\alpha$ の処方で $+2.9\times10^{-4}$ になる。処方の差と同じ大きさである。非対称度のうち、$A^{0,b}_{\mathrm{FB}}$ は $M_W$ の処方で $-0.7\sigma$、SLD の $A_\ell$ は $\alpha$ の処方の方が近い（$-2.6\sigma$）。この二つの測定が $\sin^2\theta_{\mathrm{eff}}$ について約 $3\sigma$ 食い違うことはよく知られている~\cite{lepewwg06}（参照）。$A_b$、$A_c$ は誤差が大きく、どちらの処方でも $0.6\sigma$ 以内で合う。
 
 \begin{table}[tbp]
 \centering\small
@@ -1020,18 +1088,13 @@ $A^{0,c}_{\mathrm{FB}}$ & 0.06974 & 0.06976（$-0.3$） & 0.07301（$+0.7$） & 
 
 (a) タドポール。タドポールの部分は $k^2$ によらず、$\Sigma^{WW}_{\mathrm{tad}}/M_W^2-\Sigma^{ZZ}_{\mathrm{tad}}/M_Z^2$ は記号として0だった。したがってタドポールは、$\Delta\rho$ からも、下の $M_W$ の予言に入る $dZ-dW$（$dV=\re\hat\Sigma^{VV}_T(M_V^2)/M_V^2$）からも消え、1PI の部分だけで足りる。
 
-(b) $\Delta\rho$。トップとボトムの二重項の部分（ループ関数に $m_t$、$m_b$ だけを含む項）の $\Delta\rho$ は、紫外の極もゲージの母数も含まず、$\mu=50$、$300$~GeV で同じ値だった。式 $N_cg^2F_0(m_t^2,m_b^2)/(4M_W^2K)$、$F_0(a,b)=a+b-\frac{2ab}{a-b}\ln\frac ab$（$m_b\to0$ で式~\eqref{eq:drho}）とは、$(m_t,m_b)=(172.57,4.78)$、$(172.57,0.001)$、$(100,50)$~GeV で相対 $10^{-16}$ で一致した（$k^2\to0$ は $k^2=10^{-12}$~GeV$^2$ で60桁）。$G_F$ と極質量では $\Delta\rho_{tb}=0.009237$（$m_b=0$ で $0.009332$）である。一方、すべてのループを含む $\Delta\rho$ は、$\mu=M_Z$ で紫外の極が $(\xi_Z,\xi_W)=(2,2)$、$(3,3)$、$(1/2,4)$ で $0.0027$、$0.0030$、$-0.0004$、有限部分が $0.0086$、$0.0077$、$0.0112$ と、ゲージによって変わった。ボソンのループでは $g'$ が custodial 対称性を破るためで、$\Delta\rho$ そのものは物理量ではない。物理量は次の $M_W$ である。
+(b) $\Delta\rho$。トップとボトムの二重項の部分（ループ関数に $m_t$、$m_b$ だけを含む項）の $\Delta\rho$ は、紫外の極もゲージの母数も含まず、$\mu=50$、$300$~GeV で同じ値だった。式~\eqref{eq:drhof0} とは、$(m_t,m_b)=(172.57,4.78)$、$(172.57,0.001)$、$(100,50)$~GeV で相対 $10^{-16}$ で一致した（$k^2\to0$ は $k^2=10^{-12}$~GeV$^2$ で60桁）。$G_F$ と極質量では $\Delta\rho_{tb}=0.009237$（$m_b=0$ で $0.009332$）である。一方、すべてのループを含む $\Delta\rho$ は、$\mu=M_Z$ で紫外の極が $(\xi_Z,\xi_W)=(2,2)$、$(3,3)$、$(1/2,4)$ で $0.0027$、$0.0030$、$-0.0004$、有限部分が $0.0086$、$0.0077$、$0.0112$ と、ゲージによって変わった。ボソンのループでは $g'$ が custodial 対称性を破るためで、$\Delta\rho$ そのものは物理量ではない。物理量は次の $M_W$ である。
 
-(c) $M_W$ の予言。入力は SM ノートの $\alpha$ の処方（$\alpha(0)$、$\Delta\alpha$、$G_F$、$M_Z$、$M_H$、$m_t$、$\alpha_s$。$M_W$ は予言）の結合である。SM ノートの当てはめでは、$dW$、$dZ$、$\hat\Delta$ のタドポールの部分（$\mu=M_t$ でそれぞれ約 $0.12$）は $\hat\Delta-dZ$ と $dZ-dW$ の組でしか消えないので、関係は
-\begin{equation}
-M_W=M_Z\hat c(\mu)\Bigl[1+\tfrac12\bigl(dZ-dW\bigr)\Bigr]
-\label{eq:mwpred}
-\end{equation}
-と線形に書く。\texttt{mw.wl} は、\texttt{nlo\_inputs.py} が1ループの方程式で走らせた $\hat c^2(\mu)$ と、Package-X で求めた $dV$ でこれを求める（ループは SM ノートの当てはめと同じ木の点で、$M_W$ は不動点まで反復する。$M_Z$ は SM ノートの極質量 $91.15387$~GeV）。$\mu=M_t$ で $M_W=80.36795$~GeV になり、三つのゲージで $10^{-36}$ まで一致した。$\mu=M_Z/2$、$M_Z$、$M_t$、$2M_t$ では $80.3883$、$80.3786$、$80.3680$、$80.3546$~GeV で、変化の幅は $34$~MeV である。木の $M_Z\hat c(\mu)$ では同じ範囲で $528$~MeV 変わる（表~\ref{tab:mw}）。
+(c) $M_W$ の予言。入力は SM ノートの $\alpha$ の処方（$\alpha(0)$、$\Delta\alpha$、$G_F$、$M_Z$、$M_H$、$m_t$、$\alpha_s$。$M_W$ は予言）の結合で、予言の式は第~\ref{sec:rho} 節の式~\eqref{eq:mwpred} である（SM ノートの当てはめでは、$dW$、$dZ$、$\hat\Delta$ のタドポールの部分は $\mu=M_t$ でそれぞれ約 $0.12$ ある）。\texttt{mw.wl} は、\texttt{nlo\_inputs.py} が1ループの方程式で走らせた $\hat c^2(\mu)$ と、Package-X で求めた $dV$ でこれを求める（ループは SM ノートの当てはめと同じ木の点で、$M_W$ は不動点まで反復する。$M_Z$ は SM ノートの極質量 $91.15387$~GeV）。$\mu=M_t$ で $M_W=80.36795$~GeV になり、三つのゲージで $10^{-36}$ まで一致した。$\mu=M_Z/2$、$M_Z$、$M_t$、$2M_t$ では $80.3883$、$80.3786$、$80.3680$、$80.3546$~GeV で、変化の幅は $34$~MeV である。木の $M_Z\hat c(\mu)$ では同じ範囲で $528$~MeV 変わる（表~\ref{tab:mw}）。
 
 SM ノートの値 $80.38171$~GeV とは $13.8$~MeV 違う。SM ノートの不動点は、$e(\mu)$、$G_F$、$M_Z$ から作った $\hat c^2$ を使う。一方、本ノートの入力の $g$、$g'$ は、その $M_W$ で $M_W$ の処方の式から作り直したもので、その $\hat c^2$ は相対 $3.4\times10^{-4}$（$O(\alpha^2)$）違う。式~\eqref{eq:mwpred} と1ループで同等な $M_Z\hat c\sqrt{1+d}$、$M_Z\hat c/\sqrt{1-d}$（$d=dZ-dW=0.0159$）も $80.3655$、$80.3756$~GeV になる。1ループの $M_W$ には、$d^2\approx2.5\times10^{-4}$ の大きさの、$10$〜$20$~MeV の切り捨ての不定性があり、$\mu$ を変えた幅と同じ程度である。
 
-(d) 測定値との比較。測定の $M_W$ は走る幅の Breit--Wigner の質量なので、$M_{\mathrm{BW}}=M\sqrt{1+\Gamma_W^2/M^2}$（手順 (4b) の $\Gamma_W=2.0859$~GeV）で $27.1$~MeV 大きくして $80.3950$~GeV と比べる。本ノートの入力の PDG 2024 の $80.3692\pm0.0133$~GeV~\cite{pdg24} とは $+25.8$~MeV（$+1.9\sigma$）、PDG の2026年の版の $80.3625\pm0.0077$~GeV~\cite{pdg26} とは $+32.5$~MeV（$+4.2\sigma$）違う（参照）。これは1ループの予言の不定性の中にある。$\Delta\rho$ の $O(\alpha\alpha_s)$ の補正（手順 (5) と同じく文献~\cite{dv87} の係数）は $\delta\Delta\rho=-0.000909$ で、$\alpha$、$G_F$、$M_Z$ を固定すると $\delta M_W=\frac{M_W}2\frac{c^2}{c^2-s^2}\delta\Delta\rho=-51$~MeV になる。これだけで上の差（$+26$〜$+33$~MeV）を超える大きさである。1ループの $M_W$ の予言の不定性は数十 MeV で、測定の誤差より大きい。$\sin^2\theta_{\mathrm{eff}}$（手順 (5)）と同じく、測定の精度に届くには2ループの補正が要る。
+(d) 測定値との比較。測定の $M_W$ は走る幅の Breit--Wigner の質量なので、$M_{\mathrm{BW}}=M\sqrt{1+\Gamma_W^2/M^2}$（手順 (4b) の $\Gamma_W=2.0859$~GeV）で $27.1$~MeV 大きくして $80.3950$~GeV と比べる。本ノートの入力の PDG 2024 の $80.3692\pm0.0133$~GeV~\cite{pdg24} とは $+25.8$~MeV（$+1.9\sigma$）、PDG の2026年の版の $80.3625\pm0.0077$~GeV~\cite{pdg26} とは $+32.5$~MeV（$+4.2\sigma$）違う（参照）。これは1ループの予言の不定性の中にある。$\Delta\rho$ の $O(\alpha\alpha_s)$ の補正（手順 (5) と同じく文献~\cite{dv87} の係数）は $\delta\Delta\rho=-0.000909$ で、$\alpha$、$G_F$、$M_Z$ を固定すると、式~\eqref{eq:drhosens} から $\delta M_W=-51$~MeV になる。これだけで上の差（$+26$〜$+33$~MeV）を超える大きさである。1ループの $M_W$ の予言の不定性は数十 MeV で、測定の誤差より大きい。$\sin^2\theta_{\mathrm{eff}}$（手順 (5)）と同じく、測定の精度に届くには2ループの補正が要る。
 
 \begin{table}[tbp]
 \centering\small
@@ -1055,12 +1118,7 @@ SM ノートの手順 (7)（その当てはめの $\hat c^2$） & & 80.3817 \\
 \end{table}
 
 \FloatBarrier
-\paragraph{手順 (7)：$\MSbar$ と on-shell の処方。}SM ノートの $M_W$ の処方の換算は、1ループで
-\begin{equation}
-g(\mu)^2=g_0^2(1+dW-\hat\Delta),\quad g(\mu)^2+g'(\mu)^2=G_0^2(1+dZ-\hat\Delta),\quad \hat c^2(\mu)=c_0^2(1+dW-dZ)
-\label{eq:convOS}
-\end{equation}
-である。$g_0^2=4\sqrt2G_FM_W^2$、$G_0^2=4\sqrt2G_FM_Z^2$、$c_0^2=M_W^2/M_Z^2$ は on-shell の $G_\mu$ の処方の木の結合で、$\hat\Delta$ は SM ノートの $\mu$ 崩壊の補正である（図~\ref{fig:gfdecay}）。これを使うと、$G_\mu$ の処方の1ループの幅は $\Gamma=\Gamma_0(g_0,s_0^2)[1+\delta(\mu)+C(\mu)]$ になる。$\delta(\mu)$ は手順 (4a)〜(4c) の値で、$C$ は木の結合を $(g_0,s_0^2)$ から $(g(\mu),\hat s^2(\mu))$ に替えたときの木の1ループの変化である。$Z\to\nu\bar\nu$ では $C=dZ-\hat\Delta$、$Z\to e^+e^-$ ではさらに $\hat s^2$ の変化 $-c_0^2(dW-dZ)$ の分が付き、$W\to e\nu$、$t\to bW^+$ では $C=dW-\hat\Delta$ である（$V_{tb}$ は両方で同じ値にし、CKM ノートの手順 (6) の換算は含めない）。$Z\to e^+e^-$ は弱い補正だけで比べる（光子の因子は共通）。\texttt{scheme.wl} は $dV-\hat\Delta$ を SM ノートの当てはめの木の点（その極質量 $M_W=80.34217$、$M_Z=91.15387$~GeV）で求め、\texttt{scheme\_compare.py} が幅を比べる。
+\paragraph{手順 (7)：$\MSbar$ と on-shell の処方。}第~\ref{sec:scheme} 節の換算 \eqref{eq:convOS} で、手順 (4a)〜(4c) の幅を $G_\mu$ の処方で組み直す（$\hat\Delta$ の図は図~\ref{fig:gfdecay}）。比べるのは $Z\to\nu\bar\nu$、$Z\to e^+e^-$、$W\to e\nu$、$t\to bW^+$ である（$V_{tb}$ は両方で同じ値にし、CKM ノートの手順 (6) の換算は含めない）。$Z\to e^+e^-$ は弱い補正だけで比べる（光子の因子は共通）。\texttt{scheme.wl} は $dV-\hat\Delta$ を SM ノートの当てはめの木の点（その極質量 $M_W=80.34217$、$M_Z=91.15387$~GeV）で求め、\texttt{scheme\_compare.py} が幅を比べる。
 
 \begin{figure}[tbp]
 \centering
