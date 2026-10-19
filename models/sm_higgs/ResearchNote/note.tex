@@ -55,7 +55,7 @@
 \maketitle
 
 \begin{abstract}
-SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote} は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、1ループの繰り込みと、$Z$、$W$、$t$ の崩壊の NLO の幅を求めた。本ノートでは、同じ模型ファイル、処方、道具で、ヒッグスの崩壊 $H\to f\bar f$、$WW^*$、$ZZ^*$、$\gamma\gamma$、$Z\gamma$、$gg$ の NLO の部分幅、全幅、分岐比を求める計画を立てる。手計算では、木の幅と1ループで誘起される崩壊の振幅、$H\to q\bar q$ の QCD の補正で $\MSbar$ の湯川結合が $\ln(m_q^2/M_H^2)$ を吸収すること、$H\to f\bar f$ にはタドポールが入らないが $H\to VV^*$ には $HHVV$ の頂点を通して入ること、$H\to gg$ の重いトップの有効理論での NLO を述べ、八つの手順の計画を定めた。手順 (1) では、模型、木の振幅（一般の $R_\xi$ ゲージで27個の記号の一致）、MadGraph との一致（相対 $10^{-14}$）を確かめた。$\mu=M_H$ の $\MSbar$ の湯川結合で書いた木の $\Gamma(H\to b\bar b)=1.85$~MeV は極質量で書いた値の3分の1で、$V$ の有限の幅は $H\to4f$ の幅を幅0の式より $WW$ で $6\%$、$ZZ$ で $21\%$ 上げる。手順 (2) では、$H\to\gamma\gamma$、$Z\gamma$、$gg$ の1ループの振幅が一般の $R_\xi$ ゲージで対抗項なしに有限でゲージによらず（$Z\gamma$ は光子の脚の $\gamma$--$Z$ の混合の図を含めて）、ループごとに文献の関数と、全体で MadLoop と一致することを確かめた。手順 (3) では、質量0の $H\to q\bar q$ の QCD の補正 $\frac{17}4C_F\alpha_s/\pi$ を $d$ 次元で厳密に求め、$\MSbar$ の湯川結合で $b\bar b$ の幅の $\mu$ の依存が $19\%$ から $5\%$ に減ることを示した。
+SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote} は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、1ループの繰り込みと、$Z$、$W$、$t$ の崩壊の NLO の幅を求めた。本ノートでは、同じ模型ファイル、処方、道具で、ヒッグスの崩壊 $H\to f\bar f$、$WW^*$、$ZZ^*$、$\gamma\gamma$、$Z\gamma$、$gg$ の NLO の部分幅、全幅、分岐比を求める計画を立てる。手計算では、木の幅と1ループで誘起される崩壊の振幅、$H\to q\bar q$ の QCD の補正で $\MSbar$ の湯川結合が $\ln(m_q^2/M_H^2)$ を吸収すること、$H\to f\bar f$ にはタドポールが入らないが $H\to VV^*$ には $HHVV$ の頂点を通して入ること、$H\to gg$ の重いトップの有効理論での NLO を述べ、八つの手順の計画を定めた。手順 (1) では、模型、木の振幅（一般の $R_\xi$ ゲージで27個の記号の一致）、MadGraph との一致（相対 $10^{-14}$）を確かめた。$\mu=M_H$ の $\MSbar$ の湯川結合で書いた木の $\Gamma(H\to b\bar b)=1.85$~MeV は極質量で書いた値の3分の1で、$V$ の有限の幅は $H\to4f$ の幅を幅0の式より $WW$ で $6\%$、$ZZ$ で $21\%$ 上げる。手順 (2) では、$H\to\gamma\gamma$、$Z\gamma$、$gg$ の1ループの振幅が一般の $R_\xi$ ゲージで対抗項なしに有限でゲージによらず（$Z\gamma$ は光子の脚の $\gamma$--$Z$ の混合の図を含めて）、ループごとに文献の関数と、全体で MadLoop と一致することを確かめた。手順 (3) では、質量0の $H\to q\bar q$ の QCD の補正 $\frac{17}4C_F\alpha_s/\pi$ を $d$ 次元で厳密に求め、$\MSbar$ の湯川結合で $b\bar b$ の幅の $\mu$ の依存が $19\%$ から $5\%$ に減ることを示した。手順 (4) では、質量を入れた $H\to b\bar b$、$c\bar c$、$\tau^+\tau^-$ の補正が文献の閉じた形と $10^{-11}$ で、MadGraph、MadLoop と倍精度で一致し、$b$ の質量は NLO の幅を $0.5\%$ 下げることを確かめた。
 \end{abstract}
 
 \tableofcontents
@@ -130,7 +130,13 @@ A_{1/2}(\tau)=\frac{2[\tau+(\tau-1)f(\tau)]}{\tau^2},\qquad A_1(\tau)=-\frac{2\t
 \Gamma(H\to q\bar q)=\Gamma_0(y_q^{\mathrm{pole}})\Bigl[1+C_F\frac{\alpha_s}\pi\Bigl(\frac94+\frac32\ln\frac{m_q^2}{M_H^2}\Bigr)\Bigr]
 \label{eq:hqqpole}
 \end{equation}
-になり、$b$ では括弧の中が $\frac94-9.8$ の大きな負の値になる。$\MSbar$ の湯川結合はこの対数を走りとして吸収するので、式~\eqref{eq:hqq} の補正は $\mu=M_H$ で $+20.3\%$ にとどまる。質量のある場合の補正は、NLO ノートの手順 (3) の方法（Package-X の仮想の補正、$d$ 次元の軟らかい放射、数値の硬い放射）を、ベクトルの流れからスカラーの流れに替えて求める。赤外の極の構造（質量0の二重極、質量のある放射体の軟い単極）はベクトルの場合と同じである。
+になり、$b$ では括弧の中が $\frac94-9.8$ の大きな負の値になる。$\MSbar$ の湯川結合はこの対数を走りとして吸収するので、式~\eqref{eq:hqq} の補正は $\mu=M_H$ で $+20.3\%$ にとどまる。質量のある場合の補正は、NLO ノートの手順 (3) の方法（Package-X の仮想の補正、$d$ 次元の軟らかい放射、数値の硬い放射）を、ベクトルの流れからスカラーの流れに替えて求めた（手順 (4)）。極質量の湯川結合では
+\begin{equation}
+\Gamma(H\to Q\bar Q)=\Gamma_0(y_Q^{\mathrm{pole}})\Bigl[1+C_F\frac{\alpha_s}\pi K_{\mathrm{OS}}(\beta)\Bigr],\qquad
+K_{\MSbar}(\mu)=K_{\mathrm{OS}}(\beta)+2+\frac32\ln\frac{\mu^2}{m_Q^2}
+\label{eq:hqqmass}
+\end{equation}
+で（$\Gamma_0$ は $\beta^3$ を含む）、$K_{\mathrm{OS}}$ は Drees と Hikasa の閉じた形 $\Delta_H(\beta)$~\cite{dh90}（\ref{app:dh}、参照）に一致し、$\beta\to1$ で式~\eqref{eq:hqqpole} の $\frac94+\frac32\ln\frac{m_Q^2}{M_H^2}$ に、閾値 $\beta\to0$ でクーロンの項 $\pi^2/(2\beta)$ になる。$\mu=M_H$ の $K_{\MSbar}$ は $b$ で $4.347$ で、質量0の $\frac{17}4$ に近い。
 
 \subsection{電弱の補正とタドポール}\label{sec:ew}
 
@@ -234,7 +240,7 @@ $H\to gg$ の NLO \eqref{eq:hgg} & 第~\ref{sec:hgg} 節 & 有効理論の1ル�
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約3分）で、手順 (2) はその後に \texttt{run\_loopind\_check.sh}（約10分。半分は MadGraph の模型の読み込み）で、手順 (3) は \texttt{run\_hqq\_check.sh}（約3分）で再現できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約3分）で、手順 (2) はその後に \texttt{run\_loopind\_check.sh}（約10分。半分は MadGraph の模型の読み込み）で、手順 (3) は \texttt{run\_hqq\_check.sh}（約3分）で、手順 (4) は \texttt{run\_hqq\_massive\_check.sh}（約6分。ほとんどは MadLoop の模型の読み込み）で再現できる。
 
 \subsection{手順 (1)：模型と木の幅}\label{sec:step1}
 
@@ -487,9 +493,35 @@ $\mu$ & 0.000857 & — & 0.000866 & $-1.20\%$、$+1.04\%$ & $-1.71\%$、$+1.57\%
 \end{tabular}
 \end{table}
 
+\subsection{手順 (4)：質量のある $H\to b\bar b$、$c\bar c$、$\tau^+\tau^-$}\label{sec:step4}
+
+\paragraph{(a) 仮想の補正と軟らかい放射。}\texttt{hqq\_massive\_virtual.wl} は、NLO ノートの手順 (3) の計算を $Z$ のベクトルと軸性の流れからスカラーの流れに替えて行う。スカラーの頂点（Feynman ゲージ）を \texttt{TID} と Package-X で求め、質量のあるクォークの on-shell の場の定数 $\delta Z=-\frac{\alpha C}{4\pi}[3(\frac1\epsilon-\gamma_E+\ln\frac{4\pi\mu^2}{m^2})+4]$ を両方の脚に付け、湯川結合の対抗項 $2\delta y/y$ を $\MSbar$（本ノート）と on-shell（極質量の湯川結合 $\sqrt2m/v$、$\delta y/y=\delta m/m$）の二通りで足す。頂点と場の定数の紫外の極は $\frac{\alpha C}\pi$ を単位に $+\frac32$ で、どちらの対抗項も打ち消す。質量0ではクォークと同じ向きに出るグルーオンも発散を作ったが（二重極）、質量があるとこの平行な発散はクォークの質量で抑えられ、とても軟らかいグルーオンの発散（単極）だけが残る。その極は赤外の軟らかい極 $-1+\frac{1+\beta^2}{2\beta}\ln\frac{1+\beta}{1-\beta}$ に記号として一致し、$d$ 次元で求めた軟らかい放射（$E_g<\delta E_{\max}$。$Z$ と同じアイコナルの積分）と打ち消す。on-shell の処方の $K_V+K_S$ は $\mu$ によらず（$\mu=7$ と $300$~GeV の差が $10^{-22}$）、$\MSbar$ の処方の値との差は $2+\frac32\ln\frac{M_H^2}{m^2}$ に一致した。
+
+\paragraph{(b) 硬い放射と和。}\texttt{hqq\_massive\_real.wl} は、4次元の $H\to Q\bar Qg$ の2乗の和 $R$ を求める。$R$ は本ノートの FeynArts の模型の $H\to b\bar bg$、$\tau^-\tau^+\gamma$（湯川結合は独立の記号）と記号として一致し、$E_g\to0$ でアイコナルの形に $E_g$ に比例して近づく（$E_g=10^{-4}$、$10^{-6}E_{\max}$ で $5\times10^{-9}$、$5\times10^{-13}$）。$E_g>\delta E_{\max}$ の硬い部分を NLO ノートの Gauss--Legendre の規則で積分して (a) と足すと、$K_{\mathrm{OS}}$ の $\delta=10^{-4}$〜$10^{-8}$ の変化は $\delta$ に比例し（$b$ で $1.3\times10^{-3}$ から $1.2\times10^{-6}$）、$\delta\to0$ に外挿した（表~\ref{tab:hqqmass}）。$K_{\mathrm{OS}}$ は Drees と Hikasa の $\Delta_H(\beta)$~\cite{dh90}（参照）と、$b$、$c$、$\tau$、$\mu$ と閾値の検算（$\beta=0.05$、$0.01$）で $2\times10^{-11}$ 以内、質量0の検算（$m/M=10^{-3}$、$10^{-5}$）で $10^{-7}$ 以内で一致した。$m/M=10^{-5}$ で $K_{\mathrm{OS}}-(\frac94+\frac32\ln\frac{m^2}{M^2})$ と $K_{\MSbar}(\mu=M)-\frac{17}4$ は $1.6\times10^{-8}$ で、手順 (3) に戻る。閾値では $K_{\mathrm{OS}}-\pi^2/(2\beta)$ が $-0.812$、$-0.954$ で、クーロンの項のほかは有限である。クーロンの項は、遅いクォークと反クォークがグルーオンを交換して引き合う効果である。
+
+\paragraph{(c) MadGraph と MadLoop。}\texttt{hqq\_massive\_mg5.py} は、MadGraph の木の standalone の $H\to b\bar bg$、$\tau^-\tau^+\gamma$ の2乗の和を、$H$ の param\_card で7点ずつ $N_cC_Fg_s^2(y^2/2)R$、$e^2(y^2/2)R$ と比べ、軟らかい端と平行な端を含めて $2.8\times10^{-12}$ 以内で一致した。\texttt{hqq\_massive\_madloop.py} は、CKM ノートの NLO の UFO の \texttt{[virt=QCD]} の $H\to b\bar b$ を、その点（$\alpha_s=0.118$、$M_H=125$、$m_b=2.86$~GeV）で比べる。この UFO の $Hb\bar b$ の QCD の UV の頂点は $-i\frac{y_b}{\sqrt2}(\frac12\delta Z_L+\frac12\delta Z_R+\delta m_b/m_b)$ で、場の定数は on-shell、$\delta m_b$ は $\MSbar$ の純粋な極なので、本ノートの $\MSbar$ の湯川結合と同じ処方である。単極と有限部分の木との比は、$\mu_R=125$、$500$~GeV で $2.2\times10^{-15}$ 以内で一致した。MadLoop の規格化（$(4\pi)^\epsilon/\Gamma(1-\epsilon)$ と $\mu_R^{2\epsilon}$ を除く）に直すとき、ループの関数の $-\gamma_E+\ln4\pi$ は Package-X の ScaleMu の置き換えで消えるが、$\MSbar$ の対抗項に書いた $-\gamma_E+\ln4\pi$ は残る。初めはこれを残したため、有限部分が $\frac32(\ln4\pi-\gamma_E)\,C_F\frac{\alpha_s}\pi$ だけ（$\mu_R$ によらず）ずれた。この規格化では $\MSbar$ の対抗項は純粋な極 $-\frac32/\epsilon$ である。
+
+\paragraph{(d) 質量を入れた幅。}\texttt{hqq\_massive\_widths.py} は、式~\eqref{eq:hqqmass} を NLO ノートの入力の $\mu=M_H/2$、$M_H$、$2M_H$ の結合で求める（表~\ref{tab:hqqmass}。クォークは QCD と QED、レプトンは QED）。$\mu=M_H$ で $\Gamma(H\to b\bar b)=2.2410$~MeV（LO の $+20.86\%$）、$\Gamma(H\to c\bar c)=0.10524$~MeV、$\Gamma(H\to\tau^+\tau^-)=0.24990$~MeV である。質量を入れると NLO の幅は手順 (3) の質量0の値から $b$ で $-0.49\%$、$c$ で $-0.05\%$、$\tau$ で $-0.12\%$ 変わる。$b$ では、木の $\beta^3$ の $-0.87\%$ を、$K_{\MSbar}$ が $\frac{17}4$ から $4.347$ に増える分が一部打ち消す。$\mu$ による幅は手順 (3) と同じく $b$ で $5.5\%$、$c$ で $3.0\%$ である。極質量の湯川結合で書くと $K_{\mathrm{OS}}=-7.45$ と大きな負の値になり、$\Gamma(H\to b\bar b)$ は $3.59$~MeV と大きく違う。大きな質量の効果はすべて結合の選び方（極質量の $4.78$~GeV か $\bar m_b(M_H)\approx2.75$~GeV か）に入り、$\MSbar$ の湯川結合を使えば運動学の質量の効果は $0.5\%$ の小さな補正にすぎない。幅に効く質量は $\bar m_b(M_H)$ である。$\tau$ では、極質量で書いた NLO（$0.2523$~MeV）と $\MSbar$ で書いた NLO（$0.2499$~MeV）が $1\%$ 違う。QED の補正は小さいので、この差は主に入力の $y_\tau$ の電弱の走り（トップの湯川結合と弱い相互作用）で、手順 (5) の電弱の補正が埋めるはずである。
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (4)：質量のある $H\to f\bar f$ の NLO（\texttt{hqq\_massive\_real.wl}、\texttt{hqq\_massive\_widths.py}）。$K$ は $\Gamma^{(1)}/\Gamma_0=\frac{\alpha C}\pi K$ の係数、幅は MeV で $\MSbar$ の結合は $\mu=M_H$。最後の列は手順 (3) の質量0の NLO からの変化。}
+\label{tab:hqqmass}
+\begin{tabular}{llllll}
+\toprule
+$f$ & $K_{\mathrm{OS}}=\Delta_H(\beta)$ & $K_{\MSbar}(M_H)$ & LO & NLO（$\MSbar$） & 質量の効果 \\
+\midrule
+$b$ & $-7.449433$ & 4.346983 & 1.854228 & 2.241013 & $-0.490\%$ \\
+$c$ & $-10.686099$ & 4.265167 & 0.087106 & 0.105243 & $-0.045\%$ \\
+$\tau$ & $-10.498128$ & 4.266948 & 0.247263 & 0.249897 & $-0.117\%$ \\
+$\mu$ & $-18.982273$ & 4.250096 & 0.000857 & 0.000866 & $-0.000\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{現在の状態。}手順 (1) を終えた。模型は NLO ノートのものと同一で、木の振幅は一般の $R_\xi$ ゲージで手計算と記号として一致し、MadGraph とは倍精度の丸めの範囲で一致した。分かったことは三つある。(i) $\MSbar$ の湯川結合は $H\to b\bar b$、$c\bar c$ の木の幅を極質量の値の $0.33$、$0.13$ 倍にし、木の $\mu$ の依存は $\pm10\%$ と大きい。(ii) FJ の $v$ で書いた木の $H\to WW^*$、$ZZ^*$ は $G_F$ で書いた木より $9\%$、$13\%$ 大きい。(iii) 幅0の式~\eqref{eq:vv} は、$V$ の幅を入れた4フェルミオンの幅より $WW$ で $6\%$、$ZZ$ で $21\%$ 小さい。手順 (2) も終えた。$H\to\gamma\gamma$、$Z\gamma$、$gg$ の1ループの振幅は、対抗項なしに紫外で有限で、一般の $R_\xi$ ゲージでゲージによらない（$Z\gamma$ は光子の脚の $\gamma$--$Z$ の混合の図を含めて）。ループごとに式~\eqref{eq:loop}、\eqref{eq:zg} と一致し、MadLoop とも一致した。LO の幅の入力の選び方では、$\alpha(0)$ と $\hat\alpha(M_H)$ の差（$\gamma\gamma$ で $15.5\%$）と $gg$ の $\alpha_s$ の $\mu$ の依存（$\pm17\%$）が大きい。手順 (3) も終えた。質量0の $H\to q\bar q$ の QCD の補正は、$d$ 次元で厳密に $C_F\frac{\alpha_s}\pi(\frac{17}4+\frac32\ln\frac{\mu^2}{M_H^2})$ で、グルーオンの質量の4次元の計算とも一致した。スカラーの流れは紫外で発散し、$\MSbar$ の湯川結合の対抗項が要る。$\MSbar$ の湯川結合では $b\bar b$ の幅の $\mu$ の依存が LO の $19\%$ から NLO の $5\%$ に減り、極質量で書くと大きな対数のために NLO でも $60\%$ 違う。手順 (4)〜(8) はこれから行う。
+\paragraph{現在の状態。}手順 (1) を終えた。模型は NLO ノートのものと同一で、木の振幅は一般の $R_\xi$ ゲージで手計算と記号として一致し、MadGraph とは倍精度の丸めの範囲で一致した。分かったことは三つある。(i) $\MSbar$ の湯川結合は $H\to b\bar b$、$c\bar c$ の木の幅を極質量の値の $0.33$、$0.13$ 倍にし、木の $\mu$ の依存は $\pm10\%$ と大きい。(ii) FJ の $v$ で書いた木の $H\to WW^*$、$ZZ^*$ は $G_F$ で書いた木より $9\%$、$13\%$ 大きい。(iii) 幅0の式~\eqref{eq:vv} は、$V$ の幅を入れた4フェルミオンの幅より $WW$ で $6\%$、$ZZ$ で $21\%$ 小さい。手順 (2) も終えた。$H\to\gamma\gamma$、$Z\gamma$、$gg$ の1ループの振幅は、対抗項なしに紫外で有限で、一般の $R_\xi$ ゲージでゲージによらない（$Z\gamma$ は光子の脚の $\gamma$--$Z$ の混合の図を含めて）。ループごとに式~\eqref{eq:loop}、\eqref{eq:zg} と一致し、MadLoop とも一致した。LO の幅の入力の選び方では、$\alpha(0)$ と $\hat\alpha(M_H)$ の差（$\gamma\gamma$ で $15.5\%$）と $gg$ の $\alpha_s$ の $\mu$ の依存（$\pm17\%$）が大きい。手順 (3) も終えた。質量0の $H\to q\bar q$ の QCD の補正は、$d$ 次元で厳密に $C_F\frac{\alpha_s}\pi(\frac{17}4+\frac32\ln\frac{\mu^2}{M_H^2})$ で、グルーオンの質量の4次元の計算とも一致した。スカラーの流れは紫外で発散し、$\MSbar$ の湯川結合の対抗項が要る。$\MSbar$ の湯川結合では $b\bar b$ の幅の $\mu$ の依存が LO の $19\%$ から NLO の $5\%$ に減り、極質量で書くと大きな対数のために NLO でも $60\%$ 違う。手順 (4) も終えた。質量を入れた補正は文献の閉じた形と $10^{-11}$ で一致し、MadGraph の木の実の放射と MadLoop の仮想の補正とも倍精度で一致した。$b$ の質量は NLO の $\Gamma(H\to b\bar b)$ を $0.5\%$ 下げるだけで、$\MSbar$ の湯川結合の補正は質量によらずほぼ $\frac{17}4C_F\frac{\alpha_s}\pi$ である。手順 (5)〜(8) はこれから行う。
 
 \appendix
 
@@ -536,6 +568,18 @@ D(s)=s-M_V^2+iM_V\Gamma_V
 \end{equation}
 である（実の放射は式~\eqref{eq:hqqr} の $y_{12}^{-\epsilon}y_{13}^{-1-\epsilon}y_{23}^{-1-\epsilon}$ などの Dirichlet の積分、頂点は $\mathrm{Re}$ をとったもの、対抗項は $\delta y/y=-3\frac{\alpha C}{4\pi}\frac{(4\pi)^\epsilon e^{-\gamma_E\epsilon}}\epsilon$）。和を展開すると $17+6\ln\frac{\mu^2}{M_H^2}+O(\epsilon)$ になる。
 
+\section{質量のある $H\to Q\bar Q$ の閉じた形}\label{app:dh}
+
+式~\eqref{eq:hqqmass} の $K_{\mathrm{OS}}$ と比べた Drees と Hikasa の形~\cite{dh90}（参照）は、$L=\ln\frac{1+\beta}{1-\beta}$ として
+\begin{equation}
+\begin{gathered}
+\Delta_H(\beta)=\frac{A(\beta)}\beta+\frac{3+34\beta^2-13\beta^4}{16\beta^3}L+\frac{3(-1+7\beta^2)}{8\beta^2},\\
+A(\beta)=(1+\beta^2)\Bigl[4\,\mathrm{Li}_2\frac{1-\beta}{1+\beta}+2\,\mathrm{Li}_2\Bigl(-\frac{1-\beta}{1+\beta}\Bigr)-3\ln\frac2{1+\beta}\,L-2\ln\beta\,L\Bigr]-3\beta\ln\frac4{1-\beta^2}-4\beta\ln\beta
+\end{gathered}
+\label{eq:dh}
+\end{equation}
+である。
+
 \section{$H\to Z\gamma$ の関数}\label{app:zg}
 
 式~\eqref{eq:zg} の関数は、$\tau=4m^2/M_H^2$、$\lambda=4m^2/M_Z^2$ として~\cite{djouadi08}
@@ -558,6 +602,7 @@ I_2(\tau,\lambda)=-\frac{\tau\lambda}{2(\tau-\lambda)}\bigl[f(\tau^{-1})-f(\lamb
 \bibitem{djouadi08} A. Djouadi, ``The anatomy of electroweak symmetry breaking. Tome I: The Higgs boson in the Standard Model,'' Phys. Rept. \textbf{457}, 1 (2008), arXiv:hep-ph/0503172。
 \bibitem{km84} W.-Y. Keung, W. J. Marciano, ``Higgs scalar decays: $H\to W^\pm X$,'' Phys. Rev. D \textbf{30}, 248 (1984)。
 \bibitem{bl80} E. Braaten, J. P. Leveille, ``Higgs-boson decay and the running mass,'' Phys. Rev. D \textbf{22}, 715 (1980)。
+\bibitem{dh90} M. Drees, K. Hikasa, ``Note on QCD corrections to hadronic Higgs decay,'' Phys. Lett. B \textbf{240}, 455 (1990)。
 \bibitem{ellis76} J. Ellis, M. K. Gaillard, D. V. Nanopoulos, ``A phenomenological profile of the Higgs boson,'' Nucl. Phys. B \textbf{106}, 292 (1976)。
 \bibitem{svvz79} M. A. Shifman, A. I. Vainshtein, M. B. Voloshin, V. I. Zakharov, ``Low-energy theorems for Higgs boson couplings to photons,'' Sov. J. Nucl. Phys. \textbf{30}, 711 (1979)。
 \bibitem{spira95} M. Spira, A. Djouadi, D. Graudenz, P. M. Zerwas, ``Higgs boson production at the LHC,'' Nucl. Phys. B \textbf{453}, 17 (1995), arXiv:hep-ph/9504378。
