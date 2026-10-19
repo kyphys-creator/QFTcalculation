@@ -790,7 +790,7 @@ Feynman ゲージの係数と精度（NLO） & $\xi_Z=\xi_W=1+10^{-20}$（80桁�
 \end{tabularx}
 \end{table}
 
-NLO のノート~\cite{smnlonote} の手順 (4c)〜(8)（10月19日）と、ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (1)〜(5)（10月19日。木の $H\to f\bar f$、$H\to Vf\bar f'$、$H\to4f$、1ループで誘起される $H\to\gamma\gamma$、$Z\gamma$、$gg$、$H\to f\bar f$ の QCD、QED、弱い補正）で分かった問題を表~\ref{tab:issues2q}、\ref{tab:issues2r} に加える。パターン変数、質量の記号、param\_card の幅、同種粒子の因子、UFO の点、$\overline{\mathrm{MS}}$ の対抗項の規格化、シェルの単語分割の行は、エラーも警告も出ず、数値が違うだけだった。
+NLO のノート~\cite{smnlonote} の手順 (4c)〜(8)（10月19日）と、ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (1)〜(7)（10月19日。木の $H\to f\bar f$、$H\to Vf\bar f'$、$H\to4f$、1ループで誘起される $H\to\gamma\gamma$、$Z\gamma$、$gg$、$H\to f\bar f$ の QCD、QED、弱い補正、$H\to gg$ の有効理論、$H\to VV^*$ の $HHVV$ の頂点のタドポール）で分かった問題を表~\ref{tab:issues2q}、\ref{tab:issues2r} に加える。パターン変数、質量の記号、param\_card の幅、同種粒子の因子、UFO の点、$\overline{\mathrm{MS}}$ の対抗項の規格化、シェルの単語分割、閉じたループの色の行は、エラーも警告も出ず、数値が違うだけだった。
 
 \begin{table}[tbp]
 \centering\footnotesize
@@ -814,7 +814,7 @@ CKM ノートの NLO の UFO と点（ヒッグス） & ループで誘起され
 
 \begin{table}[tbp]
 \centering\footnotesize
-\caption{表~\ref{tab:issues2q} の続き（ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (4)、(5)）。}
+\caption{表~\ref{tab:issues2q} の続き（ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (4)、(5)、(7)）。}
 \label{tab:issues2r}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
@@ -822,6 +822,8 @@ CKM ノートの NLO の UFO と点（ヒッグス） & ループで誘起され
 \midrule
 Package-X の規格化と $\overline{\mathrm{MS}}$ の対抗項（ヒッグス） & MadLoop の \texttt{[virt=QCD]} の $H\to b\bar b$ の有限部分と木の比が、自分の値と $\mu_R$ によらない $0.147$（$\frac32(\ln4\pi-\gamma_E)\,C_F\alpha_s/\pi$）だけずれた。単極は $10^{-15}$ で一致した & MadLoop の規格化（$(4\pi)^\epsilon/\Gamma(1-\epsilon)$ と $\mu_R^{2\epsilon}$ を除く）に直すのに Package-X の \texttt{ScaleMu} を $\sqrt{\pi e^{\gamma_E}}\mu_R$ に置き換えると、ループの関数の $-\gamma_E+\ln4\pi$ は消えるが、手で書き足した $\overline{\mathrm{MS}}$ の対抗項 $-\frac32(\frac1\epsilon-\gamma_E+\ln4\pi)$ の $-\gamma_E+\ln4\pi$ は残る（NLO のノートの $Z\to b\bar b$ はベクトルの流れで、この対抗項がなかった） & その規格化では $\overline{\mathrm{MS}}$ の対抗項を純粋な極 $-\frac32/\epsilon$ にする（$2\times10^{-15}$ で一致、\texttt{hqq\_massive\_virtual.wl}）。物理の値（$\mu$ を ScaleMu $=2\pi\mu$ で入れたもの）はもとから正しい \\
 zsh の単語分割（ヒッグス） & 対話のシェル（zsh）で \texttt{for tg in "4 3" "3 2" "2 2"; do set -- \$tg; ... \$1 \$2; done} と書いて3つの引数の組で \texttt{wolframscript} を起動すると、3つとも既定の引数で走り、同じ結果のファイルを書いた（エラーは出ない。ログは \texttt{hff\_4 3.log} のように空白を含む名前になった） & zsh は引用符のない変数を空白で分けない（bash と違う。\texttt{setopt shwordsplit} が既定で切れている）ので、\texttt{\$1} が \texttt{"4 3"} 全体、\texttt{\$2} が空になる & 引数を並べて直接書くか（\texttt{wolframscript -file x.wl 4 3 \&}）、スクリプトを \texttt{\#!/bin/bash} のファイルにして走らせる（\texttt{run\_hff\_weak\_check.sh}） \\
+FeynCalc の \texttt{FCFAConvert} と閉じたクォークのループの色（ヒッグス） & $H\to W^+W^-$、$ZZ$ の $HHVV$ の頂点にタドポールを付けた図と、SM ノートの $\Sigma^{WW}$、$\Sigma^{ZZ}$ のタドポールの部分を比べると、$2\delta_A^{\mathrm{tad}}+d_V^{\mathrm{tad}}$ がクォークのループの分 $4e^2\sum_qm_q^2A_0(m_q^2)/(M_H^2M_W^2s_W^2)$ だけ0にならなかった（レプトンとボソンのループは0。エラーも警告も出ない） & \texttt{DropSumOver -> True} は振幅の \texttt{SumOver} をすべて落とし、添字の和を繰り返しの添字の暗黙の和に任せる。閉じたクォークのループの色の添字は色を持たない頂点（$Hq\bar q$）だけでつながり、ほかに現れないので、$N_c=3$ の和が1になる & \texttt{DropSumOver -> False} にし、ほかに現れない添字の \texttt{SumOver[i, n]} を $n$ に、それ以外を1にする（\texttt{hvv\_scheme.wl}。クォークのループの分も記号として0になった） \\
+FeynCalc の \texttt{Coefficient} と縮約していない振幅（ヒッグス） & $H\to VV$ の1ループの図を木の振幅の $\varepsilon_1\cdot\varepsilon_2$ の係数で割ると \texttt{Power::infy} が出て、$2\delta_A^{\mathrm{tad}}+d_V^{\mathrm{tad}}$ が \texttt{ComplexInfinity} になった。図ごとの還元は成功していた & \texttt{FCFAConvert} の木の振幅は \texttt{Pair[LorentzIndex[Lor1], LorentzIndex[Lor2]]} と、偏極ベクトルとの \texttt{Pair[LorentzIndex[Lor1], Momentum[Polarization[p1, ...]]]} の積で、縮約しないと \texttt{SPD[e1, e2]} が現れず、\texttt{Coefficient} が0を返す & 係数をとる前に \texttt{Contract} する（\texttt{hvv\_scheme.wl}。1ループの側は \texttt{TID} の後に \texttt{Contract}） \\
 \bottomrule
 \end{tabularx}
 \end{table}
