@@ -123,9 +123,11 @@ msML$[x_, muR_] := Module[{y = Expand[x /. ScaleMu -> Sqrt[Pi Exp[EulerGamma]] m
    (4 pi)^eps e^(-gamma eps), which the substitution of ScaleMu removes from the loop functions only *)
 kVml$ = kVertZ$ - (3/2)/Epsilon;
 mlRows$ = {};
-Do[Module[{z = msML$[kVml$, muR] /. {m -> 286/100, MM -> 125^2}},
-   Print["MadLoop point (M_H = 125, m_b = 2.86), mu_R = ", muR, ":  H -> b bbar  K_V (MS-bar) pole ", N[Re[z[[1]]], 15],
+(* the same K (abelian) for the photonic part of the leptons in step (5): tau, mu at the point's masses *)
+Do[Module[{z = msML$[kVml$, muR] /. {m -> c[[2]], MM -> 125^2}},
+   Print["MadLoop point (M_H = 125, m = ", N[c[[2]]], "), mu_R = ", muR, ":  ", c[[1]], "  K_V (MS-bar) pole ", N[Re[z[[1]]], 15],
     ", finite ", N[Re[z[[2]]], 15]];
-   AppendTo[mlRows$, {"h_bb", muR, ToString[CForm[N[Re[z[[1]]], 20]]], ToString[CForm[N[Re[z[[2]]], 20]]]}]], {muR, {125, 500}}];
+   AppendTo[mlRows$, {c[[1]], muR, ToString[CForm[N[Re[z[[1]]], 20]]], ToString[CForm[N[Re[z[[2]]], 20]]]}]],
+  {c, {{"h_bb", 286/100}, {"h_tata", 1746/1000}, {"h_mumu", 1027/10000}}}, {muR, {125, 500}}];
 Export[FileNameJoin[{resDirMV$, "hqq_massive_virtual_ml.csv"}], Prepend[mlRows$, {"process", "mu_R", "KV_pole", "KV_finite"}], "CSV"];
 Print["written: results/hqq_massive_vs.csv, results/hqq_massive_virtual_ml.csv"];
