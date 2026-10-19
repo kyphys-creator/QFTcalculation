@@ -45,36 +45,41 @@ def observables(w):
             "tau/mu": lep[2] / lep[1]}
 
 
-obs_lo = [observables(widths(i, False, False)) for i in range(3)]
-obs_q = observables(widths(0, False, True))
-obs = [observables(widths(i)) for i in range(3)]
-print("delta_EW at mu = M_W: " + ", ".join("%s %+.5f%%" % (n, 100 * dew[(n, round(MW, 3))]) for n, *_ in CHANS))
-print("  e minus mu (the lepton mass drops out, KLN): %.1e;  tau minus mu: %.1e"
-      % (dew[("lnu1", round(MW, 3))] - dew[("lnu2", round(MW, 3))], dew[("lnu3", round(MW, 3))] - dew[("lnu2", round(MW, 3))]))
-print("%-10s %-22s %-22s %-22s %-18s  %s" % ("quantity", "LO", "LO + QCD", "NLO (+ EW)", "measured", "mu = M/2, 2M: LO; NLO"))
-rows = []
-for k in ORDER:
-    a, b, c = obs_lo[0][k], obs_q[k], obs[0][k]
-    m, e = PDG.get(k, (float("nan"), float("nan")))
-    dlo = [100 * (obs_lo[i][k] / a - 1) for i in (1, 2)]
-    dnl = [100 * (obs[i][k] / c - 1) for i in (1, 2)]
-    meas = "%.4f +- %.4f" % (m, e) if k in PDG else ""
-    print("%-10s %.6f (%+.2f%%)  %.6f (%+.2f%%)  %.6f (%+.2f%%)  %-18s  %+.3f%% %+.3f%%;  %+.3f%% %+.3f%%"
-          % (k, a, 100 * (a / c - 1), b, 100 * (b / c - 1), c, 0.0, meas, *dlo, *dnl))
-    rows.append([k, "%.8e" % a, "%.8e" % b, "%.8e" % c, m if k in PDG else "", e if k in PDG else "", "%.4f" % dlo[0], "%.4f" % dlo[1],
-                 "%.4f" % dnl[0], "%.4f" % dnl[1]])
-    if k in PDG:
-        print("           NLO - measured = %+.2f%% = %+.2f sigma" % (100 * (c / m - 1), (c - m) / e))
-print("(the percentages after LO and LO + QCD: relative to the NLO value)")
-print("BR(W -> l nu) with lepton universality (PDG 2026: 0.1086 +- 0.0009): NLO BR_e %.5f (%+.2f sigma)"
-      % (obs[0]["BR_e"], (obs[0]["BR_e"] - 0.1086) / 0.0009))
-obs_ew = [observables(widths(i, True, False)) for i in range(3)]
-print("mu = M/2, 2M with LO + EW only (no QCD factor): " + ";  ".join(
-    "%s %+.3f%% %+.3f%%" % (k, 100 * (obs_ew[1][k] / obs_ew[0][k] - 1), 100 * (obs_ew[2][k] / obs_ew[0][k] - 1))
-    for k in ("Gamma_e", "Gamma_had", "Gamma_W", "BR_e")))
-with open(HERE / "results" / "wweak_widths.csv", "w", newline="") as fh:
-    w = csv.writer(fh)
-    w.writerow(["quantity", "lo", "lo_qcd", "nlo", "measured", "error", "lo_mu_half_pct", "lo_mu_2_pct", "nlo_mu_half_pct",
-                "nlo_mu_2_pct"])
-    w.writerows(rows)
-print("wrote results/wweak_widths.csv")
+def main():
+    obs_lo = [observables(widths(i, False, False)) for i in range(3)]
+    obs_q = observables(widths(0, False, True))
+    obs = [observables(widths(i)) for i in range(3)]
+    print("delta_EW at mu = M_W: " + ", ".join("%s %+.5f%%" % (n, 100 * dew[(n, round(MW, 3))]) for n, *_ in CHANS))
+    print("  e minus mu (the lepton mass drops out, KLN): %.1e;  tau minus mu: %.1e"
+          % (dew[("lnu1", round(MW, 3))] - dew[("lnu2", round(MW, 3))], dew[("lnu3", round(MW, 3))] - dew[("lnu2", round(MW, 3))]))
+    print("%-10s %-22s %-22s %-22s %-18s  %s" % ("quantity", "LO", "LO + QCD", "NLO (+ EW)", "measured", "mu = M/2, 2M: LO; NLO"))
+    rows = []
+    for k in ORDER:
+        a, b, c = obs_lo[0][k], obs_q[k], obs[0][k]
+        m, e = PDG.get(k, (float("nan"), float("nan")))
+        dlo = [100 * (obs_lo[i][k] / a - 1) for i in (1, 2)]
+        dnl = [100 * (obs[i][k] / c - 1) for i in (1, 2)]
+        meas = "%.4f +- %.4f" % (m, e) if k in PDG else ""
+        print("%-10s %.6f (%+.2f%%)  %.6f (%+.2f%%)  %.6f (%+.2f%%)  %-18s  %+.3f%% %+.3f%%;  %+.3f%% %+.3f%%"
+              % (k, a, 100 * (a / c - 1), b, 100 * (b / c - 1), c, 0.0, meas, *dlo, *dnl))
+        rows.append([k, "%.8e" % a, "%.8e" % b, "%.8e" % c, m if k in PDG else "", e if k in PDG else "", "%.4f" % dlo[0], "%.4f" % dlo[1],
+                     "%.4f" % dnl[0], "%.4f" % dnl[1]])
+        if k in PDG:
+            print("           NLO - measured = %+.2f%% = %+.2f sigma" % (100 * (c / m - 1), (c - m) / e))
+    print("(the percentages after LO and LO + QCD: relative to the NLO value)")
+    print("BR(W -> l nu) with lepton universality (PDG 2026: 0.1086 +- 0.0009): NLO BR_e %.5f (%+.2f sigma)"
+          % (obs[0]["BR_e"], (obs[0]["BR_e"] - 0.1086) / 0.0009))
+    obs_ew = [observables(widths(i, True, False)) for i in range(3)]
+    print("mu = M/2, 2M with LO + EW only (no QCD factor): " + ";  ".join(
+        "%s %+.3f%% %+.3f%%" % (k, 100 * (obs_ew[1][k] / obs_ew[0][k] - 1), 100 * (obs_ew[2][k] / obs_ew[0][k] - 1))
+        for k in ("Gamma_e", "Gamma_had", "Gamma_W", "BR_e")))
+    with open(HERE / "results" / "wweak_widths.csv", "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["quantity", "lo", "lo_qcd", "nlo", "measured", "error", "lo_mu_half_pct", "lo_mu_2_pct", "nlo_mu_half_pct",
+                    "nlo_mu_2_pct"])
+        w.writerows(rows)
+    print("wrote results/wweak_widths.csv")
+
+
+if __name__ == "__main__":
+    main()

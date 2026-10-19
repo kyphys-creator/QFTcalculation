@@ -67,30 +67,35 @@ def observables(w):
             "R_c": w["u2"] / had, "sigma0_had": 12 * math.pi * w["l1"] * had / (MZ**2 * gz**2) * GEV2NB}
 
 
-obs_lo = [observables(widths(i, False, False)) for i in range(3)]
-obs_qq = observables(widths(0, False, True))
-obs = [observables(widths(i)) for i in range(3)]
-print("delta_weak at mu = M_Z: " + ", ".join("%s %+.5f%%" % (n, 100 * dw[(n, round(MZ, 3))]) for n, *_ in FERM))
-print("%-11s %-22s %-22s %-22s %-18s  %s" % ("quantity", "LO", "LO + QED, QCD", "NLO (+ weak)", "measured", "mu = M/2, 2M: LO; NLO"))
-rows = []
-for k in PDG:
-    m, e = PDG[k]
-    a, b, c = obs_lo[0][k], obs_qq[k], obs[0][k]
-    dlo = [100 * (obs_lo[i][k] / a - 1) for i in (1, 2)]
-    dnl = [100 * (obs[i][k] / c - 1) for i in (1, 2)]
-    print("%-11s %.6f (%+.2f%%)  %.6f (%+.2f%%)  %.6f (%+.2f%%)  %.5f +- %.5f   %+.3f%% %+.3f%%;  %+.3f%% %+.3f%%"
-          % (k, a, 100 * (a / m - 1), b, 100 * (b / m - 1), c, 100 * (c / m - 1), m, e, *dlo, *dnl))
-    rows.append([k, "%.8e" % a, "%.8e" % b, "%.8e" % c, m, e, "%.4f" % dlo[0], "%.4f" % dlo[1], "%.4f" % dnl[0], "%.4f" % dnl[1]])
-    if k in ("Gamma_Z", "R_b", "Gamma_inv", "sigma0_had", "R_l"):
-        print("            NLO - measured = %+.2f sigma" % ((c - m) / e))
-# the mu dependence of the electroweak part alone (LO + weak, no QED, QCD factors): what the weak correction is to cancel
-obs_ew = [observables(widths(i, True, False)) for i in range(3)]
-print("mu = M/2, 2M with LO + weak only (the alpha_s(mu) of the QCD factor left out): " + ";  ".join(
-    "%s %+.3f%% %+.3f%%" % (k, 100 * (obs_ew[1][k] / obs_ew[0][k] - 1), 100 * (obs_ew[2][k] / obs_ew[0][k] - 1))
-    for k in ("Gamma_ll", "Gamma_inv", "Gamma_had", "Gamma_Z")))
-with open(HERE / "results" / "zweak_widths.csv", "w", newline="") as fh:
-    w = csv.writer(fh)
-    w.writerow(["quantity", "lo", "lo_qed_qcd", "nlo", "measured", "error", "lo_mu_half_pct", "lo_mu_2_pct", "nlo_mu_half_pct",
-                "nlo_mu_2_pct"])
-    w.writerows(rows)
-print("wrote results/zweak_widths.csv")
+def main():
+    obs_lo = [observables(widths(i, False, False)) for i in range(3)]
+    obs_qq = observables(widths(0, False, True))
+    obs = [observables(widths(i)) for i in range(3)]
+    print("delta_weak at mu = M_Z: " + ", ".join("%s %+.5f%%" % (n, 100 * dw[(n, round(MZ, 3))]) for n, *_ in FERM))
+    print("%-11s %-22s %-22s %-22s %-18s  %s" % ("quantity", "LO", "LO + QED, QCD", "NLO (+ weak)", "measured", "mu = M/2, 2M: LO; NLO"))
+    rows = []
+    for k in PDG:
+        m, e = PDG[k]
+        a, b, c = obs_lo[0][k], obs_qq[k], obs[0][k]
+        dlo = [100 * (obs_lo[i][k] / a - 1) for i in (1, 2)]
+        dnl = [100 * (obs[i][k] / c - 1) for i in (1, 2)]
+        print("%-11s %.6f (%+.2f%%)  %.6f (%+.2f%%)  %.6f (%+.2f%%)  %.5f +- %.5f   %+.3f%% %+.3f%%;  %+.3f%% %+.3f%%"
+              % (k, a, 100 * (a / m - 1), b, 100 * (b / m - 1), c, 100 * (c / m - 1), m, e, *dlo, *dnl))
+        rows.append([k, "%.8e" % a, "%.8e" % b, "%.8e" % c, m, e, "%.4f" % dlo[0], "%.4f" % dlo[1], "%.4f" % dnl[0], "%.4f" % dnl[1]])
+        if k in ("Gamma_Z", "R_b", "Gamma_inv", "sigma0_had", "R_l"):
+            print("            NLO - measured = %+.2f sigma" % ((c - m) / e))
+    # the mu dependence of the electroweak part alone (LO + weak, no QED, QCD factors): what the weak correction is to cancel
+    obs_ew = [observables(widths(i, True, False)) for i in range(3)]
+    print("mu = M/2, 2M with LO + weak only (the alpha_s(mu) of the QCD factor left out): " + ";  ".join(
+        "%s %+.3f%% %+.3f%%" % (k, 100 * (obs_ew[1][k] / obs_ew[0][k] - 1), 100 * (obs_ew[2][k] / obs_ew[0][k] - 1))
+        for k in ("Gamma_ll", "Gamma_inv", "Gamma_had", "Gamma_Z")))
+    with open(HERE / "results" / "zweak_widths.csv", "w", newline="") as fh:
+        w = csv.writer(fh)
+        w.writerow(["quantity", "lo", "lo_qed_qcd", "nlo", "measured", "error", "lo_mu_half_pct", "lo_mu_2_pct", "nlo_mu_half_pct",
+                    "nlo_mu_2_pct"])
+        w.writerows(rows)
+    print("wrote results/zweak_widths.csv")
+
+
+if __name__ == "__main__":
+    main()
