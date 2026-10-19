@@ -547,7 +547,92 @@ $\Gamma_t$ & 1.453649（$+2.37\%$） & — & 1.329919（$-6.34\%$） & $1.42^{+0
 \FloatBarrier
 \paragraph{手順 (4a)：$Z\to f\bar f$ の弱い補正。}手順 (4) は $Z$、$W$、$t$ の崩壊に分け、ここでは (4a) として $Z\to f\bar f$ を扱う。$Z$ の崩壊では、光子の部分（光子の交換、光子による場の定数、実の光子の放射）はそれだけでゲージによらない組をなし、手順 (2)、(3) の $K$（$C=Q_f^2$）に等しい。グルーオンの部分も同じである。残りの弱い部分（$Z$、$W$、$H$ と Goldstone のループ、ボソンの自己エネルギーと $Z$--光子の混合、対抗項）は赤外で有限で、$\Gamma_f=\Gamma_0[1+\delta_{\mathrm{weak}}+\frac{\alpha Q_f^2}\pi K+\frac{\alpha_sC_F}\pi K]$ の $\delta_{\mathrm{weak}}$ を与える。
 
-(a) 振幅。\texttt{zff\_feyncalc.wl} は、本ノートの FeynArts の模型で、光子とグルーオンを除いた 1PI の頂点を一般の $R_\xi$ ゲージで求める（図はニュートリノで11個、荷電レプトンで25個、クォークで33個）。形状因子は $\mathcal M=g_Z\bar u[\slashed\varepsilon(F_LP_L+F_RP_R)+(\varepsilon\cdot p_1)(H_LP_L+H_RP_R)]v$ と書く（木では $F_L=T_3-Q\hat s^2$、$F_R=-Q\hat s^2$）。同じスクリプトで、そのフェルミオンの弱い自己エネルギー（5〜13個の図）も求める。$t$ を除く11個のフェルミオンを並列に計算する（約6分）。
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) the ZWW vertex
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[photon] (0,0) -- (0.6,0.45); \draw[photon] (0,0) -- (0.6,-0.45);
+  \draw[fermion] (0.6,-0.45) -- (0.6,0.45);
+  \draw[fermion] (0.6,0.45) -- (1.2,0.8); \draw[fermion] (1.2,-0.8) -- (0.6,-0.45);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.45) {}; \node[vtx] at (0.6,-0.45) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (0.12,0.48) {$W$}; \node[font=\scriptsize] at (0.12,-0.48) {$W$};
+  \node[font=\scriptsize] at (0.85,0) {$f'$}; \node[font=\scriptsize] at (1.4,0.85) {$f$}; \node[font=\scriptsize] at (1.4,-0.85) {$\bar f$};
+  \node[slab] at (0.1,-1.45) {(a) $ZWW$ の頂点};
+\end{scope}
+% (b) the W exchange
+\begin{scope}[shift={(3.6,0)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0.42); \draw[fermion] (0.6,0.42) -- (1.15,0.8);
+  \draw[fermion] (1.15,-0.8) -- (0.6,-0.42); \draw[fermion] (0.6,-0.42) -- (0,0);
+  \draw[photon] (0.6,0.42) -- (0.6,-0.42);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.42) {}; \node[vtx] at (0.6,-0.42) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (0.2,0.45) {$f'$}; \node[font=\scriptsize] at (0.2,-0.45) {$\bar f'$};
+  \node[font=\scriptsize] at (0.88,0) {$W$}; \node[font=\scriptsize] at (1.35,0.85) {$f$}; \node[font=\scriptsize] at (1.35,-0.85) {$\bar f$};
+  \node[slab] at (0.1,-1.45) {(b) $W$ の交換（$Z$、$H$ も）};
+\end{scope}
+% (c) the Z-photon mixing
+\begin{scope}[shift={(7.6,0)}]
+  \draw[photon] (-1.5,0) -- (-0.92,0); \draw[photon] (-0.58,0) -- (0,0);
+  \node[blob,minimum size=10pt] at (-0.75,0) {};
+  \draw[fermion] (0,0) -- (1.15,0.75); \draw[fermion] (1.15,-0.75) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.3,0.25) {$Z$}; \node[font=\scriptsize] at (-0.28,0.25) {$\gamma$};
+  \node[font=\scriptsize] at (-0.75,-0.35) {$\Sigma^{AZ}$};
+  \node[font=\scriptsize] at (1.35,0.8) {$f$}; \node[font=\scriptsize] at (1.35,-0.8) {$\bar f$};
+  \node[slab] at (-0.1,-1.45) {(c) $Z$--光子の混合};
+\end{scope}
+% (d) the residue of the Z
+\begin{scope}[shift={(11.6,0)}]
+  \draw[photon] (-1.5,0) -- (-0.92,0); \draw[photon] (-0.58,0) -- (0,0);
+  \node[blob,minimum size=10pt] at (-0.75,0) {};
+  \draw[fermion] (0,0) -- (1.15,0.75); \draw[fermion] (1.15,-0.75) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.3,0.25) {$Z$}; \node[font=\scriptsize] at (-0.28,0.25) {$Z$};
+  \node[font=\scriptsize] at (-0.75,-0.35) {$\Sigma^{ZZ}$};
+  \node[font=\scriptsize] at (1.35,0.8) {$f$}; \node[font=\scriptsize] at (1.35,-0.8) {$\bar f$};
+  \node[slab] at (-0.1,-1.45) {(d) $Z$ の留数};
+\end{scope}
+% (e) the field constant of a fermion leg
+\begin{scope}[shift={(1.2,-3.2)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.35,0.245); \draw[fermion] (0.35,0.245) -- (0.9,0.63); \draw[fermion] (0.9,0.63) -- (1.2,0.84);
+  \draw[fermion] (1.2,-0.84) -- (0,0);
+  \draw[photon] (0.35,0.245) .. controls (0.3,0.85) and (0.75,1.15) .. (0.9,0.63);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.35,0.245) {}; \node[vtx] at (0.9,0.63) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (0.3,1.05) {$W$, $Z$}; \node[font=\scriptsize] at (0.85,0.32) {$f'$};
+  \node[font=\scriptsize] at (1.4,0.9) {$f$}; \node[font=\scriptsize] at (1.4,-0.9) {$\bar f$};
+  \node[slab] at (0.1,-1.45) {(e) 脚の場の定数 $\delta Z_f$};
+\end{scope}
+% (f) the top in the Z b bbar vertex
+\begin{scope}[shift={(5.6,-3.2)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0.42); \draw[fermion] (0.6,0.42) -- (1.15,0.8);
+  \draw[fermion] (1.15,-0.8) -- (0.6,-0.42); \draw[fermion] (0.6,-0.42) -- (0,0);
+  \draw[scalar] (0.6,0.42) -- (0.6,-0.42);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.42) {}; \node[vtx] at (0.6,-0.42) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (0.2,0.45) {$t$}; \node[font=\scriptsize] at (0.2,-0.45) {$\bar t$};
+  \node[font=\scriptsize] at (0.95,0) {$G^\pm$}; \node[font=\scriptsize] at (1.35,0.85) {$b$}; \node[font=\scriptsize] at (1.35,-0.85) {$\bar b$};
+  \node[slab] at (0.1,-1.45) {(f) $Zb\bar b$ のトップ（$\propto y_t^2$）};
+\end{scope}
+% (g) the top with two W/G
+\begin{scope}[shift={(10.2,-3.2)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[scalar] (0,0) -- (0.6,0.45); \draw[scalar] (0,0) -- (0.6,-0.45);
+  \draw[fermion] (0.6,-0.45) -- (0.6,0.45);
+  \draw[fermion] (0.6,0.45) -- (1.2,0.8); \draw[fermion] (1.2,-0.8) -- (0.6,-0.45);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.45) {}; \node[vtx] at (0.6,-0.45) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (0.1,0.5) {$G^-$}; \node[font=\scriptsize] at (0.1,-0.5) {$G^+$};
+  \node[font=\scriptsize] at (0.85,0) {$t$}; \node[font=\scriptsize] at (1.4,0.85) {$b$}; \node[font=\scriptsize] at (1.4,-0.85) {$\bar b$};
+  \node[slab] at (0.1,-1.45) {(g) $Zb\bar b$ のトップ（$G^\pm$ の対）};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (4a) の $Z\to f\bar f$ の弱い補正の図の例（光子とグルーオンを除く。波線はゲージ場、破線は Goldstone 場）。(a)、(b) は 1PI の頂点（1PI の図はニュートリノで11個、荷電レプトンで25個、クォークで33個）。(c) は式~\eqref{eq:zren} の $Z$--光子の混合で、光子の木を通して $\mathcal V_f$ だけをずらし、手順 (5) の $\hat\kappa_f$ の主な部分になる。(d) の $Z$ の留数は $F_L$、$F_R$ に共通で、$\mathcal V_f/\mathcal A_f$ からは消える。(e) はフェルミオンの脚の場の定数（式~\eqref{eq:zren} の $\delta Z_f^L$）。(f)、(g) は $b$ に固有の、内線のトップと $W$、$G^\pm$ の頂点で（$W$ の線を含む同じ形の図もある）、$y_t^2$ に比例して $Z\to b\bar b$ を $-1.44\%$ ずらし、$R_b$ を測定値に戻す。}
+\label{fig:znlo}
+\end{figure}
+
+(a) 振幅。\texttt{zff\_feyncalc.wl} は、本ノートの FeynArts の模型で、光子とグルーオンを除いた 1PI の頂点を一般の $R_\xi$ ゲージで求める（図はニュートリノで11個、荷電レプトンで25個、クォークで33個。例を図~\ref{fig:znlo} に示す）。形状因子は $\mathcal M=g_Z\bar u[\slashed\varepsilon(F_LP_L+F_RP_R)+(\varepsilon\cdot p_1)(H_LP_L+H_RP_R)]v$ と書く（木では $F_L=T_3-Q\hat s^2$、$F_R=-Q\hat s^2$）。同じスクリプトで、そのフェルミオンの弱い自己エネルギー（5〜13個の図）も求める。$t$ を除く11個のフェルミオンを並列に計算する（約6分）。
 
 (b) S 行列要素。\texttt{zweak.wl} は、SM ノートと CKM ノートと同じく、裸の切断された頂点に on-shell の LSZ の因子を掛けて S 行列要素にする。
 \begin{equation}
@@ -844,7 +929,7 @@ $\mathrm{BR}(t\to bW^+)$ & 0.998222 & 0.998222 & 0.998234 & — & $0.00$ & $0.00
 
 (a) ゲージと $\mu$ によらないこと。$(\xi_Z,\xi_W)=(1,1)$、$(2,3)$、$(1/2,4)$ で、8個の荷電フェルミオンの $\sin^2\theta^f_{\mathrm{eff}}$ は $10^{-18}$ 以内で一致した。結合を $\mu=M_Z/2$、$M_Z$、$2M_Z$ に走らせると、$\hat s^2(\mu)=0.228958$、$0.232420$、$0.235903$ は $\pm1.5\%$ 変わる。一方 $\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.232448$、$0.232423$、$0.232376$ の変化は $\pm3\times10^{-5}$ にとどまり、$\hat\kappa_f(\mu)$ が $\hat s^2(\mu)$ の走りを打ち消す。
 
-(b) 内訳。$\mu=M_Z$ で $\sin^2\theta_{\mathrm{eff}}-\hat s^2(M_Z)$ を部分に分けると、レプトンでは $Z$--光子の混合が $-5.22\times10^{-4}$、頂点が $+5.69\times10^{-4}$、フェルミオンの脚が $-0.43\times10^{-4}$ で、和は $+0.04\times10^{-4}$（$\hat\kappa_\ell=1.000016$）だった。$Z$ の脚と $\MSbar$ の対抗項の寄与は $10^{-14}$ で、上の通り消える。$b$ では頂点が $+26.6\times10^{-4}$、脚が $-7.2\times10^{-4}$ で、$\hat\kappa_b=1.0061$ になる。手順 (4a) の $Zb\bar b$ と同じく、トップのループによる $b$ に固有の補正である。値を表~\ref{tab:zeff} に示す。
+(b) 内訳。$\mu=M_Z$ で $\sin^2\theta_{\mathrm{eff}}-\hat s^2(M_Z)$ を部分に分けると、レプトンでは $Z$--光子の混合（図~\ref{fig:znlo}(c)）が $-5.22\times10^{-4}$、頂点が $+5.69\times10^{-4}$、フェルミオンの脚が $-0.43\times10^{-4}$ で、和は $+0.04\times10^{-4}$（$\hat\kappa_\ell=1.000016$）だった。$Z$ の脚と $\MSbar$ の対抗項の寄与は $10^{-14}$ で、上の通り消える。$b$ では頂点が $+26.6\times10^{-4}$、脚が $-7.2\times10^{-4}$ で、$\hat\kappa_b=1.0061$ になる。手順 (4a) の $Zb\bar b$ と同じく、トップのループによる $b$ に固有の補正である。値を表~\ref{tab:zeff} に示す。
 
 (c) 測定値との比較。本ノートの入力（SM ノートの手順 (7) の $M_W$ の処方）では $\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.232423$ で、LEP と SLD の値 $0.23153\pm0.00016$~\cite{lepewwg06}（参照）より $8.9\times10^{-4}$（$+5.6\sigma$）大きい。同じ1ループの計算に、SM ノートの $\alpha$ の処方（$M_W$ の代わりに $\alpha(0)$ を入力にし、$M_W$ は予言になる）の結合を入れると、$\hat s^2(M_Z)=0.231658$、$\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.231670$（$+0.9\sigma$）になる（表~\ref{tab:zasym}）。二つの処方は1ループでは同等で、差の $7.5\times10^{-4}$ は1ループで決めた結合に残る高次の項の大きさである。これは測定の誤差の約5倍で、$\sin^2\theta_{\mathrm{eff}}$ の精度は本ノートの NLO の範囲を超えている。$M_W$ の処方では $\hat s^2$ が $M_W/M_Z$ に $\Delta\rho$ を通じて結びつき、$\sin^2\theta_{\mathrm{eff}}$ は $c_W^2\Delta\rho$ だけずれる。$\Delta\rho$ の $O(\alpha\alpha_s)$ の補正 $-\frac23(1+\frac{\pi^2}3)\frac{\alpha_s}\pi\Delta\rho$（文献~\cite{dv87} の係数、参照）を式~\eqref{eq:drho} の $\Delta\rho$（極質量の $m_t$ で $0.00933$）に当てると、$M_W$ の処方で $-7.1\times10^{-4}$、$\alpha$ の処方で $+2.9\times10^{-4}$（$-\hat s^2\hat c^2/(\hat c^2-\hat s^2)\cdot\delta\Delta\rho$）になる。処方の差と同じ大きさである。非対称度のうち、$A^{0,b}_{\mathrm{FB}}$ は $M_W$ の処方で $-0.7\sigma$、SLD の $A_\ell$ は $\alpha$ の処方の方が近い（$-2.6\sigma$）。この二つの測定が $\sin^2\theta_{\mathrm{eff}}$ について約 $3\sigma$ 食い違うことはよく知られている~\cite{lepewwg06}（参照）。$A_b$、$A_c$ は誤差が大きく、どちらの処方でも $0.6\sigma$ 以内で合う。
 
@@ -885,7 +970,53 @@ $A^{0,c}_{\mathrm{FB}}$ & 0.06974 & 0.06976（$-0.3$） & 0.07301（$+0.7$） & 
 \end{table}
 
 \FloatBarrier
-\paragraph{手順 (6)：$\Delta\rho$ と $M_W$ の予言。}\texttt{mw.wl} は、SM ノートの手順 (3) の $\Sigma^{WW}_T$、$\Sigma^{ZZ}_T$（一般の $R_\xi$、すべてのフェルミオンの質量、1PI の部分とタドポールの部分）を使う。
+\paragraph{手順 (6)：$\Delta\rho$ と $M_W$ の予言。}\texttt{mw.wl} は、SM ノートの手順 (3) の $\Sigma^{WW}_T$、$\Sigma^{ZZ}_T$（一般の $R_\xi$、すべてのフェルミオンの質量、1PI の部分とタドポールの部分）を使う（図~\ref{fig:drho}）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) the top-bottom loop of the W
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (-1.5,0) -- (-0.6,0); \draw[photon] (0.6,0) -- (1.5,0);
+  \draw[fermion] (-0.6,0) arc (180:0:0.6); \draw[fermion] (0.6,0) arc (0:-180:0.6);
+  \node[vtx] at (-0.6,0) {}; \node[vtx] at (0.6,0) {};
+  \node[font=\scriptsize] at (-1.2,0.25) {$W^+$}; \node[font=\scriptsize] at (1.2,0.25) {$W^+$};
+  \node[font=\scriptsize] at (0,0.82) {$t$}; \node[font=\scriptsize] at (0,-0.82) {$b$};
+  \node[slab] at (0,-1.35) {(a) $\Sigma^{WW}_T$ の $t$、$b$};
+\end{scope}
+% (b) the top loop of the Z
+\begin{scope}[shift={(3.7,0)}]
+  \draw[photon] (-1.5,0) -- (-0.6,0); \draw[photon] (0.6,0) -- (1.5,0);
+  \draw[fermion] (-0.6,0) arc (180:0:0.6); \draw[fermion] (0.6,0) arc (0:-180:0.6);
+  \node[vtx] at (-0.6,0) {}; \node[vtx] at (0.6,0) {};
+  \node[font=\scriptsize] at (-1.2,0.25) {$Z$}; \node[font=\scriptsize] at (1.2,0.25) {$Z$};
+  \node[font=\scriptsize] at (0,0.82) {$t$}; \node[font=\scriptsize] at (0,-0.82) {$t$};
+  \node[slab] at (0,-1.35) {(b) $\Sigma^{ZZ}_T$ の $t$（$b$ も）};
+\end{scope}
+% (c) the tadpole
+\begin{scope}[shift={(7.4,0)}]
+  \draw[photon] (-1.3,0) -- (0,0); \draw[photon] (0,0) -- (1.3,0);
+  \draw[scalar] (0,0) -- (0,0.62);
+  \draw[fermion] (0,0.62) arc (-90:270:0.33);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0,0.62) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$W$, $Z$}; \node[font=\scriptsize] at (1.0,0.25) {$W$, $Z$};
+  \node[font=\scriptsize] at (0.22,0.3) {$H$}; \node[font=\scriptsize] at (0.52,1.12) {$t$};
+  \node[slab] at (0,-1.35) {(c) タドポール（FJ）};
+\end{scope}
+% (d) a bosonic loop
+\begin{scope}[shift={(11.1,0)}]
+  \draw[photon] (-1.5,0) -- (-0.6,0); \draw[photon] (0.6,0) -- (1.5,0);
+  \draw[photon] (-0.6,0) arc (180:0:0.6); \draw[photon] (0.6,0) arc (0:-180:0.6);
+  \node[vtx] at (-0.6,0) {}; \node[vtx] at (0.6,0) {};
+  \node[font=\scriptsize] at (-1.2,0.25) {$W^+$}; \node[font=\scriptsize] at (1.2,0.25) {$W^+$};
+  \node[font=\scriptsize] at (0,0.85) {$W$}; \node[font=\scriptsize] at (0,-0.85) {$Z$, $\gamma$};
+  \node[slab] at (0,-1.35) {(d) ボソンのループ};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (6) の $\Delta\rho=\Sigma^{ZZ}_T(0)/M_Z^2-\Sigma^{WW}_T(0)/M_W^2$ に入る図の例。(a)、(b) のトップとボトムの二重項は紫外で有限、ゲージによらず、$m_t$ と $m_b$ の差に比例する custodial 対称性の破れとして式~\eqref{eq:drho}（$m_b$ を含めた $F_0$）になる。(c) の FJ のタドポールは、$\Sigma^{WW}_T/M_W^2$ と $\Sigma^{ZZ}_T/M_Z^2$ に同じ係数で入り、$\Delta\rho$ と $M_W$ の予言の $dZ-dW$ から消える。(d) のボソンのループ（ほかに $H$、Goldstone、ゴースト）は $g'$ が custodial 対称性を破るので紫外の極を残し、ゲージによる。}
+\label{fig:drho}
+\end{figure}
+
 
 (a) タドポール。タドポールの部分は $k^2$ によらず、$\Sigma^{WW}_{\mathrm{tad}}/M_W^2-\Sigma^{ZZ}_{\mathrm{tad}}/M_Z^2$ は記号として0だった。したがってタドポールは、$\Delta\rho$ からも、下の $M_W$ の予言に入る $dZ-dW$（$dV=\re\hat\Sigma^{VV}_T(M_V^2)/M_V^2$）からも消え、1PI の部分だけで足りる。
 
@@ -929,7 +1060,63 @@ SM ノートの手順 (7)（その当てはめの $\hat c^2$） & & 80.3817 \\
 g(\mu)^2=g_0^2(1+dW-\hat\Delta),\quad g(\mu)^2+g'(\mu)^2=G_0^2(1+dZ-\hat\Delta),\quad \hat c^2(\mu)=c_0^2(1+dW-dZ)
 \label{eq:convOS}
 \end{equation}
-である。$g_0^2=4\sqrt2G_FM_W^2$、$G_0^2=4\sqrt2G_FM_Z^2$、$c_0^2=M_W^2/M_Z^2$ は on-shell の $G_\mu$ の処方の木の結合で、$\hat\Delta$ は SM ノートの $\mu$ 崩壊の補正である。これを使うと、$G_\mu$ の処方の1ループの幅は $\Gamma=\Gamma_0(g_0,s_0^2)[1+\delta(\mu)+C(\mu)]$ になる。$\delta(\mu)$ は手順 (4a)〜(4c) の値で、$C$ は木の結合を $(g_0,s_0^2)$ から $(g(\mu),\hat s^2(\mu))$ に替えたときの木の1ループの変化である。$Z\to\nu\bar\nu$ では $C=dZ-\hat\Delta$、$Z\to e^+e^-$ ではさらに $\hat s^2$ の変化 $-c_0^2(dW-dZ)$ の分が付き、$W\to e\nu$、$t\to bW^+$ では $C=dW-\hat\Delta$ である（$V_{tb}$ は両方で同じ値にし、CKM ノートの手順 (6) の換算は含めない）。$Z\to e^+e^-$ は弱い補正だけで比べる（光子の因子は共通）。\texttt{scheme.wl} は $dV-\hat\Delta$ を SM ノートの当てはめの木の点（その極質量 $M_W=80.34217$、$M_Z=91.15387$~GeV）で求め、\texttt{scheme\_compare.py} が幅を比べる。
+である。$g_0^2=4\sqrt2G_FM_W^2$、$G_0^2=4\sqrt2G_FM_Z^2$、$c_0^2=M_W^2/M_Z^2$ は on-shell の $G_\mu$ の処方の木の結合で、$\hat\Delta$ は SM ノートの $\mu$ 崩壊の補正である（図~\ref{fig:gfdecay}）。これを使うと、$G_\mu$ の処方の1ループの幅は $\Gamma=\Gamma_0(g_0,s_0^2)[1+\delta(\mu)+C(\mu)]$ になる。$\delta(\mu)$ は手順 (4a)〜(4c) の値で、$C$ は木の結合を $(g_0,s_0^2)$ から $(g(\mu),\hat s^2(\mu))$ に替えたときの木の1ループの変化である。$Z\to\nu\bar\nu$ では $C=dZ-\hat\Delta$、$Z\to e^+e^-$ ではさらに $\hat s^2$ の変化 $-c_0^2(dW-dZ)$ の分が付き、$W\to e\nu$、$t\to bW^+$ では $C=dW-\hat\Delta$ である（$V_{tb}$ は両方で同じ値にし、CKM ノートの手順 (6) の換算は含めない）。$Z\to e^+e^-$ は弱い補正だけで比べる（光子の因子は共通）。\texttt{scheme.wl} は $dV-\hat\Delta$ を SM ノートの当てはめの木の点（その極質量 $M_W=80.34217$、$M_Z=91.15387$~GeV）で求め、\texttt{scheme\_compare.py} が幅を比べる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) the tree
+\begin{scope}[shift={(0,0)}]
+  \draw[fermion] (-1.1,0.85) -- (0,0.5); \draw[fermion] (0,0.5) -- (1.1,0.85);
+  \draw[photon] (0,0.5) -- (0,-0.5);
+  \draw[fermion] (0,-0.5) -- (1.1,-0.85); \draw[fermion] (-1.1,-0.85) -- (0,-0.5);
+  \node[vtx] at (0,0.5) {}; \node[vtx] at (0,-0.5) {};
+  \node[font=\scriptsize] at (-1.3,0.98) {$\mu^-$}; \node[font=\scriptsize] at (1.3,0.98) {$\nu_\mu$};
+  \node[font=\scriptsize] at (1.3,-0.98) {$e^-$}; \node[font=\scriptsize] at (-1.3,-0.98) {$\bar\nu_e$};
+  \node[font=\scriptsize] at (0.28,0) {$W$};
+  \node[slab] at (0,-1.5) {(a) 木};
+\end{scope}
+% (b) the W self-energy at zero momentum
+\begin{scope}[shift={(3.7,0)}]
+  \draw[fermion] (-1.1,0.85) -- (0,0.5); \draw[fermion] (0,0.5) -- (1.1,0.85);
+  \draw[photon] (0,0.5) -- (0,0.18); \draw[photon] (0,-0.18) -- (0,-0.5);
+  \node[blob,minimum size=10pt] at (0,0) {};
+  \draw[fermion] (0,-0.5) -- (1.1,-0.85); \draw[fermion] (-1.1,-0.85) -- (0,-0.5);
+  \node[vtx] at (0,0.5) {}; \node[vtx] at (0,-0.5) {};
+  \node[font=\scriptsize] at (-1.3,0.98) {$\mu^-$}; \node[font=\scriptsize] at (1.3,0.98) {$\nu_\mu$};
+  \node[font=\scriptsize] at (1.3,-0.98) {$e^-$}; \node[font=\scriptsize] at (-1.3,-0.98) {$\bar\nu_e$};
+  \node[font=\scriptsize,anchor=west] at (0.2,0) {$\Sigma^{WW}_T(0)$};
+  \node[slab] at (0,-1.5) {(b) $W$ の自己エネルギー};
+\end{scope}
+% (c) a vertex correction
+\begin{scope}[shift={(7.4,0)}]
+  \draw[fermion] (-1.1,0.85) -- (-0.55,0.675); \draw[fermion] (-0.55,0.675) -- (0,0.5); \draw[fermion] (0,0.5) -- (0.55,0.675); \draw[fermion] (0.55,0.675) -- (1.1,0.85);
+  \draw[photon] (-0.55,0.675) .. controls (-0.35,1.3) and (0.35,1.3) .. (0.55,0.675);
+  \draw[photon] (0,0.5) -- (0,-0.5);
+  \draw[fermion] (0,-0.5) -- (1.1,-0.85); \draw[fermion] (-1.1,-0.85) -- (0,-0.5);
+  \node[vtx] at (0,0.5) {}; \node[vtx] at (0,-0.5) {}; \node[vtx] at (-0.55,0.675) {}; \node[vtx] at (0.55,0.675) {};
+  \node[font=\scriptsize] at (-1.3,0.98) {$\mu^-$}; \node[font=\scriptsize] at (1.3,0.98) {$\nu_\mu$};
+  \node[font=\scriptsize] at (1.3,-0.98) {$e^-$}; \node[font=\scriptsize] at (-1.3,-0.98) {$\bar\nu_e$};
+  \node[font=\scriptsize] at (0,1.38) {$Z$}; \node[font=\scriptsize] at (0.28,0) {$W$};
+  \node[slab] at (0,-1.5) {(c) 頂点 $\delta_V$};
+\end{scope}
+% (d) a box
+\begin{scope}[shift={(11.1,0)}]
+  \draw[fermion] (-1.1,0.85) -- (-0.45,0.5); \draw[fermion] (0.45,0.5) -- (1.1,0.85);
+  \draw[fermion] (-0.45,0.5) -- (0.45,0.5);
+  \draw[photon] (-0.45,0.5) -- (-0.45,-0.5); \draw[photon] (0.45,0.5) -- (0.45,-0.5);
+  \draw[fermion] (0.45,-0.5) -- (1.1,-0.85); \draw[fermion] (-0.45,-0.5) -- (0.45,-0.5); \draw[fermion] (-1.1,-0.85) -- (-0.45,-0.5);
+  \node[vtx] at (-0.45,0.5) {}; \node[vtx] at (0.45,0.5) {}; \node[vtx] at (-0.45,-0.5) {}; \node[vtx] at (0.45,-0.5) {};
+  \node[font=\scriptsize] at (-1.3,0.98) {$\mu^-$}; \node[font=\scriptsize] at (1.3,0.98) {$\nu_\mu$};
+  \node[font=\scriptsize] at (1.3,-0.98) {$e^-$}; \node[font=\scriptsize] at (-1.3,-0.98) {$\bar\nu_e$};
+  \node[font=\scriptsize] at (-0.72,0) {$W$}; \node[font=\scriptsize] at (0.72,0) {$Z$};
+  \node[font=\scriptsize] at (0,0.7) {$\nu_\mu$}; \node[font=\scriptsize] at (0,-0.72) {$e$};
+  \node[slab] at (0,-1.5) {(d) 箱 $\delta_B$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (7) の換算 \eqref{eq:convOS} に入る $\mu$ 崩壊の補正 $\hat\Delta$（SM ノートの手順 (6)。外線の運動量と $e$、$\mu$ の質量を0にする）の図の例。(a) の木で $G_F/\sqrt2=1/(2v^2)$ になり、1ループで $G_F/\sqrt2=(1+\hat\Delta)/(2v^2)$、$\hat\Delta=[\Sigma^{WW}_T(0)/M_W^2+\delta_V+\delta_B-\frac12\sum_f\Sigma^L_f(0)]_{\MSbar}$ になる。最後の項は4本の外線の場の定数である。(b) の $\Sigma^{WW}_T(0)$ はタドポールの付いた図を含み（その部分が $\hat\Delta$ で最も大きい）、それが $dW$、$dZ$ のタドポールと打ち消す。比べるのは、標準模型の振幅から $G_F$ を定める Fermi 理論の光子のループを引いたもので、後者は運動量0では0になる。}
+\label{fig:gfdecay}
+\end{figure}
 
 (a) ゲージ。$dW$、$dZ$（タドポールを含む）と $\hat\Delta$ はそれぞれゲージによらないはずの量で（極質量、$\MSbar$ の結合、$G_F$ に対応する）、$\mu=M_Z$ の $dW-\hat\Delta$、$dZ-\hat\Delta$ は三つのゲージで22桁一致した。タドポールの部分（約 $0.12$）は式~\eqref{eq:convOS} の組で消える。
 
