@@ -100,7 +100,43 @@ $Z$ の $f\bar f$ への結合を $-i\frac{g_Z}2\gamma^\mu(v_f-a_f\gamma_5)$、$
 \end{aligned}
 \label{eq:lo}
 \end{equation}
-である（$\lambda(a,b,c)=a^2+b^2+c^2-2ab-2bc-2ca$、レプトンでは $N_c=1$）。結合 $g$、$g'$、$y_f$ は $\mu$ での $\MSbar$ の値、$M_Z$、$M_W$、$m_t$、$M_H$ と終状態の質量は極質量である。$t\to bW^+$ の $M_W^{-2}$ は外線の $W$ の偏極の和から来るので、極質量である。質量0の $f$ では $\Gamma_0(Z\to f\bar f)=N_cg_Z^2M_Z(v_f^2+a_f^2)/(48\pi)$ で、木の関係 $G_F/\sqrt2=g_Z^2/(8M_Z^2)$ を使うと、よく知られた $N_cG_FM_Z^3(v_f^2+a_f^2)/(6\sqrt2\pi)$ になる（$Z\to\nu\bar\nu$ で $G_FM_Z^3/(12\sqrt2\pi)$）。CKM ノートの式 (6) と SM ノートの式 (11) は、ここで結合を $\MSbar$、質量を極質量と読んだものである。
+である（$\lambda(a,b,c)=a^2+b^2+c^2-2ab-2bc-2ca$、レプトンでは $N_c=1$）。結合 $g$、$g'$、$y_f$ は $\mu$ での $\MSbar$ の値、$M_Z$、$M_W$、$m_t$、$M_H$ と終状態の質量は極質量である。$t\to bW^+$ の $M_W^{-2}$ は外線の $W$ の偏極の和から来るので、極質量である。質量0の $f$ では $\Gamma_0(Z\to f\bar f)=N_cg_Z^2M_Z(v_f^2+a_f^2)/(48\pi)$ で、木の関係 $G_F/\sqrt2=g_Z^2/(8M_Z^2)$ を使うと、よく知られた $N_cG_FM_Z^3(v_f^2+a_f^2)/(6\sqrt2\pi)$ になる（$Z\to\nu\bar\nu$ で $G_FM_Z^3/(12\sqrt2\pi)$）。CKM ノートの式 (6) と SM ノートの式 (11) は、ここで結合を $\MSbar$、質量を極質量と読んだものである。木の図を図~\ref{fig:lo} に示す。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% (a) Z -> f fbar
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (-1.2,0) -- (0,0); \draw[fermion] (0,0) -- (1.0,0.7); \draw[fermion] (1.0,-0.7) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$Z$}; \node[font=\scriptsize] at (1.2,0.8) {$f$}; \node[font=\scriptsize] at (1.2,-0.8) {$\bar f$};
+  \node[slab] at (0,-1.35) {(a) $-i\frac{g_Z}2\gamma^\mu(v_f-a_f\gamma_5)$};
+\end{scope}
+% (b) W+ -> f fbar'
+\begin{scope}[shift={(3.9,0)}]
+  \draw[photon] (-1.2,0) -- (0,0); \draw[fermion] (0,0) -- (1.0,0.7); \draw[fermion] (1.0,-0.7) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$W^+$}; \node[font=\scriptsize] at (1.2,0.8) {$u_i$}; \node[font=\scriptsize] at (1.2,-0.8) {$\bar d_j$};
+  \node[slab] at (0,-1.35) {(b) $-i\frac g{\sqrt2}V_{ij}\gamma^\mu P_L$\\（レプトンでは $V\to1$）};
+\end{scope}
+% (c) t -> b W+
+\begin{scope}[shift={(7.8,0)}]
+  \draw[fermion] (-1.2,0) -- (0,0); \draw[fermion] (0,0) -- (1.0,0.7); \draw[photon] (0,0) -- (1.0,-0.7);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$t$}; \node[font=\scriptsize] at (1.2,0.8) {$b$}; \node[font=\scriptsize] at (1.25,-0.8) {$W^+$};
+  \node[slab] at (0,-1.35) {(c) $-i\frac g{\sqrt2}V_{tb}\gamma^\mu P_L$};
+\end{scope}
+% (d) H -> f fbar
+\begin{scope}[shift={(11.7,0)}]
+  \draw[scalar] (-1.2,0) -- (0,0); \draw[fermion] (0,0) -- (1.0,0.7); \draw[fermion] (1.0,-0.7) -- (0,0);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.0,0.25) {$H$}; \node[font=\scriptsize] at (1.2,0.8) {$f$}; \node[font=\scriptsize] at (1.2,-0.8) {$\bar f$};
+  \node[slab] at (0,-1.35) {(d) $-i\frac{y_f}{\sqrt2}$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (1) の木の崩壊（式~\eqref{eq:lo}）と頂点の因子（\texttt{SM\_CKM.fr} の Feynman 則。$g_Z=\sqrt{g^2+g'^2}$、$v_f=T_3-2Q_f\hat s^2$、$a_f=T_3$、$P_L=(1-\gamma_5)/2$）。矢印はフェルミオンの流れ、波線はゲージ場、破線はヒッグス場。結合は $\mu=M$ の $\MSbar$ の値、運動学は極質量である。}
+\label{fig:lo}
+\end{figure}
 
 \subsection{赤外の発散の構造}\label{sec:ir}
 
@@ -129,7 +165,107 @@ $N_\epsilon=\frac{\alpha C}{2\pi}\bigl(\frac{4\pi\mu^2}{M^2}\bigr)^\epsilon\frac
 C=C_F=\tfrac43\ (\text{グルーオン}：1+\tfrac{\alpha_s}\pi),\qquad C=Q_f^2\ (\text{$Z\to f\bar f$ の光子})
 \label{eq:inclusive}
 \end{equation}
-になる（\ref{app:ir}）。有限部分の $\pm\pi^2$ は $N_\epsilon$ の $\epsilon^2$ の項の取り方で変わるが、二つで符号が逆なので和にはよらない。ベクトルと軸性ベクトルの結合は質量0では同じ補正を受ける。$W^+\to\ell^+\nu$ では光子が $W$ にも付くので、光子の部分だけを取り出した補正は単独ではゲージによらず、弱い補正と合わせて初めて意味を持つ。
+になる（\ref{app:ir}）。有限部分の $\pm\pi^2$ は $N_\epsilon$ の $\epsilon^2$ の項の取り方で変わるが、二つで符号が逆なので和にはよらない。ベクトルと軸性ベクトルの結合は質量0では同じ補正を受ける。NLO の図を図~\ref{fig:ir} に示す。$W^+\to\ell^+\nu$ では光子が $W$ にも付くので、光子の部分だけを取り出した補正は単独ではゲージによらず、弱い補正と合わせて初めて意味を持つ。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% ---- Z -> f fbar ----
+% (a) emission from f
+\begin{scope}[shift={(0,0)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.5,0.35); \draw[fermion] (0.5,0.35) -- (1.2,0.55); \draw[fermion] (1.15,-0.75) -- (0,0);
+  \draw[gluon] (0.5,0.35) -- (0.95,1.1);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.5,0.35) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (1.4,0.55) {$f$}; \node[font=\scriptsize] at (1.35,-0.8) {$\bar f$};
+  \node[font=\scriptsize] at (1.2,1.15) {$g$};
+  \node[slab] at (0.1,-1.6) {(a) 実の放射};
+\end{scope}
+% (b) emission from fbar
+\begin{scope}[shift={(3.4,0)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (1.15,0.75); \draw[fermion] (1.2,-0.55) -- (0.5,-0.35); \draw[fermion] (0.5,-0.35) -- (0,0);
+  \draw[gluon] (0.5,-0.35) -- (0.95,-1.1);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.5,-0.35) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (1.35,0.8) {$f$}; \node[font=\scriptsize] at (1.4,-0.55) {$\bar f$};
+  \node[font=\scriptsize] at (1.2,-1.15) {$g$};
+  \node[slab] at (0.1,-1.6) {(b) 実の放射};
+\end{scope}
+% (c) vertex
+\begin{scope}[shift={(6.8,0)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0.42); \draw[fermion] (0.6,0.42) -- (1.15,0.8);
+  \draw[fermion] (1.15,-0.8) -- (0.6,-0.42); \draw[fermion] (0.6,-0.42) -- (0,0);
+  \draw[gluon] (0.6,0.42) -- (0.6,-0.42);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.42) {}; \node[vtx] at (0.6,-0.42) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (1.35,0.85) {$f$}; \node[font=\scriptsize] at (1.35,-0.85) {$\bar f$};
+  \node[font=\scriptsize] at (0.95,0) {$g$};
+  \node[slab] at (0.1,-1.6) {(c) 頂点の補正};
+\end{scope}
+% (d) external field constant
+\begin{scope}[shift={(10.2,0)}]
+  \draw[photon] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.35,0.245); \draw[fermion] (0.35,0.245) -- (0.9,0.63); \draw[fermion] (0.9,0.63) -- (1.2,0.84);
+  \draw[fermion] (1.2,-0.84) -- (0,0);
+  \draw[gluon] (0.35,0.245) .. controls (0.3,0.85) and (0.75,1.15) .. (0.9,0.63);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.35,0.245) {}; \node[vtx] at (0.9,0.63) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$Z$}; \node[font=\scriptsize] at (1.4,0.9) {$f$}; \node[font=\scriptsize] at (1.4,-0.9) {$\bar f$};
+  \node[slab] at (0.1,-1.6) {(d) 場の定数 $\delta Z$};
+\end{scope}
+% ---- t -> b W+ ----
+% (e) emission from t
+\begin{scope}[shift={(0,-3.4)}]
+  \draw[fermion] (-1.15,0) -- (-0.55,0); \draw[fermion] (-0.55,0) -- (0,0);
+  \draw[fermion] (0,0) -- (1.15,0.75); \draw[photon] (0,0) -- (1.15,-0.75);
+  \draw[gluon] (-0.55,0) -- (-0.1,0.95);
+  \node[vtx] at (0,0) {}; \node[vtx] at (-0.55,0) {};
+  \node[font=\scriptsize] at (-1.0,0.22) {$t$}; \node[font=\scriptsize] at (1.35,0.8) {$b$}; \node[font=\scriptsize] at (1.4,-0.8) {$W^+$};
+  \node[font=\scriptsize] at (0.15,1.05) {$g$};
+  \node[slab] at (0.1,-1.3) {(e) 実の放射};
+\end{scope}
+% (f) emission from b
+\begin{scope}[shift={(3.4,-3.4)}]
+  \draw[fermion] (-1.15,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.5,0.35); \draw[fermion] (0.5,0.35) -- (1.2,0.55); \draw[photon] (0,0) -- (1.15,-0.75);
+  \draw[gluon] (0.5,0.35) -- (0.95,1.1);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.5,0.35) {};
+  \node[font=\scriptsize] at (-1.0,0.22) {$t$}; \node[font=\scriptsize] at (1.4,0.55) {$b$}; \node[font=\scriptsize] at (1.4,-0.8) {$W^+$};
+  \node[font=\scriptsize] at (1.2,1.15) {$g$};
+  \node[slab] at (0.1,-1.3) {(f) 実の放射};
+\end{scope}
+% (g) vertex
+\begin{scope}[shift={(6.8,-3.4)}]
+  \draw[fermion] (-1.15,0) -- (-0.55,0); \draw[fermion] (-0.55,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0.42); \draw[fermion] (0.6,0.42) -- (1.15,0.8); \draw[photon] (0,0) -- (1.15,-0.75);
+  \draw[gluon] (-0.55,0) .. controls (-0.5,0.75) and (0.2,0.95) .. (0.6,0.42);
+  \node[vtx] at (0,0) {}; \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.6,0.42) {};
+  \node[font=\scriptsize] at (-1.0,0.22) {$t$}; \node[font=\scriptsize] at (1.35,0.85) {$b$}; \node[font=\scriptsize] at (1.4,-0.8) {$W^+$};
+  \node[font=\scriptsize] at (-0.2,0.98) {$g$};
+  \node[slab] at (0.1,-1.3) {(g) 頂点の補正};
+\end{scope}
+% (h) field constant of t
+\begin{scope}[shift={(10.2,-3.4)}]
+  \draw[fermion] (-1.55,0) -- (-1.1,0); \draw[fermion] (-1.1,0) -- (-0.35,0); \draw[fermion] (-0.35,0) -- (0,0);
+  \draw[fermion] (0,0) -- (1.15,0.75); \draw[photon] (0,0) -- (1.15,-0.75);
+  \draw[gluon] (-1.1,0) arc (180:0:0.375);
+  \node[vtx] at (0,0) {}; \node[vtx] at (-1.1,0) {}; \node[vtx] at (-0.35,0) {};
+  \node[font=\scriptsize] at (-1.5,-0.22) {$t$}; \node[font=\scriptsize] at (1.35,0.8) {$b$}; \node[font=\scriptsize] at (1.4,-0.8) {$W^+$};
+  \node[slab] at (0.0,-1.3) {(h) $\delta Z_t$};
+\end{scope}
+% (i) field constant of b
+\begin{scope}[shift={(13.6,-3.4)}]
+  \draw[fermion] (-1.15,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.35,0.245); \draw[fermion] (0.35,0.245) -- (0.9,0.63); \draw[fermion] (0.9,0.63) -- (1.2,0.84);
+  \draw[photon] (0,0) -- (1.15,-0.75);
+  \draw[gluon] (0.35,0.245) .. controls (0.3,0.85) and (0.75,1.15) .. (0.9,0.63);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.35,0.245) {}; \node[vtx] at (0.9,0.63) {};
+  \node[font=\scriptsize] at (-1.0,0.22) {$t$}; \node[font=\scriptsize] at (1.4,0.9) {$b$}; \node[font=\scriptsize] at (1.4,-0.8) {$W^+$};
+  \node[slab] at (0.1,-1.3) {(i) $\delta Z_b$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (2)、(3) の NLO の図。上の段は $Z\to f\bar f$、下の段は $t\to bW^+$ で、巻いた線はグルーオンである（$Z\to\ell^+\ell^-$ と $Z\to\tau^+\tau^-$ では光子で、$C_F\to Q_f^2$）。(a)(b)(e)(f) は実の放射、(c)(g) は頂点の補正、(d)(h)(i) は外線の自己エネルギー（on-shell の場の定数。(d) は $\bar f$ の脚にも同じものがある）。質量0のフェルミオンでは (d) はスケールのない積分で0になる。仮想の補正の赤外の極は、実の放射の軟らかい領域（式~\eqref{eq:eikonal}）の極と打ち消す。手順 (2) の独立な計算では、放射する粒子に質量 $\lambda$ を与える。}
+\label{fig:ir}
+\end{figure}
 
 \subsection{$\rho$ パラメータ}\label{sec:rho}
 
@@ -300,9 +436,49 @@ K_S=-\frac1{4\epsilon}\Bigl(\frac{4\pi\mu^2}{\Delta E^2}\Bigr)^\epsilon\frac{\Si
 \end{equation*}
 になる（$|\vec k|$ の積分が $1/\epsilon$ を与える）。$O(\epsilon)$ の項は40桁の数値積分で求めた。$K_V+K_S$ の極はすべての過程で $10^{-38}$ 以下まで消え、$\mu$ への依存も $10^{-22}$ 以下だった。
 
-(c) 硬い放射。\texttt{ir\_massive\_real.wl} は、実の放射の振幅の2乗 $R=\sum|\mathcal M_R|^2/(g^2C)$ を4次元で求める（$Z$ と $W$ の偏極の和は $-g+kk/M^2$、グルーオンは $-g$）。$R$ は本ノートの FeynArts の模型の $Z\to b\bar bg$ と $t\to bW^+g$ と記号として一致した。$E\to0$ では木と eikonal 因子の積に近づいた（差は $E^2$ に比例し、$E=10^{-6}E_{\max}$ で $10^{-13}$）。\texttt{ir\_massive\_mg5.py} では、MadGraph の木の $|\mathcal M|^2$（$Z\to b\bar bg$、$Z\to\tau^-\tau^+\gamma$、$t\to bW^+g$）と Dalitz の平面の21点で比べ、相対 $8\times10^{-12}$ 以内で一致した（手の式は PS.input に書いた運動量の不変量で40桁で評価）。$E>\Delta E$ の積分は、$x=M^2-s_{12}=2ME$ と $2p_i\cdot p_3$ の対数を変数にして、Gauss--Legendre の公式で求めた。初めは積分の精度が出なかった。原因は二つあった。一つは、$R$ を $s_{12}$、$s_{13}$ の式で評価すると、軟らかい端で大きな数の差になって桁を落とすことである。もう一つは、硬い端（$s_{12}\to(m_1+m_2)^2$）で Dalitz の領域の幅が $\sqrt{x_{\max}-x}$ で縮み、その平方根が公式の収束を損なうことである。$R$ を $x$ と $2p_1\cdot p_3$ で厳密に書き直し、硬い側を $x=x_{\max}-\frac{x_{\max}}2t^2$ で写した。パネルの数を16から24にしたときの差は $10^{-14}$ 程度（$m/M=10^{-5}$ の試験で $10^{-8}$）になった。
+(c) 硬い放射。\texttt{ir\_massive\_real.wl} は、実の放射の振幅の2乗 $R=\sum|\mathcal M_R|^2/(g^2C)$ を4次元で求める（$Z$ と $W$ の偏極の和は $-g+kk/M^2$、グルーオンは $-g$）。$R$ は本ノートの FeynArts の模型の $Z\to b\bar bg$ と $t\to bW^+g$ と記号として一致した。$E\to0$ では木と eikonal 因子の積に近づいた（差は $E^2$ に比例し、$E=10^{-6}E_{\max}$ で $10^{-13}$）。\texttt{ir\_massive\_mg5.py} では、MadGraph の木の $|\mathcal M|^2$（$Z\to b\bar bg$、$Z\to\tau^-\tau^+\gamma$、$t\to bW^+g$）と Dalitz の平面の21点で比べ、相対 $8\times10^{-12}$ 以内で一致した（手の式は PS.input に書いた運動量の不変量で40桁で評価）。$E>\Delta E$ の積分は、$x=M^2-s_{12}=2ME$ と $2p_i\cdot p_3$ の対数を変数にして、Gauss--Legendre の公式で求めた（図~\ref{fig:dalitz}）。初めは積分の精度が出なかった。原因は二つあった。一つは、$R$ を $s_{12}$、$s_{13}$ の式で評価すると、軟らかい端で大きな数の差になって桁を落とすことである。もう一つは、硬い端（$s_{12}\to(m_1+m_2)^2$）で Dalitz の領域の幅が $\sqrt{x_{\max}-x}$ で縮み、その平方根が公式の収束を損なうことである。$R$ を $x$ と $2p_1\cdot p_3$ で厳密に書き直し、硬い側を $x=x_{\max}-\frac{x_{\max}}2t^2$ で写した。パネルの数を16から24にしたときの差は $10^{-14}$ 程度（$m/M=10^{-5}$ の試験で $10^{-8}$）になった。
 
 (d) $\delta$ によらないこと。$\delta$ を $10^{-4}$ から $10^{-8}$ まで変えると、$K_V+K_S$ と $K_H$ はそれぞれ90ほど変わる。和の $K$ の変化は軟らかい近似の誤差の $O(\delta)$ だけで、$\delta$ に比例して縮んだ（表~\ref{tab:massdelta}）。$\delta\to0$ の値は $K(10^{-8})-[K(10^{-7})-K(10^{-8})]/9$ とした。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \def\lowerB{(0.000,0.000) (0.289,0.008) (0.571,0.016) (0.848,0.025) (1.118,0.034) (1.382,0.044) (1.641,0.054) (1.893,0.065) (2.139,0.077) (2.379,0.089) (2.613,0.102) (2.841,0.116) (3.062,0.131) (3.278,0.146) (3.488,0.163) (3.691,0.181) (3.889,0.200) (4.080,0.220) (4.266,0.241) (4.445,0.265) (4.618,0.289) (4.785,0.316) (4.946,0.344) (5.101,0.374) (5.250,0.407) (5.393,0.442) (5.530,0.479) (5.660,0.519) (5.785,0.563) (5.903,0.609) (6.016,0.658) (6.122,0.712) (6.222,0.769) (6.316,0.829) (6.405,0.894) (6.487,0.964) (6.563,1.037) (6.632,1.115) (6.696,1.198) (6.754,1.285) (6.806,1.376) (6.851,1.471) (6.891,1.569) (6.924,1.671) (6.951,1.775) (6.973,1.881) (6.988,1.987) (6.997,2.094) (7.000,2.200)}
+  \def\upperB{(7.000,2.200) (6.997,2.304) (6.988,2.405) (6.973,2.502) (6.951,2.594) (6.924,2.681) (6.891,2.762) (6.851,2.836) (6.806,2.902) (6.754,2.961) (6.696,3.011) (6.632,3.054) (6.563,3.088) (6.487,3.114) (6.405,3.131) (6.316,3.141) (6.222,3.143) (6.122,3.136) (6.016,3.123) (5.903,3.102) (5.785,3.073) (5.660,3.038) (5.530,2.996) (5.393,2.948) (5.250,2.893) (5.101,2.832) (4.946,2.765) (4.785,2.692) (4.618,2.614) (4.445,2.529) (4.266,2.440) (4.080,2.345) (3.889,2.245) (3.691,2.140) (3.488,2.029) (3.278,1.914) (3.062,1.794) (2.841,1.670) (2.613,1.540) (2.379,1.406) (2.139,1.268) (1.893,1.125) (1.641,0.977) (1.382,0.825) (1.118,0.669) (0.848,0.508) (0.571,0.343) (0.289,0.174) (0.000,0.000)}
+  % the hard region and the soft strip
+  \fill[black!7] plot coordinates \lowerB -- plot coordinates \upperB -- cycle;
+  \begin{scope}
+    \clip plot coordinates \lowerB -- plot coordinates \upperB -- cycle;
+    \fill[blue!18] (0,0) rectangle (0.8,3.5);
+  \end{scope}
+  \draw[thick] plot coordinates \lowerB; \draw[thick] plot coordinates \upperB;
+  % axes
+  \draw[-{Stealth[length=2mm]}] (0,0) -- (7.7,0) node[right,font=\small] {$x$};
+  \draw[-{Stealth[length=2mm]}] (0,0) -- (0,3.7) node[above,font=\small] {$w$};
+  \node[font=\scriptsize,below] at (7.0,0) {$x_{\max}$}; \draw (7.0,0) -- (7.0,0.08);
+  % the cut, the split at x_max/2, the boundary of the two maps in w
+  \draw[dashed,blue!60!black] (0.8,0) -- (0.8,0.9);
+  \node[font=\scriptsize,below,blue!60!black] at (0.8,0) {$2M\Delta E$};
+  \draw[dashed] (3.5,0) -- (3.5,2.08); \node[font=\scriptsize,below] at (3.5,0) {$x_{\max}/2$};
+  \draw[densely dotted] (0,0) -- (7.0,2.2);
+  % labels
+  \node[font=\scriptsize,blue!60!black,align=right,anchor=east] (soft) at (-0.3,0.9) {軟らかい領域\\$E<\Delta E$};
+  \draw[-{Stealth[length=1.3mm]},blue!60!black] (soft.east) -- (0.5,0.17);
+  \node[font=\scriptsize,align=center] at (5.1,2.2) {硬い領域：\\4次元の数値積分};
+  \node[font=\scriptsize] (c1) at (5.3,-0.42) {$p_3\parallel p_1$：$w=w_{\mathrm{lo}}$};
+  \draw[-{Stealth[length=1.3mm]}] (c1.north) -- (5.3,0.38);
+  \node[font=\scriptsize,anchor=south east] (c2) at (3.3,2.15) {$p_3\parallel p_2$：$x-w=w'_{\mathrm{lo}}$};
+  \draw[-{Stealth[length=1.3mm]}] (2.1,2.15) -- (2.2,1.37);
+  \node[font=\scriptsize,anchor=west] at (2.75,0.55) {$w=w'$};
+  \node[font=\scriptsize,align=left,anchor=west] at (7.15,2.2) {$s_{12}\to(m_1+m_2)^2$：\\幅が $\sqrt{x_{\max}-x}$ で閉じる};
+  \draw[{Stealth[length=1.3mm]}-{Stealth[length=1.3mm]}] (0.8,-0.78) -- (3.5,-0.78);
+  \draw[{Stealth[length=1.3mm]}-{Stealth[length=1.3mm]}] (3.5,-0.78) -- (7.0,-0.78);
+  \node[font=\scriptsize,align=center] at (2.15,-1.05) {$\ln x$ の写像};
+  \node[font=\scriptsize,align=center] at (5.25,-1.1) {$x=x_{\max}-\frac{x_{\max}}2t^2$};
+\end{tikzpicture}
+\caption{手順 (3) の位相空間（$Z\to Q\bar Qg$、$m=0.2M$ で描いた）。横軸は $x=M^2-s_{12}=2ME$（$E$ は放射のエネルギー）、縦軸は $w=2p_1\cdot p_3$。青い帯 $E<\Delta E=\delta E_{\max}$（$\delta$ は誇張した）は、式~\eqref{eq:eikonal} の積を $d$ 次元で解析的に積分する。残りは4次元で数値で積分する。下と上の縁は、放射が $p_1$、$p_2$ に平行な共線の端である。質量があるので、$w$、$w'=2p_2\cdot p_3$ は0にならない。数値の積分では、$x$ と、それぞれの縁から点線までの $w$、$w'$ の対数を変数にする。$x>x_{\max}/2$ では、領域の幅の $\sqrt{x_{\max}-x}$ を $t^2$ の写像で除く。}
+\label{fig:dalitz}
+\end{figure}
 
 (e) 極限。質量0の極限（$m/M=10^{-5}$）では $K_V-\frac34=-4.5\times10^{-9}$、$K_A-\frac34=1.5\times10^{-8}$ で、手順 (2) の式~\eqref{eq:inclusive} に戻った。閾値（$\beta=0.05$、$0.01$）では $K_V-\pi^2/(2\beta)=-3.803$、$-3.954$ で、$\beta\to0$ で $-4$ に近づく。$\pi^2/(2\beta)$ は Coulomb の Sommerfeld の因子の1次で、$-4$ はベクトルの流れの硬い部分であり、よく知られた閾値の展開と合う。軸性ベクトルでは $K_A-\pi^2/(2\beta)=-1.804$、$-1.954$ だった。$t\to bW^+$ で $m_b$ と $M_W$ を $10^{-3}m_t$、$10^{-4}m_t$ にすると、$K$ と文献の極限 $-(\pi^2/3-5/4)$（$\Gamma^{(1)}/\Gamma_0=-\frac{2\alpha_s}{3\pi}(\frac{2\pi^2}3-\frac52)$~\cite{jk89}）との差は $5.8\times10^{-5}$、$7.9\times10^{-7}$ と縮んだ。
 
