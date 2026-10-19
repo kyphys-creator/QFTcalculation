@@ -44,7 +44,7 @@
 
 \title{ループ計算環境の構築記録\\[2pt]{\large \texttt{\textasciitilde/hep} に組んだ1ループ計算スタック（Apple M3・Mathematica 14.2）}}
 \author{}
-\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17、18日）}
+\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17、18日、NLO のノートの分は10月18日）}
 
 \begin{document}
 \maketitle
@@ -643,7 +643,7 @@ FeynCalc の Dirac 方程式と運動量の保存（SM2） & $\nu\bar\nu\to\nu\b
 FeynCalc の $D$ 次元の $\gamma_5$ のトレース（SM2） & $Z$ の自己エネルギーのフェルミオンのループで \texttt{DiracTrace[...\,.\,GA[5]]} が評価されずに残り、図ごと射影から落ちる & NDR では $D$ 次元の $\gamma_5$ と4個以上の行列のトレースを評価しない & $\gamma_5$ のないトレースは $D$ 次元で評価し、$\gamma_5$ のトレース（ここでは $\epsilon(p_3,\mu,p_4,\rho)$ の対で打ち消す）は4次元で評価する。射影の外に残る構造を表示して確かめる \\
 FormCalc と FeynRules の模型（SM2） & 木の2乗が 2460 倍ずれる。\texttt{FieldRC} の後に略号が \texttt{Removed[F1]} になる & FormCalc は質量の2乗を \texttt{MZ2} などと書くが FeynRules の模型はそれを定義しない。\texttt{FieldRC} は別の過程を計算して略号を消す。記号の文脈が模型と FormCalc で違うことがある & 数値は記号の名前で置き換え（\texttt{MZ2} $\to M_Z^2$ も）、残った記号を表示する。\texttt{FieldRC} を先に計算して略号を展開し、\texttt{ClearProcess[]} してから本体を計算する \\
 LoopTools の関数名（SM2） & FeynCalc の結果を読んだ後に \texttt{Install} すると \texttt{A0::shdw} が出て、\texttt{A0}、\texttt{B0} の置き換えが効かない & LoopTools の \texttt{A0}、\texttt{B0}、\texttt{C0}、\texttt{D0}、\texttt{DB0} が同じ名前で別の文脈にある & 読み込んだ直後に頭を \texttt{fA0} などに付け替えてから \texttt{Install} する \\
-MadGraph の param\_card の読み込み（SM2） & param\_card に \texttt{1.7257000000}\allowbreak\texttt{00000e+02} と書くと、MadLoop の \texttt{check} が $M_t=1.7257$ として計算し、born が約9000倍になる。エラーも警告も出ない & \texttt{lha\_read.f} は値を \texttt{character*20} に読むので、21文字の値は指数の最後の桁が落ちる & 有効数字11桁（\texttt{\%.10e}、16文字）で書く。\texttt{check} が最初に出力する外部パラメータの値を確かめる \\
+MadGraph の param\_card の読み込み（SM2） & param\_card に \texttt{1.7257000000}\allowbreak\texttt{00000e+02} と書くと、MadLoop の \texttt{check} が $M_t=1.7257$ として計算し、born が約9000倍になる。エラーも警告も出ない。22文字の値（\texttt{\%.16e}）では、木の standalone の \texttt{check} が \texttt{Bad real number in item 1 of list input} で止まる（NLO のノート~\cite{smnlonote} の手順 (2)） & \texttt{lha\_read.f} は値を \texttt{character*20} に読むので、21文字の値は指数の最後の桁が、22文字の値は指数の数字がすべて落ちる。同じカードを \texttt{compute\_widths}（Python）は全桁で読む & 有効数字11桁（\texttt{\%.10e}、16文字）で書く。\texttt{check} が最初に出力する外部パラメータの値を確かめる \\
 MadLoop と2点の UV の頂点（SM2） & UFO の自己共役な場の2点の UV の頂点（$AA$、$ZZ$、$HH$）は、\texttt{loop\_particles} に書いた粒子の組と同じループの図がない過程では使われない（MadGraph の \texttt{loop\_diagram\_}\allowbreak\texttt{generation.py} を読んで分かった） & MadLoop は \texttt{type = 'UV'} の頂点を、同じ粒子の2点なら \texttt{UVmass}、それ以外は \texttt{UVloop} とし、\texttt{UVmass} は R2 と同じくループの粒子の組（PDG の集合）が一致する図にだけ付ける（\texttt{UVloop} は禁じた粒子との照合だけ） & ラグランジアンの対抗項を UV の頂点にするときは \texttt{loop\_particles} を空（\texttt{[ [ [] ] ]}）にし、その位置のループごとに1回付ける \\
 NLOCT の on-shell の定数（SM2） & UV の頂点（\texttt{SM\_CT.nlo}）から場の定数だけを取り出せない。$G^0G^0$、$G^+G^-$ の頂点には、対抗項のラグランジアン（\texttt{FR\$deltat} を0）にない、運動量によらない項がある。定数は質量の等式と閾値の \texttt{If}（273個の条件）を含み、$m_d=2m_u$ のような点では $0/0$ になる & NLOCT は on-shell の条件を解いた値を代入して頂点を書き出す。UFO の \texttt{cond} は0との比較しか表さない & 記号の対抗項の頂点（\texttt{FR\$CT} の係数の Feynman 則）と2点の頂点の係数を比べて定数を解く（\texttt{nlo\_dz.wl}）。\texttt{If} は軽い質量を0、重い質量を基準点の値にして決める（\texttt{nlo\_ctparams.wl}） \\
 MadGraph の木の standalone の出力（SM2） & \texttt{output standalone} を実行したディレクトリとその親に、\texttt{nsqso\_born.inc} が残る（git の管理下に未追跡のファイルができる） & \texttt{export\_v4.py} が \texttt{nsqso\_born.inc} を現在のディレクトリに書き、\texttt{'..'} へ写す（出力先のディレクトリではない） & 無視されるディレクトリ（\texttt{work/}）の中から MadGraph を実行する \\
@@ -704,7 +704,7 @@ FeynRules と \texttt{Unitary -> True}（CKM） & ユニタリー性の置き換
 MadGraph と図のない過程（CKM） & 世代を変える中性の過程（\texttt{d s\textasciitilde{} > mu+ mu-} など）を \texttt{generate} すると \texttt{NoDiagramException} で、スクリプトの残りのコマンドを実行しない（「command not executed」） & MadGraph の仕様 & 図がないことを確かめる過程は、過程ごとに別の MadGraph のスクリプトで実行する \\
 FeynCalc の \texttt{FCFAConvert} と \texttt{IndexSum}（CKM） & $u\bar u\to d\bar s$ の $\sum|\mathcal M|^2$ に、質量0なら消えるはずの $t$ チャンネルの $G^+$ の図が残り、$\xi_W$ に依存した（\texttt{CKM[1, Ind273]}、\texttt{yd[Ind273, 2]} のような縮約されない添字を含む）。警告 \texttt{FCFAConvert::indexSumWarn} は出るが、エラーにはならない & FeynRules の FeynArts の模型は $G^\pm$ の結合を世代の和 \texttt{IndexSum[...,}\allowbreak\texttt{\{Generation\$1, 1, 3\}]} で書く。\texttt{FCFAConvert} は既定（\texttt{DropIndexSum -> True}）で \texttt{IndexSum} を外し、和の添字を自由な添字の名前に変える & \texttt{DropIndexSum -> False} にし、\texttt{IndexSum} を \texttt{Sum} に置き換えて和を書き出してから、対角の湯川結合を入れる。振幅に \texttt{CKM} と \texttt{IndexSum} が残らないことを表示する \\
 FeynCalc の \texttt{ComplexConjugate} と複素なパラメータ（CKM） & （問題になる前に確かめた）\texttt{ComplexConjugate} は記号を実数として扱う & FeynCalc の仕様（明示的な $i$ と Dirac の構造だけを共役にする） & $V_{ij}$ を実の記号で $v^R_{ij}+iv^I_{ij}$ と書き、$|V_{ij}|^2=(v^R_{ij})^2+(v^I_{ij})^2$ とする。共役が正しいことをスクリプトの最初に表示する \\
-MadGraph の \texttt{compute\_widths} と色のある粒子（CKM） & トップの幅が $t\to bW^+$ だけになり（分岐比1）、$t\to sW^+$、$t\to dW^+$ が幅のファイルにない & MadGraph は、色のある粒子の部分幅が QCD のスケールより小さいと0にする（ログに「partial width of particle t lower than QCD scale: $X$. Set it to zero.」と値を16桁で表示する）。$W$ のような色のない粒子では小さな部分幅（$W\to u\bar b$ の $10^{-5}$~GeV）も残る & ログの表示から値を読んで比べる。MadGraph のトップの全幅は $t\to bW^+$ だけの値である \\
+MadGraph の \texttt{compute\_widths} と色のある粒子（CKM） & トップの幅が $t\to bW^+$ だけになり（分岐比1）、$t\to sW^+$、$t\to dW^+$ が幅のファイルにない & MadGraph は、色のある粒子の部分幅が QCD のスケールより小さいと0にする（ログに「partial width of particle t lower than QCD scale: $X$. Set it to zero.」と値を16桁で表示する）。$W$ のような色のない粒子では小さな部分幅（$W\to u\bar b$ の $10^{-5}$~GeV）も残る & ログの表示から値を読んで比べる。MadGraph のトップの全幅は $t\to bW^+$ だけの値である（NLO のノート~\cite{smnlonote} の手順 (1) でも同じ） \\
 MadGraph の乱数と二つの模型（CKM） & 同じ run card で別の模型の $u\bar u\to W^+W^-$ を積分すると、断面積と誤差が表示の桁まで同じになる & 乱数の種が既定（\texttt{iseed = 0}）で同じ値になり、被積分関数が等しければ同じ点列で同じ値になる & 誤差を独立とした pull ではなく、値の相対差で比べる \\
 \bottomrule
 \end{tabularx}
@@ -1361,6 +1361,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{smnote} 標準模型：電弱の1ループの繰り込みと検算（本リポジトリの \nolinkurl{models/sm/ResearchNote/note.pdf}。2026年10月16日に \nolinkurl{models/sm} ごと削除した。最後の版はコミット 201985b にある）。ツールとの照合は第5節と付録~G。
 \bibitem{smmsbarnote} 標準模型：$\overline{\mathrm{MS}}$ の電弱の1ループの繰り込みと検算（FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm/ResearchNote/note.pdf}。上の \cite{smnote} を削除した後に同じ場所に作り直したもの）。
 \bibitem{smckmnote} 標準模型と CKM 行列：$\overline{\mathrm{MS}}$ の繰り込みと世代を変える過程（FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm_ckm/ResearchNote/note.pdf}）。
+\bibitem{smnlonote} 標準模型の NLO の物理量：実の放射を含む崩壊幅と電弱の精密測定（$\overline{\mathrm{MS}}$、FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm_nlo/ResearchNote/note.pdf}）。
 \end{thebibliography}
 
 \end{document}
