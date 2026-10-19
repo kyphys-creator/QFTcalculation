@@ -12,7 +12,8 @@ Z Z: 1/2 for the identical Z, no interference of identical fermions or of W W wi
   and Eq. (vv) (the narrow on-shell V) for reference.  The narrow-width limit (all widths, total and partial, times 0.1 at
   fixed branching ratios, as in step (1)): the QCD gain then is Gamma_V's, sum_f N_c c_f^2 K_f over sum_f N_c c_f^2 (the off-shell
   V* to all f fbar' with the on-shell V's branching ratios adding to 1); the rest of the gain at the physical widths comes from
-  the region where both V are off the peak.  Writes results/hvv_widths.csv.
+  the region where both V are off the peak.  For step (8), LO + QCD also with alpha_s at M_V/2 and 2 M_V.
+Writes results/hvv_widths.csv.
 """
 import csv
 import math
@@ -40,8 +41,8 @@ WD = [(1, False)] * 3 + [(3, True)] * 2
 ZF = lw.ZF
 
 
-def widths(qcd):
-    aw, az = at(MW)["alphas"], at(MZ)["alphas"]
+def widths(qcd, xi=1.0):
+    aw, az = at(xi * MW)["alphas"], at(xi * MZ)["alphas"]
     cw = sum(nc * (1 + (aw / math.pi if (qcd and q) else 0)) for nc, q in WD) * G2 / 2       # sum of N_c (cL^2 + cR^2) for W
     cz = sum(nc * lw.cz2(math.sqrt(GZ2), S2, t3, q) * (1 + (az / math.pi if (qcd and nc == 3) else 0)) for nc, t3, q in ZF)
     return cw, cz, cw * MW / (24 * math.pi), cz * MZ / (24 * math.pi)
@@ -80,6 +81,13 @@ print("  the QCD gain of Gamma_V (BR_had alpha_s/pi): W %+.3f%%, Z %+.3f%%;  of 
                                                                      *(100 * x for x in gain)))
 for label in ("LO", "LO + QCD"):
     rows.append([label + ", widths x 0.1", "", "", "%.10e" % narrow[label][0], "%.10e" % narrow[label][1]])
+for label, xi in (("LO + QCD, mu = M_V/2", 0.5), ("LO + QCD, mu = 2 M_V", 2.0)):
+    cw, cz, gw, gz = widths(True, xi)
+    ww = lw.four_f(ghww, MW, gw, lw.gv_of(cw), lw.gv_of(cw))
+    zz = 0.5 * lw.four_f(ghzz, MZ, gz, lw.gv_of(cz), lw.gv_of(cz))
+    print("  %-21s Gamma(H -> W W* -> 4 f) = %.6f MeV (%+.3f%%), Gamma(H -> Z Z* -> 4 f) = %.6f MeV (%+.3f%%)"
+          % (label, 1e3 * ww, 100 * (ww / res["LO + QCD"][0] - 1), 1e3 * zz, 100 * (zz / res["LO + QCD"][1] - 1)))
+    rows.append([label, "%.8f" % gw, "%.8f" % gz, "%.10e" % ww, "%.10e" % zz])
 rows.append(["Eq. (vv)", "", "", "%.10e" % kmw, "%.10e" % kmz])
 with open(HERE / "results" / "hvv_widths.csv", "w", newline="") as fh:
     w = csv.writer(fh)
