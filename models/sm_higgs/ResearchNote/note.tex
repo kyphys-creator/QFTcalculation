@@ -55,7 +55,7 @@
 \maketitle
 
 \begin{abstract}
-SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote} は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、1ループの繰り込みと、$Z$、$W$、$t$ の崩壊の NLO の幅を求めた。本ノートでは、同じ模型ファイル、処方、道具で、ヒッグスの崩壊 $H\to f\bar f$、$WW^*$、$ZZ^*$、$\gamma\gamma$、$Z\gamma$、$gg$ の NLO の部分幅、全幅、分岐比を求める計画を立てる。手計算では、木の幅と1ループで誘起される崩壊の振幅、$H\to q\bar q$ の QCD の補正で $\MSbar$ の湯川結合が $\ln(m_q^2/M_H^2)$ を吸収すること、$H\to f\bar f$ にはタドポールが入らないが $H\to VV^*$ には $HHVV$ の頂点を通して入ること、$H\to gg$ の重いトップの有効理論での NLO を述べ、八つの手順の計画を定めた。手順 (1) では、模型、木の振幅（一般の $R_\xi$ ゲージで27個の記号の一致）、MadGraph との一致（相対 $10^{-14}$）を確かめた。$\mu=M_H$ の $\MSbar$ の湯川結合で書いた木の $\Gamma(H\to b\bar b)=1.85$~MeV は極質量で書いた値の3分の1で、$V$ の有限の幅は $H\to4f$ の幅を幅0の式より $WW$ で $6\%$、$ZZ$ で $21\%$ 上げる。
+SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote} は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、1ループの繰り込みと、$Z$、$W$、$t$ の崩壊の NLO の幅を求めた。本ノートでは、同じ模型ファイル、処方、道具で、ヒッグスの崩壊 $H\to f\bar f$、$WW^*$、$ZZ^*$、$\gamma\gamma$、$Z\gamma$、$gg$ の NLO の部分幅、全幅、分岐比を求める計画を立てる。手計算では、木の幅と1ループで誘起される崩壊の振幅、$H\to q\bar q$ の QCD の補正で $\MSbar$ の湯川結合が $\ln(m_q^2/M_H^2)$ を吸収すること、$H\to f\bar f$ にはタドポールが入らないが $H\to VV^*$ には $HHVV$ の頂点を通して入ること、$H\to gg$ の重いトップの有効理論での NLO を述べ、八つの手順の計画を定めた。手順 (1) では、模型、木の振幅（一般の $R_\xi$ ゲージで27個の記号の一致）、MadGraph との一致（相対 $10^{-14}$）を確かめた。$\mu=M_H$ の $\MSbar$ の湯川結合で書いた木の $\Gamma(H\to b\bar b)=1.85$~MeV は極質量で書いた値の3分の1で、$V$ の有限の幅は $H\to4f$ の幅を幅0の式より $WW$ で $6\%$、$ZZ$ で $21\%$ 上げる。手順 (2) では、$H\to\gamma\gamma$、$Z\gamma$、$gg$ の1ループの振幅が一般の $R_\xi$ ゲージで対抗項なしに有限でゲージによらず（$Z\gamma$ は光子の脚の $\gamma$--$Z$ の混合の図を含めて）、ループごとに文献の関数と、全体で MadLoop と一致することを確かめた。
 \end{abstract}
 
 \tableofcontents
@@ -111,7 +111,12 @@ A_{1/2}(\tau)=\frac{2[\tau+(\tau-1)f(\tau)]}{\tau^2},\qquad A_1(\tau)=-\frac{2\t
 \end{gathered}
 \label{eq:loop}
 \end{equation}
-になる（$\tau>1$ では $f=-\frac14[\ln\frac{1+\sqrt{1-1/\tau}}{1-\sqrt{1-1/\tau}}-i\pi]^2$）。重い粒子の極限 $\tau\to0$ で $A_{1/2}\to\frac43$、$A_1\to-7$ で、ループの粒子の質量によらない（低エネルギーの定理）。$W$ とトップの寄与は逆の符号で、$A_1(\tau_W)=-8.33$、$3\cdot\frac49A_{1/2}(\tau_t)=1.84$（$A_{1/2}(\tau_t)=1.377$）である。$\alpha(0)$ と $v_G$ では $\Gamma(H\to\gamma\gamma)=9.2\times10^{-3}$~MeV、$\alpha_s(M_H)$ では $\Gamma(H\to gg)=0.195$~MeV（トップだけ）になる。木の頂点がないので1ループの振幅には対抗項がなく、紫外の極は図の和で消えなければならない。$W$ のループは Goldstone とゴーストを含め、$\xi$ によらないはずである。$H\to Z\gamma$ も同じ型で、$Z$ の結合 $\hat v_f$ と二変数の関数 $I_1$、$I_2$ を使う~\cite{djouadi08}。式~\eqref{eq:loop} の $v$ と $\alpha$ をどの処方の値にするかは LO の不定性で、手順 (2) と (8) で扱う。
+になる（$\tau>1$ では $f=-\frac14[\ln\frac{1+\sqrt{1-1/\tau}}{1-\sqrt{1-1/\tau}}-i\pi]^2$）。重い粒子の極限 $\tau\to0$ で $A_{1/2}\to\frac43$、$A_1\to-7$ で、ループの粒子の質量によらない（低エネルギーの定理）。$W$ とトップの寄与は逆の符号で、$A_1(\tau_W)=-8.33$、$3\cdot\frac49A_{1/2}(\tau_t)=1.84$（$A_{1/2}(\tau_t)=1.377$）である。$H\to Z\gamma$ は
+\begin{equation}
+\Gamma(H\to Z\gamma)=\frac{G_F^2M_W^2\alpha M_H^3}{64\pi^4}\Bigl(1-\frac{M_Z^2}{M_H^2}\Bigr)^3\Bigl|\sum_fN_c\frac{Q_f\hat v_f}{c_W}A^{Z\gamma}_{1/2}(\tau_f,\lambda_f)+A^{Z\gamma}_1(\tau_W,\lambda_W)\Bigr|^2,\qquad\hat v_f=2T_3-4Q_fs_W^2
+\label{eq:zg}
+\end{equation}
+で、$A^{Z\gamma}$ は二変数の関数 $I_1$、$I_2$ で書ける（\ref{app:zg}。ここだけ $\tau=4m^2/M_H^2$、$\lambda=4m^2/M_Z^2$~\cite{djouadi08}）。木の頂点がないので1ループの振幅には対抗項がなく、紫外の極は図の和で消えなければならない（$H\to Z\gamma$ では、光子の脚の $\gamma$--$Z$ の混合の図も和に入る）。$W$ のループは Goldstone とゴーストを含め、$\xi$ によらないはずである。手順 (2) で、これらがすべて成り立ち、ループごとに式~\eqref{eq:loop}、\eqref{eq:zg} と一致することを確かめた。$\alpha(0)$、$G_F$、極質量で書いた LO の幅は $\Gamma(H\to\gamma\gamma)=9.39\times10^{-3}$~MeV、$\Gamma(H\to Z\gamma)=6.36\times10^{-3}$~MeV、$\alpha_s(M_H)$ で $\Gamma(H\to gg)=0.169$~MeV である（$gg$ は $b$、$c$ のループで、トップだけの $0.195$~MeV より $13.6\%$ 小さい）。$\alpha$ を $\MSbar$ の $\hat\alpha(M_H)$ にすると $\gamma\gamma$ は $15.5\%$ 大きく、$\alpha_s$ の $\mu$ を $M_H/2$、$2M_H$ にすると $gg$ は $+20\%$、$-15\%$ 動く。これらは LO の不定性で、手順 (6)、(8) で扱う。
 
 \subsection{$H\to q\bar q$ の QCD の補正と $\MSbar$ の湯川結合}\label{sec:hqq}
 
@@ -229,7 +234,7 @@ $H\to gg$ の NLO \eqref{eq:hgg} & 第~\ref{sec:hgg} 節 & 有効理論の1ル�
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約3分）で再現できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約3分）で、手順 (2) はその後に \texttt{run\_loopind\_check.sh}（約10分。半分は MadGraph の模型の読み込み）で再現できる。
 
 \subsection{手順 (1)：模型と木の幅}\label{sec:step1}
 
@@ -359,9 +364,102 @@ $H\to\nu_ee^+\mu^-\bar\nu_\mu$、$e^-e^+\mu^-\mu^+$ & 0.0104171 & 0.000247491 & 
 \end{tabular}
 \end{table}
 
+\subsection{手順 (2)：1ループで誘起される崩壊}\label{sec:step2}
+
+\paragraph{(a) 振幅と紫外の極。}\texttt{loopind\_feyncalc.wl} は、本ノートの FeynArts の模型（\texttt{GaugeXi} を残したもの）で、$H\to\gamma\gamma$（44個）、$Z\gamma$（74個）、$gg$（18個）の1ループの図をすべて作り（\texttt{CreateTopologies[1, 1 -> 2]}）、一般の $R_\xi$ ゲージで FeynCalc の \texttt{TID} で $A_0$、$B_0$、$C_0$ に還元する（図~\ref{fig:loopw}）。on-shell で $\varepsilon_i\cdot k_i=0$ として、振幅を $\mathcal M=F_g(\varepsilon_1^*\cdot\varepsilon_2^*)+F_{21}(k_2\cdot\varepsilon_1^*)(k_1\cdot\varepsilon_2^*)$ と書くと、ほかの構造（$\epsilon$ テンソルを含む項）は残らなかった。$F_g$、$F_{21}$ の $1/\epsilon$ の係数（FeynCalc の \texttt{PaVeUVPart}）は、3過程とも、質量と $\xi_W$、$\xi_Z$ を記号のままにして0だった。$H\to Z\gamma$ では、1PI の図の極 $\propto(2+\xi_W)c_W^2$ と、光子の脚の $\gamma$--$Z$ の混合の図（$H\to ZZ^*$、$Z^*\to\gamma$。$Z$ の伝播関数は $k_2^2=0$ で $-1/M_Z^2$）の極 $\propto-(2+\xi_W)M_W^2/M_Z^2$ が、$c_W=M_W/M_Z$ で打ち消す。一般の $R_\xi$ ゲージでは外に出る光子の状態に $Z$ の成分が混ざるので、S 行列要素にはこの図が要る。$\gamma\gamma$ と $gg$ では、$\xi$ の依存は還元の段階で記号として消えた（$F_g$、$F_{21}$ に $\xi$ が残らない）。$Z\gamma$ では $\xi_W$ が $B_0$、$C_0$ の質量 $\sqrt{\xi_W}M_W$ に残るので、数値で確かめる。
+
+\paragraph{(b) 数値。}\texttt{loopind.wl} は、Package-X（30桁）で $F_g$、$F_{21}$ を $H$ の param\_card の値（有理数）で求める（表~\ref{tab:lichk}）。$M_H=125.2$~GeV と $300$~GeV（$W$ のループが閾値より上で複素）、$\gamma\gamma$ と $gg$ では $M_H=1$~GeV（重いループの極限）で、$(\xi_W,\xi_Z)=(1,1)$、$(2,3)$、$(1/2,4)$ と $\mu=M_H$、$1000$~GeV の6通りの値の差は $10^{-29}$ より小さく、光子とグルーオンの Ward の恒等式 $F_g+(k_1\cdot k_2)F_{21}=0$ も $10^{-29}$ で成り立った。フェルミオンごと（湯川結合に付けた印で分ける）と $W$ のループ（Goldstone、ゴーストを含む）ごとに $F_g$ を規格化すると、式~\eqref{eq:loop} の $N_cQ_f^2A_{1/2}(\tau_f)$、$A_1(\tau_W)$ と、式~\eqref{eq:zg} の項と、共通の位相（$\gamma\gamma$、$gg$ で $-1$、$Z\gamma$ で $+1$。FeynArts の振幅の $i$ の取り方）を除いて、使った精度（約18桁）の範囲で一致した（$t$、$b$、$c$、$\tau$、$\mu$、$e$）。$M_H=1$~GeV では $W$ のループが $A_1=-7.00006$、トップが $A_{1/2}=1.333336$ で、極限 $-7$、$\frac43$ に近づく。
+
+\paragraph{(c) MadLoop。}\texttt{loopind\_madloop.py} は、CKM ノートの NLO の UFO で、MadLoop のループで誘起される過程（\texttt{h > a a [sqrvirt=QED]}、\texttt{h > z a [sqrvirt=QED]}、\texttt{h > g g [sqrvirt=QCD]}、Feynman ゲージ、COLLIER）の $\sum|\mathcal M|^2$ を求め、$2|F_g|^2$（$\gamma\gamma$、$Z\gamma$）、$16|F_g|^2$（$gg$）と比べる。MadGraph の行列要素は終状態の同種のボソンの $\frac12$ を含むので、$\gamma\gamma$、$gg$ では2倍して比べる。$H$ の param\_card では、$\gamma\gamma$ と $gg$ は相対 $2.8\times10^{-13}$、$8.6\times10^{-13}$ で一致し、$\mu_R=M_H$、$1000$~GeV によらなかった。$Z\gamma$ は $-1.3\%$（$\mu_R=M_H$）、$-10.3\%$（$1000$~GeV）ずれ、$\mu_R$ に依存した。MadLoop の $Z\gamma$ には UFO の UV の頂点 $HZ\gamma$（$\frac i2g_{HZZ}\delta Z_{ZA}$、2個の図）が入るが、この UFO の場の定数 $\delta Z_{ZA}$ は CKM ノートの MadLoop の点（$1/\alpha=128$、$M_Z=91$、$M_W=80$、$M_H=125$~GeV など）での数値で、その点の param\_card でしか使えない。その点では3過程とも相対 $1.1\times10^{-13}$ 以内で一致し、$Z\gamma$ も $\mu_R$ によらなかった。$\gamma\gamma$、$gg$ には対抗項が入らないので、どちらの点でも一致する。UFO は正しいが、その点のほかでは対抗項の入る過程に使えない。
+
+\paragraph{(d) 幅と入力。}\texttt{loopind\_widths.py} は、(b) で確かめた式~\eqref{eq:loop}、\eqref{eq:zg} で LO の幅を求める（表~\ref{tab:liwidths}）。$\alpha(0)$、$G_F$、極質量では、$\gamma\gamma$ の振幅の和は $-6.5763+0.0870i$（$W$ が $-8.3315$、トップが $+1.8355$、$b$、$c$、$\tau$ がそれぞれ約 $-0.03+0.03i$）で、$\Gamma(H\to\gamma\gamma)=9.3941\times10^{-3}$~MeV、$\Gamma(H\to Z\gamma)=6.3586\times10^{-3}$~MeV である。$W$ とトップの寄与が逆の符号で打ち消し合うので、電荷を持つ重い粒子がほかにあれば、その寄与は $H\to\gamma\gamma$ に敏感に現れる（重い極限で $A_{1/2}\to\frac43$、$A_1\to-7$ と質量によらないので、重くても消えない）。$gg$ の和 $\frac34\sum A_{1/2}=0.9539+0.1036i$ のうち、$b$ と $c$ の分が幅をトップだけのとき（$0.19533$~MeV）より $13.6\%$ 下げ（$M_H>2m_b,\,2m_c$ なのでループが複素になり、実部もトップと逆の符号）、$\Gamma(H\to gg)=0.16868$~MeV になる。LO で選び方の決まらない入力のうち、$\alpha(0)$ を $\MSbar$ の $\hat\alpha(M_H)=1/127.49$ にすると $\gamma\gamma$ が $+15.5\%$、$Z\gamma$ が $+7.5\%$、$\sqrt2m_f/v_G$ を $\MSbar$ の湯川結合 $y_f(M_H)$ にすると（トップで $0.957$ 倍）$+1.5\%$、$+0.3\%$、$-2.3\%$、$\alpha_s$ の $\mu$ を $M_H/2$、$2M_H$ にすると $gg$ が $+19.9\%$、$-15.3\%$ 変わる。$\alpha$ の差は、NLO で光子の場の定数が入れる軽いフェルミオンの $\ln m_f^2$ の分で、on-shell の光子には $\alpha(0)$ が自然である。$gg$ の $\mu$ の依存は手順 (6) の NLO の QCD の補正が減らすはずである。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) Goldstone triangle
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[scalar] (0,0) -- (0.85,0.55); \draw[scalar] (0.85,0.55) -- (0.85,-0.55); \draw[scalar] (0.85,-0.55) -- (0,0);
+  \draw[photon] (0.85,0.55) -- (1.55,0.9); \draw[photon] (0.85,-0.55) -- (1.55,-0.9);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.85,0.55) {}; \node[vtx] at (0.85,-0.55) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.15,0) {$G^\pm$};
+  \node[font=\scriptsize] at (1.75,0.95) {$\gamma$}; \node[font=\scriptsize] at (1.75,-0.95) {$\gamma$};
+  \node[slab] at (0.2,-1.45) {(a) Goldstone};
+\end{scope}
+% (b) ghost triangle
+\begin{scope}[shift={(3.4,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[ghost] (0,0) -- (0.85,0.55); \draw[ghost] (0.85,0.55) -- (0.85,-0.55); \draw[ghost] (0.85,-0.55) -- (0,0);
+  \draw[photon] (0.85,0.55) -- (1.55,0.9); \draw[photon] (0.85,-0.55) -- (1.55,-0.9);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.85,0.55) {}; \node[vtx] at (0.85,-0.55) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.15,0) {$u^\pm$};
+  \node[font=\scriptsize] at (1.75,0.95) {$\gamma$}; \node[font=\scriptsize] at (1.75,-0.95) {$\gamma$};
+  \node[slab] at (0.2,-1.45) {(b) ゴースト};
+\end{scope}
+% (c) bubble with the W W gamma gamma vertex
+\begin{scope}[shift={(6.8,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[photon] (0,0) to[bend left=60] (1.0,0); \draw[photon] (0,0) to[bend right=60] (1.0,0);
+  \draw[photon] (1.0,0) -- (1.6,0.65); \draw[photon] (1.0,0) -- (1.6,-0.65);
+  \node[vtx] at (0,0) {}; \node[vtx] at (1.0,0) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (0.5,0.55) {$W$};
+  \node[font=\scriptsize] at (1.8,0.7) {$\gamma$}; \node[font=\scriptsize] at (1.8,-0.7) {$\gamma$};
+  \node[slab] at (0.3,-1.45) {(c) $WW\gamma\gamma$};
+\end{scope}
+% (d) the photon-Z mixing of H -> Z gamma
+\begin{scope}[shift={(10.5,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[photon] (0,0) -- (1.1,0.7); \draw[photon] (0,0) -- (0.55,-0.35);
+  \draw[photon] (0.55,-0.35) to[bend left=60] (1.25,-0.8); \draw[photon] (0.55,-0.35) to[bend right=60] (1.25,-0.8);
+  \draw[photon] (1.25,-0.8) -- (1.85,-1.1);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.55,-0.35) {}; \node[vtx] at (1.25,-0.8) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.3,0.8) {$Z$}; \node[font=\scriptsize] at (0.05,-0.45) {$Z^*$};
+  \node[font=\scriptsize] at (1.55,-0.45) {$W$}; \node[font=\scriptsize] at (2.05,-1.1) {$\gamma$};
+  \node[slab] at (0.3,-1.45) {(d) $\gamma$--$Z$ の混合};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (2) の1ループの図の例（図~\ref{fig:lo} の (c)〜(e) のほか）。(a) Goldstone の三角形、(b) ゴーストの三角形、(c) $WW\gamma\gamma$ の4点の頂点の泡（ほかに $HG^\pm W^\mp\gamma$ の頂点の図がある）。一般の $R_\xi$ ゲージで (a)〜(c) と $W$ の三角形の $\xi_W$ の依存は打ち消す。(d) は $H\to Z\gamma$ の光子の脚の $\gamma$--$Z$ の混合で、1PI の図の紫外の極を打ち消す（$W$、$G^\pm$、ゴーストのループ。フェルミオンのループは $k_2^2=0$ で0）。}
+\label{fig:loopw}
+\end{figure}
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (2) の検算（\texttt{loopind\_feyncalc.wl}、\texttt{loopind.wl}、\texttt{loopind\_madloop.py}）。記号の比較は差が記号として0、数値は相対の差の絶対値の最大。}
+\label{tab:lichk}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{2.6cm}}
+\toprule
+比べたもの & $\gamma\gamma$ & $Z\gamma$ & $gg$ \\
+\midrule
+図の数（一般の $R_\xi$） & 44 & 74（混合の図を含む） & 18 \\
+$F_g$、$F_{21}$ の $1/\epsilon$（記号） & 0 & 0 & 0 \\
+$F_g$ の $\xi$（記号） & なし & $\xi_W$ が残る & なし \\
+$\xi$ と $\mu$ の6通りの差、Ward の恒等式 & $<10^{-29}$ & $<10^{-29}$ & $<10^{-29}$ \\
+ループごとに式~\eqref{eq:loop}、\eqref{eq:zg} と & $<10^{-18}$（$W$ と6個のフェルミオン） & $<10^{-18}$（同左） & $<10^{-18}$（$t$、$b$、$c$） \\
+MadLoop、$H$ の param\_card & $2.8\times10^{-13}$ & $-1.3\%$、$-10.3\%$（UFO の点が違う） & $8.6\times10^{-13}$ \\
+MadLoop、CKM ノートの点 & $4.7\times10^{-14}$ & $6.0\times10^{-14}$ & $1.1\times10^{-13}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (2)：1ループで誘起される崩壊の LO の幅（\texttt{loopind\_widths.py}。MeV）。(a) は $\alpha(0)=1/137.036$、$G_F$、極質量、$\alpha_s(M_H)$。(b)〜(d) は (a) からの変化。}
+\label{tab:liwidths}
+\begin{tabular}{llll}
+\toprule
+入力 & $\Gamma(H\to\gamma\gamma)$ & $\Gamma(H\to Z\gamma)$ & $\Gamma(H\to gg)$ \\
+\midrule
+(a) $\alpha(0)$、$G_F$、極質量 & $9.3941\times10^{-3}$ & $6.3586\times10^{-3}$ & 0.168685 \\
+(b) $\MSbar$ の $\hat\alpha(M_H)$ & $+15.53\%$ & $+7.48\%$ & — \\
+(c) $\MSbar$ の $y_f(M_H)$ & $+1.45\%$ & $+0.34\%$ & $-2.34\%$ \\
+(d) $\alpha_s(M_H/2)$、$\alpha_s(2M_H)$ & — & — & $+19.92\%$、$-15.34\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{現在の状態。}手順 (1) を終えた。模型は NLO ノートのものと同一で、木の振幅は一般の $R_\xi$ ゲージで手計算と記号として一致し、MadGraph とは倍精度の丸めの範囲で一致した。分かったことは三つある。(i) $\MSbar$ の湯川結合は $H\to b\bar b$、$c\bar c$ の木の幅を極質量の値の $0.33$、$0.13$ 倍にし、木の $\mu$ の依存は $\pm10\%$ と大きい。(ii) FJ の $v$ で書いた木の $H\to WW^*$、$ZZ^*$ は $G_F$ で書いた木より $9\%$、$13\%$ 大きい。(iii) 幅0の式~\eqref{eq:vv} は、$V$ の幅を入れた4フェルミオンの幅より $WW$ で $6\%$、$ZZ$ で $21\%$ 小さい。手順 (2)〜(8) はこれから行う。
+\paragraph{現在の状態。}手順 (1) を終えた。模型は NLO ノートのものと同一で、木の振幅は一般の $R_\xi$ ゲージで手計算と記号として一致し、MadGraph とは倍精度の丸めの範囲で一致した。分かったことは三つある。(i) $\MSbar$ の湯川結合は $H\to b\bar b$、$c\bar c$ の木の幅を極質量の値の $0.33$、$0.13$ 倍にし、木の $\mu$ の依存は $\pm10\%$ と大きい。(ii) FJ の $v$ で書いた木の $H\to WW^*$、$ZZ^*$ は $G_F$ で書いた木より $9\%$、$13\%$ 大きい。(iii) 幅0の式~\eqref{eq:vv} は、$V$ の幅を入れた4フェルミオンの幅より $WW$ で $6\%$、$ZZ$ で $21\%$ 小さい。手順 (2) も終えた。$H\to\gamma\gamma$、$Z\gamma$、$gg$ の1ループの振幅は、対抗項なしに紫外で有限で、一般の $R_\xi$ ゲージでゲージによらない（$Z\gamma$ は光子の脚の $\gamma$--$Z$ の混合の図を含めて）。ループごとに式~\eqref{eq:loop}、\eqref{eq:zg} と一致し、MadLoop とも一致した。LO の幅の入力の選び方では、$\alpha(0)$ と $\hat\alpha(M_H)$ の差（$\gamma\gamma$ で $15.5\%$）と $gg$ の $\alpha_s$ の $\mu$ の依存（$\pm17\%$）が大きい。手順 (3)〜(8) はこれから行う。
 
 \appendix
 
@@ -394,6 +492,20 @@ D(s)=s-M_V^2+iM_V\Gamma_V
 \label{eq:h4ffact}
 \end{equation}
 になる（$k_1\cdot k_2=(M_H^2-q_1^2-q_2^2)/2$。数値の積分では $q^2=M_V^2+M_V\Gamma_V\tan\theta$ と置く）。幅を0にすると、一方の $V$ の Breit--Wigner は $\pi\delta(q^2-M_V^2)/(M_V\Gamma_V)$ になり、分岐比を掛けた式~\eqref{eq:vv} に戻る。
+
+\section{$H\to Z\gamma$ の関数}\label{app:zg}
+
+式~\eqref{eq:zg} の関数は、$\tau=4m^2/M_H^2$、$\lambda=4m^2/M_Z^2$ として~\cite{djouadi08}
+\begin{equation}
+\begin{gathered}
+A^{Z\gamma}_{1/2}(\tau,\lambda)=I_1(\tau,\lambda)-I_2(\tau,\lambda),\qquad
+A^{Z\gamma}_1(\tau,\lambda)=c_W\Bigl\{4\Bigl(3-\frac{s_W^2}{c_W^2}\Bigr)I_2(\tau,\lambda)+\Bigl[\Bigl(1+\frac2\tau\Bigr)\frac{s_W^2}{c_W^2}-\Bigl(5+\frac2\tau\Bigr)\Bigr]I_1(\tau,\lambda)\Bigr\},\\
+I_1(\tau,\lambda)=\frac{\tau\lambda}{2(\tau-\lambda)}+\frac{\tau^2\lambda^2}{2(\tau-\lambda)^2}\bigl[f(\tau^{-1})-f(\lambda^{-1})\bigr]+\frac{\tau^2\lambda}{(\tau-\lambda)^2}\bigl[g(\tau^{-1})-g(\lambda^{-1})\bigr],\\
+I_2(\tau,\lambda)=-\frac{\tau\lambda}{2(\tau-\lambda)}\bigl[f(\tau^{-1})-f(\lambda^{-1})\bigr]
+\end{gathered}
+\label{eq:zgfun}
+\end{equation}
+で、$f$ は式~\eqref{eq:loop} のもの、$g(t)=\sqrt{1/t-1}\arcsin\sqrt t$（$t\le1$）、$g(t)=\frac12\sqrt{1-1/t}\,[\ln\frac{1+\sqrt{1-1/t}}{1-\sqrt{1-1/t}}-i\pi]$（$t>1$）である。手順 (2) で、本ノートの模型の1ループの振幅とループごとに一致することを確かめた。
 
 \begin{thebibliography}{99}
 \bibitem{smnote} 標準模型：$\MSbar$ の電弱の1ループの繰り込みと検算（$V_{\mathrm{CKM}}=1$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}）。
