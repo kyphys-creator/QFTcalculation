@@ -54,7 +54,7 @@
 \maketitle
 
 \begin{abstract}
-標準模型のノート~\cite{smnote}（以下 SM ノート）と CKM 行列のノート~\cite{ckmnote}（以下 CKM ノート）は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、一般の $R_\xi$ ゲージの1ループの振幅が紫外で有限でゲージによらないことを確かめ、MadLoop の仮想の補正と赤外の極まで突き合わせた。ただし、どちらも実の光子やグルーオンの放射を足していないので、赤外で有限な物理量（崩壊幅、断面積）はまだ一つも求めていない。本ノートでは、CKM ノートの模型ファイル（\texttt{SM\_CKM.fr}）と同じ処方、道具で、実の放射を含む NLO の崩壊幅と、$Z$ 極の電弱の精密測定の量を求める。対象は $Z\to f\bar f$、$W^+\to f\bar f'$、$t\to bW^+$ の幅、$Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$、$R_\ell$、$R_b$、$\rho$ パラメータと $M_W$ の予言である。手計算では、$\MSbar$ の結合と極質量の運動学で書いた木の幅、仮想と実の放射の赤外の極の構造（質量0の放射体の二重極と、質量のある二つの放射体の軟い極）、質量0のフェルミオン対への崩壊の包括的な補正 $\frac34C\alpha/\pi$（QCD では $\alpha_s/\pi$）、トップとボトムの二重項の $\Delta\rho=3y_t^2/(2K)$（$K=(4\pi)^2$。FJ のタドポールは打ち消す）を述べ、八つの手順の計画を定めた。手順 (1) では、CKM ノートの模型ファイルから書き出した FeynArts の模型と UFO が CKM ノートのものと同一であること、2体の崩壊の振幅の2乗が19個とも手計算の式と記号として一致すること、$\MSbar$ の結合と極質量の運動学をそろえた MadGraph の27個の部分幅が式と相対 $2\times10^{-15}$ で一致することを確かめた。木の $\Gamma_Z=2.428$~GeV は測定値より $2.7\%$ 小さく、差はほぼハドロンの幅の QCD の補正の大きさである。手順 (2) では、質量0のフェルミオン対の実の放射と仮想の補正を $\epsilon$ について厳密に求め、極が記号として消えて $\frac34C\alpha/\pi$ が残ることを確かめた。放射する粒子に質量を与えた $d=4$ の独立な計算でも、和は同じ値に $10^{-14}$ まで近づいた。MadGraph の木の3体の振幅の2乗も、式と相対 $6\times10^{-14}$ で一致した。計画の式の有限部分は規格化を定めておらず、$\pm\pi^2$ が抜けていたので直した。この補正を木の幅に掛けると、$\Gamma_Z$ と測定値の差は $-0.16\%$ に、ハドロンの幅の差は $-0.29\%$ に縮む。手順 (3) では、質量のある放射体（$Z\to b\bar b$、$c\bar c$、$\tau^+\tau^-$、$\mu^+\mu^-$ と $t\to bW^+$）の仮想の補正を Package-X で解析的に、軟らかい放射を $d$ 次元の eikonal 因子で、硬い放射を数値で求めた。仮想の補正の単極は式の軟らかい極と一致し、和は切断 $\delta$ によらなかった（$O(\delta)$ の誤差を除く）。質量0、閾値、$m_b=M_W=0$ の極限は既知の値に戻った。MadLoop の仮想の補正とは $7\times10^{-15}$、MadGraph の木の3体とは $8\times10^{-12}$ で一致した。$b$ の質量を入れると $\Gamma_Z$ と測定値の差は $-0.07\%$ になり、$R_b$ は $+1.1\%$ 離れる。トップの幅の QCD の補正は $-8.5\%$ で、$\Gamma_t=1.330$~GeV である。手順 (4a) では、$Z\to f\bar f$ の弱い補正（光子とグルーオンを除くループ、LSZ の因子、$Z$--光子の混合、$\MSbar$ の対抗項）を一般の $R_\xi$ ゲージで求めた。11個のフェルミオンで紫外の極は記号として消え、結果はゲージの母数によらなかった。MadLoop の電弱の仮想の補正とは $4\times10^{-13}$ で一致した。$Zb\bar b$ の頂点のトップの補正は $-1.44\%$ で、これで $R_b$ は測定値と $0.3\sigma$ で合う。$\mu$ への依存は、電弱の部分で $\pm1\%$ から $0.04\%$ 以下になった。手順 (4b) では、$W^+\to f\bar f'$ の電弱の補正を、光子が $W$ にも付くので光子を含めて求め、実の光子の放射と足した。仮想の補正の単極は $W$ の電荷を入れた軟らかい光子の極と打ち消し、結果はゲージの母数によらなかった。MadLoop の仮想の補正とは $6\times10^{-12}$、MadGraph の木の3体とは $8\times10^{-10}$ で一致した（MadGraph が $d$ 型のクォークの光子の結合を7桁で書き出す分を直したもの）。$e$ と $\mu$ の補正は $10^{-7}$ で一致し、レプトンの質量によらない（KLN）。$\mu=M_W$ の $\MSbar$ の結合では電弱の補正は $+0.01\%$（レプトン）、$-0.04\%$（軽いクォーク）と小さく、$\Gamma_W=2.086$~GeV、$\mathrm{BR}(W\to\ell\nu)=10.84\%$ で、測定値と $-1.1\sigma$、$-0.2\sigma$ である。手順 (4c) では、光子が崩壊するトップ、$b$、$W$ の三つに付く $t\to bW^+$ を同じ方法で扱った。極の打ち消しとゲージによらないことを確かめ、MadLoop とは $4\times10^{-14}$、MadGraph の木の3体とは $2\times10^{-10}$ で一致した。$m_b$ を $1/10$ にしても補正は $4\times10^{-5}$ しか変わらない（KLN）。電弱の補正は $\mu=m_t$ で $+3.28\%$（$G_F$ で書いた木に対しては $+1.52\%$）で、QCD の $-8.51\%$ と合わせて $\Gamma_t=1.378$~GeV になり、測定値と $-0.3\sigma$ で合う。
+標準模型のノート~\cite{smnote}（以下 SM ノート）と CKM 行列のノート~\cite{ckmnote}（以下 CKM ノート）は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、一般の $R_\xi$ ゲージの1ループの振幅が紫外で有限でゲージによらないことを確かめ、MadLoop の仮想の補正と赤外の極まで突き合わせた。ただし、どちらも実の光子やグルーオンの放射を足していないので、赤外で有限な物理量（崩壊幅、断面積）はまだ一つも求めていない。本ノートでは、CKM ノートの模型ファイル（\texttt{SM\_CKM.fr}）と同じ処方、道具で、実の放射を含む NLO の崩壊幅と、$Z$ 極の電弱の精密測定の量を求める。対象は $Z\to f\bar f$、$W^+\to f\bar f'$、$t\to bW^+$ の幅、$Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$、$R_\ell$、$R_b$、$\rho$ パラメータと $M_W$ の予言である。手計算では、$\MSbar$ の結合と極質量の運動学で書いた木の幅、仮想と実の放射の赤外の極の構造（質量0の放射体の二重極と、質量のある二つの放射体の軟い極）、質量0のフェルミオン対への崩壊の包括的な補正 $\frac34C\alpha/\pi$（QCD では $\alpha_s/\pi$）、トップとボトムの二重項の $\Delta\rho=3y_t^2/(2K)$（$K=(4\pi)^2$。FJ のタドポールは打ち消す）を述べ、八つの手順の計画を定めた。手順 (1) では、CKM ノートの模型ファイルから書き出した FeynArts の模型と UFO が CKM ノートのものと同一であること、2体の崩壊の振幅の2乗が19個とも手計算の式と記号として一致すること、$\MSbar$ の結合と極質量の運動学をそろえた MadGraph の27個の部分幅が式と相対 $2\times10^{-15}$ で一致することを確かめた。木の $\Gamma_Z=2.428$~GeV は測定値より $2.7\%$ 小さく、差はほぼハドロンの幅の QCD の補正の大きさである。手順 (2) では、質量0のフェルミオン対の実の放射と仮想の補正を $\epsilon$ について厳密に求め、極が記号として消えて $\frac34C\alpha/\pi$ が残ることを確かめた。放射する粒子に質量を与えた $d=4$ の独立な計算でも、和は同じ値に $10^{-14}$ まで近づいた。MadGraph の木の3体の振幅の2乗も、式と相対 $6\times10^{-14}$ で一致した。計画の式の有限部分は規格化を定めておらず、$\pm\pi^2$ が抜けていたので直した。この補正を木の幅に掛けると、$\Gamma_Z$ と測定値の差は $-0.16\%$ に、ハドロンの幅の差は $-0.29\%$ に縮む。手順 (3) では、質量のある放射体（$Z\to b\bar b$、$c\bar c$、$\tau^+\tau^-$、$\mu^+\mu^-$ と $t\to bW^+$）の仮想の補正を Package-X で解析的に、軟らかい放射を $d$ 次元の eikonal 因子で、硬い放射を数値で求めた。仮想の補正の単極は式の軟らかい極と一致し、和は切断 $\delta$ によらなかった（$O(\delta)$ の誤差を除く）。質量0、閾値、$m_b=M_W=0$ の極限は既知の値に戻った。MadLoop の仮想の補正とは $7\times10^{-15}$、MadGraph の木の3体とは $8\times10^{-12}$ で一致した。$b$ の質量を入れると $\Gamma_Z$ と測定値の差は $-0.07\%$ になり、$R_b$ は $+1.1\%$ 離れる。トップの幅の QCD の補正は $-8.5\%$ で、$\Gamma_t=1.330$~GeV である。手順 (4a) では、$Z\to f\bar f$ の弱い補正（光子とグルーオンを除くループ、LSZ の因子、$Z$--光子の混合、$\MSbar$ の対抗項）を一般の $R_\xi$ ゲージで求めた。11個のフェルミオンで紫外の極は記号として消え、結果はゲージの母数によらなかった。MadLoop の電弱の仮想の補正とは $4\times10^{-13}$ で一致した。$Zb\bar b$ の頂点のトップの補正は $-1.44\%$ で、これで $R_b$ は測定値と $0.3\sigma$ で合う。$\mu$ への依存は、電弱の部分で $\pm1\%$ から $0.04\%$ 以下になった。手順 (4b) では、$W^+\to f\bar f'$ の電弱の補正を、光子が $W$ にも付くので光子を含めて求め、実の光子の放射と足した。仮想の補正の単極は $W$ の電荷を入れた軟らかい光子の極と打ち消し、結果はゲージの母数によらなかった。MadLoop の仮想の補正とは $6\times10^{-12}$、MadGraph の木の3体とは $8\times10^{-10}$ で一致した（MadGraph が $d$ 型のクォークの光子の結合を7桁で書き出す分を直したもの）。$e$ と $\mu$ の補正は $10^{-7}$ で一致し、レプトンの質量によらない（KLN）。$\mu=M_W$ の $\MSbar$ の結合では電弱の補正は $+0.01\%$（レプトン）、$-0.04\%$（軽いクォーク）と小さく、$\Gamma_W=2.086$~GeV、$\mathrm{BR}(W\to\ell\nu)=10.84\%$ で、測定値と $-1.1\sigma$、$-0.2\sigma$ である。手順 (4c) では、光子が崩壊するトップ、$b$、$W$ の三つに付く $t\to bW^+$ を同じ方法で扱った。極の打ち消しとゲージによらないことを確かめ、MadLoop とは $4\times10^{-14}$、MadGraph の木の3体とは $2\times10^{-10}$ で一致した。$m_b$ を $1/10$ にしても補正は $4\times10^{-5}$ しか変わらない（KLN）。電弱の補正は $\mu=m_t$ で $+3.28\%$（$G_F$ で書いた木に対しては $+1.52\%$）で、QCD の $-8.51\%$ と合わせて $\Gamma_t=1.378$~GeV になり、測定値と $-0.3\sigma$ で合う。手順 (5) では、(4a) の形状因子から $Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$ を求めた。値はゲージによらず、$\mu$ を $M_Z/2$ から $2M_Z$ まで変えても $\pm3\times10^{-5}$ しか変わらない。$\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}$ は本ノートの入力（$M_W$ の処方）で $0.23242$（測定値と $+5.6\sigma$）、$\alpha(0)$ を入力にした結合で $0.23167$（$+0.9\sigma$）で、処方の差 $7.5\times10^{-4}$ は $\Delta\rho$ の $O(\alpha\alpha_s)$ の補正の大きさである。この量は1ループの精度では測定値に届かない。
 \end{abstract}
 
 \tableofcontents
@@ -317,7 +317,7 @@ $\Delta\rho$ \eqref{eq:drho}、$M_W$ & 第~\ref{sec:rho} 節 & 自己エネル�
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約1分）で、手順 (2) はその後に \texttt{run\_ir\_check.sh}（約4分）で、手順 (3) はさらにその後に \texttt{run\_massive\_check.sh}（約6分。ほとんどは MadLoop の模型の読み込み）で、手順 (4a) はその後に \texttt{run\_zweak\_check.sh}（約15分）で、手順 (4b) はさらにその後に \texttt{run\_wweak\_check.sh}（約20分）で、手順 (4c) はその後に \texttt{run\_tweak\_check.sh}（約15分）で、まとめて再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約1分）で、手順 (2) はその後に \texttt{run\_ir\_check.sh}（約4分）で、手順 (3) はさらにその後に \texttt{run\_massive\_check.sh}（約6分。ほとんどは MadLoop の模型の読み込み）で、手順 (4a) はその後に \texttt{run\_zweak\_check.sh}（約15分）で、手順 (4b) はさらにその後に \texttt{run\_wweak\_check.sh}（約20分）で、手順 (4c) はその後に \texttt{run\_tweak\_check.sh}（約15分）で、手順 (5) は (4a) の後に \texttt{run\_zpole\_check.sh}（約3分）で、まとめて再実行できる。
 
 \paragraph{手順 (1)：木の幅。}(a) 模型。\texttt{generate\_SM\_CKM.wl} で、写した \texttt{SM\_CKM.fr} から FeynRules の頂点と FeynArts の模型と UFO を書き出した（CKM ノートと同じく UFO を先に書く）。93個の頂点のクラスは CKM ノートの FeynRules の出力と同一で（Mathematica の \texttt{===}）、FeynArts の模型の3個のファイルと UFO の8個のファイルも、日付と場所の行を除いて CKM ノートのものと同一だった。
 
@@ -840,9 +840,54 @@ $\mathrm{BR}(t\to bW^+)$ & 0.998222 & 0.998222 & 0.998234 & — & $0.00$ & $0.00
 \end{table}
 
 \FloatBarrier
+\paragraph{手順 (5)：$Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$。}式~\eqref{eq:effcoup} の有効結合は、手順 (4a) の繰り込んだ弱い形状因子（式~\eqref{eq:zren}）から $\mathcal V_f=F_L+F_R$、$\mathcal A_f=F_L-F_R$（$g_Z/2$ の単位。木では $T_3-2Q\hat s^2$、$T_3$）で与えられる。$Z$ の留数 $\frac12\delta Z_{ZZ}$ は $F_L$、$F_R$ に共通なので比 $\mathcal V_f/\mathcal A_f$ からは消える。光子とグルーオンの終状態の補正は、質量0のフェルミオンでは $\mathcal V_f$ と $\mathcal A_f$ に同じ因子を掛けるだけなので含めない。$H_L$、$H_R$ は $O(m_f)$ である。これは LEP の有効結合の定義と同じである。\texttt{zeff.wl} は比を $O(\alpha)$（1ループの部分について線形）でとり、式~\eqref{eq:s2eff} の $\sin^2\theta^f_{\mathrm{eff}}$ を求める。比をそのままとった値との差は $-5\times10^{-5}$ で、$O(\alpha^2)$ の大きさの目安になる。\texttt{zpole.py} は $x_f=1-4|Q_f|\sin^2\theta^f_{\mathrm{eff}}$ から $A_f=2x_f/(1+x_f^2)$、$A^{0,f}_{\mathrm{FB}}=\frac34A_eA_f$ を求める。
+
+(a) ゲージと $\mu$ によらないこと。$(\xi_Z,\xi_W)=(1,1)$、$(2,3)$、$(1/2,4)$ で、8個の荷電フェルミオンの $\sin^2\theta^f_{\mathrm{eff}}$ は $10^{-18}$ 以内で一致した。結合を $\mu=M_Z/2$、$M_Z$、$2M_Z$ に走らせると、$\hat s^2(\mu)=0.228958$、$0.232420$、$0.235903$ は $\pm1.5\%$ 変わる。一方 $\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.232448$、$0.232423$、$0.232376$ の変化は $\pm3\times10^{-5}$ にとどまり、$\hat\kappa_f(\mu)$ が $\hat s^2(\mu)$ の走りを打ち消す。
+
+(b) 内訳。$\mu=M_Z$ で $\sin^2\theta_{\mathrm{eff}}-\hat s^2(M_Z)$ を部分に分けると、レプトンでは $Z$--光子の混合が $-5.22\times10^{-4}$、頂点が $+5.69\times10^{-4}$、フェルミオンの脚が $-0.43\times10^{-4}$ で、和は $+0.04\times10^{-4}$（$\hat\kappa_\ell=1.000016$）だった。$Z$ の脚と $\MSbar$ の対抗項の寄与は $10^{-14}$ で、上の通り消える。$b$ では頂点が $+26.6\times10^{-4}$、脚が $-7.2\times10^{-4}$ で、$\hat\kappa_b=1.0061$ になる。手順 (4a) の $Zb\bar b$ と同じく、トップのループによる $b$ に固有の補正である。値を表~\ref{tab:zeff} に示す。
+
+(c) 測定値との比較。本ノートの入力（SM ノートの手順 (7) の $M_W$ の処方）では $\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.232423$ で、LEP と SLD の値 $0.23153\pm0.00016$~\cite{lepewwg06}（参照）より $8.9\times10^{-4}$（$+5.6\sigma$）大きい。同じ1ループの計算に、SM ノートの $\alpha$ の処方（$M_W$ の代わりに $\alpha(0)$ を入力にし、$M_W$ は予言になる）の結合を入れると、$\hat s^2(M_Z)=0.231658$、$\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}=0.231670$（$+0.9\sigma$）になる（表~\ref{tab:zasym}）。二つの処方は1ループでは同等で、差の $7.5\times10^{-4}$ は1ループで決めた結合に残る高次の項の大きさである。これは測定の誤差の約5倍で、$\sin^2\theta_{\mathrm{eff}}$ の精度は本ノートの NLO の範囲を超えている。$M_W$ の処方では $\hat s^2$ が $M_W/M_Z$ に $\Delta\rho$ を通じて結びつき、$\sin^2\theta_{\mathrm{eff}}$ は $c_W^2\Delta\rho$ だけずれる。$\Delta\rho$ の $O(\alpha\alpha_s)$ の補正 $-\frac23(1+\frac{\pi^2}3)\frac{\alpha_s}\pi\Delta\rho$（文献~\cite{dv87} の係数、参照）を式~\eqref{eq:drho} の $\Delta\rho$（極質量の $m_t$ で $0.00933$）に当てると、$M_W$ の処方で $-7.1\times10^{-4}$、$\alpha$ の処方で $+2.9\times10^{-4}$（$-\hat s^2\hat c^2/(\hat c^2-\hat s^2)\cdot\delta\Delta\rho$）になる。処方の差と同じ大きさである。非対称度のうち、$A^{0,b}_{\mathrm{FB}}$ は $M_W$ の処方で $-0.7\sigma$、SLD の $A_\ell$ は $\alpha$ の処方の方が近い（$-2.6\sigma$）。この二つの測定が $\sin^2\theta_{\mathrm{eff}}$ について約 $3\sigma$ 食い違うことはよく知られている~\cite{lepewwg06}（参照）。$A_b$、$A_c$ は誤差が大きく、どちらの処方でも $0.6\sigma$ 以内で合う。
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (5)：$\mu=M_Z$ の $\sin^2\theta^f_{\mathrm{eff}}$ と $\hat\kappa_f=\sin^2\theta^f_{\mathrm{eff}}/\hat s^2(M_Z)$（\texttt{zeff.wl}。$\hat s^2(M_Z)=0.2324197$。$O(\alpha)$）。右は SM ノートの $\alpha$ の処方の結合での値（$\hat s^2(M_Z)=0.2316581$）。}
+\label{tab:zeff}
+\begin{tabular}{lll|l}
+\toprule
+$f$ & $\sin^2\theta^f_{\mathrm{eff}}$ & $\hat\kappa_f$ & $\alpha$ の処方 \\
+\midrule
+$e$、$\mu$ & 0.2324233 & 1.000016 & 0.2316695 \\
+$\tau$ & 0.2324219 & 1.000010 & 0.2316682 \\
+$u$、$c$ & 0.2323168、0.2323153 & 0.999557、0.999551 & 0.2315636、0.2315620 \\
+$d$、$s$ & 0.2321895、0.2321926 & 0.999010、0.999023 & 0.2314369、0.2314400 \\
+$b$ & 0.2338331 & 1.006081 & 0.2330745 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (5)：$Z$ 極の非対称度（\texttt{zpole.py}。$A_f=2x_f/(1+x_f^2)$、$A^{0,f}_{\mathrm{FB}}=\frac34A_eA_f$）。木は $\hat s^2(M_Z)$ で、NLO は本ノートの入力（$M_W$ の処方）と $\alpha$ の処方の値。測定値は LEP と SLD~\cite{lepewwg06}（参照。$A_\ell$ は SLD の値）で、括弧は測定値との差（$\sigma$）。}
+\label{tab:zasym}
+\begin{tabular}{llllll}
+\toprule
+量 & 木 & NLO（$M_W$） & NLO（$\alpha$） & 測定値（参照） & $\mu=M_Z/2$、$2M_Z$（$M_W$） \\
+\midrule
+$\sin^2\theta^{\mathrm{lept}}_{\mathrm{eff}}$ & 0.232420 & 0.232423（$+5.6$） & 0.231670（$+0.9$） & $0.23153(16)$ & 0.232448、0.232376 \\
+$A_\ell$ & 0.13995 & 0.13992（$-5.4$） & 0.14586（$-2.6$） & $0.1513(21)$ & 0.13973、0.14029 \\
+$A_b$ & 0.93495 & 0.93404（$+0.6$） & 0.93453（$+0.6$） & $0.923(20)$ & 0.93403、0.93406 \\
+$A_c$ & 0.66438 & 0.66475（$-0.2$） & 0.66736（$-0.1$） & $0.670(27)$ & 0.66466、0.66492 \\
+$A^{0,\ell}_{\mathrm{FB}}$ & 0.01469 & 0.01468（$-2.4$） & 0.01596（$-1.1$） & $0.0171(10)$ & 0.01464、0.01476 \\
+$A^{0,b}_{\mathrm{FB}}$ & 0.09813 & 0.09802（$-0.7$） & 0.10223（$+1.9$） & $0.0992(16)$ & 0.09788、0.09828 \\
+$A^{0,c}_{\mathrm{FB}}$ & 0.06974 & 0.06976（$-0.3$） & 0.07301（$+0.7$） & $0.0707(35)$ & 0.06965、0.06996 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{現在の状態。}手計算の結果と計画を定め、手順 (1)〜(4) を行った。手順 (2) では、計画の式~\eqref{eq:masslessVR} の有限部分の誤り（規格化を定めず、$\pm\pi^2$ が抜けていた）を見つけて直した。手順 (3) で、仮想と実の放射の赤外の極の打ち消しを、質量0と質量のある放射体の両方で確かめたことになる。手順 (4a) で、$Z$ の部分幅の電弱と QCD の NLO の補正がそろい、$R_b$ と $\sigma^0_{\mathrm{had}}$ は測定値と合った。手順 (4b) では、光子が $W$ にも付く場合の赤外の打ち消しを、レプトンの質量によらないこと（KLN）まで確かめ、$W$ の幅と分岐比を NLO で求めた。途中で、Feynman ゲージの近似 $\xi=1+10^{-20}$ が数値の精度を使い切ってレプトンの値を誤らせること（KLN の確かめで見つかった）と、MadGraph が $d$ 型のクォークの電荷を7桁で書き出すことが分かった。手順 (4c) では、光子が崩壊するトップにも付く場合を同じ方法で扱い、$m_b$ によらないことを確かめて、トップの幅を NLO で求めた。これで手順 (4) の $Z$、$W$、$t$ の NLO の幅がそろった。手順 (5)〜(8) はこれから行う。
+\paragraph{現在の状態。}手計算の結果と計画を定め、手順 (1)〜(5) を行った。手順 (2) では、計画の式~\eqref{eq:masslessVR} の有限部分の誤り（規格化を定めず、$\pm\pi^2$ が抜けていた）を見つけて直した。手順 (3) で、仮想と実の放射の赤外の極の打ち消しを、質量0と質量のある放射体の両方で確かめたことになる。手順 (4a) で、$Z$ の部分幅の電弱と QCD の NLO の補正がそろい、$R_b$ と $\sigma^0_{\mathrm{had}}$ は測定値と合った。手順 (4b) では、光子が $W$ にも付く場合の赤外の打ち消しを、レプトンの質量によらないこと（KLN）まで確かめ、$W$ の幅と分岐比を NLO で求めた。途中で、Feynman ゲージの近似 $\xi=1+10^{-20}$ が数値の精度を使い切ってレプトンの値を誤らせること（KLN の確かめで見つかった）と、MadGraph が $d$ 型のクォークの電荷を7桁で書き出すことが分かった。手順 (4c) では、光子が崩壊するトップにも付く場合を同じ方法で扱い、$m_b$ によらないことを確かめて、トップの幅を NLO で求めた。これで手順 (4) の $Z$、$W$、$t$ の NLO の幅がそろった。手順 (5) では、$Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$ がゲージと $\mu$ によらないことを確かめた。$\sin^2\theta_{\mathrm{eff}}$ は入力の結合の処方（$M_W$ と $\alpha(0)$）で $7.5\times10^{-4}$ 変わり、測定値は $\alpha(0)$ の処方の値と $0.9\sigma$ で合う（$M_W$ の処方では $+5.6\sigma$）。この量の精度には、$\Delta\rho$ の $O(\alpha\alpha_s)$ などの2ループの補正が要る。手順 (6)〜(8) はこれから行う。
 
 \appendix
 
@@ -880,6 +925,7 @@ r\equiv\frac{M^2\sum|\mathcal M_R|^2}{e^2Q_f^2\sum|\mathcal M_0|^2}=\frac{2\bigl
 \bibitem{lepewwg06} ALEPH, DELPHI, L3, OPAL, SLD Collaborations, LEP Electroweak Working Group, SLD Electroweak and Heavy Flavour Groups, ``Precision electroweak measurements on the $Z$ resonance,'' Phys. Rept. \textbf{427}, 257 (2006), arXiv:hep-ex/0509008。
 \bibitem{pdg24} S. Navas \textit{et al.} (Particle Data Group), Phys. Rev. D \textbf{110}, 030001 (2024)。
 \bibitem{pdg26t} Particle Data Group, pdgLive（2026年の版）のトップクォークの項、\url{https://pdglive.lbl.gov/Particle.action?node=Q007}（2026年10月19日に参照）。
+\bibitem{dv87} A. Djouadi, C. Verzegnassi, ``Virtual very heavy top effects in LEP/SLC precision measurements,'' Phys. Lett. B \textbf{195}, 265 (1987)。
 \bibitem{ds91} A. Denner, T. Sack, ``The top width,'' Nucl. Phys. B \textbf{358}, 46 (1991)。
 \bibitem{pdg26} Particle Data Group, pdgLive（2026年の版）の $W$ の項、\url{https://pdglive.lbl.gov/Particle.action?node=S043}（2026年10月19日に参照）。
 \bibitem{mr19} S. P. Martin, D. G. Robertson, ``Standard Model parameters in the tadpole-free pure $\overline{\mathrm{MS}}$ scheme,'' Phys. Rev. D \textbf{100}, 073004 (2019), arXiv:1907.02500。

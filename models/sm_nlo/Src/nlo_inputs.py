@@ -128,27 +128,34 @@ def ckm_of(Yu, Yd):
     return dag(Uu[:, ::-1]) @ Ud[:, ::-1], su[::-1], sd[::-1]
 
 
-def start():
-    G = G_of(YT3, G2, G2 * VFJ / 2, MT_START)
+def start(case="PDG2024_MW_scheme"):
+    """the parameters at M_t of a row of the SM note's msbar_fit.csv (the default: the M_W scheme; "PDG2024_alpha_scheme" takes
+    alpha(0) in place of M_W)"""
+    lam, _, yt3, g2, gy, _, vfj, g3 = (float(x) for x in fit[case][1:9])
+    G = G_of(yt3, g2, g2 * vfj / 2, MT_START)
     V0 = msbar_V(G)
-    yu = np.array([YB * MQ["u"] / MQ["b"], YB * MQ["c"] / MQ["b"], YT3])
+    yu = np.array([YB * MQ["u"] / MQ["b"], YB * MQ["c"] / MQ["b"], yt3])
     yd = YB * np.array([MQ["d"], MQ["s"], MQ["b"]]) / MQ["b"]
     ye = YTAU * np.array([ML["e"], ML["mu"], ML["tau"]]) / ML["tau"]
-    return G, V0, pack(np.diag(yu).astype(complex), V0 @ np.diag(yd), np.diag(ye).astype(complex), GY, G2, G3, LAM)
+    return G, V0, pack(np.diag(yu).astype(complex), V0 @ np.diag(yd), np.diag(ye).astype(complex), gy, g2, g3, lam)
 
 
 G_MT, V_MT, Y_MT = start()
+_starts = {"PDG2024_MW_scheme": Y_MT}
 _sols = {}
 
 
-def at(mu):
-    """the MS-bar parameters at mu (one-loop running from M_t)"""
+def at(mu, case="PDG2024_MW_scheme"):
+    """the MS-bar parameters at mu (one-loop running from M_t), from the fit row case"""
+    if case not in _starts:
+        _starts[case] = start(case)[2]
+    y0 = _starts[case]
     if mu == MT_START:
-        y = Y_MT
+        y = y0
     else:
-        key = round(math.log(mu), 12)
+        key = (case, round(math.log(mu), 12))
         if key not in _sols:
-            _sols[key] = solve_ivp(rhs, (math.log(MT_START), math.log(mu)), Y_MT, **TOL).y[:, -1]
+            _sols[key] = solve_ivp(rhs, (math.log(MT_START), math.log(mu)), y0, **TOL).y[:, -1]
         y = _sols[key]
     Yu, Yd, Ye, gp, g, gs, lam = unpack(y)
     V, yu, yd = ckm_of(Yu, Yd)
