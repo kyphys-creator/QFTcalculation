@@ -180,6 +180,12 @@ Do[Module[{mz = "MZ" /. pointML$, mw = "MW" /. pointML$, mbv = "MB" /. pointML$,
    Print["MadLoop point, mu_R = ", muR, ":  Z -> b bbar  K_V pole ", N[Re[z[[1]]], 15], ", finite ", N[Re[z[[2]]], 15],
     ";  t -> b W+  pole ", N[Re[t[[1]]], 15], ", finite ", N[Re[t[[2]]], 15]];
    AppendTo[mlRows$, {"z_bb", muR, ToString[CForm[N[Re[z[[1]]], 20]]], ToString[CForm[N[Re[z[[2]]], 20]]]}];
-   AppendTo[mlRows$, {"t_bw", muR, ToString[CForm[N[Re[t[[1]]], 20]]], ToString[CForm[N[Re[t[[2]]], 20]]]}]], {muR, {91, 500}}];
+   AppendTo[mlRows$, {"t_bw", muR, ToString[CForm[N[Re[t[[1]]], 20]]], ToString[CForm[N[Re[t[[2]]], 20]]]}];
+   (* Z -> tau- tau+ (its photonic part for zweak_madloop.py; the same K, the coupling alpha Q^2 put in there) *)
+   Module[{mta = 1746/1000, vt = -1/2 + 2 s2, at = -1/2, tV, tA, zt},
+    tV = bornZv$[1] /. {D -> 4, m -> mta, MM -> mz^2}; tA = bornZv$[GA5] /. {D -> 4, m -> mta, MM -> mz^2};
+    zt = (vt^2 tV msML$[kVZ$[1], muR] + at^2 tA msML$[kVZ$[GA5], muR])/(vt^2 tV + at^2 tA) /. {m -> mta, MM -> mz^2};
+    AppendTo[mlRows$, {"z_tata", muR, ToString[CForm[N[Re[zt[[1]]], 20]]], ToString[CForm[N[Re[zt[[2]]], 20]]]}]]],
+  {muR, {91, 500}}];
 Export[FileNameJoin[{resDirMV$, "ir_massive_virtual_ml.csv"}], Prepend[mlRows$, {"process", "mu_R", "KV_pole", "KV_finite"}], "CSV"];
 Print["written: results/ir_massive_vs.csv, results/ir_massive_virtual_ml.csv"];
