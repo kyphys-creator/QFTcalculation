@@ -6,8 +6,11 @@
 # Output in ./out (process directories, logs, the param_cards used).  About 5 minutes.
 cd "$(dirname "$0")"
 HERE=$(pwd)
-UFO="$HERE/../../../models/sm_higgs/Src/generated/SM_CKM_HEFT_UFO"
 mkdir -p out
+# MG5 rewrites a Python-2 UFO in place when it imports it (object_library.py, write_param_card.py, py3_model.pkl):
+# import a fresh copy, so that the committed UFO of models/sm_higgs stays as generated
+rm -rf out/SM_CKM_HEFT_UFO && cp -R "$HERE/../../../models/sm_higgs/Src/generated/SM_CKM_HEFT_UFO" out/
+UFO="$HERE/out/SM_CKM_HEFT_UFO"
 python3 test_lhapdf.py sumrules
 common () {   # run card settings shared by both processes
   cat <<CARD

@@ -1265,6 +1265,7 @@ g_L^f=\frac e{s_Wc_W}(T_3-Qs_W^2),\qquad g_R^f=-\frac e{s_Wc_W}Qs_W^2
 \item \MGaMC{} 3.8.1 の \texttt{install} は、installer に \texttt{--prefix=./HEPTools} を渡す。この相対パスは \MGaMC{} を起動した作業ディレクトリについて解かれるので、ほかのディレクトリから起動すると、そこに \texttt{HEPTools} を作って入れる。一方、設定ファイルには \MGaMC{} の \texttt{HEPTools} の場所を書くので、設定と実体が食い違う。メッセージは成功を報告する。\MGaMC{} は自分のディレクトリから起動する（\nolinkurl{tests/lhc/run_stage1.sh} もそうする）。
 \item installer は LHAPDF の Python の拡張 \texttt{lhapdf.so} を \texttt{libpython3.12.dylib} にリンクする。conda の Python は本体に interpreter を静的に含むので、読み込むと interpreter が二つになり、メッセージなしに落ちる（exit 139）。拡張を \texttt{-undefined dynamic\_lookup} で作り直す（下の使い方）。\MGaMC{} で LHAPDF を入れ直すと、落ちる拡張に戻る。
 \item installer は、\MGaMC{} の既定の PDF の組（NNPDF23 の LO と NLO、tarball 合わせて 56 MB）を、問い合わせなしに取得する。取得するものを先に決めて承認を得る運用では、導入の後に確かめて消す。
+\item \MGaMC{} は Python 2 の書き方の UFO（FeynRules 2.3.49 の出力）を読むと、その場で Python 3 の形に書き換え、\texttt{write\_param\_card.py} を自分の版に置き換え、\texttt{py3\_model.pkl} を作る。リポジトリに入れた UFO を直接読むと作業ツリーが変わるので、写しを読む（\nolinkurl{tests/lhc/run_stage1.sh} は \texttt{out/} に写す）。
 \item \MGaMC{} 3.8 は param\_card の名前を小文字で書く（\texttt{\# aewm1}、\texttt{\# chgg}）。ログの \texttt{Cross-section :} は4桁しか表示しないので、値は banner の \texttt{Integrated weight (pb)} から、誤差は \texttt{SubProcesses/results.dat} の1行目の2番目の数から読む。
 \item \texttt{pdlabel = lhapdf} の最初の実行で、\MGaMC{} は \texttt{lhapdf-config does not seem to correspond to a valid lhapdf-config executable} と出したあと、設定の場所を見つけて続けた。結果には影響しない。
 \item LHAPDF の \texttt{xfxQ2} は $xf(x)$ を返す。和則では、運動量の和は $xf$ を、価クォークの数は $xf/x$ を積分する。
