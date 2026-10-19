@@ -790,11 +790,11 @@ Feynman ゲージの係数と精度（NLO） & $\xi_Z=\xi_W=1+10^{-20}$（80桁�
 \end{tabularx}
 \end{table}
 
-NLO のノート~\cite{smnlonote} の手順 (4c)〜(8)（10月19日）と、ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (1)、(2)（10月19日。木の $H\to f\bar f$、$H\to Vf\bar f'$、$H\to4f$ と、1ループで誘起される $H\to\gamma\gamma$、$Z\gamma$、$gg$）で分かった問題を表~\ref{tab:issues2q} に加える。パターン変数、質量の記号、param\_card の幅、同種粒子の因子、UFO の点の行は、エラーも警告も出ず、数値が違うだけだった。
+NLO のノート~\cite{smnlonote} の手順 (4c)〜(8)（10月19日）と、ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (1)〜(4)（10月19日。木の $H\to f\bar f$、$H\to Vf\bar f'$、$H\to4f$、1ループで誘起される $H\to\gamma\gamma$、$Z\gamma$、$gg$、$H\to q\bar q$ の QCD の補正）で分かった問題を表~\ref{tab:issues2q} に加える。パターン変数、質量の記号、param\_card の幅、同種粒子の因子、UFO の点、$\overline{\mathrm{MS}}$ の対抗項の規格化の行は、エラーも警告も出ず、数値が違うだけだった。
 
 \begin{table}[tbp]
 \centering\footnotesize
-\caption{表~\ref{tab:issues2p} の続き（NLO のノート~\cite{smnlonote} の手順 (4c)〜(8)、ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (1)、(2)）。}
+\caption{表~\ref{tab:issues2p} の続き（NLO のノート~\cite{smnlonote} の手順 (4c)〜(8)、ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (1)〜(4)）。}
 \label{tab:issues2q}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
@@ -808,6 +808,7 @@ madevent の崩壊の幅の出力（ヒッグス） & $1\to4$ の崩壊の \text
 FeynCalc の \texttt{TID} と外線の伝播関数（ヒッグス） & $H\to Z\gamma$ の1ループの紫外の極が $(2+\xi_W)\bigl(c_W^2+M_W^2\,\texttt{FAD[\{k2, MZ\}]}\bigr)$ の形で残り、光子の脚の $\gamma$--$Z$ の混合の図のフェルミオンのループに \texttt{DiracTrace[GSD[k2].}\allowbreak\texttt{GSD[e2].GSD[k2].}\allowbreak\texttt{GSD[e1].GA[5]]} が評価されずに残った & 混合の図の $Z$ の伝播関数は外線の運動量 $k_2$ だけを持ち、\texttt{FDS}、\texttt{TID} は \texttt{FAD} のまま残す。$\gamma_5$ と4個の行列のトレースは、NDR（既定）の \texttt{DiracTraceEvaluate -> True} でも評価されなかった（推論：NDR では $D$ 次元のこの形を評価しない） & 還元の後に \texttt{FeynAmpDenominatorExplicit} を掛ける（$k_2^2=0$ で $-1/M_Z^2$。極は $c_W=M_W/M_Z$ で0になる）。トレースは中身を先に \texttt{DiracSimplify} する（$k_2^2=k_2\cdot e_2=0$ で0、\texttt{loopind\_feyncalc.wl}） \\
 MadGraph の行列要素と同種粒子（ヒッグス） & MadLoop の \texttt{h > a a [sqrvirt=QED]}、\texttt{h > g g [sqrvirt=QCD]} の値が、自分の $\sum|\mathcal M|^2$ のちょうど半分になった（$Z\gamma$ は半分でない） & MadGraph の \texttt{check} が出す行列要素は、終状態の同種の粒子の $1/n!$ を含む \texttt{IDEN} で割ってある（崩壊の幅の位相空間には入れない） & 同種の粒子のある終状態では2倍して比べる（$2.8\times10^{-13}$ で一致、\texttt{loopind\_madloop.py}） \\
 CKM ノートの NLO の UFO と点（ヒッグス） & ループで誘起される $H\to Z\gamma$ が、$H$ の param\_card で自分の値と $-1.3\%$（$\mu_R=M_H$）、$-10\%$（$\mu_R=1$~TeV）違い、$\mu_R$ に依存した。$H\to\gamma\gamma$、$gg$ は一致した & 光子の脚の $\gamma$--$Z$ の混合は UV の頂点 $HZ\gamma$（$\frac i2g_{HZZ}\delta Z_{ZA}$）として入るが、その $\delta Z_{ZA}$（CT パラメータ \texttt{FJdZZAre}）は CKM ノートの MadLoop の点（$1/\alpha=128$、$M_Z=91$、$M_W=80$~GeV など）での数値である（表~\ref{tab:issues2n} の「軽いクォークの質量と UFO の対抗項」） & UV の頂点が入る過程はその点の param\_card で比べる（3過程とも $1.1\times10^{-13}$ 以内で一致、$\mu_R$ によらない）。ほかの点で使うには、場の定数をその点で計算し直して UFO に入れる \\
+Package-X の規格化と $\overline{\mathrm{MS}}$ の対抗項（ヒッグス） & MadLoop の \texttt{[virt=QCD]} の $H\to b\bar b$ の有限部分と木の比が、自分の値と $\mu_R$ によらない $0.147$（$\frac32(\ln4\pi-\gamma_E)\,C_F\alpha_s/\pi$）だけずれた。単極は $10^{-15}$ で一致した & MadLoop の規格化（$(4\pi)^\epsilon/\Gamma(1-\epsilon)$ と $\mu_R^{2\epsilon}$ を除く）に直すのに Package-X の \texttt{ScaleMu} を $\sqrt{\pi e^{\gamma_E}}\mu_R$ に置き換えると、ループの関数の $-\gamma_E+\ln4\pi$ は消えるが、手で書き足した $\overline{\mathrm{MS}}$ の対抗項 $-\frac32(\frac1\epsilon-\gamma_E+\ln4\pi)$ の $-\gamma_E+\ln4\pi$ は残る（NLO のノートの $Z\to b\bar b$ はベクトルの流れで、この対抗項がなかった） & その規格化では $\overline{\mathrm{MS}}$ の対抗項を純粋な極 $-\frac32/\epsilon$ にする（$2\times10^{-15}$ で一致、\texttt{hqq\_massive\_virtual.wl}）。物理の値（$\mu$ を ScaleMu $=2\pi\mu$ で入れたもの）はもとから正しい \\
 \bottomrule
 \end{tabularx}
 \end{table}
