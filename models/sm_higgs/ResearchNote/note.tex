@@ -55,7 +55,7 @@
 \maketitle
 
 \begin{abstract}
-SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote} は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、1ループの繰り込みと、$Z$、$W$、$t$ の崩壊の NLO の幅を求めた。本ノートでは、同じ模型ファイル、処方、道具で、ヒッグスの崩壊 $H\to f\bar f$、$WW^*$、$ZZ^*$、$\gamma\gamma$、$Z\gamma$、$gg$ の NLO の部分幅、全幅、分岐比を求める計画を立てる。手計算では、木の幅と1ループで誘起される崩壊の振幅、$H\to q\bar q$ の QCD の補正で $\MSbar$ の湯川結合が $\ln(m_q^2/M_H^2)$ を吸収すること、$H\to f\bar f$ にはタドポールが入らないが $H\to VV^*$ には $HHVV$ の頂点を通して入ること、$H\to gg$ の重いトップの有効理論での NLO を述べ、八つの手順の計画を定めた。$\mu=M_H$ の $\MSbar$ の湯川結合で書いた木の $\Gamma(H\to b\bar b)=1.85$~MeV は、極質量で書いた値の3分の1である。LO の部分幅の和は $3.28$~MeV である。
+SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote} は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、1ループの繰り込みと、$Z$、$W$、$t$ の崩壊の NLO の幅を求めた。本ノートでは、同じ模型ファイル、処方、道具で、ヒッグスの崩壊 $H\to f\bar f$、$WW^*$、$ZZ^*$、$\gamma\gamma$、$Z\gamma$、$gg$ の NLO の部分幅、全幅、分岐比を求める計画を立てる。手計算では、木の幅と1ループで誘起される崩壊の振幅、$H\to q\bar q$ の QCD の補正で $\MSbar$ の湯川結合が $\ln(m_q^2/M_H^2)$ を吸収すること、$H\to f\bar f$ にはタドポールが入らないが $H\to VV^*$ には $HHVV$ の頂点を通して入ること、$H\to gg$ の重いトップの有効理論での NLO を述べ、八つの手順の計画を定めた。手順 (1) では、模型、木の振幅（一般の $R_\xi$ ゲージで27個の記号の一致）、MadGraph との一致（相対 $10^{-14}$）を確かめた。$\mu=M_H$ の $\MSbar$ の湯川結合で書いた木の $\Gamma(H\to b\bar b)=1.85$~MeV は極質量で書いた値の3分の1で、$V$ の有限の幅は $H\to4f$ の幅を幅0の式より $WW$ で $6\%$、$ZZ$ で $21\%$ 上げる。
 \end{abstract}
 
 \tableofcontents
@@ -98,7 +98,7 @@ R_T(x)=\frac{3(1-8x+20x^2)}{\sqrt{4x-1}}\arccos\frac{3x-1}{2x^{3/2}}-\frac{(1-x)
 \end{gathered}
 \label{eq:vv}
 \end{equation}
-である（$g_W=g$、$\delta'_W=1$、$\delta'_Z=\frac7{12}-\frac{10}9s^2+\frac{40}{27}s^4$。$V^*$ は $f\bar f'$ に崩壊する仮想の $V$ で、$WW^*$ は $W^+W^{-*}$ と $W^{+*}W^-$ の和）。式~\eqref{eq:vv} は Keung--Marciano の式~\cite{km84,djouadi08} を本ノートの結合で書いたもので、木の関係 $g_{HVV}=g_VM_V$ では $3G_F^2M_V^4M_H\delta'_VR_T/(16\pi^3)$ になる。手順 (1) で確かめる。湯川結合は $\mu$ での $\MSbar$ の値、運動学の質量は極質量である。$\mu=M_H$ の $\MSbar$ の $y_b$ で書いた $\Gamma_0(H\to b\bar b)=1.854$~MeV は、極質量 $y=\sqrt2m_b/v_G$ で書いた値 $5.58$~MeV の $0.33$ 倍で、$c\bar c$ では $0.13$ 倍、$\tau^+\tau^-$ では $0.95$ 倍である。$G_F$ と極質量で書いた式~\eqref{eq:vv} は $\Gamma(H\to WW^*)=0.797$~MeV、$\Gamma(H\to ZZ^*)=0.087$~MeV になる（on-shell の $s^2=1-M_W^2/M_Z^2$）。木の図を図~\ref{fig:lo} に示す。
+である（$g_W=g$、$\delta'_W=1$、$\delta'_Z=\frac7{12}-\frac{10}9s^2+\frac{40}{27}s^4$。$V^*$ は $f\bar f'$ に崩壊する仮想の $V$ で、$WW^*$ は $W^+W^{-*}$ と $W^{+*}W^-$ の和）。式~\eqref{eq:vv} は Keung--Marciano の式~\cite{km84,djouadi08} を本ノートの結合で書いたもので、木の関係 $g_{HVV}=g_VM_V$ では $3G_F^2M_V^4M_H\delta'_VR_T/(16\pi^3)$ になる。手順 (1) で、質量0のフェルミオンの3体の Dalitz の積分と相対 $3\times10^{-14}$ で一致した。湯川結合は $\mu$ での $\MSbar$ の値、運動学の質量は極質量である。$\mu=M_H$ の $\MSbar$ の $y_b$ で書いた $\Gamma_0(H\to b\bar b)=1.854$~MeV は、極質量 $y=\sqrt2m_b/v_G$ で書いた値 $5.58$~MeV の $0.33$ 倍で、$c\bar c$ では $0.13$ 倍、$\tau^+\tau^-$ では $0.95$ 倍である。$G_F$ と極質量で書いた式~\eqref{eq:vv} は $\Gamma(H\to WW^*)=0.797$~MeV、$\Gamma(H\to ZZ^*)=0.087$~MeV になる（on-shell の $s^2=1-M_W^2/M_Z^2$）。ただし式~\eqref{eq:vv} は on-shell の $V$ を幅0で扱う。$V$ の伝播関数に Breit--Wigner の幅を付けた $H\to4f$ の幅（式~\eqref{eq:h4ffact}）は、式~\eqref{eq:vv} より $WW$ で $5.9\%$、$ZZ$ で $20.8\%$ 大きい。また $Z^*\to b\bar b$、$\tau^+\tau^-$ の質量は $\Gamma(H\to ZZ^*)$ を $3.1\%$ 下げる（手順 (1)）。木の図を図~\ref{fig:lo} に示す。
 
 \subsection{1ループで誘起される崩壊}\label{sec:loop}
 
@@ -136,7 +136,7 @@ F_S=y_f\Bigl[1+F^{\mathrm{vtx}}+\tfrac12\delta Z_H+\tfrac12\bigl(\delta Z^L_f+\d
 \end{equation}
 である（$\delta Z^{L,R}_f$ は NLO ノートの on-shell の形、$\delta y_f^{\MSbar}$ は湯川行列の $\beta$ 関数の極）。光子の部分（光子の交換と光子による場の定数、実の光子の放射）は、ヒッグスが電荷を持たないので、$Z$ の崩壊と同じく単独でゲージによらない組をなし、式~\eqref{eq:hqq} の QED の形になる。標準模型には $HHf\bar f$ の頂点がないので、$H\to f\bar f$ の頂点の補正にタドポールの図はない。$\Sigma_H$ のタドポールの部分は $p^2$ によらないので $\delta Z_H$ にも入らず、タドポールは質量（運動学の極質量）を通してしか入らない。湯川結合で書いた $H\to f\bar f$ は、FJ の処方でもタドポールによらない。
 
-一方、$H\to VV^*$ の $HVV$ の結合 $g_{HVV}=g_V^2v/2$ は $v$ を含み、FJ の処方の $\MSbar$ の $v_{\mathrm{FJ}}$ はタドポールのために $G_F$ からの $v_G$ より大きい（$\mu=M_t$ で $(v_{\mathrm{FJ}}/v_G)^2=1.131$）。$\MSbar$ の $g(M_H)$、$v_{\mathrm{FJ}}$ と極質量 $M_W$ で書いた木の $H\to WW^*$ は、$G_F$ で書いた木より $9\%$ 大きい。ラグランジアンの $\frac{g^2}4(v+H)^2W^+W^-$ には $HHWW$ の頂点があり、それに付いたタドポールの図が $HVV$ の頂点の1ループの補正に入る。この図は $p^2$ によらない定数で、$g_{HVV}$ の $v_{\mathrm{FJ}}$ を $M_W$ の極質量に合う $v$ に近づける向きに働き、木の差を打ち消すはずである（手順 (7) で確かめる）。完全な電弱の NLO（$H\to4f$ の1ループ）は本ノートの範囲の外に置き、$HVV$ の頂点の普遍的な部分（タドポール、$\delta Z_H$、$\delta Z_V$、$\MSbar$ の対抗項）で処方の違いを確かめる。
+一方、$H\to VV^*$ の $HVV$ の結合 $g_{HVV}=g_V^2v/2$ は $v$ を含み、FJ の処方の $\MSbar$ の $v_{\mathrm{FJ}}$ はタドポールのために $G_F$ からの $v_G$ より大きい（$\mu=M_t$ で $(v_{\mathrm{FJ}}/v_G)^2=1.131$）。$\MSbar$ の $g(M_H)$、$s^2(M_H)$、$v_{\mathrm{FJ}}$ と極質量で書いた木の幅は、$G_F$ で書いた木より $H\to WW^*$ で $9.2\%$、$H\to ZZ^*$ で $12.6\%$ 大きい（手順 (1)）。ラグランジアンの $\frac{g^2}4(v+H)^2W^+W^-$ には $HHWW$ の頂点があり、それに付いたタドポールの図が $HVV$ の頂点の1ループの補正に入る。この図は $p^2$ によらない定数で、$g_{HVV}$ の $v_{\mathrm{FJ}}$ を $M_W$ の極質量に合う $v$ に近づける向きに働き、木の差を打ち消すはずである（手順 (7) で確かめる）。完全な電弱の NLO（$H\to4f$ の1ループ）は本ノートの範囲の外に置き、$HVV$ の頂点の普遍的な部分（タドポール、$\delta Z_H$、$\delta Z_V$、$\MSbar$ の対抗項）で処方の違いを確かめる。
 
 \subsection{$H\to gg$ の NLO の QCD の補正}\label{sec:hgg}
 
@@ -229,17 +229,171 @@ $H\to gg$ の NLO \eqref{eq:hgg} & 第~\ref{sec:hgg} 節 & 有効理論の1ル�
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} に置く。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約3分）で再現できる。
+
+\subsection{手順 (1)：模型と木の幅}\label{sec:step1}
+
+\paragraph{(a) 模型。}\texttt{generate\_SM\_CKM.wl} で、写した \texttt{SM\_CKM.fr} から FeynRules の頂点、FeynArts の模型、UFO を書き出した。93個の頂点のクラスは NLO ノートの FeynRules の出力と同一で（Mathematica の \texttt{===}）、FeynArts の模型の3個のファイルと UFO の8個のファイルも、日付と場所の行を除いて NLO ノートのもの（それ自体 CKM ノートのものと同一）と同一だった。
+
+\paragraph{(b) 振幅の2乗。}\texttt{lo\_feyncalc.wl} は、本ノートの FeynArts の模型で木の振幅の2乗（スピン、偏極、色の和）を FeynCalc で記号として求め、\ref{app:lo} の手計算の式と比べる（表~\ref{tab:lochk}）。$H\to f\bar f$（$b$、$c$、$\tau$、$\mu$）では、湯川結合と運動学の質量を独立の記号にして $\sum|\mathcal M|^2=N_cy_f^2(M_H^2-4m_f^2)$ と一致した。$H\to Vf\bar f'$ では、$W^+e^-\bar\nu_e$、$W^+\tau^-\bar\nu_\tau$、$W^+b\bar c$、$Z\nu_e\bar\nu_e$、$Z\tau^-\tau^+$、$Zb\bar b$ の6個を、一般の $R_\xi$ ゲージ（$\xi_W$、$\xi_Z$ は記号）ですべての質量を残して求めた（湯川結合は木の関係 $y=\sqrt2m/v$。図~\ref{fig:hvff}）。6個とも $\xi_W$、$\xi_Z$ による微分は記号として0で、$V^*$ の伝播関数の $\xi$ の項、Goldstone の図、湯川結合でフェルミオンから $V$ が出る図の和でゲージの依存が消える。$W^+b\bar c$ は $|V_{cb}|^2$ に比例し、フェルミオンの質量を0にすると6個とも式~\eqref{eq:hvffhand} に一致した。$H\to4f$ では、$\nu_ee^+\mu^-\bar\nu_\mu$（$WW$）と $e^-e^+\mu^-\mu^+$（$ZZ$）を質量0で求め、$\xi$ によらないことと式~\eqref{eq:h4f} を確かめた。27個の差はすべて記号として0である。式~\eqref{eq:h4f} の $V-A$ の流れの運動量の対は、初めに書いた $(p_1\cdot p_4)(p_2\cdot p_3)$ では FeynCalc と合わず、$(p_1\cdot p_3)(p_2\cdot p_4)$（$\mu$ 粒子の崩壊と同じ対）が正しかった。
+
+\paragraph{(c) MadGraph。}\texttt{lo\_mg5.py} は、NLO ノートと同じ $H$ の param\_card（$M_Z$ は極質量、$M_W=M_Z\hat c(M_H)$、$\alpha^{-1}=\hat\alpha^{-1}(M_H)$。UFO の湯川結合は運動学の質量から $\sqrt2m/v$ で決まる）で MadGraph と比べる。\texttt{compute\_widths} の $H\to b\bar b$、$c\bar c$、$\tau^+\tau^-$、$\mu^+\mu^-$ は、同じ値の式~\eqref{eq:lo} と相対 $2.9\times10^{-15}$ で一致した。standalone の出力（ユニタリーゲージ）の振幅の2乗は、$H\to W^+\tau^-\bar\nu_\tau$、$W^+b\bar c$、$Z\nu_e\bar\nu_e$、$Zb\bar b$ の Dalitz の7点ずつで FeynCalc の Feynman ゲージの式と $2.0\times10^{-14}$ で、$H\to\nu_ee^+\mu^-\bar\nu_\mu$、$e^-e^+\mu^-\mu^+$ の4体の6点ずつで固定の幅の Breit--Wigner の伝播関数を付けた式~\eqref{eq:h4f} と $1.1\times10^{-14}$ で一致した。3体の比較で param\_card に $V$ の幅を残すと、仮想の $V^*$ の伝播関数の $M_V^2\Gamma_V^2/(q^2-M_V^2)^2$ の分（約 $10^{-3}$）だけずれるので、3体では幅を0にした。madevent で積分した4レプトンの幅（カットなし）は、式~\eqref{eq:h4ffact} の数値積分と、$\nu_ee^+\mu^-\bar\nu_\mu$ で $-2.2\times10^{-4}$（統計の誤差 $1.6\times10^{-3}$ の $-0.14\sigma$）、$e^-e^+\mu^-\mu^+$ で $-2.4\times10^{-4}$（$-0.14\sigma$）の差で一致した。
+
+\paragraph{(d) $H\to f\bar f$ の幅。}\texttt{lo\_widths.py} は式~\eqref{eq:lo} を $\mu=M_H$、$M_H/2$、$2M_H$ の $\MSbar$ の湯川結合と極質量で求める（表~\ref{tab:lohff}）。$\MSbar$ の $y_b(M_H)$ で書いた $\Gamma_0(H\to b\bar b)=1.854$~MeV は、極質量の湯川結合 $\sqrt2m_b/v_G$ で書いた $5.583$~MeV の $0.332$ 倍で、$c\bar c$ では $0.127$ 倍、$\tau^+\tau^-$ と $\mu^+\mu^-$ では $0.954$ 倍と $0.934$ 倍である。$\mu$ を $M_H/2$、$2M_H$ にした変化は $b\bar b$ で $+10.5\%$、$-8.8\%$、$c\bar c$ で $+9.3\%$、$-7.9\%$ と大きい。これは湯川結合の QCD の走りで、手順 (3)、(4) の QCD の補正の $\ln\mu^2$ の項が打ち消すはずである。レプトンでは $-1.2\%$、$+1.0\%$ である。
+
+\paragraph{(e) $H\to VV^*$ と $H\to4f$ の幅。}質量0のフェルミオンの3体の Dalitz の積分（式~\eqref{eq:hvffhand}。$W^*$ は3個のレプトンと2個のクォークの二重項、$Z^*$ はトップ以外の11個のフェルミオン、$WW^*$ は電荷の二つの割り当ての和）は、$G_F$ と $\MSbar$ の二組の結合で、式~\eqref{eq:vv} と相対 $3\times10^{-14}$ で一致した（表~\ref{tab:lohvv}）。$G_F$ の結合と極質量では $\Gamma(H\to WW^*)=0.79711$~MeV、$\Gamma(H\to ZZ^*)=0.086892$~MeV である。$\MSbar$ の $g(M_H)$、$s^2(M_H)$、$v_{\mathrm{FJ}}$ で書くと $0.87049$、$0.097831$~MeV で、$G_F$ の値の $1.092$、$1.126$ 倍になる。$(v_{\mathrm{FJ}}/v_G)^2=1.131$ のタドポールの分が、結合と極質量の比を通して残っている。この差は手順 (7) で扱う。
+
+フェルミオンの質量を残した FeynCalc の式を積分すると（$G_F$ の結合）、$H\to W^+\tau^-\bar\nu_\tau$ は $-0.65\%$、$W^+b\bar c$ は $-5.2\%$、$Z\tau^-\tau^+$ は $-4.0\%$、$Zb\bar b$ は $-19.6\%$ 変わる。$Z^*\to b\bar b$ では、大きい軸性の結合の部分が $\beta^3$ で抑えられ、しかも $Z^*$ の不変質量が小さい（$\sqrt{q^2}\le M_H-M_Z=34$~GeV）ので、効きが大きい。$b$ と $\tau$ の質量で $\Gamma(H\to ZZ^*)$ は $3.1\%$ 下がる。
+
+式~\eqref{eq:vv} は on-shell の $V$ を幅0で扱う。$V$ の伝播関数に固定の幅の Breit--Wigner を付けた $H\to4f$ の幅（式~\eqref{eq:h4ffact}。質量0のフェルミオンで、$\Gamma_V$ は同じ結合の LO の幅 $\Gamma_W=2.0443$~GeV、$\Gamma_Z=2.4433$~GeV）は、すべての対の和で $WW$ が $0.84379$~MeV、$ZZ$ が $0.10496$~MeV（同種の $Z$ の $\frac12$ を付け、同種のフェルミオンの干渉と $WW$ と $ZZ$ の干渉は入れない）で、式~\eqref{eq:vv} より $5.9\%$、$20.8\%$ 大きい。幅を分岐比を変えずに0.1倍にすると差は $0.64\%$、$2.19\%$ になり、幅に比例して式~\eqref{eq:vv} に近づく。$M_H=125$~GeV では、一方の $V$ が $M_V$ より軽くなると、他方の $V^*$ の位相空間と伝播関数が急に大きくなるので、幅の効果が $\Gamma_V/M_V$（$2.5\%$、$2.7\%$）の数倍に増える。手順 (7)、(8) では、$H\to VV^*$ の幅に式~\eqref{eq:vv} ではなく4フェルミオンの形を使う。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) H -> Z Z* -> Z b bbar
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[photon] (0,0) -- (1.1,0.7); \draw[photon] (0,0) -- (0.7,-0.45);
+  \draw[fermion] (0.7,-0.45) -- (1.35,-0.15); \draw[fermion] (1.35,-0.95) -- (0.7,-0.45);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.7,-0.45) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.3,0.8) {$Z$}; \node[font=\scriptsize] at (0.18,-0.5) {$Z^*$};
+  \node[font=\scriptsize] at (1.55,-0.12) {$b$}; \node[font=\scriptsize] at (1.55,-1.0) {$\bar b$};
+  \node[slab] at (0.1,-1.45) {(a) $V^*$（$R_\xi$）};
+\end{scope}
+% (b) H -> Z G0* -> Z b bbar
+\begin{scope}[shift={(3.3,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[photon] (0,0) -- (1.1,0.7); \draw[scalar] (0,0) -- (0.7,-0.45);
+  \draw[fermion] (0.7,-0.45) -- (1.35,-0.15); \draw[fermion] (1.35,-0.95) -- (0.7,-0.45);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.7,-0.45) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.3,0.8) {$Z$}; \node[font=\scriptsize] at (0.15,-0.52) {$G^0$};
+  \node[font=\scriptsize] at (1.55,-0.12) {$b$}; \node[font=\scriptsize] at (1.55,-1.0) {$\bar b$};
+  \node[slab] at (0.1,-1.45) {(b) Goldstone};
+\end{scope}
+% (c) H -> b bbar*, bbar* -> bbar Z
+\begin{scope}[shift={(6.6,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[fermion] (0,0) -- (1.2,0.7); \draw[fermion] (0.65,-0.38) -- (0,0); \draw[fermion] (1.25,-0.75) -- (0.65,-0.38);
+  \draw[photon] (0.65,-0.38) -- (1.4,-0.05);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.65,-0.38) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.4,0.78) {$b$}; \node[font=\scriptsize] at (1.6,0.02) {$Z$};
+  \node[font=\scriptsize] at (1.45,-0.85) {$\bar b$};
+  \node[slab] at (0.1,-1.45) {(c) $y_b$};
+\end{scope}
+% (d) H -> b* bbar, b* -> b Z
+\begin{scope}[shift={(9.9,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[fermion] (0,0) -- (0.65,0.38); \draw[fermion] (0.65,0.38) -- (1.25,0.75); \draw[fermion] (1.2,-0.7) -- (0,0);
+  \draw[photon] (0.65,0.38) -- (1.4,0.05);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.65,0.38) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.45,0.85) {$b$}; \node[font=\scriptsize] at (1.6,-0.02) {$Z$};
+  \node[font=\scriptsize] at (1.4,-0.78) {$\bar b$};
+  \node[slab] at (0.1,-1.45) {(d) $y_b$};
+\end{scope}
+% (e) H -> W W -> 4 f
+\begin{scope}[shift={(13.3,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[photon] (0,0) -- (0.75,0.5); \draw[photon] (0,0) -- (0.75,-0.5);
+  \draw[fermion] (0.75,0.5) -- (1.4,0.95); \draw[fermion] (1.45,0.25) -- (0.75,0.5);
+  \draw[fermion] (0.75,-0.5) -- (1.45,-0.25); \draw[fermion] (1.4,-0.95) -- (0.75,-0.5);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0.5) {}; \node[vtx] at (0.75,-0.5) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (0.2,0.5) {$W^+$}; \node[font=\scriptsize] at (0.2,-0.5) {$W^-$};
+  \node[font=\scriptsize] at (1.65,1.0) {$\nu_e$}; \node[font=\scriptsize] at (1.65,0.25) {$e^+$};
+  \node[font=\scriptsize] at (1.65,-0.25) {$\mu^-$}; \node[font=\scriptsize] at (1.65,-1.0) {$\bar\nu_\mu$};
+  \node[slab] at (0.2,-1.45) {(e) $H\to4f$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (1) の木の図。(a)〜(d) は一般の $R_\xi$ ゲージの $H\to Zb\bar b$ の4個の図で、(a) の $Z^*$ の伝播関数の $\xi_Z$ の項と (b) の Goldstone の図（質量 $\sqrt{\xi_Z}M_Z$）の $\xi_Z$ の依存は打ち消す。(c)、(d) は湯川結合 $y_b$ で $b$ から $Z$ が出る図で、質量0の極限で (b) とともに消える。(e) は $H\to\nu_ee^+\mu^-\bar\nu_\mu$ で、二つの $W$ の伝播関数に Breit--Wigner の幅を付ける（式~\eqref{eq:h4f}）。}
+\label{fig:hvff}
+\end{figure}
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (1) の検算（\texttt{lo\_feyncalc.wl}、\texttt{lo\_mg5.py}）。記号の比較は差が記号として0、数値の比較は相対の差の絶対値の最大。}
+\label{tab:lochk}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.2cm}l}
+\toprule
+比べたもの & 個数 & 結果 \\
+\midrule
+FeynRules の頂点、FeynArts の模型、UFO と NLO ノートのもの & 93個のクラス、11個のファイル & 同一 \\
+FeynCalc：$H\to f\bar f$ と式~\eqref{eq:lo} & 4 & 0 \\
+FeynCalc：$H\to Vf\bar f'$ の $\partial_{\xi_W}$、$\partial_{\xi_Z}$、質量0で式~\eqref{eq:hvffhand} & 6過程、19個 & 0 \\
+FeynCalc：$H\to4f$ の $\partial_\xi$ と式~\eqref{eq:h4f} & 2過程、4個 & 0 \\
+MadGraph \texttt{compute\_widths} と式~\eqref{eq:lo} & 4 & $2.9\times10^{-15}$ \\
+MadGraph standalone と FeynCalc（3体） & 4過程、28点 & $2.0\times10^{-14}$ \\
+MadGraph standalone と式~\eqref{eq:h4f}（4体、幅あり） & 2過程、12点 & $1.1\times10^{-14}$ \\
+madevent の4レプトンの幅と式~\eqref{eq:h4ffact} & 2 & $2.4\times10^{-4}$（$0.14\sigma$） \\
+Dalitz の積分と式~\eqref{eq:vv}（$G_F$、$\MSbar$） & 4 & $3\times10^{-14}$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (1)：$H\to f\bar f$ の木の幅（\texttt{lo\_widths.py}。MeV）。$\MSbar$ の湯川結合 $y_f(\mu)$ と極質量の湯川結合 $\sqrt2m_f/v_G$、$\beta_f$ は極質量。$\bar m_f=y_f(M_H)v_G/\sqrt2$。}
+\label{tab:lohff}
+\begin{tabular}{llllll}
+\toprule
+$f$ & $\MSbar$、$\mu=M_H$ & $\mu=M_H/2$、$2M_H$ & 極質量の $y_f$ & 比 & $\bar m_f$ [GeV] \\
+\midrule
+$b$ & 1.85423 & $+10.55\%$、$-8.83\%$ & 5.58325 & 0.3321 & 2.7546 \\
+$c$ & 0.087106 & $+9.32\%$、$-7.88\%$ & 0.68677 & 0.1268 & 0.5948 \\
+$\tau$ & 0.247263 & $-1.20\%$、$+1.04\%$ & 0.259140 & 0.9542 & 1.7357 \\
+$\mu$ & 0.000856516 & $-1.20\%$、$+1.04\%$ & 0.000917329 & 0.9337 & 0.10210 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (1)：$H\to VV^*$ と $H\to4f$ の木の幅（\texttt{lo\_widths.py}。MeV、極質量）。$G_F$：$g_V^2=4\sqrt2G_FM_V^2$、$g_{HVV}=g_VM_V$。$\MSbar$：$g(M_H)$、$s^2(M_H)$、$g_{HVV}=g_V^2v_{\mathrm{FJ}}/2$。4フェルミオンは質量0のフェルミオン、Breit--Wigner の幅は同じ結合の LO の値で、$ZZ$ は同種のフェルミオンの干渉を入れない。}
+\label{tab:lohvv}
+\begin{tabular}{llll}
+\toprule
+量 & $WW$ & $ZZ$ & 備考 \\
+\midrule
+式~\eqref{eq:vv}、$G_F$ & 0.797106 & 0.0868916 & Dalitz の積分と $3\times10^{-14}$ \\
+式~\eqref{eq:vv}、$\MSbar$ & 0.870492 & 0.0978307 & $G_F$ の $1.092$、$1.126$ 倍 \\
+$H\to4f$（幅あり）、$G_F$ & 0.843788 & 0.104956 & 式~\eqref{eq:vv} の $+5.86\%$、$+20.79\%$ \\
+\quad 幅を0.1倍 & 0.802218 & 0.0887935 & $+0.64\%$、$+2.19\%$ \\
+$H\to\nu_ee^+\mu^-\bar\nu_\mu$、$e^-e^+\mu^-\mu^+$ & 0.0104171 & 0.000247491 & 幅あり、$G_F$ \\
+\midrule
+質量の効果（$G_F$） & $W^+\tau^-\bar\nu_\tau$：$-0.65\%$ & $Z\tau^-\tau^+$：$-3.98\%$ & 3体、質量0との比 \\
+ & $W^+b\bar c$：$-5.17\%$ & $Zb\bar b$：$-19.55\%$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{現在の状態。}手計算の結果と計画を定めた。手順 (1)〜(8) はこれから行う。
+\paragraph{現在の状態。}手順 (1) を終えた。模型は NLO ノートのものと同一で、木の振幅は一般の $R_\xi$ ゲージで手計算と記号として一致し、MadGraph とは倍精度の丸めの範囲で一致した。分かったことは三つある。(i) $\MSbar$ の湯川結合は $H\to b\bar b$、$c\bar c$ の木の幅を極質量の値の $0.33$、$0.13$ 倍にし、木の $\mu$ の依存は $\pm10\%$ と大きい。(ii) FJ の $v$ で書いた木の $H\to WW^*$、$ZZ^*$ は $G_F$ で書いた木より $9\%$、$13\%$ 大きい。(iii) 幅0の式~\eqref{eq:vv} は、$V$ の幅を入れた4フェルミオンの幅より $WW$ で $6\%$、$ZZ$ で $21\%$ 小さい。手順 (2)〜(8) はこれから行う。
 
 \appendix
 
 \section{木の崩壊幅の導出}\label{app:lo}
 
 $H\to f\bar f$ の振幅 $-i\frac{y_f}{\sqrt2}\bar uv$ の2乗をスピンと色で和をとると、$\sum|\mathcal M|^2=N_c\frac{y_f^2}2\cdot2(M_H^2-4m_f^2)=N_cy_f^2M_H^2\beta_f^2$ になる。2体の位相空間 $\int\dd\Phi_2=\beta_f/(8\pi)$ と $1/(2M_H)$ を掛けると、式~\eqref{eq:lo} になる。$H\to VV^*$ では、$V^*\to f\bar f'$ の不変質量 $q^2$ について $\Gamma=\int\frac{\dd q^2}\pi\frac{\sqrt{q^2}\,\Gamma_{V\to f\bar f'}(q^2)}{(q^2-M_V^2)^2}\Gamma(H\to VV(q^2))$（$\Gamma_{V\to f\bar f'}(q^2)$、$\Gamma(H\to VV(q^2))$ は一方の $V$ の質量を $\sqrt{q^2}$ にした幅）と書き、$\Gamma_V\ll M_V$ の幅を落として $q^2$ と角度を積分すると、関数 $R_T$ になる~\cite{km84}。
+
+$H\to V(p_1)f(p_2)\bar f'(p_3)$ の振幅は、質量0のフェルミオンでは $V^*$ の伝播関数の $q^\mu q^\nu$ の項と Goldstone の図と湯川結合の図が消えるので、$\mathcal M=g_{HVV}\varepsilon^*_\mu(p_1)\frac{-1}{s_{23}-M_V^2}\bar u(p_2)\gamma^\mu(c_LP_L+c_RP_R)v(p_3)$ である（$s_{ij}=(p_i+p_j)^2$。$W$ では $c_L=gV_{ij}/\sqrt2$、$c_R=0$、$Z$ では $c_L=g_Z(T_3-Qs^2)$、$c_R=-g_ZQs^2$）。偏極の和 $-g^{\mu\nu}+p_1^\mu p_1^\nu/M_V^2$ をフェルミオンの跡 $2(c_L^2+c_R^2)(p_2^\mu p_3^\nu+p_2^\nu p_3^\mu-g^{\mu\nu}p_2\cdot p_3)$ と縮約すると
+\begin{equation}
+\sum|\mathcal M|^2=N_cg_{HVV}^2(c_L^2+c_R^2)\frac{s_{23}+4(p_1\cdot p_2)(p_1\cdot p_3)/M_V^2}{(s_{23}-M_V^2)^2}
+\label{eq:hvffhand}
+\end{equation}
+になる。これを Dalitz の領域で $\Gamma=\frac1{256\pi^3M_H^3}\int\dd s_{12}\,\dd s_{23}\sum|\mathcal M|^2$ と積分し、フェルミオンと電荷の割り当てで和をとると、式~\eqref{eq:vv} になる。
+
+4体の $H\to f_1(p_1)\bar f_2(p_2)f_3(p_3)\bar f_4(p_4)$（$V_1\to f_1\bar f_2$、$V_2\to f_3\bar f_4$、質量0）では
+\begin{equation}
+\begin{gathered}
+\sum|\mathcal M|^2=16N_{c1}N_{c3}g_{HVV}^2\frac{(c_{L1}^2c_{L3}^2+c_{R1}^2c_{R3}^2)(p_1\cdot p_3)(p_2\cdot p_4)+(c_{L1}^2c_{R3}^2+c_{R1}^2c_{L3}^2)(p_1\cdot p_4)(p_2\cdot p_3)}{|D(s_{12})D(s_{34})|^2},\\
+D(s)=s-M_V^2+iM_V\Gamma_V
+\end{gathered}
+\label{eq:h4f}
+\end{equation}
+である。フェルミオンの角度を積分すると、伝播関数の $q^\mu q^\nu$ の項は流れの上で消え、$V$ の崩壊の部分は $\sqrt{q^2}$ の質量の $V$ の幅になるので、
+\begin{equation}
+\begin{gathered}
+\Gamma=\int\frac{\dd q_1^2}\pi\int\frac{\dd q_2^2}\pi\frac{\sqrt{q_1^2}\,\Gamma_1(q_1^2)}{|D(q_1^2)|^2}\frac{\sqrt{q_2^2}\,\Gamma_2(q_2^2)}{|D(q_2^2)|^2}\Gamma(H\to V(q_1)V(q_2)),\\
+\Gamma_i(q^2)=N_{ci}(c_{Li}^2+c_{Ri}^2)\frac{\sqrt{q^2}}{24\pi},\qquad
+\Gamma(H\to V(q_1)V(q_2))=g_{HVV}^2\Bigl[2+\frac{(k_1\cdot k_2)^2}{q_1^2q_2^2}\Bigr]\frac{\lambda^{1/2}(M_H^2,q_1^2,q_2^2)}{16\pi M_H^3}
+\end{gathered}
+\label{eq:h4ffact}
+\end{equation}
+になる（$k_1\cdot k_2=(M_H^2-q_1^2-q_2^2)/2$。数値の積分では $q^2=M_V^2+M_V\Gamma_V\tan\theta$ と置く）。幅を0にすると、一方の $V$ の Breit--Wigner は $\pi\delta(q^2-M_V^2)/(M_V\Gamma_V)$ になり、分岐比を掛けた式~\eqref{eq:vv} に戻る。
 
 \begin{thebibliography}{99}
 \bibitem{smnote} 標準模型：$\MSbar$ の電弱の1ループの繰り込みと検算（$V_{\mathrm{CKM}}=1$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}）。

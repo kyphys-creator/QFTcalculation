@@ -1,0 +1,25 @@
+channel,couplings,quantity,width_GeV
+WW*,G_F,dalitz_massless,7.9710631789e-04
+WW*,G_F,eq_vv,7.9710631789e-04
+ZZ*,G_F,dalitz_massless,8.6891562441e-05
+ZZ*,G_F,eq_vv,8.6891562441e-05
+WW*,MS-bar,dalitz_massless,8.7049154829e-04
+WW*,MS-bar,eq_vv,8.7049154829e-04
+ZZ*,MS-bar,dalitz_massless,9.7830670464e-05
+ZZ*,MS-bar,eq_vv,9.7830670464e-05
+W+ tau- nutaubar,G_F,massive,4.3994490325e-05
+W+ tau- nutaubar,G_F,massless,4.4283684327e-05
+W+ b cbar,G_F,massive,1.2598726940e-04
+W+ b cbar,G_F,massless,1.3285105298e-04
+Z tau- tau+,G_F,massive,2.8648988031e-06
+Z tau- tau+,G_F,massless,2.9835809585e-06
+Z b bbar,G_F,massive,1.0631245535e-05
+Z b bbar,G_F,massless,1.3214855384e-05
+WW->4f,G_F,bw_width_x0.1,8.0221830545e-04
+ZZ->4f,G_F,bw_width_x0.1,8.8793546706e-05
+WW->4f,G_F,bw_lo_width,8.4378843743e-04
+ZZ->4f,G_F,bw_lo_width,1.0495637897e-04
+nue e+ mu- numubar,G_F,bw_lo_width,1.0417141203e-05
+e- e+ mu- mu+,G_F,bw_lo_width,2.4749092286e-07
+Gamma_W,G_F,lo,2.0442544035e+00
+Gamma_Z,G_F,lo,2.4432732429e+00
