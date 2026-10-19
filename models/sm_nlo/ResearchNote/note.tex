@@ -46,7 +46,6 @@
   blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
 }
 
-
 \title{標準模型の NLO の物理量：実の放射を含む崩壊幅と電弱の精密測定\\（$\MSbar$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）}
 \author{}
 \date{2026年10月18日}
@@ -55,7 +54,7 @@
 \maketitle
 
 \begin{abstract}
-標準模型のノート~\cite{smnote}（以下 SM ノート）と CKM 行列のノート~\cite{ckmnote}（以下 CKM ノート）は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、一般の $R_\xi$ ゲージの1ループの振幅が紫外で有限でゲージによらないことを確かめ、MadLoop の仮想の補正と赤外の極まで突き合わせた。ただし、どちらも実の光子やグルーオンの放射を足していないので、赤外で有限な物理量（崩壊幅、断面積）はまだ一つも求めていない。本ノートでは、CKM ノートの模型ファイル（\texttt{SM\_CKM.fr}）と同じ処方、道具で、実の放射を含む NLO の崩壊幅と、$Z$ 極の電弱の精密測定の量を求める。対象は $Z\to f\bar f$、$W^+\to f\bar f'$、$t\to bW^+$ の幅、$Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$、$R_\ell$、$R_b$、$\rho$ パラメータと $M_W$ の予言である。手計算では、$\MSbar$ の結合と極質量の運動学で書いた木の幅、仮想と実の放射の赤外の極の構造（質量0の放射体の二重極と、質量のある二つの放射体の軟い極）、質量0のフェルミオン対への崩壊の包括的な補正 $\frac34C\alpha/\pi$（QCD では $\alpha_s/\pi$）、トップとボトムの二重項の $\Delta\rho=3y_t^2/(2K)$（$K=(4\pi)^2$。FJ のタドポールは打ち消す）を述べ、八つの手順の計画を定めた。手順 (1) では、CKM ノートの模型ファイルから書き出した FeynArts の模型と UFO が CKM ノートのものと同一であること、2体の崩壊の振幅の2乗が19個とも手計算の式と記号として一致すること、$\MSbar$ の結合と極質量の運動学をそろえた MadGraph の27個の部分幅が式と相対 $2\times10^{-15}$ で一致することを確かめた。木の $\Gamma_Z=2.428$~GeV は測定値より $2.7\%$ 小さく、差はほぼハドロンの幅の QCD の補正の大きさである。
+標準模型のノート~\cite{smnote}（以下 SM ノート）と CKM 行列のノート~\cite{ckmnote}（以下 CKM ノート）は、$\MSbar$ のパラメータと Fleischer--Jegerlehner（FJ）のタドポールの処方で、一般の $R_\xi$ ゲージの1ループの振幅が紫外で有限でゲージによらないことを確かめ、MadLoop の仮想の補正と赤外の極まで突き合わせた。ただし、どちらも実の光子やグルーオンの放射を足していないので、赤外で有限な物理量（崩壊幅、断面積）はまだ一つも求めていない。本ノートでは、CKM ノートの模型ファイル（\texttt{SM\_CKM.fr}）と同じ処方、道具で、実の放射を含む NLO の崩壊幅と、$Z$ 極の電弱の精密測定の量を求める。対象は $Z\to f\bar f$、$W^+\to f\bar f'$、$t\to bW^+$ の幅、$Z$ の有効結合と $\sin^2\theta_{\mathrm{eff}}$、$R_\ell$、$R_b$、$\rho$ パラメータと $M_W$ の予言である。手計算では、$\MSbar$ の結合と極質量の運動学で書いた木の幅、仮想と実の放射の赤外の極の構造（質量0の放射体の二重極と、質量のある二つの放射体の軟い極）、質量0のフェルミオン対への崩壊の包括的な補正 $\frac34C\alpha/\pi$（QCD では $\alpha_s/\pi$）、トップとボトムの二重項の $\Delta\rho=3y_t^2/(2K)$（$K=(4\pi)^2$。FJ のタドポールは打ち消す）を述べ、八つの手順の計画を定めた。手順 (1) では、CKM ノートの模型ファイルから書き出した FeynArts の模型と UFO が CKM ノートのものと同一であること、2体の崩壊の振幅の2乗が19個とも手計算の式と記号として一致すること、$\MSbar$ の結合と極質量の運動学をそろえた MadGraph の27個の部分幅が式と相対 $2\times10^{-15}$ で一致することを確かめた。木の $\Gamma_Z=2.428$~GeV は測定値より $2.7\%$ 小さく、差はほぼハドロンの幅の QCD の補正の大きさである。手順 (2) では、質量0のフェルミオン対の実の放射と仮想の補正を $\epsilon$ について厳密に求め、極が記号として消えて $\frac34C\alpha/\pi$ が残ることを確かめた。放射する粒子に質量を与えた $d=4$ の独立な計算でも、和は同じ値に $10^{-14}$ まで近づいた。MadGraph の木の3体の振幅の2乗も、式と相対 $6\times10^{-14}$ で一致した。計画の式の有限部分は規格化を定めておらず、$\pm\pi^2$ が抜けていたので直した。この補正を木の幅に掛けると、$\Gamma_Z$ と測定値の差は $-0.16\%$ に、ハドロンの幅の差は $-0.29\%$ に縮む。
 \end{abstract}
 
 \tableofcontents
@@ -117,19 +116,20 @@ $Z$ の $f\bar f$ への結合を $-i\frac{g_Z}2\gamma^\mu(v_f-a_f\gamma_5)$、$
 \end{equation}
 を掛けたものになり、その位相空間の積分の赤外の極が式~\eqref{eq:softpole} と符号が逆になって、$\Gamma_V+\Gamma_R$ の極が消える。共線の発散は質量が切るので、$\ln(m^2/M^2)$ が有限部分に残るが、包括的な幅では仮想と実の放射の間で打ち消し、$m\to0$ で有限になる（KLN）。
 
-\paragraph{質量0の放射体。}質量0のフェルミオン対では、軟らかい極と共線の極が重なり、二重極になる。共通の因子 $(4\pi\mu^2/M^2)^\epsilon H(\epsilon)$（$H(\epsilon)=1+O(\epsilon^2)$）を除いて~\cite{esw96}
+\paragraph{質量0の放射体。}質量0のフェルミオン対では、軟らかい極と共線の極が重なり、二重極になる。$\Gamma_0$ を $d$ 次元の木の幅とし、共通の因子を
+$N_\epsilon=\frac{\alpha C}{2\pi}\bigl(\frac{4\pi\mu^2}{M^2}\bigr)^\epsilon\frac1{\Gamma(1-\epsilon)}$ とすると~\cite{esw96}
 \begin{equation}
-\Gamma_V=\Gamma_0\frac{\alpha C}{2\pi}\Bigl(\frac{4\pi\mu^2}{M^2}\Bigr)^\epsilon H(\epsilon)\Bigl(-\frac2{\epsilon^2}-\frac3\epsilon-8\Bigr),\qquad
-\Gamma_R=\Gamma_0\frac{\alpha C}{2\pi}\Bigl(\frac{4\pi\mu^2}{M^2}\Bigr)^\epsilon H(\epsilon)\Bigl(\frac2{\epsilon^2}+\frac3\epsilon+\frac{19}2\Bigr)
+\Gamma_V=\Gamma_0N_\epsilon\Bigl(-\frac2{\epsilon^2}-\frac3\epsilon-8+\pi^2\Bigr),\qquad
+\Gamma_R=\Gamma_0N_\epsilon\Bigl(\frac2{\epsilon^2}+\frac3\epsilon+\frac{19}2-\pi^2\Bigr)
 \label{eq:masslessVR}
 \end{equation}
-で、和は
+（$O(\epsilon)$ を除く。$\epsilon$ について厳密な形は \ref{app:ir}）で、和は
 \begin{equation}
 \Gamma=\Gamma_0\Bigl(1+\frac34\frac{\alpha C}\pi\Bigr),\qquad
 C=C_F=\tfrac43\ (\text{グルーオン}：1+\tfrac{\alpha_s}\pi),\qquad C=Q_f^2\ (\text{$Z\to f\bar f$ の光子})
 \label{eq:inclusive}
 \end{equation}
-になる（\ref{app:ir}）。ベクトルと軸性ベクトルの結合は質量0では同じ補正を受ける。$W^+\to\ell^+\nu$ では光子が $W$ にも付くので、光子の部分だけを取り出した補正は単独ではゲージによらず、弱い補正と合わせて初めて意味を持つ。
+になる（\ref{app:ir}）。有限部分の $\pm\pi^2$ は $N_\epsilon$ の $\epsilon^2$ の項の取り方で変わるが、二つで符号が逆なので和にはよらない。ベクトルと軸性ベクトルの結合は質量0では同じ補正を受ける。$W^+\to\ell^+\nu$ では光子が $W$ にも付くので、光子の部分だけを取り出した補正は単独ではゲージによらず、弱い補正と合わせて初めて意味を持つ。
 
 \subsection{$\rho$ パラメータ}\label{sec:rho}
 
@@ -181,7 +181,7 @@ $\Delta\rho$ \eqref{eq:drho}、$M_W$ & 第~\ref{sec:rho} 節 & 自己エネル�
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約1分）でまとめて再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトは \texttt{Src/} にあり、手順 (1) は \texttt{run\_lo\_check.sh}（約1分）で、手順 (2) はその後に \texttt{run\_ir\_check.sh}（約4分）で、まとめて再実行できる。
 
 \paragraph{手順 (1)：木の幅。}(a) 模型。\texttt{generate\_SM\_CKM.wl} で、写した \texttt{SM\_CKM.fr} から FeynRules の頂点と FeynArts の模型と UFO を書き出した（CKM ノートと同じく UFO を先に書く）。93個の頂点のクラスは CKM ノートの FeynRules の出力と同一で（Mathematica の \texttt{===}）、FeynArts の模型の3個のファイルと UFO の8個のファイルも、日付と場所の行を除いて CKM ノートのものと同一だった。
 
@@ -238,9 +238,59 @@ $\Gamma(H\to\tau^+\tau^-)$ & 0.000247 & $-1.20\%$ & $+1.04\%$ & \\
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (2)：質量0のフェルミオン対の赤外の極。}(a) 実の放射の振幅。\texttt{ir\_massless\_feyncalc.wl} は、$Z\to f\bar f\gamma$ の2個の図の振幅の2乗を FeynCalc で $d$ 次元のまま求める。流れ $\gamma^\mu$ と $\gamma^\mu\gamma_5$ は別々に扱い（$\gamma_5$ は反可換）、二つの偏極の和は $-g$ とする（流れが保存するので）。比 $r$ は \ref{app:ir} の式と記号として一致し、軸性ベクトルでも同じだった。$d=4$ では、本ノートの FeynArts の模型の $Z\to\mu^-\mu^+\gamma$ と $Z\to u\bar ug$ の振幅の2乗が、木の結合と $r$ の積と記号として一致した（グルーオンは色の因子 $C_F=4/3$）。\texttt{ir\_mg5.py} では、MadGraph の木の $|\mathcal M|^2$ を同じ式と比べた（UFO、手順 (1) の $Z$ の param\_card で $m_\mu=0$）。点は Dalitz の平面の7点で、中心から軟らかい端と共線の端の近く（$y=10^{-4}$）までとった。14個の値は相対 $6\times10^{-14}$ 以内で一致した（端に近い点ほど、運動量の丸めで桁を落とす）。MadGraph の Fortran の param\_card の読み込みは値を20文字で切るので、card の値は14桁で書いた（17桁で書くと値が切れて読めない）。
+
+(b) 実の放射の積分。$d$ 次元の3体の位相空間を $y_{ij}$ の Dirichlet の積分にして（\ref{app:ir}）、$\Gamma_R/\Gamma_0$ を $\epsilon$ について厳密に求めた（式~\eqref{eq:irexact}）。展開は $N_\epsilon(2/\epsilon^2+3/\epsilon+19/2-\pi^2)$ だった。
+
+(c) 仮想の補正。頂点の補正を TID で $B_0$ と $C_0$ に帰着させた。質量0の $C_0$ を $B_0$ で書くと、$\mathcal M_1/\mathcal M_0$ は $B_0$ と $\epsilon$ の有理式の積になった（ベクトルと軸性ベクトルで同じ）。$B_0$ の位相の実部をとると式~\eqref{eq:irexact} の $\Gamma_V$ になり、展開は $N_\epsilon(-2/\epsilon^2-3/\epsilon-8+\pi^2)$ だった。
+
+(d) 和。$\Gamma_V+\Gamma_R$ の $1/\epsilon^2$ と $1/\epsilon$ は記号として消えた。残りは $\Gamma_0N_\epsilon\cdot\frac32+O(\epsilon)$ で、式~\eqref{eq:inclusive} の $\frac34\alpha C/\pi$ である（グルーオンでは $C=C_F$ なので $\alpha_s/\pi$）。ここで手計算の誤りが一つ見つかった。計画を立てたときの式~\eqref{eq:masslessVR} は、共通の因子を $(4\pi\mu^2/M^2)^\epsilon H(\epsilon)$（$H=1+O(\epsilon^2)$）とし、有限部分を $-8$ と $19/2$ としていた。しかし有限部分は因子の $\epsilon^2$ の項で符号を逆にしてずれるので、$H$ を定めない有限部分には意味がない。さらに $1/\Gamma(1-\epsilon)$ には $O(\epsilon)$ の項がある。そこで式~\eqref{eq:masslessVR} を $N_\epsilon$ の形に直した。有限部分は $-8+\pi^2$ と $19/2-\pi^2$ で、文献~\cite{esw96}の値と同じである。和は因子の取り方によらないので、式~\eqref{eq:inclusive} は変わらない。
+
+(e) 光子の質量。\texttt{ir\_photonmass.wl} は独立な正則化として、放射する粒子に質量 $\lambda$ を与え（$w=\lambda^2/M^2$。フェルミオンは質量0のまま）、$d=4$ で計算する。軟らかい領域も共線の領域も $\lambda$ で切れるので、$\Gamma_V$ と $\Gamma_R$ は別々に有限になる。仮想の補正は、頂点と場の定数 $\delta Z=\Sigma_V(0)$（$\Sigma(p)=\slashed p\,\Sigma_V(p^2)$）を、TID と Package-X（FeynHelpers）で解析的に求めた。紫外の極は二つの間で記号として消え（Ward の恒等式）、$\mu$ も消えて、
+\begin{equation*}
+\frac{\Gamma_V}{\Gamma_0}=\frac{\alpha C}{2\pi}\Bigl[-\frac72-2w-(3+2w)\ln w-(1+w)^2\Bigl(\ln^2w+2\re\mathrm{Li}_2(1+w)-\frac{2\pi^2}3\Bigr)\Bigr]
+\end{equation*}
+になった。実の放射は、質量 $\lambda$ の放射の $|\mathcal M_R|^2$ を Dalitz の平面で数値で積分した（NIntegrate、30桁、精度の目標 $10^{-13}$。$w=0$ で $r$ に戻ることを記号で確かめた）。結果は表~\ref{tab:photonmass} の通りである。二つはそれぞれ $\ln^2w$ で発散するが、和は $w\to0$ で $\frac{\alpha C}{2\pi}\cdot\frac32$ に近づいた。差は $w=10^{-4}$ で $-1.5\times10^{-8}$、$10^{-6}$ で $-1.5\times10^{-12}$（$\approx-1.5w^2$）で、$w\le10^{-8}$ では積分の精度の $10^{-14}$ 程度だった。$\Gamma_V$ は上の式の $w\to0$ の形 $\frac{\alpha C}{2\pi}(-\ln^2w-3\ln w-\frac72+\frac{\pi^2}3)$（$\mathrm{Li}_2(1)=\pi^2/6$）に、$\Gamma_R$ はそれと和が $\frac32$ になる形に、$2w\ln^2w$ 程度の差で近づく。
+
+(f) 物理。\texttt{ir\_inclusive.py} で、式~\eqref{eq:inclusive} を手順 (1) の木の幅に掛けた（$\hat\alpha(M)$、$\alpha_s(M)$。クォークの質量は木の幅にだけ入れる）。結果は表~\ref{tab:inclusive} の通りである。ハドロンの幅は $\alpha_s/\pi=3.73\%$ で $1.7394$~GeV になり、測定値との差は $-3.9\%$ から $-0.29\%$ に縮んだ。$\Gamma_Z$ の差は $-2.7\%$ から $-0.16\%$ に、$R_\ell$ は $-3.7\%$ から $-0.25\%$ に縮んだ。レプトンの幅は QED の $+0.19\%$ で、差は $-0.02\%$ になった。$\Gamma_W$ には QCD の因子だけを掛けた（光子は $W$ にも付くので、QED の部分だけではゲージによらない）。$2.0864$~GeV で、測定値 $2.085\pm0.042$~GeV と合う。残りの差は、$(\alpha_s/\pi)^2=0.14\%$ の大きさの高次の QCD の補正、手順 (3) の質量の補正、手順 (4)、(5) の電弱の補正の大きさである。見えない幅の $+0.28\%$ は QED と QCD の補正を受けないので、電弱の補正だけで決まる。式~\eqref{eq:inclusive} は $\mu$ によらないので、木の幅の $\mu$ の依存は手順 (4) の電弱の補正で打ち消されるはずである。
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (2)：光子の質量 $\lambda$ で正則化した仮想の補正と実の放射（\texttt{ir\_photonmass.wl}。$w=\lambda^2/M^2$、$\Gamma_0\frac{\alpha C}{2\pi}$ を単位とする）。和は $w\to0$ で $\frac32$ になるはずである。}
+\label{tab:photonmass}
+\begin{tabular}{rrrr}
+\toprule
+$w$ & $\Gamma_V$ & $\Gamma_R$ & $\Gamma_V+\Gamma_R-\frac32$ \\
+\midrule
+$10^{-4}$ & $-57.426189745079$ & $58.926189730086$ & $-1.5\times10^{-8}$ \\
+$10^{-6}$ & $-149.632311326793$ & $151.132311326792$ & $-1.5\times10^{-12}$ \\
+$10^{-8}$ & $-284.269575465696$ & $285.769575465696$ & $5\times10^{-15}$ \\
+$10^{-10}$ & $-461.322390230102$ & $462.822390230102$ & $1\times10^{-14}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (2)：式~\eqref{eq:inclusive} を木の幅（表~\ref{tab:lo}）に掛けた値（\texttt{ir\_inclusive.py}。GeV）。測定値は PDG 2024~\cite{pdg24}（参照）。括弧は測定値との差。}
+\label{tab:inclusive}
+\begin{tabular}{llll}
+\toprule
+量 & 木 & 式~\eqref{eq:inclusive} を掛けた値 & 測定値（参照） \\
+\midrule
+$\Gamma(Z\to\ell^+\ell^-)$ & 0.083814（$-0.20\%$） & 0.083971（$-0.02\%$） & $0.083984\pm0.000086$ \\
+$\Gamma(Z\to\nu\bar\nu)\times3$ & 0.500412（$+0.28\%$） & 0.500412（$+0.28\%$） & $0.4990\pm0.0015$ \\
+$\Gamma(Z\to\mathrm{hadrons})$ & 1.676229（$-3.91\%$） & 1.739392（$-0.29\%$） & $1.7444\pm0.0020$ \\
+$\Gamma_Z$ & 2.427894（$-2.71\%$） & 2.491527（$-0.16\%$） & $2.4955\pm0.0023$ \\
+$R_\ell$ & 19.9993（$-3.70\%$） & 20.7142（$-0.25\%$） & $20.767\pm0.025$ \\
+$\Gamma_W$（QCD だけ） & 2.034973（$-2.40\%$） & 2.086368（$+0.07\%$） & $2.085\pm0.042$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{現在の状態。}手計算の結果と計画を定め、手順 (1) を行った。手順 (2)〜(8) はこれから行う。
+\paragraph{現在の状態。}手計算の結果と計画を定め、手順 (1)、(2) を行った。手順 (2) では、計画の式~\eqref{eq:masslessVR} の有限部分の誤り（規格化を定めず、$\pm\pi^2$ が抜けていた）を見つけて直した。手順 (3)〜(8) はこれから行う。
 
 \appendix
 
@@ -250,11 +300,24 @@ $Z\to f\bar f$ の振幅 $-i\frac{g_Z}2\bar u\gamma^\mu(v-a\gamma_5)v\,\varepsil
 
 \section{赤外の極の打ち消し}\label{app:ir}
 
-質量0のフェルミオン対では、$x_{1,2}=2E_{1,2}/M$（崩壊する粒子の静止系）として、実の放射の振幅の2乗は $d$ 次元で
+質量0のフェルミオン対では、$x_i=2E_i/M$（崩壊する粒子の静止系。$x_1+x_2+x_3=2$、3が光子またはグルーオン）として、実の放射の振幅の2乗は $d$ 次元で
 \begin{equation*}
-\overline{|\mathcal M_R|^2}\propto\frac{x_1^2+x_2^2-\epsilon(2-x_1-x_2)^2}{(1-x_1)(1-x_2)}
+r\equiv\frac{M^2\sum|\mathcal M_R|^2}{e^2Q_f^2\sum|\mathcal M_0|^2}=\frac{2\bigl[x_1^2+x_2^2-\epsilon(2-x_1-x_2)^2\bigr]}{(1-x_1)(1-x_2)}
 \end{equation*}
-の形になる（ベクトルの流れ。軸性ベクトルでも質量0では同じ）。$d$ 次元の3体の位相空間は $\dd x_1\dd x_2[(1-x_1)(1-x_2)(1-x_3)]^{-\epsilon}$ を含み、$x_{1,2}\to1$ の端の積分が $1/\epsilon$、$1/\epsilon^2$ を与えて、式~\eqref{eq:masslessVR} の $\Gamma_R$ になる~\cite{esw96}。仮想の補正は、質量0のフェルミオンの流れの1ループの形状因子（光子またはグルーオンの交換と、場の繰り込み。質量0では場の定数は次元正則化で0）である。二つの和で $1/\epsilon^2$ と $1/\epsilon$ が消え、有限部分 $\frac{\alpha C}{2\pi}(\frac{19}2-8)=\frac34\frac{\alpha C}\pi$ が残る。手順 (2) でこれを記号として確かめる。
+になる（ベクトルの流れ。軸性ベクトルでも質量0では同じ。グルーオンでは $e^2Q_f^2\to g_s^2C_F$）。$y_{ij}=s_{ij}/M^2$（$y_{23}=1-x_1$、$y_{13}=1-x_2$、$y_{12}=1-x_3$）で、$d$ 次元の3体と2体の位相空間は
+\begin{equation*}
+\int\dd\Phi_3=\frac{M^2}{2(4\pi)^3}\Bigl(\frac{4\pi}{M^2}\Bigr)^{2\epsilon}\frac1{\Gamma(2-2\epsilon)}\int\dd y_{13}\dd y_{23}\,(y_{12}y_{13}y_{23})^{-\epsilon},\qquad
+\int\dd\Phi_2=\Bigl(\frac{4\pi}{M^2}\Bigr)^\epsilon\frac{\Gamma(1-\epsilon)}{8\pi\Gamma(2-2\epsilon)}
+\end{equation*}
+である。$r$ を $y_{12}$、$y_{13}$、$y_{23}$ の単項式の和 $2[y_{13}/y_{23}+y_{23}/y_{13}+2y_{12}/(y_{13}y_{23})-\epsilon(y_{13}/y_{23}+y_{23}/y_{13}+2)]$ に書くと、積分は Dirichlet の積分 $\int y_{12}^{a-1}y_{13}^{b-1}y_{23}^{c-1}=\Gamma(a)\Gamma(b)\Gamma(c)/\Gamma(a+b+c)$ になる。$y_{13},y_{23}\to0$ の端が $1/\epsilon^2$ と $1/\epsilon$ を与える。仮想の補正は、質量0のフェルミオンの流れの1ループの形状因子である（光子またはグルーオンの交換。場の定数はスケールのない積分で0）。TID で $B_0(M^2;0,0)$ と $C_0(0,0,M^2;0,0,0)=2(d-3)B_0/((4-d)M^2)$ に帰着し、$\mathcal M_1/\mathcal M_0=\frac{\alpha C}{4\pi}\bigl[-(2-\epsilon+2\epsilon^2)/\epsilon\bigr]B_0$、$B_0=(4\pi\mu^2/M^2)^\epsilon\Gamma(\epsilon)\Gamma(1-\epsilon)^2e^{i\pi\epsilon}/\Gamma(2-2\epsilon)$ になる。結果は $\epsilon$ について厳密に
+\begin{equation}
+\begin{aligned}
+\frac{\Gamma_R}{\Gamma_0}&=\frac{\alpha C}{2\pi}\Bigl(\frac{4\pi\mu^2}{M^2}\Bigr)^\epsilon\frac{6(1-\epsilon)(1-2\epsilon)(2-2\epsilon+\epsilon^2)\Gamma(1-\epsilon)^2}{\epsilon^2\,\Gamma(4-3\epsilon)},\\
+\frac{\Gamma_V}{\Gamma_0}&=-\frac{\alpha C}{2\pi}\Bigl(\frac{4\pi\mu^2}{M^2}\Bigr)^\epsilon\frac{(2-\epsilon+2\epsilon^2)\Gamma(1+\epsilon)\Gamma(1-\epsilon)^2\cos\pi\epsilon}{\epsilon^2\,\Gamma(2-2\epsilon)}
+\end{aligned}
+\label{eq:irexact}
+\end{equation}
+で（$\cos\pi\epsilon$ は $(-M^2-i0)^{-\epsilon}$ の位相から）、$1/\Gamma(1-\epsilon)$ を除いて展開すると式~\eqref{eq:masslessVR} になる。和は $N_\epsilon\cdot\frac32+O(\epsilon)$ で、式~\eqref{eq:inclusive} の $\frac34\frac{\alpha C}\pi$ である。
 
 \begin{thebibliography}{99}
 \bibitem{smnote} 標準模型：$\MSbar$ の電弱の1ループの繰り込みと検算（$V_{\mathrm{CKM}}=1$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}、2026年10月17日の版）。式、表、手順の番号はこの版のもの。
