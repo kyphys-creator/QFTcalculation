@@ -44,6 +44,7 @@
       \draw (path picture bounding box.north west) -- (path picture bounding box.south east)
             (path picture bounding box.south west) -- (path picture bounding box.north east);}},
   blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
+  eftv/.style={rectangle,fill=black,inner sep=2.2pt},
 }
 
 
@@ -465,12 +466,65 @@ MadLoop、CKM ノートの点 & $4.7\times10^{-14}$ & $6.0\times10^{-14}$ & $1.1
 
 \subsection{手順 (3)：質量0の $H\to q\bar q$ の QCD の補正}\label{sec:step3}
 
-\paragraph{(a) $d$ 次元で厳密に。}\texttt{hqq\_massless\_feyncalc.wl} は、NLO ノートの手順 (2) の計算を、$Z$ のベクトルの流れからヒッグスのスカラーの流れ（湯川の頂点、単位行列）に替えて行う。放射するボソンは $eQ\gamma^\rho$ で結合し、グルーオンでは $\alpha C=\alpha_sC_F$、光子では $\alpha Q_f^2$ である。木の $\sum|\mathcal M_0|^2$（結合と色を除く）は $2M_H^2$ で、実の放射 $H\to q\bar qg$ の2個の図の2乗の和は $d$ 次元で
+\paragraph{(a) $d$ 次元で厳密に。}\texttt{hqq\_massless\_feyncalc.wl} は、NLO ノートの手順 (2) の計算を、$Z$ のベクトルの流れからヒッグスのスカラーの流れ（湯川の頂点、単位行列）に替えて行う。図は図~\ref{fig:hqqnlo} にある。放射するボソンは $eQ\gamma^\rho$ で結合し、グルーオンでは $\alpha C=\alpha_sC_F$、光子では $\alpha Q_f^2$ である。木の $\sum|\mathcal M_0|^2$（結合と色を除く）は $2M_H^2$ で、実の放射 $H\to q\bar qg$ の2個の図の2乗の和は $d$ 次元で
 \begin{equation}
 r=\frac{M_H^2\sum|\mathcal M_R|^2}{e^2Q^2\sum|\mathcal M_0|^2}=\frac{2[(1-\epsilon)(1+y_{12}^2)+2\epsilon y_{12}]}{y_{13}y_{23}},\qquad y_{ij}=\frac{s_{ij}}{M_H^2}
 \label{eq:hqqr}
 \end{equation}
 になった（$d=4$ では $2(M_H^4+s_{12}^2)/(s_{13}s_{23})$）。4次元の値は本ノートの FeynArts の模型の $H\to u\bar ug$、$\mu^-\mu^+\gamma$（質量0、湯川結合は独立の記号）の2乗と記号として一致した。$d$ 次元の3体の位相空間を Dirichlet の積分で、頂点の補正を \texttt{TID} の $B_0(M_H^2,0,0)$、$C_0(0,0,M_H^2,0,0,0)$ で、$\epsilon$ について厳密に求めると、$N(\epsilon)=\frac{\alpha C}{4\pi}(\frac{4\pi\mu^2}{M_H^2})^\epsilon/\Gamma(1-\epsilon)$ を単位にして、実の放射は $\frac4{\epsilon^2}+\frac6\epsilon+21-2\pi^2$、頂点は $-\frac4{\epsilon^2}-4+2\pi^2$、$\MSbar$ の湯川結合の対抗項 $2\delta y/y$ は $-\frac6\epsilon+6\ln\frac{\mu^2}{M_H^2}$ になる（$O(\epsilon^0)$ まで。厳密な形は \ref{app:hqq}）。仮想の補正と実の放射は単独では赤外で発散するが、とても軟らかいグルーオンやクォークと同じ向きに出るグルーオンを出した崩壊は、出さない崩壊と区別できないので、意味を持つのは二つの和である。和は極を持たず、$17+6\ln\frac{\mu^2}{M_H^2}$（$\epsilon^0$ の項。$O(\epsilon)$ も求めた）で、式~\eqref{eq:hqq} の $C_F\frac{\alpha_s}\pi(\frac{17}4+\frac32\ln\frac{\mu^2}{M_H^2})$ に一致した。頂点の単極は0だが、これは紫外の $+\frac6\epsilon$ と赤外の $-\frac6\epsilon$ の和で（質量0の自己エネルギーは0なので区別できない。(b) で分かれる）、赤外の分が実の放射の $+\frac6\epsilon$ を、紫外の分が対抗項の $-\frac6\epsilon$ を打ち消す。$Z$ のベクトルの流れは保存するので紫外で有限だったが、スカラーの流れは繰り込みが要る点が違う。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) vertex correction
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.7,0.45); \draw[fermion] (0.7,0.45) -- (1.35,0.87);
+  \draw[fermion] (0.7,-0.45) -- (0,0); \draw[fermion] (1.35,-0.87) -- (0.7,-0.45);
+  \draw[gluon] (0.7,0.45) -- (0.7,-0.45);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.7,0.45) {}; \node[vtx] at (0.7,-0.45) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.55,0.95) {$q$}; \node[font=\scriptsize] at (1.55,-0.95) {$\bar q$}; \node[font=\scriptsize] at (1.0,0) {$g$};
+  \node[slab] at (0.1,-1.45) {(a) 頂点の補正};
+\end{scope}
+% (b) self-energy on the q leg
+\begin{scope}[shift={(3.4,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[thick] (0,0) -- (0.3,0.19); \draw[thick] (0.3,0.19) -- (1.0,0.64); \draw[fermion] (1.0,0.64) -- (1.6,1.02);
+  \draw[fermion] (1.35,-0.87) -- (0,0);
+  \draw[gluon] (0.3,0.19) to[bend left=80] (1.0,0.64);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.3,0.19) {}; \node[vtx] at (1.0,0.64) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.8,1.08) {$q$}; \node[font=\scriptsize] at (1.55,-0.95) {$\bar q$}; \node[font=\scriptsize] at (0.2,0.85) {$g$};
+  \node[slab] at (0.1,-1.45) {(b) 外線の自己エネルギー};
+\end{scope}
+% (c) MS-bar Yukawa counterterm
+\begin{scope}[shift={(6.8,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[fermion] (0,0) -- (1.2,0.75); \draw[fermion] (1.2,-0.75) -- (0,0);
+  \node[ctv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.4,0.85) {$q$}; \node[font=\scriptsize] at (1.4,-0.85) {$\bar q$}; \node[font=\scriptsize] at (0.1,0.42) {$\delta\bar y_q$};
+  \node[slab] at (0.1,-1.45) {(c) 湯川結合の対抗項};
+\end{scope}
+% (d) real emission off q
+\begin{scope}[shift={(10.2,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0.38); \draw[fermion] (0.6,0.38) -- (1.3,0.82); \draw[fermion] (1.25,-0.78) -- (0,0);
+  \draw[gluon] (0.6,0.38) -- (1.45,0.1);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.38) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.5,0.9) {$q$}; \node[font=\scriptsize] at (1.65,0.1) {$g$}; \node[font=\scriptsize] at (1.45,-0.85) {$\bar q$};
+  \node[slab] at (0.1,-1.45) {(d) 実の放射};
+\end{scope}
+% (e) real emission off qbar
+\begin{scope}[shift={(13.6,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (1.25,0.78); \draw[fermion] (0.6,-0.38) -- (0,0); \draw[fermion] (1.3,-0.82) -- (0.6,-0.38);
+  \draw[gluon] (0.6,-0.38) -- (1.45,-0.1);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,-0.38) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.45,0.85) {$q$}; \node[font=\scriptsize] at (1.65,-0.1) {$g$}; \node[font=\scriptsize] at (1.5,-0.9) {$\bar q$};
+  \node[slab] at (0.1,-1.45) {(e) 実の放射};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (3)、(4) の $H\to q\bar q$ の NLO の QCD の図。(a) 頂点の補正、(b) 外線の自己エネルギー（on-shell の場の定数 $\delta Z$。$\bar q$ の脚にも同じ図がある）、(c) $\MSbar$ の湯川結合の対抗項（スカラーの流れは紫外で発散するので要る）、(d)、(e) 実の放射 $H\to q\bar qg$。(a)〜(c) と木の干渉の赤外の極は、(d)、(e) の和の2乗を位相空間で積分した極と打ち消す。手順 (4) では同じ図をクォークの質量を入れて求め、$\tau$、$\mu$ の QED の補正はグルーオンを光子に替えた同じ図である。}
+\label{fig:hqqnlo}
+\end{figure}
 
 \paragraph{(b) グルーオンの質量。}\texttt{hqq\_gluonmass.wl} は、独立の確かめとして、放射するボソンに質量 $\lambda$ を与え、赤外の発散（軟らかい領域と平行な領域）を4次元で $\lambda$ で切る（NLO ノートの手順 (2) の光子の質量の確かめと同じ）。紫外は次元正則化のままで、頂点と場の定数 $2\delta Z=2\Sigma_V(0)$ の紫外の極は $\frac{\alpha C}{2\pi}$ を単位に $+3$ になり、$\MSbar$ の対抗項 $-3/\epsilon$ がちょうど打ち消す。実の放射は Dalitz の領域で数値で積分した（30桁）。$w=\lambda^2/M_H^2=10^{-4}$、$10^{-6}$、$10^{-8}$、$10^{-10}$ で、仮想と実の和と $\frac{\alpha C}{2\pi}(\frac{17}2+3\ln\frac{\mu^2}{M_H^2})$ の差は $-6.0\times10^{-4}$、$-6\times10^{-6}$、$-6\times10^{-8}$、$-6\times10^{-10}$ で（$\mu^2/M_H^2=1$、$4$ とも）、$w$ に比例して0に近づく。二つは $\ln^2w$ で大きく打ち消し合い（$w=10^{-10}$ で $-455$ と $+464$）、和だけが正則化によらない。
 
@@ -495,7 +549,7 @@ $\mu$ & 0.000857 & — & 0.000866 & $-1.20\%$、$+1.04\%$ & $-1.71\%$、$+1.57\%
 
 \subsection{手順 (4)：質量のある $H\to b\bar b$、$c\bar c$、$\tau^+\tau^-$}\label{sec:step4}
 
-\paragraph{(a) 仮想の補正と軟らかい放射。}\texttt{hqq\_massive\_virtual.wl} は、NLO ノートの手順 (3) の計算を $Z$ のベクトルと軸性の流れからスカラーの流れに替えて行う。スカラーの頂点（Feynman ゲージ）を \texttt{TID} と Package-X で求め、質量のあるクォークの on-shell の場の定数 $\delta Z=-\frac{\alpha C}{4\pi}[3(\frac1\epsilon-\gamma_E+\ln\frac{4\pi\mu^2}{m^2})+4]$ を両方の脚に付け、湯川結合の対抗項 $2\delta y/y$ を $\MSbar$（本ノート）と on-shell（極質量の湯川結合 $\sqrt2m/v$、$\delta y/y=\delta m/m$）の二通りで足す。頂点と場の定数の紫外の極は $\frac{\alpha C}\pi$ を単位に $+\frac32$ で、どちらの対抗項も打ち消す。質量0ではクォークと同じ向きに出るグルーオンも発散を作ったが（二重極）、質量があるとこの平行な発散はクォークの質量で抑えられ、とても軟らかいグルーオンの発散（単極）だけが残る。その極は赤外の軟らかい極 $-1+\frac{1+\beta^2}{2\beta}\ln\frac{1+\beta}{1-\beta}$ に記号として一致し、$d$ 次元で求めた軟らかい放射（$E_g<\delta E_{\max}$。$Z$ と同じアイコナルの積分）と打ち消す。on-shell の処方の $K_V+K_S$ は $\mu$ によらず（$\mu=7$ と $300$~GeV の差が $10^{-22}$）、$\MSbar$ の処方の値との差は $2+\frac32\ln\frac{M_H^2}{m^2}$ に一致した。
+\paragraph{(a) 仮想の補正と軟らかい放射。}\texttt{hqq\_massive\_virtual.wl} は、NLO ノートの手順 (3) の計算を $Z$ のベクトルと軸性の流れからスカラーの流れに替えて行う（図~\ref{fig:hqqnlo} の図にクォークの質量を入れたもの）。スカラーの頂点（Feynman ゲージ）を \texttt{TID} と Package-X で求め、質量のあるクォークの on-shell の場の定数 $\delta Z=-\frac{\alpha C}{4\pi}[3(\frac1\epsilon-\gamma_E+\ln\frac{4\pi\mu^2}{m^2})+4]$ を両方の脚に付け、湯川結合の対抗項 $2\delta y/y$ を $\MSbar$（本ノート）と on-shell（極質量の湯川結合 $\sqrt2m/v$、$\delta y/y=\delta m/m$）の二通りで足す。頂点と場の定数の紫外の極は $\frac{\alpha C}\pi$ を単位に $+\frac32$ で、どちらの対抗項も打ち消す。質量0ではクォークと同じ向きに出るグルーオンも発散を作ったが（二重極）、質量があるとこの平行な発散はクォークの質量で抑えられ、とても軟らかいグルーオンの発散（単極）だけが残る。その極は赤外の軟らかい極 $-1+\frac{1+\beta^2}{2\beta}\ln\frac{1+\beta}{1-\beta}$ に記号として一致し、$d$ 次元で求めた軟らかい放射（$E_g<\delta E_{\max}$。$Z$ と同じアイコナルの積分）と打ち消す。on-shell の処方の $K_V+K_S$ は $\mu$ によらず（$\mu=7$ と $300$~GeV の差が $10^{-22}$）、$\MSbar$ の処方の値との差は $2+\frac32\ln\frac{M_H^2}{m^2}$ に一致した。
 
 \paragraph{(b) 硬い放射と和。}\texttt{hqq\_massive\_real.wl} は、4次元の $H\to Q\bar Qg$ の2乗の和 $R$ を求める。$R$ は本ノートの FeynArts の模型の $H\to b\bar bg$、$\tau^-\tau^+\gamma$（湯川結合は独立の記号）と記号として一致し、$E_g\to0$ でアイコナルの形に $E_g$ に比例して近づく（$E_g=10^{-4}$、$10^{-6}E_{\max}$ で $5\times10^{-9}$、$5\times10^{-13}$）。$E_g>\delta E_{\max}$ の硬い部分を NLO ノートの Gauss--Legendre の規則で積分して (a) と足すと、$K_{\mathrm{OS}}$ の $\delta=10^{-4}$〜$10^{-8}$ の変化は $\delta$ に比例し（$b$ で $1.3\times10^{-3}$ から $1.2\times10^{-6}$）、$\delta\to0$ に外挿した（表~\ref{tab:hqqmass}）。$K_{\mathrm{OS}}$ は Drees と Hikasa の $\Delta_H(\beta)$~\cite{dh90}（参照）と、$b$、$c$、$\tau$、$\mu$ と閾値の検算（$\beta=0.05$、$0.01$）で $2\times10^{-11}$ 以内、質量0の検算（$m/M=10^{-3}$、$10^{-5}$）で $10^{-7}$ 以内で一致した。$m/M=10^{-5}$ で $K_{\mathrm{OS}}-(\frac94+\frac32\ln\frac{m^2}{M^2})$ と $K_{\MSbar}(\mu=M)-\frac{17}4$ は $1.6\times10^{-8}$ で、手順 (3) に戻る。閾値では $K_{\mathrm{OS}}-\pi^2/(2\beta)$ が $-0.812$、$-0.954$ で、クーロンの項のほかは有限である。クーロンの項は、遅いクォークと反クォークがグルーオンを交換して引き合う効果である。
 
@@ -521,7 +575,67 @@ $\mu$ & $-18.982273$ & 4.250096 & 0.000857 & 0.000866 & $-0.000\%$ \\
 
 \subsection{手順 (5)：$H\to f\bar f$ の弱い補正}\label{sec:step5}
 
-\paragraph{(a) 振幅。}\texttt{hff\_weak\_feyncalc.wl} は、NLO ノートの手順 (4a) の計算を $Z$ の頂点から湯川の頂点に替えて、$\tau$、$\mu$、$b$、$c$ の $H\to f\bar f$ の弱い1PI の頂点（光子とグルーオンを除くループ。$\tau$ で34個、$b$ で58個の図）とフェルミオンの弱い自己エネルギー（1PI の11個または13個と、タドポールの付いた44個）を、一般の $R_\xi$ ゲージで質量と CKM 行列を記号のまま求める。光子の部分は手順 (4) の QED の $K$ に入っている。\texttt{hff\_weak.wl} は、それに SM ノートの $\Sigma^{HH}$（一般の $R_\xi$、1PI とタドポール）と、湯川結合の $\MSbar$ の対抗項を足して式~\eqref{eq:hffren} を作る。対抗項は標準模型の湯川結合の1ループの $\beta$ 関数から QED の部分 $-6Q_f^2e^2$ を除いたものである（$16\pi^2\beta_y=yB$、$K\delta y/y=B/(2\epsilon)$。$B_\ell=\frac32y_\ell^2+Y_2-\frac94g^2-\frac{15}4g'^2$、$B_d=\frac32(y_d^2-\sum_j|V_{jd}|^2y_{u_j}^2)+Y_2-\frac94g^2-\frac5{12}g'^2$、$B_u$ は $u$ と $d$ を入れ替えて $-\frac{17}{12}g'^2$、$Y_2=\sum(3y_u^2+3y_d^2+y_\ell^2)$）。
+\paragraph{(a) 振幅。}\texttt{hff\_weak\_feyncalc.wl} は、NLO ノートの手順 (4a) の計算を $Z$ の頂点から湯川の頂点に替えて、$\tau$、$\mu$、$b$、$c$ の $H\to f\bar f$ の弱い1PI の頂点（光子とグルーオンを除くループ。$\tau$ で34個、$b$ で58個の図）とフェルミオンの弱い自己エネルギー（1PI の11個または13個と、タドポールの付いた44個）を、一般の $R_\xi$ ゲージで質量と CKM 行列を記号のまま求める（図~\ref{fig:hffweak}）。光子の部分は手順 (4) の QED の $K$ に入っている。\texttt{hff\_weak.wl} は、それに SM ノートの $\Sigma^{HH}$（一般の $R_\xi$、1PI とタドポール）と、湯川結合の $\MSbar$ の対抗項を足して式~\eqref{eq:hffren} を作る。対抗項は標準模型の湯川結合の1ループの $\beta$ 関数から QED の部分 $-6Q_f^2e^2$ を除いたものである（$16\pi^2\beta_y=yB$、$K\delta y/y=B/(2\epsilon)$。$B_\ell=\frac32y_\ell^2+Y_2-\frac94g^2-\frac{15}4g'^2$、$B_d=\frac32(y_d^2-\sum_j|V_{jd}|^2y_{u_j}^2)+Y_2-\frac94g^2-\frac5{12}g'^2$、$B_u$ は $u$ と $d$ を入れ替えて $-\frac{17}{12}g'^2$、$Y_2=\sum(3y_u^2+3y_d^2+y_\ell^2)$）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) neutral boson exchange
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.75,0.48); \draw[fermion] (0.75,0.48) -- (1.4,0.9);
+  \draw[fermion] (0.75,-0.48) -- (0,0); \draw[fermion] (1.4,-0.9) -- (0.75,-0.48);
+  \draw[photon] (0.75,0.48) -- (0.75,-0.48);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0.48) {}; \node[vtx] at (0.75,-0.48) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.6,0.98) {$f$}; \node[font=\scriptsize] at (1.6,-0.98) {$\bar f$}; \node[font=\scriptsize] at (1.05,0) {$Z$};
+  \node[slab] at (0.1,-1.55) {(a) $Z$（$G^0$、$H$）\\の交換};
+\end{scope}
+% (b) W exchange with f' between H and the W
+\begin{scope}[shift={(3.4,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.75,0.48); \draw[fermion] (0.75,0.48) -- (1.4,0.9);
+  \draw[fermion] (0.75,-0.48) -- (0,0); \draw[fermion] (1.4,-0.9) -- (0.75,-0.48);
+  \draw[photon] (0.75,0.48) -- (0.75,-0.48);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0.48) {}; \node[vtx] at (0.75,-0.48) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.6,0.98) {$f$}; \node[font=\scriptsize] at (1.6,-0.98) {$\bar f$}; \node[font=\scriptsize] at (1.08,0) {$W$};
+  \node[font=\scriptsize] at (0.25,0.45) {$f'$}; \node[font=\scriptsize] at (0.25,-0.45) {$\bar f'$};
+  \node[slab] at (0.1,-1.55) {(b) $W$（$G^\pm$）、\\$f'$（$b$ では $t$）};
+\end{scope}
+% (c) through the H V V vertex
+\begin{scope}[shift={(6.8,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[photon] (0,0) -- (0.75,0.48); \draw[photon] (0,0) -- (0.75,-0.48);
+  \draw[fermion] (0.75,-0.48) -- (0.75,0.48);
+  \draw[fermion] (0.75,0.48) -- (1.4,0.9); \draw[fermion] (1.4,-0.9) -- (0.75,-0.48);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0.48) {}; \node[vtx] at (0.75,-0.48) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.6,0.98) {$f$}; \node[font=\scriptsize] at (1.6,-0.98) {$\bar f$};
+  \node[font=\scriptsize] at (0.25,0.5) {$Z$}; \node[font=\scriptsize] at (0.25,-0.5) {$Z$}; \node[font=\scriptsize] at (0.98,0) {$f$};
+  \node[slab] at (0.1,-1.55) {(c) $ZZ$\\（$WW$）};
+\end{scope}
+% (d) through the scalar three-point vertex
+\begin{scope}[shift={(10.2,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[scalar] (0,0) -- (0.75,0.48); \draw[scalar] (0,0) -- (0.75,-0.48);
+  \draw[fermion] (0.75,-0.48) -- (0.75,0.48);
+  \draw[fermion] (0.75,0.48) -- (1.4,0.9); \draw[fermion] (1.4,-0.9) -- (0.75,-0.48);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.75,0.48) {}; \node[vtx] at (0.75,-0.48) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.6,0.98) {$f$}; \node[font=\scriptsize] at (1.6,-0.98) {$\bar f$};
+  \node[font=\scriptsize] at (0.25,0.5) {$H$}; \node[font=\scriptsize] at (0.25,-0.5) {$H$}; \node[font=\scriptsize] at (0.98,0) {$f$};
+  \node[slab] at (0.1,-1.55) {(d) $HH$\\（$G^0G^0$、$G^+G^-$）};
+\end{scope}
+% (e) a tadpole on the fermion leg
+\begin{scope}[shift={(13.6,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.6,0.38); \draw[fermion] (0.6,0.38) -- (1.3,0.82); \draw[fermion] (1.3,-0.82) -- (0,0);
+  \draw[scalar] (0.6,0.38) -- (0.6,0.95); \draw[thick] (0.6,1.25) circle (0.3);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.6,0.38) {}; \node[vtx] at (0.6,0.95) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.5,0.9) {$f$}; \node[font=\scriptsize] at (1.5,-0.9) {$\bar f$}; \node[font=\scriptsize] at (0.3,0.8) {$H$};
+  \node[slab] at (0.1,-1.55) {(e) 脚の\\タドポール};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (5) の $H\to f\bar f$ の弱い補正の図の例（光子とグルーオンを除く1PI の頂点と脚）。(a) 中性のボソンの交換、(b) $W$ と Goldstone の交換（$H$ はループの中の $f'$ に付く。$b$ ではトップが入り、$m_t^2$ に比例する項が出る）、(c) $HVV$ の頂点を通る三角形、(d) スカラーの3点の頂点を通る三角形、(e) フェルミオンの脚のタドポール（$p$ によらないので場の定数に入らない）。ほかに外線の弱い自己エネルギー、$\Sigma^{HH}$ からの $\delta Z_H$、湯川結合の $\MSbar$ の対抗項（図~\ref{fig:hqqnlo} の (c)）がある。$HHf\bar f$ の頂点はないので、頂点にはタドポールの図がない。}
+\label{fig:hffweak}
+\end{figure}
 
 \paragraph{(b) 紫外の有限性、ゲージ、タドポール。}$F_L$、$F_R$ の紫外の極は、4個のフェルミオンとも、質量と $\xi_W$、$\xi_Z$ を記号のまま（CKM 行列は有理数のユニタリーな行列）記号として0だった。湯川結合の対抗項を除くと極は残る。この対抗項は入力の湯川結合を走らせた1ループの方程式そのものなので、紫外の有限性はその方程式が模型と食い違わないことの確かめにもなる。頂点の極は $\xi_W$、$\xi_Z$ を含むが、場の定数と合わせると消える。タドポールについて、(i) 頂点にはタドポールの図がない（挿入の数が0）、(ii) フェルミオンの自己エネルギーのタドポールの付いた44個の図は $\slashed p$ の部分が0で、スカラーの部分は $p$ によらず、場の定数に入らない、(iii) $\Sigma^{HH}$ のタドポールの部分は $p^2$ によらず $\delta Z_H$ に入らない、ことを確かめた。$\MSbar$ の湯川結合で書く限り、$H\to f\bar f$ は FJ の処方の大きなタドポールの寄与から自由である。$v_{\mathrm{FJ}}$ を結合に含む $H\to VV^*$（手順 (7)）とは対照的である。$\mu=M_H$ の $\MSbar$ の結合と極質量（ループの中は木の関係 $M_W=M_Z\hat c$）での $\delta_{\mathrm{weak}}=\mathrm{Re}(F_L+F_R)-2$ は、$(\xi_Z,\xi_W)=(1,1)$、$(2,3)$、$(1/2,4)$ で、レプトンでは50桁まで、クォークでは CKM 行列を倍精度で入れた $10^{-15}$ の範囲で同じ値になり、$F_L=F_R$（$CP$ の保存）も同じ精度で成り立った（表~\ref{tab:hffweak}）。
 
@@ -550,9 +664,75 @@ $\mu$ & $+2.858\%$ & $+4.751\%$ & $+0.988\%$ & 0.000890 & $2.24\%$ & $3.27\%$ & 
 
 \subsection{手順 (6)：$H\to gg$ の NLO の QCD の補正}\label{sec:step6}
 
-\paragraph{(a) 模型。}\texttt{HggEFT.fr} は、本ノートの模型ファイルを変えずに、演算子 $-\frac14c_{Hgg}\frac H{v}G^a_{\mu\nu}G^{a\mu\nu}$（新しいパラメータ $c_{Hgg}$、結合の次数 HIG）を足す。\texttt{generate\_HggEFT.wl} は \texttt{LoadModel["SM\_CKM.fr", "HggEFT.fr"]} から FeynArts の模型と UFO を書き出す。標準模型の93個の頂点のクラスは手順 (1) と同一で、新しい頂点は $Hgg$、$Hggg$、$Hgggg$ の3個である。$Hgg$ の頂点は $\frac{ic_{Hgg}}v\delta^{ab}(p_1\cdot p_2\,g^{\mu\nu}-p_1^\nu p_2^\mu)$ になった。物理の値は $c_{Hgg}=-\frac{\alpha_s}{3\pi}(1+\frac{11}4\frac{\alpha_s}\pi)$ である。トップがヒッグスより十分重い（$M_H<2m_t$）と、トップのループは一点に縮み、この演算子で置き換えられる。そのため完全な理論では2ループの NLO の補正が、有効理論では1ループの計算になる。
+\paragraph{(a) 模型。}\texttt{HggEFT.fr} は、本ノートの模型ファイルを変えずに、演算子 $-\frac14c_{Hgg}\frac H{v}G^a_{\mu\nu}G^{a\mu\nu}$（新しいパラメータ $c_{Hgg}$、結合の次数 HIG）を足す。\texttt{generate\_HggEFT.wl} は \texttt{LoadModel["SM\_CKM.fr", "HggEFT.fr"]} から FeynArts の模型と UFO を書き出す。標準模型の93個の頂点のクラスは手順 (1) と同一で、新しい頂点は $Hgg$、$Hggg$、$Hgggg$ の3個である。$Hgg$ の頂点は $\frac{ic_{Hgg}}v\delta^{ab}(p_1\cdot p_2\,g^{\mu\nu}-p_1^\nu p_2^\mu)$ になった。物理の値は $c_{Hgg}=-\frac{\alpha_s}{3\pi}(1+\frac{11}4\frac{\alpha_s}\pi)$ である。トップがヒッグスより十分重い（$M_H<2m_t$）と、トップのループは一点に縮み、この演算子で置き換えられる。そのため完全な理論では2ループの NLO の補正が、有効理論では1ループの計算になる（図~\ref{fig:hggeft}）。
 
 \paragraph{(b) 実の放射。}\texttt{hgg\_eft\_feyncalc.wl} は、この模型でグルーオン、そのゴースト、質量0の軽いクォークだけを使い（質量0なので湯川結合の図は0）、すべて $d$ 次元で求める。グルーオンの偏極の和は物理的なもの（基準のベクトルは別のグルーオンの運動量）である。$H\to ggg$（4個の図）と $H\to gq\bar q$（1個）の2乗の和の木との比は、4次元で既知の $2C_A(M_H^8+s_{12}^4+s_{13}^4+s_{23}^4)/(M_H^2s_{12}s_{13}s_{23})$ と $(s_{12}^2+s_{13}^2)/(M_H^2s_{23})$ の形に一致した（$q=p_2$、$\bar q=p_3$）。$d$ 次元の3体の位相空間の Dirichlet の積分（3個のグルーオンの $\frac1{3!}$、木の $\frac1{2!}$）で、$N(\epsilon)=\frac{\alpha_s}{4\pi}(\frac{4\pi\mu^2}{M_H^2})^\epsilon/\Gamma(1-\epsilon)$ を単位に、$H\to ggg$ は $\frac{4C_A}{\epsilon^2}+\frac{22C_A}{3\epsilon}+\frac{73}3C_A-2\pi^2C_A$、$H\to gq\bar q$ は1フレーバーあたり $-\frac4{3\epsilon}-\frac{14}3$ になった（$O(\epsilon^0)$ まで。厳密な形は結果のファイル）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=1]
+% (a) the top loop shrinks to the operator
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[fermion] (0,0) -- (0.85,0.55); \draw[fermion] (0.85,0.55) -- (0.85,-0.55); \draw[fermion] (0.85,-0.55) -- (0,0);
+  \draw[gluon] (0.85,0.55) -- (1.6,0.95); \draw[gluon] (0.85,-0.55) -- (1.6,-0.95);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0.85,0.55) {}; \node[vtx] at (0.85,-0.55) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.08,0) {$t$}; \node[font=\scriptsize] at (1.8,1.0) {$g$}; \node[font=\scriptsize] at (1.8,-1.0) {$g$};
+  \node[font=\scriptsize] at (2.55,0.05) {$\xrightarrow{\;m_t\to\infty\;}$};
+  \draw[scalar] (3.25,0) -- (4.25,0); \draw[gluon] (4.25,0) -- (5.05,0.75); \draw[gluon] (4.25,0) -- (5.05,-0.75);
+  \node[eftv] at (4.25,0) {};
+  \node[font=\scriptsize] at (3.45,0.25) {$H$}; \node[font=\scriptsize] at (5.25,0.8) {$g$}; \node[font=\scriptsize] at (5.25,-0.8) {$g$}; \node[font=\scriptsize] at (4.05,-0.38) {$c_{Hgg}$};
+  \node[slab] at (2.0,-1.5) {(a) 一点に縮むトップのループ};
+\end{scope}
+% (b) virtual: triangle of gluons
+\begin{scope}[shift={(7.4,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[gluon] (0,0) -- (0.95,0.6); \draw[gluon] (0,0) -- (0.95,-0.6); \draw[gluon] (0.95,0.6) -- (0.95,-0.6);
+  \draw[gluon] (0.95,0.6) -- (1.7,1.0); \draw[gluon] (0.95,-0.6) -- (1.7,-1.0);
+  \node[eftv] at (0,0) {}; \node[vtx] at (0.95,0.6) {}; \node[vtx] at (0.95,-0.6) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.9,1.05) {$g$}; \node[font=\scriptsize] at (1.9,-1.05) {$g$};
+  \node[slab] at (0.3,-1.5) {(b) 仮想の補正};
+\end{scope}
+% (c) virtual: bubble with the H g g g vertex
+\begin{scope}[shift={(10.8,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[gluon] (0,0) -- (1.3,1.0);
+  \draw[gluon] (0,0) to[bend left=50] (1.15,-0.5); \draw[gluon] (0,0) to[bend right=50] (1.15,-0.5);
+  \draw[gluon] (1.15,-0.5) -- (1.85,-0.9);
+  \node[eftv] at (0,0) {}; \node[vtx] at (1.15,-0.5) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.5,1.08) {$g$}; \node[font=\scriptsize] at (2.05,-0.95) {$g$};
+  \node[slab] at (0.3,-1.5) {(c) 仮想の補正（$Hggg$）};
+\end{scope}
+% (d) real: H -> g g g at the contact vertex
+\begin{scope}[shift={(2.0,-3.4)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[gluon] (0,0) -- (0.9,1.2); \draw[gluon] (0,0) -- (1.6,0); \draw[gluon] (0,0) -- (0.9,-1.2);
+  \node[eftv] at (0,0) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.1,1.25) {$g$}; \node[font=\scriptsize] at (1.8,0) {$g$}; \node[font=\scriptsize] at (1.1,-1.25) {$g$};
+  \node[slab] at (0.3,-1.5) {(d) $H\to ggg$（$Hggg$）};
+\end{scope}
+% (e) real: H -> g g* -> g g g
+\begin{scope}[shift={(6.2,-3.4)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[gluon] (0,0) -- (1.3,1.0); \draw[gluon] (0,0) -- (0.8,-0.45);
+  \draw[gluon] (0.8,-0.45) -- (1.7,-0.05); \draw[gluon] (0.8,-0.45) -- (1.5,-1.1);
+  \node[eftv] at (0,0) {}; \node[vtx] at (0.8,-0.45) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.5,1.08) {$g$}; \node[font=\scriptsize] at (1.9,0) {$g$}; \node[font=\scriptsize] at (1.7,-1.15) {$g$};
+  \node[slab] at (0.3,-1.5) {(e) $H\to ggg$（分岐）};
+\end{scope}
+% (f) real: H -> g q qbar
+\begin{scope}[shift={(10.4,-3.4)}]
+  \draw[scalar] (-1.1,0) -- (0,0);
+  \draw[gluon] (0,0) -- (1.3,1.0); \draw[gluon] (0,0) -- (0.8,-0.45);
+  \draw[fermion] (0.8,-0.45) -- (1.6,-0.1); \draw[fermion] (1.5,-1.1) -- (0.8,-0.45);
+  \node[eftv] at (0,0) {}; \node[vtx] at (0.8,-0.45) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.5,1.08) {$g$}; \node[font=\scriptsize] at (1.8,-0.08) {$q$}; \node[font=\scriptsize] at (1.7,-1.15) {$\bar q$};
+  \node[slab] at (0.3,-1.5) {(f) $H\to gq\bar q$};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (6) の重いトップの有効理論の図。黒の四角は演算子 $-\frac14c_{Hgg}\frac HvG^a_{\mu\nu}G^{a\mu\nu}$ の頂点で、$Hgg$、$Hggg$、$Hgggg$ がある。(a) $M_H<2m_t$ では、トップのループは一点に縮み、この演算子で置き換えられる（2ループの NLO が1ループになる）。(b)、(c) 1ループの仮想の補正の例（ほかに $Hgggg$ の頂点、ゴーストのループの図など、合わせて14個）。(d)〜(f) 実の放射（$H\to ggg$ は (d)、(e) の形で4個、$H\to gq\bar q$ は (f) の1個）。}
+\label{fig:hggeft}
+\end{figure}
 
 \paragraph{(c) 仮想の補正と和。}1ループの $H\to gg$ は14個の図で（演算子を2回含む、内線にヒッグスのある2個は別の次数として除く）、外線の自己エネルギーは質量0で0である。\texttt{TID} で $B_0(M_H^2,0,0)$、$C_0(0,0,M_H^2,0,0,0)$ にして厳密な形にすると、$-\frac{4C_A}{\epsilon^2}+2\pi^2C_A$ で単極を持たない（紫外と赤外の単極が打ち消す）。$c_{Hgg}$ の $\alpha_s$ の $\MSbar$ の対抗項 $2\delta\alpha_s/\alpha_s=-2\beta_0\frac{\alpha_s}{4\pi}\frac{S_\epsilon}\epsilon$（$\beta_0=\frac{11}3C_A-\frac43T_FN_F$。$\alpha_sG^a_{\mu\nu}G^{a\mu\nu}$ がこの次数で有限であることによる）を足すと、和は極を持たず、
 \begin{equation}
@@ -597,7 +777,46 @@ R_V=\Bigl(\frac{g_V^2}{g_{V0}^2}\Bigr)^2\frac{M_V^2|_{\MSbar}}{M_V^2}=(1+d_V-\ha
 \end{equation}
 になる（$Z$ では $\delta'_Z$ の $s^2$ も変わり、$\hat c^2=c_0^2(1+d_W-d_Z)$ の分が加わる）。二つの木の差は、どちらかが誤りというものではない。同じ物理の量を別の結合で書いた木の違いで、NLO まで入れれば高次の差を除いて一致するはずである。ここでは、その差のどの部分が NLO のどの図で消えるかを確かめる。タドポールの部分 $d_V^{\mathrm{tad}}$ は $p^2$ によらない定数で、$d_W$、$d_Z$、$\hat\Delta$ に同じ値で入る。そのため結合の比 $d_V-\hat\Delta$ では消え、$R_V-1$ には $M_V^2|_{\MSbar}/M_V^2$ を通して1回だけ入る。
 
-\texttt{hvv\_scheme.wl} は、本ノートの FeynArts の模型で、$H\to W^+W^-$、$ZZ$ の外線の補正を除く1ループの可約な位相の図を求める。これは $HHVV$ の頂点に運動量0のヒッグスの線でタドポールを付けた図で、それぞれ17個ある（タドポールのループはすべての場）。一般の $R_\xi$ ゲージで質量を記号のまま求めた木との比 $\delta_A^{\mathrm{tad}}$ を、SM ノートの $\Sigma^{WW}$、$\Sigma^{ZZ}$ のタドポールの部分と比べた。$K(2\delta_A^{\mathrm{tad}}+d_V^{\mathrm{tad}})$ は $W$、$Z$ とも記号として0で、$d_W^{\mathrm{tad}}=d_Z^{\mathrm{tad}}$ も記号として成り立った。振幅の2乗でこの図は木に $1+2\delta_A^{\mathrm{tad}}=1-d_V^{\mathrm{tad}}$ を掛ける。したがって $\MSbar$ の NLO の振幅では、木の差のタドポールの部分をこの図がちょうど打ち消す。FJ の処方の $v_{\mathrm{FJ}}$ は $\MSbar$ のパラメータの木のポテンシャルの最小で、タドポールの図は $v$ を真空の値に $\Delta v$ だけずらす。真空の値で書くと $M_V^2=g_V^2v^2/4$ も $g_{HVV}^2=g_V^4v^2/4$ も同じ $1+2\Delta v/v$ 倍になり、極質量の関係から $2\Delta v/v=-d_V^{\mathrm{tad}}$ である。$HHVV$ のタドポールの図は、このずれの $g_{HVV}^2$ の側である。
+\texttt{hvv\_scheme.wl} は、本ノートの FeynArts の模型で、$H\to W^+W^-$、$ZZ$ の外線の補正を除く1ループの可約な位相の図を求める。これは $HHVV$ の頂点に運動量0のヒッグスの線でタドポールを付けた図（図~\ref{fig:hvvtad} の (a)）で、それぞれ17個ある（タドポールのループはすべての場）。一般の $R_\xi$ ゲージで質量を記号のまま求めた木との比 $\delta_A^{\mathrm{tad}}$ を、SM ノートの $\Sigma^{WW}$、$\Sigma^{ZZ}$ のタドポールの部分（図~\ref{fig:hvvtad} の (b)）と比べた。$K(2\delta_A^{\mathrm{tad}}+d_V^{\mathrm{tad}})$ は $W$、$Z$ とも記号として0で、$d_W^{\mathrm{tad}}=d_Z^{\mathrm{tad}}$ も記号として成り立った。振幅の2乗でこの図は木に $1+2\delta_A^{\mathrm{tad}}=1-d_V^{\mathrm{tad}}$ を掛ける。したがって $\MSbar$ の NLO の振幅では、木の差のタドポールの部分をこの図がちょうど打ち消す。FJ の処方の $v_{\mathrm{FJ}}$ は $\MSbar$ のパラメータの木のポテンシャルの最小で、タドポールの図は $v$ を真空の値に $\Delta v$ だけずらす。真空の値で書くと $M_V^2=g_V^2v^2/4$ も $g_{HVV}^2=g_V^4v^2/4$ も同じ $1+2\Delta v/v$ 倍になり、極質量の関係から $2\Delta v/v=-d_V^{\mathrm{tad}}$ である。$HHVV$ のタドポールの図は、このずれの $g_{HVV}^2$ の側である。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.85]
+% (a) the H H V V vertex with a tadpole
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[photon] (0,0) -- (1.1,0.7); \draw[photon] (0,0) -- (1.1,-0.7);
+  \draw[scalar] (0,0) -- (0,0.75); \draw[thick] (0,1.05) circle (0.3);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0,0.75) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (1.3,0.8) {$V$}; \node[font=\scriptsize] at (1.3,-0.8) {$V$}; \node[font=\scriptsize] at (0.22,0.42) {$H$};
+  \node[slab] at (0.1,-1.55) {(a) $HHVV$ の頂点\\（$\delta_A^{\mathrm{tad}}$）};
+\end{scope}
+% (b) the tadpole part of Sigma^VV
+\begin{scope}[shift={(3.9,0)}]
+  \draw[photon] (-1.1,0) -- (0,0); \draw[photon] (0,0) -- (1.1,0);
+  \draw[scalar] (0,0) -- (0,0.75); \draw[thick] (0,1.05) circle (0.3);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0,0.75) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$V$}; \node[font=\scriptsize] at (0.9,0.25) {$V$}; \node[font=\scriptsize] at (0.22,0.42) {$H$};
+  \node[slab] at (0,-1.55) {(b) $\Sigma^{VV}$ のタドポール\\（$d_V^{\mathrm{tad}}$）};
+\end{scope}
+% (c) the tadpole as the shift of v
+\begin{scope}[shift={(7.6,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[thick] (0.3,0) circle (0.3);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (-0.55,-0.3) {$p=0$};
+  \node[slab] at (0,-1.55) {(c) $v$ のずれ\\$\Delta v$};
+\end{scope}
+% (d) the tadpole part of Sigma^HH
+\begin{scope}[shift={(11.0,0)}]
+  \draw[scalar] (-1.1,0) -- (0,0); \draw[scalar] (0,0) -- (1.1,0);
+  \draw[scalar] (0,0) -- (0,0.75); \draw[thick] (0,1.05) circle (0.3);
+  \node[vtx] at (0,0) {}; \node[vtx] at (0,0.75) {};
+  \node[font=\scriptsize] at (-0.9,0.25) {$H$}; \node[font=\scriptsize] at (0.9,0.25) {$H$}; \node[font=\scriptsize] at (0.22,0.42) {$H$};
+  \node[slab] at (0,-1.55) {(d) $\Sigma^{HH}$ の\\タドポール};
+\end{scope}
+\end{tikzpicture}
+\caption{手順 (7) のタドポールの図。円はタドポールのループで、すべての場が入る。FJ の処方ではタドポールの図を落とさずに入れ、縦のヒッグスの線は運動量0である。(c) は場の真空の値のずれ $\Delta v$ にあたり、(a) はそれを $g_{HVV}^2$ に、(b) は $M_V^2$ に、同じ $1+2\Delta v/v$ 倍として入れる。$2\delta_A^{\mathrm{tad}}+d_V^{\mathrm{tad}}=0$ を一般の $R_\xi$ ゲージで記号として確かめた。(d) は $p^2$ によらないので $\delta Z_H$ に入らない（手順 (5)）。}
+\label{fig:hvvtad}
+\end{figure}
 
 \paragraph{(b) $\mu=M_t$ の数。}同じスクリプトは、SM ノートの当てはめの点 $\mu=M_t$ で、NLO ノートの \texttt{scheme.wl} の道具（Package-X、当てはめの木の点）を使い、$d_W$、$d_Z$、$\hat\Delta$ とそのタドポールの部分を求める（表~\ref{tab:hvv}）。$d_W=0.1108$、$d_Z=0.1267$、$\hat\Delta=0.1273$ のほとんどはタドポールの $d_V^{\mathrm{tad}}=0.1177$ で、それを除くと $-0.0069$、$+0.0090$、$+0.0095$ と小さい。$d_W-\hat\Delta=-0.01643$ は NLO ノートの \texttt{scheme.csv} の $\mu=M_t$ の値と同じである。当てはめた $g$、$g'$、$v_{\mathrm{FJ}}$ で書いた木と、$G_F$ と極質量で書いた木の厳密な比は $R_W=1.0767$、$R_Z=1.1154$ で、式~\eqref{eq:rv} の1ループの値 $1.0780$、$1.1121$ と $O(\alpha^2)$ の差で合う（手順 (1) の $1.092$、$1.126$ は $g$、$s^2$ を $M_H$ に走らせた値で、そのぶん違う）。$R_V-1$ のうちタドポールの分は $+11.77\%$ で、残りは $W$ で $-3.98\%$、$Z$ で $-0.57\%$ である。$W$ と $Z$ の残りの違いは、$d_W$ と $d_Z$ のタドポールによらない部分の違い（$-0.7\%$ と $+0.9\%$）による。
 
