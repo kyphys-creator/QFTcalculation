@@ -44,7 +44,7 @@
 
 \title{ループ計算環境の構築記録\\[2pt]{\large \texttt{\textasciitilde/hep} に組んだ1ループ計算スタック（Apple M3・Mathematica 14.2）}}
 \author{}
-\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17、18日、NLO のノートの分は10月18、19日）}
+\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17、18日、NLO のノートの分は10月18、19日、\\ヒッグスの崩壊のノートの分は10月19日）}
 
 \begin{document}
 \maketitle
@@ -790,6 +790,28 @@ Feynman ゲージの係数と精度（NLO） & $\xi_Z=\xi_W=1+10^{-20}$（80桁�
 \end{tabularx}
 \end{table}
 
+NLO のノート~\cite{smnlonote} の手順 (4c)〜(8)（10月19日）と、ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (1)、(2)（10月19日。木の $H\to f\bar f$、$H\to Vf\bar f'$、$H\to4f$ と、1ループで誘起される $H\to\gamma\gamma$、$Z\gamma$、$gg$）で分かった問題を表~\ref{tab:issues2q} に加える。パターン変数、質量の記号、param\_card の幅、同種粒子の因子、UFO の点の行は、エラーも警告も出ず、数値が違うだけだった。
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2p} の続き（NLO のノート~\cite{smnlonote} の手順 (4c)〜(8)、ヒッグスの崩壊のノート~\cite{higgsnote} の手順 (1)、(2)）。}
+\label{tab:issues2q}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+Mathematica のパターン変数と式の記号（NLO） & 手順 (7) の処方の換算で、$\hat\Delta$ の $\ln\mu^2$ が記号のまま残り、$\mu$ を代入した値にならなかった & \texttt{f[mu\_] := x /. ...} の右辺で \texttt{mu} が置き換わるのは右辺に字面で書いた \texttt{mu} だけで、変数 \texttt{x} に入れた式（$\hat\Delta$）の中の記号 \texttt{mu} は残る & 引数の名前を式の記号と別にし（\texttt{muv\_}）、式には \texttt{/. mu -> muv} で代入する（\texttt{scheme.wl}） \\
+同じ Mac の他の Wolfram のカーネル（NLO） & 止まらないスクリプトを \texttt{pkill -9 -f WolframKernel} で止めると、別の作業の Mathematica のカーネルもすべて止まった & パターンがこの Mac で動いているすべての \texttt{WolframKernel} に一致する & 自分で起動したプロセスの PID（シェルの \texttt{\$!}、\texttt{ps} の親プロセス）で止める \\
+FeynCalc の \texttt{FCFAConvert} と質量の記号（ヒッグス） & $H\to e^-e^+\mu^-\mu^+$ を質量0のレプトンで求めようと \texttt{FCGV["MMU"] -> 0} を加えても、結果に \texttt{MMU} が残り、手の式と合わなかった & この模型の FeynArts の出力から \texttt{FCFAConvert}（\texttt{SMP -> False}）が作る振幅では、伝播関数などの質量は \texttt{FCGV["MZ"]} の形だが、外線のスピノルの質量は裸の記号（\texttt{Spinor[Momentum[p2], MMU, 1]}）になる & 外線の質量は裸の記号で置き換える（\texttt{/. \{Me -> 0, MMU -> 0\}}、\texttt{lo\_feyncalc.wl}） \\
+MadGraph の standalone と param\_card の幅（ヒッグス） & 木の $H\to W^+\tau^-\bar\nu_\tau$、$Zb\bar b$ などの3体の $|\mathcal M|^2$ が、FeynCalc の幅0の式と点によって $-9\times10^{-4}$、$-8\times10^{-4}$ ずれた & param\_card に $W$、$Z$ の幅を書くと、閾値より下の仮想の $V^*$ の伝播関数にも $iM_V\Gamma_V$ が入る（$M_V^2\Gamma_V^2/(q^2-M_V^2)^2$ の分） & 幅0の式と比べるときは幅を0にする（$2\times10^{-14}$ で一致）。4体の比較では手の式に同じ固定の幅の Breit--Wigner を入れる。standalone の \texttt{check} は実行のたびに \texttt{Cards/param\_card.dat} を読むので、出力を作り直さずに書き換えられる（\texttt{lo\_mg5.py}） \\
+madevent の崩壊の幅の出力（ヒッグス） & $1\to4$ の崩壊の \texttt{generate\_events} の出力に \texttt{Cross-section :} の行がなく、\texttt{Width : 1.11e-05}\allowbreak\texttt{ +- 1.797e-08 GeV} と3桁だけが出る & 崩壊の過程では、結果を幅として表示する & 6桁の値は \texttt{Events/run\_*/}\allowbreak\texttt{run\_*\_banner.txt} の \texttt{Integrated weight (pb)}（崩壊では GeV の幅）から、誤差は \texttt{SubProcesses/}\allowbreak\texttt{results.dat} の1行目の2番目の数から読む。崩壊の run\_card には既定でレプトンのカットがない（\texttt{ptl} = 0、\texttt{etal} = $-1$、\texttt{drll} = 0） \\
+FeynCalc の \texttt{TID} と外線の伝播関数（ヒッグス） & $H\to Z\gamma$ の1ループの紫外の極が $(2+\xi_W)\bigl(c_W^2+M_W^2\,\texttt{FAD[\{k2, MZ\}]}\bigr)$ の形で残り、光子の脚の $\gamma$--$Z$ の混合の図のフェルミオンのループに \texttt{DiracTrace[GSD[k2].}\allowbreak\texttt{GSD[e2].GSD[k2].}\allowbreak\texttt{GSD[e1].GA[5]]} が評価されずに残った & 混合の図の $Z$ の伝播関数は外線の運動量 $k_2$ だけを持ち、\texttt{FDS}、\texttt{TID} は \texttt{FAD} のまま残す。$\gamma_5$ と4個の行列のトレースは、NDR（既定）の \texttt{DiracTraceEvaluate -> True} でも評価されなかった（推論：NDR では $D$ 次元のこの形を評価しない） & 還元の後に \texttt{FeynAmpDenominatorExplicit} を掛ける（$k_2^2=0$ で $-1/M_Z^2$。極は $c_W=M_W/M_Z$ で0になる）。トレースは中身を先に \texttt{DiracSimplify} する（$k_2^2=k_2\cdot e_2=0$ で0、\texttt{loopind\_feyncalc.wl}） \\
+MadGraph の行列要素と同種粒子（ヒッグス） & MadLoop の \texttt{h > a a [sqrvirt=QED]}、\texttt{h > g g [sqrvirt=QCD]} の値が、自分の $\sum|\mathcal M|^2$ のちょうど半分になった（$Z\gamma$ は半分でない） & MadGraph の \texttt{check} が出す行列要素は、終状態の同種の粒子の $1/n!$ を含む \texttt{IDEN} で割ってある（崩壊の幅の位相空間には入れない） & 同種の粒子のある終状態では2倍して比べる（$2.8\times10^{-13}$ で一致、\texttt{loopind\_madloop.py}） \\
+CKM ノートの NLO の UFO と点（ヒッグス） & ループで誘起される $H\to Z\gamma$ が、$H$ の param\_card で自分の値と $-1.3\%$（$\mu_R=M_H$）、$-10\%$（$\mu_R=1$~TeV）違い、$\mu_R$ に依存した。$H\to\gamma\gamma$、$gg$ は一致した & 光子の脚の $\gamma$--$Z$ の混合は UV の頂点 $HZ\gamma$（$\frac i2g_{HZZ}\delta Z_{ZA}$）として入るが、その $\delta Z_{ZA}$（CT パラメータ \texttt{FJdZZAre}）は CKM ノートの MadLoop の点（$1/\alpha=128$、$M_Z=91$、$M_W=80$~GeV など）での数値である（表~\ref{tab:issues2n} の「軽いクォークの質量と UFO の対抗項」） & UV の頂点が入る過程はその点の param\_card で比べる（3過程とも $1.1\times10^{-13}$ 以内で一致、$\mu_R$ によらない）。ほかの点で使うには、場の定数をその点で計算し直して UFO に入れる \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \paragraph{Package-X。}Package-X の結果を \texttt{Simplify[..., qq < 0]} のように空間的な $q^2$ を仮定して簡約すると、対数と平方根の閾値より上の枝が $+i0$ の処方と合わないことがある。時間的な $q^2$ では、有理数の $q^2$ を代入した式に \texttt{PaXEvaluate} を呼び、枝の選び方を Package-X に任せる（スピノル QED のノートの手順 (9)）。Package-X の数値関数 \texttt{ScalarC0}、\texttt{ScalarD0} は、内線の質量の2乗ではなく質量を引数にとる（湯川のノートの手順 (3)）。
 
 \paragraph{倍精度で桁を落とすところ。}倍精度のツール（LoopTools、COLLIER、FormCalc、MadLoop）は、大きな打ち消しのある領域で桁を落とす。真空偏極を PaVe 関数で書いた $(1+2m^2/q^2)B_0(q^2)-(2m^2/q^2)B_0(0)$ は、小さい $|q^2|$ で約 $\log_{10}(m^2/|q^2|)$ 桁を失う。$q^2\to0$ までの積分（異常磁気モーメントへの真空偏極の寄与など）では、級数か、Package-X を有理数の入力で30桁で評価した値を使う。光子--光子散乱の振幅は低エネルギーで $s^2$ のように小さくなるが、それは $O(1)$ の項の打ち消しで作られるので、倍精度のツールの値は $s=0.01m^2$ で $10^{-5}$ ほどずれる。COLLIER では、ある点（$s=0.01m^2$、$\cos\theta=0.872$）でループの二つの向きの値が相対 $3\times10^{-6}$ ずれ、振幅は Euler--Heisenberg の値から $34\%$ ずれた。そこでの基準には、有理数の運動学で Package-X を80桁で評価した値を使った。重いクォークの脱結合でも同じことが起こる（QCD のノートの手順 (6)）。$\Pi_t(k^2)-\Pi_t(0)\propto k^2/(5m^2)$ を $(1+2m^2/k^2)B_0(k^2)-(2m^2/k^2)B_0(0)$ の形で評価すると、$|k^2|=10^{-3}$〜$10^{-2}m^2$ で LoopTools は相対 $4\times10^{-10}$、COLLIER は $7\times10^{-8}$ ずれた（COLLIER は $|k^2|=10^{-2}m^2$ の方が $10^{-3}m^2$ よりずれが大きい）。MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与（$\propto s/m_t^2$）は、$m_t^2/s=10^5$ で $0.65\%$ ずれ、$m_t$ によらないはずの極の係数も $6\times10^{-10}$ 揺れた。
@@ -1378,6 +1400,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{smmsbarnote} 標準模型：$\overline{\mathrm{MS}}$ の電弱の1ループの繰り込みと検算（FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm/ResearchNote/note.pdf}。上の \cite{smnote} を削除した後に同じ場所に作り直したもの）。
 \bibitem{smckmnote} 標準模型と CKM 行列：$\overline{\mathrm{MS}}$ の繰り込みと世代を変える過程（FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm_ckm/ResearchNote/note.pdf}）。
 \bibitem{smnlonote} 標準模型の NLO の物理量：実の放射を含む崩壊幅と電弱の精密測定（$\overline{\mathrm{MS}}$、FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm_nlo/ResearchNote/note.pdf}）。
+\bibitem{higgsnote} 標準模型のヒッグスの崩壊：NLO の部分幅と分岐比（$\overline{\mathrm{MS}}$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリの \nolinkurl{models/sm_higgs/ResearchNote/note.pdf}）。
 \end{thebibliography}
 
 \end{document}
