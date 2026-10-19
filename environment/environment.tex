@@ -44,7 +44,7 @@
 
 \title{ループ計算環境の構築記録\\[2pt]{\large \texttt{\textasciitilde/hep} に組んだ1ループ計算スタック（Apple M3・Mathematica 14.2）}}
 \author{}
-\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17、18日、NLO のノートの分は10月18、19日、\\ヒッグスの崩壊のノートの分は10月19日）}
+\date{2026年10月9日（熱的な道具の追加は10月11日、2ループの道具は10月12日、\\フェルミオンとゲージ場の模型で分かった問題の追加は10月14日、\\標準模型のノートで分かった問題の追加は10月15日、$\overline{\mathrm{MS}}$ の標準模型のノートの分は10月16日、\\CKM 行列を入れたノートの分は10月17、18日、NLO のノートの分は10月18、19日、\\ヒッグスの崩壊のノートの分と LHC の道具は10月19日）}
 
 \begin{document}
 \maketitle
@@ -79,7 +79,7 @@ Python & miniforge（conda 24.11.3）の環境 \texttt{qft}：Python 3.12.15、n
 
 \paragraph{前提。}本稿は次の前提に立つ。
 \begin{enumerate}
-\item 版と日付は2026年10月9日時点のものである。熱的な道具（第~\ref{sec:thermal} 節）は10月11日、2ループの道具（第~\ref{sec:twoloop} 節）は10月12日時点である。フェルミオンとゲージ場の模型で分かった問題（第~\ref{sec:issues} 節の表~\ref{tab:issues2}〜\ref{tab:issues2c}）は、10月12日から14日の検算（QCD のノートの分を含む）によるもので、ツールの版は変えていない。
+\item 版と日付は2026年10月9日時点のものである。熱的な道具（第~\ref{sec:thermal} 節）は10月11日、2ループの道具（第~\ref{sec:twoloop} 節）は10月12日、LHC の現象論の道具（第~\ref{sec:lhc} 節）は10月19日時点である。LHC の道具は表~\ref{tab:machine} とは別の Mac Studio で入れた。フェルミオンとゲージ場の模型で分かった問題（第~\ref{sec:issues} 節の表~\ref{tab:issues2}〜\ref{tab:issues2c}）は、10月12日から14日の検算（QCD のノートの分を含む）によるもので、ツールの版は変えていない。
 \item ソフトウェアは公式の配布元から \texttt{curl} で取得した。ソースから構築できるものはこの Mac で構築した。
 \item 「正しく動く」かどうかは、既知の厳密値、独立な別実装、または独立な解析計算との数値の一致で判定する。
 \item パスの \texttt{\textasciitilde} はホームディレクトリ \nolinkurl{/Users/koichiro} を表す。
@@ -107,7 +107,7 @@ quarantine & macOS がダウンロードしたファイルに付ける拡張属�
 \end{tabularx}
 \end{table}
 
-本稿の構成は次の通りである。第~\ref{sec:migration} 節で旧環境の撤去と自作模型の退避を、第~\ref{sec:layout} 節で導入した構成を述べる。第~\ref{sec:issues} 節では、この Mac に固有の障害と、のちの模型の検算で分かったツールの問題とその対処を、第~\ref{sec:tests} 節では検証の方法と結果を示す。第~\ref{sec:usage} 節に使い方を、第~\ref{sec:thermal} 節と第~\ref{sec:twoloop} 節に後から加えた熱的な道具と2ループの道具を、第~\ref{sec:discussion} 節に検証していない点と今後の課題をまとめる。付録には、ファイル配置、検算に使った解析式の導出、変更・作成したファイルの全文を載せる。
+本稿の構成は次の通りである。第~\ref{sec:migration} 節で旧環境の撤去と自作模型の退避を、第~\ref{sec:layout} 節で導入した構成を述べる。第~\ref{sec:issues} 節では、この Mac に固有の障害と、のちの模型の検算で分かったツールの問題とその対処を、第~\ref{sec:tests} 節では検証の方法と結果を示す。第~\ref{sec:usage} 節に使い方を、第~\ref{sec:thermal} 節、第~\ref{sec:twoloop} 節、第~\ref{sec:lhc} 節に後から加えた熱的な道具、2ループの道具、LHC の現象論の道具を、第~\ref{sec:discussion} 節に検証していない点と今後の課題をまとめる。付録には、ファイル配置、検算に使った解析式の導出、変更・作成したファイルの全文を載せる。
 
 \section{旧環境の撤去と自作模型の退避}\label{sec:migration}
 
@@ -1188,13 +1188,108 @@ cc -DTSIL_SIZE_DOUBLE -I$HOME/hep/include prog.c -L$HOME/hep/lib -ltsil -lm     
 cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 \end{Verbatim}
 
+\section{LHC の現象論の道具の追加}\label{sec:lhc}
+
+2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）を記録する。
+
+段階 1 は Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
+
+\begin{table}[htbp]
+\centering\small
+\caption{LHC の現象論の道具を入れる計画（2026年10月19日）。}
+\label{tab:lhcplan}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.9cm}>{\raggedright\arraybackslash}p{3.2cm}X}
+\toprule
+\textbf{段階} & \textbf{道具} & \textbf{確かめ} \\
+\midrule
+1 & LHAPDF 6、PDF の組 & 和則。$pp\to e^+e^-$ と $gg\to H$ の LO の断面積を、同じ PDF での自分の積分と比べる \\
+2 & Pythia 8、HepMC & シャワーで全断面積が変わらないこと。MLM のマッチングの断面積が xqcut によらず、DJR の分布がなめらかなこと \\
+3 & ROOT、FastJet、Delphes & Delphes の中のジェットが、同じ粒子に FastJet を単独でかけたジェットと一致すること。電子の効率がカードの式に合うこと \\
+4 & MadAnalysis5（PAD） & 検証つきの解析を一つ選び、検証のノートのカットフローを再現する（公表の値は参照） \\
+5 & pyhf、SModelS、HiggsTools & HEPData の尤度で公表の CLs を、配布の例で参照の出力を再現する。ヒッグスのノートの部分幅を入れて SM の点の $\chi^2$ を出す \\
+6 & 通しの確かめ & 自作の $Z'$ の模型で $pp\to Z'\to\ell\ell$ を Delphes まで流し、ダイレプトンの共鳴の探索の質量の制限を公表の背景で再現する（公表の制限は参照） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 1 で入れたものの版、配置、入手元。配置の \texttt{L} は \pth{hep/MG5_aMC_v3_8_1/HEPTools/lhapdf6_py3}。PDF の組の数字は LHAPDF の番号と組の数、括弧の中は展開した大きさと取得した tarball の大きさ。}
+\label{tab:lhc1}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}p{1.6cm}X>{\raggedright\arraybackslash}p{3.6cm}}
+\toprule
+\textbf{もの} & \textbf{版} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+LHAPDF & 6.5.5 & \texttt{L}。Python の拡張は \texttt{L/lib/python3.12/site-packages/lhapdf}（作り直したもの） & lhapdf.hepforge.org~\cite{lhapdf6,url:lhapdf}（\MGaMC{} の \texttt{install lhapdf6}、0.90 MB。最新は 6.5.6） \\
+Cython（LHAPDF の構築用） & 3.3.0 & \texttt{L/python3.12} & PyPI（installer の pip、3.1 MB） \\
+NNPDF40\_nlo\_as\_\allowbreak 01180 & 331700、101 & \texttt{L/share/LHAPDF}（159 MB、53.0 MB） & lhapdfsets.web.cern.ch~\cite{nnpdf40}（\texttt{lhapdf install}） \\
+CT18NNLO & 14000、59 & 同上（67 MB、18.7 MB） & 同上~\cite{ct18} \\
+PDF4LHC21\_40 & 93100、41 & 同上（31 MB、9.8 MB） & 同上~\cite{pdf4lhc21} \\
+NNPDF23\_lo\_as\_\allowbreak 0130\_qed、NNPDF23\_nlo\_as\_\allowbreak 0119\_qed & 247000、244800 & 承認外の取得物なので、tarball とともにゴミ箱へ移した（2か所の計 493 MB） & 同上。installer が \MGaMC{} の既定の組として自動で取得した（27.6、28.5 MB） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{導入。}LHAPDF は \MGaMC{} の installer（\texttt{install lhapdf6}）で入れた。\MGaMC{} は installer に、C++ では \texttt{/usr/bin/clang++}、Fortran では Homebrew の gfortran を渡す。一方、この Mac の PATH の先頭は MESA SDK の gcc（GCC 13）なので、\texttt{CC} と \texttt{CXX} も clang に固定して起動した。installer は、Python の拡張を作るため Cython を pip で入れ、\MGaMC{} の既定の PDF の組2つも自動で取得した（表~\ref{tab:lhc1}）。この2つは導入の前に承認を得た取得物に入っていなかったので、\texttt{/usr/bin/trash} でゴミ箱へ移した。\MGaMC{} は LHAPDF の場所を、利用者の設定 \pth{.config/mg5_configuration.txt} の \texttt{lhapdf\_py3} に書く。PDF の組は、LHAPDF の \texttt{lhapdf install} で公式の置き場から取得した。
+
+\paragraph{検証。}結果を表~\ref{tab:lhc1tests} にまとめる。自分の積分は、部分の断面積 $\hat\sigma$ を手で書き、\MGaMC{} と同じ PDF と因子化の目盛りで、$pp\to e^+e^-$ は $(M^2,y)$ の2次元、$gg\to H$ は $\delta(\hat s-M_H^2)$ で1次元の積分にした（\nolinkurl{tests/lhc/test_lhapdf.py}）。$pp\to e^+e^-$ は \MGaMC{} の \texttt{sm} の模型（$\gamma$ と $Z$ の交換、陽子は $u$、$d$、$s$、$c$）で、
+\begin{gather*}
+\hat\sigma_q=\frac1{N_c}\frac{\hat s}{48\pi}\sum_{i,j=L,R}\Bigl|\frac{e^2Q_qQ_e}{\hat s}+\frac{g_i^qg_j^e}{\hat s-M_Z^2+iM_Z\Gamma_Z}\Bigr|^2,\\
+g_L^f=\frac e{s_Wc_W}(T_3-Qs_W^2),\qquad g_R^f=-\frac e{s_Wc_W}Qs_W^2
+\end{gather*}
+とした。$gg\to H$ はヒッグスの崩壊のノート~\cite{higgsnote}の重いトップの有効理論の UFO で、
+\[
+\sigma=\frac{\pi^2\Gamma(H\to gg)}{8M_Hs}\int_\tau^1\frac{\mathrm{d}x}x\,g(x)g(\tau/x),\qquad\Gamma(H\to gg)=\frac{c_{Hgg}^2M_H^3}{8\pi v^2},\qquad\tau=\frac{M_H^2}s
+\]
+とした。どちらも \MGaMC{} の統計の誤差の範囲で一致した。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 1 の検証の結果（\nolinkurl{tests/lhc/run_stage1.sh}、約1分）。断面積は 13 TeV、LO、NNPDF40\_nlo\_as\_01180、固定の因子化の目盛り。}
+\label{tab:lhc1tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & LHAPDF の Python の拡張 & miniforge の base（3.12.10）と \texttt{qft}（3.12.15）で読み込める & installer が作った拡張は、どちらでも読み込みで落ちる（exit 139）。作り直すと両方で読める & 対処して一致 \\
+2 & 和則（$Q=100$~GeV、中心の組、$x$ は格子の下限から1） & 運動量の和 1、$u_v$ 2、$d_v$ 1 & NNPDF4.0：1.000044、1.99855、0.99845。CT18：1.000204、1.99991、0.99984。PDF4LHC21：1.001566、1.99237、0.98669 & 期待どおり（PDF4LHC21 の格子は $x=10^{-6}$ で終わる） \\
+3 & $\alpha_s(M_Z)$ & 組の情報の値 & 3組とも 0.11800 & 一致 \\
+4 & $pp\to e^+e^-$、$60<m_{ee}<120$~GeV、$\mu_F=M_Z$ & 自分の積分 1690.39~pb & 1690.37 ± 0.55~pb（差 $-1.6\times10^{-5}$、$0.05\sigma$） & 一致 \\
+5 & $gg\to H$、$c_{Hgg}=-0.0125$、$\mu_F=M_H$ & 自分の積分 14.511~pb & 14.510 ± 0.009~pb（差 $-6.8\times10^{-5}$、$0.11\sigma$） & 一致 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}導入と照合の途中で、次のことが分かった。
+\begin{itemize}
+\item \MGaMC{} 3.8.1 の \texttt{install} は、installer に \texttt{--prefix=./HEPTools} を渡す。この相対パスは \MGaMC{} を起動した作業ディレクトリについて解かれるので、ほかのディレクトリから起動すると、そこに \texttt{HEPTools} を作って入れる。一方、設定ファイルには \MGaMC{} の \texttt{HEPTools} の場所を書くので、設定と実体が食い違う。メッセージは成功を報告する。\MGaMC{} は自分のディレクトリから起動する（\nolinkurl{tests/lhc/run_stage1.sh} もそうする）。
+\item installer は LHAPDF の Python の拡張 \texttt{lhapdf.so} を \texttt{libpython3.12.dylib} にリンクする。conda の Python は本体に interpreter を静的に含むので、読み込むと interpreter が二つになり、メッセージなしに落ちる（exit 139）。拡張を \texttt{-undefined dynamic\_lookup} で作り直す（下の使い方）。\MGaMC{} で LHAPDF を入れ直すと、落ちる拡張に戻る。
+\item installer は、\MGaMC{} の既定の PDF の組（NNPDF23 の LO と NLO、tarball 合わせて 56 MB）を、問い合わせなしに取得する。取得するものを先に決めて承認を得る運用では、導入の後に確かめて消す。
+\item \MGaMC{} 3.8 は param\_card の名前を小文字で書く（\texttt{\# aewm1}、\texttt{\# chgg}）。ログの \texttt{Cross-section :} は4桁しか表示しないので、値は banner の \texttt{Integrated weight (pb)} から、誤差は \texttt{SubProcesses/results.dat} の1行目の2番目の数から読む。
+\item \texttt{pdlabel = lhapdf} の最初の実行で、\MGaMC{} は \texttt{lhapdf-config does not seem to correspond to a valid lhapdf-config executable} と出したあと、設定の場所を見つけて続けた。結果には影響しない。
+\item LHAPDF の \texttt{xfxQ2} は $xf(x)$ を返す。和則では、運動量の和は $xf$ を、価クォークの数は $xf/x$ を積分する。
+\end{itemize}
+
+\paragraph{使い方。}\MGaMC{} の run\_card で \texttt{pdlabel = lhapdf}、\texttt{lhaid = 331700} のように番号で選ぶ。Python からは次のように使う。照合は \nolinkurl{tests/lhc/run_stage1.sh} で実行し直す（約1分）。\texttt{tests/run\_all.sh} に \texttt{--lhc} を付けると、これも実行する。
+\begin{Verbatim}
+L=~/hep/MG5_aMC_v3_8_1/HEPTools/lhapdf6_py3
+PYTHONPATH=$L/lib/python3.12/site-packages python $L/bin/lhapdf install <set>     # more PDF sets
+python3 -c "import sys; sys.path.insert(0, '$L/lib/python3.12/site-packages'); import lhapdf"
+# reinstall: from MG5's own directory, with clang (then rebuild the Python module)
+cd ~/hep/MG5_aMC_v3_8_1 && echo "install lhapdf6" > /tmp/i.mg5 && CC=/usr/bin/clang CXX=/usr/bin/clang++ ~/hep/bin/mg5_aMC /tmp/i.mg5
+clang++ -shared -fPIC -undefined dynamic_lookup -O2 -std=c++11 -o $L/lib/python3.12/site-packages/lhapdf/lhapdf.so \
+  LHAPDF-6.5.5/wrappers/python/lhapdf.cpp -I$L/include -I$HOME/miniforge3/envs/qft/include/python3.12 \
+  -L$L/lib -lLHAPDF -Wl,-rpath,$L/lib
+cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage1.sh
+\end{Verbatim}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO の断面積の計算（\texttt{[QCD]}、実の放射を含む \texttt{[QED]}）、Mathematica 14.1.0 での動作である。はじめ確かめていなかった NLOCT の対抗項と NLO 用 UFO は、その後 $\phi^3$、擬スカラー湯川、スピノル QED のノート~\cite{phi3note,yukawanote,qednote} で、手計算の対抗項と記号として一致し、MadLoop の値も手計算の式と倍精度の範囲で一致した（第~\ref{sec:issues} 節の回避策のもとで）。FormCalc の記号の計算と LoopTools の組、MadLoop のループで誘起される過程（\texttt{[sqrvirt=QED]}）と MadEvent（\texttt{[noborn=QED]}）も、スピノル QED のノートで確かめた。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。
 
 \paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
 
-\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。
+\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1 だけを入れた（第~\ref{sec:lhc} 節）。
 
 \appendix
 
@@ -1368,6 +1463,11 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{url:px} Package-X（McMule による再公開）. \url{https://mule-tools.gitlab.io/package-x/}
 \bibitem{url:fr} FeynRules. \url{https://feynrules.irmp.ucl.ac.be/}
 \bibitem{url:mg5} MadGraph5\_aMC@NLO. \url{https://launchpad.net/mg5amcnlo}
+\bibitem{lhapdf6} A. Buckley \textit{et al.}, ``LHAPDF6: parton density access in the LHC precision era,'' Eur.Phys.J.C \textbf{75} (2015) 132, \href{https://arxiv.org/abs/1412.7420}{arXiv:1412.7420}.
+\bibitem{url:lhapdf} LHAPDF. \url{https://lhapdf.hepforge.org/}
+\bibitem{nnpdf40} R. D. Ball \textit{et al.} (NNPDF), ``The path to proton structure at 1\% accuracy,'' Eur.Phys.J.C \textbf{82} (2022) 428, \href{https://arxiv.org/abs/2109.02653}{arXiv:2109.02653}.
+\bibitem{ct18} T.-J. Hou \textit{et al.}, ``New CTEQ global analysis of quantum chromodynamics with high-precision data from the LHC,'' Phys.Rev.D \textbf{103} (2021) 014013, \href{https://arxiv.org/abs/1912.10053}{arXiv:1912.10053}.
+\bibitem{pdf4lhc21} R. D. Ball \textit{et al.} (PDF4LHC Working Group), ``The PDF4LHC21 combination of global PDF fits for the LHC Run III,'' J.Phys.G \textbf{49} (2022) 080501, \href{https://arxiv.org/abs/2203.05506}{arXiv:2203.05506}.
 \bibitem{url:feynmaster} D. Fontes, J. C. Rom\~ao, FeynMaster Manual v2（Mathematica 14 での FeynRules の \texttt{MatrixSymbol} の扱い）. \url{https://porthos.tecnico.ulisboa.pt/FeynMaster/Manual/Manual-v2.pdf}
 \bibitem{phi34thermal} $\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波（本リポジトリ \nolinkurl{models/phi34_thermal/ResearchNote/note.pdf}）。熱的な道具との照合は第7節と付録~H。
 \bibitem{cosmotransitions} C. L. Wainwright, ``CosmoTransitions: computing cosmological phase transition temperatures and bubble profiles with multiple fields,'' Comput.Phys.Commun. \textbf{183} (2012) 2006, \href{https://arxiv.org/abs/1109.4189}{arXiv:1109.4189}.
