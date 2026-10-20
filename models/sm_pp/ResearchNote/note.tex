@@ -9,7 +9,7 @@
 \usepackage[table]{xcolor}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing,shapes.geometric}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing,shapes.geometric,shapes.misc}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
 % the figures of step (3): categorical colours validated for colour-vision deficiency (dataviz palette slots 1-3), with line styles
@@ -39,6 +39,11 @@
   vtx/.style={circle,fill=black,inner sep=1.3pt},
   blob/.style={ellipse,draw=black,thick,fill=black!12,minimum width=0.9cm,minimum height=1.25cm,inner sep=0pt},
   lab/.style={font=\small,align=center},
+  scalar/.style={thick,dashed},
+  effvtx/.style={rectangle,fill=black,inner sep=2.5pt},
+  rtwo/.style={draw,thick,fill=white,rectangle,inner sep=1.6pt,font=\scriptsize},
+  uvct/.style={fill=white,circle,inner sep=0pt,font=\Large},
+  dcap/.style={font=\small,align=center},
 }
 
 \title{陽子どうしの衝突の NLO の QCD の補正\\（Drell--Yan、重いトップの有効理論の $gg\to H$、MC@NLO、$\MSbar$、$d=4-2\epsilon$）}
@@ -357,6 +362,81 @@ G_{ij}(y)=\int_{\ln y}^0\dd t\,x f_i(e^t)\,x f_j(ye^{-t})
 
 \subsection{NLO の係数関数}\label{sec:coef}
 
+図~\ref{fig:dynlo} に、$\alpha_s$ の1次で現れる図をすべて示す。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.82,every node/.style={font=\small}]
+% (a) vertex correction
+\begin{scope}
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (u1) at (0.9,0.55); \coordinate (u2) at (0.9,-0.55); \coordinate (v) at (1.7,0);
+\draw[fermion] (a) -- (u1) node[pos=0,left] {$q$};
+\draw[fermion] (u1) -- (v); \draw[fermion] (v) -- (u2); \draw[fermion] (u2) -- (b) node[left] {$\bar q$};
+\draw[gluon] (u1) -- (u2);
+\draw[photon] (v) -- (2.9,0) node[right] {$V^*$};
+\foreach \p in {u1,u2,v} \node[vtx] at (\p) {};
+\node[dcap] at (1.4,-1.9) {(a) 仮想の補正\\（頂点の補正）};
+\end{scope}
+% (b) gluon from the quark
+\begin{scope}[xshift=5.6cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (u1) at (0.8,0.6); \coordinate (v) at (1.5,0);
+\draw[fermion] (a) -- (u1) node[pos=0,left] {$q$};
+\draw[fermion] (u1) -- (v); \draw[fermion] (v) -- (b) node[left] {$\bar q$};
+\draw[gluon] (u1) -- (2.4,1.25) node[right] {$g$};
+\draw[photon] (v) -- (2.8,0) node[right] {$V^*$};
+\foreach \p in {u1,v} \node[vtx] at (\p) {};
+\node[dcap] at (1.4,-1.9) {(b) $q\bar q\to V^*g$\\（$q$ から放つ）};
+\end{scope}
+% (c) gluon from the antiquark
+\begin{scope}[xshift=11.2cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (u2) at (0.8,-0.6); \coordinate (v) at (1.5,0);
+\draw[fermion] (a) -- (v) node[pos=0,left] {$q$};
+\draw[fermion] (v) -- (u2); \draw[fermion] (u2) -- (b) node[left] {$\bar q$};
+\draw[gluon] (u2) -- (2.4,-1.25) node[right] {$g$};
+\draw[photon] (v) -- (2.8,0) node[right] {$V^*$};
+\foreach \p in {u2,v} \node[vtx] at (\p) {};
+\node[dcap] at (1.4,-1.9) {(c) $q\bar q\to V^*g$\\（$\bar q$ から放つ）};
+\end{scope}
+% (d) q g, s-channel quark
+\begin{scope}[yshift=-4.3cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (v1) at (0.9,0); \coordinate (v2) at (1.9,0);
+\draw[fermion] (a) -- (v1) node[pos=0,left] {$q$};
+\draw[gluon] (b) -- (v1) node[pos=0,left] {$g$};
+\draw[fermion] (v1) -- (v2);
+\draw[photon] (v2) -- (3.0,0.8) node[right] {$V^*$};
+\draw[fermion] (v2) -- (3.0,-0.8) node[right] {$q$};
+\foreach \p in {v1,v2} \node[vtx] at (\p) {};
+\node[dcap] at (1.4,-1.9) {(d) $qg\to V^*q$\\（$s$ チャンネル）};
+\end{scope}
+% (e) q g, t-channel quark
+\begin{scope}[xshift=5.6cm,yshift=-4.3cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (v1) at (1.2,0.6); \coordinate (v2) at (1.2,-0.6);
+\draw[fermion] (a) -- (v1) node[pos=0,left] {$q$};
+\draw[photon] (v1) -- (2.6,1.1) node[right] {$V^*$};
+\draw[fermion] (v1) -- (v2);
+\draw[gluon] (b) -- (v2) node[pos=0,left] {$g$};
+\draw[fermion] (v2) -- (2.6,-1.1) node[right] {$q$};
+\foreach \p in {v1,v2} \node[vtx] at (\p) {};
+\node[dcap] at (1.4,-1.9) {(e) $qg\to V^*q$\\（$t$ チャンネル）};
+\end{scope}
+% (f) collinear splitting absorbed into the parton distribution
+\begin{scope}[xshift=11.2cm,yshift=-4.3cm]
+\node[blob] (b1) at (0,0) {};
+\draw[thick,double] (-1.1,0) -- (b1) node[pos=0,left] {$p$};
+\coordinate (s) at (1.3,0.15);
+\draw[fermion] (b1) -- (s);
+\draw[fermion] (s) -- (3.0,0.35) node[right] {$q$};
+\draw[gluon] (s) -- (2.7,0.95) node[right] {$g$};
+\node[vtx] at (s) {};
+\draw[thick,dashed,rounded corners,black!60] (-0.6,-0.8) rectangle (1.9,0.95);
+\node[font=\scriptsize,black!70] at (0.65,-1.2) {$f_q(x,\mu_F)$ に吸収};
+\node[dcap] at (1.2,-1.9) {(f) 共線の分岐\\（$P_{qq}$、$P_{qg}$）};
+\end{scope}
+\end{tikzpicture}
+\caption{Drell--Yan 過程の $\alpha_s$ の1次で現れる図。(a) 仮想の補正。Born（図~\ref{fig:dy}(a)）との干渉が断面積に入る（外線の自己エネルギーは質量0では0）。(b)、(c) グルーオンを1個放つ実の放射。2つの振幅を足して2乗する。(d)、(e) グルーオンが始状態にある新しいチャンネル。(a) と (b)、(c) の軟らかい発散と共線の発散の一部は打ち消し合う。残る始状態の共線の発散は、(f) のように、パートンが陽子の中で分かれたものとみなしてパートン分布に移す（$\MSbar$ の共線の対抗項、第~\ref{sec:div} 節）。}
+\label{fig:dynlo}
+\end{figure}
+
 \paragraph{実の放射。}$q(p_1)\bar q(p_2)\to V^*(q)g(k)$ と $q(p_1)g(p_2)\to V^*(q)q(k)$ で、$t=(p_1-k)^2=-\hat s(1-z)v$、$u=(p_2-k)^2=-\hat s(1-z)(1-v)$ とする。$-g_{\mu\nu}H^{\mu\nu}$ の Born に対する比に、色と平均の因子（$q\bar q$ は $C_F$、$qg$ は $T_R/(1-\epsilon)$：グルーオンの偏極は $d-2$ 個）を掛けたものは
 \begin{equation}
 r_{q\bar q}=2C_F\Bigl[(1-\epsilon)\Bigl(\frac ut+\frac tu\Bigr)+\frac{2Q^2\hat s}{ut}-2\epsilon\Bigr],\qquad
@@ -386,6 +466,89 @@ F^{(1)}=-a_sC_F\Bigl(\frac{\mu_R^2}{-Q^2-i0}\Bigr)^\epsilon\frac{e^{\epsilon\gam
 になる。$\delta(1-z)$ の係数 $8\zeta_2-16$ は、実の放射の $-6\zeta_2$ と仮想の補正の $-16+14\zeta_2$ の和である。仮想の $14\zeta_2$ のうち $12\zeta_2$ は時間的な $Q^2$ への解析接続（$\cos\pi\epsilon$）から来る。$\mu_F$ の依存 $-4L_FP_{qq}$、$-2L_FP_{qg}$ は、LO の $f(\mu_F)$ の DGLAP の進化を打ち消す。
 
 \subsection{$gg\to H$ の NLO の係数関数（重いトップの有効理論）}\label{sec:gghcoef}
+
+図~\ref{fig:gghnlo} に、NLO の仮想の補正と実の放射の図を示す。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.82,every node/.style={font=\small}]
+% (a) triangle
+\begin{scope}
+\coordinate (g1) at (0,1.1); \coordinate (g2) at (0,-1.1); \coordinate (A) at (1.0,0.65); \coordinate (B) at (1.0,-0.65); \coordinate (C) at (2.1,0);
+\draw[gluon] (g1) -- (A) node[pos=0,left] {$g$};
+\draw[gluon] (g2) -- (B) node[pos=0,left] {$g$};
+\draw[gluon] (A) -- (B); \draw[gluon] (A) -- (C); \draw[gluon] (B) -- (C);
+\draw[scalar] (C) -- (3.1,0) node[right] {$H$};
+\node[vtx] at (A) {}; \node[vtx] at (B) {}; \node[effvtx] at (C) {};
+\node[dcap] at (1.5,-1.9) {(a) 三角形};
+\end{scope}
+% (b) bubble with the H g g g vertex
+\begin{scope}[xshift=5.6cm]
+\coordinate (g1) at (0,1.1); \coordinate (g2) at (0,-1.1); \coordinate (A) at (0.7,0.8); \coordinate (C) at (2.2,0);
+\draw[gluon] (g1) -- (A) node[pos=0,left] {$g$};
+\draw[gluon] (A) to[bend left=50] (C); \draw[gluon] (A) to[bend right=50] (C);
+\draw[gluon] (g2) -- (C) node[pos=0,left] {$g$};
+\draw[scalar] (C) -- (3.1,0) node[right] {$H$};
+\node[vtx] at (A) {}; \node[effvtx] at (C) {};
+\node[dcap] at (1.5,-1.9) {(b) 泡（$Hggg$ の頂点）};
+\end{scope}
+% (c) bubble with the four-gluon vertex
+\begin{scope}[xshift=11.2cm]
+\coordinate (g1) at (0,1.1); \coordinate (g2) at (0,-1.1); \coordinate (A) at (0.8,0); \coordinate (C) at (2.1,0);
+\draw[gluon] (g1) -- (A) node[pos=0,left] {$g$};
+\draw[gluon] (g2) -- (A) node[pos=0,left] {$g$};
+\draw[gluon] (A) to[bend left=55] (C); \draw[gluon] (A) to[bend right=55] (C);
+\draw[scalar] (C) -- (3.1,0) node[right] {$H$};
+\node[vtx] at (A) {}; \node[effvtx] at (C) {};
+\node[dcap] at (1.5,-1.9) {(c) 泡（4グルーオンの頂点）};
+\end{scope}
+% (d) g g -> H g, contact
+\begin{scope}[yshift=-4.3cm]
+\coordinate (g1) at (0,1.1); \coordinate (g2) at (0,-1.1); \coordinate (C) at (1.2,0);
+\draw[gluon] (g1) -- (C) node[pos=0,left] {$g$};
+\draw[gluon] (g2) -- (C) node[pos=0,left] {$g$};
+\draw[gluon] (C) -- (2.4,1.0) node[right] {$g$};
+\draw[scalar] (C) -- (2.5,-0.7) node[right] {$H$};
+\node[effvtx] at (C) {};
+\node[dcap] at (1.2,-1.9) {(d) $gg\to Hg$\\（$Hggg$ の頂点）};
+\end{scope}
+% (e) g g -> H g, s-channel gluon
+\begin{scope}[xshift=4.3cm,yshift=-4.3cm]
+\coordinate (g1) at (0,1.1); \coordinate (g2) at (0,-1.1); \coordinate (A) at (0.8,0); \coordinate (C) at (1.8,0);
+\draw[gluon] (g1) -- (A) node[pos=0,left] {$g$};
+\draw[gluon] (g2) -- (A) node[pos=0,left] {$g$};
+\draw[gluon] (A) -- (C);
+\draw[gluon] (C) -- (2.8,1.0) node[right] {$g$};
+\draw[scalar] (C) -- (2.9,-0.7) node[right] {$H$};
+\node[vtx] at (A) {}; \node[effvtx] at (C) {};
+\node[dcap] at (1.4,-1.9) {(e) $gg\to Hg$\\（$s$、$t$、$u$ チャンネル）};
+\end{scope}
+% (f) q g -> H q
+\begin{scope}[xshift=8.6cm,yshift=-4.3cm]
+\coordinate (q) at (0,1.1); \coordinate (g) at (0,-1.1); \coordinate (A) at (1.0,0.65); \coordinate (C) at (1.0,-0.55);
+\draw[fermion] (q) -- (A) node[pos=0,left] {$q$};
+\draw[fermion] (A) -- (2.3,1.1) node[right] {$q$};
+\draw[gluon] (A) -- (C);
+\draw[gluon] (g) -- (C) node[pos=0,left] {$g$};
+\draw[scalar] (C) -- (2.3,-0.9) node[right] {$H$};
+\node[vtx] at (A) {}; \node[effvtx] at (C) {};
+\node[dcap] at (1.2,-1.9) {(f) $qg\to Hq$};
+\end{scope}
+% (g) q qbar -> H g
+\begin{scope}[xshift=12.9cm,yshift=-4.3cm]
+\coordinate (q) at (0,1.1); \coordinate (qb) at (0,-1.1); \coordinate (A) at (0.8,0); \coordinate (C) at (1.8,0);
+\draw[fermion] (q) -- (A) node[pos=0,left] {$q$};
+\draw[fermion] (A) -- (qb) node[left] {$\bar q$};
+\draw[gluon] (A) -- (C);
+\draw[gluon] (C) -- (2.8,1.0) node[right] {$g$};
+\draw[scalar] (C) -- (2.9,-0.7) node[right] {$H$};
+\node[vtx] at (A) {}; \node[effvtx] at (C) {};
+\node[dcap] at (1.4,-1.9) {(g) $q\bar q\to Hg$};
+\end{scope}
+\end{tikzpicture}
+\caption{重いトップの有効理論の $gg\to H$ の NLO の図（黒い四角が有効な頂点 $-\frac14c_{Hgg}(H/v)GG$ から出る頂点。$G^a_{\mu\nu}$ はグルーオンを2個まで含むので、$Hgg$、$Hggg$、$Hgggg$ の頂点がある）。上段：仮想の補正の1ループの図の形（グルーオンのループ。ゴーストは $H$ に結合しないのでループを作らず、$Hgggg$ の頂点の自分自身へのループはスケールを持たないので0）。下段：実の放射。(e) は、2つの入射のグルーオンが合わさる $s$ チャンネルのほかに、$t$、$u$ チャンネルがある。(f) は $gg$ の Born から、入射のグルーオンの一方がクォークに替わったもの。(g) は赤外で有限で、aMC@NLO の \texttt{[QCD]} には入らない（第~\ref{sec:step2} 節 (g)）。}
+\label{fig:gghnlo}
+\end{figure}
 
 Drell--Yan と同じく、パートンの断面積を $\hat\sigma_{ij}=\sigma_0z\,\Delta_{ij}(z)$、$z=M_H^2/\hat s$ と書く（文献の係数関数は $z\Delta$ である）。LO は
 \begin{equation}
@@ -568,7 +731,50 @@ LO のヒッグスのラピディティの分布（38 ビン）は $\chi^2=15.7$
 
 \paragraph{(i) 自作の NLO の UFO。}MadLoop は、ループの積分の被積分関数の分子を、ループの運動量 $q$ の4次元の多項式として数値で組み立て、既知のスカラーの積分の和に分ける（OPP の方法）。ところが次元正則化では、ループの運動量は $D=4-2\epsilon$ 次元にある。$q$ を4次元に限ると、分子の中の $\bar q^2=q^2+\tilde q^2$（$\tilde q$ は余分な $-2\epsilon$ 次元の成分）の $\tilde q^2$ と、計量の縮約 $g^\mu{}_\mu=D$ の $D-4$ が落ちる。これらは $\epsilon$ に比例するが、ループの紫外の発散 $1/\epsilon$ に掛かると有限な項が残る。この残りを R2 と呼び、MadLoop は UFO に書かれた木の形の頂点（R2 の頂点）として足す。紫外の対抗項も UFO の頂点である。NLOCT はこの二つを繰り込み可能な頂点についてしか出せない（(d)）ので、$GGH$ の頂点のものを自分で導いた。
 
-\texttt{gh\_r2.wl} は、ヒッグスのノートの FeynArts の模型で、1ループの $G^a_\mu(k_1)G^b_\nu(k_2)\to H$ の頂点（$c_{Hgg}g_s^2$ の次数の14図、Feynman ゲージ。外の添字と運動量は4次元、ループは $D$ 次元の 't~Hooft--Veltman の方式）を、分子を $D$ 次元で計算したものから4次元で計算したものを引いて求める。グルーオンは質量殻から外す（$k_1^2,k_2^2\neq0$）ので赤外の発散はなく、差は紫外の極だけから来る。$\tilde q^2$ を含む積分は、$\int\tilde q^2Y=(D-4)\times$（$\int q^\alpha q^\beta Y$ の $g^{\alpha\beta}$ の係数）、$\tilde q^4$ は $(D-4)(D-2)\times$（$g^{\alpha\beta}g^{\gamma\delta}$ の係数）で求めた（$\tilde q$ は4次元の外の運動量と直交する）。結果は
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.82,every node/.style={font=\small}]
+\newcommand{\trianglegh}{%
+\coordinate (g1) at (0,1.0); \coordinate (g2) at (0,-1.0); \coordinate (A) at (0.9,0.6); \coordinate (B) at (0.9,-0.6); \coordinate (C) at (1.9,0);
+\draw[gluon] (g1) -- (A) node[pos=0,left] {$k_1$};
+\draw[gluon] (g2) -- (B) node[pos=0,left] {$k_2$};
+\draw[gluon] (A) -- (B); \draw[gluon] (A) -- (C); \draw[gluon] (B) -- (C);
+\draw[scalar] (C) -- (2.8,0) node[right] {$H$};
+\node[vtx] at (A) {}; \node[vtx] at (B) {}; \node[effvtx] at (C) {};}
+\begin{scope}
+\trianglegh
+\node[dcap] at (1.3,-1.8) {ループの運動量\\$\bar q$ は $D$ 次元};
+\end{scope}
+\node at (3.9,0) {\large $=$};
+\begin{scope}[xshift=4.9cm]
+\trianglegh
+\node[dcap] at (1.3,-1.8) {分子を4次元の $q$ で\\組み立てる（MadLoop）};
+\end{scope}
+\node at (8.8,0) {\large $+$};
+\begin{scope}[xshift=9.7cm]
+\coordinate (g1) at (0,1.0); \coordinate (g2) at (0,-1.0); \coordinate (C) at (1.0,0);
+\draw[gluon] (g1) -- (C) node[pos=0,left] {$k_1$};
+\draw[gluon] (g2) -- (C) node[pos=0,left] {$k_2$};
+\draw[scalar] (C) -- (2.0,0) node[right] {$H$};
+\node[rtwo] at (C) {R2};
+\node[dcap] at (1.0,-1.8) {R2 の頂点\\（式~\eqref{eq:r2ggh}）};
+\end{scope}
+\node at (13.1,0) {\large $+$};
+\begin{scope}[xshift=14.0cm]
+\coordinate (g1) at (0,1.0); \coordinate (g2) at (0,-1.0); \coordinate (C) at (1.0,0);
+\draw[gluon] (g1) -- (C) node[pos=0,left] {$k_1$};
+\draw[gluon] (g2) -- (C) node[pos=0,left] {$k_2$};
+\draw[scalar] (C) -- (2.0,0) node[right] {$H$};
+\node[uvct] at (C) {$\otimes$};
+\node[dcap] at (1.0,-1.8) {紫外の対抗項\\（$\delta\alpha_s/\alpha_s$）};
+\end{scope}
+\end{tikzpicture}
+\caption{R2 の頂点と紫外の対抗項の考え方（図~\ref{fig:gghnlo} の三角形の図で）。次元正則化のループは $D$ 次元の運動量 $\bar q=q+\tilde q$ を持つが、MadLoop は分子を4次元の $q$ で組み立てる。その差（$\tilde q^2$ や $g^\mu{}_\mu=D$ の $D-4$ と紫外の極 $1/\epsilon$ の積が残す有限な項）を、木の形の R2 の頂点として足す。さらに、$\alpha_s$ の繰り込みから来る紫外の対抗項（$\otimes$）を足すと、くりこまれた仮想の補正になる。ほかのループの形（泡）も同じ R2 の頂点にまとめられる。}
+\label{fig:r2}
+\end{figure}
+
+\texttt{gh\_r2.wl} は（図~\ref{fig:r2}）、ヒッグスのノートの FeynArts の模型で、1ループの $G^a_\mu(k_1)G^b_\nu(k_2)\to H$ の頂点（$c_{Hgg}g_s^2$ の次数の14図、Feynman ゲージ。外の添字と運動量は4次元、ループは $D$ 次元の 't~Hooft--Veltman の方式）を、分子を $D$ 次元で計算したものから4次元で計算したものを引いて求める。グルーオンは質量殻から外す（$k_1^2,k_2^2\neq0$）ので赤外の発散はなく、差は紫外の極だけから来る。$\tilde q^2$ を含む積分は、$\int\tilde q^2Y=(D-4)\times$（$\int q^\alpha q^\beta Y$ の $g^{\alpha\beta}$ の係数）、$\tilde q^4$ は $(D-4)(D-2)\times$（$g^{\alpha\beta}g^{\gamma\delta}$ の係数）で求めた（$\tilde q$ は4次元の外の運動量と直交する）。結果は
 \begin{equation}
 R_2^{\mu\nu,ab}=\frac{ic_{Hgg}}v\frac{g_s^2}{128\pi^2}\delta^{ab}\bigl[-17k_1^2g^{\mu\nu}-93\,k_1\!\cdot\!k_2\,g^{\mu\nu}-17k_2^2g^{\mu\nu}+14k_1^\mu k_1^\nu+k_1^\mu k_2^\nu+89k_2^\mu k_1^\nu+14k_2^\mu k_2^\nu\bigr]
 \label{eq:r2ggh}
@@ -604,7 +810,47 @@ $(2,\frac12)$ & 10.1124 & 10.1134(9) ($+1.1$) & 22.5217 & 22.5219(23) ($+0.1$) \
 
 \subsection{手順 (3)：MC@NLO と Pythia 8}\label{sec:step3}
 
-\paragraph{考え方。}固定次数の NLO は、グルーオンを高々1個放つところまでを正しく数える。実際の衝突では、始状態のパートンは陽子から出てくるまでに何度もグルーオンを放ち、その反跳でボソンは横向きの運動量 $p_T$ を受け取る。$p_T$ が小さいと、1回の放射の確率 $\sim\alpha_s\ln^2(Q^2/p_T^2)$ が 1 に近づくので、何回もの放射を足し上げなければならない。\textbf{パートンシャワー}（ここでは Pythia~8）は、「ある $p_T$ より上では何も放たない確率」（\textbf{Sudakov の因子}）を使って放射を順に確率的に作り、この足し上げを近似する。固定次数の NLO の $p_T$ の分布は $p_T\to0$ で発散する（打ち消しの相手の仮想の補正が $p_T=0$ にある）が、シャワーをつなぐと有限な分布になる。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.82,every node/.style={font=\small}]
+\begin{scope}
+\node[blob] (b1) at (0,1.2) {};
+\node[blob] (b2) at (0,-1.2) {};
+\coordinate (v) at (2.4,0);
+\coordinate (e) at (1.2,0.75);
+\draw[fermion] (b1) -- (e); \draw[fermion] (e) -- (v);
+\draw[fermion] (v) -- (b2);
+\draw[gluon] (e) -- (2.4,1.6) node[right] {$g$};
+\draw[photon] (v) -- (3.7,0) node[right] {$V^*$};
+\node[vtx] at (e) {}; \node[vtx] at (v) {};
+\node[dcap] at (1.7,-2.7) {(a) 固定次数の NLO：\\放射は高々1個};
+\end{scope}
+\begin{scope}[xshift=7.0cm]
+\node[blob] (b1) at (0,1.3) {};
+\node[blob] (b2) at (0,-1.3) {};
+\coordinate (v) at (4.4,0);
+\coordinate (e1) at (1.0,1.08); \coordinate (e2) at (1.9,0.83); \coordinate (e3) at (2.8,0.55); \coordinate (e4) at (3.6,0.28);
+\draw[fermion] (b1) -- (e1); \draw[fermion] (e1) -- (e2); \draw[fermion] (e2) -- (e3); \draw[fermion] (e3) -- (e4); \draw[fermion] (e4) -- (v);
+\draw[gluon] (e1) -- ++(0.85,0.3);
+\draw[gluon] (e2) -- ++(0.65,0.6);
+\draw[gluon] (e3) -- ++(0.4,0.85);
+\draw[gluon] (e4) -- ++(0.1,1.0);
+\coordinate (f1) at (1.5,-0.92); \coordinate (f2) at (3.0,-0.42);
+\draw[fermion] (v) -- (f2); \draw[fermion] (f2) -- (f1); \draw[fermion] (f1) -- (b2);
+\draw[gluon] (f1) -- ++(0.85,-0.35);
+\draw[gluon] (f2) -- ++(0.3,-0.9);
+\draw[photon] (v) -- (5.6,0) node[right] {$V^*$};
+\foreach \p in {e1,e2,e3,e4,f1,f2,v} \node[vtx] at (\p) {};
+\draw[-{Stealth[length=2mm]},black!60] (0.8,2.45) -- (3.9,2.45) node[midway,above,font=\scriptsize] {放射の $p_T$ が大きくなる};
+\node[dcap] at (2.6,-2.7) {(b) パートンシャワー：\\何度も放射し、反跳が積み重なる};
+\end{scope}
+\end{tikzpicture}
+\caption{固定次数の NLO とパートンシャワー（模式図）。(a) 固定次数の NLO は、グルーオンを1個放つところまでを正確に数える。(b) シャワーは、始状態のパートンが陽子から出てきて硬い過程に入るまでに、何度もグルーオンを放つ様子を確率的に作る。硬い過程に近い放射ほど $p_T$ が大きい。ボソンの $p_T$ は放射の反跳の和になるので、小さい $p_T$ で固定次数が発散する所が有限な分布になる。MC@NLO は、(a) の1個目の放射と (b) の1個目の放射を二重に数えないようにつなぐ。}
+\label{fig:shower}
+\end{figure}
+
+\paragraph{考え方。}固定次数の NLO は、グルーオンを高々1個放つところまでを正しく数える。実際の衝突では、始状態のパートンは陽子から出てくるまでに何度もグルーオンを放ち、その反跳でボソンは横向きの運動量 $p_T$ を受け取る。$p_T$ が小さいと、1回の放射の確率 $\sim\alpha_s\ln^2(Q^2/p_T^2)$ が 1 に近づくので、何回もの放射を足し上げなければならない。\textbf{パートンシャワー}（ここでは Pythia~8）は、「ある $p_T$ より上では何も放たない確率」（\textbf{Sudakov の因子}）を使って放射を順に確率的に作り、この足し上げを近似する（図~\ref{fig:shower}）。固定次数の NLO の $p_T$ の分布は $p_T\to0$ で発散する（打ち消しの相手の仮想の補正が $p_T=0$ にある）が、シャワーをつなぐと有限な分布になる。
 
 NLO の事象にそのままシャワーをかけると、1個目の放射を NLO の実の放射とシャワーの両方で数えてしまう。\textbf{MC@NLO}~\cite{mcatnlo} は、シャワーが1回目に放つ分（MC の対抗項。シャワーの放射の確率を $\alpha_s$ の1次で展開したもの）を NLO の実の放射から引き、同じものを Born の事象の側に足しておく。こうすると、シャワーをかけた結果を $\alpha_s$ の1次で展開したものが NLO と一致し、それより高い次数をシャワーが補う。引き算のため、事象の重みには負のものが混じる。シャワーは確率を保つ（事象を消さず、放射を足すだけ）ので、次のことが期待される。
 \begin{itemize}
@@ -752,7 +998,43 @@ $p_T<5$~GeV の割合 & 0.311 & 0.068 \\
 
 \subsection{手順 (4)：SSM の $Z'$ の NLO と質量の下限}\label{sec:step4}
 
-\paragraph{考え方。}$Z'$ は、$Z$ と同じ形でフェルミオンに結合する、重い中性のゲージボソンの仮想的な例である（SSM、sequential standard model）。LHC では Drell--Yan と同じく $q\bar q\to Z'\to\ell^+\ell^-$ で作られ、$m_{\ell\ell}$ の分布に山を作る。計算環境の記録の段階 6~\cite{env} では、自作の模型 \texttt{ZpSSM.fr} で LO の断面積を求め、ATLAS の 139~fb$^{-1}$ のダイレプトンの分布~\cite{atlasll}（参照）から $\sigma\times B(Z'\to\ell\ell)$ の 95\% の上限を出した。SSM の断面積が上限を上回る質量は除外されるので、その境目が質量の下限になる（5.04~TeV）。比べる断面積が大きいほど下限は上がるので、NLO の補正は下限を動かす。$Z'$ はクォークにベクトルと軸性の結合でつくので、手順 (1) の係数関数（質量0のクォークではベクトルと軸性で同じ）がそのまま使え、Born の $\sigma_0$ を $Z'$ のものに替えるだけでよい。手順 (4) は \texttt{Src/run\_zp\_check.sh} で再現できる（約10分。段階 6 の出力が要る）。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.82,every node/.style={font=\small}]
+\begin{scope}
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (v) at (1.1,0); \coordinate (w) at (2.6,0);
+\draw[fermion] (a) -- (v) node[pos=0,left] {$q$};
+\draw[fermion] (v) -- (b) node[left] {$\bar q$};
+\draw[photon] (v) -- (w) node[midway,above] {$Z'$};
+\draw[fermion] (3.6,0.85) -- (w) node[pos=0,right] {$\ell^+$};
+\draw[fermion] (w) -- (3.6,-0.85) node[right] {$\ell^-$};
+\node[vtx] at (v) {}; \node[vtx] at (w) {};
+\node[dcap] at (1.8,-1.9) {(a) LO};
+\end{scope}
+\begin{scope}[xshift=5.9cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (u1) at (0.8,0.55); \coordinate (u2) at (0.8,-0.55); \coordinate (v) at (1.6,0);
+\draw[fermion] (a) -- (u1) node[pos=0,left] {$q$};
+\draw[fermion] (u1) -- (v); \draw[fermion] (v) -- (u2); \draw[fermion] (u2) -- (b) node[left] {$\bar q$};
+\draw[gluon] (u1) -- (u2);
+\draw[photon] (v) -- (2.9,0) node[right] {$Z'$};
+\foreach \p in {u1,u2,v} \node[vtx] at (\p) {};
+\node[dcap] at (1.4,-1.9) {(b) 仮想の補正};
+\end{scope}
+\begin{scope}[xshift=11.2cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (v) at (1.0,0);
+\draw[fermion] (a) -- (v) node[pos=0,left] {$q$};
+\draw[fermion] (v) -- (b) node[left] {$\bar q$};
+\draw[photon] (v) -- (2.3,0) node[right] {$Z'$};
+\node[rtwo] at (v) {R2};
+\node[dcap] at (1.2,-1.9) {(c) R2 の頂点：\\$-2C_F\frac{g_s^2}{16\pi^2}\times$ (a) の頂点};
+\end{scope}
+\end{tikzpicture}
+\caption{SSM の $Z'$。(a) LO の $q\bar q\to Z'\to\ell^+\ell^-$。$Z'$ はクォークとレプトンに $Z$ と同じ形（左巻きと右巻きで違う強さ）で結合する。(b) NLO の仮想の補正は、Drell--Yan（図~\ref{fig:dynlo}）と同じ形で、実の放射も同じである。(c) 自作の NLO の UFO の、NLOCT が出した $q\bar qZ'$ の R2 の頂点（紫外の対抗項は0）。}
+\label{fig:zplo}
+\end{figure}
+
+\paragraph{考え方。}$Z'$ は、$Z$ と同じ形でフェルミオンに結合する、重い中性のゲージボソンの仮想的な例である（SSM、sequential standard model）。LHC では Drell--Yan と同じく $q\bar q\to Z'\to\ell^+\ell^-$ で作られ（図~\ref{fig:zplo}）、$m_{\ell\ell}$ の分布に山を作る。計算環境の記録の段階 6~\cite{env} では、自作の模型 \texttt{ZpSSM.fr} で LO の断面積を求め、ATLAS の 139~fb$^{-1}$ のダイレプトンの分布~\cite{atlasll}（参照）から $\sigma\times B(Z'\to\ell\ell)$ の 95\% の上限を出した。SSM の断面積が上限を上回る質量は除外されるので、その境目が質量の下限になる（5.04~TeV）。比べる断面積が大きいほど下限は上がるので、NLO の補正は下限を動かす。$Z'$ はクォークにベクトルと軸性の結合でつくので、手順 (1) の係数関数（質量0のクォークではベクトルと軸性で同じ）がそのまま使え、Born の $\sigma_0$ を $Z'$ のものに替えるだけでよい。手順 (4) は \texttt{Src/run\_zp\_check.sh} で再現できる（約10分。段階 6 の出力が要る）。
 
 \paragraph{(a) 自分の NLO。}\texttt{zp\_hadronic.py} は、
 \[
