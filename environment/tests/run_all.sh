@@ -14,8 +14,10 @@
 #   about 16 minutes, 2.7 GB in lhc/out; the control samples of run_stage4.sh --controls are not made here).
 #   --eftdm re-runs the checks of the EFT and dark-matter tools (environment.pdf, Sec. EFT/DM) in ./eftdm: stage 1,
 #   wilson and DsixTools (SMEFT and WET running, tree matching, against own formulas and each other); stage 2, DirectDM;
-#   stage 3, MadDM 3.3 (sigma_SI, <sigma v>, Omega h^2 of a Higgs-portal scalar against own formulas); stage 4,
-#   micrOMEGAs 7.1.10 on the same model (about 3 minutes in all).
+#   stage 3, MadDM 3.3 (sigma_SI, <sigma v>, Omega h^2 of a Higgs-portal scalar against own formulas; the tree-level
+#   continuum indirect sigma v of each channel; the loop-induced lines S S -> a a, a Z against the Higgs note's one-loop
+#   amplitudes, with an NLO UFO made by NLOCT the first time, about 5 minutes, and reused afterwards); stage 4,
+#   micrOMEGAs 7.1.10 on the same model (about 5 minutes in all, 10 the first time).
 # Test files are named test_*: a file called formcalc.wl in the working directory would
 # shadow the FormCalc package (macOS file names are case-insensitive).
 cd "$(dirname "$0")"
@@ -93,6 +95,10 @@ if [ "$EFTDM" = 1 ]; then
   ./eftdm/run_stage2.sh 2>&1 | tee -a "$log"
   step "EFT/DM tools, stage 3: MadDM 3.3 (rc/3.3) with RAPIDD, Higgs-portal scalar"
   ./eftdm/run_stage3.sh 2>&1 | tee -a "$log"
+  step "EFT/DM tools, stage 3: MadDM's tree-level continuum indirect sigma v of each channel"
+  ./eftdm/run_stage3_id.sh 2>&1 | tee -a "$log"
+  step "EFT/DM tools, stage 3: MadDM's loop-induced lines S S -> a a, a Z (NLO UFO from NLOCT, made once)"
+  if [ -d eftdm/out/model_nlo/SM_SingletDM_NLO_UFO ]; then ./eftdm/run_stage3_line.sh --no-ufo; else ./eftdm/run_stage3_line.sh; fi 2>&1 | tee -a "$log"
   step "EFT/DM tools, stage 4: micrOMEGAs 7.1.10 on the same model and its own SingletDM"
   ./eftdm/run_stage4.sh 2>&1 | tee -a "$log"
 fi

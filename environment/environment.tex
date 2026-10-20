@@ -1522,7 +1522,7 @@ cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage4.sh
 
 \section{EFT・暗黒物質の道具の追加}\label{sec:eftdm}
 
-2026年10月19日に、レビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、まだ入れていなかった EFT・暗黒物質用の道具を加えた。SMEFT と低エネルギー EFT（WET、LEFT）の走行と整合の wilson~\cite{wilson} と DsixTools 2.1~\cite{dsixtools,dsixtools2}、直接検出の非相対論的 EFT への整合の DirectDM~\cite{directdm}、残存量・直接検出・間接検出の MadDM~\cite{maddm3,maddm32}、それに MadDM と独立な系統として micrOMEGAs 7.1~\cite{micromegas6} である。作業は第~\ref{sec:lhc} 節の段階 1、2 と同じ Mac Studio（Apple M4 Max、macOS 15.5）で行った。各段階で、自分の式とツールの出力、およびツールどうしを突き合わせた（表~\ref{tab:eftdmplan}）。照合はすべて \nolinkurl{tests/eftdm} にあり、\texttt{run\_all.sh --eftdm} で4段階をまとめて実行し直せる（約2分。段階 3 の間接検出の照合、\nolinkurl{tests/eftdm/run_stage3_line.sh}（ループで誘起されるライン。NLO の UFO を作るので約7分）と \nolinkurl{tests/eftdm/run_stage3_id.sh}（連続スペクトル、約1.5分）は、ここには含めない）。
+2026年10月19日に、レビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、まだ入れていなかった EFT・暗黒物質用の道具を加えた。SMEFT と低エネルギー EFT（WET、LEFT）の走行と整合の wilson~\cite{wilson} と DsixTools 2.1~\cite{dsixtools,dsixtools2}、直接検出の非相対論的 EFT への整合の DirectDM~\cite{directdm}、残存量・直接検出・間接検出の MadDM~\cite{maddm3,maddm32}、それに MadDM と独立な系統として micrOMEGAs 7.1~\cite{micromegas6} である。作業は第~\ref{sec:lhc} 節の段階 1、2 と同じ Mac Studio（Apple M4 Max、macOS 15.5）で行った。各段階で、自分の式とツールの出力、およびツールどうしを突き合わせた（表~\ref{tab:eftdmplan}）。照合はすべて \nolinkurl{tests/eftdm} にあり、\texttt{run\_all.sh --eftdm} で4段階をまとめて実行し直せる（段階 3 の間接検出の照合 \nolinkurl{tests/eftdm/run_stage3_id.sh}、\texttt{run\_stage3\_line.sh} を含めて約5分。ラインの照合は NLO の UFO を初めの一度だけ作り、そのときはさらに約5分かかる）。
 
 \begin{table}[htbp]
 \centering\small
@@ -1765,7 +1765,7 @@ c_1^N=\frac{C}{2m_S}\Bigl[\sum_{q=u,d,s}\sigma_q^N+\frac29m_G\Bigr],\qquad
 
 \subsection{使い方}\label{sec:eftdmusage}
 
-照合は \texttt{run\_all.sh --eftdm}、または段階ごとに \nolinkurl{tests/eftdm/run_stage1.sh}〜\texttt{run\_stage4.sh} で実行し直す（段階 4 は段階 3 の模型を使う）。ループで誘起されるラインは \nolinkurl{tests/eftdm/run_stage3_line.sh}（\texttt{--no-ufo} で NLO の UFO を作り直さなければ約1分）、連続スペクトルの $\sigma v$ は \nolinkurl{tests/eftdm/run_stage3_id.sh}（約1.5分）で照合する。MadDM は \MGaMC{} のディレクトリから起動する。
+照合は \texttt{run\_all.sh --eftdm}、または段階ごとに \nolinkurl{tests/eftdm/run_stage1.sh}〜\texttt{run\_stage4.sh} で実行し直す（段階 4 は段階 3 の模型を使う）。ループで誘起されるラインは \nolinkurl{tests/eftdm/run_stage3_line.sh}（\texttt{--no-ufo} で NLO の UFO を作り直さなければ約1分）、連続スペクトルの $\sigma v$ は \nolinkurl{tests/eftdm/run_stage3_id.sh}（約1.5分）で照合する。どちらも段階 3 の模型を使い、\texttt{run\_all.sh --eftdm} に含まれる（UFO があれば \texttt{--no-ufo} で）。MadDM は \MGaMC{} のディレクトリから起動する。
 \begin{Verbatim}
 # wilson (qft): running and matching; for alpha_s, alpha_e of the WET running use WETrunner directly
 ~/miniforge3/envs/qft/bin/python -c "from wilson import Wilson; w = Wilson({'lq1_1123': 1e-6}, 1000, 'SMEFT', 'Warsaw'); print(w.match_run(5, 'WET', 'JMS'))"
