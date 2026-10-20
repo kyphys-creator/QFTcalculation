@@ -1,0 +1,171 @@
+(* ::Package:: *)
+
+(* QCDH.fr -- FeynRules model file for the heavy-top effective theory of g g -> H at NLO in QCD (models/sm_pp, step (2)).
+   QCD with five massless quarks (the QCD note's QCD.fr, models/qcd/Src, without its photon, electron and heavy quark: the top is
+   integrated out) and a Higgs boson with the operator of the Higgs note (HggEFT.fr), its coefficient written with alpha_s:
+     L = -1/4 G G - cbar d.D c + sum_q qbar i Dslash q + 1/2 (dH)^2 - MH^2/2 H^2 - (1/4) cHgg (H/vev) G^a_{mu nu} G^{a mu nu},
+     cHgg = -(alpha_s/(3 pi)) kHgg   (kHgg = 1: the top loop at leading order in the heavy-top limit; the Wilson coefficient's
+                                      O(alpha_s) term (11/4) alpha_s/pi is put in by hand, not here),
+   so that NLOCT's renormalization of alpha_s gives the operator's counterterm (alpha_s G G is finite at one loop).
+   - G: the gluon;  ghG: its ghost;  uq = {u, c}, dq = {d, s, b} massless;  H: the Higgs (PDG 25, name h).
+   - Coupling orders: gs counts QCD = 1 (aS: QCD = 2), kHgg counts HIG = 1; the H g g vertex is QCD = 2, HIG = 1.
+   - The names aS (block SMINPUTS, 3) and G are the ones MadGraph expects for the strong coupling.
+   - Load from this folder: LoadModel["QCDH.fr"] after FeynRules.
+*)
+
+M$ModelName = "QCDH";
+
+M$Information = {
+  Authors -> {"K. Yasuda"},
+  Date    -> "2026-10-20",
+  Version -> "1.0",
+  Comment -> "QCD with five massless quarks and the heavy-top effective g g H operator (research note models/sm_pp)"
+};
+
+M$InteractionOrderHierarchy = {
+  {QCD, 1},
+  {HIG, 1}
+};
+
+M$GaugeGroups = {
+  SU3C == {
+    Abelian           -> False,
+    CouplingConstant  -> gs,
+    GaugeBoson        -> G,
+    StructureConstant -> f,
+    Representations   -> {T, Colour},
+    SymmetricTensor   -> dSUN
+  }
+};
+
+IndexRange[Index[Gluon  ]] = NoUnfold[Range[8]];
+IndexRange[Index[Colour ]] = NoUnfold[Range[3]];
+IndexRange[Index[UpGen  ]] = Range[2];
+IndexRange[Index[DownGen]] = Range[3];
+
+IndexStyle[Gluon,   a];
+IndexStyle[Colour,  m];
+IndexStyle[UpGen,   f];
+IndexStyle[DownGen, g];
+
+M$Parameters = {
+  aS == {
+    ParameterType    -> External,
+    BlockName        -> SMINPUTS,
+    OrderBlock       -> 3,
+    Value            -> 0.118,
+    InteractionOrder -> {QCD, 2},
+    TeX              -> Subscript[\[Alpha], s],
+    Description      -> "Strong coupling constant alpha_s = gs^2/(4 pi)"
+  },
+  gs == {
+    ParameterType    -> Internal,
+    Value            -> Sqrt[4 Pi aS],
+    InteractionOrder -> {QCD, 1},
+    TeX              -> Subscript[g, s],
+    ParameterName    -> G,
+    Description      -> "Strong coupling constant"
+  },
+  vev == {
+    ParameterType    -> External,
+    BlockName        -> HIGGS,
+    OrderBlock       -> 1,
+    Value            -> 246.21965079413738,
+    TeX              -> v,
+    Description      -> "Higgs vacuum expectation value (G_F^-1/2 2^-1/4)"
+  },
+  kHgg == {
+    ParameterType    -> External,
+    BlockName        -> HEFT,
+    OrderBlock       -> 1,
+    Value            -> 1.0,
+    InteractionOrder -> {HIG, 1},
+    TeX              -> Subscript[k, Hgg],
+    Description      -> "cHgg = -(alpha_s/(3 pi)) kHgg"
+  }
+};
+
+M$ClassesDescription = {
+  V[2] == {
+    ClassName       -> G,
+    SelfConjugate   -> True,
+    Indices         -> {Index[Gluon]},
+    Mass            -> 0,
+    Width           -> 0,
+    ParticleName    -> "g",
+    PDG             -> 21,
+    PropagatorLabel -> "G",
+    PropagatorType  -> C,
+    PropagatorArrow -> None,
+    FullName        -> "Gluon"
+  },
+  U[2] == {
+    ClassName       -> ghG,
+    SelfConjugate   -> False,
+    Indices         -> {Index[Gluon]},
+    Ghost           -> G,
+    PDG             -> 82,
+    QuantumNumbers  -> {GhostNumber -> 1},
+    Mass            -> 0,
+    Width           -> 0,
+    PropagatorLabel -> "uG",
+    PropagatorType  -> GhostDash,
+    PropagatorArrow -> Forward
+  },
+  F[2] == {
+    ClassName        -> uq,
+    ClassMembers     -> {u, c},
+    Indices          -> {Index[UpGen], Index[Colour]},
+    FlavorIndex      -> UpGen,
+    SelfConjugate    -> False,
+    Mass             -> 0,
+    Width            -> 0,
+    QuantumNumbers   -> {Q -> 2/3},
+    PropagatorLabel  -> {"uq", "u", "c"},
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> {2, 4},
+    ParticleName     -> {"u", "c"},
+    AntiParticleName -> {"u~", "c~"},
+    FullName         -> {"u-quark", "c-quark"}
+  },
+  F[3] == {
+    ClassName        -> dq,
+    ClassMembers     -> {d, s, b},
+    Indices          -> {Index[DownGen], Index[Colour]},
+    FlavorIndex      -> DownGen,
+    SelfConjugate    -> False,
+    Mass             -> 0,
+    Width            -> 0,
+    QuantumNumbers   -> {Q -> -1/3},
+    PropagatorLabel  -> {"dq", "d", "s", "b"},
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> {1, 3, 5},
+    ParticleName     -> {"d", "s", "b"},
+    AntiParticleName -> {"d~", "s~", "b~"},
+    FullName         -> {"d-quark", "s-quark", "b-quark"}
+  },
+  S[1] == {
+    ClassName       -> H,
+    SelfConjugate   -> True,
+    Mass            -> {MH, 125.2},
+    Width           -> {WH, 0.0041},
+    PropagatorLabel -> "H",
+    PropagatorType  -> D,
+    PropagatorArrow -> None,
+    PDG             -> 25,
+    ParticleName    -> "h",
+    FullName        -> "Higgs"
+  }
+};
+
+GaugeXi[V[2]] = GaugeXi[G];
+GaugeXi[U[2]] = GaugeXi[G];
+
+LGaugeQCDH := Block[{mu, nu, aa}, ExpandIndices[-1/4 FS[G, mu, nu, aa] FS[G, mu, nu, aa]]];
+LFermionQCDH := Block[{mu}, ExpandIndices[(I uqbar.Ga[mu].DC[uq, mu] + I dqbar.Ga[mu].DC[dq, mu])]];
+LGhostQCDH := Block[{mu, ii}, ExpandIndices[-ghGbar[ii].del[DC[ghG[ii], mu], mu]]];
+LHiggsQCDH := Block[{mu}, ExpandIndices[(1/2 del[H, mu] del[H, mu] - MH^2/2 H^2)]];
+LHggQCDH := Block[{mu, nu, aa}, ExpandIndices[(-1/4 (-aS/(3 Pi)) kHgg/vev H FS[G, mu, nu, aa] FS[G, mu, nu, aa])]];
+LQCDH := LGaugeQCDH + LFermionQCDH + LGhostQCDH + LHiggsQCDH + LHggQCDH;
