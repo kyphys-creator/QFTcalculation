@@ -9,7 +9,9 @@ of Delta_gg; HC_NLO_X0 has it in the finite part of its g g X0 counterterm (gh_m
 v = 2 M_W s_W/e of the param card's inputs (= (sqrt2 G_F)^-1/2).
 Checks: the coefficient functions against gh_feyncalc.wl's values; LO and NLO totals for mu_F = M/2, M, 2M (reweighted) and
 mu_R = M/2, M, 2M (separate runs; MG5's mu_R reweighting misses HC_NLO_X0's alpha_s in gHgg); the LO rapidity distribution.  Also: K, the channels, the scale ranges, and the cross section with the exact top-mass LO factor
-|A_1/2(tau_t)|^2/|A_1/2(0)|^2 (m_t = 172.5 GeV).  Writes results/gh_hadronic.csv.  Run with ~/hep/opt/lhc/bin/python.
+|A_1/2(tau_t)|^2/|A_1/2(0)|^2 (m_t = 172.5 GeV).
+Step (2f): the same against aMC@NLO with the note's own NLO UFO (gh_own_mg5.sh, runs o_LO, o_NLO): no Wilson coefficient, v of its
+param card (block HIGGS), all nine (mu_R, mu_F) columns by reweighting.  Writes results/gh_hadronic.csv.  Run with ~/hep/opt/lhc/bin/python.
 """
 import csv
 import math
@@ -96,6 +98,20 @@ def param_card(path):
     mw = math.sqrt(mz ** 2 / 2 + math.sqrt(mz ** 4 / 4 - aew * math.pi * mz ** 2 / (gf * math.sqrt(2))))
     sw = math.sqrt(1 - mw ** 2 / mz ** 2)
     return {"vev": 2 * mw * sw / math.sqrt(4 * math.pi * aew), "gf": gf}
+
+
+def card_value(path, block, code):
+    """the entry code of block in a param card"""
+    cur = None
+    for line in open(path):
+        s = line.split("#")[0].split()
+        if not s:
+            continue
+        if s[0].lower() == "block":
+            cur = s[1].lower()
+        elif cur == block.lower() and len(s) >= 2 and s[0] == str(code):
+            return float(s[1])
+    raise KeyError((block, code))
 
 
 def sigma(lums, alphas, vev, mur, muf, order, wilson=True, parts=("gg", "qg", "qq"), n1=96, n2=64):
@@ -215,6 +231,33 @@ def main():
                       % (order + suffix, len(pulls), sum(p * p for p in pulls), max(abs(p) for p in pulls), ylo.sum() / lo - 1))
                 out.append(["h_%s%s" % (order, suffix), "yH", "%d bins" % len(pulls), "chi2", "%.2f" % sum(p * p for p in pulls),
                             "max_abs_pull", "%.2f" % max(abs(p) for p in pulls)])
+    # step (2f): the own NLO UFO (no Wilson coefficient; mu_R and mu_F both by reweighting), v of its param card
+    pco = WORK / "ppo" / "Cards" / "param_card.dat"
+    if pco.exists():
+        vo = card_value(pco, "higgs", 1)
+        print("    own UFO: v = %.6f GeV" % vo)
+        for order in ("LO", "NLO"):
+            hw = WORK / "ppo" / "Events" / ("o_%s" % order) / "MADatNLO.HwU"
+            if not hw.exists():
+                print("    no %s" % hw)
+                continue
+            h = dy.read_hwu(hw)
+            labels, rows = h["total"]
+            for k, xr, xf in dy.scale_columns(labels):
+                own = sigma(lums, pdf.alphasQ, vo, xr * mu0, xf * mu0, order, wilson=False, parts=("gg", "qg"))
+                mg, err = rows[0][k], rows[0][3] * max(1.0, abs(rows[0][k] / rows[0][2]))
+                pull = (mg - own) / err
+                out.append(["o_%s" % order, "total", "%g,%g" % (xr, xf), "%.8e" % own, "%.8e" % mg, "%.3e" % err, "%.2f" % pull])
+                print("    o_%-4s muR,F = %3g,%3g  own %.6f  MG5 %.6f +- %.4f  (%+.2f sigma, %+.1e)"
+                      % (order, xr, xf, own, mg, err, pull, mg / own - 1))
+            if order == "LO":
+                labels, rows = h["yH"]
+                edges = np.array([r[0] for r in rows] + [rows[-1][1]])
+                ylo = lo_rapidity(lums[mu0], pdf.alphasQ, vo, mu0, edges)
+                pulls = [(r[2] - o) / r[3] for r, o in zip(rows, ylo) if r[3] > 0]
+                print("    o_LO   yH: %d bins, chi2 = %.1f, max |pull| %.2f" % (len(pulls), sum(p * p for p in pulls), max(abs(p) for p in pulls)))
+                out.append(["o_LO", "yH", "%d bins" % len(pulls), "chi2", "%.2f" % sum(p * p for p in pulls), "max_abs_pull",
+                            "%.2f" % max(abs(p) for p in pulls)])
     # q qbar -> x0 g at LO with MadEvent (mu_R = mu_F = M) against the own q qbar part of the NLO
     banner = sorted((WORK / "qqh" / "Events" / "qq").glob("*banner.txt")) if (WORK / "qqh").exists() else []
     if banner:

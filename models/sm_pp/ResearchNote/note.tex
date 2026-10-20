@@ -43,7 +43,7 @@
 \maketitle
 
 \begin{abstract}
-SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote}、ヒッグスのノート~\cite{higgsnote} は、崩壊の NLO を実の放射まで含めて求めた。QCD ノート~\cite{qcdnote} は、$e^+e^-\to$ ハドロンと重いクォークの対生成の NLO を、QCD だけの模型で aMC@NLO と突き合わせた。本ノートでは、陽子の中のパートンが始状態にある色を持たない粒子の生成の NLO の QCD の補正を扱う（パートン、パートン分布、NLO の補正の考え方は、第~\ref{sec:primer} 節で学部の物理から説明する）。$\overline{\mathrm{MS}}$ の共線の対抗項でパートン分布に吸収する始状態の放射が、終状態だけの崩壊と違う点である。四つの手順の計画を立てる。(1) Drell--Yan（$pp\to\gamma^*/Z\to e^+e^-$、$W^\pm\to e\nu$）、(2) 重いトップの有効理論の $gg\to H$、(3) MC@NLO と Pythia 8、(4) 段階 6 の $Z'$ の NLO。手順 (1) では、$q\bar q\to V^*g$、$qg\to V^*q$ の実の放射と形状因子を $d$ 次元で $\epsilon$ について厳密に求め、$\MSbar$ の共線の対抗項を足すと極が記号として消え、$\ln\mu_R$ が落ち、係数関数が Altarelli--Ellis--Martinelli の $\MSbar$ の形（参照）と記号として一致することを確かめた。4次元の振幅の2乗は、本ノートの FeynArts の模型の $\gamma$、$Z$、$W$ の4過程と記号として一致した。係数関数を NNPDF4.0 NLO と自分で畳み込んだ断面積を、\MGaMC{} の固定次数の LO と NLO（\texttt{[QCD]}）と比べた。$Z$ の共鳴の付近、0.5~TeV より上、$W^\pm$ の全断面積と質量の窓、$m_{\ell\ell}$ の分布、ラピディティの分布（\ref{app:rap} の自分の $d$ 次元の式）、9通りの $(\mu_R,\mu_F)$ の重みの付け直しは、LO と NLO で統計の範囲で一致した（$Z$ の NLO の全断面積は $2064.54$~pb に対し $2064.78\pm0.22$~pb）。$K$ は $Z$、$W^+$、$W^-$ で 1.140、1.150、1.138（$q\bar q$ が $+29\%$、$qg$ が $-15\%$）、0.5~TeV より上で 1.188 で、スケールの範囲は LO の $\pm12\%$ から NLO の $^{+4}_{-7}\%$ に縮む。$W$ の NLO の全断面積は \MGaMC{} の積分ごとのばらつきが誤差の約2.4倍あり、その源は $m_{e\nu}<1$~GeV の正と負の重みの打ち消しだった。自分の積分では、Breit--Wigner の変数だけの求積が $W$ の裾を $10^{-3}$ 少なく見積もっていたことが、この比較で分かった。手順 (2) では、重いトップの有効理論の $gg\to H$ の $gg$、$qg$、$q\bar q$ の係数関数を $d$ 次元で求め、文献の形（参照）と記号として一致させた。自作の模型から NLOCT で NLO の UFO を作る試みは、次元5の演算子の R2 が得られず断念し、HC\_NLO\_X0（FeynRules の模型のデータベース）を使った。その MadLoop の仮想の補正は、ウィルソン係数の補正を足すと自分の値と $2\times10^{-14}$ で一致したが、軽いクォークの紫外の対抗項の極が MG5 3.8.1 で落ちて aMC@NLO が止まるので、作業用の複製で直した。$\mu_R$ の重みの付け直しが $g_{Hgg}$ の中の $\alpha_s^2$ を動かさないこと、赤外で有限な $q\bar q\to Hg$ が \texttt{[QCD]} に入らないことも分かり、それらを考えに入れると LO と NLO の断面積は統計の範囲で一致した。$\mu=M_H$ で $K=2.29$ である。
+SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote}、ヒッグスのノート~\cite{higgsnote} は、崩壊の NLO を実の放射まで含めて求めた。QCD ノート~\cite{qcdnote} は、$e^+e^-\to$ ハドロンと重いクォークの対生成の NLO を、QCD だけの模型で aMC@NLO と突き合わせた。本ノートでは、陽子の中のパートンが始状態にある色を持たない粒子の生成の NLO の QCD の補正を扱う（パートン、パートン分布、NLO の補正の考え方は、第~\ref{sec:primer} 節で学部の物理から説明する）。$\overline{\mathrm{MS}}$ の共線の対抗項でパートン分布に吸収する始状態の放射が、終状態だけの崩壊と違う点である。四つの手順の計画を立てる。(1) Drell--Yan（$pp\to\gamma^*/Z\to e^+e^-$、$W^\pm\to e\nu$）、(2) 重いトップの有効理論の $gg\to H$、(3) MC@NLO と Pythia 8、(4) 段階 6 の $Z'$ の NLO。手順 (1) では、$q\bar q\to V^*g$、$qg\to V^*q$ の実の放射と形状因子を $d$ 次元で $\epsilon$ について厳密に求め、$\MSbar$ の共線の対抗項を足すと極が記号として消え、$\ln\mu_R$ が落ち、係数関数が Altarelli--Ellis--Martinelli の $\MSbar$ の形（参照）と記号として一致することを確かめた。4次元の振幅の2乗は、本ノートの FeynArts の模型の $\gamma$、$Z$、$W$ の4過程と記号として一致した。係数関数を NNPDF4.0 NLO と自分で畳み込んだ断面積を、\MGaMC{} の固定次数の LO と NLO（\texttt{[QCD]}）と比べた。$Z$ の共鳴の付近、0.5~TeV より上、$W^\pm$ の全断面積と質量の窓、$m_{\ell\ell}$ の分布、ラピディティの分布（\ref{app:rap} の自分の $d$ 次元の式）、9通りの $(\mu_R,\mu_F)$ の重みの付け直しは、LO と NLO で統計の範囲で一致した（$Z$ の NLO の全断面積は $2064.54$~pb に対し $2064.78\pm0.22$~pb）。$K$ は $Z$、$W^+$、$W^-$ で 1.140、1.150、1.138（$q\bar q$ が $+29\%$、$qg$ が $-15\%$）、0.5~TeV より上で 1.188 で、スケールの範囲は LO の $\pm12\%$ から NLO の $^{+4}_{-7}\%$ に縮む。$W$ の NLO の全断面積は \MGaMC{} の積分ごとのばらつきが誤差の約2.4倍あり、その源は $m_{e\nu}<1$~GeV の正と負の重みの打ち消しだった。自分の積分では、Breit--Wigner の変数だけの求積が $W$ の裾を $10^{-3}$ 少なく見積もっていたことが、この比較で分かった。手順 (2) では、重いトップの有効理論の $gg\to H$ の $gg$、$qg$、$q\bar q$ の係数関数を $d$ 次元で求め、文献の形（参照）と記号として一致させた。NLOCT は次元5の演算子の頂点の R2 と紫外の対抗項を出せなかったので、まず HC\_NLO\_X0（FeynRules の模型のデータベース）を使った。その MadLoop の仮想の補正は、ウィルソン係数の補正を足すと自分の値と $2\times10^{-14}$ で一致したが、軽いクォークの紫外の対抗項の極が MG5 3.8.1 で落ちて aMC@NLO が止まるので、作業用の複製で直した。$\mu_R$ の重みの付け直しが $g_{Hgg}$ の中の $\alpha_s^2$ を動かさないこと、赤外で有限な $q\bar q\to Hg$ が \texttt{[QCD]} に入らないことも分かり、それらを考えに入れると LO と NLO の断面積は統計の範囲で一致した。$\mu=M_H$ で $K=2.29$ である。次に、$GGH$ の頂点の R2 と紫外の対抗項を FeynCalc で自分で導き（R2 は HC\_NLO\_X0 のもの（参照）と7つの係数がすべて一致した）、NLOCT の $H$ の頂点と入れ替えて自作の NLO の UFO を作った。MadLoop は直しなしで自分の値と $2\times10^{-14}$ で一致し、aMC@NLO の LO と NLO は、今度は $\mu_R$ を含む9通りの $(\mu_R,\mu_F)$ の重みの付け直しで、統計の範囲で一致した。
 \end{abstract}
 
 \tableofcontents
@@ -303,6 +303,9 @@ pb、fb & 断面積の単位（$10^{-36}$、$10^{-39}~\mathrm{cm}^2$） \\
 プル & 2つの値の差を誤差で割ったもの（統計の一致の目安） \\
 重いトップの有効理論 & トップのループを点にした $ggH$ の結合（第~\ref{sec:heftintro} 節） \\
 ウィルソン係数 & 有効な結合の係数 $c_{Hgg}$ とその $\alpha_s$ の補正 $\frac{11}4\frac{\alpha_s}\pi$ \\
+紫外の対抗項 & ループの紫外の発散を打ち消す頂点（結合定数の繰り込みから来る） \\
+R2 の頂点 & ループを4次元の運動量で組み立てるときに落ちる有限な項を補う頂点（第~\ref{sec:step2} 節 (i)） \\
+UFO & \MGaMC{} が読む模型のファイル（粒子、頂点、NLO では紫外の対抗項と R2 の頂点） \\
 $C_A=3$ & グルーオンが放射する強さの色の因子 \\
 \bottomrule
 \end{tabularx}
@@ -404,7 +407,7 @@ Drell--Yan と同じく、パートンの断面積を $\hat\sigma_{ij}=\sigma_0z
 \textbf{量} & \textbf{手計算} & \textbf{FeynCalc + FeynArts、自分の積分} & \textbf{\MGaMC{}} \\
 \midrule
 Drell--Yan の係数関数 \eqref{eq:dqq}、\eqref{eq:dqg} & 第~\ref{sec:coef} 節 & $d$ 次元の実と仮想、対抗項；LHAPDF との畳み込み & 固定次数の LO と NLO、重みの付け直し \\
-$gg\to H$（有効理論） & 式~\eqref{eq:dgg}、\eqref{eq:dqgh} & 有効理論の1ループと実の放射、対抗項；畳み込み & HC\_NLO\_X0 の MadLoop、木の振幅、固定次数（自分の NLOCT の UFO は R2 が得られず断念） \\
+$gg\to H$（有効理論） & 式~\eqref{eq:dgg}、\eqref{eq:dqgh} & 有効理論の1ループと実の放射、対抗項；畳み込み & HC\_NLO\_X0 と自作の NLO の UFO（R2 と紫外の対抗項を自分で導出）の MadLoop、木の振幅、固定次数 \\
 MC@NLO & — & 固定次数の NLO との比 & Pythia 8 のシャワー \\
 $Z'$ の $K$ 因子 & 式~\eqref{eq:dqq}、\eqref{eq:dqg} & $Z'$ の結合での畳み込み & 自分の NLO の UFO で固定次数 \\
 \bottomrule
@@ -413,7 +416,7 @@ $Z'$ の $K$ 因子 & 式~\eqref{eq:dqq}、\eqref{eq:dqg} & $Z'$ の結合での
 
 \paragraph{一致の基準。}ヒッグスのノートと同じである。発散部分は $1/\epsilon$ の係数が記号として一致すること、有限部分は記号として一致すること、数値の積分は精度を明示する。\MGaMC{} の固定次数の積分は統計の誤差を持つので、全断面積とビンごとに、自分の値との差を誤差で割った値（プル）で比べる。$\mu_R$、$\mu_F$ の重みを付け直した値は同じ事象から求めるので、中心の値と統計の揺らぎが強く相関する。
 
-\paragraph{手順。}次の順に進める。(1) Drell--Yan：$d$ 次元で式~\eqref{eq:real}、\eqref{eq:ff} を求めて極の打ち消しと式~\eqref{eq:dqq}、\eqref{eq:dqg} を確かめ、4次元の振幅の2乗を本ノートの FeynArts の模型と比べる。係数関数を LHAPDF のパートン分布と畳み込み、\MGaMC{} の固定次数の LO と NLO の全断面積、$m_{\ell\ell}$ の分布、9通りの $(\mu_R,\mu_F)$ と比べる（$Z$ の共鳴の付近、高い質量、$W^\pm$）。(2) $gg\to H$：重いトップの有効理論で、$gg$、$qg$、$q\bar q$ の係数関数を $d$ 次元で求める。NLO の UFO は、自分の模型から NLOCT で作ることを試み、使えなければ HC\_NLO\_X0 を使って、MadLoop の仮想の補正、実の放射の木の振幅、aMC@NLO の固定次数を確かめる。(3) MC@NLO：手順 (1)、(2) の過程で Pythia 8 のシャワーをつなぎ、全断面積が固定次数の NLO と一致すること、ラピディティの分布、横運動量の大きいところが LO の $V+$ジェットに近づくことを確かめる。(4) $Z'$：段階 6~\cite{env} の SSM の $Z'$ の NLO の $K$ 因子を、式~\eqref{eq:dqq}、\eqref{eq:dqg} の $Z'$ の結合での畳み込みと、ZpSSM の NLO の UFO の aMC@NLO で求め、質量の下限を NLO で出し直す。
+\paragraph{手順。}次の順に進める。(1) Drell--Yan：$d$ 次元で式~\eqref{eq:real}、\eqref{eq:ff} を求めて極の打ち消しと式~\eqref{eq:dqq}、\eqref{eq:dqg} を確かめ、4次元の振幅の2乗を本ノートの FeynArts の模型と比べる。係数関数を LHAPDF のパートン分布と畳み込み、\MGaMC{} の固定次数の LO と NLO の全断面積、$m_{\ell\ell}$ の分布、9通りの $(\mu_R,\mu_F)$ と比べる（$Z$ の共鳴の付近、高い質量、$W^\pm$）。(2) $gg\to H$：重いトップの有効理論で、$gg$、$qg$、$q\bar q$ の係数関数を $d$ 次元で求める。NLO の UFO は、自分の模型から NLOCT で作ることを試み、使えなければ HC\_NLO\_X0 を使って、MadLoop の仮想の補正、実の放射の木の振幅、aMC@NLO の固定次数を確かめる。さらに、NLOCT が出せない頂点を自分で導いて自作の NLO の UFO を作り、同じ確かめをする。(3) MC@NLO：手順 (1)、(2) の過程で Pythia 8 のシャワーをつなぎ、全断面積が固定次数の NLO と一致すること、ラピディティの分布、横運動量の大きいところが LO の $V+$ジェットに近づくことを確かめる。(4) $Z'$：段階 6~\cite{env} の SSM の $Z'$ の NLO の $K$ 因子を、式~\eqref{eq:dqq}、\eqref{eq:dqg} の $Z'$ の結合での畳み込みと、ZpSSM の NLO の UFO の aMC@NLO で求め、質量の下限を NLO で出し直す。
 
 \section{検算}\label{sec:checks}
 
@@ -511,7 +514,7 @@ $W^-$ & 7776.65 & 8853.23 & 1.1384 & $+0.3004$ & $-0.1620$ & $^{+3.7}_{-6.9}\%$�
 \paragraph{(i) 道具の注意。}\MGaMC{} の固定次数の解析の HwU の値はビンごとの断面積で、幅で割っていない。NLO の run\_card の固定スケールの既定値は 91.118~GeV（$M_Z$ ではない）。\texttt{pdlabel = lhapdf} では $\alpha_s(Q)$ も LHAPDF の値で（\texttt{alfas\_functions\_lhapdf6.f}）、自分の計算も同じ関数を使った。$W$ の NLO は $m_{e\nu}$ の下限がなく、$3\times10^{-4}$ の精度に約30分かかる（$Z$ は1.5分）。重みを付け直した列の誤差は HwU にないので、中心の列の誤差に $\max(1,|\text{付け直した値}/\text{中心の値}|)$ を掛けた（値の比だけを掛けると、NLO が LO を打ち消す $W$ の数 GeV のビンで誤差が小さくなりすぎる）。これらは計算環境の記録~\cite{env} の表に加えた。
 \subsection{手順 (2)：重いトップの有効理論の $gg\to H$}\label{sec:step2}
 
-手順 (2) は \texttt{Src/run\_gh\_check.sh} で再現できる（約1時間。ほとんどは \MGaMC{} の積分で、\texttt{--reuse} で既にある結果を使うと約1分。自作の NLO の UFO の試み (d) は \texttt{--nloct} を付けたときだけ走らせる（約15分）。HC\_NLO\_X0 は \nolinkurl{~/hep/src/smpp2-dl/extracted} に要る）。この手順の \MGaMC{} の模型は、FeynRules の模型のデータベースの HC\_NLO\_X0（版 1.3~\cite{hcnlo}、\texttt{HC\_NLO\_X0\_UFO.zip}、123{,}075 バイト、\nolinkurl{~/hep/src/smpp2-dl}）で、取得は承認を得て行った。その $ggX0$ の結合は $-i\cos\alpha\,\kappa_{Hgg}g_{Hgg}$、$g_{Hgg}=-g_s^2/(12\pi^2v)=-\alpha_s/(3\pi v)$ で、$\kappa_{Hgg}=\cos\alpha=1$ で本ノートの $c_{Hgg}/v$ に等しい。
+手順 (2) は \texttt{Src/run\_gh\_check.sh} で再現できる（約1時間10分。ほとんどは \MGaMC{} の積分で、\texttt{--reuse} で既にある結果を使うと約2分。NLOCT の対抗項の計算 (d) は \texttt{--nloct} を付けたときだけ走らせ（約15分）、ふだんは保存したその結果から自作の NLO の UFO (i) を作る。HC\_NLO\_X0 は \nolinkurl{~/hep/src/smpp2-dl/extracted} に要る）。この手順の \MGaMC{} の模型は、FeynRules の模型のデータベースの HC\_NLO\_X0（版 1.3~\cite{hcnlo}、\texttt{HC\_NLO\_X0\_UFO.zip}、123{,}075 バイト、\nolinkurl{~/hep/src/smpp2-dl}）で、取得は承認を得て行った。その $ggX0$ の結合は $-i\cos\alpha\,\kappa_{Hgg}g_{Hgg}$、$g_{Hgg}=-g_s^2/(12\pi^2v)=-\alpha_s/(3\pi v)$ で、$\kappa_{Hgg}=\cos\alpha=1$ で本ノートの $c_{Hgg}/v$ に等しい。
 
 \paragraph{(a) 振幅の2乗。}\texttt{gh\_feyncalc.wl} は、ヒッグスのノートの FeynArts の模型（\texttt{SM\_CKM\_HEFT\_FA}）で、$gg\to H$ の Born（1図）と、$gg\to Hg$（4図）、$qg\to Hq$（3図）、$q\bar q\to Hg$（3図）の $d$ 次元の振幅の2乗を、グルーオンの物理的な偏極の和（基準のベクトルは別の運動量）で求める。4次元では、それぞれ $(M_H^8+\hat s^4+t^4+u^4)/(\hat stu)$、$(\hat s^2+u^2)/t$、$(t^2+u^2)/\hat s$ の定数倍になった。
 
@@ -519,7 +522,7 @@ $W^-$ & 7776.65 & 8853.23 & 1.1384 & $+0.3004$ & $-0.1620$ & $^{+3.7}_{-6.9}\%$�
 
 \paragraph{(c) 和と対抗項。}紫外と共線の対抗項を足すと、$gg$ の2重極と単極、$qg$ と $q\bar q$ の単極はすべて記号として0になり、$L_R$ による微分は $\Delta_{gg}$ の $\delta(1-z)$ の $2\beta_0$ だけだった（LO の $\alpha_s^2$ の走りを打ち消す）。$z\Delta^{(1)}$ は三つのチャンネルとも文献の形~\cite{dawson91,dsz91,hk02}（参照）と記号として一致した。
 
-\paragraph{(d) 自分の NLO の UFO（うまくいかなかったこと）。}NLO の UFO を自分で作るため、QCD ノートの模型から光子、電子、重いクォークを除き、ヒッグスと演算子を足した \texttt{QCDH.fr}（演算子の係数を $\alpha_s$ で書き、$\alpha_s$ の繰り込みが演算子の対抗項を与えるようにした）を書き、QCD ノートと同じ NLOCT の三つの手順（\texttt{gh\_generate\_nlo.sh}）を通した。FeynArts の \texttt{Lorentz.gen} にはスカラー1個とベクトル3、4個の結合の形がないので、FeynRules の generic のファイルを NLOCT に渡すと計算は終わったが、$GGH$ と $q\bar qH$ の R2 と UV の頂点に Feynman のパラメータの積分と内部の運動量が残り、使えなかった（NLOCT 1.02 は次元5の演算子の頂点を扱わない。計算環境の記録~\cite{env} の表）。そこで HC\_NLO\_X0 を使い、その R2 と UV の頂点を (e) で確かめる。
+\paragraph{(d) NLOCT による NLO の UFO（そのままでは使えなかったこと）。}NLO の UFO を自分で作るため、QCD ノートの模型から光子、電子、重いクォークを除き、ヒッグスと演算子を足した \texttt{QCDH.fr}（演算子の係数を $\alpha_s$ で書き、$\alpha_s$ の繰り込みが演算子の対抗項を与えるようにした）を書き、QCD ノートと同じ NLOCT の三つの手順（\texttt{gh\_generate\_nlo.sh}）を通した。FeynArts の \texttt{Lorentz.gen} にはスカラー1個とベクトル3、4個の結合の形がないので、FeynRules の generic のファイルを NLOCT に渡すと計算は終わったが、$GGH$ と $q\bar qH$ の R2 と UV の頂点に Feynman のパラメータの積分と内部の運動量が残り、使えなかった（NLOCT 1.02 は次元5の演算子の頂点を扱わない。計算環境の記録~\cite{env} の表）。そこでまず HC\_NLO\_X0 を使い、その R2 と UV の頂点を (e) で確かめる。のちに、この二つの頂点を自分で導いて NLOCT の $H$ の頂点と入れ替え、自作の NLO の UFO を作った（(i)）。
 
 \paragraph{(e) MadLoop の仮想の補正。}\texttt{gh\_madloop.py} は \texttt{g g > x0 / t [virt=QCD]} を standalone で書き出し、$M_H=125.2$~GeV、$\alpha_s=0.118$、$\mu_R=M_H/2$、$M_H$、$2M_H$ で、MadLoop の規格化（$(4\pi)^\epsilon/\Gamma(1-\epsilon)$ を外し、$\ln(\mu_R^2/M_H^2)$ を係数に含む）の $A/\epsilon^2+B/\epsilon+C$ を自分の値（\texttt{gh\_feyncalc.wl} の (f)：$\MSbar$ の $(4\pi)^\epsilon e^{-\epsilon\gamma_E}$ との比 $\Gamma(1-\epsilon)e^{-\epsilon\gamma_E}$ を掛ける）と比べた。$\mu_R=M_H$ で自分の値は $A=-12$、$B=-2\beta_0=-15.333$、$C=6\pi^2=59.218$ である。初め、$A$ は $10^{-14}$ で一致したが、$B$ は $\mu_R$ によらず $-4.000$、$C$ は $+22.000$ ずれた。$C$ のずれは、HC\_NLO\_X0 の $ggX0$ の UV の対抗項の有限部分に入っているウィルソン係数の補正 $2\times\frac{11}4\frac{\alpha_s}\pi=22a_s$ である。$B$ のずれは、その対抗項の軽いクォーク（$u$、$d$、$s$）の部分 $3\times\frac43a_s$ が、ループの粒子として \texttt{[[u],[d],[s]]} に結び付けてあるため、軽いクォークのループのない $gg\to X0$ では MG5 3.8.1 に落とされることによる。作業用の複製でこの極を \texttt{[[G]]} の部分に移すと（有限部分は変わらない）、$A$、$B$、$C+22$ は三つの $\mu_R$ で $2\times10^{-14}$ 以内で一致した。これで HC\_NLO\_X0 の R2 の頂点と UV の対抗項が確かめられた。直す前は、aMC@NLO が \texttt{Poles do not cancel} で止まった（FKS の単極 $-38.23$ に対し MadLoop $-42.23$、2重極の $\frac1{12}$ を単位として）。
 
@@ -554,13 +557,50 @@ LO のヒッグスのラピディティの分布（38 ビン）は $\chi^2=15.7$
 
 \paragraph{(h) 断面積と $K$ 因子。}$\mu=M_H$ で、LO は 12.924~pb、NLO は 29.603~pb（ウィルソン係数の補正を含む。含まないと 27.054~pb）で、$K=2.29$ である。NLO の補正の内訳は、LO に対して $gg$ のチャンネルが $+111\%$、ウィルソン係数が $+19.7\%$、$qg$ が $-1.8\%$、$q\bar q$ が $+0.13\%$ で、ほとんどがグルーオンの放射である。9通りのスケールの範囲は NLO で $^{+22}_{-18}\%$ で、LO（$\mu_R=\mu_F$）の $^{+17}_{-14}\%$ より狭くならない。$gg\to H$ では NLO の補正が LO と同じくらい大きく、さらに高い次数（NNLO、N$^3$LO）が必要なことを示している。トップの質量を正しく入れた LO との比 1.066 を掛けると 31.56~pb になる。LHC Higgs Cross Section Working Group の N$^3$LO の値~\cite{yr4ggh}（参照、$M_H=125$~GeV、13~TeV で 48.58~pb）とは、本ノートが入れていない NNLO、N$^3$LO の QCD の補正と電弱の補正、スケールの選び方（参照は $\mu=M_H/2$）の分だけ違う。
 
+
+\paragraph{(i) 自作の NLO の UFO。}MadLoop は、ループの積分の被積分関数の分子を、ループの運動量 $q$ の4次元の多項式として数値で組み立て、既知のスカラーの積分の和に分ける（OPP の方法）。ところが次元正則化では、ループの運動量は $D=4-2\epsilon$ 次元にある。$q$ を4次元に限ると、分子の中の $\bar q^2=q^2+\tilde q^2$（$\tilde q$ は余分な $-2\epsilon$ 次元の成分）の $\tilde q^2$ と、計量の縮約 $g^\mu{}_\mu=D$ の $D-4$ が落ちる。これらは $\epsilon$ に比例するが、ループの紫外の発散 $1/\epsilon$ に掛かると有限な項が残る。この残りを R2 と呼び、MadLoop は UFO に書かれた木の形の頂点（R2 の頂点）として足す。紫外の対抗項も UFO の頂点である。NLOCT はこの二つを繰り込み可能な頂点についてしか出せない（(d)）ので、$GGH$ の頂点のものを自分で導いた。
+
+\texttt{gh\_r2.wl} は、ヒッグスのノートの FeynArts の模型で、1ループの $G^a_\mu(k_1)G^b_\nu(k_2)\to H$ の頂点（$c_{Hgg}g_s^2$ の次数の14図、Feynman ゲージ。外の添字と運動量は4次元、ループは $D$ 次元の 't~Hooft--Veltman の方式）を、分子を $D$ 次元で計算したものから4次元で計算したものを引いて求める。グルーオンは質量殻から外す（$k_1^2,k_2^2\neq0$）ので赤外の発散はなく、差は紫外の極だけから来る。$\tilde q^2$ を含む積分は、$\int\tilde q^2Y=(D-4)\times$（$\int q^\alpha q^\beta Y$ の $g^{\alpha\beta}$ の係数）、$\tilde q^4$ は $(D-4)(D-2)\times$（$g^{\alpha\beta}g^{\gamma\delta}$ の係数）で求めた（$\tilde q$ は4次元の外の運動量と直交する）。結果は
+\begin{equation}
+R_2^{\mu\nu,ab}=\frac{ic_{Hgg}}v\frac{g_s^2}{128\pi^2}\delta^{ab}\bigl[-17k_1^2g^{\mu\nu}-93\,k_1\!\cdot\!k_2\,g^{\mu\nu}-17k_2^2g^{\mu\nu}+14k_1^\mu k_1^\nu+k_1^\mu k_2^\nu+89k_2^\mu k_1^\nu+14k_2^\mu k_2^\nu\bigr]
+\label{eq:r2ggh}
+\end{equation}
+で、すべて $\tilde q^2$ の項から来た（$D-4$ の項の和は0だった）。これは HC\_NLO\_X0 の R2 の頂点（参照）と、7つの係数がすべて一致した。紫外の対抗項は、演算子の係数が $\alpha_s$ に比例するので、$\alpha_s$ の $\MSbar$ の繰り込み $\delta\alpha_s/\alpha_s=-\beta_0\frac{g_s^2}{16\pi^2}\frac1\epsilon$（$\beta_0=11-\frac23n_f=\frac{23}3$）を木の頂点 $i(c_{Hgg}/v)\delta^{ab}(k_1\!\cdot\!k_2\,g^{\mu\nu}-k_2^\mu k_1^\nu)$ に掛けたものである（質量0のグルーオンの場の繰り込みは質量殻の方式で0）。これは (e) で直した HC\_NLO\_X0 のものと一致した。木の頂点の形も、FeynArts から求めたものが手で書いた形と一致した。
+
+\texttt{gh\_nlo\_ufo.wl} は、NLOCT の対抗項から $H$ を含む頂点（$GGH$ は積分が残り、$q\bar qH$ は内部の運動量が残り、$GGHH$ は $\kappa_{Hgg}^2$ の次数）を除き、この二つを入れて、FeynRules の \texttt{WriteUFO} で \texttt{generated/QCDH\_NLO\_UFO} を書く（$c_{Hgg}=-\frac{\alpha_s}{3\pi}\kappa_{Hgg}$）。二つの頂点のループの粒子はグルーオンだけにした。$gg\to H$ の1ループの図にはグルーオンのループしかないので、$n_f=5$ の $\delta\alpha_s$ の全体をグルーオンに結び付ければ、(e) のように MG5 に落とされない。ウィルソン係数の補正は入れていない（頂点は演算子そのもの）。FeynRules が書いた木の頂点は FeynCalc のものと一致した。$q\bar qH$ の頂点は、木がなく、$gg\to H$ の1ループに現れないので要らない。
+
+\texttt{gh\_own\_madloop.py} の MadLoop（\texttt{g g > h [virt=QCD]}）は、何も直さずに、Born が $(c_{Hgg}/v)^2M_H^4/64$ と $4\times10^{-16}$ で、$A$、$B$、$C$ が自分の値と三つの $\mu_R$ で $2\times10^{-14}$ 以内で一致した（ウィルソン係数を入れていないので、$C+22$ ではなく $C$ と一致する）。これで、自分で導いた R2 と紫外の対抗項が MadLoop の中で正しく働くことが確かめられた。
+
+\texttt{gh\_own\_mg5.sh} の aMC@NLO（\texttt{p p > h QCD=2 HIG=1 [QCD]}、$\kappa_{Hgg}=1$、\texttt{req\_acc\_FO}~$=10^{-4}$）を動かすには、ツールの側の手当てが二つ要った。結合の次数を書かないと、aMC@NLO は模型の次数の階層から QED と QCD の次数を推し量ろうとして \texttt{KeyError: 'QED'} で止まる（この模型には QED の次数がない）ので、次数を書いた。また、FKS の \texttt{fks\_singular.f} が $M_Z$、$M_W$ と、使わない6→5フレーバーの対抗項の $m_t$ を参照してコンパイルが止まるので、作業用の複製に頂点のない $Z$、$W$、$t$ と、どの頂点も持たない QED の次数を足した（QCD ノートと同じ。計算環境の記録~\cite{env} の表）。結果を表~\ref{tab:ghown} に示す。自分の値はウィルソン係数の補正と $q\bar q$ のチャンネルを除いたもので、$v$ は模型の値 $246.21965$~GeV（HC\_NLO\_X0 は $246.21846$~GeV）である。今度は $\alpha_s^2$ が結合の次数 \texttt{QCD=2} として入っているので、$\mu_R$ の重みの付け直しも効く。9通りの $(\mu_R,\mu_F)$ のすべてで、LO は $+1.1\sigma$〜$+1.4\sigma$、NLO は $-1.3\sigma$〜$+0.1\sigma$ で一致した（同じ事象の重みを付け直した9つの値は互いに相関している）。LO のヒッグスのラピディティの分布（38 ビン）は $\chi^2=25.0$（最大のプル 1.9）だった。aMC@NLO の初めの極の確かめも、直しなしで通った（20点のすべて）。これで、配布の模型に頼らず、自分の模型と自分で導いた R2 と紫外の対抗項から作った NLO の UFO で、$gg\to H$ の \MGaMC{} の NLO（仮想の補正、実の放射、FKS の引き算、9通りのスケールの重みの付け直し）が確かめられた。
+
+\begin{table}[htbp]
+\centering\small
+\caption{$pp\to H$（重いトップの有効理論、ウィルソン係数の補正なし）の自分の値と、自作の NLO の UFO の \MGaMC{}（pb、\texttt{req\_acc\_FO}~$=10^{-4}$、9通りは重みの付け直し）。NLO の自分の値は $q\bar q$ のチャンネルを除いたもの。括弧はプル。}
+\label{tab:ghown}
+\begin{tabular}{lllll}
+\toprule
+$(\mu_R,\mu_F)/M_H$ & LO 自分 & LO \MGaMC{} & NLO 自分 & NLO \MGaMC{} \\
+\midrule
+$(1,1)$ & 12.9243 & 12.9256(9) ($+1.4$) & 27.0366 & 27.0353(23) ($-0.5$) \\
+$(1,2)$ & 13.4038 & 13.4051(9) ($+1.4$) & 27.5750 & 27.5723(24) ($-1.1$) \\
+$(1,\frac12)$ & 12.2228 & 12.2240(9) ($+1.4$) & 26.3844 & 26.3846(23) ($+0.1$) \\
+$(\frac12,1)$ & 15.9483 & 15.9499(11) ($+1.4$) & 31.9178 & 31.9161(27) ($-0.6$) \\
+$(\frac12,2)$ & 16.5400 & 16.5416(11) ($+1.4$) & 32.4651 & 32.4614(28) ($-1.3$) \\
+$(\frac12,\frac12)$ & 15.0826 & 15.0841(10) ($+1.4$) & 31.3030 & 31.3033(27) ($+0.1$) \\
+$(2,1)$ & 10.6927 & 10.6938(9) ($+1.2$) & 23.1655 & 23.1646(23) ($-0.4$) \\
+$(2,2)$ & 11.0895 & 11.0905(9) ($+1.2$) & 23.6753 & 23.6733(23) ($-0.9$) \\
+$(2,\frac12)$ & 10.1124 & 10.1134(9) ($+1.1$) & 22.5217 & 22.5219(23) ($+0.1$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手順 (1) で分かったこと。}第一の問いには肯定で答えられる。$d$ 次元の実の放射と形状因子に $\MSbar$ の共線の対抗項を足すと、$q\bar q$ の2重極と単極、$qg$ の単極が記号として消え、$\ln\mu_R$ が落ち、係数関数は $\MSbar$ のパートン分布の規約（グルーオンの偏極の平均 $1/(2(1-\epsilon))$）と合う形になった。この規約は、$\MSbar$ で決めた NNPDF4.0 と組み合わせたハドロンの断面積が \MGaMC{} と一致したことで、実際に確かめられた。$\delta(1-z)$ の係数 $8\zeta_2-16$ に入る時間的な形状因子の $\pi^2$ の項と、$\mathcal D_1$ の軟らかい放射の対数が $q\bar q$ を約 $+29\%$ 上げ、$qg$ が約 $-15\%$ 下げて、$Z$、$W$ の共鳴の付近で $K\approx1.14$〜$1.15$ になる。
 
 第二の問いにも、手順 (1) の範囲で肯定で答えられる。電弱の結合と Breit--Wigner の伝播関数を持つ \texttt{loop\_sm} の Drell--Yan で、\MGaMC{} の固定次数の LO と NLO は、全断面積、$m_{\ell\ell}$ の分布、ラピディティの分布、9通りの $(\mu_R,\mu_F)$ の重みの付け直しで、自分の畳み込みと統計の誤差の範囲で一致した（$W$ の NLO の全体は、$m_{e\nu}<1$~GeV の打ち消しによる積分のばらつきの範囲で）。QCD ノートの $t\bar t$ と合わせて、\texttt{[QCD]} の FKS の引き算は、始状態の $q\bar q$、$qg$、$gg$ のチャンネルで確かめたことになる。比べる途中で、自分の積分の Breit--Wigner の変数だけの求積が $W$ の裾を $10^{-3}$ 少なく見積もっていたことが分かった。点を倍にする確かめは、比べる範囲そのものでする必要がある（計算環境の記録~\cite{env} の表に加えた）。
 
-\paragraph{手順 (2) で分かったこと。}$gg\to H$ の係数関数は、Drell--Yan と同じ手順で $d$ 次元で求まり、三つのチャンネルが文献と記号として一致した。\MGaMC{} の側では、ツールの使い方に三つの注意が要った。次元5の演算子の NLO の UFO は NLOCT では作れないこと、配布の HC\_NLO\_X0 は MG5 3.8.1 で軽いクォークの対抗項の極が落ちること（極の確かめで止まる）、その結合の次数のために $\mu_R$ の重みの付け直しが効かないことである。さらに、aMC@NLO の \texttt{[QCD]} は FKS の対に写らない有限な実の放射（$q\bar q\to Hg$、LO の $0.13\%$）を含まない。これらは自分の計算と並べて初めて分かったことで、計算環境の記録~\cite{env} の表に加えた。物理としては、$K=2.29$ と大きく、スケールの範囲が NLO でも縮まないので、$gg\to H$ の精密な予言には NNLO 以上が要る。
+\paragraph{手順 (2) で分かったこと。}$gg\to H$ の係数関数は、Drell--Yan と同じ手順で $d$ 次元で求まり、三つのチャンネルが文献と記号として一致した。\MGaMC{} の側では、ツールの使い方に三つの注意が要った。次元5の演算子の NLO の UFO は NLOCT だけでは作れないこと（R2 と紫外の対抗項を自分で導いて入れると作れ、MadLoop は直しなしで正しく、aMC@NLO は次数の明示と頂点のないダミーの粒子を足すだけで動いた）、配布の HC\_NLO\_X0 は MG5 3.8.1 で軽いクォークの対抗項の極が落ちること（極の確かめで止まる）、その結合の次数のために $\mu_R$ の重みの付け直しが効かないことである。さらに、aMC@NLO の \texttt{[QCD]} は FKS の対に写らない有限な実の放射（$q\bar q\to Hg$、LO の $0.13\%$）を含まない。これらは自分の計算と並べて初めて分かったことで、計算環境の記録~\cite{env} の表に加えた。物理としては、$K=2.29$ と大きく、スケールの範囲が NLO でも縮まないので、$gg\to H$ の精密な予言には NNLO 以上が要る。
 
 \paragraph{今後。}手順 (3) の MC@NLO では、手順 (1)、(2) の固定次数の値を基準に、Pythia 8 のシャワーをつないだ全断面積と分布を確かめる。手順 (4) では、式~\eqref{eq:dqq}、\eqref{eq:dqg} は $Z'$ にもそのまま使え、段階 6 の $Z'$ の断面積を NLO にできる。ラピディティの分布を除く、レプトンにカットを掛けた分布（fiducial な断面積）は、自分の計算がレプトンの角度を積分しているので比べていない。$gg\to H$ の NLO のラピディティの分布と、トップの質量を残した NLO（2ループの仮想の補正）も比べていない。
 
