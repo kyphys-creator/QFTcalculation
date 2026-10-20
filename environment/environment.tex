@@ -938,6 +938,24 @@ PATH の gfortran（陽子） & libgfortran の場所を調べる \nolinkurl{gfo
 \end{tabularx}
 \end{table}
 
+陽子どうしの衝突のノートの手順 (4)（10月20日。段階 6 の SSM の $Z'$ を、Drell--Yan の係数関数と、QCD と $Z'$ だけの自作の NLO の UFO の aMC@NLO で NLO にし、段階 6 の上限を NLO で出し直した）で分かった問題を、表~\ref{tab:issues2v} に加える。
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{表~\ref{tab:issues2u} の続き（陽子どうしの衝突のノート~\cite{ppnote} の手順 (4)、SSM の $Z'$ の NLO）。}
+\label{tab:issues2v}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{2.4cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{対象} & \textbf{症状} & \textbf{原因} & \textbf{対処} \\
+\midrule
+固定次数の解析の関数（陽子） & 自分の \texttt{FO\_ANALYSE} の Fortran のリンクが \texttt{Undefined symbols: \_getinvm\_} で止まった & 不変質量の \texttt{getinvm} は \MGaMC{} の固定次数の解析のライブラリに入っていない（配布の解析の例はファイルの中で定義している） & 解析のファイルの中で \texttt{getinvm} を定義する（\nolinkurl{models/sm_pp/Src/analysis_HwU_zp.f}） \\
+失敗した実行のやり直し（陽子） & コンパイルで止まった実行と同じ名前で \texttt{launch} し直すと、\texttt{KeyError: 'm1000\_LO'}（古い実行の情報を消すところ）で止まった & 失敗した実行の情報が中途半端に残る & 出力のディレクトリを作り直す（または実行の名前を替える） \\
+aMC@NLO の誤差（陽子） & 3~TeV の $Z'$ の NLO の $m_{ee}>225$~GeV の断面積が自分の値より $+2.9\sigma$（$+0.33\%$）。ずれはピークの外の裾に集まっていた & 表示の誤差が実際のばらつきより小さい（手順 (1) の $W$ と同じ）。種を替え \texttt{req\_acc\_FO = 3e-4} にした2回目は $+1.5\sigma$（$+0.034\%$） & 食い違いは、種と精度を替えた実行で確かめてから判断する \\
+事象の記録の $Z'$（陽子） & 段階 6 の Delphes の事象で、真の $Z'$ の質量（status 22）がない事象が質量とともに増え（0.5~TeV で 2\%、6~TeV で 85\%）、$Z'$ がある事象ではハードな過程のレプトン（status 23）がない & \MGaMC{} は、仮想質量がピークから \texttt{bwcutoff} より遠い $Z'$ を LHE に書かない。Pythia は、$Z'$ のある事象では崩壊のレプトンを終状態（status 1）としてしか残さない & 真の $m_{\ell\ell}$ は、$Z'$ があればその質量、なければ status 23 の2つのレプトンの不変質量とする（\nolinkurl{models/sm_pp/Src/zp_limit.py}。どちらもない事象は0） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
 \paragraph{Package-X。}Package-X の結果を \texttt{Simplify[..., qq < 0]} のように空間的な $q^2$ を仮定して簡約すると、対数と平方根の閾値より上の枝が $+i0$ の処方と合わないことがある。時間的な $q^2$ では、有理数の $q^2$ を代入した式に \texttt{PaXEvaluate} を呼び、枝の選び方を Package-X に任せる（スピノル QED のノートの手順 (9)）。Package-X の数値関数 \texttt{ScalarC0}、\texttt{ScalarD0} は、内線の質量の2乗ではなく質量を引数にとる（湯川のノートの手順 (3)）。
 
 \paragraph{倍精度で桁を落とすところ。}倍精度のツール（LoopTools、COLLIER、FormCalc、MadLoop）は、大きな打ち消しのある領域で桁を落とす。真空偏極を PaVe 関数で書いた $(1+2m^2/q^2)B_0(q^2)-(2m^2/q^2)B_0(0)$ は、小さい $|q^2|$ で約 $\log_{10}(m^2/|q^2|)$ 桁を失う。$q^2\to0$ までの積分（異常磁気モーメントへの真空偏極の寄与など）では、級数か、Package-X を有理数の入力で30桁で評価した値を使う。光子--光子散乱の振幅は低エネルギーで $s^2$ のように小さくなるが、それは $O(1)$ の項の打ち消しで作られるので、倍精度のツールの値は $s=0.01m^2$ で $10^{-5}$ ほどずれる。COLLIER では、ある点（$s=0.01m^2$、$\cos\theta=0.872$）でループの二つの向きの値が相対 $3\times10^{-6}$ ずれ、振幅は Euler--Heisenberg の値から $34\%$ ずれた。そこでの基準には、有理数の運動学で Package-X を80桁で評価した値を使った。重いクォークの脱結合でも同じことが起こる（QCD のノートの手順 (6)）。$\Pi_t(k^2)-\Pi_t(0)\propto k^2/(5m^2)$ を $(1+2m^2/k^2)B_0(k^2)-(2m^2/k^2)B_0(0)$ の形で評価すると、$|k^2|=10^{-3}$〜$10^{-2}m^2$ で LoopTools は相対 $4\times10^{-10}$、COLLIER は $7\times10^{-8}$ ずれた（COLLIER は $|k^2|=10^{-2}m^2$ の方が $10^{-3}m^2$ よりずれが大きい）。MadLoop の $u\bar u\to d\bar d$ の $t$ の寄与（$\propto s/m_t^2$）は、$m_t^2/s=10^5$ で $0.65\%$ ずれ、$m_t$ によらないはずの極の係数も $6\times10^{-10}$ 揺れた。
@@ -1936,7 +1954,7 @@ ATLAS のダイレプトンの共鳴の探索（139 fb$^{-1}$~\cite{atlasll}）�
 \item \textbf{検出器。}Pythia 8 と Delphes の ATLAS の card で、探索の選別（$p_T>30$~GeV、電子は $|\eta|<2.47$ で 1.37〜1.52 を除く、ミューオンは $|\eta|<2.5$ で電荷が逆、$m_{\ell\ell}>225$~GeV）を当てた。A$\times\varepsilon$ を ATLAS の spin-1 の選別の効率と、ピークの相対分解能（$m_{\mathrm{reco}}/m_{\mathrm{true}}-1$ の中央 68\% の半幅）を ATLAS のパラメータ化と比べた。
 \item \textbf{上限。}公表の ee と $\mu\mu$ の $m_{\ell\ell}$ の分布（225 GeV〜5.8 TeV の 99 ビン、データの事象数だけ）に、公表の背景の関数（疑似コードの式）を自分でフィットした（規格化、$b$、$p_0$〜$p_3$ をチャンネルごとに自由に）。自分の信号の $m_{\ell\ell}$ の分布を型にして、背景の母数をプロファイルしたビンごとのポアソンの尤度、$\tilde q_\mu$、漸近式の CLs（段階 5 の式）で、$\sigma\times B(Z'\to\ell\ell)$ の 95\% の上限を出した。
 \end{itemize}
-模型、幅、断面積は、自分の式と積分に一致した。検出器の段では、Delphes の ATLAS の card の電子の A$\times\varepsilon$ が 0.29〜0.39 で、ATLAS の 0.69〜0.74 の半分ほどしかない（下の注意）。ミューオンは 0.49〜0.69 で、高い $p_T$ のミューオンの厳しい条件を使う ATLAS の 0.38〜0.52 より高い。分解能は、電子で ATLAS の 0.6〜1 倍、ミューオンで 0.7 倍ほどである。孤立を飛跡だけで取る card では電子の A$\times\varepsilon$ が 0.33〜0.46 に上がったが、新たに残った電子は FSR の光子のエネルギーを含まないので、分解能が 2〜5\% に悪くなった。上限は二つの card でほぼ同じだった。SSM の断面積に対する上限の比は、4〜5.5 TeV で ATLAS の値（参照）と 12\% 以内で合い、SSM の質量の下限は 5.04 TeV（期待 4.99 TeV）、孤立を飛跡で取る card で 5.07 TeV（5.02 TeV）になった。ATLAS の値は 5.1 TeV（参照）である。ただし自分の SSM の断面積は LO、ATLAS は NNLO であり、低い質量（0.5〜3 TeV）では比が ATLAS の 1.3〜1.8 倍になる。ee と $\mu\mu$ を別々に fiducial な上限で比べると、4〜5.5 TeV の ee で 3〜8 倍の差があり、効率の差だけでは説明できない（下の注意の fiducial の定義）。
+模型、幅、断面積は、自分の式と積分に一致した。検出器の段では、Delphes の ATLAS の card の電子の A$\times\varepsilon$ が 0.29〜0.39 で、ATLAS の 0.69〜0.74 の半分ほどしかない（下の注意）。ミューオンは 0.49〜0.69 で、高い $p_T$ のミューオンの厳しい条件を使う ATLAS の 0.38〜0.52 より高い。分解能は、電子で ATLAS の 0.6〜1 倍、ミューオンで 0.7 倍ほどである。孤立を飛跡だけで取る card では電子の A$\times\varepsilon$ が 0.33〜0.46 に上がったが、新たに残った電子は FSR の光子のエネルギーを含まないので、分解能が 2〜5\% に悪くなった。上限は二つの card でほぼ同じだった。SSM の断面積に対する上限の比は、4〜5.5 TeV で ATLAS の値（参照）と 12\% 以内で合い、SSM の質量の下限は 5.04 TeV（期待 4.99 TeV）、孤立を飛跡で取る card で 5.07 TeV（5.02 TeV）になった。ATLAS の値は 5.1 TeV（参照）である。ただし自分の SSM の断面積は LO、ATLAS は NNLO であり、低い質量（0.5〜3 TeV）では比が ATLAS の 1.3〜1.8 倍になる。陽子どうしの衝突のノート~\cite{ppnote} の手順 (4) で、自分の NLO の $K(m_{\ell\ell})$ で事象を重み付けし直すと、下限は観測 5.20~TeV、期待 5.16~TeV に上がった（表~\ref{tab:issues2v}）。ee と $\mu\mu$ を別々に fiducial な上限で比べると、4〜5.5 TeV の ee で 3〜8 倍の差があり、効率の差だけでは説明できない（下の注意の fiducial の定義）。
 
 \begin{table}[htbp]
 \centering\small

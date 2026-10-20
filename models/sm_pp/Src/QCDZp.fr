@@ -1,0 +1,238 @@
+(* ::Package:: *)
+
+(* QCDZp.fr -- FeynRules model file for the SSM Z' of stage 6 of the LHC tools at NLO in QCD (models/sm_pp, step (4)).
+   QCD with four massless quarks (u, c, d, s: the proton of stage 6, where the b is massive and not in p), a massless electron,
+   and the Z' of environment/tests/lhc/zprime/ZpSSM.fr with the same couplings:
+     L = -1/4 G G - cbar d.D c + sum_q qbar i Dslash q + ebar i dslash e - 1/4 Zp_{mu nu} Zp^{mu nu} + 1/2 MZp^2 Zp_mu Zp^mu
+         + gZp ee/(sw cw) Zp_mu sum_f fbar gamma^mu (T3_f P_L - Q_f sw^2) f,
+   ee, sw, cw from aEWM1, Gf, MZ as in FeynRules' SM.fr (stage 6's inputs).  No photon, Z or W: the process p p > e+ e- is the
+   Z' alone, as stage 6's 'p p > zp > l+ l-'.  The width WZp is external (MadWidth's value of stage 6 for each mass).
+   - Coupling orders: gs counts QCD = 1 (aS: QCD = 2), ee counts QED = 1 (the Z' f f vertex is QED = 1, gZp has no order).
+   - The names aS (block SMINPUTS, 3) and G are the ones MadGraph expects for the strong coupling; MZ (block MASS, 23) is only an
+     electroweak input here (no Z particle).
+   - Load from this folder: LoadModel["QCDZp.fr"] after FeynRules.
+*)
+
+M$ModelName = "QCDZp";
+
+M$Information = {
+  Authors -> {"K. Yasuda"},
+  Date    -> "2026-10-20",
+  Version -> "1.0",
+  Comment -> "QCD with four massless quarks, a massless electron and the SSM Z' (research note models/sm_pp, step 4)"
+};
+
+M$InteractionOrderHierarchy = {
+  {QCD, 1},
+  {QED, 2}
+};
+
+M$GaugeGroups = {
+  SU3C == {
+    Abelian           -> False,
+    CouplingConstant  -> gs,
+    GaugeBoson        -> G,
+    StructureConstant -> f,
+    Representations   -> {T, Colour},
+    SymmetricTensor   -> dSUN
+  }
+};
+
+IndexRange[Index[Gluon  ]] = NoUnfold[Range[8]];
+IndexRange[Index[Colour ]] = NoUnfold[Range[3]];
+IndexRange[Index[UpGen  ]] = Range[2];
+IndexRange[Index[DownGen]] = Range[2];
+
+IndexStyle[Gluon,   a];
+IndexStyle[Colour,  m];
+IndexStyle[UpGen,   f];
+IndexStyle[DownGen, g];
+
+M$Parameters = {
+  aS == {
+    ParameterType    -> External,
+    BlockName        -> SMINPUTS,
+    OrderBlock       -> 3,
+    Value            -> 0.118,
+    InteractionOrder -> {QCD, 2},
+    TeX              -> Subscript[\[Alpha], s],
+    Description      -> "Strong coupling constant alpha_s = gs^2/(4 pi)"
+  },
+  gs == {
+    ParameterType    -> Internal,
+    Value            -> Sqrt[4 Pi aS],
+    InteractionOrder -> {QCD, 1},
+    TeX              -> Subscript[g, s],
+    ParameterName    -> G,
+    Description      -> "Strong coupling constant"
+  },
+  aEWM1 == {
+    ParameterType    -> External,
+    BlockName        -> SMINPUTS,
+    OrderBlock       -> 1,
+    Value            -> 127.9,
+    InteractionOrder -> {QED, -2},
+    Description      -> "Inverse of the electroweak coupling constant (as SM.fr)"
+  },
+  Gf == {
+    ParameterType    -> External,
+    BlockName        -> SMINPUTS,
+    OrderBlock       -> 2,
+    Value            -> 1.16637*^-5,
+    InteractionOrder -> {QED, 2},
+    Description      -> "Fermi constant (as SM.fr)"
+  },
+  MZ == {
+    ParameterType    -> External,
+    BlockName        -> MASS,
+    OrderBlock       -> 23,
+    Value            -> 91.1876,
+    Description      -> "Z mass, an electroweak input only (as SM.fr)"
+  },
+  aEW == {
+    ParameterType    -> Internal,
+    Value            -> 1/aEWM1,
+    InteractionOrder -> {QED, 2},
+    Description      -> "Electroweak coupling constant"
+  },
+  ee == {
+    ParameterType    -> Internal,
+    Value            -> Sqrt[4 Pi aEW],
+    InteractionOrder -> {QED, 1},
+    TeX              -> e,
+    Description      -> "Electric coupling constant"
+  },
+  MW == {
+    ParameterType    -> Internal,
+    Value            -> Sqrt[MZ^2/2 + Sqrt[MZ^4/4 - Pi/Sqrt[2] aEW/Gf MZ^2]],
+    Description      -> "W mass from aEWM1, Gf, MZ (as SM.fr; no W particle)"
+  },
+  sw2 == {
+    ParameterType    -> Internal,
+    Value            -> 1 - MW^2/MZ^2,
+    Description      -> "Squared sine of the Weinberg angle"
+  },
+  sw == {
+    ParameterType    -> Internal,
+    Value            -> Sqrt[sw2],
+    TeX              -> Subscript[s, w],
+    Description      -> "Sine of the Weinberg angle"
+  },
+  cw == {
+    ParameterType    -> Internal,
+    Value            -> MW/MZ,
+    TeX              -> Subscript[c, w],
+    Description      -> "Cosine of the Weinberg angle"
+  },
+  gZp == {
+    ParameterType    -> External,
+    BlockName        -> ZPCOUP,
+    OrderBlock       -> 1,
+    Value            -> 1.,
+    TeX              -> Subscript[g, Zp],
+    Description      -> "Z' couplings in units of the Z's (1: SSM)"
+  }
+};
+
+M$ClassesDescription = {
+  V[2] == {
+    ClassName       -> G,
+    SelfConjugate   -> True,
+    Indices         -> {Index[Gluon]},
+    Mass            -> 0,
+    Width           -> 0,
+    ParticleName    -> "g",
+    PDG             -> 21,
+    PropagatorLabel -> "G",
+    PropagatorType  -> C,
+    PropagatorArrow -> None,
+    FullName        -> "Gluon"
+  },
+  V[100] == {
+    ClassName       -> Zp,
+    SelfConjugate   -> True,
+    Mass            -> {MZp, 3000.},
+    Width           -> {WZp, 88.8},
+    ParticleName    -> "Zp",
+    PDG             -> 32,
+    PropagatorLabel -> "Zp",
+    PropagatorType  -> Sine,
+    PropagatorArrow -> None,
+    FullName        -> "Zprime"
+  },
+  U[2] == {
+    ClassName       -> ghG,
+    SelfConjugate   -> False,
+    Indices         -> {Index[Gluon]},
+    Ghost           -> G,
+    PDG             -> 82,
+    QuantumNumbers  -> {GhostNumber -> 1},
+    Mass            -> 0,
+    Width           -> 0,
+    PropagatorLabel -> "uG",
+    PropagatorType  -> GhostDash,
+    PropagatorArrow -> Forward
+  },
+  F[1] == {
+    ClassName        -> elec,
+    SelfConjugate    -> False,
+    Mass             -> 0,
+    Width            -> 0,
+    QuantumNumbers   -> {Q -> -1},
+    PropagatorLabel  -> "e",
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> 11,
+    ParticleName     -> "e-",
+    AntiParticleName -> "e+",
+    FullName         -> "Electron"
+  },
+  F[2] == {
+    ClassName        -> uq,
+    ClassMembers     -> {u, c},
+    Indices          -> {Index[UpGen], Index[Colour]},
+    FlavorIndex      -> UpGen,
+    SelfConjugate    -> False,
+    Mass             -> 0,
+    Width            -> 0,
+    QuantumNumbers   -> {Q -> 2/3},
+    PropagatorLabel  -> {"uq", "u", "c"},
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> {2, 4},
+    ParticleName     -> {"u", "c"},
+    AntiParticleName -> {"u~", "c~"},
+    FullName         -> {"u-quark", "c-quark"}
+  },
+  F[3] == {
+    ClassName        -> dq,
+    ClassMembers     -> {d, s},
+    Indices          -> {Index[DownGen], Index[Colour]},
+    FlavorIndex      -> DownGen,
+    SelfConjugate    -> False,
+    Mass             -> 0,
+    Width            -> 0,
+    QuantumNumbers   -> {Q -> -1/3},
+    PropagatorLabel  -> {"dq", "d", "s"},
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> {1, 3},
+    ParticleName     -> {"d", "s"},
+    AntiParticleName -> {"d~", "s~"},
+    FullName         -> {"d-quark", "s-quark"}
+  }
+};
+
+GaugeXi[V[2]] = GaugeXi[G];
+GaugeXi[U[2]] = GaugeXi[G];
+
+LGaugeQCDZp := Block[{mu, nu, aa}, ExpandIndices[-1/4 FS[G, mu, nu, aa] FS[G, mu, nu, aa]]];
+LFermionQCDZp := Block[{mu}, ExpandIndices[(I uqbar.Ga[mu].DC[uq, mu] + I dqbar.Ga[mu].DC[dq, mu] + I elecbar.Ga[mu].del[elec, mu])]];
+LGhostQCDZp := Block[{mu, ii}, ExpandIndices[-ghGbar[ii].del[DC[ghG[ii], mu], mu]]];
+LZpKinQCDZp := Block[{mu, nu}, ExpandIndices[-1/4 FS[Zp, mu, nu] FS[Zp, mu, nu] + 1/2 MZp^2 Zp[mu] Zp[mu]]];
+(* the Z f f couplings of SM.fr times gZp (the sign checked in stage 6's generate_zp.wl) *)
+LZpFQCDZp := Block[{mu}, ExpandIndices[gZp ee/(sw cw) Zp[mu] (
+     - 1/2 elecbar.Ga[mu].ProjM.elec + sw^2 elecbar.Ga[mu].elec
+     + 1/2 uqbar.Ga[mu].ProjM.uq - 2/3 sw^2 uqbar.Ga[mu].uq
+     - 1/2 dqbar.Ga[mu].ProjM.dq + 1/3 sw^2 dqbar.Ga[mu].dq)]];
+LQCDZp := LGaugeQCDZp + LFermionQCDZp + LGhostQCDZp + LZpKinQCDZp + LZpFQCDZp;
