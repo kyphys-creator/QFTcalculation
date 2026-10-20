@@ -1,0 +1,40 @@
+--- maddm_run_interface.py.orig
++++ maddm_run_interface.py
+@@ -2297,7 +2297,7 @@
+                 set_level = 50
+             logger.info("Computing sigmav with method: %s" % self.maddm_card['sigmav_method'])
+             with self.me_cmd.RunWebHandling(pjoin(self.dir_path, indirect_directory)):
+-                with misc.TMP_variable(banner_mod.RunCard, 'get_idbmup', lambda *args: 52):
++                with misc.TMP_variable(banner_mod.RunCard, 'get_idbmup', lambda *args, **opts: 52):  # local patch: MG5 3.8 passes beam=
+                     #this with statement ensure that only one process is running within
+                     #that directory.
+                     with misc.MuteLogger(['madgraph','madevent','cmdprint'], [set_level]*3):
+@@ -5425,12 +5425,13 @@
+         return
+ 
+ 
+-    def make_make_all_html_results(self, folder_names = []):
++    def make_make_all_html_results(self, folder_names = [], jobs=[], get_attr=None):
+         """keep track of the P results via an instance variable.
+            Do not do the html output
++           (local patch: the signature and get_attr of MG5 3.8, whose do_refine asks for ('xsec','xerru','axsec'))
+         """
+         run = self.results.current['run_name']
+-        Presults = sum_html.collect_result(self, folder_names=folder_names)
++        Presults = sum_html.collect_result(self, folder_names=folder_names, jobs=jobs)
+ 
+         self.Presults = {}
+         for i, P_comb in enumerate(Presults):
+@@ -5438,7 +5439,11 @@
+             self.Presults['xsec_%s' % P_comb.name[7:]] = P_comb.xsec
+             self.Presults['xerr_%s' % P_comb.name[7:]] = P_comb.xerru
+ 
+-        return Presults.xsec, Presults.xerru
++        if not get_attr:
++            return Presults.xsec, Presults.xerru
++        if isinstance(get_attr, tuple):
++            return [getattr(Presults, a) for a in get_attr]
++        return getattr(Presults, get_attr)
+ 
+     def check_nb_events(self):
+         """Redefine maximum number of events for MadDM"""

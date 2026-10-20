@@ -1522,7 +1522,7 @@ cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage4.sh
 
 \section{EFT・暗黒物質の道具の追加}\label{sec:eftdm}
 
-2026年10月19日に、レビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、まだ入れていなかった EFT・暗黒物質用の道具を加えた。SMEFT と低エネルギー EFT（WET、LEFT）の走行と整合の wilson~\cite{wilson} と DsixTools 2.1~\cite{dsixtools,dsixtools2}、直接検出の非相対論的 EFT への整合の DirectDM~\cite{directdm}、残存量・直接検出・間接検出の MadDM~\cite{maddm3,maddm32}、それに MadDM と独立な系統として micrOMEGAs 7.1~\cite{micromegas6} である。作業は第~\ref{sec:lhc} 節の段階 1、2 と同じ Mac Studio（Apple M4 Max、macOS 15.5）で行った。各段階で、自分の式とツールの出力、およびツールどうしを突き合わせた（表~\ref{tab:eftdmplan}）。照合はすべて \nolinkurl{tests/eftdm} にあり、\texttt{run\_all.sh --eftdm} で4段階をまとめて実行し直せる（約2分）。
+2026年10月19日に、レビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、まだ入れていなかった EFT・暗黒物質用の道具を加えた。SMEFT と低エネルギー EFT（WET、LEFT）の走行と整合の wilson~\cite{wilson} と DsixTools 2.1~\cite{dsixtools,dsixtools2}、直接検出の非相対論的 EFT への整合の DirectDM~\cite{directdm}、残存量・直接検出・間接検出の MadDM~\cite{maddm3,maddm32}、それに MadDM と独立な系統として micrOMEGAs 7.1~\cite{micromegas6} である。作業は第~\ref{sec:lhc} 節の段階 1、2 と同じ Mac Studio（Apple M4 Max、macOS 15.5）で行った。各段階で、自分の式とツールの出力、およびツールどうしを突き合わせた（表~\ref{tab:eftdmplan}）。照合はすべて \nolinkurl{tests/eftdm} にあり、\texttt{run\_all.sh --eftdm} で4段階をまとめて実行し直せる（約2分。段階 3 の間接検出の照合、\nolinkurl{tests/eftdm/run_stage3_line.sh}（ループで誘起されるライン。NLO の UFO を作るので約7分）と \nolinkurl{tests/eftdm/run_stage3_id.sh}（連続スペクトル、約1.5分）は、ここには含めない）。
 
 \begin{table}[htbp]
 \centering\small
@@ -1534,7 +1534,7 @@ cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage4.sh
 \midrule
 1 & wilson、DsixTools & 純 QCD の模型での SMEFT の走行を自分の冪の式と、全 SM の結合での走行を2つのツールどうしで（WCxf を経由して）、SMEFT $\to$ WET の木の整合と WET の走行を自分の式と比べる \\
 2 & DirectDM（Python、Mathematica） & ヒッグスの入り口の実スカラーの $c_1^N$ と $\sigma_{\mathrm{SI}}$、Dirac 粒子のベクトルと軸性ベクトルの結合を、各版の核子の入力での自分の式と比べる \\
-3 & MadDM 3.3 & FeynRules で作った同じ模型で、DM とクォークの結合、$\sigma_{\mathrm{SI}}$、$\langle\sigma v\rangle$、残存量を、MadDM の入力での自分の式（Gondolo--Gelmini の熱平均とボルツマン方程式~\cite{gondologelmini}）と比べる \\
+3 & MadDM 3.3 & FeynRules で作った同じ模型で、DM とクォークの結合、$\sigma_{\mathrm{SI}}$、$\langle\sigma v\rangle$、残存量を、MadDM の入力での自分の式（Gondolo--Gelmini の熱平均とボルツマン方程式~\cite{gondologelmini}）と比べる。ループで誘起される $\gamma$ 線のライン（$SS\to\gamma\gamma$、$Z\gamma$）を、NLOCT で作った NLO の UFO で、ヒッグスのノートの1ループの振幅と比べる。木の過程の連続スペクトルの $\sigma v$ をチャネルごとに比べる \\
 4 & micrOMEGAs 7.1.10 & 段階 3 と同じ模型で同じ量を自分の式と比べ、MadDM との差を説明する。micrOMEGAs 自身の SingletDM の模型とも比べる \\
 \bottomrule
 \end{tabularx}
@@ -1555,7 +1555,7 @@ pandas、pyyaml、voluptuous（wilson 用） & 3.0.6、6.0.3、0.16.0 & \texttt{
 DsixTools & 2.1 + master \texttt{d4ff3293} & \texttt{A/DsixTools}（.mx に変換、\texttt{input.m} に局所パッチ） & GitHub~\cite{dsixtools2,url:dsixtools}（93 MB） \\
 DirectDM（Python） & 2.2.3 & \texttt{qft}（二つの局所パッチ） & GitHub のタグ~\cite{directdm,url:directdm}（PyPI は 2.2.2、0.06 MB） \\
 DirectDM（Mathematica） & 1.2.1 & \texttt{A/DirectDM} & GitHub のタグ~\cite{url:directdm}（0.04 MB） \\
-MadDM & 3.3（rc/3.3 \texttt{6570bb5f}） & \texttt{M/PLUGIN/maddm}（対応版の上限に局所パッチ）、起動スクリプト \pth{hep/bin/maddm} & GitHub（maddmhep）~\cite{maddm32,url:maddm}（5.2 MB） \\
+MadDM & 3.3（rc/3.3 \texttt{6570bb5f}） & \texttt{M/PLUGIN/maddm}（対応版の上限と、間接検出の出力と madevent の経路に局所パッチ）、起動スクリプト \pth{hep/bin/maddm} & GitHub（maddmhep）~\cite{maddm32,url:maddm}（5.2 MB） \\
 RAPIDD（MadDM の部分モジュール） & \texttt{f471a101} & \texttt{M/PLUGIN/maddm/vendor/RAPIDD\_for\_DM}（CMake で構築） & GitHub（cheekyparticle）~\cite{url:rapidd}（16 MB、ライセンスの表示なし）。$\sigma_{\mathrm{SI}}$ に要ると分かってから承認を得た \\
 micrOMEGAs & 7.1.10 & \pth{hep/micromegas_7.1.10}（照合用のプロジェクト \texttt{SingletFR}） & micromegasdm.github.io~\cite{micromegas6,url:micromegas}（22.7 MB） \\
 PPPC4DMID、HEPToolsInstaller & 1.16、V168 & 承認外の取得物なので PPPC4DMID をゴミ箱へ移した & MadDM が問い合わせなしに取得した（29.5 MB、0.04 MB）。DRAGON の導入も始めたが、その依存 cfitsio の取得に失敗して止まった \\
@@ -1670,9 +1670,73 @@ c_1^N=\frac{C}{2m_S}\Bigl[\sum_{q=u,d,s}\sigma_q^N+\frac29m_G\Bigr],\qquad
 \item MadDM の残存量の ODE は、出発点を1ずつ戻して前回との相対差が \texttt{eps\_ode}（既定 0.01）未満になったら止める。既定では $\Omega h^2$ が1\% ずれる。積分は \texttt{x\_end} $=1000$ で止めるので、$s$ 波の消滅では $x>1000$ の消滅（$x_f/1000\approx2$\%）が入らず、$\Omega h^2$ が大きめに出る（段階 4）。
 \item MadDM 3.3 の核子の直接検出は RAPIDD を要る。ないと \texttt{add direct\_detection} が RAPIDD の構築を試みて失敗し、電子との散乱だけを計算する（メッセージは ERROR だが実行は続く）。
 \item 初めて \texttt{generate indirect\_detection} を実行すると、MadDM は依存ツール（PPPC4DMID、DRAGON、その入力データ）の導入を問う。スクリプトでは既定の答え（すべて導入）が選ばれ、問い合わせなしに PPPC4DMID（29.5 MB）を取得し、DRAGON の導入を始めた（cfitsio の取得に失敗して止まった）。設定の \texttt{pppc4dmid\_path} を消し、\texttt{set maddm\_first\_indirect False} を MG5 の \texttt{input/mg5\_configuration.txt} に保存して、以後は問わないようにした。
-\item 間接検出の $\sigma v$（\texttt{indirect=sigmav}）は確かめられなかった。既定の方法（\texttt{reshuffling}）は MadDM が内部で madevent を起動し、\MGaMC{} 3.8.1 の \texttt{ask\_run\_configuration} が \texttt{TypeError: 'NoneType' object is not iterable} で落ちた（MadAnalysis5 が入っていて、解析の切り替えが既定で ON になる環境で）。\texttt{inclusive} では $\sigma v=-1$ が返った。
+\item 間接検出の $\sigma v$（\texttt{indirect=sigmav}）は、局所パッチを当てて \texttt{madevent} の方法で確かめた（下のラインと連続スペクトルの照合）。既定の方法（\texttt{reshuffling}）は MadDM が内部で madevent を起動し、\MGaMC{} 3.8.1 の \texttt{ask\_run\_configuration} が \texttt{TypeError: 'NoneType' object is not iterable} で落ちる。MadDM が切り替えに plugin の値 \texttt{reweight=indirect} を渡し、\MGaMC{} 3.8.1 の \texttt{get\_cardcmd\_for\_reweight} が \texttt{OFF}、\texttt{ON}、\texttt{density} 以外には \texttt{None} を返すためで、はじめに疑った MadAnalysis5 とは関係がない。\texttt{madevent} の方法は、下のラインと連続スペクトルの照合で当てた局所パッチで動く。\texttt{inclusive} では $\sigma v=-1$ が返った。
 \item スクリプトで \texttt{launch} したときの問いは、切り替えとカードの編集が一つにまとまっていて、\texttt{set} は \texttt{done} の前に置く。\texttt{done} のあとに置くと、MG5 の \texttt{set} として解釈されて落ちる。粒子名の \texttt{\textasciitilde} は、MadDM の過程名では \texttt{x} になる（\texttt{xsdmxsdm\_wpwm}）。
 \end{itemize}
+
+\paragraph{ループで誘起されるライン。}レビューが MadDM を推奨する主な理由である $\gamma$ 線のライン（MadDM の命令は \texttt{indirect\_spectral\_features}~\cite{maddm32}）を、木のない $SS\to\gamma\gamma$、$Z\gamma$ で確かめた（\nolinkurl{tests/eftdm/run_stage3_line.sh}、約7分。表~\ref{tab:eftdm3line}）。木の振幅がないと、MadDM は MadLoop の \texttt{[noborn=QED]} で過程を作るので、模型の NLO の UFO が要る。照合の模型を Feynman ゲージで書き、FeynRules と NLOCT~\cite{nloct} で作った（\nolinkurl{tests/eftdm/model/make_nlo_ufo.wl}）。$|H|^2$ は Goldstone を含めて $G^+G^-+[(v+h)^2+(G^0)^2]/2$ と書き下した（$-\frac{\lambda_{hs}}2S^2\Phi^\dagger\Phi$ と Feynman 則が一致する）ので、$SSG^+G^-$、$SSG^0G^0$（$-i\lambda_{hs}$）の頂点が加わる。CKM 行列は単位行列にした（$SS\to V\gamma$ の1ループに $W$ とクォークのループは入らない。NLOCT は CKM のノートの模型の72分に対して約3分で終わる）。R2 の頂点は166個で、一重項を含むのは $hhSS$、$G^0G^0SS$、$G^+G^-SS$ の4点の頂点だけである。$SS\gamma\gamma$、$SSZ\gamma$ の R2 はない（スカラーのループで外線の添字が4次元なので、分子に $\tilde q^2$ が出ない）。一方、$Z\gamma$ には外線の光子の $\gamma$--$Z$ の混合が要る（ヒッグスのノートの手順 (2)）。MadLoop は外線に自己エネルギーを付けず、これを UFO の UV の頂点 $hZ\gamma$、$\frac i2g_{hZZ}\delta Z_{ZA}$ から取る。NLOCT の on-shell の対抗項（\texttt{WriteCT}、約3分）のうち、$hZ\gamma$ と $h\gamma\gamma$ の二つの UV の頂点だけを UFO に入れた。前者の $\delta Z_{ZA}=-(\alpha/\pi)(c_W/s_W)B_0(0,M_W,M_W)$（$\Sigma_T^{AZ}(0)$ の $W$ のループ）は記号として確かめ、後者はループの粒子ごとの極の和が0である。ほかの UV の頂点は $SS\to V\gamma$ の1ループに入らない（タドポールの定数を0とした模型なので、木のある過程の NLO には使わない）。
+
+\paragraph{自分の1ループの振幅。}Feynman ゲージの $SS\to V\gamma$（$V=\gamma,Z$）には、$s$ チャネルの図（$hSS$ のあとに $h^*\to V\gamma$ のループ）と、$SSG^+G^-$ の接触の図がある。接触の図の $G^\pm$ のループ $B$ は、$h\to V\gamma$ で $hG^+G^-$（$-iM_h^2/v$）の後ろにつくものと同じである（$SSG^0G^0$ は1ループで光子に届かない）。二つを足すと
+\[
+(-i\lambda_{hs}v)\frac{i}{s-M_h^2}\Bigl(-i\frac{M_h^2}{v}\Bigr)B+(-i\lambda_{hs})B=(-i\lambda_{hs}v)\frac{i}{s-M_h^2}\Bigl(-i\frac sv\Bigr)B
+\]
+となり、$hG^+G^-$ の頂点の $M_h^2$ を $s$ に替えた $s$ チャネルの振幅になる。$h\to V\gamma$ のほかのループは $M_h$ を含まないので、これは質量 $\sqrt s$ のヒッグスの on-shell の $h\to V\gamma$ の振幅である。したがって
+\[
+\sigma v_{\mathrm{rel}}=\frac{2\lambda_{hs}^2v^2\,\Gamma(h^*\to V\gamma;\sqrt s)}{\sqrt s\,(s-M_h^2)^2}
+\]
+である。$\Gamma$ はヒッグスのノート~\cite{higgsnote}の LO の幅で、そのノートで一般の $R_\xi$ ゲージの FeynCalc、Package-X、MadLoop と照合したループの関数（\texttt{loopind\_widths.py}）をファイルから読み、$M_H\to\sqrt s$ とし、UFO の param\_card の値（$\alpha=1/127.9$、$G_F$、湯川質量と極質量、9個の荷電フェルミオン）で計算した。$s$ チャネルの伝播関数にだけ幅を入れると、$M_h^2$ が $s+iM_h\Gamma_h$ に替わる。これで振幅の2乗が $4\times10^{-6}$ ずれた（$m_S=100$~GeV）ので、照合は $\Gamma_h=0$ で行う。MadDM の $\sigma v$ は、MadEvent の断面積 $\sigma$（ビームのエネルギー $m\sqrt{1+v^2}$、$v=\frac{\sqrt3}2\,$\texttt{vave\_indirect\_line}、既定 $7.5\times10^{-4}$）に $2v$ と \texttt{pb2cm3} $=2.99\times10^{-26}$ を掛けたものである。自分の値も同じ $v$ で、$\sigma=\sigma v_{\mathrm{rel}}/v_{\mathrm{rel}}$（$v_{\mathrm{rel}}=2v/\sqrt{1+v^2}$）から作った。照合の点は $\lambda_{hs}=0.1$、$m_S=70$、100、200~GeV（$\sqrt s$ が $2M_W$ の下、$2M_W$ と $2m_t$ の間、$2m_t$ の上）である。MadDM が使う MadLoop のコード（\texttt{Indirect\_LI\_line/SubProcesses/PV*}）は、単体の \texttt{check} に点と $\mu_R$ を与えて、振幅の2乗を倍精度で比べた。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 3 のループで誘起されるラインの検証の結果（\nolinkurl{tests/eftdm/test_maddm_line.py}）。$\lambda_{hs}=0.1$、$m_S=70$、100、200~GeV の順。}
+\label{tab:eftdm3line}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & MadLoop の $\sum|\mathcal M|^2$、$\gamma\gamma$（MadDM のループのコード） & 自分の式（$\mu_R=91.188$、1000~GeV、二つの角度） & $7.4\times10^{-14}$ 以内 & 一致 \\
+2 & 同、$Z\gamma$ & 同（$\mu_R$ によらない） & $1.1\times10^{-13}$ 以内 & 一致 \\
+3 & MadDM の $\sigma v$、$\gamma\gamma$ & 自分の式（MadDM の $v$ と \texttt{pb2cm3}） & $1.1635\times10^{-28}$、$1.0087\times10^{-29}$、$1.6548\times10^{-31}$~cm$^3$/s に対し、MadEvent の $\sigma$ で $-5.3\times10^{-4}$、$+4.0\times10^{-4}$、$-1\times10^{-5}$ & 一致 \\
+4 & 同、$Z\gamma$ & 同 & $1.3523\times10^{-28}$、$3.0581\times10^{-29}$、$9.5899\times10^{-31}$~cm$^3$/s に対し、$-5.2\times10^{-4}$、$-6.2\times10^{-4}$、$+1.2\times10^{-4}$ & 一致 \\
+5 & 表示の $\sigma v$（3桁） & 同 & $3\times10^{-3}$ 以内 & 一致 \\
+6 & \texttt{pb2cm3} & $c\times1$~pb $=2.9979\times10^{-26}$~cm$^3$/s & $2.99\times10^{-26}$（$-0.26\%$） & 注意 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意（ライン）。}照合の途中で、次のことが分かった。
+\begin{itemize}
+\item MadDM のラインと連続スペクトルの $\sigma v$ は、MadDM が内部で madevent を起動して求める。\MGaMC{} 3.8.1 では、既定の \texttt{reshuffling} は上に書いたとおり落ち、\texttt{madevent} も2か所で落ちた。MadDM の \texttt{Indirect\_Cmd.make\_make\_all\_html\_results} が \MGaMC{} 3.8 の引数 \texttt{get\_attr}（\texttt{do\_refine} が \texttt{('xsec','xerru','axsec')} を求める）を受けないこと、\texttt{RunCard.get\_idbmup} の置き換え \texttt{lambda *args: 52} が \texttt{beam=} を受けないことである。両方を直す局所パッチを当て（\nolinkurl{files/maddm_run_interface.py.patch}、元は \texttt{.orig}）、\texttt{set sigmav\_method madevent} で使う。
+\item 外線の光子の $\gamma$--$Z$ の混合の対抗項がない UFO（R2 だけ。NLOCT の \texttt{MSbar -> True} の UV の頂点は、2点に限らず3点でも因子 $-i$ を落とすので使えない）では、MadLoop の $Z\gamma$ は自分の振幅の和 $F$ に対して $|F+P\ln(\mu_R^2/M_W^2)|^2/|F|^2$、$P=4c_WM_Z^2/(s-M_Z^2)$ 倍になった（$\Gamma_h=4.07$~MeV のままの実行で、$\mu_R=M_W$、91.188、1000~GeV のいずれも $3\times10^{-6}$ 以内）。MadDM の $Z\gamma$ のラインは $m_S=100$~GeV で $+4.7\%$ 大きかった。\texttt{add model} で一重項を CKM のノートの NLO の UFO に足しても、その $\delta Z_{ZA}$ はそのノートの点での数値なので（ヒッグスのノートの手順 (2)）、別の点の $Z\gamma$ には使えない。$\gamma\gamma$ には対抗項が入らない。
+\item MadEvent はループの $\mu_R$ を param\_card の \texttt{MU\_R}（\texttt{Block loop}、MadDM の card にはなく既定の 91.188~GeV）のままにし、run\_card の動的な目盛り（$\sqrt{\hat s}$）は $\alpha_s$ にしか使わない（\texttt{cuts.f} が \texttt{update\_as\_param2} ではなく \texttt{update\_as\_param} を呼ぶ）。
+\item MadDM の \texttt{launch} は param\_card の値を \texttt{Source/param\_card.inc} に書いてコンパイルし直す。MadEvent も単体の \texttt{check} も実行時に card を読まないので、\texttt{check} は各 \texttt{launch} の直後に作り直して走らせる。MadEvent はループで誘起される過程の初期化で \texttt{check\_sa.f} の \texttt{READPS} と \texttt{NPSPOINTS} を書き換えるので、照合のスクリプトは毎回それを直して、終わったら元に戻す。
+\item MadDM の表示は3桁で、過程ごとの $\sigma$ は MadEvent のチャンネルの結果（\texttt{P*/G*/results.dat}、5桁）にしか残らず、次の \texttt{launch} で上書きされる。照合のスクリプトは毎回それを写す。MadEvent が表示する誤差は、自分の値との差より最大で4倍ほど小さかった（スピノル QED のノートで見た、乱数の種によるばらつきより小さい誤差と同じ）。
+\item MadDM の \texttt{pb2cm3} $=2.99\times10^{-26}$ は $c\times1$~pb より $0.26\%$ 小さいので、MadDM の cm$^3$/s の $\sigma v$ は $0.26\%$ 小さく出る。$s$ 波なので、$\sigma v$ は $v$ の取り方によらない（$O(v^2)$）。
+\end{itemize}
+
+\paragraph{連続スペクトルの $\sigma v$。}木の過程の間接検出（\texttt{generate indirect\_detection}、\texttt{indirect=sigmav}）を、段階 3 のユニタリーゲージの模型で、チャネルごとに自分の式と比べた（\nolinkurl{tests/eftdm/run_stage3_id.sh}、約1.5分。表~\ref{tab:eftdm3id}）。\texttt{sigmav\_method madevent} で、スペクトルは使わない（何も取得しない）。MadDM の木の出力（\texttt{Indirect\_tree\_cont}）は、はじめ \texttt{Source/MODEL/couplings.f} がコンパイルできなかった（\texttt{VECSIZE\_MEMMAX} が未定義）。\MGaMC{} 3.8.1 の模型の書き出しは、\texttt{export\_format} が \texttt{madevent} か \texttt{madloop\_optimized} のときだけ \texttt{vector.inc}、\texttt{maxparticles.inc} を \texttt{run.inc} の前に入れ、MadDM の出力の名前 \texttt{indirect} では古い形を書くからである。木の出力の模型の変換だけを \texttt{madevent} として行う局所パッチを当てた（\nolinkurl{files/maddm_MGoutput.py.patch}、元は \texttt{.orig}。ループで誘起される出力は変わらない）。終状態はそれぞれ別の \texttt{P} のディレクトリになる。自分の式は段階 3 の $\sigma v$ の式（$WW$、$ZZ$、$f\bar f$）に、$SS\to hh$ を加えたものである。$hh$ には接触（$-i\lambda_{hs}$）、$s$ チャネルの $h$（$hhh$：$-3im_h^2/v$）、$S$ の $t$、$u$ チャネル（$hSS$：$-i\lambda_{hs}v$）があり、
+\[
+\mathcal M=-\lambda_{hs}\Bigl[1+\frac{3m_h^2}{s-m_h^2+im_h\Gamma_h}+\frac{\lambda_{hs}v^2}{t-m_S^2}+\frac{\lambda_{hs}v^2}{u-m_S^2}\Bigr],\qquad
+\sigma v_{\mathrm{rel}}=\frac{\beta_h}{16\pi s}\,\frac12\int_{-1}^1|\mathcal M|^2\,d\cos\theta
+\]
+（$\frac12$ は同種のヒッグス）である。MadDM の $v$ は \texttt{vave\_indirect\_cont}（既定 $2\times10^{-5}$）の $\frac{\sqrt3}2$ 倍で、ラインと同じく $\sigma\times2v\times$ \texttt{pb2cm3} を表示する。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 3 の連続スペクトルの $\sigma v$ の検証の結果（\nolinkurl{tests/eftdm/test_maddm_id.py}）。$\lambda_{hs}=0.1$、$m_S=70$、100、200~GeV。}
+\label{tab:eftdm3id}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & MadEvent の $\sigma$（チャネルごと） & 自分の式（MadDM の $v$ と \texttt{pb2cm3}。$hh$ は $t$、$u$ チャネルを含む） & 開いたチャネル（70~GeV で8個、100~GeV で10個、200~GeV で12個）のすべてで、5桁の丸めの範囲（最大 $1.4\times10^{-5}$、70~GeV の $b\bar b$）。閉じたチャネル（$WW$、$ZZ$、$hh$、$t\bar t$）は0 & 一致 \\
+2 & 表示の $\sigma v$（3桁） & 同 & $3.6\times10^{-3}$ 以内 & 一致 \\
+3 & \texttt{Total\_xsec} & 自分の和 & $4.33\times10^{-26}$、$1.70\times10^{-25}$、$6.09\times10^{-26}$~cm$^3$/s に対し $2.9\times10^{-3}$ 以内（主なチャネルは $b\bar b$ 89\%、$WW$ 74\%、$WW$ 46\% と $hh$ 24\%） & 一致 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意（連続スペクトル）。}$v=1.7\times10^{-5}$ では、ビームの運動量 $p=\sqrt{E^2-m^2}=mv$ が倍精度で $10^{-7}$〜$10^{-6}$ 失われるので、照合は5桁の丸めに $10^{-6}$ を足した範囲で判定した。MadEvent が表示する誤差は、$|\mathcal M|^2$ が角度によらないチャネルで $10^{-9}$ ほど（$t$、$u$ チャネルのある $hh$ で $10^{-6}$）である。各チャネルの Fermi の dSph の上限（MadDM の表）と、\texttt{sigmav} の方法でも表示される pythia8 のスペクトルの全体の制限（尤度 $-1$）は確かめていない。
 
 \subsection{段階 4：micrOMEGAs}\label{sec:eftdm4}
 
@@ -1701,7 +1765,7 @@ c_1^N=\frac{C}{2m_S}\Bigl[\sum_{q=u,d,s}\sigma_q^N+\frac29m_G\Bigr],\qquad
 
 \subsection{使い方}\label{sec:eftdmusage}
 
-照合は \texttt{run\_all.sh --eftdm}、または段階ごとに \nolinkurl{tests/eftdm/run_stage1.sh}〜\texttt{run\_stage4.sh} で実行し直す（段階 4 は段階 3 の模型を使う）。MadDM は \MGaMC{} のディレクトリから起動する。
+照合は \texttt{run\_all.sh --eftdm}、または段階ごとに \nolinkurl{tests/eftdm/run_stage1.sh}〜\texttt{run\_stage4.sh} で実行し直す（段階 4 は段階 3 の模型を使う）。ループで誘起されるラインは \nolinkurl{tests/eftdm/run_stage3_line.sh}（\texttt{--no-ufo} で NLO の UFO を作り直さなければ約1分）、連続スペクトルの $\sigma v$ は \nolinkurl{tests/eftdm/run_stage3_id.sh}（約1.5分）で照合する。MadDM は \MGaMC{} のディレクトリから起動する。
 \begin{Verbatim}
 # wilson (qft): running and matching; for alpha_s, alpha_e of the WET running use WETrunner directly
 ~/miniforge3/envs/qft/bin/python -c "from wilson import Wilson; w = Wilson({'lq1_1123': 1e-6}, 1000, 'SMEFT', 'Warsaw'); print(w.match_run(5, 'WET', 'JMS'))"
@@ -1711,6 +1775,10 @@ wolframscript -code 'Needs["DsixTools`"]; SetRGEsMethod[1]; NewInput[{CHl1[1,2] 
 ~/miniforge3/envs/qft/bin/python -c "import directdm as d; print(d.WC_5f({'C63b': 1e-6}, DM_type='R').cNR(100, 1e-3)['cNR1p'])"
 # MadDM (script: 'set' before 'done'; indirect detection: 'set maddm_first_indirect False' is saved)
 cd ~/hep/MG5_aMC_v3_8_1 && ~/hep/bin/maddm run.txt
+# MadDM lines: an NLO UFO (R2 and the h Z a counterterm, model/make_nlo_ufo.wl), 'set sigmav_method madevent', WH = 0
+cd ~/Documents/Claude/QFTcalculation/environment/tests/eftdm && ./run_stage3_line.sh --no-ufo
+# MadDM continuum sigma v (tree level): 'indirect=sigmav', 'set sigmav_method madevent' (local patches)
+cd ~/Documents/Claude/QFTcalculation/environment/tests/eftdm && ./run_stage3_id.sh
 # micrOMEGAs: a CalcHEP model from FeynRules (unitary gauge) needs ForceUG = 1
 cd ~/hep/micromegas_7.1.10 && ./newProject NAME   # copy the *.mdl into NAME/work/models, gmake main=main.c
 cd ~/Documents/Claude/QFTcalculation/environment/tests && ./run_all.sh --no-mg5 --eftdm
@@ -1718,11 +1786,11 @@ cd ~/Documents/Claude/QFTcalculation/environment/tests && ./run_all.sh --no-mg5 
 
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO の断面積の計算（\texttt{[QCD]}、実の放射を含む \texttt{[QED]}）、Mathematica 14.1.0 での動作である。はじめ確かめていなかった NLOCT の対抗項と NLO 用 UFO は、その後 $\phi^3$、擬スカラー湯川、スピノル QED のノート~\cite{phi3note,yukawanote,qednote} で、手計算の対抗項と記号として一致し、MadLoop の値も手計算の式と倍精度の範囲で一致した（第~\ref{sec:issues} 節の回避策のもとで）。FormCalc の記号の計算と LoopTools の組、MadLoop のループで誘起される過程（\texttt{[sqrvirt=QED]}）と MadEvent（\texttt{[noborn=QED]}）も、スピノル QED のノートで確かめた。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。EFT・暗黒物質の道具（第~\ref{sec:eftdm} 節）は、少数の演算子と、ヒッグスの入り口の実スカラーの一つの点（$m_S=100$ GeV、$\lambda_{hs}=0.1$）でだけ確かめた。DsixTools と wilson の1ループの整合、DirectDM の電弱スケールより上の走行（\texttt{WC\_EW}）、MadDM と micrOMEGAs の共消滅や共鳴の近く、MadDM の直接検出の尤度（LZ）と間接検出、micrOMEGAs の間接検出と制限は試していない。
+\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO の断面積の計算（\texttt{[QCD]}、実の放射を含む \texttt{[QED]}）、Mathematica 14.1.0 での動作である。はじめ確かめていなかった NLOCT の対抗項と NLO 用 UFO は、その後 $\phi^3$、擬スカラー湯川、スピノル QED のノート~\cite{phi3note,yukawanote,qednote} で、手計算の対抗項と記号として一致し、MadLoop の値も手計算の式と倍精度の範囲で一致した（第~\ref{sec:issues} 節の回避策のもとで）。FormCalc の記号の計算と LoopTools の組、MadLoop のループで誘起される過程（\texttt{[sqrvirt=QED]}）と MadEvent（\texttt{[noborn=QED]}）も、スピノル QED のノートで確かめた。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。EFT・暗黒物質の道具（第~\ref{sec:eftdm} 節）は、少数の演算子と、ヒッグスの入り口の実スカラーの一つの点（$m_S=100$ GeV、$\lambda_{hs}=0.1$。ループで誘起されるラインと連続スペクトルの $\sigma v$ は3点）でだけ確かめた。DsixTools と wilson の1ループの整合、DirectDM の電弱スケールより上の走行（\texttt{WC\_EW}）、MadDM と micrOMEGAs の共消滅や共鳴の近く、MadDM の直接検出の尤度（LZ）、間接検出のスペクトル（PPPC4DMID、Pythia）、Fermi の dSph とラインの制限、既定の \texttt{reshuffling} の方法、$a\,h$ と BSM の終状態のライン、micrOMEGAs の間接検出と制限は試していない。
 
-\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。EFT・暗黒物質の道具では、DsixTools の \texttt{input.m}、DirectDM（Python）、MadDM の \texttt{\_\_init\_\_.py} の局所パッチ（\nolinkurl{files/DsixTools_input.m.patch}、\nolinkurl{files/directdm-py.patch}、\nolinkurl{files/maddm_init.py.patch}）を、入れ直したときに当て直す。wilson、DsixTools、MadDM、RAPIDD は版の付いた配布でなく固定したコミットを入れたので、入れ直すときはそのコミットを指定する。MadDM 3.3 は \MGaMC{} 3.8.0 まで確かめられた候補版なので、\MGaMC{} を更新したら \nolinkurl{tests/eftdm/run_stage3.sh} を実行し直す。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
+\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。EFT・暗黒物質の道具では、DsixTools の \texttt{input.m}、DirectDM（Python）、MadDM の \texttt{\_\_init\_\_.py}、\texttt{maddm\_run\_interface.py}、\texttt{MGoutput.py} の局所パッチ（\nolinkurl{files/DsixTools_input.m.patch}、\nolinkurl{files/directdm-py.patch}、\nolinkurl{files/maddm_init.py.patch}、\nolinkurl{files/maddm_run_interface.py.patch}、\nolinkurl{files/maddm_MGoutput.py.patch}）を、入れ直したときに当て直す。wilson、DsixTools、MadDM、RAPIDD は版の付いた配布でなく固定したコミットを入れたので、入れ直すときはそのコミットを指定する。MadDM 3.3 は \MGaMC{} 3.8.0 まで確かめられた候補版なので、\MGaMC{} を更新したら \nolinkurl{tests/eftdm/run_stage3.sh}、\texttt{run\_stage3\_line.sh}、\texttt{run\_stage3\_id.sh} を実行し直す（後の二つは、局所パッチを当てた間接検出の経路を通る）。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
 
-\paragraph{今後。}EFT・暗黒物質用のツールは、wilson、DsixTools 2.1、DirectDM、MadDM 3.3、micrOMEGAs 7.1.10 を入れた（第~\ref{sec:eftdm} 節）。MadDM の主な機能のうち、ループ誘起の間接検出（$\gamma$ 線のライン）と間接検出の $\sigma v$ は確かめていない。前者には、照合用の模型の NLO の UFO（SM と一重項を合わせた模型の NLOCT。CKM のノートの UFO に \texttt{add model} で足すと、Feynman ゲージの Goldstone のループの R2 が欠ける）と、自分の1ループの $SS\to\gamma\gamma$ が要る。DsixTools の WCxf の読み込みは、冗長な成分を補うように直すまで使わない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1〜3 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR の 0 と 1 のジェットの境目に、15〜25\% の継ぎ目が残ることが分かった（PDF をそろえ、シャワーの $k_T$ の方式を使うと小さくなる）。ジェットの $p_T$ がマッチングの目盛りの付近にある量を扱うときは、NLO のマッチングを入れることを考える。
+\paragraph{今後。}EFT・暗黒物質用のツールは、wilson、DsixTools 2.1、DirectDM、MadDM 3.3、micrOMEGAs 7.1.10 を入れた（第~\ref{sec:eftdm} 節）。MadDM のループで誘起される $\gamma$ 線のライン（$SS\to\gamma\gamma$、$Z\gamma$）は、SM と一重項を合わせて NLOCT で作った NLO の UFO で、自分の1ループの振幅と、MadLoop の振幅の2乗で $10^{-13}$、MadDM の $\sigma v$ で $10^{-3}$ 以内で一致した（第~\ref{sec:eftdm3} 節。\MGaMC{} 3.8.1 で動かすための MadDM の局所パッチと、$Z\gamma$ に要る $hZ\gamma$ の対抗項を含めて）。木の過程の連続スペクトルの $\sigma v$ も、$hh$ の $t$、$u$ チャネルを含む12のチャネルで自分の式と5桁の丸めの範囲で一致した（木の出力がコンパイルできるようにする局所パッチを含めて）。スペクトル（PPPC4DMID、Pythia）と Fermi の制限、既定の \texttt{reshuffling} の方法（\MGaMC{} 3.8.1 の \texttt{get\_cardcmd\_for\_reweight} で落ちる）は確かめていない。DsixTools の WCxf の読み込みは、冗長な成分を補うように直すまで使わない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1〜3 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR の 0 と 1 のジェットの境目に、15〜25\% の継ぎ目が残ることが分かった（PDF をそろえ、シャワーの $k_T$ の方式を使うと小さくなる）。ジェットの $p_T$ がマッチングの目盛りの付近にある量を扱うときは、NLO のマッチングを入れることを考える。
 
 \appendix
 

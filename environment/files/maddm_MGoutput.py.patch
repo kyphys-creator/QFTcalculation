@@ -1,0 +1,22 @@
+--- MGoutput.py.orig
++++ MGoutput.py
+@@ -1341,7 +1341,18 @@
+         
+          
+ class ProcessExporterIndirectDLO(ProcessExporterIndirectD,export_v4.ProcessExporterFortranMEGroup):
+-    pass
+ 
++    def convert_model(self, model, wanted_lorentz = [],
++                             wanted_couplings = [], **opts):
++        """local patch: MG5 3.8 writes the includes of Source/MODEL/couplings.f (vector.inc, maxparticles.inc before
++        run.inc) and the ALOHA vector option only for export_format 'madevent'; this tree-level output is a MadEvent
++        output named 'indirect', whose couplings.f did not compile"""
++        old = self.opt['export_format']
++        self.opt['export_format'] = 'madevent'
++        try:
++            super(ProcessExporterIndirectDLO, self).convert_model(model, wanted_lorentz, wanted_couplings, **opts)
++        finally:
++            self.opt['export_format'] = old
++
+ class ProcessExporterIndirectDLI(ProcessExporterIndirectD,loop_exporters.LoopInducedExporterMEGroup):
+     pass
