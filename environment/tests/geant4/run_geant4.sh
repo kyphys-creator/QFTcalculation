@@ -14,12 +14,15 @@
 #   6. rdecay01 (rdecay01.in, serial): the particle counts of each run against rdecay01.out; Co60's half-life and
 #      branching against ENSDF
 #   7. geant4_pybind (conda env g4): TestEm0's numbers recomputed from Python, against step 3's C++ run, and 100 events
-#   8. with --qt only: B1's geometry and 10 events in the Qt session (an OpenGL and a ToolsSG viewer), exported to out/qt/qt_ogl_0000.png, qt_tsg.png;
+#   8. with --hepmc only: the stage-3 LHC events through HepMCEx02 (hepmc/run_hepmc.sh: the imported primaries against
+#      the HepMC file, the e+- in the 3 T field against own helix; about 4 minutes; needs ../lhc/out from run_stage3.sh)
+#   9. with --qt only: B1's geometry and 10 events in the Qt session (an OpenGL and a ToolsSG viewer), exported to out/qt/qt_ogl_0000.png, qt_tsg.png;
 #      the window opens on the screen for about 12 s and closes itself
 # Output in ./out.  About 35 s (the first run of each new executable takes about 10 s longer: macOS scans it).
 cd "$(dirname "$0")"
 HERE=$(pwd)
-QT=0; for a in "$@"; do [ "$a" = --qt ] && QT=1; done
+QT=0; HEPMC=0
+for a in "$@"; do [ "$a" = --qt ] && QT=1; [ "$a" = --hepmc ] && HEPMC=1; done
 G4=$HOME/hep/geant4-11.4.3
 EX=$G4/share/Geant4/examples
 source ~/hep/opt/geant4env.sh   # geant4.sh, CMAKE_PREFIX_PATH with Qt, Apple clang, default SDK
@@ -74,6 +77,10 @@ if ~/miniforge3/envs/g4/bin/python -c "import geant4_pybind" 2> /dev/null; then
   (cd out/run && ~/miniforge3/envs/g4/bin/python "$HERE/test_pybind.py" TestEm0.out) 2>&1 | grep -E '^pybind|Error|G4Exception'
 else
   echo "geant4_pybind is not installed in conda env g4"
+fi
+
+if [ "$HEPMC" = 1 ]; then
+  ./hepmc/run_hepmc.sh
 fi
 
 if [ "$QT" = 1 ]; then

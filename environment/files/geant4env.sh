@@ -5,5 +5,5 @@ G4HOME="$HOME/hep/geant4-11.4.3"
 # CMake: Geant4, and Qt 6 from conda env g4. Only its lib/cmake is added, so that expat, zlib, ... still come from macOS.
 export CMAKE_PREFIX_PATH="$G4HOME:$HOME/miniforge3/envs/g4/lib/cmake${CMAKE_PREFIX_PATH:+:$CMAKE_PREFIX_PATH}"
 export CC=/usr/bin/clang CXX=/usr/bin/clang++   # Apple clang, as for the Geant4 build (the MESA SDK's gcc is first in PATH)
-export SDKROOT="$(xcrun --show-sdk-path)"        # the default SDK, as for the Geant4 build (MESA sets the 14.5 SDK)
+export SDKROOT="$(env -u SDKROOT xcrun --show-sdk-path)"   # the default SDK, as for the Geant4 build (with MESA's SDKROOT set, xcrun returns the 14.5 SDK)
 unset G4HOME
