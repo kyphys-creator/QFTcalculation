@@ -197,3 +197,50 @@ make install CC=cc TSIL_SIZE=-DTSIL_SIZE_DOUBLE TSIL_LIBDIR=$HOME/hep/lib TSIL_I
 #   checks
 ~/Documents/Claude/QFTcalculation/models/phi3/Src/run_twoloop4_check.sh      # about 12 minutes
 ~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh --no-mg5 --twoloop                  # the same through run_all.sh
+
+## 12. EFT and dark-matter tools (added 2026-10-19 on the Mac Studio, environment.pdf Sec. EFT/DM): wilson, DsixTools,
+##     DirectDM (Python and Mathematica), MadDM 3.3 (rc/3.3) with RAPIDD, micrOMEGAs 7.1.10
+#   logs: ~/hep/src/logs/{eftdm-conda,wilson-pip,dsixtools-convert,rapidd-cmake,rapidd-make,micromegas-make}*.log
+#   wilson: master d21596fa (2.5.2 + the 2026-10-15 fixes of the WET QED evolution and the EOS translation) and its
+#   submodule wcxf-bases fae7bd4a (not in GitHub's tarball); dependencies into qft (pandas, pyyaml were in conda's cache)
+~/miniforge3/bin/conda install -y --freeze-installed -n qft -c conda-forge pandas pyyaml voluptuous   # + ca-certificates 2026.10.18
+D=~/hep/src/wilson-dl; mkdir -p $D/x && cd $D
+~/miniforge3/envs/qft/bin/pip download --no-deps -d . ckmutil==1.2.0 rundec==0.7 pylha==0.4
+curl -fsSL -o wilson-d21596fa.tar.gz https://codeload.github.com/wilson-eft/wilson/tar.gz/d21596fa1e10a3018c24208f02c8681dea25e709
+curl -fsSL -o ../wcxfbases-dl/wcxf-bases-fae7bd4a.tar.gz https://codeload.github.com/wcxf/wcxf-bases/tar.gz/fae7bd4a2d1c543cfef5077b269c090af294db10
+tar xzf wilson-d21596fa.tar.gz -C x && W=$(ls -d x/wilson-*) && tar xzf ../wcxfbases-dl/wcxf-bases-fae7bd4a.tar.gz -C $W/wilson/wcxf/bases --strip-components=1
+~/miniforge3/envs/qft/bin/pip install --no-deps --no-build-isolation ckmutil-1.2.0-py3-none-any.whl rundec-0.7-cp310-abi3-macosx_11_0_arm64.whl pylha-0.4.tar.gz ./$W
+#   DsixTools 2.1: master d4ff3293 (v2.1 + the 2023 bug fixes), by hand as its install.m does (no dialogs in wolframscript)
+D=~/hep/src/dsixtools-dl; mkdir -p $D/x && cd $D
+curl -fsSL -o DsixTools-d4ff3293.tar.gz https://codeload.github.com/DsixTools/DsixTools/tar.gz/d4ff3293 && tar xzf DsixTools-d4ff3293.tar.gz -C x
+A=~/Library/Wolfram/Applications; cp -R x/DsixTools-d4ff3293/DsixTools $A/DsixTools
+cd $A/DsixTools/Package && unzip -q evolutionSMEFT.m.zip && unzip -q evolutionLEFT.m.zip && rm evolution*.m.zip
+cd $A/DsixTools && unzip -q Documentation.zip && rm Documentation.zip
+wolframscript -code 'Get[FileNameJoin[{$UserBaseDirectory,"Applications","DsixTools","convert.m"}]]; PacletDataRebuild[]'   # .m -> .mx, 25 s
+cd $A/DsixTools/Package && cp -p input.m input.m.orig && patch -p0 input.m < .../environment/files/DsixTools_input.m.patch   # WCxf reader
+#   DirectDM: Python v2.2.3 (GitHub tag; PyPI has 2.2.2) with two local patches, Mathematica v1.2.1
+D=~/hep/src/directdm-dl; mkdir -p $D/x && cd $D
+curl -fsSL -o directdm-py-2.2.3.tar.gz https://codeload.github.com/DirectDM/directdm-py/tar.gz/refs/tags/v2.2.3
+curl -fsSL -o directdm-mma-1.2.1.tar.gz https://codeload.github.com/DirectDM/directdm-mma/tar.gz/refs/tags/v1.2.1
+tar xzf directdm-py-2.2.3.tar.gz -C x && tar xzf directdm-mma-1.2.1.tar.gz -C x
+(cd x/directdm-py-2.2.3 && patch -p1 < .../environment/files/directdm-py.patch && ~/miniforge3/envs/qft/bin/pip install --no-deps --no-build-isolation .)
+cp -R x/directdm-mma-1.2.1/DirectDM ~/Library/Wolfram/Applications/DirectDM
+#   MadDM 3.3: rc/3.3 6570bb5f as MG5 plugin (MG5's 'install maddm' gives 3.2.13), version bound patched to 3.8.1;
+#   RAPIDD f471a101 (its git submodule, needed for sigma_SI) built with CMake against Homebrew's GSL; its committed *.o removed
+D=~/hep/src/maddm-dl; mkdir -p $D/x && cd $D
+curl -fsSL -o maddm-6570bb5f.tar.gz https://codeload.github.com/maddmhep/maddm/tar.gz/6570bb5f && tar xzf maddm-6570bb5f.tar.gz -C x
+M=~/hep/MG5_aMC_v3_8_1; cp -R x/maddm-6570bb5f $M/PLUGIN/maddm
+(cd $M/PLUGIN/maddm && cp -p __init__.py __init__.py.orig && patch -p0 __init__.py < .../environment/files/maddm_init.py.patch)
+#   ~/hep/bin/maddm: wrapper as ~/hep/bin/mg5_aMC with --mode=maddm (environment.tex)
+D=~/hep/src/rapidd-dl; mkdir -p $D && cd $D
+curl -fsSL -o RAPIDD_for_DM-f471a101.tar.gz https://codeload.github.com/cheekyparticle/RAPIDD_for_DM/tar.gz/f471a1010e19032e38b7f5323de4a4cd16623eb7
+V=$M/PLUGIN/maddm/vendor/RAPIDD_for_DM; rmdir $V; mkdir -p $V && tar xzf RAPIDD_for_DM-f471a101.tar.gz -C $V --strip-components=1
+find $V -name '*.o' -delete
+source ~/hep/opt/buildenv.sh && cd $V && mkdir -p lib/build && cd lib/build && cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_PREFIX_PATH=/opt/homebrew && make -j8
+#   MadDM's first 'generate indirect_detection' installs PPPC4DMID, DRAGON, its data without asking in a script: avoid with
+#     set maddm_first_indirect False      (saved in MG5's input/mg5_configuration.txt on 2026-10-19)
+#   micrOMEGAs 7.1.10 (micromegasdm.github.io/downloadarea/v7.1/micromegas_7.1.10.tgz)
+cd ~/hep && tar xzf src/micromegas-dl/micromegas_7.1.10.tgz && cd micromegas_7.1.10 && source ~/hep/opt/buildenv.sh && gmake   # 16 s
+#   the project SingletFR (the FeynRules model of tests/eftdm) is made and filled by tests/eftdm/run_stage4.sh
+#   checks
+~/Documents/Claude/QFTcalculation/environment/tests/run_all.sh --no-mg5 --eftdm       # all four stages, about 3 minutes

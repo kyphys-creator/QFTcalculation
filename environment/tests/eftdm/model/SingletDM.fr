@@ -1,0 +1,30 @@
+(* Real scalar dark matter with a Higgs portal (Z2: sdm -> -sdm), to be loaded after FeynRules' SM.fr.
+     L = 1/2 (d sdm)^2 - 1/2 (MS0^2 - lamHS vev^2/2) sdm^2 - (lamHS/2) sdm^2 Phi^dagger Phi,
+   written in unitary gauge, Phi^dagger Phi = (vev + H)^2/2 (writing Phi itself breaks WriteUFO), so that the physical
+   mass is MS0 and the couplings are h sdm sdm: -i lamHS vev, h h sdm sdm: -i lamHS. *)
+M$ModelName = "SM_SingletDM";
+M$Information = {Authors -> {"QFTcalculation environment"}, Version -> "1.0", Date -> "2026-10-19"};
+
+M$Parameters = {
+  lamHS == {
+    ParameterType -> External,
+    BlockName     -> DMINPUTS,
+    OrderBlock    -> 1,
+    Value         -> 0.1,
+    InteractionOrder -> {QED, 2},
+    TeX           -> Subscript[\[Lambda], hs],
+    Description   -> "Higgs-portal coupling"}
+};
+
+M$ClassesDescription = {
+  S[100] == {
+    ClassName     -> sdm,
+    SelfConjugate -> True,
+    Mass          -> {MS0, 100.},
+    Width         -> 0,
+    PDG           -> 9000006,
+    ParticleName  -> "~sdm",                 (* "~": an odd particle for micrOMEGAs; MG5 accepts it *)
+    FullName      -> "scalar dark matter"}
+};
+
+LDM := 1/2 del[sdm, mu] del[sdm, mu] - 1/2 (MS0^2 - lamHS vev^2/2) sdm^2 - lamHS/4 sdm^2 (vev + H)^2;

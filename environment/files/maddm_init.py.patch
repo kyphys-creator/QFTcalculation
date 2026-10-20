@@ -1,0 +1,8 @@
+--- __init__.py.orig	2026-10-19 18:56:44
++++ __init__.py	2026-10-19 18:56:44
+@@ -19,4 +19,4 @@
+ ## The test/code have been validated up to this version
+ latest_validated_version = (2,9,24)
+ minimal_mg5amcnlo_version = (2,9,18)
+-maximal_mg5amcnlo_version = (3,8,0)
++maximal_mg5amcnlo_version = (3,8,1)   # local patch: rc/3.3 is validated up to 3.8.0, MG5 here is 3.8.1

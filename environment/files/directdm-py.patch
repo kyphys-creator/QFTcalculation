@@ -1,0 +1,33 @@
+--- a/directdm/run/adm.py.orig	2025-03-26 08:33:03
++++ b/directdm/run/adm.py	2026-10-19 18:02:59
+@@ -2,7 +2,9 @@
+ 
+ import numpy as np
+ import re
+-from pkg_resources import resource_filename
++# setuptools >= 81 has no pkg_resources: the same path from importlib.resources (local patch)
++from importlib.resources import files as _files
++def resource_filename(package, resource): return str(_files(package).joinpath(resource))
+ from ..num.num_input import Num_input
+ from directdm.run import rge
+ 
+--- a/directdm/wilson_coefficients.py.orig	2025-03-26 08:33:03
++++ b/directdm/wilson_coefficients.py	2026-10-19 18:53:44
+@@ -907,7 +907,7 @@
+             'cNR10n' : FGtilden * c3mu_dict['C66']/2/DM_mass,
+             'cNR11n' : 0,
+             'cNR12n' : 0,
+-            'cNR13p' : 0.,
++            'cNR13n' : 0.,
+             'cNR14n' : 0,
+ 
+             'cNR6pin' : 0,
+@@ -989,7 +989,7 @@
+             'cNR10n' : FGtilden * c3mu_dict['C66']/2/DM_mass,
+             'cNR11n' : 0,
+             'cNR12n' : 0,
+-            'cNR13p' : 0.,
++            'cNR13n' : 0.,
+             'cNR14n' : 0,
+ 
+             'cNR6pin' : 0,

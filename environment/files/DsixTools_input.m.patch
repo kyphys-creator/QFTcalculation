@@ -1,0 +1,24 @@
+--- input.m.orig	2026-10-19 17:34:08
++++ input.m	2026-10-19 18:29:34
+@@ -576,8 +576,9 @@
+ 
+ (* Function to rewrite the WCXF input and replace real and imaginary parts by their values *)
+ RewriteWCXF[x_]:=Block[{},
+-If[Head[x]==List,Return["Re"+I "Im"/.x]];
+-If[Head[x]==Real,Return[x]];
++(* local patch: Mathematica 14 imports JSON numbers without a decimal point (1e-06, 0) as Rational or Integer *)
++If[Head[x]==List,Return[N["Re"+I "Im"/.x]]];
++If[NumericQ[x],Return[N[x]]];
+ If[Head[x]==String,Return[0]];
+ ];
+ 
+@@ -1223,7 +1224,8 @@
+ ];
+ 
+ inputWCsWCXF=Import[WCXFFile,format];
+-wcxfdata=Join["values"/.inputWCsWCXF[[4]]];
++(* local patch: take "values" by its key, not as the 4th entry of the file *)
++wcxfdata=Join["values"/.inputWCsWCXF];
+ ReadWCsFileWCXF[EFT];
+ WriteInputFileSLHA[SLHAFile,EFT];
+ 

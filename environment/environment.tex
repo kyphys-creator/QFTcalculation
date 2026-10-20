@@ -1432,13 +1432,209 @@ gzip -dc events.hepmc.gz | $D/DelphesHepMC2 $D/cards/delphes_card_CMS.tcl out.ro
 cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage3.sh
 \end{Verbatim}
 
+\section{EFT・暗黒物質の道具の追加}\label{sec:eftdm}
+
+2026年10月19日に、レビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、まだ入れていなかった EFT・暗黒物質用の道具を加えた。SMEFT と低エネルギー EFT（WET、LEFT）の走行と整合の wilson~\cite{wilson} と DsixTools 2.1~\cite{dsixtools,dsixtools2}、直接検出の非相対論的 EFT への整合の DirectDM~\cite{directdm}、残存量・直接検出・間接検出の MadDM~\cite{maddm3,maddm32}、それに MadDM と独立な系統として micrOMEGAs 7.1~\cite{micromegas6} である。作業は第~\ref{sec:lhc} 節の段階 1、2 と同じ Mac Studio（Apple M4 Max、macOS 15.5）で行った。各段階で、自分の式とツールの出力、およびツールどうしを突き合わせた（表~\ref{tab:eftdmplan}）。照合はすべて \nolinkurl{tests/eftdm} にあり、\texttt{run\_all.sh --eftdm} で4段階をまとめて実行し直せる（約2分）。
+
+\begin{table}[htbp]
+\centering\small
+\caption{EFT・暗黒物質の道具を入れる計画と確かめ（2026年10月19日）。}
+\label{tab:eftdmplan}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.9cm}>{\raggedright\arraybackslash}p{3.2cm}X}
+\toprule
+\textbf{段階} & \textbf{道具} & \textbf{確かめ} \\
+\midrule
+1 & wilson、DsixTools & 純 QCD の模型での SMEFT の走行を自分の冪の式と、全 SM の結合での走行を2つのツールどうしで（WCxf を経由して）、SMEFT $\to$ WET の木の整合と WET の走行を自分の式と比べる \\
+2 & DirectDM（Python、Mathematica） & ヒッグスの入り口の実スカラーの $c_1^N$ と $\sigma_{\mathrm{SI}}$、Dirac 粒子のベクトルと軸性ベクトルの結合を、各版の核子の入力での自分の式と比べる \\
+3 & MadDM 3.3 & FeynRules で作った同じ模型で、DM とクォークの結合、$\sigma_{\mathrm{SI}}$、$\langle\sigma v\rangle$、残存量を、MadDM の入力での自分の式（Gondolo--Gelmini の熱平均とボルツマン方程式~\cite{gondologelmini}）と比べる \\
+4 & micrOMEGAs 7.1.10 & 段階 3 と同じ模型で同じ量を自分の式と比べ、MadDM との差を説明する。micrOMEGAs 自身の SingletDM の模型とも比べる \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering\small
+\caption{EFT・暗黒物質の道具の版、配置、入手元。大きさは取得したファイルのもの。\texttt{M} は \pth{hep/MG5_aMC_v3_8_1}、\texttt{A} は \pth{Library/Wolfram/Applications}。}
+\label{tab:eftdm}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{1.9cm}X>{\raggedright\arraybackslash}p{3.9cm}}
+\toprule
+\textbf{もの} & \textbf{版} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+wilson & 2.5.2 + master \texttt{d21596fa} & \texttt{qft} の site-packages & GitHub（wilson-eft）~\cite{wilson,url:wilson}（0.45 MB） \\
+wcxf-bases（wilson の部分モジュール） & \texttt{fae7bd4a} & wilson の \texttt{wcxf/bases} & GitHub（wcxf）~\cite{wcxf}（0.27 MB）。承認の一覧に入れ忘れ、取得の前に追加の承認を得た \\
+ckmutil、rundec、pylha（wilson 用） & 1.2.0、0.7、0.4 & \texttt{qft} & PyPI（0.26 MB） \\
+pandas、pyyaml、voluptuous（wilson 用） & 3.0.6、6.0.3、0.16.0 & \texttt{qft}（ca-certificates が 2026.10.18 に更新された） & conda-forge（pandas と pyyaml は conda の手元のキャッシュから） \\
+DsixTools & 2.1 + master \texttt{d4ff3293} & \texttt{A/DsixTools}（.mx に変換、\texttt{input.m} に局所パッチ） & GitHub~\cite{dsixtools2,url:dsixtools}（93 MB） \\
+DirectDM（Python） & 2.2.3 & \texttt{qft}（二つの局所パッチ） & GitHub のタグ~\cite{directdm,url:directdm}（PyPI は 2.2.2、0.06 MB） \\
+DirectDM（Mathematica） & 1.2.1 & \texttt{A/DirectDM} & GitHub のタグ~\cite{url:directdm}（0.04 MB） \\
+MadDM & 3.3（rc/3.3 \texttt{6570bb5f}） & \texttt{M/PLUGIN/maddm}（対応版の上限に局所パッチ）、起動スクリプト \pth{hep/bin/maddm} & GitHub（maddmhep）~\cite{maddm32,url:maddm}（5.2 MB） \\
+RAPIDD（MadDM の部分モジュール） & \texttt{f471a101} & \texttt{M/PLUGIN/maddm/vendor/RAPIDD\_for\_DM}（CMake で構築） & GitHub（cheekyparticle）~\cite{url:rapidd}（16 MB、ライセンスの表示なし）。$\sigma_{\mathrm{SI}}$ に要ると分かってから承認を得た \\
+micrOMEGAs & 7.1.10 & \pth{hep/micromegas_7.1.10}（照合用のプロジェクト \texttt{SingletFR}） & micromegasdm.github.io~\cite{micromegas6,url:micromegas}（22.7 MB） \\
+PPPC4DMID、HEPToolsInstaller & 1.16、V168 & 承認外の取得物なので PPPC4DMID をゴミ箱へ移した & MadDM が問い合わせなしに取得した（29.5 MB、0.04 MB）。DRAGON の導入も始めたが、その依存 cfitsio の取得に失敗して止まった \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{段階 1：wilson と DsixTools}\label{sec:eftdm1}
+
+\paragraph{導入。}wilson は PyPI の最新が 2.5.2（2025年4月）である。2026年10月15日に master に入った修正（WET の QED の発展行列で、固有値の差が丸めの範囲で1に近い組の桁落ち。$f=3$ の \texttt{sd}、\texttt{dF0} のクラスで相対誤差が最大 $2.5\times10^{-3}$）を含めるため、master の固定したコミットを入れた。GitHub の tarball には基底の定義（部分モジュール wcxf-bases）が含まれず、そのままでは \texttt{import wilson} が落ちるので、wilson が固定したコミットの wcxf-bases を加えた。依存は \texttt{qft} に入れ、numpy、scipy は更新していない。DsixTools は付属の \texttt{install.m} が確認のダイアログを出すので、同じ手順（展開、発展行列の解凍、文書の登録、\texttt{convert.m} による .mx への変換）を手で行った。
+
+\paragraph{検証。}結果を表~\ref{tab:eftdm1tests} にまとめる（\nolinkurl{tests/eftdm/run_stage1.sh}、約1分）。wilson の SMEFT の RGE は DsixTools から移植されたもの（wilson の \texttt{run/smeft/\_\_init\_\_.py}）なので、2つのツールの一致は独立な検算ではない。そこで、自分で導いた式と比べる照合を三つ置いた。(B) $g$、$g'$、$\lambda$、$m^2$、湯川を $10^{-6}$ 以下にした純 QCD の模型では、$a=g_s^2$ が $a(\mu)=a_0/(1+2b_0a_0\ln(\mu/\Lambda)/16\pi^2)$（$b_0=7$）、クォークの双線形のアノマラス次元が $\gamma_S=-6C_F$、$\gamma_T=2C_F$ なので、$C_{ledq},C_{lequ}^{(1)}\propto a^{4/7}$、$C_{lequ}^{(3)}\propto a^{-4/21}$、$C_{lq}^{(1)}$ は一定、$C_{HG}/g_s^2$ は一定になる。(C) 下側の基底（CKM の因子が出ない）での木の整合は、$L^{V,LL}_{ed}=C_{lq}^{(1)}+C_{lq}^{(3)}$、$L^{V,LL}_{\nu d}=C_{lq}^{(1)}-C_{lq}^{(3)}$、$L^{S,RL}_{ed}=C_{ledq}$~\cite{jms}。(D) 5フレーバーの WET の QCD の走行は、スカラーが $\alpha_s^{12/23}$、テンソルが $\alpha_s^{-4/23}$、ベクトル流は一定である（各ツール自身の $\alpha_s(\mu)$ で）。QED を含む WET の走行は、二つのツールが独立に実装している（wilson は Aebischer らの ADM、DsixTools は JMS の RGE）ので、互いに比べた。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 1 の検証の結果。(A) の入力は DsixTools の付属の SM の結合（湯川は特異値にして対角化）と13個の Warsaw 係数（\nolinkurl{tests/eftdm/test_eft_stage1.py}）。}
+\label{tab:eftdm1tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & wilson の付属の試験 & 171 件が通る & 170 件が通る。1件は許容 $10^{-14}$ に対し差 $3\times10^{-14}$（丸め） & 期待どおり \\
+2 & (B) 純 QCD の SMEFT、1 TeV $\to M_Z$ & 上の冪の式 & 許容を締めると wilson $1.4\times10^{-11}$、DsixTools $2.9\times10^{-12}$。既定の許容では $2.5\times10^{-7}$、$3.1\times10^{-6}$ & 一致 \\
+3 & (A) 全 SM の SMEFT、同じ入力 & 2つのツールが一致（DsixTools の WCxf の書き出しは7桁） & 最大の係数の $10^{-3}$ を超える68個で相対 $4.2\times10^{-7}$ 以内。1052個すべてが最大の係数の $1.3\times10^{-9}$ 以内（\texttt{le\_3311} だけ相対 $3\times10^{-6}$。精度を上げても変わらず、二つの RGE のわずかな違い） & 一致 \\
+4 & (A) SM の結合 & 同上 & $g_s$、$g$、$g'$、$\lambda$、$m^2$ が $1.3\times10^{-11}$ 以内 & 一致 \\
+5 & (A) \texttt{Wilson.match\_run} の積分 & 許容を締めた値 & SMEFT の積分は \texttt{solve\_ivp} の既定（rtol $10^{-3}$、atol $10^{-6}$）で、差 $6.8\times10^{-5}$ & 注意 \\
+6 & (A) DsixTools の WCxf の読み込み & wilson と同じ配列 & \texttt{phil1\_12}、\texttt{lq1\_1123} が 0.5 倍、\texttt{dd\_1112} が 1.75 倍 & 一致しない \\
+7 & (C) 木の整合 & 上の式 & wilson $5.6\times10^{-16}$。DsixTools の \texttt{MatchEW} の係数は記号として一致 & 一致 \\
+8 & (D) WET、QED なし、$M_Z\to5$ GeV & 上の冪の式 & wilson $1\times10^{-16}$、DsixTools $7.8\times10^{-9}$ & 一致 \\
+9 & (D) WET、QED あり & 2つのツールが一致（同じ $\alpha_s(M_Z)=0.1181$、$\alpha_e$、wilson の $\alpha_s$ を1ループに） & QED の効果は $-7.7$〜$+1.1$\%、差は $8.3\times10^{-4}$ 以内（wilson は $\alpha_e$ を固定し QED を1次で扱う） & 一致 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}導入と照合の途中で、次のことが分かった。
+\begin{itemize}
+\item DsixTools の入力の配列は、冗長な成分まで含めた対称な配列として扱われる。\texttt{NewInput[\{CHl1[1,2] -> c\}]} のように独立な成分だけを与えると、エルミートでない入力とみなされ、\texttt{CHl1[2,1]=0} との平均で $c/2$ になる（メッセージは \texttt{TurnOffMessages} で消える）。WCxf の読み込み（\texttt{WCXFtoSLHA}）も独立な成分だけを SLHA に書くので、同じことが起きる。一方、WCxf の書き出しは wilson の規約と一致する。WCxf を DsixTools に渡すときは、wilson の \texttt{smeftutil.wcxf2arrays\_symmetrized} の配列の全成分を \texttt{NewInput} で与える（\nolinkurl{tests/eftdm/stage1_dsixtools.wl}）。
+\item Mathematica 14 の JSON の読み込みは、小数点のない数（\texttt{1e-06}、\texttt{0}）を有理数や整数にする。DsixTools の \texttt{RewriteWCXF} は実数しか扱わないので、python が書いた WCxf の値が \texttt{Re[Null]} や、2次元の表記の分数として SLHA に書かれた。\texttt{RewriteWCXF} を \texttt{N[]} で受けるように直し、\texttt{"values"} もファイルの4番目ではなく名前で取るようにした（\nolinkurl{files/DsixTools_input.m.patch}）。SLHA を経由するので、読み込みは7桁に丸められる。
+\item DsixTools の \texttt{ReadInputFiles} がオプションのファイルから読んだループの次数は、変数を変えるだけで RGE を作り直さない（作り直すのは \texttt{SetSMEFTLoopOrder} だけで、それも値が変わるときだけ）。既定の5ループの SM の RGE のまま走り、$g_s(M_Z)$ が1ループの値から1\% ずれた。
+\item DsixTools は、\texttt{t}（$\log_{10}\mu$）、\texttt{t0}、\texttt{g}、\texttt{gp}、\texttt{gs}、\texttt{m2}、\texttt{Mu}、\texttt{Md}、\texttt{Me} などを自分の記号として使う。照合のスクリプトで \texttt{t} に計測時間を代入したところ、\texttt{D6run} がその値を $\log_{10}\mu$ として評価し、5 GeV ではなく 16 GeV の値を返した。QED を含む走行は記号のまま膨れ、出力が 64 MB を超えた。
+\item ゼロの結合（$g=g'=0$、$\lambda=m^2=0$、湯川 $=0$）を DsixTools に与えると、RGE に $0^{-2}$ が出て NDSolve が止まり、そのあとの評価が数 GB の記号の式になる。湯川がゼロだと、入力の基底への回転（\texttt{RotateYukawasHIGH}）も定まらない。微小な値を入れる。全 SM の結合では \texttt{AccuracyGoal -> 30} で NDSolve が最初の一歩で止まり、\texttt{InterpolatingFunction} の外挿の値が返った（\texttt{AccuracyGoal -> 20} にした）。
+\item DsixTools は、UV のスケールで与えた SM の湯川も入力の基底（既定は down）に回し直し、CKM の位相の規約をそろえる。$\Gamma_u$ に位相のある DsixTools の付属の入力では、$\Gamma_d^{23}$ の虚部が wilson と3\% 違った（絶対値は $10^{-6}$ で一致）。基底によらない比較のため、(A) では湯川を対角にした。
+\item \texttt{Wilson.match\_run} は、\texttt{set\_option('parameters', ...)} で与えた $\alpha_s$、$\alpha_e$ を WET の走行に渡さない（\texttt{WETrunner} は既定の $\alpha_s(M_Z)=0.1185$、$\alpha_e=1/127.9$ を使う）。値を変えるには \texttt{WETrunner} を直接使う。WET の QCD の走行は、3ループの $\alpha_s$ の値を1ループの冪の式に入れる LL の解である。
+\item DsixTools は、秒の値が50以上のときに読み込むと、音を鳴らして1秒止まる（\texttt{Murder}）。害はない。
+\end{itemize}
+
+\subsection{段階 2：DirectDM}\label{sec:eftdm2}
+
+\paragraph{導入。}Python 版は GitHub のタグ v2.2.3（\texttt{wilson\_coefficients.py} の添字の範囲の修正を含む。PyPI は 2.2.2）を \texttt{qft} に入れ、二つの局所パッチを当てた（\nolinkurl{files/directdm-py.patch}）。一つ目は、setuptools 81 以降で削除された \texttt{pkg\_resources} を \texttt{importlib.resources} に置き換えるもの、二つ目は、複素スカラーと実スカラーの中性子の係数の名前の誤り（\texttt{cNR13n} が \texttt{cNR13p} と書かれている）を直すものである。後者がないと、スカラーの DM の \texttt{cNR()} は \texttt{KeyError} で落ちる（上流の最新も同じ）。Mathematica 版は \texttt{A/DirectDM} に置いた。
+
+\paragraph{検証。}結果を表~\ref{tab:eftdm2tests} にまとめる（\nolinkurl{tests/eftdm/run_stage2.sh}、約10秒）。実スカラー $S$ のヒッグスの入り口 $\mathcal L\supset-(\lambda_{hs}/2)S^2|H|^2$ でヒッグスを積分すると、$\mathcal L_{\mathrm{eff}}=(\lambda_{hs}/2m_h^2)\sum_q m_qS^2\bar qq$ である。DirectDM の実スカラーの演算子は複素スカラーより 1/2 小さく定義されている（$Q_{3,q}^{(6)}=(m_q/2)S^2\bar qq$、$Q_5^{(6)}=(\alpha_s/24\pi)S^2GG$、文献~\cite{directdm}の付録 A）ので、$C_{3,q}=\lambda_{hs}/m_h^2$、重いクォーク1個につき $C_5=-\lambda_{hs}/m_h^2$（$m_Q\bar QQ\to-(\alpha_s/12\pi)GG$）となり、
+\[
+c_1^N=\frac{C}{2m_S}\Bigl[\sum_{q=u,d,s}\sigma_q^N+\frac29m_G\Bigr],\qquad
+\sigma_{\mathrm{SI}}^N=\frac{\mu_N^2(c_1^N)^2}{\pi}=\frac{\lambda_{hs}^2\mu_N^2}{4\pi m_h^4m_S^2}\Bigl[\sum_q\sigma_q^N+\frac29m_G\Bigr]^2
+\]
+である。Python 版と Mathematica 版は核子の入力が違う（$\sigma_s$ が 52.9 と 41.3 MeV、$m_G$ が 836 と 848 MeV、$g_A$、$\Delta q$）ので、それぞれ自分の入力での式と比べた。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 2 の検証の結果（\nolinkurl{tests/eftdm/test_directdm.py}）。$m_{\mathrm{DM}}=100$ GeV、$|\vec q|=10^{-3}$ GeV（$q=0$ は \texttt{cNR} が0で割る）。}
+\label{tab:eftdm2tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & 実スカラー、3フレーバー（2 GeV） & $c_1^{p,n}$ の上の式 & Python 0、Mathematica $1\times10^{-16}$ & 一致 \\
+2 & 同、5フレーバー（$M_Z$）、走行なし & LO の重いクォークの分離で同じ式 & Python 0、Mathematica $1\times10^{-16}$ & 一致 \\
+3 & 同、走行と閾値あり & --- & $c_1^p$ が Python で $+0.73$\%、Mathematica で $+0.72$\% & 走行の効果 \\
+4 & Dirac、ベクトル & $c_1^p=2C_u+C_d$、$c_1^n=C_u+2C_d$ & $10^{-9}$ 以内（$q^2$ による） & 一致 \\
+5 & Dirac、軸性ベクトル & $c_4^N=-4\sum_qC_q\Delta q^N$ & Python 0、Mathematica $1\times10^{-16}$ & 一致 \\
+6 & $\sigma_{\mathrm{SI}}^p$（$\lambda_{hs}=0.1$、$m_S=100$ GeV） & LO の式 & $9.04675\times10^{-45}$~cm$^2$（走行ありで $9.17930\times10^{-45}$） & 一致 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}DirectDM は暗黒物質の演算子を自分で走らせるので、wilson や DsixTools から WCxf で受け取る経路はない（DM の演算子は SMEFT、WET の基底にない）。レビューの学習経路の「DsixTools/wilson で走行、DirectDM へ渡す」は、SM の演算子の走行と DM の演算子の整合を別々に行うことになる。import のときに scipy の \texttt{odeint} が \texttt{ODEintWarning: Illegal input detected} を出すが、38回とも長さ0の積分（$\mu_0=\mu=m_b$）で、初期値がそのまま返る。害はない。
+
+\subsection{段階 3：MadDM}\label{sec:eftdm3}
+
+\paragraph{導入。}\MGaMC{} の \texttt{install maddm} が取得するのは 3.2.13（2023年）で、\MGaMC{} 3.x 向けの修正を含まない。そこで \MGaMC{} 3.8.0 への対応（2026年9月28日）が入った \texttt{rc/3.3} の固定したコミットを \texttt{M/PLUGIN/maddm} に置いた。この枝は対応版の上限を (3,8,0) としていて、そのままでは \MGaMC{} 3.8.1 が plugin を捨てるので、上限を (3,8,1) にした（\nolinkurl{files/maddm_init.py.patch}）。起動スクリプト \pth{hep/bin/maddm} は \pth{hep/bin/mg5_aMC} と同じ環境で \texttt{--mode=maddm} を付ける。MadDM 3.3 は核子の $\sigma_{\mathrm{SI}}$ を RAPIDD の python で計算する。RAPIDD は部分モジュールで tarball に含まれないので、承認を得て取得し、Homebrew の GSL で CMake により構築した。リポジトリにコミットされていた構築済みの \texttt{*.o}（arm64）は、出所が分からないので消した（CMake の構築は使わない）。
+
+\paragraph{模型。}照合用の模型は、FeynRules の SM に実スカラー \texttt{\textasciitilde sdm}（$Z_2$ で奇、PDG 9000006）を加えたもの（\nolinkurl{tests/eftdm/model/SingletDM.fr}）で、ユニタリーゲージで UFO と CalcHEP の模型を書き出す（段階 4 で使う）。$|H|^2$ は $(v+h)^2/2$ と直接書いた（\texttt{Phi} を書くと \texttt{WriteUFO} が粒子名の文字列で落ちる）。頂点は $hSS$：$-i\lambda_{hs}v$、$hhSS$：$-i\lambda_{hs}$ で、FeynRules のメッセージは0件である。照合の点は $m_S=100$ GeV、$\lambda_{hs}=0.1$ とした。
+
+\paragraph{検証。}結果を表~\ref{tab:eftdm3tests} にまとめる（\nolinkurl{tests/eftdm/run_stage3.sh}、約40秒）。自分の式は、MadDM の入力（実行の param\_card、MadDM の核子の形状因子 $f_{Tu}^p=0.0153$ など、RAPIDD の $m_p=0.938$、$m_n=0.94$、MadDM の $g_*$ と定数）で計算した。$\sigma v$ は $s$ チャネルのヒッグスだけで、
+\[
+\sigma v=\frac{2\lambda_{hs}^2v^2}{\sqrt s}\frac{\sum_X\Gamma(h^*\to X;\sqrt s)}{(s-m_h^2)^2+m_h^2\Gamma_h^2},\qquad
+\Gamma(h^*\to WW)=\frac{M^3}{16\pi v^2}\sqrt{1-x}\Bigl(1-x+\frac34x^2\Bigr),\ x=\frac{4M_W^2}{M^2}
+\]
+（$ZZ$ はその半分を $M_Z$ で、$f\bar f$ は $N_cMy_f^2\beta^3/8\pi v^2$）とし、Gondolo--Gelmini の式~\cite{gondologelmini}で熱平均した。ボルツマン方程式は MadDM と同じ形 $dY/dx=-\sqrt{\pi/45g_*}\,g_{*S}M_{\mathrm{Pl}}m\langle\sigma v\rangle(Y^2-Y_{\mathrm{eq}}^2)/x^2$ で、$g_*$ は MadDM の \texttt{get\_gstar}（実行の \texttt{model\_info.txt} と boson、fermion の表）を写した。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 3 の検証の結果（\nolinkurl{tests/eftdm/test_maddm.py}）。}
+\label{tab:eftdm3tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & DM とクォークの結合 $\alpha_q$（\texttt{maddm.out}） & $\lambda_{hs}m_q/(4m_h^2m_S)$ & 6種のクォークで $1.2\times10^{-6}$ 以内（MadDM は0運動量の振幅から数値で取る） & 一致 \\
+2 & $\sigma_{\mathrm{SI}}^{p,n}$ & 自分の式（MadDM の入力） & $7.7639\times10^{-45}$、$7.9983\times10^{-45}$~cm$^2$。全桁で $4\times10^{-8}$、表示の3桁で $5\times10^{-4}$ & 一致 \\
+3 & $\langle\sigma v\rangle(x_f=21)$ & 自分の熱平均 & 自分の $1.263762\times10^{-8}$~GeV$^{-2}$ は MadDM の表示の値のちょうど2倍（差 $-9\times10^{-6}$） & 一致 \\
+4 & チャネルの割合 & $\sqrt s=2\sqrt{m^2+p^2}$、$p=m/x_f$ での $\sigma_X/\sigma$ & $10^{-14}$\% 以内（$WW$ 73.48\%、$ZZ$ 25.85\%、$b\bar b$ 0.60\%） & 一致 \\
+5 & $\Omega h^2$ & 自分の解（MadDM の $g_*$、$x$ は1000まで） & MadDM 0.016495、自分 0.016654（$-0.96$\%） & 一致（\texttt{eps\_ode}） \\
+6 & 同、\texttt{eps\_ode} $=10^{-4}$ & 同 & MadDM 0.016623（$-0.19$\%） & 一致 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}導入と照合の途中で、次のことが分かった。
+\begin{itemize}
+\item MadDM の表示する \texttt{sigmav(xf)} は、自己共役な DM では $\langle\sigma v\rangle/2$ である（ボルツマン方程式に \texttt{2*taacs} として入る）。表示の \texttt{sigmav\_xf}（$7.36\times10^{-26}$~cm$^3$/s）を熱的な断面積と比べるときは2倍する。チャネルの割合は熱平均ではなく、一つの $\sqrt s$ での断面積の比である。
+\item MadDM の残存量の ODE は、出発点を1ずつ戻して前回との相対差が \texttt{eps\_ode}（既定 0.01）未満になったら止める。既定では $\Omega h^2$ が1\% ずれる。積分は \texttt{x\_end} $=1000$ で止めるので、$s$ 波の消滅では $x>1000$ の消滅（$x_f/1000\approx2$\%）が入らず、$\Omega h^2$ が大きめに出る（段階 4）。
+\item MadDM 3.3 の核子の直接検出は RAPIDD を要る。ないと \texttt{add direct\_detection} が RAPIDD の構築を試みて失敗し、電子との散乱だけを計算する（メッセージは ERROR だが実行は続く）。
+\item 初めて \texttt{generate indirect\_detection} を実行すると、MadDM は依存ツール（PPPC4DMID、DRAGON、その入力データ）の導入を問う。スクリプトでは既定の答え（すべて導入）が選ばれ、問い合わせなしに PPPC4DMID（29.5 MB）を取得し、DRAGON の導入を始めた（cfitsio の取得に失敗して止まった）。設定の \texttt{pppc4dmid\_path} を消し、\texttt{set maddm\_first\_indirect False} を MG5 の \texttt{input/mg5\_configuration.txt} に保存して、以後は問わないようにした。
+\item 間接検出の $\sigma v$（\texttt{indirect=sigmav}）は確かめられなかった。既定の方法（\texttt{reshuffling}）は MadDM が内部で madevent を起動し、\MGaMC{} 3.8.1 の \texttt{ask\_run\_configuration} が \texttt{TypeError: 'NoneType' object is not iterable} で落ちた（MadAnalysis5 が入っていて、解析の切り替えが既定で ON になる環境で）。\texttt{inclusive} では $\sigma v=-1$ が返った。
+\item スクリプトで \texttt{launch} したときの問いは、切り替えとカードの編集が一つにまとまっていて、\texttt{set} は \texttt{done} の前に置く。\texttt{done} のあとに置くと、MG5 の \texttt{set} として解釈されて落ちる。粒子名の \texttt{\textasciitilde} は、MadDM の過程名では \texttt{x} になる（\texttt{xsdmxsdm\_wpwm}）。
+\end{itemize}
+
+\subsection{段階 4：micrOMEGAs}\label{sec:eftdm4}
+
+\paragraph{導入。}micrOMEGAs 7.1.10 を \pth{hep/micromegas_7.1.10} に展開し、\pth{hep/opt/buildenv.sh} の環境で \texttt{gmake} した（16秒）。照合用に \texttt{newProject SingletFR} を作り、段階 3 の FeynRules の模型の CalcHEP のファイルを入れる（\nolinkurl{tests/eftdm/run_stage4.sh} が毎回行う。主プログラムは \nolinkurl{tests/eftdm/micromegas}）。micrOMEGAs に付属の SingletDM の模型（Feynman ゲージ、独自の SM の入力、走る $b$、$c$ の質量、有効的な $hgg$）も、独立な実装として同じ点で走らせた。その $h\tilde x_1\tilde x_1$ の頂点は $-2\,\mathtt{laSH}\,v$ なので、$\mathtt{laSH}=\lambda_{hs}/2$ である。
+
+\paragraph{検証。}結果を表~\ref{tab:eftdm4tests} にまとめる（\nolinkurl{tests/eftdm/test_micromegas.py}）。micrOMEGAs の $\sigma_{\mathrm{SI}}$ は重いクォークの寄与に $1+(11/4-16/9)\alpha_s(m_Q)/\pi$（$\alpha_s(m_c)=0.39$、$\alpha_s(m_b)=0.22$、$\alpha_s(m_t)$ は計算値）を掛ける（\texttt{sources/directDet.c}）ので、自分の式にもこれを入れた。残存量は micrOMEGAs と同じ形 $dY/ds_3=M_{\mathrm{Pl}}(2\pi^2h_{\mathrm{eff}}/45)^{2/3}\langle\sigma v\rangle(Y^2-Y_{\mathrm{eq}}^2)/\sqrt{8\pi/3\cdot\pi^2/30\cdot g_{\mathrm{eff}}}$（$s_3=T(2\pi^2h_{\mathrm{eff}}/45)^{1/3}$）を、micrOMEGAs の既定の表（Drees、Hajkarim、Schmitz~\cite{dhs}）で $x\to\infty$ まで解いた。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 4 の検証の結果。}
+\label{tab:eftdm4tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & $\langle\sigma v\rangle$（$x=15$〜30） & 自分の熱平均（micrOMEGAs が計算した $\Gamma_h$） & $2.2\times10^{-4}$ 以内（$x=20$ で 4.885 pb） & 一致 \\
+2 & 核子の振幅 $A^{p,n}$ & 自分の式（その QCD の因子、$M_N=0.939$） & $3\times10^{-12}$ 以内。LO の式の 1.0534 倍 & 一致 \\
+3 & $\Omega h^2$ & 自分の解（DHS の表） & micrOMEGAs 0.016139、自分 0.016139（$+2.5\times10^{-5}$） & 一致 \\
+4 & MadDM との比 & $g_*$ の表と \texttt{x\_end} の違い & MadDM（\texttt{eps\_ode} $10^{-4}$）/micrOMEGAs $=1.0300$、自分の二つの解の比 $1.0319$ & 説明できる \\
+5 & micrOMEGAs の SingletDM（$\mathtt{laSH}=0.05$） & --- & $\Omega h^2=0.016212$（$+0.5$\%）、$A^p$ は $10^{-5}$ 以内 & 独立な模型 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}FeynRules のユニタリーゲージの CalcHEP の模型には Goldstone 粒子がないが、$W$、$Z$ には CalcHEP のゲージ粒子の印（\texttt{G}）が付いている。micrOMEGAs の既定（\texttt{ForceUG = 0}）では Feynman ゲージの偏極和 $-g_{\mu\nu}$ が使われ、$SS\to WW$ が約40\% 小さく、$\Omega h^2$ が 0.0235 になった（$\sqrt s=200$ GeV で物理的な偏極和との比は $4/6.58$）。\texttt{ForceUG = 1} にする。\MGaMC{} と同じ $2\to2$ だけにするには \texttt{VZdecay = VWdecay = 0} とする。micrOMEGAs は名前が \texttt{\textasciitilde} で始まる粒子を $Z_2$ で奇とみなすので、模型の DM を \texttt{\textasciitilde sdm} とした（MG5 もこの名前を受け付ける）。\texttt{findValW("WH")} は自動の幅（\texttt{!WH}）を返さず、\texttt{pWidth("H", NULL)} で取る。
+
+\subsection{使い方}\label{sec:eftdmusage}
+
+照合は \texttt{run\_all.sh --eftdm}、または段階ごとに \nolinkurl{tests/eftdm/run_stage1.sh}〜\texttt{run\_stage4.sh} で実行し直す（段階 4 は段階 3 の模型を使う）。MadDM は \MGaMC{} のディレクトリから起動する。
+\begin{Verbatim}
+# wilson (qft): running and matching; for alpha_s, alpha_e of the WET running use WETrunner directly
+~/miniforge3/envs/qft/bin/python -c "from wilson import Wilson; w = Wilson({'lq1_1123': 1e-6}, 1000, 'SMEFT', 'Warsaw'); print(w.match_run(5, 'WET', 'JMS'))"
+# DsixTools: give every redundant entry; set the RGE order with SetSMEFTLoopOrder, not the options file
+wolframscript -code 'Needs["DsixTools`"]; SetRGEsMethod[1]; NewInput[{CHl1[1,2] -> c, CHl1[2,1] -> Conjugate[c]}, HIGHSCALE -> 1000]; RunDsixTools'
+# DirectDM (qft); real scalar: Q_{3,q} = (m_q/2) S^2 qbar q
+~/miniforge3/envs/qft/bin/python -c "import directdm as d; print(d.WC_5f({'C63b': 1e-6}, DM_type='R').cNR(100, 1e-3)['cNR1p'])"
+# MadDM (script: 'set' before 'done'; indirect detection: 'set maddm_first_indirect False' is saved)
+cd ~/hep/MG5_aMC_v3_8_1 && ~/hep/bin/maddm run.txt
+# micrOMEGAs: a CalcHEP model from FeynRules (unitary gauge) needs ForceUG = 1
+cd ~/hep/micromegas_7.1.10 && ./newProject NAME   # copy the *.mdl into NAME/work/models, gmake main=main.c
+cd ~/Documents/Claude/QFTcalculation/environment/tests && ./run_all.sh --no-mg5 --eftdm
+\end{Verbatim}
+
 \section{議論と今後}\label{sec:discussion}
 
-\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO の断面積の計算（\texttt{[QCD]}、実の放射を含む \texttt{[QED]}）、Mathematica 14.1.0 での動作である。はじめ確かめていなかった NLOCT の対抗項と NLO 用 UFO は、その後 $\phi^3$、擬スカラー湯川、スピノル QED のノート~\cite{phi3note,yukawanote,qednote} で、手計算の対抗項と記号として一致し、MadLoop の値も手計算の式と倍精度の範囲で一致した（第~\ref{sec:issues} 節の回避策のもとで）。FormCalc の記号の計算と LoopTools の組、MadLoop のループで誘起される過程（\texttt{[sqrvirt=QED]}）と MadEvent（\texttt{[noborn=QED]}）も、スピノル QED のノートで確かめた。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。
+\paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO の断面積の計算（\texttt{[QCD]}、実の放射を含む \texttt{[QED]}）、Mathematica 14.1.0 での動作である。はじめ確かめていなかった NLOCT の対抗項と NLO 用 UFO は、その後 $\phi^3$、擬スカラー湯川、スピノル QED のノート~\cite{phi3note,yukawanote,qednote} で、手計算の対抗項と記号として一致し、MadLoop の値も手計算の式と倍精度の範囲で一致した（第~\ref{sec:issues} 節の回避策のもとで）。FormCalc の記号の計算と LoopTools の組、MadLoop のループで誘起される過程（\texttt{[sqrvirt=QED]}）と MadEvent（\texttt{[noborn=QED]}）も、スピノル QED のノートで確かめた。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。EFT・暗黒物質の道具（第~\ref{sec:eftdm} 節）は、少数の演算子と、ヒッグスの入り口の実スカラーの一つの点（$m_S=100$ GeV、$\lambda_{hs}=0.1$）でだけ確かめた。DsixTools と wilson の1ループの整合、DirectDM の電弱スケールより上の走行（\texttt{WC\_EW}）、MadDM と micrOMEGAs の共消滅や共鳴の近く、MadDM の直接検出の尤度（LZ）と間接検出、micrOMEGAs の間接検出と制限は試していない。
 
-\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
+\paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。EFT・暗黒物質の道具では、DsixTools の \texttt{input.m}、DirectDM（Python）、MadDM の \texttt{\_\_init\_\_.py} の局所パッチ（\nolinkurl{files/DsixTools_input.m.patch}、\nolinkurl{files/directdm-py.patch}、\nolinkurl{files/maddm_init.py.patch}）を、入れ直したときに当て直す。wilson、DsixTools、MadDM、RAPIDD は版の付いた配布でなく固定したコミットを入れたので、入れ直すときはそのコミットを指定する。MadDM 3.3 は \MGaMC{} 3.8.0 まで確かめられた候補版なので、\MGaMC{} を更新したら \nolinkurl{tests/eftdm/run_stage3.sh} を実行し直す。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
 
-\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1〜3 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR の 0 と 1 のジェットの境目に、15〜25\% の継ぎ目が残ることが分かった（PDF をそろえ、シャワーの $k_T$ の方式を使うと小さくなる）。ジェットの $p_T$ がマッチングの目盛りの付近にある量を扱うときは、NLO のマッチングを入れることを考える。
+\paragraph{今後。}EFT・暗黒物質用のツールは、wilson、DsixTools 2.1、DirectDM、MadDM 3.3、micrOMEGAs 7.1.10 を入れた（第~\ref{sec:eftdm} 節）。MadDM の主な機能のうち、ループ誘起の間接検出（$\gamma$ 線のライン）と間接検出の $\sigma v$ は確かめていない。前者には、照合用の模型の NLO の UFO（SM と一重項を合わせた模型の NLOCT。CKM のノートの UFO に \texttt{add model} で足すと、Feynman ゲージの Goldstone のループの R2 が欠ける）と、自分の1ループの $SS\to\gamma\gamma$ が要る。DsixTools の WCxf の読み込みは、冗長な成分を補うように直すまで使わない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1〜3 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR の 0 と 1 のジェットの境目に、15〜25\% の継ぎ目が残ることが分かった（PDF をそろえ、シャワーの $k_T$ の方式を使うと小さくなる）。ジェットの $p_T$ がマッチングの目盛りの付近にある量を扱うときは、NLO のマッチングを入れることを考える。
 
 \appendix
 
@@ -1675,6 +1871,23 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{smckmnote} 標準模型と CKM 行列：$\overline{\mathrm{MS}}$ の繰り込みと世代を変える過程（FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm_ckm/ResearchNote/note.pdf}）。
 \bibitem{smnlonote} 標準模型の NLO の物理量：実の放射を含む崩壊幅と電弱の精密測定（$\overline{\mathrm{MS}}$、FJ のタドポール、一般の $R_\xi$ ゲージ）（本リポジトリの \nolinkurl{models/sm_nlo/ResearchNote/note.pdf}）。
 \bibitem{higgsnote} 標準模型のヒッグスの崩壊：NLO の部分幅と分岐比（$\overline{\mathrm{MS}}$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリの \nolinkurl{models/sm_higgs/ResearchNote/note.pdf}）。
+\bibitem{wilson} J. Aebischer, J. Kumar, D. M. Straub, ``Wilson: a Python package for the running and matching of Wilson coefficients above and below the electroweak scale,'' Eur.Phys.J.C \textbf{78} (2018) 1026, \href{https://arxiv.org/abs/1804.05033}{arXiv:1804.05033}.
+\bibitem{wcxf} J. Aebischer \textit{et al.}, ``WCxf: an exchange format for Wilson coefficients beyond the Standard Model,'' Comput.Phys.Commun. \textbf{232} (2018) 71, \href{https://arxiv.org/abs/1712.05298}{arXiv:1712.05298}.
+\bibitem{dsixtools} A. Celis, J. Fuentes-Mart\'in, A. Vicente, J. Virto, ``DsixTools: The Standard Model Effective Field Theory Toolkit,'' Eur.Phys.J.C \textbf{77} (2017) 405, \href{https://arxiv.org/abs/1704.04504}{arXiv:1704.04504}.
+\bibitem{dsixtools2} J. Fuentes-Mart\'in, P. Ruiz-Femen\'ia, A. Vicente, J. Virto, ``DsixTools 2.0: The Effective Field Theory Toolkit,'' Eur.Phys.J.C \textbf{81} (2021) 167, \href{https://arxiv.org/abs/2010.16341}{arXiv:2010.16341}.
+\bibitem{jms} E. E. Jenkins, A. V. Manohar, P. Stoffer, ``Low-Energy Effective Field Theory below the Electroweak Scale: Operators and Matching,'' JHEP \textbf{03} (2018) 016, \href{https://arxiv.org/abs/1709.04486}{arXiv:1709.04486}.
+\bibitem{directdm} F. Bishara, J. Brod, B. Grinstein, J. Zupan, ``DirectDM: a tool for dark matter direct detection,'' \href{https://arxiv.org/abs/1708.02678}{arXiv:1708.02678}.
+\bibitem{maddm3} F. Ambrogi \textit{et al.}, ``MadDM v.3.0: a Comprehensive Tool for Dark Matter Studies,'' Phys.Dark Univ. \textbf{24} (2019) 100249, \href{https://arxiv.org/abs/1804.00044}{arXiv:1804.00044}.
+\bibitem{maddm32} C. Arina, J. Heisig, F. Maltoni, D. Massaro, O. Mattelaer, ``Indirect dark-matter detection with MadDM v3.2 -- Lines and Loops,'' Eur.Phys.J.C \textbf{83} (2023) 241, \href{https://arxiv.org/abs/2107.04598}{arXiv:2107.04598}.
+\bibitem{micromegas6} G. Alguero \textit{et al.}, ``micrOMEGAs 6.0: N-component dark matter,'' Comput.Phys.Commun. \textbf{299} (2024) 109133, \href{https://arxiv.org/abs/2312.14894}{arXiv:2312.14894}.
+\bibitem{gondologelmini} P. Gondolo, G. Gelmini, ``Cosmic abundances of stable particles: improved analysis,'' Nucl.Phys.B \textbf{360} (1991) 145.
+\bibitem{dhs} M. Drees, F. Hajkarim, E. R. Schmitz, ``The Effects of QCD Equation of State on the Relic Density of WIMP Dark Matter,'' JCAP \textbf{06} (2015) 025, \href{https://arxiv.org/abs/1503.03513}{arXiv:1503.03513}.
+\bibitem{url:wilson} wilson. \url{https://github.com/wilson-eft/wilson}
+\bibitem{url:dsixtools} DsixTools. \url{https://github.com/DsixTools/DsixTools}
+\bibitem{url:directdm} DirectDM. \url{https://github.com/DirectDM}
+\bibitem{url:maddm} MadDM. \url{https://github.com/maddmhep/maddm}
+\bibitem{url:rapidd} RAPIDD for DM. \url{https://github.com/cheekyparticle/RAPIDD_for_DM}
+\bibitem{url:micromegas} micrOMEGAs. \url{https://micromegasdm.github.io/}
 \end{thebibliography}
 
 \end{document}

@@ -10,16 +10,21 @@
 #   (sum rules; p p -> e+ e- and g g -> H in MG5 against own integrals; about 1 minute); stage 2, Pythia 8 and HepMC
 #   (shower, conservation laws, MLM matching and DJRs; about 45 minutes, 3.5 GB in lhc/out); stage 3, ROOT and Delphes
 #   (GenJets against own FastJet, the efficiencies and smearing against the card; about 1.5 minutes).
+#   --eftdm re-runs the checks of the EFT and dark-matter tools (environment.pdf, Sec. EFT/DM) in ./eftdm: stage 1,
+#   wilson and DsixTools (SMEFT and WET running, tree matching, against own formulas and each other); stage 2, DirectDM;
+#   stage 3, MadDM 3.3 (sigma_SI, <sigma v>, Omega h^2 of a Higgs-portal scalar against own formulas); stage 4,
+#   micrOMEGAs 7.1.10 on the same model (about 3 minutes in all).
 # Test files are named test_*: a file called formcalc.wl in the working directory would
 # shadow the FormCalc package (macOS file names are case-insensitive).
 cd "$(dirname "$0")"
-NO_MG5=0; THERMAL=0; TWOLOOP=0; LHC=0
+NO_MG5=0; THERMAL=0; TWOLOOP=0; LHC=0; EFTDM=0
 for a in "$@"; do
   case "$a" in
     --no-mg5) NO_MG5=1 ;;
     --thermal) THERMAL=1 ;;
     --twoloop) TWOLOOP=1 ;;
     --lhc) LHC=1 ;;
+    --eftdm) EFTDM=1 ;;
   esac
 done
 export PATH="$HOME/hep/bin:$PATH"
@@ -76,5 +81,15 @@ if [ "$LHC" = 1 ]; then
   ./lhc/run_stage2.sh 2>&1 | tee -a "$log"
   step "LHC tools, stage 3: ROOT 6.32.14, Delphes 3.5.1, FastJet (GenJets, efficiencies, smearing)"
   ./lhc/run_stage3.sh 2>&1 | grep -v "^#" | tee -a "$log"
+fi
+if [ "$EFTDM" = 1 ]; then
+  step "EFT/DM tools, stage 1: wilson (d21596fa) and DsixTools 2.1 (running, matching, WCxf)"
+  ./eftdm/run_stage1.sh 2>&1 | tee -a "$log"
+  step "EFT/DM tools, stage 2: DirectDM 2.2.3 (Python) and 1.2.1 (Mathematica)"
+  ./eftdm/run_stage2.sh 2>&1 | tee -a "$log"
+  step "EFT/DM tools, stage 3: MadDM 3.3 (rc/3.3) with RAPIDD, Higgs-portal scalar"
+  ./eftdm/run_stage3.sh 2>&1 | tee -a "$log"
+  step "EFT/DM tools, stage 4: micrOMEGAs 7.1.10 on the same model and its own SingletDM"
+  ./eftdm/run_stage4.sh 2>&1 | tee -a "$log"
 fi
 echo "done; full log in $log"
