@@ -2445,6 +2445,7 @@ cd ~/Documents/Claude/QFTcalculation/environment/tests/geant4/hepmc && ./run_hep
 cd ~/Documents/Claude/QFTcalculation/environment/tests/geant4/fcal && ./run_fcal.sh 500       # ATLAS FCAL (Sec. 11.2)
 cd ~/Documents/Claude/QFTcalculation/environment/tests/geant4/ccal && ./run_ccal.sh           # CMS HCAL (Sec. 11.3)
 ~/Documents/Claude/QFTcalculation/environment/tests/geant4/lhcview/run_lhcview.sh   # LHC events in the Qt window
+~/Documents/Claude/QFTcalculation/environment/tests/geant4/fcalview/run_fcalview.sh 20 e-   # FCAL showers in Qt
 \end{Verbatim}
 
 \subsection{LHC の事象を HepMCEx02 に通す}\label{sec:geant4hepmc}
@@ -2507,6 +2508,8 @@ Geant4 の例 \texttt{advanced/lAr\_calorimeter} は、ATLAS の前方の液体�
 \item 逐次の \texttt{run1.mac} は、rdecay01 と違って参照の出力と事象ごとには一致しなかった（統計の範囲では一致）。
 \item 上流の鉛の穴の外を通ったビームは、0.5 cm（約 0.9 $X_0$）の鉛でシャワーを始め、FCAL1 に落ちるエネルギーが減る。テストビームではこの計数器で穴の外の粒子を捨てるので、分解能はその選択で比べた。ATLAS の値は、電子回路、クラスタの半径、ビームの広がりを含む実験の値であり、この模擬（FCAL1 全体の見えるエネルギー、雑音なし）とは定義が違う。
 \end{itemize}
+
+\paragraph{Qt の窓で見る。}シャワーを Qt の窓で1つずつ見るには \nolinkurl{tests/geant4/fcalview/run_fcalview.sh}（引数はエネルギーと粒子、既定は 20 GeV の e$^-$）を使う。例の部品に自作の \texttt{main}（\texttt{fcalview.cc}）をつなぎ、逐次で初期化してから \texttt{fcalview.mac}（FCAL の外箱から下だけを描く ToolsSG の viewer、半透明の FCAL1 と FCAL2、FCAL2 の棒と液体アルゴンは隠す、粒子の種類による色分け、ビームを横から見る視点）を読む。トラックのファイルは \texttt{run\_fcal.sh} と同じく掃除した写しを使う。逐次の実行は毎回同じ事象を作り、20 GeV の初めの2つは FCAL の手前でシャワーを始めるので、既定では初めの2つを描かずに流す（\texttt{--skip}）。窓は 20 GeV の電子で約 400 MB で、4 GB を超えたら止める見張りをつけた。\texttt{--check} は、窓が開いたあとに画を書き出して閉じる（自分で表示を確かめるため）。
 
 \subsection{CMS HCAL のテストビームの例}\label{sec:geant4ccal}
 

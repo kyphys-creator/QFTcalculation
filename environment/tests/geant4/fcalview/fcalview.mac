@@ -1,0 +1,38 @@
+# fcalview: the ATLAS FCAL of the lAr_calorimeter example, one shower at a time (run_fcalview.sh writes the gun lines).
+# In the Qt window: drag to rotate, wheel to zoom; /run/beamOn 1 for the next particle.
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+#
+/vis/open TSG_QT_GLES 1200x900
+/vis/viewer/set/autoRefresh false
+/vis/verbose errors
+/vis/drawVolume FCALEnvelopePhysical
+# FCAL1 (copper with 2351 liquid-argon gaps, not drawn) and FCAL2 (tungsten), see-through; FCAL2's rods hidden
+/vis/geometry/set/colour EmModuleLogical 0 0.95 0.45 0.2 0.12
+/vis/geometry/set/colour F1CableTroffLogical 0 0.95 0.45 0.2 0.12
+/vis/geometry/set/colour HadModuleLogical 0 0.6 0.6 0.75 0.08
+/vis/geometry/set/colour SolidWLogical 0 0.6 0.6 0.75 0.08
+/vis/geometry/set/colour CuPlateLogical 0 0.95 0.45 0.2 0.12
+/vis/geometry/set/colour F2TroffMainLogical 0 0.95 0.45 0.2 0.12
+/vis/geometry/set/colour F2TroffABLogical 0 0.95 0.45 0.2 0.12
+/vis/geometry/set/visibility F2RodLogical 0 false
+/vis/geometry/set/visibility F2LArGapLogical 0 false
+/vis/viewer/set/style surface
+/vis/viewer/set/background 0.05 0.05 0.1
+# from the side (+x), a little above: the beam comes in along -z (from the right), FCAL tilted by 2.83 deg in y-z
+/vis/viewer/set/viewpointVector 1 0.25 0.15
+/vis/viewer/set/upVector 0 1 0
+/vis/viewer/zoom 1.1
+/vis/scene/add/scale 10 cm
+/vis/scene/add/eventID
+# trajectories: e- red, e+ blue, photons faint green, neutrons yellow, others white
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByParticleID shower
+/vis/modeling/trajectories/shower/set e- red
+/vis/modeling/trajectories/shower/set e+ blue
+/vis/modeling/trajectories/shower/setRGBA gamma 0.2 1 0.2 0.25
+/vis/modeling/trajectories/shower/setRGBA neutron 1 1 0 0.6
+/vis/modeling/trajectories/shower/setDefaultRGBA 1 1 1 0.8
+/vis/scene/endOfEventAction refresh
+/vis/viewer/set/autoRefresh true
