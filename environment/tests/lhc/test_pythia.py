@@ -4,21 +4,26 @@
             in every HepMC event, the sum of the final-state (status 1) four-momenta against (0, 0, 0, sqrt s), the charge
             against +2 and the baryon number against 2 (the charges and baryon numbers from the PDG codes: quark digits of
             the hadrons, a table for the leptons and bosons).
-  matching: MLM matching of p p -> e+ e- + 0, 1, 2 jets: xqcut = 15, 20, 30 GeV with NNPDF4.0 (runs 1-3) and xqcut = 20 GeV
-            with MG5's internal nn23lo1 (run 4, the LO set of Pythia's default ISR PDF), qCut = 1.5 xqcut.  MG5 3.8.1 showers
-            with Pythia's own main164 in parallel jobs (not MG5aMC_PY8_interface) and writes no DJR histograms.  So:
+  matching: MLM matching of p p -> e+ e- + 0, 1, 2 jets, qCut = 1.5 xqcut.  MG5 does not pass its PDF to Pythia (whose ISR
+            then uses its default NNPDF2.3 LO): runs 1-3 (NNPDF4.0 matrix elements, xqcut = 15, 20, 30 GeV) and run 4 (MG5's
+            internal nn23lo1, xqcut 20) keep MG5's default; runs 5-7 (xqcut 15, 20, 30) set Pythia's PDF to the matrix
+            elements' (PDF:pSet = LHAPDF6:NNPDF40_nlo_as_01180), and run 8 repeats run 6 with 200000 events.  MG5 3.8.1
+            showers with Pythia's own main164 in parallel jobs (not MG5aMC_PY8_interface) and writes no DJR histograms.  So:
             (i) the matched cross section: MG5's value against sigma_LHE sum(n_acc)/sum(n_try) from all the Pythia::stat tables
-                of the log, with the acceptance per jet multiplicity (the user classification codes 0, 1, 2);
-            (ii) own DJRs: each run's LHE split by its number of final-state partons, showered again by main164 at parton
-                level (MPI, beam remnants and hadronization off, the same JetMatching settings), and the final-state partons
-                clustered by own exclusive kT algorithm with R = 1 (d_ij = min(pT_i^2, pT_j^2) dR^2, d_iB = pT_i^2, E-scheme);
-            (iii) the matching's own DJRs: MG5aMC_PY8_interface run directly on the LHE (getDJR of JetMatchingMadgraph), the
-                same parton-level settings; own against these bin by bin (chi^2 per bin of the summed histograms);
-            (iv) the smoothness at qCut: log of the summed histogram fitted by a line on each side (0.06 to 0.36 from
-                log10 qCut), the ratio of the two lines at log10 qCut ("step"; 1 if smooth);
-            (v) the consistency of the shower with the matrix elements: MG5 does not pass its PDF to Pythia, whose ISR
-                uses its default NNPDF2.3 LO; run 2 again through the interface with PDF:pSet = LHAPDF6:NNPDF40_nlo_as_01180,
-                and with that and the shower alpha_s = 0.118 at two loops.
+                of the log, the acceptance per jet multiplicity, and the spread over xqcut (the merging-scale uncertainty);
+            (ii) the DJRs of MG5aMC_PY8_interface run directly on each LHE (parton level: MPI and hadronization off).  Its DJR
+                is not the matching's internal measure: SlowJet kT with R = 0.4 on the final-state coloured particles (beam
+                remnants included) with |eta| < 4.4, as in its source;
+            (iii) own DJRs of the same definition: each LHE split by its number of partons, showered again by main164 with the
+                same settings, the final-state coloured partons (quarks, gluons, diquarks) with |eta| < 4.4 clustered by own
+                exclusive kT algorithm (d_ij = min(pT_i^2, pT_j^2) dR^2/R^2 with dR in (y, phi), d_iB = pT_i^2, E-scheme);
+                own against the interface bin by bin (chi^2 of the summed histograms);
+            (iv) the smoothness at qCut: log of the summed histogram over |x| < 0.36 (x = log10 sqrt(d) - log10 qCut) fitted
+                by a quadratic in x plus a step s theta(x); "step" = exp(s), 1 if smooth.  The same fit at log10 qCut -+ 0.45,
+                where no boundary is, checks the method ("control", 1 expected);
+            (v) run 6 again through the interface with the shower alpha_s = 0.118 at two loops as well;
+            (vi) run 8 (200000 events, xqcut 20) again through the interface with qCut = 25 and 40 GeV, and with the
+                shower-kT scheme (JetMatching:doShowerKt = on, qCut 30).
 Usage: python3 test_pythia.py [shower | matching]
 """
 import gzip
@@ -130,7 +135,10 @@ def shower():
 # ---------------------------------------------------------------------------------------------------- the DJRs
 MAIN164 = Path.home() / "hep/MG5_aMC_v3_8_1/HEPTools/pythia8/share/Pythia8/examples/main164"
 IFACE = Path.home() / "hep/MG5_aMC_v3_8_1/HEPTools/MG5aMC_PY8_interface/MG5aMC_PY8_interface"
-RUNS = (("run_01", 15, "NNPDF4.0"), ("run_02", 20, "NNPDF4.0"), ("run_03", 30, "NNPDF4.0"), ("run_04", 20, "nn23lo1"))
+RUNS = (("run_01", 15, "NNPDF4.0, Pythia's default PDF", 1), ("run_02", 20, "NNPDF4.0, Pythia's default PDF", 1),
+        ("run_03", 30, "NNPDF4.0, Pythia's default PDF", 1), ("run_04", 20, "nn23lo1 (= Pythia's default PDF)", 1),
+        ("run_05", 15, "NNPDF4.0 in both", 1), ("run_06", 20, "NNPDF4.0 in both", 1), ("run_07", 30, "NNPDF4.0 in both", 1),
+        ("run_08", 20, "NNPDF4.0 in both, 200000 events", 0))       # last: 1 = own reshower and DJRs too
 EDGES = [0.03 * k for k in range(101)]          # the interface's binning of log10 sqrt(d)
 PARTON = ["PartonLevel:MPI = off", "HadronLevel:all = off", "Next:numberCount = 0", "Next:numberShowEvent = 0",
           "Next:numberShowInfo = 0", "Next:numberShowProcess = 0"]
@@ -163,12 +171,20 @@ def split_lhe(src, dst_prefix):
     return res, len(events), header + body
 
 
-def kt_djr(parts):
-    """exclusive kT clustering with R = 1 (E-scheme); returns sqrt(d) of the steps n+1 -> n for n = 0, 1, 2 (d01, d12, d23)"""
+def kt_djr(parts, R=0.4, etamax=4.4):
+    """exclusive kT clustering (E-scheme) of the particles with |eta| < etamax; returns sqrt(d) of the steps n+1 -> n for
+    n = 0, 1, 2 (d01, d12, d23), None where the event has fewer objects.  d_ij = min(pT_i^2, pT_j^2) dR^2/R^2, d_iB = pT_i^2"""
     import numpy as np
-    if not parts:
+    sel = []
+    for px, py, pz, e in parts:
+        pp = math.sqrt(px * px + py * py + pz * pz)
+        if pp - abs(pz) <= 0:
+            continue
+        if abs(0.5 * math.log((pp + pz) / (pp - pz))) < etamax:
+            sel.append((px, py, pz, e))
+    if not sel:
         return [None, None, None]
-    p = np.array(parts, dtype=float)           # px, py, pz, e
+    p = np.array(sel, dtype=float)
     res = {}
     while len(p):
         pt2 = p[:, 0]**2 + p[:, 1]**2
@@ -178,7 +194,7 @@ def kt_djr(parts):
         if n > 1:
             dphi = np.abs(phi[:, None] - phi[None, :])
             dphi = np.minimum(dphi, 2 * np.pi - dphi)
-            dij = np.minimum(pt2[:, None], pt2[None, :]) * ((y[:, None] - y[None, :])**2 + dphi**2)
+            dij = np.minimum(pt2[:, None], pt2[None, :]) * ((y[:, None] - y[None, :])**2 + dphi**2) / R**2
             dij[np.diag_indices(n)] = np.inf
             i, j = divmod(int(np.argmin(dij)), n)
             dmin_ij = dij[i, j]
@@ -195,9 +211,15 @@ def kt_djr(parts):
     return [res.get(k) for k in (0, 1, 2)]
 
 
+def coloured(pid):
+    """quarks, gluons and diquarks (the coloured final-state partons of a parton-level event, beam remnants included)"""
+    a = abs(pid)
+    return a <= 6 or a == 21 or (1000 <= a < 10000 and (a // 10) % 10 == 0)
+
+
 def hepmc_partons(path):
     for fs in hepmc_events(path):
-        yield [x[1:] for x in fs if abs(x[0]) <= 5 or x[0] == 21]
+        yield [x[1:] for x in fs if coloured(x[0])]
 
 
 def read_djrs(path):
@@ -212,20 +234,27 @@ def read_djrs(path):
     return out
 
 
-def step(tot, err, q, gap=0.06, width=0.3):
-    """ratio at q of the lines fitted to log(tot) on each side of q; returns step, its error"""
+def step(tot, err, q, half=0.36):
+    """log tot = a + b x + c x^2 + s theta(x) over |x| < half, x = c - q; returns exp(s) and its error"""
     import numpy as np
     e = np.array(EDGES)
-    c = 0.5 * (e[1:] + e[:-1])
-    fits = []
-    for sel in ((c < q - gap) & (c > q - gap - width), (c > q + gap) & (c < q + gap + width)):
-        m = sel & (tot > 0)
-        x, y, s = c[m] - q, np.log(tot[m]), err[m] / tot[m]
-        A = np.vstack([np.ones_like(x), x]).T / s[:, None]
-        coef = np.linalg.lstsq(A, y / s, rcond=None)[0]
-        fits.append((coef[0], math.sqrt(np.linalg.inv(A.T @ A)[0, 0])))
-    r = math.exp(fits[1][0] - fits[0][0])
-    return r, r * math.hypot(fits[0][1], fits[1][1])
+    x = 0.5 * (e[1:] + e[:-1]) - q
+    m = (np.abs(x) < half) & (tot > 0)
+    X = np.vstack([np.ones(m.sum()), x[m], x[m]**2, (x[m] > 0).astype(float)]).T
+    sig = err[m] / tot[m]
+    A = X / sig[:, None]
+    coef = np.linalg.lstsq(A, np.log(tot[m]) / sig, rcond=None)[0]
+    r = math.exp(coef[3])
+    return r, r * math.sqrt(np.linalg.inv(A.T @ A)[3, 3])
+
+
+def steps(tot, err, q):
+    """the step at q and the two controls at q -+ 0.45"""
+    return [step(tot, err, q + dq) for dq in (0.0, -0.45, 0.45)]
+
+
+def fmt_steps(st):
+    return "%.3f +- %.3f (control %.3f +- %.3f, %.3f +- %.3f)" % (st[0] + st[1] + st[2])
 
 
 def matching():
@@ -235,39 +264,53 @@ def matching():
     mg = [(float(a), float(b)) for a, b in re.findall(r"Matched cross-section :\s+([0-9.eE+-]+)\s+\+-\s+([0-9.eE+-]+)\s+pb",
                                                        (OUT / "mlm.log").read_text())]
     print("(b) MLM matching of p p -> e+ e- + 0, 1, 2 jets (qCut = 1.5 xqcut), MG5's showers (MPI and hadronization on)")
-    for (run, xq, pdf), (msig, merr) in zip(RUNS, mg):
+    msig = {}
+    for (run, xq, pdf, _), (m, merr) in zip(RUNS, mg):
         log = sorted(run_dir("mlm_proc", run).glob("*pythia8*.log"))[-1]
         (n_try, n_acc), per = py8_counts(log)
         lhe = lhe_sigma("mlm_proc", run)
-        print("  %s xqcut %2d: LHE %.2f pb;  MG5 matched %.2f +- %.2f pb;  own sigma_LHE n_acc/n_try = %.2f pb (%d/%d);  "
-              "acceptance %s" % (pdf, xq, lhe, msig, merr, lhe * n_acc / n_try, n_acc, n_try,
+        own = lhe * n_acc / n_try
+        msig[run] = (own, own * math.sqrt((1 - n_acc / n_try) / n_acc))
+        print("  %s %s xqcut %2d: LHE %.2f pb;  MG5 matched %.2f +- %.2f pb;  own sigma_LHE n_acc/n_try = %.2f pb (%d/%d);  "
+              "acceptance %s" % (run, pdf, xq, lhe, m, merr, own, n_acc, n_try,
                                  ", ".join("%dj %.3f" % (c, a / t) for c, (t, a) in sorted(per.items()))))
-    nn = [m for (_, _, pdf), (m, _) in zip(RUNS, mg) if pdf == "NNPDF4.0"]
-    print("  NNPDF4.0: the matched cross section over xqcut 15, 20, 30 GeV: %s pb (spread %.1f%% of the middle one)"
-          % (", ".join("%.0f" % m for m in nn), 100 * (max(nn) - min(nn)) / nn[1]))
+    for label, runs in (("Pythia's default PDF", ("run_01", "run_02", "run_03")), ("NNPDF4.0 in both", ("run_05", "run_06", "run_07"))):
+        v = [msig[r][0] for r in runs]
+        print("  %s: the matched cross section over xqcut 15, 20, 30 GeV: %s pb;  spread (max - min)/middle = %.1f%%"
+              % (label, ", ".join("%.1f +- %.1f" % msig[r] for r in runs), 100 * (max(v) - min(v)) / v[1]))
     djr = OUT / "djr"
     djr.mkdir(exist_ok=True)
     jobs, meta = [], {}
-    for run, xq, pdf in RUNS:
+    skip = {"Main:HepMC", "HepMC:output", "Main:subrun", "Beams:LHEF", "Main:numberOfEvents"}
+    for run, xq, pdf, doown in RUNS:
         rd = run_dir("mlm_proc", run)
         parts, ntot, full = split_lhe(rd / "unweighted_events.lhe.gz", str(djr / run))
         meta[run] = (ntot, {n: c for n, (p, c) in parts.items()})
-        base = mg5_lines(rd / "tag_1_pythia8.cmd", {"Main:HepMC", "HepMC:output", "Main:subrun", "Beams:LHEF",
-                                                     "Main:numberOfEvents"})
-        for n, (p, c) in parts.items():      # main164 refuses Main:numberOfEvents = -1 (MG5 fills in the count)
-            hep = djr / ("%s_n%d.hepmc" % (run, n))
-            cmd = djr / ("%s_n%d.cmnd" % (run, n))
-            cmd.write_text("\n".join(base + PARTON + ["PartonLevel:Remnants = off", "Check:event = off", "Main:HepMC = on",
-                                                      "HepMC:output = %s" % hep, "Main:numberOfEvents = %d" % c,
-                                                      "Beams:LHEF = %s" % p]) + "\n")
-            jobs.append(([str(MAIN164), "-c", str(cmd)], str(hep) + ".log"))
+        base = mg5_lines(rd / "tag_1_pythia8.cmd", skip)
+        if doown:                            # main164 refuses Main:numberOfEvents = -1 (MG5 fills in the count)
+            for n, (p, c) in parts.items():
+                hep = djr / ("%s_n%d.hepmc" % (run, n))
+                cmd = djr / ("%s_n%d.cmnd" % (run, n))
+                cmd.write_text("\n".join(base + PARTON + ["Main:HepMC = on", "HepMC:output = %s" % hep,
+                                                          "Main:numberOfEvents = %d" % c, "Beams:LHEF = %s" % p]) + "\n")
+                jobs.append(([str(MAIN164), "-c", str(cmd)], str(hep) + ".log"))
         lhe = djr / ("%s_full.lhe" % run)
         lhe.write_text(full)
-        cmd = djr / ("%s_iface.cmnd" % run)
-        cmd.write_text("\n".join(base + PARTON + ["Main:numberOfEvents = %d" % ntot, "HEPMCoutput:file = void",
-                                                  "HistFile:name = %s_" % run, "LHEFInputs:nSubruns = 1", "Main:subrun = 0",
-                                                  "Beams:LHEF = %s" % lhe]) + "\n")
-        jobs.append(([str(IFACE), str(cmd)], str(djr / ("%s_iface.log" % run))))
+        variants = [("", [])]
+        if run == "run_06":
+            variants.append(("as", ["SpaceShower:alphaSvalue = 0.118", "TimeShower:alphaSvalue = 0.118",
+                                    "SpaceShower:alphaSorder = 2", "TimeShower:alphaSorder = 2"]))
+        if run == "run_08":
+            variants += [("q25", ["JetMatching:qCut = 25.0"]), ("q40", ["JetMatching:qCut = 40.0"]),
+                         ("skt", ["JetMatching:doShowerKt = on"])]
+        for tag, add in variants:
+            keys = {a.split("=")[0].strip() for a in add}
+            b0 = [l for l in base if l.split("=")[0].strip() not in keys]
+            cmd = djr / ("%s%s_iface.cmnd" % (run, tag))
+            cmd.write_text("\n".join(b0 + PARTON + add + ["Main:numberOfEvents = %d" % ntot, "HEPMCoutput:file = void",
+                                                            "HistFile:name = %s%s_" % (run, tag), "LHEFInputs:nSubruns = 1",
+                                                            "Main:subrun = 0", "Beams:LHEF = %s" % lhe]) + "\n")
+            jobs.append(([str(IFACE), str(cmd)], str(djr / ("%s%s_iface.log" % (run, tag)))))
 
     def go(job):
         args, log = job
@@ -276,56 +319,56 @@ def matching():
 
     with ThreadPoolExecutor(max_workers=12) as ex:
         list(ex.map(go, jobs))
-    print("  DJRs at parton level (MPI, hadronization off): own (main164 reshowers, own kT) and the matching's own "
-          "(MG5aMC_PY8_interface); step = ratio at qCut of the lines fitted on each side (1 if smooth)")
-    for run, xq, pdf in RUNS:
+
+    def sums(it, name):
+        return (sum(it[(n, name)][0] for n in (0, 1, 2) if (n, name) in it),
+                np.sqrt(sum(it[(n, name)][1]**2 for n in (0, 1, 2) if (n, name) in it)))
+
+    print("  DJRs at parton level (MPI, hadronization off) of MG5aMC_PY8_interface (SlowJet kT, R = 0.4, |eta| < 4.4) and own of "
+          "the same definition; step = exp(s) of log N = quadratic + s theta(x) around qCut (1 if smooth)")
+    for run, xq, pdf, doown in RUNS:
         ntot, counts = meta[run]
-        lhe = lhe_sigma("mlm_proc", run)
-        w = lhe / ntot
+        w = lhe_sigma("mlm_proc", run) / ntot
         q = math.log10(1.5 * xq)
+        it = read_djrs(djr / ("%s_djrs.dat" % run))
         own = {k: np.zeros(100) for k in (0, 1)}
         nacc = 0
-        for n in counts:
-            for ev in hepmc_partons(djr / ("%s_n%d.hepmc" % (run, n))):
-                nacc += 1
-                d = kt_djr(ev)
-                for k in (0, 1):
-                    if d[k]:
-                        b = int(math.log10(d[k]) / 0.03)
-                        if 0 <= b < 100:
-                            own[k][b] += w
-        it = read_djrs(djr / ("%s_djrs.dat" % run))
-        isig = float(re.findall(r"Inclusive cross section:\s+([0-9.eE+-]+)", (djr / ("%s_iface.log" % run)).read_text())[-1]) * 1e9
-        print("  %s xqcut %2d (log10 qCut %.3f): matched, own %.2f pb, interface %.2f pb" % (pdf, xq, q, w * nacc, isig))
+        if doown:
+            for n in counts:
+                for ev in hepmc_partons(djr / ("%s_n%d.hepmc" % (run, n))):
+                    nacc += 1
+                    d = kt_djr(ev)
+                    for k in (0, 1):
+                        if d[k]:
+                            b = int(math.log10(d[k]) / 0.03)
+                            if 0 <= b < 100:
+                                own[k][b] += w
+        isig = float(re.findall(r"Inclusive cross section:\s+([0-9.eE+-]+)",
+                                (djr / ("%s_iface.log" % run)).read_text())[-1]) * 1e9
+        print("  %s %s xqcut %2d (log10 qCut %.3f): matched, interface %.2f pb%s"
+              % (run, pdf, xq, q, isig, (", own reshower %.2f pb" % (w * nacc)) if doown else ""))
         for k, name in ((0, "d01"), (1, "d12")):
-            tot = sum(it[(n, name)][0] for n in (0, 1, 2))
-            err = np.sqrt(sum(it[(n, name)][1]**2 for n in (0, 1, 2)))
-            eo = np.sqrt(np.maximum(own[k] * w, w * w))
-            m = (tot > 0) | (own[k] > 0)
-            chi2 = float((((own[k] - tot)**2) / (eo**2 + err**2))[m].sum())
-            r_i, dr_i = step(tot, err, q)
-            r_o, dr_o = step(own[k], eo, q)
-            print("    %s: own against interface chi^2/bins = %.0f/%d;  step: interface %.3f +- %.3f, own %.3f +- %.3f"
-                  % (name, chi2, int(m.sum()), r_i, dr_i, r_o, dr_o))
-    print("  run 2 (NNPDF4.0, xqcut 20) through the interface with the shower made consistent with the matrix elements")
-    base = (djr / "run_02_iface.cmnd").read_text().splitlines()
-    for tag, extra in (("pdf", ["PDF:pSet = LHAPDF6:NNPDF40_nlo_as_01180"]),
-                       ("pdfas", ["PDF:pSet = LHAPDF6:NNPDF40_nlo_as_01180", "SpaceShower:alphaSvalue = 0.118",
-                                  "TimeShower:alphaSvalue = 0.118", "SpaceShower:alphaSorder = 2", "TimeShower:alphaSorder = 2"])):
-        lines = [l.replace("HistFile:name = run_02_", "HistFile:name = run_02%s_" % tag) for l in base]
-        i = lines.index("LHEFInputs:nSubruns = 1")
-        lines[i:i] = extra
-        cmd = djr / ("run_02%s_iface.cmnd" % tag)
-        cmd.write_text("\n".join(lines) + "\n")
-        go(([str(IFACE), str(cmd)], str(djr / ("run_02%s_iface.log" % tag))))
-        it = read_djrs(djr / ("run_02%s_djrs.dat" % tag))
-        res = []
-        for name in ("d01", "d12"):
-            tot = sum(it[(n, name)][0] for n in (0, 1, 2))
-            err = np.sqrt(sum(it[(n, name)][1]**2 for n in (0, 1, 2)))
-            res.append("%s step %.3f +- %.3f" % ((name,) + step(tot, err, math.log10(30.0))))
-        print("    %-58s %s" % ("Pythia's PDF NNPDF4.0" if tag == "pdf" else "Pythia's PDF NNPDF4.0, shower alpha_s 0.118 (2 loops)",
-                                 ";  ".join(res)))
+            tot, err = sums(it, name)
+            line = "    %s: step %s (interface)" % (name, fmt_steps(steps(tot, err, q)))
+            if doown:
+                eo = np.sqrt(np.maximum(own[k] * w, w * w))
+                m = (tot > 0) | (own[k] > 0)
+                chi2 = float((((own[k] - tot)**2) / (eo**2 + err**2))[m].sum())
+                r_o, dr_o = step(own[k], eo, q)
+                line += ", %.3f +- %.3f (own);  own against interface chi^2/bins = %.0f/%d" % (r_o, dr_o, chi2, int(m.sum()))
+            print(line)
+        if run == "run_06":
+            ita = read_djrs(djr / "run_06as_djrs.dat")
+            res = ["%s step %.3f +- %.3f" % ((name,) + step(*sums(ita, name), q)) for name in ("d01", "d12")]
+            print("    and with the shower alpha_s = 0.118 (2 loops): %s" % ";  ".join(res))
+        if run == "run_08":
+            for tag, qc, label in (("q25", 25.0, "qCut 25 GeV"), ("q40", 40.0, "qCut 40 GeV"),
+                                   ("skt", 30.0, "the shower-kT scheme, qCut 30 GeV")):
+                itv = read_djrs(djr / ("run_08%s_djrs.dat" % tag))
+                sv = float(re.findall(r"Inclusive cross section:\s+([0-9.eE+-]+)",
+                                      (djr / ("run_08%s_iface.log" % tag)).read_text())[-1]) * 1e9
+                res = ["%s step %.3f +- %.3f" % ((name,) + step(*sums(itv, name), math.log10(qc))) for name in ("d01", "d12")]
+                print("    with %-34s matched %.1f pb;  %s" % (label + ":", sv, ";  ".join(res)))
 
 
 if __name__ == "__main__":

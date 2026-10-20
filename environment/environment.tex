@@ -1308,13 +1308,24 @@ MG5aMC\_PY8\_interface & 1.3 & \texttt{H/MG5aMC\_PY8\_interface} & madgraph.phys
 
 \paragraph{導入。}\MGaMC{} の \texttt{install pythia8} を、段階 1 と同じく \MGaMC{} のディレクトリから \texttt{CC} と \texttt{CXX} を clang に固定して起動した（約20分）。installer は HepMC、zlib、Pythia の順に入れ、そのあと MG5aMC\_PY8\_interface を自動で入れた。取得したのは導入の前に承認を得た6つだけだが、installer 一式と MG5aMC\_PY8\_interface は、示した madgraph.mi.infn.it ではなく、同じものを置く madgraph.phys.ucl.ac.be から取った。\MGaMC{} は利用者の設定に \texttt{pythia8\_path} と \texttt{mg5amc\_py8\_interface\_path} を書く。
 
-\paragraph{検証。}結果を表~\ref{tab:lhc2tests} にまとめる（\nolinkurl{tests/lhc/run_stage2.sh}、約20分、\texttt{out/} は 2.3 GB）。シャワー、事象の記録、マッチングの集計は正しく動いた。一方、MLM のマッチング~\cite{mlm}の DJR（$k_T$ のクラスタリングで $n+1$ 個のジェットが $n$ 個になる目盛り）は、0 と 1 のジェットの境目（d01）で、マッチングの目盛り qCut を境に 35〜40\% 落ちた。\MGaMC{} は run\_card の PDF を Pythia に渡さないので、行列要素は NNPDF4.0（$\alpha_s=0.118$）で、シャワーの ISR は Pythia の既定の NNPDF2.3 LO で計算される。PDF をどちらかにそろえると段差は 20\% 前後に縮み、シャワーの $\alpha_s$ をそろえても変わらなかった。残りの段差は統計の $2\sigma$ ほどで、原因は分かっていない。マッチングの後の断面積が xqcut で 6.4\% 動くのも、同じ食い違いの表れと考えられる。後の段階で MLM を使うときは、行列要素とシャワーの PDF をそろえ、DJR を毎回確かめる。
+\paragraph{検証。}結果を表~\ref{tab:lhc2tests} にまとめる（\nolinkurl{tests/lhc/run_stage2.sh}、約45分、\texttt{out/} は 3.5 GB）。シャワー、事象の記録、マッチングの集計は正しく動いた。MLM のマッチング~\cite{mlm}は、DJR（$k_T$ のクラスタリングで $n+1$ 個のジェットが $n$ 個になる目盛り）で確かめた。0 と 1 のジェットの境目（d01）では、マッチングの目盛り qCut を境に DJR の和が段差を持ち、20 万事象で $0.744\pm0.016$ 倍になった。1 と 2 のジェットの境目（d12）はなめらかだった（$0.98\pm0.04$）。
 
-自分の DJR は、事象を LHE のジェットの数で分けて \texttt{main164} でパートンの段階でシャワーをかけ直し、終状態のパートンを自分の排他的な $k_T$ のクラスタリング（$R=1$、$d_{ij}=\min(p_{Ti}^2,p_{Tj}^2)\Delta R_{ij}^2$、$d_{iB}=p_{Ti}^2$）で求めた。形はマッチング自身の DJR（MG5aMC\_PY8\_interface の \texttt{getDJR}）に近いが、統計の範囲では一致せず、d12 の段差は自分の DJR にだけ出る。b クォークを除いても変わらず、原因は分かっていない。段差の判定には、マッチング自身の DJR を使った。
+段差は、$\log$（DJR の和）を qCut のまわり（$|x|<0.36$、$x=\log_{10}\sqrt d-\log_{10}\mathrm{qCut}$）で、2次式と $x>0$ の段差の項の和に当てはめて測った。境目のない $\log_{10}\mathrm{qCut}\mp0.45$ で同じ当てはめをすると、20 万事象で $1.032\pm0.015$、$0.972\pm0.041$ になり、測り方に偏りがないことを確かめた。
+
+段差の原因として、次のものを順に確かめた。
+\begin{itemize}
+\item \textbf{PDF の食い違い。}\MGaMC{} は run\_card の PDF を Pythia に渡さないので、既定では、行列要素は NNPDF4.0（$\alpha_s=0.118$）で、シャワーの ISR は Pythia の既定の NNPDF2.3 LO で計算される。Pythia の card で \texttt{PDF:pSet = LHAPDF6:NNPDF40\_nlo\_as\_01180} とすると（\MGaMC{} の \texttt{set} で渡せ、Pythia が LHAPDF から読み込むことを確かめた）、段差は 0.71、0.70、0.65 倍から 0.72、0.77、0.78 倍（xqcut 15、20、30~GeV）に少し縮んだ。行列要素の側をシャワーに合わせた nn23lo1 では 0.81 倍だった。主な原因ではない。
+\item \textbf{シャワーの $\alpha_s$。}0.118（2ループ）にそろえても、0.77 倍から 0.81 倍で、統計の範囲で変わらない。
+\item \textbf{qCut。}20 万事象の同じ LHE で qCut を 25、30、40~GeV にすると、0.74、0.74、0.80 倍だった。
+\item \textbf{マッチングの方式。}Pythia のシャワーの $k_T$ を使う MLM（\texttt{JetMatching:doShowerKt = on}）では 0.85 倍で、いちばん小さかった。
+\end{itemize}
+したがって、この $k_T$-MLM の設定（Pythia 8.317 の既定の tune）では、qCut の付近で 15〜25\% の継ぎ目が残る。後の段階で MLM を使うときは、行列要素とシャワーの PDF をそろえ、シャワーの $k_T$ の方式を使い、DJR を確かめる。ジェットの $p_T$ が qCut の付近（ここでは 20〜45~GeV）にある量には、この大きさの不定性を付けるか、NLO のマッチング（FxFx、CKKW-L）を使う。マッチングの後の断面積は、PDF をそろえた場合に xqcut 15、20、30~GeV で 1585.7、1626.4、1672.6~pb（最大と最小の差が中央の 5.3\%）、xqcut 20~GeV で qCut を 25、30、40~GeV にすると 1588、1637、1681~pb だった。この幅（$\pm3\%$ ほど）がマッチングの目盛りの不定性である。
+
+自分の DJR は、事象を LHE のジェットの数で分けて \texttt{main164} でパートンの段階でシャワーをかけ直し、終状態の色を持つパートン（ビームの残りの diquark を含む）で $|\eta|<4.4$ のものを、自分の排他的な $k_T$ のクラスタリング（$R=0.4$、$d_{ij}=\min(p_{Ti}^2,p_{Tj}^2)\Delta R_{ij}^2/R^2$、$\Delta R$ は $(y,\phi)$、$d_{iB}=p_{Ti}^2$）で求めた。これは MG5aMC\_PY8\_interface が図にする DJR と同じ定義で、ビンごとに $\chi^2$/ビン数 $=0.9$〜1.6 で一致した。初めは $R=1$、$\eta$ の制限なし、ビームの残りなしで比べて食い違った。interface の DJR がマッチングの内部の量（$R=1$）ではないことを、そのソースで確かめて直した。
 
 \begin{table}[htbp]
 \centering\small
-\caption{段階 2 の検証の結果。$pp\to e^+e^-$（13 TeV、$60<m_{ee}<120$~GeV）、MLM は $pp\to e^+e^-+0,1,2$ ジェット、qCut $=1.5\,$xqcut、20000 事象ずつ。段差は、DJR の和の $\log$ を qCut の両側で直線に当てはめ、qCut での二つの直線の比（なめらかなら1）。}
+\caption{段階 2 の検証の結果。$pp\to e^+e^-$（13 TeV、$60<m_{ee}<120$~GeV）、MLM は $pp\to e^+e^-+0,1,2$ ジェット、qCut $=1.5\,$xqcut、20000 事象ずつ（記したもの以外）。DJR は MG5aMC\_PY8\_interface の定義（$k_T$、$R=0.4$、$|\eta|<4.4$）。段差は、DJR の和の $\log$ を qCut のまわりで2次式と段差の項に当てはめた段差の比（なめらかなら1、誤差は統計）。}
 \label{tab:lhc2tests}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.9cm}}
 \toprule
@@ -1323,10 +1334,12 @@ MG5aMC\_PY8\_interface & 1.3 & \texttt{H/MG5aMC\_PY8\_interface} & madgraph.phys
 1 & シャワーと断面積（10000 事象） & Pythia の断面積が LHE の値に等しい & 14 の並列の仕事がすべて 1689.922000~pb（LHE と同じ）、10000 事象すべてを受け入れ & 一致 \\
 2 & 保存則（10000 事象、終状態は平均392個） & 終状態の和が $(0,0,0,\sqrt s)$、電荷 $+2$、バリオン数 2 & 運動量は $1.8\times10^{-6}$（HepMC の表示の桁）、電荷とバリオン数はすべての事象で 2 & 一致 \\
 3 & マッチングの集計 & \MGaMC{} の値が $\sigma_{\mathrm{LHE}}\sum n_{\mathrm{acc}}/\sum n_{\mathrm{try}}$ に等しい & 1563.02、1605.12、1665.89、1436.55~pb（\MGaMC{} は4桁で 1563、1605、1666、1436~pb） & 一致 \\
-4 & マッチングの断面積（NNPDF4.0） & xqcut によらない & xqcut 15、20、30~GeV で 1563、1605、1666~pb（6.4\%） & 一致しない \\
-5 & DJR のつながり（マッチング自身の DJR） & 段差 1 & d01：NNPDF4.0 で 0.63、0.66、0.61（$\pm0.06$〜0.07）、nn23lo1 で $0.83\pm0.08$。d12：0.96〜1.09（$\pm0.16$〜0.23）、$0.90\pm0.15$ & d01 は一致しない \\
-6 & シャワーを行列要素にそろえる（NNPDF4.0、xqcut 20~GeV） & 段差が1に近づく & Pythia の PDF を NNPDF4.0 にすると d01 は $0.79\pm0.08$、さらにシャワーの $\alpha_s$ を 0.118（2ループ）にすると $0.82\pm0.08$ & 改善（残り約 $2\sigma$） \\
-7 & 自分の DJR & マッチング自身の DJR に一致 & 形は近いが $\chi^2$/ビン数 $=3.2$〜4.7。d12 の段差は自分の DJR にだけ出る & 一致しない \\
+4 & マッチングの断面積（PDF をそろえる） & マッチングの目盛りによらない & xqcut 15、20、30~GeV で 1585.7、1626.4、1672.6~pb（5.3\%）。qCut 25、30、40~GeV で 1588、1637、1681~pb & 不定性 $\pm3\%$ \\
+5 & 自分の DJR（$R=0.4$、$|\eta|<4.4$） & interface の DJR に一致 & $\chi^2$/ビン数 $=0.9$〜1.6（7つの実行の d01 と d12） & 一致 \\
+6 & 段差の測り方 & 境目のない所で1 & 20 万事象で $1.032\pm0.015$、$0.972\pm0.041$ & 一致 \\
+7 & DJR のつながり（d12） & 段差 1 & 20 万事象で $0.981\pm0.037$ & 一致 \\
+8 & DJR のつながり（d01） & 段差 1 & 既定（PDF が食い違う）で 0.71、0.70、0.65。PDF をそろえて 0.72、0.77、0.78、20 万事象で $0.744\pm0.016$ & 一致しない \\
+9 & d01 の段差を減らす & 段差が1に近づく & nn23lo1 0.81、$\alpha_s$ もそろえて 0.81、qCut 25、40~GeV で 0.74、0.80、シャワーの $k_T$ の方式で $0.852\pm0.018$ & 改善するが残る \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -1336,12 +1349,13 @@ MG5aMC\_PY8\_interface & 1.3 & \texttt{H/MG5aMC\_PY8\_interface} & madgraph.phys
 \item \MGaMC{} 3.8.1 は、LO の事象のシャワーに MG5aMC\_PY8\_interface ではなく Pythia 8.317 の \texttt{main164} を使う（installer の注記では、新しい世代の MadGraph への移行の一部）。\texttt{main164} は DJR のヒストグラムを書かないので、\MGaMC{} は \texttt{Cross-sections could not be read from theXML node 'xsection'} と出し、DJR の図を作らない。DJR は MG5aMC\_PY8\_interface を直接走らせて得る（\texttt{HistFile:name}、\texttt{LHEFInputs:nSubruns = 1}、\texttt{Main:subrun = 0} を指定する）。
 \item \MGaMC{} は \texttt{main164} を並列の仕事（この Mac では14）に分けて走らせる。ログには仕事ごとの Pythia::stat の表が並び、各表に、ジェットの数ごと（user classification code 0、1、2）の試行と受け入れの数がある。\texttt{Matched cross-section} は4桁しか表示しないので、受け入れの数から求め直せる。
 \item \texttt{main164} を単独で走らせると、\texttt{Main:numberOfEvents = -1} を受け付けない（\MGaMC{} は事象の数を書き入れてから走らせる）。
-\item \MGaMC{} の Pythia の card は \texttt{PDF:pSet} を設定しないので、シャワーの ISR は run\_card の PDF によらず Pythia の既定の NNPDF2.3 LO を使う。MLM のマッチングでは、行列要素の PDF と食い違うと DJR に段差が出る（表~\ref{tab:lhc2tests} の 5、6）。
+\item \MGaMC{} の Pythia の card は \texttt{PDF:pSet} を設定しないので、シャワーの ISR は run\_card の PDF によらず Pythia の既定の NNPDF2.3 LO を使う。\texttt{set PDF:pSet LHAPDF6:<組>} で渡せる。
+\item MG5aMC\_PY8\_interface が図にする DJR は、マッチングの内部の量（$k_T$、$R=1$、\texttt{getDJR}）ではない。どのマッチングの方式でも同じに定義するため、色を持つ終状態の粒子とハドロン（ビームの残りを含む）で $|\eta|<4.4$ のものに、$k_T$、$R=0.4$ の \texttt{SlowJet} をかけたものである（ソースの注記）。\texttt{main164} の \texttt{Main:InternalAnalysis} も同じ定義である。
 \item MPI とハドロン化を入れた HepMC の出力は、gzip で 10000 事象あたり 0.79 GB になる。使わないときは Pythia の card で \texttt{HEPMCoutput:file = /dev/null} にする。
 \item \MGaMC{} の \texttt{install} は、そのたびに \texttt{package\_info.dat} と installer 一式を取得し、置き場所（madgraph.mi.infn.it、madgraph.phys.ucl.ac.be）はそのときによって変わる。
 \end{itemize}
 
-\paragraph{使い方。}\MGaMC{} の \texttt{launch} の最初の問いで \texttt{shower=Pythia8} とする。MLM は run\_card の \texttt{ickkw = 1} と \texttt{xqcut}、Pythia の card の \texttt{JetMatching:qCut} で指定する。照合は \nolinkurl{tests/lhc/run_stage2.sh} で実行し直す（約20分）。
+\paragraph{使い方。}\MGaMC{} の \texttt{launch} の最初の問いで \texttt{shower=Pythia8} とする。MLM は run\_card の \texttt{ickkw = 1} と \texttt{xqcut}、Pythia の card の \texttt{JetMatching:qCut} で指定する。照合は \nolinkurl{tests/lhc/run_stage2.sh} で実行し直す（約45分）。
 \begin{Verbatim}
 launch <proc>
 shower=Pythia8
@@ -1350,7 +1364,8 @@ set ickkw 1
 set xqcut 20
 set JetMatching:qCut 30
 set HEPMCoutput:file /dev/null            # no HepMC (0.79 GB per 10^4 events otherwise)
-set PDF:pSet LHAPDF6:NNPDF40_nlo_as_01180  # the shower's PDF = the matrix elements' (tried only in the interface's card)
+set PDF:pSet LHAPDF6:NNPDF40_nlo_as_01180  # the shower's PDF = the matrix elements'
+set JetMatching:doShowerKt on               # the shower-kT MLM: the smallest DJR step here
 done
 # DJRs of the matching itself (main164, which MG5 uses, writes none):
 ~/hep/MG5_aMC_v3_8_1/HEPTools/MG5aMC_PY8_interface/MG5aMC_PY8_interface run.cmnd   # writes <HistFile:name>djrs.dat
@@ -1363,7 +1378,7 @@ cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage2.sh
 
 \paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
 
-\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1、2 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR に、行列要素とシャワーの PDF の食い違いによる段差が見つかった。PDF をそろえても残る約 $2\sigma$ の段差と、自分の DJR がマッチング自身の DJR と統計の範囲で合わない理由は、まだ分かっていない。
+\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1、2 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR の 0 と 1 のジェットの境目に、15〜25\% の継ぎ目が残ることが分かった（PDF をそろえ、シャワーの $k_T$ の方式を使うと小さくなる）。ジェットの $p_T$ がマッチングの目盛りの付近にある量を扱うときは、NLO のマッチングを入れることを考える。
 
 \appendix
 
