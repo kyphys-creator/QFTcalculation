@@ -8,7 +8,8 @@
 #   pySecDec, feyntrop on the d = 4 two-loop self-energy (about 12 minutes).
 #   --lhc re-runs the checks of the LHC tools (environment.pdf, Sec. 9) in ./lhc: stage 1, LHAPDF and the PDF sets
 #   (sum rules; p p -> e+ e- and g g -> H in MG5 against own integrals; about 1 minute); stage 2, Pythia 8 and HepMC
-#   (shower, conservation laws, MLM matching and DJRs; about 45 minutes, 3.5 GB in lhc/out).
+#   (shower, conservation laws, MLM matching and DJRs; about 45 minutes, 3.5 GB in lhc/out); stage 3, ROOT and Delphes
+#   (GenJets against own FastJet, the efficiencies and smearing against the card; about 1.5 minutes).
 # Test files are named test_*: a file called formcalc.wl in the working directory would
 # shadow the FormCalc package (macOS file names are case-insensitive).
 cd "$(dirname "$0")"
@@ -73,5 +74,7 @@ if [ "$LHC" = 1 ]; then
   ./lhc/run_stage1.sh 2>&1 | tee -a "$log"
   step "LHC tools, stage 2: Pythia 8.317 and HepMC 2.06.09 (shower, conservation, MLM matching, DJRs)"
   ./lhc/run_stage2.sh 2>&1 | tee -a "$log"
+  step "LHC tools, stage 3: ROOT 6.32.14, Delphes 3.5.1, FastJet (GenJets, efficiencies, smearing)"
+  ./lhc/run_stage3.sh 2>&1 | grep -v "^#" | tee -a "$log"
 fi
 echo "done; full log in $log"

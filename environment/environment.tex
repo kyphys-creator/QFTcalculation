@@ -1190,9 +1190,9 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 
 \section{LHC の現象論の道具の追加}\label{sec:lhc}
 
-2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）と段階 2（Pythia 8 と HepMC）を記録する。
+2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）を記録する。
 
-どちらの段階も Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
+どの段階も Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
 
 \begin{table}[htbp]
 \centering\small
@@ -1372,13 +1372,73 @@ done
 cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage2.sh
 \end{Verbatim}
 
+\subsection{段階 3：ROOT、Delphes、FastJet}\label{sec:lhc3}
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 3 で入れたものの版、配置、入手元。大きさは取得したもの。}
+\label{tab:lhc3}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.0cm}>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.0cm}}
+\toprule
+\textbf{もの} & \textbf{版} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+ROOT & 6.32.14 & \pth{hep/root-6.32.14}（公式のビルド済みの tarball、macOS 15.5、Apple clang 17.0。展開して 704 MB） & root.cern~\cite{root,url:root}（305.9 MB） \\
+Delphes（FastJet を同梱） & 3.5.1 & \pth{hep/MG5_aMC_v3_8_1/Delphes}（\MGaMC{} の \texttt{install Delphes}） & GitHub のタグ~\cite{delphes,url:delphes}（5.0 MB） \\
+uproot、awkward、awkward-cpp、fastjet、vector、cramjam、xxhash、fsspec & 5.7.7、2.14.0、57、3.5.2.0、1.9.0、2.14.0、4.0.2、2026.9.0 & 仮想環境 \pth{hep/opt/lhc}（miniforge の base の上、\texttt{--system-site-packages}） & PyPI（計 7.5 MB。fastjet は FastJet 3.5.2~\cite{fastjet}） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{導入。}ROOT は Homebrew では入れなかった。本稿の記録では、Homebrew は依存のために Python や openssl を入れ替えようとしたからである。公式の配布のうち、この Mac と同じ macOS 15.5、Apple clang 17.0 で作られた長期サポートの版 6.32.14 を選んだ。これより新しい版は macOS 15.7 で作られている。展開した ROOT の \texttt{libCling.so} は、MacPorts の zstd（\texttt{/opt/local/lib/libzstd.1.dylib}）を参照していて読み込めなかった。この参照を \texttt{install\_name\_tool} で Homebrew の zstd 1.5.7 に付け替え、その場の署名（\texttt{codesign -f -s -}）をし直した（元のファイルは \texttt{libCling.so.orig-macports-zstd} に残した）。ほかに MacPorts と XQuartz を参照するライブラリが8つある（\texttt{libASImage}、\texttt{libEve}、\texttt{libFTGL}、\texttt{libRDAVIX}、\texttt{libRGL}、\texttt{libROOTTMVASofieParser}、\texttt{libXMLParser}、\texttt{libXrdXml}）。これらは画像、3次元の表示、XML、TMVA などで、\texttt{root-config --libs} にも Delphes にも入らないので、直していない。Delphes は \MGaMC{} の \texttt{install Delphes} で、\texttt{ROOTSYS} を指定して入れた。Python の道具は、base を変えないように仮想環境に \texttt{--no-deps} で版を固定して入れた。取得したのは承認した10個（ROOT、\texttt{package\_info.dat}、Delphes、Python の8つ）だけである。ただし、承認の前に Delphes の tarball の大きさを調べる際、GitHub が範囲の指定を無視したため、tarball 全体（5.0 MB）を一度取得して捨てた。
+
+\paragraph{検証。}結果を表~\ref{tab:lhc3tests} にまとめる（\nolinkurl{tests/lhc/run_stage3.sh}、約1.5分）。$pp\to e^+e^-$（10000 事象、行列要素とシャワーの PDF は NNPDF4.0）を、\MGaMC{} から \texttt{detector=Delphes} で走らせ、さらに同じ HepMC を、CMS の card に枝を足した \nolinkurl{tests/lhc/cards/delphes_card_CMS_checks.tcl} で Delphes に通した。足した枝は、電子の飛跡の効率、運動量のぼかし、電子の効率の各モジュールの前後の候補である。
+
+GenJet は、CMS の card の定義（anti-$k_T$、$R=0.5$、$p_T>20$~GeV、安定な粒子からニュートリノを除いたもの）で、自分の FastJet の結果と全事象で一致した。二つの効率は、モジュールの前後の候補の数の比を card の式と比べ、二項分布の誤差の範囲で一致した。ここで、Delphes の \texttt{Efficiency} と \texttt{MomentumSmearing} は、式に入れる $\eta$ を、運動量ではなく、カロリメーターまで伝播させた候補の\textbf{位置}の $\eta$（Track の \texttt{EtaOuter}）でとる（\texttt{UseMomentumVector} を指定したときだけ運動量の $\eta$）。初めは運動量の $\eta$ で領域を分けていて、低い $p_T$ の飛跡の効率が合わなかった。磁場で大きく曲がる電子は端の面に当たり、位置の $\eta$ が 2.5 を超えて効率 0 になる。運動量のぼかしは、card の分解能（上限 1）の幅の対数正規分布として一致した。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 3 の検証の結果。$pp\to e^+e^-$（13 TeV、$60<m_{ee}<120$~GeV、10000 事象）、Delphes の CMS の card。効率の領域は card の式のもの（位置の $\eta$）。}
+\label{tab:lhc3tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.6cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & ROOT 6.32.14 & 解釈器、\texttt{TLorentzVector}、\texttt{TTree} の書き込みと読み出し & 不変質量と平均が手の値と 12 桁、6 桁で一致 & 一致 \\
+2 & \MGaMC{} の \texttt{detector=Delphes} & 全事象が Delphes の木に入る & 10000 事象 & 一致 \\
+3 & GenJet & 自分の anti-$k_T$（FastJet 3.5、Python）と事象ごとに一致 & 20830 本、ジェットの数が全事象で同じ。$p_T$、$\eta$、$\phi$ の差は $1.0\times10^{-7}$、$3.0\times10^{-7}$、$1.5\times10^{-7}$（float の精度） & 一致 \\
+4 & 電子の飛跡の効率 & card の式（6つの領域） & 0.713、0.946、1.000、0.486、0.834、0.854。pull は $-0.36$〜$+0.81$、$\chi^2=5.0$ & 一致 \\
+5 & 電子の効率 & card の式（0.95、0.85） & $0.9506\pm0.0024$、$0.8569\pm0.0056$（$\chi^2=1.6$） & 一致 \\
+6 & 電子の運動量のぼかし & $(p_T'/p_T-1)/\sigma$ の幅が 1 & 0.985、1.017、1.021（$\pm0.010$〜0.013） & 一致 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}導入と照合の途中で、次のことが分かった。
+\begin{itemize}
+\item ROOT の公式の macOS 用のビルドは、MacPorts（\texttt{/opt/local}）と XQuartz（\texttt{/opt/X11}）のライブラリを絶対パスで参照する。どちらもない Mac では、解釈器（\texttt{libCling.so}、zstd）を含む9つのライブラリが読み込めない。\texttt{install\_name\_tool} で付け替えたら、arm64 の macOS では署名をし直さないと読み込めない。Homebrew の zstd を消したり、互換の版が変わったりすると、また読めなくなる。
+\item Delphes の CMS の card には \texttt{RandomSeed} がないので、Delphes は時刻などから種を決め、実行のたびに結果が変わる。種を固定しない8回と、種を 1〜8 に固定した8回のうち、固定しない最初の1回だけ、310 事象目の \texttt{SimpleCalorimeter::Process()} でセグメンテーション違反が起きた。ほかの15回では再現しなかった。確かめの card では \texttt{set RandomSeed 1} とした。結果を再現したい場合は、\MGaMC{} の Delphes の card にも種を書く。
+\item Delphes の \texttt{Efficiency} と \texttt{MomentumSmearing} の式の $\eta$、$\phi$ は、候補の位置（伝播の後）のものである。Delphes の出力で効率や分解能を確かめるときは、Track の \texttt{EtaOuter} で分ける。
+\item CMS の card の GenJet と、検出器のジェット（\texttt{FastJetFinder}）は anti-$k_T$ の $R=0.5$ である（$R=0.4$ ではない）。検出器のジェットには、そのあと \texttt{JetEnergyScale} が掛かる。
+\item 仮想環境では、base の s3fs が要求する fsspec 2026.2.0 ではなく 2026.9.0 が見える（uproot が 2026.2.0 を除くため）。base の中では変わらない。
+\end{itemize}
+
+\paragraph{使い方。}ROOT と Delphes を使うシェルでは、次のように環境を設定する。照合は \nolinkurl{tests/lhc/run_stage3.sh} で実行し直す（約1.5分）。
+\begin{Verbatim}
+export ROOTSYS=$HOME/hep/root-6.32.14 PATH=$HOME/hep/root-6.32.14/bin:$PATH
+D=$HOME/hep/MG5_aMC_v3_8_1/Delphes
+gzip -dc events.hepmc.gz | $D/DelphesHepMC2 $D/cards/delphes_card_CMS.tcl out.root -     # add "set RandomSeed <n>"
+~/hep/opt/lhc/bin/python -c "import uproot; t = uproot.open('out.root')['Delphes']; print(t['Jet.PT'].array())"
+# in MG5: launch <proc>, then shower=Pythia8 and detector=Delphes
+cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage3.sh
+\end{Verbatim}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{検証していないこと。}今回の検証は、各ツールが起動し、代表的な計算で正しい値を返すことの確認である。次の機能は確かめていない。FormCalc が生成する数値計算用 Fortran コードのコンパイルと実行、MadGraph の NLO の断面積の計算（\texttt{[QCD]}、実の放射を含む \texttt{[QED]}）、Mathematica 14.1.0 での動作である。はじめ確かめていなかった NLOCT の対抗項と NLO 用 UFO は、その後 $\phi^3$、擬スカラー湯川、スピノル QED のノート~\cite{phi3note,yukawanote,qednote} で、手計算の対抗項と記号として一致し、MadLoop の値も手計算の式と倍精度の範囲で一致した（第~\ref{sec:issues} 節の回避策のもとで）。FormCalc の記号の計算と LoopTools の組、MadLoop のループで誘起される過程（\texttt{[sqrvirt=QED]}）と MadEvent（\texttt{[noborn=QED]}）も、スピノル QED のノートで確かめた。また、MadGraph の $gg\to H$ には独立な検算がない。表~\ref{tab:tests} の LoopTools の $C_0$ の検算は外運動量がゼロの点だけで、外運動量がゼロでない場合の誤りはその後に見つかった（第~\ref{sec:issues} 節）。これらを使う計算の前には、既知の結果の再現を最初に確かめるべきである。熱的な道具（第~\ref{sec:thermal} 節）は、1成分の実スカラーの模型でだけ確かめた。ゲージ場やフェルミオンを含む模型、DRalgo の2ループの有効ポテンシャル、多成分の場の相転移、Matchete による零温度の EFT の matching は試していない。WallGo は局所熱平衡の壁の速さだけを確かめ、平衡からずれた粒子を含む壁の速さの計算は試していない。2ループの道具（第~\ref{sec:twoloop} 節）は、質量が一つの2ループの自己エネルギーでだけ確かめた。多くの質量や外線を持つ積分、FIRE の MPI と多素数のモード、Kira の FireFly による再構成、pySecDec の領域展開、AMFlow の高ループの積分は試していない。
 
 \paragraph{保守上の注意。}FeynRules 2.3.49 は2021年から更新されておらず、\texttt{FeynRules.m} と \texttt{Core/Loop.m} の二つの局所パッチを前提に動いている。FeynRules を入れ直したときは、\ref{app:files} の差分を当て直す必要がある。Package-X は開発が止まっており、$O(\epsilon)$ の項を持たない。FeynCalc の公式インストーラは、タグではなく安定版の枝（\texttt{hotfix-stable}）を取得する。今回入ったのは 10.2.1 だが、次に実行したときに同じ版になるとは限らない。FORM は 5.0.0 と 5.0.1 に深刻なバグがあったので、5.0.2 より古い版には戻さない。Mathematica 14.3.0 では素の FeynArts 3.12 が模型の初期化で落ちる（表~\ref{tab:issues2e}）ので、Mathematica を更新したら、FeynArts と FormCalc の試験が通ることを先に確かめる。macOS や Homebrew の gcc を更新すると、SDKROOT や gfortran の挙動が変わりうる（gcc は 14.2 と 15.2 の二つが入っている）。いずれの場合も、更新のあとに \texttt{run\_all.sh} を実行して表~\ref{tab:tests} の値を再現できることを確かめる。熱的な道具では、Matchete に版の付いた配布がないので、入れ直すときは記録したコミットを指定する。CosmoTransitions は \texttt{np.product} を補って numpy 2 で使っているので、numpy を更新したときは第~\ref{sec:thermal} 節の照合のスクリプトを実行し直す。PhaseTracer2 と BSMPT は Homebrew の Boost、Eigen、GSL、NLopt の共有ライブラリにつないでいるので、これらを更新したら \nolinkurl{run_review_tools_check.sh} を実行し直す。Kira は \texttt{-O2} で構築する（\texttt{-O3} は誤る）。FIRE と feyntrop は Homebrew の LLVM の libc++ と libomp に、FIRE の fuel は記録したコミットの FLINT につないでいるので、LLVM を更新したら構築し直して \nolinkurl{run_twoloop4_check.sh} を実行する。MadGraph を更新したら、\nolinkurl{mg5_tpole.py} の書き換え（\texttt{Source/dsample.f} の \texttt{setgrid}、\texttt{SubProcesses/myamp.f} の \texttt{set\_peaks}）が新しい版のソースに当てはまるか、UFO の小数の切り詰めが残っているかを確かめる。
 
-\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1、2 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR の 0 と 1 のジェットの境目に、15〜25\% の継ぎ目が残ることが分かった（PDF をそろえ、シャワーの $k_T$ の方式を使うと小さくなる）。ジェットの $p_T$ がマッチングの目盛りの付近にある量を扱うときは、NLO のマッチングを入れることを考える。
+\paragraph{今後。}レビューが推奨した構成のうち、EFT・暗黒物質用のツール（DsixTools、wilson、DirectDM、MadDM）は、まだ入れていない。2ループ用のツールは、Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 を入れた（第~\ref{sec:twoloop} 節）。熱的な道具は、レビューに挙がったものをすべて入れ、壁の速さの WallGo も加えた（第~\ref{sec:thermal} 節）。WallGo で平衡からずれた粒子の摩擦を求めるには、WallGoMatrix と WallGoCollision が要る。メモリ 16 GB の制約から、大規模な IBP 簡約はこの Mac では難しい。退避した自作の模型を git で管理するかどうかも、まだ決めていない。LHC の現象論の道具は、計画の6段階のうち段階 1〜3 を入れた（第~\ref{sec:lhc} 節）。段階 2 で、MLM のマッチングの DJR の 0 と 1 のジェットの境目に、15〜25\% の継ぎ目が残ることが分かった（PDF をそろえ、シャワーの $k_T$ の方式を使うと小さくなる）。ジェットの $p_T$ がマッチングの目盛りの付近にある量を扱うときは、NLO のマッチングを入れることを考える。
 
 \appendix
 
@@ -1561,6 +1621,11 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{url:pythia} PYTHIA. \url{https://pythia.org/}
 \bibitem{hepmc} M. Dobbs, J. B. Hansen, ``The HepMC C++ Monte Carlo event record for High Energy Physics,'' Comput.Phys.Commun. \textbf{134} (2001) 41.
 \bibitem{mlm} M. L. Mangano, M. Moretti, F. Piccinini, M. Treccani, ``Matching matrix elements and shower evolution for top-quark production in hadronic collisions,'' JHEP \textbf{01} (2007) 013, \href{https://arxiv.org/abs/hep-ph/0611129}{arXiv:hep-ph/0611129}.
+\bibitem{root} R. Brun, F. Rademakers, ``ROOT --- an object oriented data analysis framework,'' Nucl.Instrum.Meth.A \textbf{389} (1997) 81.
+\bibitem{url:root} ROOT. \url{https://root.cern/}
+\bibitem{delphes} J. de Favereau \textit{et al.} (DELPHES 3), ``DELPHES 3: a modular framework for fast simulation of a generic collider experiment,'' JHEP \textbf{02} (2014) 057, \href{https://arxiv.org/abs/1307.6346}{arXiv:1307.6346}.
+\bibitem{url:delphes} Delphes. \url{https://github.com/delphes/delphes}
+\bibitem{fastjet} M. Cacciari, G. P. Salam, G. Soyez, ``FastJet user manual,'' Eur.Phys.J.C \textbf{72} (2012) 1896, \href{https://arxiv.org/abs/1111.6097}{arXiv:1111.6097}.
 \bibitem{url:feynmaster} D. Fontes, J. C. Rom\~ao, FeynMaster Manual v2（Mathematica 14 での FeynRules の \texttt{MatrixSymbol} の扱い）. \url{https://porthos.tecnico.ulisboa.pt/FeynMaster/Manual/Manual-v2.pdf}
 \bibitem{phi34thermal} $\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波（本リポジトリ \nolinkurl{models/phi34_thermal/ResearchNote/note.pdf}）。熱的な道具との照合は第7節と付録~H。
 \bibitem{cosmotransitions} C. L. Wainwright, ``CosmoTransitions: computing cosmological phase transition temperatures and bubble profiles with multiple fields,'' Comput.Phys.Commun. \textbf{183} (2012) 2006, \href{https://arxiv.org/abs/1109.4189}{arXiv:1109.4189}.
