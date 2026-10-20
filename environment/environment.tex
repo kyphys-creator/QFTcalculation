@@ -9,7 +9,9 @@
 \usepackage{booktabs,tabularx,array}
 \usepackage[table]{xcolor}
 \usepackage{tikz}
-\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds}
+\usetikzlibrary{positioning,arrows.meta,calc,fit,backgrounds,decorations.pathreplacing}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 \usepackage[font=small,labelfont=bf]{caption}
 \usepackage{fancyvrb,fvextra}
 \usepackage{xurl}
@@ -55,7 +57,7 @@
 
 \section{はじめに}\label{sec:intro}
 
-本稿の問いは次の一つである。\textbf{この Mac で1ループ計算を正しく、かつ再現可能に行うために、どのような環境を組み、それが正しく動くことをどう確かめたか。}環境を組み直した理由は、旧環境に五つの問題があったことである。FeynCalc は 10.1.0 で、外部ツールとの連携を担う FeynHelpers が入っていなかった。LoopTools はビルドされておらず、Package-X は難読化された旧配布版だった。FormCalc に付属する FORM の実行ファイルは、検証のために起動した直後に macOS によって削除された。FeynRules は Mathematica 14 で読み込むたびにエラーを出した。さらに、同じツールのコピーが Library・Documents・Downloads・Dropbox に散らばり、どれが使われているのか分からなかった。そこで同じリポジトリのレビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、1ループの中核部分を導入することにした。2ループ用のツールと、EFT・暗黒物質用のツールは、当初は本稿の範囲外とした。その後、模型の検算や現象論に進むために、熱的ループと相転移の道具（第~\ref{sec:thermal} 節）、2ループの道具（第~\ref{sec:twoloop} 節）、LHC の現象論の道具（第~\ref{sec:lhc} 節）、EFT・暗黒物質の道具（第~\ref{sec:eftdm} 節）を順に加えた。
+本稿の問いは次の一つである。\textbf{この Mac で1ループ計算を正しく、かつ再現可能に行うために、どのような環境を組み、それが正しく動くことをどう確かめたか。}環境を組み直した理由は、旧環境に五つの問題があったことである。FeynCalc は 10.1.0 で、外部ツールとの連携を担う FeynHelpers が入っていなかった。LoopTools はビルドされておらず、Package-X は難読化された旧配布版だった。FormCalc に付属する FORM の実行ファイルは、検証のために起動した直後に macOS によって削除された。FeynRules は Mathematica 14 で読み込むたびにエラーを出した。さらに、同じツールのコピーが Library・Documents・Downloads・Dropbox に散らばり、どれが使われているのか分からなかった。そこで同じリポジトリのレビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、1ループの中核部分を導入することにした。2ループ用のツールと、EFT・暗黒物質用のツールは、当初は本稿の範囲外とした。その後、模型の検算や現象論に進むために、熱的ループと相転移の道具（第~\ref{sec:thermal} 節）、2ループの道具（第~\ref{sec:twoloop} 節）、LHC の現象論の道具（第~\ref{sec:lhc} 節）、EFT・暗黒物質の道具（第~\ref{sec:eftdm} 節）を順に加えた。その経過を図~\ref{fig:timeline} に示す。
 
 \paragraph{設定。}対象とする計算機と、ビルドに使った共通の基盤を表~\ref{tab:machine} に示す。Mathematica は 14.2.1（\texttt{/Applications/Wolfram 2.app}）と 14.1.0（\texttt{/Applications/Wolfram.app}）の二つが入っている。両者は同じ \texttt{\$UserBaseDirectory}（\pth{Library/Wolfram}）を参照するので、パッケージはどちらからも見える。ビルドと検証には 14.2.1 だけを使った。
 
@@ -108,6 +110,55 @@ quarantine & macOS がダウンロードしたファイルに付ける拡張属�
 \end{table}
 
 本稿の構成は次の通りである。第~\ref{sec:migration} 節で旧環境の撤去と自作模型の退避を、第~\ref{sec:layout} 節で導入した構成を述べる。第~\ref{sec:issues} 節では、この Mac に固有の障害と、のちの模型の検算で分かったツールの問題とその対処を、第~\ref{sec:tests} 節では検証の方法と結果を示す。第~\ref{sec:usage} 節に使い方を、第~\ref{sec:thermal} 節、第~\ref{sec:twoloop} 節、第~\ref{sec:lhc} 節、第~\ref{sec:eftdm} 節に後から加えた熱的な道具、2ループの道具、LHC の現象論の道具、EFT・暗黒物質の道具を、第~\ref{sec:discussion} 節に検証していない点と今後の課題をまとめる。付録には、ファイル配置、検算に使った解析式の導出、変更・作成したファイルの全文を載せる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  x=1.5cm,
+  ev/.style={draw=#1d,fill=#1f,rounded corners=2pt,text width=1.85cm,align=flush center,font=\scriptsize,inner sep=2pt},
+  nb/.style={draw=cQd,fill=cQf,rounded corners=2pt,align=flush center,font=\scriptsize,inner sep=1.5pt,minimum height=0.6cm},
+  pin/.style={black!45,thin},
+  band/.style={fill=black!3,draw=black!18,rounded corners=3pt},
+  btitle/.style={font=\scriptsize\bfseries,text=black!70},
+]
+\begin{scope}[on background layer]
+  \fill[band] (-0.7,2.35) rectangle (10.55,3.2);
+  \fill[band] (-0.7,0.5) rectangle (10.55,2.2);
+  \fill[band] (-0.7,-0.5) rectangle (10.55,-2.3);
+\end{scope}
+\node[btitle,anchor=west] at (-0.65,2.775) {Mac Studio（Apple M4 Max）};
+\node[btitle,anchor=west] at (4.1,1.75) {Apple M3 の Mac（表~\ref{tab:machine}）};
+\node[btitle,anchor=north west,align=left] at (-0.65,-0.55) {模型のノートの検算で\\分かった問題（第~\ref{sec:issues} 節）};
+% axis
+\draw[thick,black!60] (-0.6,0) -- (10.5,0);
+\foreach \d in {9,...,19} {
+  \draw[black!60] (\d-9,0.07) -- (\d-9,-0.07);
+  \node[font=\scriptsize,text=black!70] at (\d-9,-0.25) {10/\d};
+}
+% tool additions
+\node[ev=cO] (e9)  at (0,1.0)  {1ループの中核\\第~\ref{sec:layout} 節};
+\node[ev=cO] (e11) at (2,1.75) {熱的な道具\\第~\ref{sec:thermal} 節};
+\node[ev=cO] (e12) at (3,1.0)  {2ループの道具\\第~\ref{sec:twoloop} 節};
+\node[ev=cO] (e19a) at (8.62,2.775) {LHC の道具\\第~\ref{sec:lhc} 節};
+\node[ev=cO] (e19b) at (9.96,2.775) {EFT・暗黒物質\\第~\ref{sec:eftdm} 節};
+\foreach \n/\d in {e9/9,e11/11,e12/12} {
+  \draw[pin] (\n.south) -- (\d-9,0.07);
+  \fill[cOd] (\d-9,0) circle (1.6pt);
+}
+\draw[pin] (e19a.south) |- (10,2.2);
+\draw[pin] (e19b.south) -- (10,0.07);
+\fill[cOd] (10,0) circle (1.6pt);
+% problems found in the model notes
+\node[nb,minimum width=4.05cm] at (4,-1.05) {擬スカラー湯川、スピノル QED、QCD};
+\node[nb,minimum width=1.2cm] at (6,-1.80) {SM};
+\node[nb,minimum width=1.2cm] at (7,-1.05) {$\overline{\mathrm{MS}}$ の SM};
+\node[nb,minimum width=2.6cm] at (8.5,-1.80) {CKM};
+\node[nb,minimum width=2.6cm] at (9.5,-1.05) {NLO};
+\node[nb,minimum width=1.2cm] at (10,-1.80) {ヒッグス};
+\end{tikzpicture}
+\caption{環境を組んで道具を加えた経過。上の二段は道具を入れた日と計算機、下の段は模型のノートの検算でツールの問題が分かった期間である。ノートの検算では、ツールの版は変えていない。下の段の SM は $V_{\mathrm{CKM}}=1$ の最初の標準模型のノート~\cite{smnote}、$\overline{\mathrm{MS}}$ の SM はそれを作り直したノート~\cite{smmsbarnote}を表す。}
+\label{fig:timeline}
+\end{figure}
 
 \section{旧環境の撤去と自作模型の退避}\label{sec:migration}
 
@@ -934,13 +985,53 @@ wolframscript -file scat4_feyncalc.wl      # batch: Inspect cells skipped, (a)/(
 ~/miniforge3/envs/qft/bin/python scat4_numeric.py   # batch; in VS Code use "Run Cell" (# %%)
 \end{Verbatim}
 
-\paragraph{全スクリプトの変換と検証。}手順 (5) で試作したあと、$\phi^3$ 模型の残りのスクリプトも同じ形にした。合わせて25本（Wolfram 15本、Python 10本）である。Inspect セルで見えるものには、たとえば次がある。ラグランジアンと Feynman 則、ダイアグラム、図ごとの振幅のテンソル簡約の前後、$D=6-2\epsilon$ での Feynman パラメータ表示、極と対抗項、$\beta$ 関数、NLOCT の対抗項、振幅の $\mu$ 微分と期待される形との差、高エネルギーでの振幅の図である。変換では計算の行を打ち直さず、セルの印と Inspect セルを決まった位置に差し込むだけにした。そのための道具と、変換が結果を変えていないことを確かめる道具を \nolinkurl{environment/interactive/} に置いた（使い方は同じ場所の \nolinkurl{README.md}）。役割は次のとおりである。
+\paragraph{全スクリプトの変換と検証。}手順 (5) で試作したあと、$\phi^3$ 模型の残りのスクリプトも同じ形にした。合わせて25本（Wolfram 15本、Python 10本）である。Inspect セルで見えるものには、たとえば次がある。ラグランジアンと Feynman 則、ダイアグラム、図ごとの振幅のテンソル簡約の前後、$D=6-2\epsilon$ での Feynman パラメータ表示、極と対抗項、$\beta$ 関数、NLOCT の対抗項、振幅の $\mu$ 微分と期待される形との差、高エネルギーでの振幅の図である。変換では計算の行を打ち直さず、セルの印と Inspect セルを決まった位置に差し込むだけにした。そのための道具と、変換が結果を変えていないことを確かめる道具を \nolinkurl{environment/interactive/} に置いた（使い方は同じ場所の \nolinkurl{README.md}）。流れを図~\ref{fig:interactive} に示す。役割は次のとおりである。
 \begin{itemize}
 \item \texttt{wlcells.py} と \texttt{pycells.py}：変換。
 \item \texttt{nbcheck.wl}：見えないフロントエンドで Inspect セルを評価し、その出力を PDF に書き出す。
 \item \texttt{pycheck.py}：IPython のカーネルで1セルずつ実行する。
 \item \texttt{samefiles.sh}：書き出されたファイルをコミット済みの版と比べる。
 \end{itemize}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  bx/.style={draw=#1d,fill=#1f,rounded corners=2pt,text width=4.9cm,align=flush center,font=\footnotesize,inner sep=3pt,minimum height=1.25cm},
+  lab/.style={font=\scriptsize,fill=white,inner sep=1pt,align=flush center},
+  rowt/.style={font=\footnotesize\bfseries,anchor=east,text=black!70},
+]
+\begin{scope}[on background layer]
+  \fill[panel] (-3.15,0.85) rectangle (13.55,-0.85);
+  \fill[panel] (-3.15,-1.35) rectangle (13.55,-3.05);
+  \fill[panel] (-3.15,-3.55) rectangle (13.55,-5.25);
+\end{scope}
+\node[rowt] at (-2.05,0) {変換};
+\node[rowt] at (-2.05,-2.2) {実行};
+\node[rowt] at (-2.05,-4.4) {検証};
+% conversion
+\node[bx=cP,text width=3.9cm] (src) at (0.3,0) {元のスクリプト（まとめて実行）\\\texttt{x\_feyncalc.wl}、\texttt{x\_numeric.py}};
+\node[bx=cQ,text width=4.6cm] (cv) at (5.15,0) {\texttt{wlcells.py}、\texttt{pycells.py}\\セルの印と Inspect セルを差し込む。\\計算の行は打ち直さない};
+\node[bx=cP,text width=3.4cm] (dst) at (10.75,0) {同じファイル\\（セルに分かれた形）};
+\draw[flow] (src) -- (cv);
+\draw[flow] (cv) -- (dst);
+% three ways to run
+\node[bx=cO,text width=4.3cm] (r1) at (0.75,-2.2) {\texttt{wolframscript -file}、\texttt{python}\\まとめて実行。Inspect セルは\\評価せず、確認の行だけを出力};
+\node[bx=cM,text width=4.3cm] (r2) at (5.75,-2.2) {\texttt{wopen} $\to$ Mathematica 14.2.1\\ノートブック。「Run All Code」で\\Inspect セル（図、式、表）も評価};
+\node[bx=cO,text width=4.3cm] (r3) at (10.75,-2.2) {VS Code の「Run Cell」\\\texttt{\# \%\%} のセルを、環境 \texttt{qft} の\\カーネルで1つずつ実行};
+\draw[flow] (dst.south) -- ++(0,-0.25) -| (r1.north);
+\draw[flow] (dst.south) -- ++(0,-0.25) -| (r2.north);
+\draw[flow] (dst.south) -- (r3.north);
+% checks
+\node[bx=cG,text width=4.5cm] (c1) at (0.75,-4.4) {\texttt{samefiles.sh}\\CSV を1バイト単位で、PDF を\\文字で、コミット済みの版と比べる};
+\node[bx=cG,text width=4.3cm] (c2) at (5.75,-4.4) {\texttt{nbcheck.wl}\\見えないフロントエンドで Inspect\\セルを評価し、出力を PDF に};
+\node[bx=cG,text width=4.3cm] (c3) at (10.75,-4.4) {\texttt{pycheck.py}\\IPython のカーネルで1セルずつ\\実行し、出力と誤りを報告};
+\draw[flow,cGd] (r1) -- node[lab,right] {出力} (c1);
+\draw[flow,cGd,dashed] (r2) -- node[lab,right] {同じ評価} (c2);
+\draw[flow,cGd,dashed] (r3) -- node[lab,right] {同じ評価} (c3);
+\end{tikzpicture}
+\caption{スクリプトを対話的に実行できる形にする流れ。上の段の変換は、セルの印と、途中の対象を表示する Inspect セル（\texttt{If[\$Notebooks, ...]}）を決まった位置に差し込むだけで、計算の行には触れない。変換したファイルは、まとめても（左）、ノートブックや VS Code でセルごとにも（中、右）実行できる。下の段の道具が、まとめて実行した結果が変わらないこと（左）と、セルごとの評価が通ること（中、右。破線は、同じ評価を人の手を介さずに再現することを表す）を確かめる。道具は \nolinkurl{environment/interactive/} にある。}
+\label{fig:interactive}
+\end{figure}
 変換したスクリプトはすべてまとめて実行し、次を確かめた。書き出された CSV はコミット済みの版と1バイト単位で一致した。図の PDF は中身の文字が一致した。確認用の出力行も変わらなかった。FeynRules と NLOCT で作り直した模型のファイルは、生成日時の行だけが変わった。Inspect セルはすべて出力を返し、Python のセルもすべて誤りなく通った。
 
 途中で踏んだ落とし穴は四つある。第一に、フロントエンドはパッケージの形式のファイルを、セルの印と2行以上の空行でだけセルに分け、1行の空行では分けない。そのため、一つのセルに複数の文が入ることがある。たとえば \texttt{Get["FeynCalc\bq"]} と、ファイルの場所を決める文が同じセルに入る。第二に、見えないフロントエンドで評価する道具は、\texttt{wolframscript -file} ではなく、\texttt{-code} で \texttt{ReadString} から読み込む。\texttt{-file} では \texttt{\$InputFileName} が道具自身を指し、ノートブックと同じ空の状態にならないからである。セルは、\texttt{\$InputFileName} をファイルの場所に置き換えたうえで丸ごと評価する。また、道具の変数名はスクリプトの記号と衝突しないようにする。今回はスクリプトが \texttt{res} という名前を使っていて衝突した。第三に、\texttt{Paint} に \texttt{SheetHeader -> None} を付けると、\texttt{Render} が失敗する。第四に、zsh は引用符のない変数の中身を空白で分けない。そのため、複数のファイル名を一つの変数で渡すと、コピーや比較が黙って失敗する。比較の結果は、比べたファイルが実際にあることも含めて確かめる。
@@ -1132,7 +1223,7 @@ meson、ninja（構築用） & 1.12.1、1.13.2 & 仮想環境 \texttt{\textascii
 
 \paragraph{導入。}どれも \texttt{curl}、\texttt{git}、\texttt{pip} で取得した。Homebrew で新しく入れたのは GNU make だけである。Homebrew の GiNaC と meson は、python@3.15 と openssl@4 を入れ、python@3.14、readline、sqlite、xz、ca-certificates を更新しようとした。そこで CLN と GiNaC はソースから静的に \pth{hep} に構築し、meson と ninja は専用の仮想環境に入れた。Kira は meson で構築し、FireFly、FLINT、yaml-cpp を同梱の副計画として作った。FLINT の副計画は Homebrew の gmp の場所を知らないので、\texttt{LIBRARY\_PATH} を与えた。Fermat はフリーウェアで、機関や研究費のある利用者には1台あたり US\$75 の寄付が求められ、営利目的では使えない。寄付は利用者が判断する。FIRE は、README のとおり Homebrew の LLVM で構築した。Homebrew の clang は macOS の SDK を見つけないので、\texttt{-isysroot} を与える小さなスクリプトを置いた（\ref{app:files}）。その C++ の標準ライブラリのヘッダはシステムの libc++ にない記号を使うので、リンクでは Homebrew の libc++ をつないだ。FIRE の Makefile は \texttt{-Werror} で gcc 向けの警告を使うので、FIRE 用のスクリプトで \texttt{-Wno-error} を後ろに付けた。FIRE の式の簡約器 fuel が要る FLINT は、記録されたコミット（49b15d9、3.1.0-dev）を CMake で BLAS なしに構築した。Homebrew の FLINT 3.6 とは API が合わない。fuel の部分モジュールのうち、使わない pari と symbolica は取得しなかった（PARI の取得は非常に遅い）。zstd と snappy の圧縮は構築していない。FIRE は kyotocabinet を絶対パスでつなぐので、ソースのフォルダを動かさず、\pth{hep/FIRE-7.1} からリンクを張った。AMFlow は Mathematica のパッケージで、\texttt{ibp\_interface} の Kira と FIRE のパスを書き換えた（元のファイルは \texttt{.orig}）。C++ の微分方程式のソルバは、付属の \texttt{auto\_install.sh}（sudo を使い、\pth{.zshrc} を書き換える）を使わず、MPSolve と yaml-cpp を \pth{hep} に構築してから \texttt{make} で作った。pySecDec は PyPI のソースを \texttt{pip install --no-deps} で \texttt{qft} に入れた。依存の sympy を pip で入れると mpmath 1.4.1 が 1.3.0 に下げられるので、conda-forge から入れた。このとき gmpy2 が加わり、mpmath の下回りが gmpy に替わったので、mpmath を使う $\phi^3$ と $\phi^3+\phi^4$ のスクリプト8本を実行し直し、CSV が1バイト単位で、図が中身の文字で変わらないことを確かめた。pySecDec が生成する Makefile は GNU make 4 以上を要る（macOS の make は 3.81）。feyntrop は Homebrew の LLVM の OpenMP で構築した。TSIL は倍精度で構築した。Apple silicon では long double は double と同じなので、試験の基準も倍精度のものを使う。コマンドは \nolinkurl{files/build_commands.txt} の11番目の項目にある。
 
-\paragraph{検証。}各ツールの付属の試験と例を通し、$\phi^3$ のノートの手順 (16) で互いに突き合わせた。結果を表~\ref{tab:twolooptests} にまとめる。手順 (16) では、Kira と FIRE の簡約が記号として一致し、8個のマスター積分が四つの方法（AMFlow、TSIL、pySecDec、feyntrop）で一致し、自己エネルギーの有限部分が文献~\cite{tsil}の式と相対 $8\times10^{-14}$ 以内で一致した。細部はノートの第8節と付録~T、U にある。
+\paragraph{検証。}各ツールの付属の試験と例を通し、$\phi^3$ のノートの手順 (16) で互いに突き合わせた。結果を表~\ref{tab:twolooptests} に、手順 (16) の照合の流れを図~\ref{fig:twoloop} に示す。手順 (16) では、Kira と FIRE の簡約が記号として一致し、8個のマスター積分が四つの方法（AMFlow、TSIL、pySecDec、feyntrop）で一致し、自己エネルギーの有限部分が文献~\cite{tsil}の式と相対 $8\times10^{-14}$ 以内で一致した。細部はノートの第8節と付録~T、U にある。
 
 \begin{table}[hbp]
 \centering\small
@@ -1155,6 +1246,46 @@ meson、ninja（構築用） & 1.12.1、1.13.2 & 仮想環境 \texttt{\textascii
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  n/.style={draw=cOd,fill=cOf,rounded corners=2pt,text width=3.55cm,align=flush center,font=\footnotesize,inner sep=3pt,minimum height=1.25cm},
+  nm/.style={n,draw=cMd,fill=cMf},
+  ex/.style={draw=cGd,fill=cGf,rounded corners=3pt,align=flush center,font=\footnotesize,inner sep=4pt,line width=0.8pt},
+  bad/.style={draw=cRd,fill=cRf,rounded corners=2pt,text width=3.3cm,align=flush center,font=\scriptsize,inner sep=2pt},
+  lab/.style={font=\scriptsize,fill=white,inner sep=1pt,align=flush center},
+  e/.style={thick,black!60},
+]
+% integrals
+\node[nm,text width=11.6cm,minimum height=0.9cm] (FA) at (0,0) {$\phi^3$ 理論の $d=4$ の2ループの自己エネルギー（ノートの手順 (16)）\\FeynArts の図 $\to$ FeynCalc の積分族（\texttt{FCLoopFindIntegralMappings} で対称な積分をそろえる）};
+% IBP
+\node[n] (KI) at (-3.0,-1.9) {Kira 3.1 + Fermat 7.9b\\FeynHelpers の\\\texttt{KiraRunReduction}};
+\node[n] (FI) at (3.0,-1.9) {FIRE 7.1\\FeynHelpers の\\\texttt{FIRERunReduction}};
+\draw[flow] (FA.south -| KI.north) -- (KI.north);
+\draw[flow] (FA.south -| FI.north) -- (FI.north);
+\draw[e,cGd] (KI) -- node[lab,text=cGd] {IBP 簡約が\\記号として一致} (FI);
+\node[bad,anchor=east] at ([xshift=-0.35cm]KI.west) {\texttt{-O3} で構築した Kira は\\すべての積分を0に簡約した\\（\texttt{-O2} で構築する）};
+% masters
+\node[draw=black!50,fill=white,rounded corners=2pt,font=\footnotesize,inner sep=4pt] (MI) at (0,-3.55) {8個のマスター積分（4つの運動学の点）};
+\draw[flow] (KI.south) |- (MI.west);
+\draw[flow] (FI.south) |- (MI.east);
+% numerical evaluation
+\node[nm,text width=3.3cm] (AM) at (-6.15,-5.3) {AMFlow 2.0\\補助質量の流れ\\（30桁、IBP は Kira）};
+\node[n,text width=3.3cm]  (TS) at (-2.05,-5.3) {TSIL 1.46\\基底積分のライブラリ\\（C）};
+\node[n,text width=3.3cm]  (PS) at (2.05,-5.3)  {pySecDec 1.6.6\\セクター分解\\（Python）};
+\node[n,text width=3.3cm]  (FT) at (6.15,-5.3)  {feyntrop 1.1.0\\熱帯の Monte Carlo\\（Python）};
+\foreach \t in {AM,TS,PS,FT} \draw[flow] (MI.south) -- ++(0,-0.3) -| (\t.north);
+\draw[e,cGd] (AM.south) -- ++(0,-0.35) -| node[lab,text=cGd,pos=0.25] {$7.5\times10^{-14}$} (TS.south);
+\draw[e,cGd] (AM.south) -- ++(0,-0.6) -| node[lab,text=cGd,pos=0.25] {$\le2\times10^{-9}$} (PS.south);
+\draw[e,cGd] (AM.south) -- ++(0,-0.85) -| node[lab,text=cGd,pos=0.25] {$7\times10^{-4}$（誤差の範囲）} (FT.south);
+% result
+\node[ex,text width=11.6cm] (RES) at (0,-7.75) {\textbf{自己エネルギー}：極は AMFlow の30桁の値で29桁以上まで0。\\有限部分は文献~\cite{tsil}の $-(M+V)/2$ と相対 $8\times10^{-14}$ 以内で一致};
+\draw[flow,cGd] (4.1,-6.77) -- (4.1,-6.77 |- RES.north);
+\end{tikzpicture}
+\caption{2ループの道具の照合の流れ（$\phi^3$ 理論のノート~\cite{phi3note}の手順 (16)）。橙は Mathematica で動く道具、青はそれ以外である。二つの IBP 簡約が記号として一致し、マスター積分は AMFlow の値と三つの独立な方法で一致した（緑の数字は AMFlow の30桁の値との最大の相対差）。}
+\label{fig:twoloop}
+\end{figure}
 
 \paragraph{注意。}導入と照合の途中で、次のことが分かった。
 \begin{itemize}
@@ -1191,7 +1322,7 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 
 \section{LHC の現象論の道具の追加}\label{sec:lhc}
 
-2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）、段階 4（MadAnalysis5 と PADForSFS）、段階 5（pyhf、SModelS、HiggsTools）、段階 6（自作の $Z'$ の模型での通しの確かめ）を記録する。
+2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）、段階 4（MadAnalysis5 と PADForSFS）、段階 5（pyhf、SModelS、HiggsTools）、段階 6（自作の $Z'$ の模型での通しの確かめ）を記録する。道具のつながりと、各段階で何と照合したかを図~\ref{fig:lhcchain} に示す。
 
 どの段階も Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
 
@@ -1212,6 +1343,62 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  t/.style={draw=#1d,fill=#1f,rounded corners=2pt,text width=2.95cm,align=flush center,font=\footnotesize,inner sep=2.5pt,minimum height=1.55cm},
+  ck/.style={text=cGd,text width=3.25cm,align=flush center,font=\scriptsize,inner sep=1pt},
+  st/.style={draw=white,fill=black!65,text=white,font=\tiny\bfseries,inner sep=1pt,minimum height=0.36cm,minimum width=0.36cm,rounded corners=0.18cm},
+  lab/.style={font=\tiny,fill=white,inner sep=0.8pt},
+]
+% main chain
+\node[t=cM] (FR) at (1.475,0)   {\textbf{FeynRules 2.3.49}\\模型 $\to$ UFO};
+\node[t=cO] (MG) at (4.9,0)  {\textbf{\MGaMC{}}\\3.8.1\\+ LHAPDF 6.5.5\\行列要素、LHE};
+\node[t=cO] (PY) at (8.325,0)   {\textbf{Pythia 8.317}\\+ HepMC 2.06.09\\シャワー、MLM};
+% detector branch
+\node[t=cO] (DE) at (11.75,2.1)  {\textbf{Delphes 3.5.1}\\+ FastJet、ROOT\\検出器、ジェット};
+\node[t=cP] (OA) at (15.175,2.1)   {\textbf{自分の解析}\\uproot、fastjet\\選別、尤度、CLs};
+% recast branch
+\node[t=cO] (MA) at (11.75,-2.1) {\textbf{MadAnalysis5}\\1.11.0 + PADForSFS\\SFS、信号領域};
+\node[t=cO] (PH) at (15.175,-2.1)  {\textbf{pyhf 0.7.6}、Spey\\CLs、上限};
+% arrows
+\draw[flow] (FR) -- (MG);
+\draw[flow] (MG) -- (PY);
+\draw[flow] (PY.east) -- ++(0.22,0) coordinate (fork) |- (DE.west);
+\draw[flow] (fork) |- (MA.west);
+\node[lab,anchor=west] at ([xshift=1pt]fork) {HepMC};
+\draw[flow] (DE) -- (OA);
+\draw[flow] (MA) -- (PH);
+% stage badges
+\foreach \n/\s in {FR/6,MG/1,PY/2,DE/3,MA/4,PH/5} \node[st] at (\n.north west) {\s};
+\node[st] at (OA.north west) {3, 6};
+% checks
+\node[ck,anchor=north] at ([yshift=-2pt]FR.south) {$Z'f\bar f$ の頂点が SM.fr\\の $Zf\bar f$ と一致（6）};
+\node[ck,anchor=north] at ([yshift=-2pt]MG.south) {PDF の和則。$pp\to e^+e^-$ と\\$gg\to H$ を自分の積分と（1）。\\$Z'$ の幅と断面積（6）};
+\node[ck,anchor=north] at ([yshift=-2pt]PY.south) {$\sigma$ の不変、保存則、\\MLM の集計、DJR（2）};
+\node[ck,anchor=north] at ([yshift=-2pt]DE.south) {GenJet を自分の\\FastJet と、効率とぼかし\\を card の式と（3）};
+\node[ck,anchor=north] at ([yshift=-2pt]OA.south) {A$\times\varepsilon$、分解能、上限を\\ATLAS の公表の値と（6）};
+\node[ck,anchor=north] at ([yshift=-2pt]MA.south) {SFS の論文の\\カットフロー（4）};
+\node[ck,anchor=north] at ([yshift=-2pt]PH.south) {自分の CLs の式、\\1Lbb の尤度（5）};
+% event-free tools
+\begin{scope}[on background layer]
+  \fill[panel] (-0.1,-2.25) rectangle (8.3,-4.6);
+\end{scope}
+\node[font=\scriptsize\bfseries,text=black!60,anchor=north west] at (0.0,-2.3) {事象を作らない道具};
+\node[t=cO,text width=3.4cm,minimum height=1.0cm] (SM) at (2.1,-3.4) {\textbf{SModelS 3.2.1}\\$\sigma\times\mathrm{BR}$ を簡略模型の上限と};
+\node[t=cO,text width=3.4cm,minimum height=1.0cm] (HT) at (6.15,-3.4) {\textbf{HiggsTools 1.3}\\ヒッグスのノートの部分幅};
+\node[st] at (SM.north west) {5};
+\node[st] at (HT.north west) {5};
+\node[ck,anchor=north,text width=3.6cm] at ([yshift=-2pt]SM.south) {UL の地図の自分の補間、pyhf};
+\node[ck,anchor=north,text width=3.6cm] at ([yshift=-2pt]HT.south) {部分幅を入れ直して SM の $\chi^2$};
+% stage 6
+\draw[decorate,decoration={brace,amplitude=4pt,mirror},thick,black!55] (-0.05,-4.85) -- (16.65,-4.85)
+  node[midway,below=5pt,font=\footnotesize,align=center] {段階 6：自作の SSM の $Z'$ を FeynRules から上限まで通し、ATLAS の 139~fb$^{-1}$ のダイレプトンの探索（HEPData）と比べる};
+\end{tikzpicture}
+\caption{LHC の現象論の道具のつながりと、各段階の照合の相手（緑）。角の数字は段階を表す。Pythia の事象（HepMC）は二つの道に分かれる。上は Delphes で検出器を通し、ROOT の木を自分の Python の解析で読んで選別と上限を出す道（段階 3、6）、下は MadAnalysis5 の SFS で公表の探索の解析を再現し、信号領域の事象数から pyhf で上限を出す道（段階 4、5）である。SModelS と HiggsTools は事象を作らず、断面積や部分幅を直接使う。橙は Mathematica で動く道具、灰色は自分のスクリプトである。}
+\label{fig:lhcchain}
+\end{figure}
 
 \subsection{段階 1：LHAPDF と PDF の組}\label{sec:lhc1}
 
@@ -1309,7 +1496,7 @@ MG5aMC\_PY8\_interface & 1.3 & \texttt{H/MG5aMC\_PY8\_interface} & madgraph.phys
 
 \paragraph{導入。}\MGaMC{} の \texttt{install pythia8} を、段階 1 と同じく \MGaMC{} のディレクトリから \texttt{CC} と \texttt{CXX} を clang に固定して起動した（約20分）。installer は HepMC、zlib、Pythia の順に入れ、そのあと MG5aMC\_PY8\_interface を自動で入れた。取得したのは導入の前に承認を得た6つだけだが、installer 一式と MG5aMC\_PY8\_interface は、示した madgraph.mi.infn.it ではなく、同じものを置く madgraph.phys.ucl.ac.be から取った。\MGaMC{} は利用者の設定に \texttt{pythia8\_path} と \texttt{mg5amc\_py8\_interface\_path} を書く。
 
-\paragraph{検証。}結果を表~\ref{tab:lhc2tests} にまとめる（\nolinkurl{tests/lhc/run_stage2.sh}、約45分、\texttt{out/} は 3.5 GB）。シャワー、事象の記録、マッチングの集計は正しく動いた。MLM のマッチング~\cite{mlm}は、DJR（$k_T$ のクラスタリングで $n+1$ 個のジェットが $n$ 個になる目盛り）で確かめた。0 と 1 のジェットの境目（d01）では、マッチングの目盛り qCut を境に DJR の和が段差を持ち、20 万事象で $0.744\pm0.016$ 倍になった。1 と 2 のジェットの境目（d12）はなめらかだった（$0.98\pm0.04$）。
+\paragraph{検証。}結果を表~\ref{tab:lhc2tests} に、DJR の段差を図~\ref{fig:djr} にまとめる（\nolinkurl{tests/lhc/run_stage2.sh}、約45分、\texttt{out/} は 3.5 GB）。シャワー、事象の記録、マッチングの集計は正しく動いた。MLM のマッチング~\cite{mlm}は、DJR（$k_T$ のクラスタリングで $n+1$ 個のジェットが $n$ 個になる目盛り）で確かめた。0 と 1 のジェットの境目（d01）では、マッチングの目盛り qCut を境に DJR の和が段差を持ち、20 万事象で $0.744\pm0.016$ 倍になった。1 と 2 のジェットの境目（d12）はなめらかだった（$0.98\pm0.04$）。
 
 段差は、$\log$（DJR の和）を qCut のまわり（$|x|<0.36$、$x=\log_{10}\sqrt d-\log_{10}\mathrm{qCut}$）で、2次式と $x>0$ の段差の項の和に当てはめて測った。境目のない $\log_{10}\mathrm{qCut}\mp0.45$ で同じ当てはめをすると、20 万事象で $1.032\pm0.015$、$0.972\pm0.041$ になり、測り方に偏りがないことを確かめた。
 
@@ -1344,6 +1531,59 @@ MG5aMC\_PY8\_interface & 1.3 & \texttt{H/MG5aMC\_PY8\_interface} & madgraph.phys
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+  width=12.5cm, height=7.6cm,
+  xmin=0.6, xmax=1.1, ymin=0.4, ymax=10.6, y dir=reverse,
+  xlabel={DJR の和の段差の比（なめらかなら 1）},
+  ytick={1,...,10},
+  yticklabels={
+    対照：境目のない所（$-0.45$）,
+    対照：境目のない所（$+0.45$）,
+    d12：1 と 2 のジェットの境目,
+    d01：既定（PDF が食い違う）,
+    d01：PDF をそろえる,
+    d01：同、20 万事象,
+    d01：行列要素を nn23lo1 に,
+    d01：$\alpha_s$ もそろえる,
+    d01：qCut 25、40~GeV,
+    d01：シャワーの $k_T$ の MLM},
+  yticklabel style={font=\footnotesize},
+  xticklabel style={font=\footnotesize,/pgf/number format/fixed},
+  xtick={0.6,0.7,0.8,0.9,1.0,1.1},
+  tick align=outside, ytick style={draw=none},
+  xmajorgrids, grid style={black!10},
+  legend style={font=\scriptsize,at={(0.02,0.98)},anchor=north west,draw=black!30},
+  legend cell align=left,
+  clip=false,
+]
+\fill[cRf,opacity=0.5] (axis cs:0.6,3.5) rectangle (axis cs:1.1,10.5);
+\draw[black!55,dashed,thick] (axis cs:1,0.4) -- (axis cs:1,10.6);
+% xqcut 15, 20, 30 GeV (2 x 10^4 events each)
+\addplot[only marks,mark=o,mark size=2.2pt,cRd,thick] coordinates {(0.71,4) (0.72,5)};
+\addplot[only marks,mark=square,mark size=2.0pt,cRd,thick] coordinates {(0.70,4) (0.77,5)};
+\addplot[only marks,mark=triangle,mark size=2.6pt,cRd,thick] coordinates {(0.65,4) (0.78,5)};
+\legend{xqcut 15~GeV, xqcut 20~GeV, xqcut 30~GeV}
+% single settings without errors
+\addplot[only marks,mark=*,mark size=2.0pt,cRd,forget plot] coordinates {(0.81,7) (0.81,8) (0.74,9) (0.80,9)};
+% 2 x 10^5 events with statistical errors
+\addplot[only marks,mark=*,mark size=2.2pt,cRd,forget plot,error bars/.cd,x dir=both,x explicit] coordinates {
+  (0.744,6) +- (0.016,0)
+  (0.852,10) +- (0.018,0)};
+\addplot[only marks,mark=*,mark size=2.2pt,cGd,forget plot,error bars/.cd,x dir=both,x explicit] coordinates {
+  (1.032,1) +- (0.015,0)
+  (0.972,2) +- (0.041,0)
+  (0.981,3) +- (0.037,0)};
+\node[font=\scriptsize,anchor=west] at (axis cs:0.74,9) {\,25};
+\node[font=\scriptsize,anchor=west] at (axis cs:0.80,9) {\,40};
+\end{axis}
+\end{tikzpicture}
+\caption{段階 2 の MLM のマッチングの DJR の段差（表~\ref{tab:lhc2tests} の 6〜9）。$pp\to e^+e^-+0,1,2$ ジェット、qCut $=1.5\,$xqcut。段差は、DJR の和の $\log$ を qCut のまわりで2次式と段差の項に当てはめた比で、なめらかなら1（破線）である。緑は境目のない所と d12、赤（色を付けた範囲）は 0 と 1 のジェットの境目 d01 である。誤差の棒は 20 万事象の統計の誤差で、2 万事象の点には付けていない。どの設定でも d01 の段差は 1 に届かない。}
+\label{fig:djr}
+\end{figure}
 
 \paragraph{注意。}導入と照合の途中で、次のことが分かった。
 \begin{itemize}
@@ -1629,7 +1869,7 @@ ATLAS のダイレプトンの共鳴の探索（139 fb$^{-1}$~\cite{atlasll}）�
 \]
 \nolinkurl{tests/lhc/zprime/generate_zp.wl} は、制限 DiagonalCKM.rst と Massless.rst（$t$、$b$、$\tau$ だけが質量を持つ）のもとで、$Z'f\bar f$ の頂点を SM.fr の $Zf\bar f$ の頂点と比べ、UFO を書く。
 
-\paragraph{検証。}結果を表~\ref{tab:lhc6tests} にまとめる（\nolinkurl{tests/lhc/run_stage6.sh}、約20分、\texttt{out/zprime} に HepMC 2.4 GB と Delphes の出力 6 GB）。比べる相手は、自分の式と自分の積分、そして ATLAS の 139 fb$^{-1}$ のダイレプトンの共鳴の探索~\cite{atlasll}の HEPData（参照）である。
+\paragraph{検証。}結果を表~\ref{tab:lhc6tests} と図~\ref{fig:zprime} にまとめる（\nolinkurl{tests/lhc/run_stage6.sh}、約20分、\texttt{out/zprime} に HepMC 2.4 GB と Delphes の出力 6 GB）。比べる相手は、自分の式と自分の積分、そして ATLAS の 139 fb$^{-1}$ のダイレプトンの共鳴の探索~\cite{atlasll}の HEPData（参照）である。
 \begin{itemize}
 \item \textbf{模型。}$Z'f\bar f$ の12の頂点（世代ごとに展開）は、$Z'\to Z$、$g_{Z'}\to1$ とすると SM.fr の $Zf\bar f$ の頂点と符号まで一致した（$\gamma^\mu=\gamma^\mu P_L+\gamma^\mu P_R$ と $c_W^2+s_W^2=1$ を使って比べる）。
 \item \textbf{幅。}MadWidth の2体の崩壊の幅を、$\Gamma=\sum_f N_cM(e/s_Wc_W)^2\beta[g_V^2(1+2x)+g_A^2(1-4x)]/(48\pi)$（$g_V=g_L+g_R$、$g_A=g_L-g_R$、$g_L=T_3-Qs_W^2$、$g_R=-Qs_W^2$、$x=m_f^2/M^2$）と比べた。
@@ -1662,6 +1902,60 @@ ATLAS のダイレプトンの共鳴の探索（139 fb$^{-1}$~\cite{atlasll}）�
 \end{tabularx}
 \end{table}
 
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}
+\pgfplotsset{
+  zp/.style={
+    width=8.3cm, height=6.6cm,
+    xmin=0.3, xmax=6.2, xtick={0.5,1,2,3,4,5,6},
+    xlabel={$M_{Z'}$ [TeV]},
+    ticklabel style={font=\footnotesize},
+    label style={font=\footnotesize},
+    grid style={black!10}, major grid style={black!10},
+    legend style={font=\scriptsize,draw=black!30},
+    legend cell align=left,
+  },
+}
+\begin{axis}[zp, name=lim, ymode=log, ymin=1e-4, ymax=30, grid=major,
+  ylabel={観測の上限 $/\,\sigma_{\mathrm{SSM}}$},
+  legend style={at={(0.03,0.97)},anchor=north west}]
+\addplot[black!70,thick,mark=none] coordinates {
+  (0.5,0.0002218) (1,0.0009954) (2,0.003256) (3,0.01395) (4,0.1732) (4.5,0.3181) (5,0.8319) (5.5,2.527) (6,8.233)};
+\addplot[cOd,thick,mark=*,mark size=1.6pt] coordinates {
+  (0.5,0.0004009) (1,0.001274) (2,0.005016) (3,0.01855) (4,0.1761) (4.5,0.3576) (5,0.9317) (5.5,2.516) (6,9.558)};
+\addplot[cMd,thick,dashed,mark=o,mark size=1.6pt] coordinates {
+  (0.5,0.0003985) (1,0.001272) (2,0.004902) (3,0.01812) (4,0.1705) (4.5,0.3527) (5,0.8733) (5.5,2.404) (6,7.95)};
+\legend{ATLAS（NNLO の $\sigma_{\mathrm{SSM}}$）, 自分（ATLAS の card）, 自分（飛跡の孤立）}
+\draw[cRd,semithick,dashed] (axis cs:0.3,1) -- (axis cs:6.2,1);
+\node[font=\scriptsize,text=cRd,anchor=north west] at (axis cs:0.35,1) {除外の境目};
+\draw[cOd,thin] (axis cs:5.036,1e-4) -- (axis cs:5.036,1);
+\node[font=\scriptsize,text=cOd,anchor=south,rotate=90] at (axis cs:4.92,6e-4) {5.04 TeV};
+\end{axis}
+\begin{axis}[zp, at={(lim.east)}, anchor=west, xshift=1.35cm,
+  ymin=0.05, ymax=0.85, grid=major,
+  ylabel={A$\times\varepsilon$},
+  yticklabel style={/pgf/number format/fixed,/pgf/number format/precision=1},
+  legend style={at={(0.5,0.02)},anchor=south,legend columns=2}]
+\addplot[cRd,thick,mark=none] coordinates {
+  (0.5,0.687) (1,0.711) (2,0.731) (3,0.738) (4,0.741) (4.5,0.741) (5,0.742) (5.5,0.742) (6,0.741)};
+\addplot[cOd,thick,mark=none] coordinates {
+  (0.5,0.524) (1,0.503) (2,0.477) (3,0.457) (4,0.438) (4.5,0.426) (5,0.413) (5.5,0.397) (6,0.381)};
+\addplot[cRd,mark=*,mark size=1.6pt,only marks] coordinates {
+  (0.5,0.349) (1,0.393) (2,0.384) (3,0.368) (4,0.364) (4.5,0.343) (5,0.318) (5.5,0.312) (6,0.292)};
+\addplot[cOd,mark=*,mark size=1.6pt,only marks] coordinates {
+  (0.5,0.538) (1,0.643) (2,0.694) (3,0.667) (4,0.617) (4.5,0.582) (5,0.535) (5.5,0.502) (6,0.485)};
+\addplot[cRd,mark=o,mark size=1.6pt,only marks] coordinates {
+  (0.5,0.400) (1,0.456) (2,0.447) (3,0.420) (4,0.415) (4.5,0.398) (5,0.366) (5.5,0.351) (6,0.329)};
+\addplot[cOd,mark=o,mark size=1.6pt,only marks] coordinates {
+  (0.5,0.591) (1,0.704) (2,0.764) (3,0.733) (4,0.671) (4.5,0.631) (5,0.580) (5.5,0.533) (6,0.524)};
+\legend{$ee$：ATLAS, $\mu\mu$：ATLAS, $ee$：自分, $\mu\mu$：自分, $ee$：飛跡の孤立, $\mu\mu$：飛跡の孤立}
+\end{axis}
+\end{tikzpicture}
+\caption{段階 6 の SSM の $Z'$（13~TeV、139~fb$^{-1}$）。左：$\sigma\times B(Z'\to\ell\ell)$ の観測の上限と SSM の断面積の比（$ee$ と $\mu\mu$ を合わせたもの）。1 を下回る質量が除外される。自分の比は LO の断面積で割り、ATLAS の比（参照）は NNLO の断面積で割っているので、低い質量では自分の比が大きい。4〜5.5~TeV では 12\% 以内で合い、質量の下限は 5.04~TeV（ATLAS は 5.1~TeV）になった。右：信号の A$\times\varepsilon$。実線は ATLAS の spin-1 の選別の効率（参照）、塗りつぶした丸は Delphes の ATLAS の card、白抜きの丸は孤立を飛跡だけで取る card で、赤が $ee$、青が $\mu\mu$ である。電子の効率は ATLAS の半分ほどにとどまる（本文の注意）。数値は \nolinkurl{tests/lhc/run_stage6.sh} の出力から取った。}
+\label{fig:zprime}
+\end{figure}
+
 \paragraph{注意。}照合の途中で、次のことが分かった。
 \begin{itemize}
 \item \MGaMC{} は、$s$ チャンネルの指定 \texttt{p p > zp > l+ l-} では $Z'$ の仮想質量を \texttt{bwcutoff} で切らない（\texttt{SubProcesses/myamp.f}：切るのは崩壊の鎖で on-shell を強制した共鳴（\texttt{gForceBW = 1}）だけ）。重い $Z'$ では、パートンの光度が持ち上げる低い質量の裾が大きく、$|m-M|<2\Gamma$ の部分は 0.5 TeV で 84\%、5 TeV で 26\%、6 TeV で 11\% にすぎない。裾の遠い部分は \MGaMC{} の積分でよく拾えず、カットなしの断面積は自分の積分と最大 1.3\% ずれた。比べるときは \texttt{mmll} などで範囲を決める。
@@ -1683,7 +1977,7 @@ wolframscript -file zprime/generate_zp.wl $PWD/out/zprime     # vertices check, 
 
 \section{EFT・暗黒物質の道具の追加}\label{sec:eftdm}
 
-2026年10月19日に、レビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、まだ入れていなかった EFT・暗黒物質用の道具を加えた。SMEFT と低エネルギー EFT（WET、LEFT）の走行と整合の wilson~\cite{wilson} と DsixTools 2.1~\cite{dsixtools,dsixtools2}、直接検出の非相対論的 EFT への整合の DirectDM~\cite{directdm}、残存量・直接検出・間接検出の MadDM~\cite{maddm3,maddm32}、それに MadDM と独立な系統として micrOMEGAs 7.1~\cite{micromegas6} である。作業は第~\ref{sec:lhc} 節と同じ Mac Studio（Apple M4 Max、macOS 15.5）で行った。各段階で、自分の式とツールの出力、およびツールどうしを突き合わせた（表~\ref{tab:eftdmplan}）。照合はすべて \nolinkurl{tests/eftdm} にあり、\texttt{run\_all.sh --eftdm} で4段階をまとめて実行し直せる（段階 3 の間接検出の照合 \nolinkurl{tests/eftdm/run_stage3_id.sh}、\texttt{run\_stage3\_line.sh} を含めて約5分。ラインの照合は NLO の UFO を初めの一度だけ作り、そのときはさらに約5分かかる）。
+2026年10月19日に、レビュー（\nolinkurl{loop_tools_review/loop_tools_review.pdf}）が推奨した構成のうち、まだ入れていなかった EFT・暗黒物質用の道具を加えた。SMEFT と低エネルギー EFT（WET、LEFT）の走行と整合の wilson~\cite{wilson} と DsixTools 2.1~\cite{dsixtools,dsixtools2}、直接検出の非相対論的 EFT への整合の DirectDM~\cite{directdm}、残存量・直接検出・間接検出の MadDM~\cite{maddm3,maddm32}、それに MadDM と独立な系統として micrOMEGAs 7.1~\cite{micromegas6} である。作業は第~\ref{sec:lhc} 節と同じ Mac Studio（Apple M4 Max、macOS 15.5）で行った。各段階で、自分の式とツールの出力、およびツールどうしを突き合わせた（表~\ref{tab:eftdmplan}、図~\ref{fig:eftdm}）。照合はすべて \nolinkurl{tests/eftdm} にあり、\texttt{run\_all.sh --eftdm} で4段階をまとめて実行し直せる（段階 3 の間接検出の照合 \nolinkurl{tests/eftdm/run_stage3_id.sh}、\texttt{run\_stage3\_line.sh} を含めて約5分。ラインの照合は NLO の UFO を初めの一度だけ作り、そのときはさらに約5分かかる）。
 
 \begin{table}[htbp]
 \centering\small
@@ -1700,6 +1994,61 @@ wolframscript -file zprime/generate_zp.wl $PWD/out/zprime     # vertices check, 
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[
+  t/.style={draw=#1d,fill=#1f,rounded corners=2pt,align=flush center,font=\footnotesize,inner sep=2.5pt},
+  ck/.style={text=cGd,align=flush left,font=\scriptsize,inner sep=1pt},
+  sc/.style={font=\scriptsize,text=black!70,anchor=east},
+  lab/.style={font=\scriptsize,fill=black!3,inner sep=1pt},
+]
+\begin{scope}[on background layer]
+  \fill[panel] (-0.2,0.45) rectangle (7.6,-6.75);
+  \fill[panel] (7.85,0.45) rectangle (16.75,-6.75);
+\end{scope}
+\node[ptitle] at (3.7,0.45) {EFT の走行と整合（段階 1、2）};
+\node[ptitle] at (12.3,0.45) {暗黒物質の模型（段階 3、4）};
+% ---------- left: scales ----------
+\draw[-{Stealth[length=2mm]},thick,black!50] (0.9,-0.55) -- (0.9,-6.45);
+\node[sc] at (0.8,-0.75) {1 TeV};
+\node[sc] at (0.8,-2.85) {$M_Z$};
+\node[sc] at (0.8,-4.45) {5 GeV};
+\node[sc] at (0.8,-5.75) {核子};
+\foreach \y in {-0.75,-2.85,-4.45,-5.75} \draw[black!50] (0.82,\y) -- (0.98,\y);
+\node[t=cO,text width=3.1cm] (SMEFT) at (2.65,-1.6) {SMEFT の走行\\（Warsaw 基底）\\wilson、DsixTools 2.1};
+\node[t=cQ,text width=3.1cm] (MATCH) at (2.65,-2.85) {木の整合\\SMEFT $\to$ WET};
+\node[t=cO,text width=3.1cm] (WET) at (2.65,-3.95) {WET（JMS）の走行\\wilson、DsixTools};
+\draw[flow] (SMEFT) -- (MATCH);
+\draw[flow] (MATCH) -- (WET);
+\node[ck,text width=3.1cm,anchor=west] at (4.35,-1.6) {純 QCD の模型の冪の式。\\全 SM で二つのツールを\\WCxf を経て比べる};
+\node[ck,text width=3.1cm,anchor=west] at (4.35,-2.85) {自分の木の整合の式};
+\node[ck,text width=3.1cm,anchor=west] at (4.35,-3.95) {冪の式。QED を含めて\\二つのツールを比べる};
+\node[t=cO,text width=3.1cm] (DD) at (2.65,-5.6) {DirectDM 2.2.3、1.2.1\\DM の演算子 $\to$ $c_i^N$};
+\node[ck,text width=3.1cm,anchor=west] at (4.35,-5.6) {ヒッグスの入り口の $c_1^N$\\と $\sigma_{\mathrm{SI}}$、Dirac の DM の\\ベクトル、軸性ベクトル};
+% ---------- right: dark-matter model ----------
+\node[t=cM,text width=8.2cm] (FR) at (12.3,-0.85) {\texttt{SingletDM.fr}（FeynRules）：SM $+$ 実スカラー $S$（$Z_2$ で奇）\\$-\frac{\lambda_{hs}}2S^2|H|^2$、$m_S=100$~GeV、$\lambda_{hs}=0.1$};
+\node[t=cP,text width=2.3cm] (UFO) at (9.45,-2.25) {UFO\\（ユニタリー\\ゲージ）};
+\node[t=cM,text width=2.3cm] (NLO) at (12.3,-2.25) {NLO の UFO\\NLOCT の R2 と\\$hZ\gamma$ の対抗項};
+\node[t=cP,text width=2.3cm] (CH) at (15.15,-2.25) {CalcHEP の\\模型};
+\foreach \n in {UFO,NLO,CH} \draw[flow] (FR.south -| \n.north) -- (\n.north);
+\node[t=cO,text width=2.3cm] (MD) at (9.45,-3.95) {MadDM 3.3\\$\sigma_{\mathrm{SI}}$、$\langle\sigma v\rangle$、\\$\Omega h^2$、連続の $\sigma v$};
+\node[t=cO,text width=2.3cm] (ML) at (12.3,-3.95) {MadDM 3.3\\ライン\\$SS\to\gamma\gamma$、$Z\gamma$};
+\node[t=cO,text width=2.3cm] (MO) at (15.15,-3.95) {micrOMEGAs\\7.1.10\\$\sigma_{\mathrm{SI}}$、$\langle\sigma v\rangle$、$\Omega h^2$};
+\draw[flow] (UFO) -- (MD);
+\draw[flow] (NLO) -- node[lab,right] {MadLoop} (ML);
+\draw[flow] (CH) -- (MO);
+\node[t=cO,text width=2.3cm,font=\scriptsize] (MOS) at (15.15,-5.35) {micrOMEGAs の\\SingletDM（独立な\\実装）};
+\draw[thick,black!45,dashed] (MO) -- (MOS);
+\node[draw=cGd,fill=cGf,rounded corners=2pt,text width=5.4cm,align=flush center,font=\scriptsize,inner sep=3pt] (OWN) at (10.85,-5.75)
+  {照合の相手：MadDM や micrOMEGAs の入力での自分の式（Gondolo--Gelmini の熱平均、ボルツマン方程式）と、ヒッグスのノートの1ループの振幅};
+\draw[flow,cGd] (MD.south) -- (MD.south |- OWN.north);
+\draw[flow,cGd] (ML.south) -- (ML.south |- OWN.north);
+\draw[flow,cGd] (MO.south west) -- (OWN.north east);
+\end{tikzpicture}
+\caption{EFT・暗黒物質の道具の照合。左は EFT の走行と整合で、縦の矢印はエネルギーの尺度を表す。wilson の SMEFT の RGE は DsixTools から移植されたものなので、二つのツールの一致に加えて、自分で導いた冪の式と比べた（緑）。DirectDM は、DM とクォーク、グルーオンの演算子から核子の非相対論的な EFT に整合する。右は、同じ模型を FeynRules から三つの形で書き出し、MadDM（木とループ）と micrOMEGAs で同じ量を求めて自分の式と比べた流れである。橙は Mathematica で動く道具、灰色は書き出した模型のファイルである。}
+\label{fig:eftdm}
+\end{figure}
 
 \begin{table}[htbp]
 \centering\small
