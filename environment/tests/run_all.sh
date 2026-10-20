@@ -1,6 +1,6 @@
 #!/bin/bash
 # Re-run every check of the loop-calculation stack (environment.pdf, Sec. 5).
-# Usage: ./run_all.sh [--no-mg5] [--thermal] [--twoloop] [--lhc]      Output goes to ./out and ./out/log.txt
+# Usage: ./run_all.sh [--no-mg5] [--thermal] [--twoloop] [--lhc] [--eftdm]   Output goes to ./out and ./out/log.txt
 #   --thermal also re-runs the cross-checks of the thermal tools (environment.pdf, Sec. 7) in
 #   models/phi34_thermal/Src: CosmoTransitions, DRalgo, Matchotter, PT2GWFinder + FindBounce, PhaseTracer, BSMPT,
 #   TransitionListener, WallGo (about 50 minutes; they rewrite the CSV files in Src/results).
@@ -16,7 +16,7 @@
 #   HEPData, SModelS against own interpolation and pyhf, HiggsSignals with the Higgs note's widths; about 10 minutes); stage 6,
 #   an own SSM Z' (FeynRules) through MG5, Pythia and Delphes against own widths and cross sections, and its limits from the
 #   published ATLAS dilepton spectra (about 20 minutes, 8 GB in lhc/out/zprime).
-#   --eftdm re-runs the checks of the EFT and dark-matter tools (environment.pdf, Sec. EFT/DM) in ./eftdm: stage 1,
+#   --eftdm re-runs the checks of the EFT and dark-matter tools (environment.pdf, Sec. 10) in ./eftdm: stage 1,
 #   wilson and DsixTools (SMEFT and WET running, tree matching, against own formulas and each other); stage 2, DirectDM;
 #   stage 3, MadDM 3.3 (sigma_SI, <sigma v>, Omega h^2 of a Higgs-portal scalar against own formulas; the tree-level
 #   continuum indirect sigma v of each channel; the loop-induced lines S S -> a a, a Z against the Higgs note's one-loop
