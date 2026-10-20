@@ -1,0 +1,17 @@
+# Hadr00: neutron cross sections on Au and H in one bin centred at 0.0253 eV (sqrt(0.008 * 0.0800066) = 0.0252993 eV).
+# Run with 1 worker thread: with the serial run manager, the /testhadr/ histogram commands do not reach the table.
+/control/verbose 1
+/run/verbose 1
+/testhadr/TargetMat G4_Au
+/run/initialize
+/testhadr/particle neutron
+/testhadr/nBinsE 1
+/testhadr/minEnergy 0.008 eV
+/testhadr/maxEnergy 0.0800066 eV
+/testhadr/verbose 1
+/gun/particle neutron
+/gun/energy 1 MeV
+/testhadr/targetElm Au
+/run/beamOn 1
+/testhadr/targetElm H
+/run/beamOn 1

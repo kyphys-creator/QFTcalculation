@@ -11,6 +11,8 @@ environment/tests/out/
 environment/tests/lhc/out/
 # the outputs of the EFT/DM tool checks (environment/tests/eftdm/run_stage*.sh): UFO, MadDM processes, logs
 environment/tests/eftdm/out/
+# the builds and outputs of the Geant4 checks (environment/tests/geant4/run_geant4.sh)
+environment/tests/geant4/out/
 py.py
 models/phi3/Src/work/
 models/phi34/Src/work/

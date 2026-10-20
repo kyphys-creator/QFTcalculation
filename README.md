@@ -9,7 +9,7 @@
 ```
 environment/
   environment.tex, .pdf   環境の構築記録：導入したツール、この環境に固有の問題と対処、検証、使い方
-  tests/                  環境の試験（run_all.sh）。lhc/ は LHC の道具、eftdm/ は EFT・暗黒物質の道具の照合
+  tests/                  環境の試験（run_all.sh）。lhc/ は LHC の道具、eftdm/ は EFT・暗黒物質の道具、geant4/ は Geant4 の照合
   interactive/            スクリプトをセルごとに実行できる形にする道具と、その検証（README.md）
   files/                  ツールへの局所パッチ、入口ファイル、ラッパー
 loop_tools_review/        ループ計算のツールの比較レビュー（環境はこの推奨に沿って組んだ）
@@ -36,8 +36,9 @@ models/backup_20261009/   旧環境から退避した自作の FeynRules・FeynA
 | 2ループ | Kira 3.1、FIRE 7.1、AMFlow 2.0、pySecDec 1.6.6、feyntrop 1.1.0、TSIL 1.46 | 第8節 |
 | LHC の現象論 | LHAPDF 6.5.5、Pythia 8.317、Delphes 3.5.1、ROOT 6.32.14、MadAnalysis5 1.11.0、pyhf、SModelS 3.2.1、HiggsTools 1.3 | 第9節 |
 | EFT・暗黒物質 | wilson、DsixTools 2.1、DirectDM、MadDM 3.3、micrOMEGAs 7.1.10 | 第10節 |
+| 物質中の輸送・検出器の模擬 | Geant4 11.4.3（マルチスレッド、Qt 6、13組のデータ）、geant4_pybind 0.1.3 | 第11節 |
 
-計算機は2台ある。1ループの中核、熱的な道具、2ループの道具は Apple M3 の Mac（`~` は `/Users/koichiro`）に入れた。LHC と EFT・暗黒物質の道具は Mac Studio（`~` は `/Users/koichiromacstudio`）に入れた。
+計算機は2台ある。1ループの中核、熱的な道具、2ループの道具は Apple M3 の Mac（`~` は `/Users/koichiro`）に入れた。LHC と EFT・暗黒物質の道具、Geant4 は Mac Studio（`~` は `/Users/koichiromacstudio`）に入れた。
 
 ## 模型のノート
 
@@ -74,6 +75,7 @@ environment/tests/run_all.sh --no-mg5
 | `--twoloop` | 2ループの道具 | 約12分 |
 | `--lhc` | LHC の道具（6段階） | 約1.5時間、出力は 10 GB を超える |
 | `--eftdm` | EFT・暗黒物質の道具 | 約5分 |
+| `--geant4` | Geant4（配布の例を参照の出力と、G4NDL・G4TENDL をデータのファイルと、geant4_pybind を C++ と） | 約35秒 |
 
 ### 模型の検算を実行し直す
 
@@ -129,3 +131,6 @@ $LoadAddOns = {"FeynArtsLoader", "FeynHelpers"};
 - MG5_aMC@NLO は自分のディレクトリから起動する。
 - MG5_aMC@NLO は、Python 2 の形の UFO をその場で書き換える。リポジトリの UFO は、写しを読ませる。
 - FeynRules は局所パッチ2つ（`FeynRules.m`、`Core/Loop.m`）を前提に動く。入れ直したら [environment/files/](environment/files/) のパッチを当て直す。
+- Geant4 を使うシェルでは、先に `source ~/hep/opt/geant4env.sh` とする（Qt 6 を conda の環境 `g4` から取るため）。Python からは `~/miniforge3/envs/g4/bin/python` で geant4_pybind を使う。
+- Geant4 で熱中性子を扱うときは `_HP` の物理リストを使う。HP なしのリストは、Au の熱中性子の捕獲を 51% 大きく見積もる。TENDL を使うのは `_AllHP`（`_HPT` は熱中性子の散乱を加えたもの）。
+- Mac Studio（36 GB）で大きな C++ を構築するときは、並列を 6 ほどに抑え、LTO を切る。geant4_pybind を既定の LTO のまま作ったら、リンクでメモリを使い切って Mac がフリーズした。

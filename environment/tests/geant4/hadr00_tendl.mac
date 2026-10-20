@@ -1,0 +1,15 @@
+# Hadr00: p + Al cross sections in 6 bins from 5 to 320 MeV (centres 7.07 ... 226 MeV), to be run with QGSP_BIC_AllHP
+# (protons below 200 MeV from G4TENDL) and with QGSP_BIC.  1 worker thread, as in hadr00_thermal.mac.
+/control/verbose 1
+/run/verbose 1
+/testhadr/TargetMat G4_Al
+/run/initialize
+/testhadr/particle proton
+/testhadr/targetElm Al
+/testhadr/nBinsE 6
+/testhadr/minEnergy 5 MeV
+/testhadr/maxEnergy 320 MeV
+/testhadr/verbose 1
+/gun/particle proton
+/gun/energy 50 MeV
+/run/beamOn 1

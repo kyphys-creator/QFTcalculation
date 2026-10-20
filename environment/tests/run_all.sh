@@ -1,6 +1,6 @@
 #!/bin/bash
 # Re-run every check of the loop-calculation stack (environment.pdf, Sec. 5).
-# Usage: ./run_all.sh [--no-mg5] [--thermal] [--twoloop] [--lhc] [--eftdm]   Output goes to ./out and ./out/log.txt
+# Usage: ./run_all.sh [--no-mg5] [--thermal] [--twoloop] [--lhc] [--eftdm] [--geant4]   Output goes to ./out and ./out/log.txt
 #   --thermal also re-runs the cross-checks of the thermal tools (environment.pdf, Sec. 7) in
 #   models/phi34_thermal/Src: CosmoTransitions, DRalgo, Matchotter, PT2GWFinder + FindBounce, PhaseTracer, BSMPT,
 #   TransitionListener, WallGo (about 50 minutes; they rewrite the CSV files in Src/results).
@@ -22,10 +22,13 @@
 #   continuum indirect sigma v of each channel; the loop-induced lines S S -> a a, a Z against the Higgs note's one-loop
 #   amplitudes, with an NLO UFO made by NLOCT the first time, about 5 minutes, and reused afterwards); stage 4,
 #   micrOMEGAs 7.1.10 on the same model (about 5 minutes in all, 10 the first time).
+#   --geant4 re-runs the checks of Geant4 11.4.3 (environment.pdf, Sec. 11) in ./geant4: TestEm0, Hadr00, B1 and rdecay01
+#   against their reference outputs, G4NDL and G4TENDL against their data files, Co60 against ENSDF, geant4_pybind
+#   against the C++ TestEm0 (about 35 s; ./geant4/run_geant4.sh --qt also opens the Qt window for about 12 s).
 # Test files are named test_*: a file called formcalc.wl in the working directory would
 # shadow the FormCalc package (macOS file names are case-insensitive).
 cd "$(dirname "$0")"
-NO_MG5=0; THERMAL=0; TWOLOOP=0; LHC=0; EFTDM=0
+NO_MG5=0; THERMAL=0; TWOLOOP=0; LHC=0; EFTDM=0; GEANT4=0
 for a in "$@"; do
   case "$a" in
     --no-mg5) NO_MG5=1 ;;
@@ -33,6 +36,7 @@ for a in "$@"; do
     --twoloop) TWOLOOP=1 ;;
     --lhc) LHC=1 ;;
     --eftdm) EFTDM=1 ;;
+    --geant4) GEANT4=1 ;;
   esac
 done
 export PATH="$HOME/hep/bin:$PATH"
@@ -109,5 +113,9 @@ if [ "$EFTDM" = 1 ]; then
   if [ -d eftdm/out/model_nlo/SM_SingletDM_NLO_UFO ]; then ./eftdm/run_stage3_line.sh --no-ufo; else ./eftdm/run_stage3_line.sh; fi 2>&1 | tee -a "$log"
   step "EFT/DM tools, stage 4: micrOMEGAs 7.1.10 on the same model and its own SingletDM"
   ./eftdm/run_stage4.sh 2>&1 | tee -a "$log"
+fi
+if [ "$GEANT4" = 1 ]; then
+  step "Geant4 11.4.3: TestEm0, Hadr00, B1, rdecay01 vs their reference outputs; G4NDL, G4TENDL, ENSDF; geant4_pybind"
+  ./geant4/run_geant4.sh 2>&1 | tee -a "$log"
 fi
 echo "done; full log in $log"

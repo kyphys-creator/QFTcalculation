@@ -1,0 +1,13 @@
+--- geant4_pybind-0.1.3/source/track/pyG4Track.cc.orig
++++ geant4_pybind-0.1.3/source/track/pyG4Track.cc
+@@ -98,7 +98,9 @@
+       .def("GetVertexPosition", &G4Track::GetVertexPosition)
+       .def("GetVolume", &G4Track::GetVolume, py::return_value_policy::reference)
+       .def("GetWeight", &G4Track::GetWeight)
+-      .def("IncrementCurrentStepNumber", &G4Track::IncrementCurrentStepNumber)
++      .def("IncrementCurrentStepNumber", py::overload_cast<>(&G4Track::IncrementCurrentStepNumber))
++      .def("IncrementCurrentStepNumber", py::overload_cast<const G4int>(&G4Track::IncrementCurrentStepNumber),
++           py::arg("nSteps"))
+       .def("IsBelowThreshold", &G4Track::IsBelowThreshold)
+       .def("IsGoodForTracking", &G4Track::IsGoodForTracking)
+       .def("RemoveAuxiliaryTrackInformation", py::overload_cast<G4int>(&G4Track::RemoveAuxiliaryTrackInformation),
