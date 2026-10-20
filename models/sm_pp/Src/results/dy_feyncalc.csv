@@ -1,0 +1,31 @@
+quantity,lF^0,lF^1
+qqbar_delta,-3.787369953618917,-8.
+qqbar_plus0,0.,-10.666666666666666
+qqbar_plus1,21.333333333333332,0.
+qqbar_reg_z=0.01,24.919754152977898,5.386666666666667
+qqbar_reg_z=0.1,15.017628236601377,5.866666666666666
+qqbar_reg_z=0.3,14.944600035685816,6.933333333333334
+qqbar_reg_z=0.5,20.33231729642506,8.
+qqbar_reg_z=0.7,31.279963144554063,9.066666666666666
+qqbar_reg_z=0.9,56.83652632951483,10.133333333333333
+qqbar_reg_z=0.99,108.36610316045034,10.613333333333333
+qg_z=0.01,5.023935137898323,-0.9802
+qg_z=0.1,2.4803285305762826,-0.82
+qg_z=0.3,1.3695612915401134,-0.58
+qg_z=0.5,0.7784264097200273,-0.5
+qg_z=0.7,-0.30473698553362105,-0.58
+qg_z=0.9,-3.3248439296708177,-0.82
+qg_z=0.99,-8.978474293407453,-0.9802
+check_axial_minus_vector_real,0,
+check_r_minus_textbook,0,
+check_v_integral_minus_NIntegrate,0.,
+check_axial_minus_vector_virtual,0,
+check_F1_minus_reference,0,
+check_poles,0,
+check_minus_AEM_reference,0,
+check_rapidity_pieces_minus_dy_hadronic_forms,0,
+check_rapidity_pieces_integrated_minus_Delta1,0,
+check_FeynArts_minus_hand u ubar -> gamma g (2 diagrams),0,
+check_FeynArts_minus_hand u ubar -> Z g (2 diagrams),0,
+check_FeynArts_minus_hand u dbar -> W+ g (2 diagrams),0,
+check_FeynArts_minus_hand u g -> gamma u (2 diagrams),0,

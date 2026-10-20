@@ -1,0 +1,500 @@
+% note.tex — 陽子どうしの衝突の NLO の QCD の補正：Drell--Yan、gg -> H（重いトップの有効理論）、MC@NLO（MS-bar、d = 4 - 2 eps）
+% コンパイル: lualatex note.tex（目次と参照の解決のため2〜3回）
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}
+\usepackage{amsmath,amssymb,slashed}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing,shapes.geometric}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{placeins}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={NLO QCD corrections in proton-proton collisions: Drell-Yan, gg -> H in the heavy-top EFT, MC@NLO},pdfauthor={}}
+
+\setlength{\emergencystretch}{3em}
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\MSbar}{\overline{\mathrm{MS}}}
+\newcommand{\MGaMC}{MG5\_aMC@NLO}
+\newcommand{\re}{\mathrm{Re}\,}
+
+\tikzset{
+  photon/.style={thick,decorate,decoration={snake,amplitude=1.1pt,segment length=4.6pt}},
+  gluon/.style={thick,decorate,decoration={coil,amplitude=2.3pt,segment length=3.6pt,aspect=0.75}},
+  fermion/.style={thick,postaction={decorate},
+    decoration={markings,mark=at position 0.58 with {\arrow{Stealth[length=1.9mm]}}}},
+  vtx/.style={circle,fill=black,inner sep=1.3pt},
+  blob/.style={ellipse,draw=black,thick,fill=black!12,minimum width=0.9cm,minimum height=1.25cm,inner sep=0pt},
+  lab/.style={font=\small,align=center},
+}
+
+\title{陽子どうしの衝突の NLO の QCD の補正\\（Drell--Yan、重いトップの有効理論の $gg\to H$、MC@NLO、$\MSbar$、$d=4-2\epsilon$）}
+\author{}
+\date{2026年10月20日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote}、ヒッグスのノート~\cite{higgsnote} は、崩壊の NLO を実の放射まで含めて求めた。QCD ノート~\cite{qcdnote} は、$e^+e^-\to$ ハドロンと重いクォークの対生成の NLO を、QCD だけの模型で aMC@NLO と突き合わせた。本ノートでは、陽子の中のパートンが始状態にある色を持たない粒子の生成の NLO の QCD の補正を扱う（パートン、パートン分布、NLO の補正の考え方は、第~\ref{sec:primer} 節で学部の物理から説明する）。$\overline{\mathrm{MS}}$ の共線の対抗項でパートン分布に吸収する始状態の放射が、終状態だけの崩壊と違う点である。四つの手順の計画を立てる。(1) Drell--Yan（$pp\to\gamma^*/Z\to e^+e^-$、$W^\pm\to e\nu$）、(2) 重いトップの有効理論の $gg\to H$、(3) MC@NLO と Pythia 8、(4) 段階 6 の $Z'$ の NLO。手順 (1) では、$q\bar q\to V^*g$、$qg\to V^*q$ の実の放射と形状因子を $d$ 次元で $\epsilon$ について厳密に求め、$\MSbar$ の共線の対抗項を足すと極が記号として消え、$\ln\mu_R$ が落ち、係数関数が Altarelli--Ellis--Martinelli の $\MSbar$ の形（参照）と記号として一致することを確かめた。4次元の振幅の2乗は、本ノートの FeynArts の模型の $\gamma$、$Z$、$W$ の4過程と記号として一致した。係数関数を NNPDF4.0 NLO と自分で畳み込んだ断面積を、\MGaMC{} の固定次数の LO と NLO（\texttt{[QCD]}）と比べた。$Z$ の共鳴の付近、0.5~TeV より上、$W^\pm$ の全断面積と質量の窓、$m_{\ell\ell}$ の分布、ラピディティの分布（\ref{app:rap} の自分の $d$ 次元の式）、9通りの $(\mu_R,\mu_F)$ の重みの付け直しは、LO と NLO で統計の範囲で一致した（$Z$ の NLO の全断面積は $2064.54$~pb に対し $2064.78\pm0.22$~pb）。$K$ は $Z$、$W^+$、$W^-$ で 1.140、1.150、1.138（$q\bar q$ が $+29\%$、$qg$ が $-15\%$）、0.5~TeV より上で 1.188 で、スケールの範囲は LO の $\pm12\%$ から NLO の $^{+4}_{-7}\%$ に縮む。$W$ の NLO の全断面積は \MGaMC{} の積分ごとのばらつきが誤差の約2.4倍あり、その源は $m_{e\nu}<1$~GeV の正と負の重みの打ち消しだった。自分の積分では、Breit--Wigner の変数だけの求積が $W$ の裾を $10^{-3}$ 少なく見積もっていたことが、この比較で分かった。
+\end{abstract}
+
+\tableofcontents
+
+\section{目的と問い}\label{sec:intro}
+
+本ノートの問いは三つである。\textbf{第一に、始状態にパートンがある色を持たない粒子の生成の NLO の QCD の補正は、$d$ 次元の仮想の補正と実の放射に $\MSbar$ の共線の対抗項を足すと有限になり、$\ln\mu_R$ によらず、$\ln\mu_F$ の依存がパートン分布の DGLAP の進化と打ち消し合う形になるか。第二に、\MGaMC{} の FKS の引き算による固定次数の NLO（\texttt{[QCD]}）は、ハドロンの断面積でこれを再現するか。$\mu_R$、$\mu_F$ の重みの付け直しは正しいか。第三に、MC@NLO で Pythia 8 のシャワーをつなぐと、全断面積と分布はどう変わるか。}
+
+第一の問いを立てる理由は、崩壊の NLO（NLO ノート、ヒッグスのノート）では終状態の赤外の発散が実と仮想の和で消えたのに対し、始状態の共線の発散は消えず、パートン分布の $\MSbar$ の繰り込みで吸収されるからである。その処方の規約（$d$ 次元のグルーオンの偏極の平均 $1/(2(1-\epsilon))$、$\overline{\mathrm{MS}}$ の極だけを引くこと）がパートン分布の決め方と合っていないと、ハドロンの断面積が有限部分でずれる。陽子の中のパートンの NLO は、LHC の信号と背景の規格化（$K$ 因子）の土台である。
+
+第二の問いは、計算環境の記録~\cite{env} で \MGaMC{} の \texttt{[QCD]} を確かめた範囲に関わる。QCD ノートは、$e^+e^-\to u\bar u$、$t\bar t$ の $K$ 因子と、QCD だけの模型での $pp\to t\bar t$ を、自分の計算と突き合わせた。電弱の結合を持つ標準模型の過程（MadGraph 同梱の \texttt{loop\_sm}）、共鳴の Breit--Wigner、ハドロンの分布の重みの付け直しは、まだ確かめていない。段階 6 の $Z'$ の断面積は LO のままである。
+
+第三の問いは、LHC の事象の生成に NLO を使うときの、MC@NLO の整合の確かめである。
+
+求める量は四つである。(i) Drell--Yan の $\MSbar$ の係数関数 $\Delta_{q\bar q}$、$\Delta_{qg}$ とハドロンの $\dd\sigma/\dd Q^2$。(ii) 重いトップの有効理論の $gg\to H$ の係数関数とウィルソン係数の $O(\alpha_s)$ の補正。(iii) MC@NLO の全断面積と分布。(iv) $Z'$ の $K$ 因子。
+
+本ノートの構成は次の通りである。第~\ref{sec:primer} 節で、パートンとその NLO の考え方を学部の物理から説明する（パートンになじみのない読者はここから読むとよい）。第~\ref{sec:setup} 節で模型と入力を定める。第~\ref{sec:results} 節で手計算の結果を述べる。第~\ref{sec:plan} 節でツールと突き合わせる計画を定める。第~\ref{sec:checks} 節に各手順の結果を、第~\ref{sec:discussion} 節にまとめを書く。導出の細部は\ref{app:dy} にある。
+
+\section{陽子の中のパートン：学部の物理からの導入}\label{sec:primer}
+
+この節は、量子力学、特殊相対論、電磁気学とクォーク模型の初歩（学部の物理）だけを前提に、本ノートで使う考え方と記号を説明する。第~\ref{sec:setup} 節から後の式は、すべてこの節の言葉で読める。最後に用語の対応表（表~\ref{tab:glossary}）を置く。
+
+\subsection{陽子は何でできているか}\label{sec:proton}
+
+陽子は、電荷 $+\frac23e$ の $u$ クォーク2個と $-\frac13e$ の $d$ クォーク1個（$uud$）でできている、とクォーク模型は教える。しかしこの3個の質量は合わせて約 9~MeV で、陽子の質量 938~MeV の $1\%$ にすぎない。残りは、クォークを結びつける強い相互作用の場のエネルギーである。強い相互作用は量子色力学（QCD）で記述され、その力を運ぶ粒子がグルーオンである。光子が電荷を持たないのと違い、グルーオンは自分も「色」の電荷を持ち、グルーオンどうしも結合する。そのためクォークとグルーオンは陽子の中に閉じ込められ、単独では取り出せない。
+
+陽子の中を見る方法は、Rutherford が原子核を見つけたのと同じ、散乱である。1960年代の終わりに SLAC で、高いエネルギーの電子を陽子に当てると、大きな角度に散乱される電子が予想より多く、陽子の中に点状の粒子があるかのように振る舞った。Feynman はこの構成粒子を\textbf{パートン}（parton、part の粒子）と呼んだ。今では、パートンはクォーク、反クォーク、グルーオンのことである。
+
+陽子の中には、$uud$ のほかに、グルーオンが量子的にクォークと反クォークの対（$g\to q\bar q$）に分かれてできる\textbf{海のクォーク}がある。だから陽子には $\bar u$、$\bar d$、$s$、$\bar s$、$c$、$b$ なども含まれる。ただし差し引きの数は決まっていて、$u$ の数から $\bar u$ の数を引くと2、$d-\bar d$ は1、$s-\bar s$ は0 になる（本ノートで使うパートン分布で、2.00、1.00、0.00）。この $uud$ の部分を\textbf{価クォーク}と呼ぶ。
+
+\subsection{高速の陽子：パートン模型}\label{sec:partonmodel}
+
+LHC では、陽子1個のエネルギーは 6.5~TeV で、Lorentz 因子は $\gamma=E/m_p\approx6900$ である。陽子の中の運動は時間の遅れで $\gamma$ 倍ゆっくりになり、陽子は進行方向に $1/\gamma$ に縮んだ薄い円盤になる。一方、パートンどうしが大きな運動量 $Q$ をやりとりする衝突は、時間 $\hbar/Q$（$Q=91$~GeV で $10^{-26}$~秒）で終わる。その短い間、パートンは互いの力を感じず、自由な粒子が陽子と同じ方向に並んで飛んでいるように見える。これが\textbf{パートン模型}である。
+
+各パートンは陽子の運動量の割合 $x$（$0<x<1$）を持つ。\textbf{パートン分布関数}（PDF）$f_i(x)$ は、
+\[
+f_i(x)\,\dd x=\text{陽子の中で、種類 $i$ のパートンが運動量の割合 $x$ から $x+\dd x$ を持つ数の期待値}
+\]
+で定義される。全部のパートンの運動量を足すと陽子の運動量になるので、$\sum_i\int_0^1x f_i(x)\,\dd x=1$ である。本ノートで使う分布（NNPDF4.0、第~\ref{sec:setup} 節）では、$Q=M_Z$ でグルーオンが運動量の $47\%$、クォークと反クォークが $53\%$ を運ぶ。$x f(x)$ を図~\ref{fig:pdf} に示す。価クォーク（$u_v=u-\bar u$、$d_v=d-\bar d$）は $x\approx0.1$〜$0.3$ に山を持ち、海のクォークとグルーオンは小さい $x$ で急に大きくなる。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{semilogxaxis}[width=0.72\linewidth,height=6.2cm,xmin=1e-4,xmax=1,ymin=0,ymax=1.0,
+  xlabel={$x$},ylabel={$x f(x)$},legend pos=north east,legend style={font=\small,draw=none,fill=none},
+  tick label style={font=\small},label style={font=\small}]
+\addplot[thick,blue] table[x=x,y=uv]{figs/pdf_mz.dat};\addlegendentry{$u_v=u-\bar u$}
+\addplot[thick,red] table[x=x,y=dv]{figs/pdf_mz.dat};\addlegendentry{$d_v=d-\bar d$}
+\addplot[thick,blue,dashed] table[x=x,y=ubar]{figs/pdf_mz.dat};\addlegendentry{$\bar u$}
+\addplot[thick,red,dashed] table[x=x,y=dbar]{figs/pdf_mz.dat};\addlegendentry{$\bar d$}
+\addplot[thick,green!50!black,dotted] table[x=x,y=s]{figs/pdf_mz.dat};\addlegendentry{$s$}
+\addplot[thick,black] table[x=x,y=g10]{figs/pdf_mz.dat};\addlegendentry{$g/10$}
+\end{semilogxaxis}
+\end{tikzpicture}
+\caption{本ノートで使うパートン分布（NNPDF4.0 NLO、$Q=M_Z$）の $x f(x)$。グルーオンは $\frac1{10}$ にして描いた。海のクォークとグルーオンは小さい $x$ で枠の外まで大きくなる（$x\bar u$ は $x<3\times10^{-3}$ で1を超え、$x=10^{-3}$ で $x\bar u=1.50$、$xg=29$）。$Z$ を $y=0$ で作るパートンは $x\approx0.007$ を持つ（第~\ref{sec:dylo} 節）。}
+\label{fig:pdf}
+\end{figure}
+
+パートン分布は、陽子の中の強く結合した運動（摂動で計算できない部分）を表すので、計算では求めず、多くの実験のデータに合わせて決める（NNPDF などのグループが公開している）。同じ分布が、どの過程の計算にも使える。これが、パートン模型を予言の道具にしている点である。
+
+二つの陽子（運動量 $P_1$、$P_2$、重心系のエネルギーの2乗 $S=(P_1+P_2)^2$、LHC で $\sqrt S=13$~TeV）から、パートン $i$（運動量 $x_1P_1$）と $j$（$x_2P_2$）が衝突するとする。陽子の質量を無視すると、パートンどうしの重心系のエネルギーの2乗は
+\[
+\hat s=(x_1P_1+x_2P_2)^2=2x_1x_2\,P_1\cdot P_2=x_1x_2S
+\]
+である（帽子は「パートンの」の印）。陽子どうしの断面積は、パートンの組ごとの断面積 $\hat\sigma_{ij}(\hat s)$ に、その組が衝突に来る確率 $f_i(x_1)\dd x_1\,f_j(x_2)\dd x_2$ を掛けて足したもの
+\begin{equation}
+\sigma(pp\to X)=\sum_{ij}\int_0^1\dd x_1\int_0^1\dd x_2\,f_i(x_1)f_j(x_2)\,\hat\sigma_{ij}(x_1x_2S)
+\label{eq:partonmodel}
+\end{equation}
+になる。これがパートン模型の基本の式で、本ノートの式~\eqref{eq:had} はこれに QCD の補正を入れたものである。
+
+\subsection{Drell--Yan 過程の最低次}\label{sec:dylo}
+
+本ノートで扱う \textbf{Drell--Yan 過程}は、一方の陽子のクォークと他方の陽子の反クォークが対消滅して仮想の光子か $Z$ ボソン（電荷が合えば $W$ ボソン）になり、それがレプトンの対（$e^+e^-$ や $e^+\nu$）に崩壊する過程である（図~\ref{fig:dy}(a)）。$e^+e^-\to\mu^+\mu^-$ を逆向きにしたものと思ってよい。終状態がレプトンだけなので、測定がきれいで、パートン分布の検証と LHC の基準の測定に使われる。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=0.82,every node/.style={font=\small}]
+\begin{scope}
+\node[blob] (b1) at (0,1.1) {};
+\node[blob] (b2) at (0,-1.1) {};
+\draw[thick,double] (-1.6,1.1) -- (b1) node[pos=0,left] {$p$};
+\draw[thick,double] (-1.6,-1.1) -- (b2) node[pos=0,left] {$p$};
+\foreach \dy in {0.05,0.2,0.35} {\draw[thin] (b1) -- ++(1.9,0.55+\dy); \draw[thin] (b2) -- ++(1.9,-0.55-\dy);}
+\coordinate (v) at (1.7,0);
+\draw[fermion] (b1) -- (v) node[midway,above right=-1pt] {$q\ (x_1)$};
+\draw[fermion] (v) -- (b2) node[midway,below right=-1pt] {$\bar q\ (x_2)$};
+\node[vtx] at (v) {};
+\coordinate (w) at (3.2,0);
+\draw[photon] (v) -- (w) node[midway,above] {$\gamma^*/Z$};
+\node[vtx] at (w) {};
+\draw[fermion] (4.3,0.85) -- (w) node[pos=0,right] {$\ell^+$};
+\draw[fermion] (w) -- (4.3,-0.85) node[right] {$\ell^-$};
+\node at (1.8,-2.3) {(a) LO};
+\end{scope}
+\begin{scope}[xshift=6.6cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (u1) at (1.2,0.55); \coordinate (u2) at (1.2,-0.55); \coordinate (v) at (1.9,0);
+\draw[fermion] (a) -- (u1) node[pos=0,left] {$q$};
+\draw[fermion] (u1) -- (v); \draw[fermion] (v) -- (u2); \draw[fermion] (u2) -- (b) node[left] {$\bar q$};
+\draw[gluon] (u1) -- (u2) node[midway,left] {$g$};
+\draw[photon] (v) -- (3.1,0) node[right] {$V^*$};
+\foreach \p in {u1,u2,v} \node[vtx] at (\p) {};
+\node at (1.4,-2.3) {(b) 仮想の補正};
+\end{scope}
+\begin{scope}[xshift=11.3cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (u1) at (0.9,0.55); \coordinate (v) at (1.6,0);
+\draw[fermion] (a) -- (u1) node[pos=0,left] {$q$};
+\draw[fermion] (u1) -- (v); \draw[fermion] (v) -- (b) node[left] {$\bar q$};
+\draw[gluon] (u1) -- (2.4,1.25) node[right] {$g$};
+\draw[photon] (v) -- (2.8,0) node[right] {$V^*$};
+\foreach \p in {u1,v} \node[vtx] at (\p) {};
+\node at (1.4,-2.3) {(c) 実の放射};
+\end{scope}
+\begin{scope}[xshift=15.6cm]
+\coordinate (a) at (0,1); \coordinate (b) at (0,-1); \coordinate (u1) at (1.0,-0.45); \coordinate (v) at (1.0,0.45);
+\draw[fermion] (a) -- (v) node[pos=0,left] {$q$};
+\draw[fermion] (v) -- (u1);
+\draw[gluon] (b) -- (u1) node[pos=0,left] {$g$};
+\draw[fermion] (u1) -- (2.2,-1.1) node[right] {$q$};
+\draw[photon] (v) -- (2.3,0.85) node[right] {$V^*$};
+\foreach \p in {u1,v} \node[vtx] at (\p) {};
+\node at (1.1,-2.3) {(d) $qg$ のチャンネル};
+\end{scope}
+\end{tikzpicture}
+\caption{(a) Drell--Yan 過程の最低次（LO）。灰色の楕円は陽子で、残りの線は衝突に加わらなかったパートン。(b)〜(d) は NLO の QCD の補正の例。$V^*$ は仮想の $\gamma^*$、$Z$、$W$。(c) のグルーオンを放つ図と、反クォークから放つ図がある。(d) は一方の陽子のグルーオンがクォークと反クォークに分かれ、反クォークが他方のクォークと消滅する。}
+\label{fig:dy}
+\end{figure}
+
+最低次（\textbf{LO}、leading order）では、レプトンの対の不変質量 $Q$ は $\sqrt{\hat s}$ に等しく、レプトンの対の運動量は $x_1P_1+x_2P_2$ である。レプトンの対の\textbf{ラピディティ} $y=\frac12\ln\frac{E+p_z}{E-p_z}$（ビームの方向へのブーストで定数だけずれる、速度に似た量）は $y=\frac12\ln(x_1/x_2)$ になる。だから $Q$ と $y$ を測ると
+\[
+x_1=\frac Q{\sqrt S}e^{y},\qquad x_2=\frac Q{\sqrt S}e^{-y}
+\]
+が決まる。$Z$（$Q=M_Z$）を $y=0$ で作るパートンは $x_1=x_2=0.0070$、$y=2.5$ では $x_1=0.085$、$x_2=0.00058$ で、ラピディティの分布はパートン分布の $x$ の依存をそのまま映す。$Z$ の質量の付近（66〜116~GeV）の LO の断面積の内訳は、$u\bar u$ が $39\%$、$d\bar d$ が $37\%$、$s\bar s$ が $15\%$、$c\bar c$ が $6\%$、$b\bar b$ が $3\%$ である。反クォークはすべて海から来るので、海のクォークがなければ Drell--Yan はほとんど起こらない。$W^+$ は主に $u\bar d$ から、$W^-$ は $d\bar u$ から作られる。陽子の中の価クォークは $u$ が $d$ の2倍あるので $W^+$ のほうが多く、比は $\sigma(W^+)/\sigma(W^-)=1.34$ になる（本ノートの NLO の値。海のクォークの寄与があるので2にはならない）。
+
+パートンどうしの断面積 $\hat\sigma$ は、学部の電磁気の延長で、$q\bar q\to\gamma^*\to e^+e^-$ なら $\hat\sigma=\frac{4\pi\alpha^2Q_q^2}{3N_c\hat s}$（$e^+e^-\to\mu^+\mu^-$ の $\frac{4\pi\alpha^2}{3s}$ に、クォークの電荷 $Q_q$ の2乗と、色の平均 $1/N_c=\frac13$ を掛けたもの）である。$Z$ を交換する部分は、$Z$ の質量で共鳴（Breit--Wigner の形）を作る（式~\eqref{eq:born}）。断面積の単位は pb（ピコバーン、$1~\mathrm{pb}=10^{-36}~\mathrm{cm}^2$）で、$Z\to e^+e^-$ の約 2~nb $=2000$~pb は、LHC の Run 2 のデータ量（積分ルミノシティ $140~\mathrm{fb}^{-1}$）で $2.8\times10^8$ 事象に当たる。
+
+\subsection{強い相互作用の補正：なぜ NLO が要るか}\label{sec:whynlo}
+
+式~\eqref{eq:partonmodel} の $\hat\sigma$ は、強い相互作用の結合定数 $\alpha_s$（電磁気の $\alpha=\frac1{137}$ にあたる）の冪級数で計算する。$\alpha_s$ を含まない項が LO、$\alpha_s$ の1次の補正を加えたものが \textbf{NLO}（next-to-leading order）である。$\alpha_s$ は量子補正のためにエネルギーとともに小さくなる（\textbf{漸近的自由}）。本ノートの値で $\alpha_s=0.297$（2~GeV）、$0.118$（$M_Z$）、$0.087$（1~TeV）で、近似的に
+\[
+\alpha_s(\mu)\approx\frac{\alpha_s(M_Z)}{1+b_0\,\alpha_s(M_Z)\ln(\mu^2/M_Z^2)},\qquad b_0=\frac{33-2n_f}{12\pi}
+\]
+と振る舞う（$n_f=5$ はクォークの種類の数）。$\alpha_s(M_Z)/\pi\approx0.04$ は小さいが、Drell--Yan の NLO の補正は断面積を約 $14\%$ 上げる（$K$ 因子 $\approx1.14$）。LHC の測定の精度（数 $\%$）で比べるには NLO 以上が要る。
+
+NLO の補正には三種類ある（図~\ref{fig:dy}(b)〜(d)）。(b) \textbf{仮想の補正}：クォークと反クォークがグルーオンを交換してから消滅する（ループの図）。終状態は LO と同じである。(c) \textbf{実の放射}：消滅の前後にグルーオンが1個放たれる。(d) 一方の陽子の\textbf{グルーオンが始状態}になる $qg\to V^*q$。電磁気で、加速された電荷が光子を放つ制動放射（bremsstrahlung）と同じで、(c) は QCD の制動放射である。
+
+\subsection{発散と、それがパートン分布に移るわけ}\label{sec:div}
+
+(b) と (c) は、そのままでは無限大になる。理由は電磁気の制動放射と同じである。電荷が光子を放つ確率は、光子のエネルギー $\omega$ について $\dd\omega/\omega$ に比例し、$\omega\to0$ で積分が対数的に発散する（\textbf{軟らかい発散}）。さらに、質量0のクォークがグルーオンを放つときは、放つ角度 $\theta$ についても $\dd\theta^2/\theta^2$ の形になり、グルーオンがクォークと平行（$\theta\to0$）なところで発散する（\textbf{共線の発散}）。式~\eqref{eq:real} の $1/t$、$1/u$（$t\propto\theta^2$）がこれである。
+
+軟らかい発散は、実の放射と仮想の補正の和で消える。エネルギー0のグルーオンを放った事象は、放たなかった事象と区別できないので、両方を足したものだけが測れる量であり、その和は有限になる（Bloch--Nordsieck の定理。崩壊の NLO のノートでも同じことを確かめた）。
+
+始状態の共線の発散は消えない。しかし物理の意味は明らかである。陽子の中で運動量の割合 $x$ のクォークが、ほぼ平行なグルーオンを放って割合 $zx$ になってから衝突したとする。これは、初めから割合 $zx$ のクォークが衝突したのと区別できない。つまりこの発散は、衝突そのものではなく\textbf{陽子の中の構造}の一部で、パートン分布がすでに表しているものを、もう一度数えている。そこで、平行な放射の部分を $\hat\sigma$ から差し引き、パートン分布に入れる。これを\textbf{因子化}（factorization）と呼ぶ。分け目の運動量（おおまかには、放射の横向きの運動量が $\mu_F$ より小さいものはパートン分布へ、大きいものは $\hat\sigma$ へ。実際の分け方は次の $\MSbar$ 方式で決める）を\textbf{因子化のスケール} $\mu_F$ と呼ぶ。
+
+計算の途中で無限大を扱うため、時空の次元を $d=4-2\epsilon$ に変える\textbf{次元正則化}を使う。たとえば $\int_0^1\dd t\,t^{-1-\epsilon}=-1/\epsilon$（$\epsilon<0$ で収束する積分を解析接続したもの）のように、対数の発散が $1/\epsilon$ の極になる。物理の量では、実と仮想の和と、パートン分布への移し替えで極がすべて消え、最後に $\epsilon\to0$ とする（第~\ref{sec:coef} 節、検算の手順 (1)(d)）。
+
+移し替えるときに、極と一緒に有限の部分をどれだけ移すかには任意性がある。標準の約束が\textbf{$\MSbar$（エムエスバー）方式}で、極（と決まった定数 $\ln4\pi-\gamma_E$）だけを移す。データから決めたパートン分布は $\MSbar$ 方式で定義されているので、$\hat\sigma$ の側も $\MSbar$ 方式で計算しなければならない。方式がずれると、有限部分がずれた断面積になる。
+
+\subsection{二つのスケールとパートン分布の進化}\label{sec:scales}
+
+パートン分布は $\mu_F$ の関数 $f_i(x,\mu_F)$ になる。$\mu_F$ を上げると、より細かく陽子を見ることになり、クォークがグルーオンを放っていた様子や、グルーオンがクォークの対に分かれていた様子が見えてくる。その変化は \textbf{DGLAP の方程式}
+\[
+\frac{\partial f_q(x,\mu_F)}{\partial\ln\mu_F^2}=\frac{\alpha_s}{2\pi}\int_x^1\frac{\dd z}z\Bigl[P_{qq}(z)\,f_q\Bigl(\frac xz,\mu_F\Bigr)+P_{qg}(z)\,f_g\Bigl(\frac xz,\mu_F\Bigr)\Bigr]
+\]
+で決まる。\textbf{分岐関数} $P_{qq}(z)=C_F\frac{1+z^2}{1-z}$（$z<1$）は、クォークがグルーオンを放って運動量の割合 $z$ を残す確率の密度、$P_{qg}(z)=T_R[z^2+(1-z)^2]$ はグルーオンがクォークの対に分かれ、クォークが割合 $z$ を持つ確率の密度である（$C_F=\frac43$、$T_R=\frac12$ は色の数え上げの因子）。本ノートの分布では、$x=0.3$ の $xu$ は $Q=10$、100、1000~GeV で 0.453、0.339、0.274 と減り、$x=0.001$ の $xg$ は 16.2、29.7、39.0 と増える。大きい $x$ のパートンが放射で小さい $x$ に移るためである。実は、第~\ref{sec:div} 節の共線の極の係数は、ちょうどこの分岐関数になる（式~\eqref{eq:dqq} の $L_FP_{qq}$）。
+
+もう一つのスケールは、$\alpha_s(\mu_R)$ を測る\textbf{くりこみのスケール} $\mu_R$ である。本当の断面積は $\mu_F$ にも $\mu_R$ にもよらないが、摂動の級数を途中で切ると、その次の次数の大きさだけ依存が残る。そこで $\mu_F$、$\mu_R$ を典型的な値（Drell--Yan では $Q$ や $M_Z$）の $\frac12$ 倍から2倍に動かした変化を、計算していない高次の項の大きさの目安にする。本ノートでは、$Z$ の断面積のこの変化が LO の $\pm12\%$ から NLO の $^{+4}_{-7}\%$ に縮む（表~\ref{tab:dyk}）。
+
+\subsection{係数関数とプラスの分布}\label{sec:coefintro}
+
+NLO の $\hat\sigma$ から発散を移し替えた残りを、LO の断面積 $\sigma_0$ で割ったものが\textbf{係数関数} $\Delta_{ij}(z)$ である（式~\eqref{eq:had}）。$z=Q^2/\hat s$ は、パートンの衝突のエネルギーのうちレプトンの対に行った割合で、$1-z$ は放たれたグルーオン（またはクォーク）が持ち去った割合を表す。LO ではすべてがレプトンの対に行くので $\Delta=\delta(1-z)$（デルタ関数）である。
+
+実の放射は $z<1$ の滑らかな関数だが、$z\to1$（放射が軟らかい）で $1/(1-z)$ のように大きくなり、仮想の補正はちょうど $z=1$ にだけある（$\delta(1-z)$ に比例し、係数が無限大）。二つを合わせた有限のものが\textbf{プラスの分布}
+\[
+\int_0^1\dd z\Bigl[\frac1{1-z}\Bigr]_+h(z)=\int_0^1\dd z\,\frac{h(z)-h(1)}{1-z}
+\]
+で、なめらかな関数 $h$ との積分の形で定義される（$h(1)$ を引くことで $z\to1$ の発散が打ち消される）。式~\eqref{eq:dqq} の $[\ln(1-z)/(1-z)]_+$ も同じ形である。陽子の断面積は、係数関数とパートン分布を掛けて $x_1$、$x_2$（または $z$）で積分した式~\eqref{eq:lumi} で求まる。NLO で LO から増えた割合を \textbf{$K$ 因子}と呼ぶ。$Z$ の質量の付近では、$q\bar q$ のチャンネルが $+29\%$、$qg$ のチャンネルが $-15\%$ で、$K=1.14$ になる（表~\ref{tab:dyk}）。$qg$ が負になるのは、移し替えた共線の部分を引いた残りだからで、確率として負になったわけではない。
+
+\subsection{\MGaMC{} がすること}\label{sec:mg5intro}
+
+本ノートの検算の相手 \MGaMC{} は、過程を指定すると Feynman 図を自動で作り、振幅を数値で計算し、位相空間の積分をモンテカルロ法（乱数で点を選んで平均する）で行うプログラムである。そのため結果は統計の誤差を持つ。NLO（\texttt{[QCD]} と指定する）では、実の放射の発散を、同じ発散を持つ簡単な関数を引いて数値で積分できる形にし（FKS の引き算~\cite{fks}）、引いた分を解析的に足し戻す。本ノートの係数関数は解析的に求めた独立の結果なので、両者が一致すれば、\MGaMC{} の NLO の仕組み（引き算、仮想の補正、パートン分布との畳み込み、スケールを変えた重みの付け直し）がこの過程で正しく働いていることになる。手順 (3) の MC@NLO は、NLO の計算に、パートンが次々に放射を繰り返す様子（パートンシャワー）を数え過ぎないようにつなぐ方法で、実際の事象の模擬に使う。
+
+\begin{table}[htbp]
+\centering\small
+\caption{本ノートの用語と記号。}
+\label{tab:glossary}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.6cm}X}
+\toprule
+\textbf{用語、記号} & \textbf{意味} \\
+\midrule
+パートン & 陽子の構成粒子（クォーク、反クォーク、グルーオン） \\
+パートン分布（PDF）$f_i(x,\mu_F)$ & パートン $i$ が運動量の割合 $x$ を持つ数の密度（第~\ref{sec:partonmodel} 節） \\
+$S$、$\hat s=x_1x_2S$ & 陽子どうし、パートンどうしの重心系のエネルギーの2乗 \\
+$Q$、$\tau=Q^2/S$、$z=Q^2/\hat s$ & レプトンの対の不変質量、その2乗の $S$、$\hat s$ に対する割合 \\
+ラピディティ $y$ & $\frac12\ln\frac{E+p_z}{E-p_z}$。LO で $\frac12\ln(x_1/x_2)$ \\
+LO、NLO & 摂動の最低次、$\alpha_s$ の1次まで \\
+$\alpha_s(\mu_R)$、$a_s=\alpha_s/4\pi$ & 強い相互作用の結合定数。$\mu_R$ はそれを測るスケール \\
+$\mu_F$ & 因子化のスケール（パートン分布と $\hat\sigma$ の分け目） \\
+仮想の補正、実の放射 & ループの図による補正、グルーオンを1個放つ過程 \\
+軟らかい発散、共線の発散 & 放射のエネルギー $\to0$、放射の角度 $\to0$ で起こる無限大 \\
+次元正則化、$\epsilon$ & 時空の次元を $4-2\epsilon$ にして発散を $1/\epsilon$ の極にする方法 \\
+因子化、$\MSbar$ 方式 & 共線の発散をパートン分布に移すこと、その標準の約束 \\
+DGLAP の方程式、分岐関数 $P_{ij}$ & パートン分布の $\mu_F$ による変化、その変化の確率の密度 \\
+係数関数 $\Delta_{ij}(z)$ & 発散を移したあとのパートンの断面積を $\sigma_0$ で割ったもの \\
+プラスの分布 $[\,\cdot\,]_+$ & $z\to1$ の軟らかい発散を仮想の補正と打ち消した分布 \\
+$K$ 因子 & NLO の断面積と LO の断面積の比 \\
+$C_F=\frac43$、$T_R=\frac12$、$N_c=3$ & QCD の色の数え上げの因子 \\
+$V^*$、$\sigma_0$ & 仮想の $\gamma^*$、$Z$、$W$、LO のパートンの断面積 \\
+pb、fb & 断面積の単位（$10^{-36}$、$10^{-39}~\mathrm{cm}^2$） \\
+固定次数、MC@NLO & シャワーなしの NLO の計算、シャワーとつないだ NLO \\
+プル & 2つの値の差を誤差で割ったもの（統計の一致の目安） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{設定}\label{sec:setup}
+
+\paragraph{模型と過程。}クォークは質量0の5フレーバー（$u$、$d$、$s$、$c$、$b$。$b$ は陽子の中にある）、CKM 行列は単位行列とする。色の因子は $C_F=\frac43$、$T_R=\frac12$、$N_c=3$ である。$d$ 次元の計算では、ベクトルの流れ $\gamma^\mu$ と軸性の流れ $\gamma^\mu\gamma_5$（$\gamma_5$ は反可換）を手で書き、4次元の振幅の2乗を NLO ノートの FeynArts の模型（\texttt{SM\_CKM\_FA}、本ノートの模型と同じもの）と比べる。\MGaMC{} 3.8.1 では、同梱の \texttt{loop\_sm} を $b$ の質量0の制限（\texttt{loop\_sm-no\_b\_mass}）で使う。これがツールとして確かめる対象である。
+
+\paragraph{入力。}電弱のパラメータは \texttt{loop\_sm} の param\_card の値とし、両方の計算で同じものを使う：$\alpha^{-1}=132.507$、$G_F=1.16639\times10^{-5}$~GeV$^{-2}$、$M_Z=91.188$~GeV、そこから $M_W=80.419002$~GeV、$s_W^2=1-M_W^2/M_Z^2=0.222246$。$V$ の伝播関数は固定の幅の Breit--Wigner で、$\Gamma_Z=2.441404$~GeV、$\Gamma_W=2.0476$~GeV である。これらは木の関係で決まる値で、SM ノートの $\MSbar$ のパラメータではない。本ノートの比べる量は、両方の計算が同じ入力から求めた断面積である。パートン分布は NNPDF4.0 NLO~\cite{nnpdf40}（LHAPDF~6.5.5 の \texttt{NNPDF40\_nlo\_as\_01180}、番号 331700）で、$\alpha_s(\mu_R)$ もこの組のもの（2ループの走り、$\alpha_s(M_Z)=0.118$、$n_f\le5$）を使う。$\sqrt S=13$~TeV、$\mu_R$ と $\mu_F$ は固定の値 $\mu_0$ とその $\frac12$、2倍である。
+
+\paragraph{断面積の定義。}レプトンの対の不変質量を $Q$、$\tau=Q^2/S$、$z=Q^2/\hat s$ とする。レプトンの角度は積分するので、レプトンのテンソルは $(q^\mu q^\nu-Q^2g^{\mu\nu})$ に $Q^2$ の関数を掛けたものになり、流れが保存するので $-g_{\mu\nu}H^{\mu\nu}$ だけが効く（$H^{\mu\nu}$ はクォークの側の振幅の2乗を、$V^*$ の偏極の添字をつけたまま書いたもの。レプトンの飛ぶ向きを積分した断面積は、そのうち $V^*$ の偏極を平均した一つの組み合わせだけで決まる）。
+\begin{equation}
+\begin{gathered}
+\frac{\dd\sigma}{\dd Q^2}=\sum_{ij}\int\dd x_1\dd x_2\,f_i(x_1,\mu_F)f_j(x_2,\mu_F)\,\frac{\sigma_0(Q^2)}{\hat s}\,\Delta_{ij}\Bigl(z,\frac{Q^2}{\mu_F^2}\Bigr),\\
+\Delta_{ij}=\delta_{ij}^{(0)}\delta(1-z)+a_s\Delta^{(1)}_{ij}+\cdots,\qquad a_s=\frac{\alpha_s(\mu_R)}{4\pi}.
+\end{gathered}
+\label{eq:had}
+\end{equation}
+$\sigma_0(Q^2)$ は $q\bar q'\to V^*\to$ レプトンの Born の断面積の $\hat s=Q^2$ での値で、$qg$ のチャンネルはそのクォークのフレーバーの $\sigma_0$ を掛ける。
+
+\section{結果}\label{sec:results}
+
+この節は、第~\ref{sec:primer} 節の考え方を式にしたものである。第~\ref{sec:born} 節は LO の $\sigma_0$ と、パートン模型の式~\eqref{eq:partonmodel} を $z$ の積分に書き直した形（第~\ref{sec:dylo} 節）、第~\ref{sec:coef} 節は NLO の三種類の補正（図~\ref{fig:dy}(b)〜(d)）と、発散をパートン分布に移したあとの係数関数（第~\ref{sec:div}〜\ref{sec:coefintro} 節）である。$t$、$u$ は放射の角度を、$v$ はその角度を $0$ から $1$ の変数にしたものを表す。
+
+\subsection{Born の断面積とハドロンの式}\label{sec:born}
+
+$q\bar q\to\gamma^*/Z\to e^+e^-$ の Born は、クォークとレプトンのヘリシティ $i,j\in\{L,R\}$ について
+\begin{equation}
+\sigma_0(Q^2)=\frac1{N_c}\frac{Q^2}{48\pi}\sum_{i,j}|A_{ij}|^2,\qquad
+A_{ij}=\frac{e^2Q_qQ_e}{Q^2}+\frac{e^2}{s_W^2c_W^2}\frac{g_i^qg_j^e}{Q^2-M_Z^2+iM_Z\Gamma_Z},\qquad g_L=T_3-Qs_W^2,\ g_R=-Qs_W^2
+\label{eq:born}
+\end{equation}
+で、$u\bar d\to W^+\to e^+\nu$ は $A_{LL}=\frac{g^2}2(Q^2-M_W^2+iM_W\Gamma_W)^{-1}$（$g=e/s_W$）だけである。$\hat s=x_1x_2S$ から $(x_1,z)$ に変数を替えると、式~\eqref{eq:had} は
+\begin{equation}
+\frac{\dd\sigma}{\dd Q^2}=\frac{\sigma_0(Q^2)}{Q^2}\sum_{ij}\int_\tau^1\dd z\,\Delta_{ij}(z)\,G_{ij}\Bigl(\frac\tau z\Bigr),\qquad
+G_{ij}(y)=\int_{\ln y}^0\dd t\,x f_i(e^t)\,x f_j(ye^{-t})
+\label{eq:lumi}
+\end{equation}
+になる（$G=yL$、$L$ はパートンの光度）。プラスの分布は $\int\dd z\,[g]_+G(\tau/z)=\int_\tau^1\dd z\,g(z)[G(\tau/z)-G(\tau)]-G(\tau)\int_0^\tau g$ で扱う。
+
+\subsection{NLO の係数関数}\label{sec:coef}
+
+\paragraph{実の放射。}$q(p_1)\bar q(p_2)\to V^*(q)g(k)$ と $q(p_1)g(p_2)\to V^*(q)q(k)$ で、$t=(p_1-k)^2=-\hat s(1-z)v$、$u=(p_2-k)^2=-\hat s(1-z)(1-v)$ とする。$-g_{\mu\nu}H^{\mu\nu}$ の Born に対する比に、色と平均の因子（$q\bar q$ は $C_F$、$qg$ は $T_R/(1-\epsilon)$：グルーオンの偏極は $d-2$ 個）を掛けたものは
+\begin{equation}
+r_{q\bar q}=2C_F\Bigl[(1-\epsilon)\Bigl(\frac ut+\frac tu\Bigr)+\frac{2Q^2\hat s}{ut}-2\epsilon\Bigr],\qquad
+r_{qg}=-\frac{2T_R}{1-\epsilon}\Bigl[(1-\epsilon)\Bigl(\frac u{\hat s}+\frac{\hat s}u\Bigr)+\frac{2Q^2t}{u\hat s}-2\epsilon\Bigr]
+\label{eq:real}
+\end{equation}
+である（ベクトルと軸性の流れで同じ）。裸の結合 $g_0^2\mu_0^{2\epsilon}=4\pi\alpha_s\mu_R^{2\epsilon}(e^{\gamma_E}/4\pi)^\epsilon$ と2体の位相空間 $\int\dd\Phi_2=\frac1{8\pi}(\frac{4\pi}{\hat s})^\epsilon\frac{(1-z)^{1-2\epsilon}}{\Gamma(1-\epsilon)}\int_0^1\dd v\,[v(1-v)]^{-\epsilon}$ から
+\begin{equation}
+\frac{\Delta_R}{a_s}=\frac{e^{\epsilon\gamma_E}}{\Gamma(1-\epsilon)}\Bigl(\frac{\mu_R^2}{Q^2}\Bigr)^\epsilon z^\epsilon(1-z)^{1-2\epsilon}\int_0^1\dd v\,[v(1-v)]^{-\epsilon}\,r(z,v)
+\label{eq:dr}
+\end{equation}
+で、$v$ の積分はベータ関数になる。$q\bar q$ では $(1-z)^{-1-2\epsilon}=-\frac1{2\epsilon}\delta(1-z)+[\frac1{1-z}]_++\cdots$ と展開する。
+
+\paragraph{仮想の補正。}Feynman ゲージの頂点の補正を TID で $B_0(Q^2)$ と $C_0$ に直し、IBP の関係 $C_0=-\frac{2(d-3)}{(d-4)Q^2}B_0$ を使うと、時間的な $Q^2$ の形状因子は
+\begin{equation}
+F^{(1)}=-a_sC_F\Bigl(\frac{\mu_R^2}{-Q^2-i0}\Bigr)^\epsilon\frac{e^{\epsilon\gamma_E}\Gamma(1+\epsilon)\Gamma(1-\epsilon)^2}{\Gamma(1-2\epsilon)}\,\frac{2-\epsilon+2\epsilon^2}{\epsilon^2(1-2\epsilon)}
+=-a_sC_F\Bigl(\frac{\mu_R^2}{-Q^2-i0}\Bigr)^\epsilon\Bigl[\frac2{\epsilon^2}+\frac3\epsilon+8-\zeta_2+O(\epsilon)\Bigr]
+\label{eq:ff}
+\end{equation}
+で、$\Delta_V=2\re F^{(1)}\delta(1-z)$ である。質量0のクォークの自己エネルギーはスケールを持たないので0で、場の定数は効かない。$(-1-i0)^{-\epsilon}=e^{i\pi\epsilon}$ の $\cos\pi\epsilon$ が $-\frac{\pi^2}2\times$ 2重極、つまり $\delta(1-z)$ の係数に $+12\zeta_2C_F$ を足す。
+
+\paragraph{共線の対抗項と結果。}$\MSbar$ のパートン分布に移す対抗項は $\frac{\alpha_s}{2\pi}\frac1\epsilon(\frac{\mu_R^2}{\mu_F^2})^\epsilon$ に $2P_{qq}$（$q\bar q$、2本の脚）、$P_{qg}$（$qg$）を掛けたもので、$P_{qq}=C_F[\frac{1+z^2}{1-z}]_+$、$P_{qg}=T_R[z^2+(1-z)^2]$ である。$\Delta_V+\Delta_R$ に足すと極が消え、$\ln\mu_R$ が落ちて（$L_F=\ln(\mu_F^2/Q^2)$）
+\begin{align}
+\Delta^{(1)}_{q\bar q}&=C_F\Bigl\{16\Bigl[\frac{\ln(1-z)}{1-z}\Bigr]_+-8(1+z)\ln(1-z)-4\frac{1+z^2}{1-z}\ln z+(8\zeta_2-16)\delta(1-z)\Bigr\}-4L_F\,P_{qq}(z),\label{eq:dqq}\\
+\Delta^{(1)}_{qg}&=T_R\Bigl\{2[z^2+(1-z)^2]\ln\frac{(1-z)^2}z+1+6z-7z^2\Bigr\}-2L_F\,P_{qg}(z)\label{eq:dqg}
+\end{align}
+になる。$\delta(1-z)$ の係数 $8\zeta_2-16$ は、実の放射の $-6\zeta_2$ と仮想の補正の $-16+14\zeta_2$ の和である。仮想の $14\zeta_2$ のうち $12\zeta_2$ は時間的な $Q^2$ への解析接続（$\cos\pi\epsilon$）から来る。$\mu_F$ の依存 $-4L_FP_{qq}$、$-2L_FP_{qg}$ は、LO の $f(\mu_F)$ の DGLAP の進化を打ち消す。
+
+\section{検算の計画}\label{sec:plan}
+
+各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にある。文献の値は参照として並べ、比べる量は本ノートの式と入力で求めたものにする。
+
+\begin{table}[htbp]
+\centering\small
+\caption{各量と、それを計算して突き合わせる手段。}
+\label{tab:plan}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{1.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{3.6cm}}
+\toprule
+\textbf{量} & \textbf{手計算} & \textbf{FeynCalc + FeynArts、自分の積分} & \textbf{\MGaMC{}} \\
+\midrule
+Drell--Yan の係数関数 \eqref{eq:dqq}、\eqref{eq:dqg} & 第~\ref{sec:coef} 節 & $d$ 次元の実と仮想、対抗項；LHAPDF との畳み込み & 固定次数の LO と NLO、重みの付け直し \\
+$gg\to H$（有効理論） & 手順 (2) & 有効理論の1ループと実の放射、ウィルソン係数 & 自分の NLO の UFO（NLOCT）で固定次数 \\
+MC@NLO & — & 固定次数の NLO との比 & Pythia 8 のシャワー \\
+$Z'$ の $K$ 因子 & 式~\eqref{eq:dqq}、\eqref{eq:dqg} & $Z'$ の結合での畳み込み & 自分の NLO の UFO で固定次数 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{一致の基準。}ヒッグスのノートと同じである。発散部分は $1/\epsilon$ の係数が記号として一致すること、有限部分は記号として一致すること、数値の積分は精度を明示する。\MGaMC{} の固定次数の積分は統計の誤差を持つので、全断面積とビンごとに、自分の値との差を誤差で割った値（プル）で比べる。$\mu_R$、$\mu_F$ の重みを付け直した値は同じ事象から求めるので、中心の値と統計の揺らぎが強く相関する。
+
+\paragraph{手順。}次の順に進める。(1) Drell--Yan：$d$ 次元で式~\eqref{eq:real}、\eqref{eq:ff} を求めて極の打ち消しと式~\eqref{eq:dqq}、\eqref{eq:dqg} を確かめ、4次元の振幅の2乗を本ノートの FeynArts の模型と比べる。係数関数を LHAPDF のパートン分布と畳み込み、\MGaMC{} の固定次数の LO と NLO の全断面積、$m_{\ell\ell}$ の分布、9通りの $(\mu_R,\mu_F)$ と比べる（$Z$ の共鳴の付近、高い質量、$W^\pm$）。(2) $gg\to H$：重いトップの有効理論で、$gg$、$qg$、$q\bar q$ の係数関数とウィルソン係数を $d$ 次元で求める。ヒッグスのノートの有効理論の模型ファイルから NLOCT で NLO の UFO を作り、MadLoop の仮想の補正と aMC@NLO の固定次数を確かめる。(3) MC@NLO：手順 (1)、(2) の過程で Pythia 8 のシャワーをつなぎ、全断面積が固定次数の NLO と一致すること、ラピディティの分布、横運動量の大きいところが LO の $V+$ジェットに近づくことを確かめる。(4) $Z'$：段階 6~\cite{env} の SSM の $Z'$ の NLO の $K$ 因子を、式~\eqref{eq:dqq}、\eqref{eq:dqg} の $Z'$ の結合での畳み込みと、ZpSSM の NLO の UFO の aMC@NLO で求め、質量の下限を NLO で出し直す。
+
+\section{検算}\label{sec:checks}
+
+手順 (1) の (a)〜(e) は、第~\ref{sec:coef} 節の係数関数を $d$ 次元で計算し直し、発散が消えること（第~\ref{sec:div} 節）と既知の形との一致を確かめる。(f) は係数関数とパートン分布から陽子の断面積を数値で求める部分の精度、(g) は \MGaMC{}（第~\ref{sec:mg5intro} 節）との比較、(h) は得られた断面積と $K$ 因子である。\MGaMC{} の値はモンテカルロの統計の誤差を持つので、差を誤差で割ったプルが $\pm2$ 程度に収まり、多くのビンの $\chi^2$ がビンの数と同じくらいなら一致とみなす。
+
+手順 (1) は \texttt{Src/run\_dy\_check.sh} で再現できる（約3時間。ほとんどは \MGaMC{} の積分で、\texttt{--reuse} で既にある結果を使うと約30分。大半は自分のラピディティの分布の積分）。
+
+\subsection{手順 (1)：Drell--Yan}\label{sec:step1}
+
+\paragraph{(a) $d$ 次元の振幅の2乗。}\texttt{dy\_feyncalc.wl} は、$q\bar q\to V^*g$（2図）と $qg\to V^*q$（2図）の流れを FeynCalc で $d$ 次元で書き、スピンの和のトレースと両方のベクトルの偏極の和 $-g$ で $-g_{\mu\nu}H^{\mu\nu}$ を求める。Born と実の放射の両方で、軸性の流れ（$\gamma^\mu\gamma_5$、反可換の $\gamma_5$）とベクトルの流れの差は記号として0で、$Z$ と $W$ の $V-A$ の流れも同じ係数関数を持つ。Born に対する比は式~\eqref{eq:real} と記号として一致した（$-g_{\mu\nu}H_B^{\mu\nu}=4(1-\epsilon)\hat s$）。
+
+\paragraph{(b) 位相空間の積分。}式~\eqref{eq:dr} の $v$ の積分は部分分数とベータ関数で $\epsilon$ について厳密に求め、$\epsilon=-0.3$、$z=0.37$ で \texttt{NIntegrate}（30桁）と15桁の範囲で一致した。$q\bar q$ の $(1-z)^2\times$（積分）は $z=1$ で正則で、$\delta(1-z)$、$\mathcal D_0$、$\mathcal D_1$ の係数と正則な部分に分けた（\ref{app:dy}）。
+
+\paragraph{(c) 仮想の補正。}頂点の補正（Feynman ゲージ）を FeynCalc の TID で $B_0(Q^2)$ と $C_0(0,0,Q^2)$ に直し、閉じた形（時間的な $Q^2$ で $(-Q^2-i0)^{-\epsilon}=Q^{-2\epsilon}e^{i\pi\epsilon}$）を入れた。IBP の関係 $C_0=-\frac{2(d-3)}{(d-4)Q^2}B_0$ は閉じた形どうしで記号として成り立つ。軸性の流れとベクトルの流れの $F^{(1)}$ の差は0で、$F^{(1)}e^{-i\pi\epsilon}$ は実で、式~\eqref{eq:ff} の閉じた形と記号として一致した。
+
+\paragraph{(d) 和と対抗項。}実の放射と仮想の補正と $\MSbar$ の共線の対抗項の和で、$q\bar q$ の $1/\epsilon^2$、$1/\epsilon$ と $qg$ の $1/\epsilon$ の係数はすべて記号として0になり、$\ln(\mu_R^2/Q^2)$ による微分も0だった。有限部分は式~\eqref{eq:dqq}、\eqref{eq:dqg}（Altarelli--Ellis--Martinelli の $\MSbar$ の形~\cite{aem79}、参照）と記号として一致した。ラピディティの分布の NLO（\ref{app:rap}）のために、$v$ を固定した部分 $R_0$、$R_1$、$S_0$、$S_1$ を同じ $d$ 次元の式から取り出し、$G$ が $v$ によらないときに式~\eqref{eq:dqq}、\eqref{eq:dqg} に記号として戻ることを確かめた。
+
+\paragraph{(e) 4次元の振幅の2乗と模型。}NLO ノートの FeynArts の模型で、$u\bar u\to\gamma g$、$u\bar u\to Zg$、$u\bar d\to W^+g$、$ug\to\gamma u$（各2図、$V$ は $Q^2$ の off-shell）の4次元の $\sum|\mathcal M|^2$ を求めた。(a) の式の $\epsilon\to0$ に模型の結合（$eQ$、$\frac{g_Z}2(T_3-2Qs_W^2)$ と $\frac{g_Z}2T_3$、$\frac g{2\sqrt2}$ の $c_V$、$c_A$）と色の和 $N_cC_F$ を掛けたものと、4つとも記号として一致した。
+
+\paragraph{(f) 自分の畳み込み。}\texttt{dy\_hadronic.py} は式~\eqref{eq:lumi} を数値で積分する。
+\begin{itemize}
+\item 係数関数を Python で書き直したものは、\texttt{dy\_feyncalc.wl} が7点の $z$ で出した値と $9\times10^{-16}$ で一致した。
+\item $xf(x)$ は LHAPDF の値を $\ln x$ の4000点の3次スプラインにし、$G_{ij}$ は $\ln y$ の700点のスプラインにした。LHAPDF を直接呼んだ値との差は、$x<0.5$ の $xf$ で $8\times10^{-7}$、$G_{u\bar u}$ で $3\times10^{-6}$ である（$x\approx0.88$ では $b$ の $xf\approx10^{-9}$ で相対 $10^{-3}$ だが、効かない）。
+\item $z$ の積分は $(\tau,\frac12)$ を $\ln z$ で、$(\frac12,1)$ を $1-z=u^3/2$ で Gauss--Legendre（96点と64点）にし、$Q^2$ の積分は共鳴の $\pm10\Gamma$ の中を Breit--Wigner の変数で（40点）、外を $\ln Q^2$ の区間（10~GeV より上は比1.5以下、下は比10以下、各20点）に分けて行った。点を倍にした変化は、66〜116~GeV の窓で $9\times10^{-8}$、全体の範囲（$Z$ は $m_{ee}>50$、500~GeV、$W$ は $10^{-3}$~GeV〜13~TeV）で $10^{-7}$ 以下だった。初めは $Q^2$ の全体を Breit--Wigner の変数だけで積分していて、$W$ の 50~GeV より下（全体の $1.3\%$）を少なく見積もり、全断面積が $10^{-3}$ 小さかった。また、\MGaMC{} は $m_{e\nu}$ の下限を持たないので、$W$ は $10^{-3}$~GeV から積分する（$m_{e\nu}<1$~GeV は $W^+$ の LO で 0.758~pb、$7.4\times10^{-5}$）。LHAPDF の $x_{\min}=10^{-9}$ より小さい $x$ は、\MGaMC{} と同じく LHAPDF の外挿（continuation）の値を使う。
+\item ラピディティの分布は、$t=\ln x_1$ の400点の格子で $f(z,t)$ の累積の積分（Simpson）を作り、ビンの端で Hermite の補間（$C'=f$）をとって $G(z,v)$ を求めた（$v$ は48点）。$|y|<12$ のビンの和は、窓の断面積と LO で $-5\times10^{-7}$、NLO で $-1.2\times10^{-6}$ 一致し、$z$、$v$、$t$ の点を倍にしたビンの値の変化は $10^{-8}$ だった。
+\end{itemize}
+
+\paragraph{(g) \MGaMC{} の固定次数。}\texttt{dy\_mg5.sh} は、\texttt{loop\_sm-no\_b\_mass} で \texttt{p p > e+ e- [QCD]}、\texttt{p p > e+ ve [QCD]}、\texttt{p p > e- ve\textasciitilde{} [QCD]} を書き出し、固定次数（\texttt{fixed\_order = ON}）の LO と NLO を走らせる。$\mu_R=\mu_F=\mu_0$ は $Z$ の共鳴の付近（$m_{ee}>50$~GeV）で $M_Z$、高い質量（$m_{ee}>500$~GeV）で 1~TeV、$W$ で $M_W$ とし、$\mu_R$、$\mu_F$ を独立に $\frac12$、1、2 倍にした9通りを重みの付け直しで同じ事象から求めた。レプトンのカットはない（$Z$ は \texttt{mll\_sf} だけ）。分布は自分で書いた固定次数の解析 \texttt{analysis\_HwU\_dy.f}（$m_V$、$y_V$、$\log m_V$、質量の窓）で取った。積分の精度は \texttt{req\_acc\_FO}~$=3\times10^{-4}$ と、種を替えた $10^{-4}$（$W$ の NLO は $3\times10^{-4}$）の二組で、$W$ には裾の分布を加えた三組目（種を替えた）がある。表~\ref{tab:dytot} に中心のスケールの全断面積と窓を、表~\ref{tab:dychi} に分布の $\chi^2$ を示す。
+
+\begin{table}[htbp]
+\centering\small
+\caption{自分の畳み込みと \MGaMC{} の固定次数（pb、$\mu_R=\mu_F=\mu_0$）。\MGaMC{} は独立な2〜3回の積分（1：$3\times10^{-4}$、2：種を替えた $10^{-4}$（$W$ の NLO は $3\times10^{-4}$）、3：$W$ の裾の分布の組）で、括弧は最後の桁の誤差、右の列はプル（\MGaMC{} から自分の値を引いて誤差で割ったもの）。$Z$ の全体は $m_{ee}>50$~GeV（高い質量は $m_{ee}>500$~GeV）、$W$ の全体はカットなし。}
+\label{tab:dytot}
+\begin{tabular}{llrrrrrrr}
+\toprule
+過程と範囲 & 次数 & 自分 & \multicolumn{2}{c}{\MGaMC{} 1} & \multicolumn{2}{c}{\MGaMC{} 2} & \multicolumn{2}{c}{\MGaMC{} 3} \\
+\midrule
+$Z$、全体 & LO & 1810.44 & 1810.16(42) & $-0.7$ & 1810.53(18) & $+0.5$ & &  \\
+ & NLO & 2064.54 & 2063.80(67) & $-1.1$ & 2064.78(22) & $+1.1$ & &  \\
+$Z$、66〜116~GeV & LO & 1721.13 & 1720.95(41) & $-0.4$ & 1721.04(17) & $-0.5$ & &  \\
+ & NLO & 1966.68 & 1966.00(64) & $-1.1$ & 1966.83(21) & $+0.7$ & &  \\
+$Z$、$m_{ee}>500$~GeV & LO & 0.0963761 & 0.0964092(190) & $+1.7$ & 0.0963768(74) & $+0.1$ & &  \\
+ & NLO & 0.114451 & 0.114426(27) & $-0.9$ & 0.114448(10) & $-0.2$ & &  \\
+$W^+$、全体 & LO & 10308.05 & 10307.7(22) & $-0.2$ & 10307.31(75) & $-1.0$ & 10307.89(75) & $-0.2$ \\
+ & NLO & 11855.87 & 11863.0(22) & $+3.3$ & 11856.9(20) & $+0.5$ & 11850.5(31) & $-1.7$ \\
+$W^+$、60〜100~GeV & LO & 10005.38 & 10005.2(21) & $-0.1$ & 10004.51(73) & $-1.2$ & 10005.02(73) & $-0.5$ \\
+ & NLO & 11543.41 & 11545.0(16) & $+1.0$ & 11543.1(12) & $-0.3$ & 11542.7(13) & $-0.6$ \\
+$W^-$、全体 & LO & 7776.65 & 7776.7(17) & $+0.0$ & 7776.44(57) & $-0.4$ & 7776.47(57) & $-0.3$ \\
+ & NLO & 8853.23 & 8856.0(31) & $+0.9$ & 8856.5(19) & $+1.8$ & 8853.8(20) & $+0.3$ \\
+$W^-$、60〜100~GeV & LO & 7541.22 & 7541.1(16) & $-0.1$ & 7541.14(55) & $-0.1$ & 7540.96(55) & $-0.5$ \\
+ & NLO & 8616.52 & 8616.3(17) & $-0.1$ & 8618.14(95) & $+1.7$ & 8616.26(90) & $-0.3$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering\small
+\caption{分布の $\chi^2$（中心のスケール、独立な積分の和）と自由度。$y$ の分布は $Z$ で 66〜116~GeV（高い質量は $m_{ee}>500$~GeV で、$|y|\ge3.25$ の運動学の端の断面積 $10^{-13}$~pb のビンを除く）、$W$ で全体。$\log_{10}m_V$ は $W$ の三組目だけ（$10^{-3}$~GeV〜13~TeV の0.2刻み）。}
+\label{tab:dychi}
+\begin{tabular}{lcccccc}
+\toprule
+ & \multicolumn{2}{c}{$m_V$ のビン} & \multicolumn{2}{c}{$y_V$ のビン} & \multicolumn{2}{c}{$\log_{10}m_V$} \\
+過程 & LO & NLO & LO & NLO & LO & NLO \\
+\midrule
+$Z$（50〜150~GeV、5~GeV 刻み） & 36.9/40 & 30.5/40 & 74.2/80 & 74.0/80 & — & — \\
+$Z$（0.5〜3.5~TeV、200~GeV 刻み） & 28.0/30 & 32.8/30 & 41.1/52 & 52.7/52 & — & — \\
+$W^+$（50〜150~GeV） & 44.3/60 & 47.3/60 & 109.8/120 & 131.1/120 & 19.8/27 & 30.0/27 \\
+$W^-$（50〜150~GeV） & 62.0/60 & 49.3/60 & 104.0/120 & 128.5/120 & 17.6/28 & 25.0/28 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+$Z$ と $W$ の窓、$m_V$ の分布、ラピディティの分布は、LO と NLO で統計の範囲で一致した。9通りの $(\mu_R,\mu_F)$ の重みを付け直した値も、$W$ の NLO の全体を除くすべての全断面積で自分の値と $1.9\sigma$ 以内で合った（$\mu_R$ は NLO の補正の $\alpha_s(\mu_R)$ だけを、$\mu_F$ はパートン分布と $L_F$ の項を変える）。$W$ の NLO の全体だけ、3回の積分のばらつきが誤差より大きい（$W^+$ で平均のまわりの $\chi^2=11.5$、自由度2。9通りのスケールでは最大 $4.9\sigma$）。裾の分布で、そのばらつきは $m_{e\nu}<1$~GeV にあることが分かった。そこでは $\mu_F=M_W$ の $L_F=\ln(\mu_F^2/Q^2)\gtrsim9$ の NLO の補正が LO（$W^+$ で 0.758~pb）より大きく負で（自分の NLO は $-0.629$~pb）、正と負の重みが打ち消し合う。\MGaMC{} の値は $W^+$ で $-4.93\pm2.5$~pb、$W^-$ で $-0.14\pm1.3$~pb（自分は $-0.620$~pb）で、この 1~GeV より下の積分が全体の誤差（2〜3~pb）のほとんどを占める。1~GeV より上の裾（1〜10、10〜50、150~GeV〜13~TeV）は LO と NLO で $2.1\sigma$ 以内で一致した。
+
+\paragraph{(h) 断面積と $K$ 因子。}表~\ref{tab:dyk} に自分の値をまとめる。共鳴の付近の $K$ は 1.14〜1.15 で、$q\bar q$ のチャンネルが $+29$〜$30\%$、$qg$ が $-14$〜$-16\%$ である。高い質量では $qg$ の光度が相対的に小さく $K=1.19$ になる。$\mu_R$、$\mu_F$ の9通りの範囲は、LO（$\mu_F$ だけ）の $\pm12$〜$13\%$ から NLO で $^{+4}_{-7}\%$ に縮む。
+
+\begin{table}[htbp]
+\centering\small
+\caption{自分の LO と NLO の断面積（pb、$\mu_0$ は (g) の値）、$K$、NLO の補正のチャンネルごとの分（LO に対する比）、9通りのスケールの範囲。}
+\label{tab:dyk}
+\begin{tabular}{lrrcccc}
+\toprule
+過程 & LO & NLO & $K$ & $q\bar q$ & $qg$ & スケールの範囲（NLO；LO） \\
+\midrule
+$Z$、$m_{ee}>50$~GeV & 1810.44 & 2064.54 & 1.1404 & $+0.2940$ & $-0.1537$ & $^{+3.6}_{-6.4}\%$；$^{+11.4}_{-12.4}\%$ \\
+$Z$、$m_{ee}>500$~GeV & 0.0963761 & 0.114451 & 1.1875 & $+0.2838$ & $-0.0962$ & $^{+1.6}_{-1.2}\%$；$^{+2.1}_{-2.2}\%$ \\
+$W^+$ & 10308.05 & 11855.87 & 1.1502 & $+0.2945$ & $-0.1444$ & $^{+4.0}_{-7.0}\%$；$^{+12.0}_{-13.0}\%$ \\
+$W^-$ & 7776.65 & 8853.23 & 1.1384 & $+0.3004$ & $-0.1620$ & $^{+3.7}_{-6.9}\%$；$^{+12.3}_{-13.4}\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+測定値（参照）と並べると、ATLAS の 13~TeV の全断面積~\cite{atlaswz}（1レプトンのフレーバーあたり）$\sigma_Z(66<m_{\ell\ell}<116~\mathrm{GeV})=1.981\pm0.057$~nb、$\sigma_{W^+}=11.83\pm0.40$~nb、$\sigma_{W^-}=8.79\pm0.30$~nb（誤差は統計、系統、ルミノシティの2乗和）に対し、本ノートの NLO は 1.967、11.856、8.853~nb で、比は 0.993、1.002、1.007 である。ただし本ノートの $W$ は CKM 行列を単位行列とした値である。PDG の $|V_{ij}|$（参照）を入れると（\texttt{dy\_ckm.py}。$u\bar s$、$c\bar d$ などの組が加わり、$u\bar d$、$c\bar s$ は $|V_{ud}|^2$、$|V_{cs}|^2$ に減る。各行の $|V_{ij}|^2$ の和は1だが、入れ替わる反クォークのパートン分布が違う）、$W^+$、$W^-$ の NLO は $0.35\%$、$0.62\%$ 下がって 11.814、8.798~nb になり、比は 0.999、1.001 になる（LO でも $0.33\%$、$0.57\%$ で、QCD の補正はフレーバーによらない）。$Z$ は中性の流れなので CKM によらない。\MGaMC{} との比較は、両方が単位行列を使うので、この違いを含まない。本ノートは NNLO の QCD と電弱の補正を入れていないので、この一致は NLO の範囲のもので、$\mu$ の範囲（約 $5\%$）より小さい。
+
+\paragraph{(i) 道具の注意。}\MGaMC{} の固定次数の解析の HwU の値はビンごとの断面積で、幅で割っていない。NLO の run\_card の固定スケールの既定値は 91.118~GeV（$M_Z$ ではない）。\texttt{pdlabel = lhapdf} では $\alpha_s(Q)$ も LHAPDF の値で（\texttt{alfas\_functions\_lhapdf6.f}）、自分の計算も同じ関数を使った。$W$ の NLO は $m_{e\nu}$ の下限がなく、$3\times10^{-4}$ の精度に約30分かかる（$Z$ は1.5分）。重みを付け直した列の誤差は HwU にないので、中心の列の誤差に $\max(1,|\text{付け直した値}/\text{中心の値}|)$ を掛けた（値の比だけを掛けると、NLO が LO を打ち消す $W$ の数 GeV のビンで誤差が小さくなりすぎる）。これらは計算環境の記録~\cite{env} の表に加えた。
+\section{議論と今後}\label{sec:discussion}
+
+\paragraph{手順 (1) で分かったこと。}第一の問いには肯定で答えられる。$d$ 次元の実の放射と形状因子に $\MSbar$ の共線の対抗項を足すと、$q\bar q$ の2重極と単極、$qg$ の単極が記号として消え、$\ln\mu_R$ が落ち、係数関数は $\MSbar$ のパートン分布の規約（グルーオンの偏極の平均 $1/(2(1-\epsilon))$）と合う形になった。この規約は、$\MSbar$ で決めた NNPDF4.0 と組み合わせたハドロンの断面積が \MGaMC{} と一致したことで、実際に確かめられた。$\delta(1-z)$ の係数 $8\zeta_2-16$ に入る時間的な形状因子の $\pi^2$ の項と、$\mathcal D_1$ の軟らかい放射の対数が $q\bar q$ を約 $+29\%$ 上げ、$qg$ が約 $-15\%$ 下げて、$Z$、$W$ の共鳴の付近で $K\approx1.14$〜$1.15$ になる。
+
+第二の問いにも、手順 (1) の範囲で肯定で答えられる。電弱の結合と Breit--Wigner の伝播関数を持つ \texttt{loop\_sm} の Drell--Yan で、\MGaMC{} の固定次数の LO と NLO は、全断面積、$m_{\ell\ell}$ の分布、ラピディティの分布、9通りの $(\mu_R,\mu_F)$ の重みの付け直しで、自分の畳み込みと統計の誤差の範囲で一致した（$W$ の NLO の全体は、$m_{e\nu}<1$~GeV の打ち消しによる積分のばらつきの範囲で）。QCD ノートの $t\bar t$ と合わせて、\texttt{[QCD]} の FKS の引き算は、始状態の $q\bar q$、$qg$、$gg$ のチャンネルで確かめたことになる。比べる途中で、自分の積分の Breit--Wigner の変数だけの求積が $W$ の裾を $10^{-3}$ 少なく見積もっていたことが分かった。点を倍にする確かめは、比べる範囲そのものでする必要がある（計算環境の記録~\cite{env} の表に加えた）。
+
+\paragraph{今後。}手順 (2) では、重いトップの有効理論の $gg\to H$ の係数関数を同じ方法で求める。$gg$ の初期状態は $P_{gg}$ と $C_A$ の項を持ち、$K$ 因子が約2と大きい。\MGaMC{} には同梱の NLO の有効理論の模型がないので、ヒッグスのノートの \texttt{HggEFT.fr} から NLOCT で NLO の UFO を作る。ウィルソン係数の繰り込み（演算子 $\alpha_sG^2$ の繰り込み）を NLOCT がどう扱うかが要点になる。FeynRules の模型のデータベースの \texttt{HC\_NLO\_X0}（123 KB、取得は承認を得てから）は検算の比較に使える。手順 (3) の MC@NLO では、手順 (1) の固定次数の値を基準にする。手順 (4) では、式~\eqref{eq:dqq}、\eqref{eq:dqg} は $Z'$ にもそのまま使え、段階 6 の $Z'$ の断面積を NLO にできる。ラピディティの分布を除く、レプトンにカットを掛けた分布（fiducial な断面積）は、自分の計算がレプトンの角度を積分しているので比べていない。
+
+\appendix
+\section{Drell--Yan の $d$ 次元の導出の細部}\label{app:dy}
+
+\paragraph{位相空間。}$q\bar q\to V^*(Q^2)+$質量0のパートンの $d$ 次元の2体の位相空間は、パートンの運動量 $|\boldsymbol k|=\frac{\sqrt{\hat s}}2(1-z)$、$p_1$ との角 $\theta$、$v=\frac{1-\cos\theta}2$ で
+\[
+\dd\Phi_2=\frac{|\boldsymbol k|^{d-3}}{4(2\pi)^{d-2}\sqrt{\hat s}}\,\dd\Omega_{d-2},\qquad
+\dd\Omega_{d-2}=\frac{2\pi^{1-\epsilon}}{\Gamma(1-\epsilon)}\,2\cdot4^{-\epsilon}[v(1-v)]^{-\epsilon}\dd v
+\]
+で、まとめると第~\ref{sec:coef} 節の式になる。Born の1体の位相空間は $2\pi\delta(\hat s-Q^2)=\frac{2\pi}{\hat s}\delta(1-z)$ で、レプトンの部分は Born と実の放射で共通である。
+
+\paragraph{$v$ の積分。}式~\eqref{eq:real} を $v$ について部分分数にすると、$v^n$ と $(1-v)^m$ の和になり、$\int_0^1\dd v\,v^{n-\epsilon}(1-v)^{-\epsilon}=\frac{\Gamma(n+1-\epsilon)\Gamma(1-\epsilon)}{\Gamma(n+2-2\epsilon)}$ で積分できる。$q\bar q$ の $(1-z)^2\times$（積分）は $z=1$ で正則で、$z=1$ での値は $8C_Fe^{\epsilon(\gamma_E+\ln(\mu_R^2/Q^2))}\Gamma(-\epsilon)/\Gamma(1-2\epsilon)$ である。
+
+\paragraph{分布の展開。}$H(z,\epsilon)=H_{-1}/\epsilon+H_0+H_1\epsilon$ を正則な部分として $H(z,\epsilon)(1-z)^{-1-2\epsilon}=-\frac{H(1,\epsilon)}{2\epsilon}\delta(1-z)+H(z,\epsilon)\{[\frac1{1-z}]_+-2\epsilon[\frac{\ln(1-z)}{1-z}]_+\}+O(\epsilon)$ とし、$c(z)[g]_+=c(1)[g]_++(c(z)-c(1))g(z)$ で正則な部分に分ける。$\delta(1-z)$ には $H(1,\epsilon)$ の $O(\epsilon)$ まで、$[\frac{\ln(1-z)}{1-z}]_+$ には $H_{-1}$ だけが要る。
+
+\section{ラピディティの分布の NLO}\label{app:rap}
+
+$v$ を固定すると、レプトンの対のパートンの重心系でのラピディティは $y^*=\frac12\ln\frac{z+v(1-z)}{1-v(1-z)}$ で、$v=0$（$k\parallel p_1$）で $\frac12\ln z$、$v=1$ で $-\frac12\ln z$、$z=1$ で0である。ハドロンの系では $y=\ln x_1+\frac12\ln(z/\tau)+y^*$ なので、観測量（ラピディティのビン）で重みを付けた光度
+\[
+G(z,v)=\int\dd t\,x f_i(e^t)\,x f_j(\tau e^{-t}/z)\,\Theta\bigl(t+\tfrac12\ln(z/\tau)+y^*(z,v)\in\text{ビン}\bigr)
+\]
+は $v$ の連続関数で、$G_a=G(z,0)$、$G_b=G(z,1)$、$G(1)=G(1,v)$ と書く。$q\bar q$ では $R(z,v,\epsilon)=(1-z)^2v(1-v)r_{q\bar q}=R_0+\epsilon R_1$、$[v(1-v)]^{-1-\epsilon}=v^{-1-\epsilon}(1-v)^{-\epsilon}+v^{-\epsilon}(1-v)^{-1-\epsilon}$ として、$z<1$ で $v^{-1-\epsilon}=-\delta(v)/\epsilon+[1/v]_++\cdots$ と展開する。$v=0$、1 の極は同じ運動学の共線の対抗項と、$\delta(1-z)$ の部分は式~\eqref{eq:dqq} の $\delta$ の係数 $c_\delta=C_F(8\zeta_2-16)-6C_FL_F$ と同じものになり
+\begin{align*}
+[\Delta_{q\bar q}G]^{(1)}&=c_\delta G(1)+\int_\tau^1\frac{\dd z}{1-z}\Bigl\{2C_F(1-z)^2(G_a+G_b)-2C_F(1+z^2)\ln z\,(G_a+G_b)\\
+&\qquad+\int_0^1\dd v\Bigl[\frac{R_0G-R_0(z,0)G_a}v+\frac{R_0G-R_0(z,1)G_b}{1-v}\Bigr]\Bigr\}\\
+&\quad+4C_F\,(1+z^2)\mathcal D_1\otimes(G_a+G_b)-2C_FL_F\,(1+z^2)\mathcal D_0\otimes(G_a+G_b)
+\end{align*}
+になる（$R_0=2C_F[(1-z)^2(v^2+(1-v)^2)+2z]$、$R_1(z,0)=R_1(z,1)=-2C_F(1-z)^2$、$\mathcal D_k=[\ln^k(1-z)/(1-z)]_+$）。$q(p_1)g(p_2)$ では $S=(1-z)(1-v)r_{qg}=S_0+\epsilon S_1$ がクォークがグルーオンに沿う $v=1$ でだけ特異で
+\[
+[\Delta_{qg}G]^{(1)}=\int_\tau^1\dd z\Bigl\{2T_RP(z)\bigl(2\ln(1-z)-\ln z\bigr)G_b+4T_Rz(1-z)G_b+\int_0^1\dd v\,\frac{S_0G-S_0(z,1)G_b}{1-v}-2T_RL_FP(z)G_b\Bigr\}
+\]
+（$P=z^2+(1-z)^2$、$S_0=2T_R[(1-z)^2(1-v)^2+1-2z(1-z)v]$）で、$g(p_1)q(p_2)$ は $v\to1-v$、$G_b\to G_a$ である。$G$ が $v$ によらないとき（$y$ で積分したとき）、両方が式~\eqref{eq:dqq}、\eqref{eq:dqg} に記号として戻ることを \texttt{dy\_feyncalc.wl} の (d2) で確かめた。
+
+\begin{thebibliography}{99}
+\bibitem{smnote} 標準模型：$\MSbar$ の電弱の1ループの繰り込みと検算（$V_{\mathrm{CKM}}=1$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm/ResearchNote/note.pdf}）。
+\bibitem{ckmnote} 標準模型と CKM 行列：$\MSbar$ の繰り込みと世代を変える過程（FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）（本リポジトリ \nolinkurl{models/sm_ckm/ResearchNote/note.pdf}）。
+\bibitem{nlonote} 標準模型の NLO の物理量：実の放射を含む崩壊幅と電弱の精密測定（本リポジトリ \nolinkurl{models/sm_nlo/ResearchNote/note.pdf}）。
+\bibitem{higgsnote} 標準模型のヒッグスの崩壊：NLO の部分幅と分岐比（本リポジトリ \nolinkurl{models/sm_higgs/ResearchNote/note.pdf}）。
+\bibitem{qcdnote} QCD：1ループ・2ループの構造、インスタントンと検算（本リポジトリ \nolinkurl{models/qcd/ResearchNote/note.pdf}）。
+\bibitem{aem79} G. Altarelli, R. K. Ellis, G. Martinelli, ``Large perturbative corrections to the Drell-Yan process in QCD,'' Nucl. Phys. B \textbf{157}, 461 (1979)。$\MSbar$ の形は R. K. Ellis, W. J. Stirling, B. R. Webber, \textit{QCD and Collider Physics}（Cambridge University Press, 1996）の 9.2 節による（参照）。
+\bibitem{nnpdf40} R. D. Ball \textit{et al.} (NNPDF Collaboration), ``The path to proton structure at 1\% accuracy,'' Eur. Phys. J. C \textbf{82}, 428 (2022), arXiv:2109.02653。
+\bibitem{fks} S. Frixione, Z. Kunszt, A. Signer, ``Three-jet cross sections to next-to-leading order,'' Nucl. Phys. B \textbf{467}, 399 (1996), arXiv:hep-ph/9512328；R. Frederix, S. Frixione, F. Maltoni, T. Stelzer, ``Automation of next-to-leading order computations in QCD: the FKS subtraction,'' JHEP \textbf{10}, 003 (2009), arXiv:0908.4272。
+\bibitem{mg5} J. Alwall \textit{et al.}, ``The automated computation of tree-level and next-to-leading order differential cross sections, and their matching to parton shower simulations,'' JHEP \textbf{07}, 079 (2014), arXiv:1405.0301。
+\bibitem{atlaswz} ATLAS Collaboration, ``Measurement of $W^\pm$ and $Z$-boson production cross sections in $pp$ collisions at $\sqrt s=13$~TeV with the ATLAS detector,'' Phys. Lett. B \textbf{759}, 601 (2016), arXiv:1603.09222（参照）。
+\bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}）。
+\end{thebibliography}
+
+\end{document}
