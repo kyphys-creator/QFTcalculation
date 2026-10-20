@@ -2444,6 +2444,7 @@ cd ~/Documents/Claude/QFTcalculation/environment/tests/geant4 && ./run_geant4.sh
 cd ~/Documents/Claude/QFTcalculation/environment/tests/geant4/hepmc && ./run_hepmc.sh 2000   # LHC events (Sec. 11.1)
 cd ~/Documents/Claude/QFTcalculation/environment/tests/geant4/fcal && ./run_fcal.sh 500       # ATLAS FCAL (Sec. 11.2)
 cd ~/Documents/Claude/QFTcalculation/environment/tests/geant4/ccal && ./run_ccal.sh           # CMS HCAL (Sec. 11.3)
+~/Documents/Claude/QFTcalculation/environment/tests/geant4/lhcview/run_lhcview.sh   # LHC events in the Qt window
 \end{Verbatim}
 
 \subsection{LHC の事象を HepMCEx02 に通す}\label{sec:geant4hepmc}
@@ -2474,6 +2475,8 @@ LHC の段階 3（第~\ref{sec:lhc3} 節）で作った $pp\to e^+e^-$ の事象
 \item 例の \texttt{CMakeLists.txt} の \texttt{find\_package(HepMC)} は Geant4 の \texttt{FindHepMC.cmake} を使うので、先に \texttt{include(\$\{Geant4\_USE\_FILE\})} が要る。
 \item $pp\to e^+e^-$ の2000事象で、ミューオン検出器のヒットは 13754 個あった（主粒子の $\pi^\pm$、K$^\pm$ が飛行中に崩壊したミューオンなど）。これは確かめていない。
 \end{itemize}
+
+\paragraph{Qt の窓で見る。}同じ事象を Qt の窓で1事象ずつ見るには \nolinkurl{tests/geant4/lhcview/run_lhcview.sh} を使う。HepMCEx02 の \texttt{main} は、窓を開くと表示を何も設定しないので、例の部品に自作の \texttt{main}（\texttt{lhcview.cc}）をつなぎ、Qt を開いて \texttt{lhcview.mac}（HepMC の入力、ToolsSG の viewer、半透明のカロリメータ、粒子の種類による色分け、初めの運動量が 1 GeV 未満の飛跡を隠す選別、最初の事象）を読んでから窓を渡す。次の事象は \texttt{/run/beamOn 1}、隠した飛跡は \texttt{/vis/filtering/trajectories/soft/active false} で出す。窓は約 300 MB で、4 GB を超えたら止める見張りをつけた。
 
 
 \subsection{ATLAS FCAL のテストビームの例}\label{sec:geant4fcal}

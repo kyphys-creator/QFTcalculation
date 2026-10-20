@@ -1,0 +1,46 @@
+# lhcview: HepMCEx02's collider detector with the stage-3 LHC events, one event at a time (run_lhcview.sh).
+# In the Qt window: drag to rotate, wheel to zoom; type /run/beamOn 1 for the next event.
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+/generator/select hepmcAscii
+/generator/hepmcAscii/open events.hepmc
+/generator/hepmcAscii/verbose 0
+#
+/vis/open TSG_QT_GLES 1200x900
+/vis/viewer/set/autoRefresh false
+/vis/verbose errors
+/vis/drawVolume
+# lead calorimeters (r = 2-3 m) and argon muon chambers, see-through
+/vis/geometry/set/colour BARREL_CAL_LV 0 0.3 0.8 0.9 0.12
+/vis/geometry/set/colour ENDCAP_CAL_LV 0 0.3 0.8 0.9 0.12
+/vis/geometry/set/colour BARREL_MUON_LV 0 1.0 1.0 0.5 0.20
+/vis/geometry/set/colour ENDCAP_MUON_LV 0 1.0 1.0 0.5 0.12
+/vis/viewer/set/style surface
+/vis/viewer/set/background 0.05 0.05 0.1
+/vis/viewer/set/viewpointThetaPhi 65 20 deg
+/vis/viewer/zoom 1.5
+/vis/scene/add/axes 0 0 0 1 m
+/vis/scene/add/eventID
+# trajectories: e+- red/magenta, muons green, photons faint yellow, charged hadrons white, other neutrals grey
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByParticleID lhc
+/vis/modeling/trajectories/lhc/set e- red
+/vis/modeling/trajectories/lhc/set e+ magenta
+/vis/modeling/trajectories/lhc/set mu- green
+/vis/modeling/trajectories/lhc/set mu+ green
+/vis/modeling/trajectories/lhc/setRGBA gamma 1 1 0 0.35
+/vis/modeling/trajectories/lhc/set pi+ white
+/vis/modeling/trajectories/lhc/set pi- white
+/vis/modeling/trajectories/lhc/set kaon+ white
+/vis/modeling/trajectories/lhc/set kaon- white
+/vis/modeling/trajectories/lhc/set proton white
+/vis/modeling/trajectories/lhc/set anti_proton white
+/vis/modeling/trajectories/lhc/setDefaultRGBA 0.6 0.6 0.6 0.5
+# hide tracks below 1 GeV at their start (/vis/filtering/trajectories/soft/active false shows them all)
+/vis/filtering/trajectories/create/attributeFilter soft
+/vis/filtering/trajectories/soft/setAttribute IMag
+/vis/filtering/trajectories/soft/addInterval 1 GeV 100000 GeV
+/vis/scene/endOfEventAction refresh
+/vis/viewer/set/autoRefresh true
+/run/beamOn 1
