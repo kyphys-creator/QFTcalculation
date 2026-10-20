@@ -12,6 +12,12 @@
 \usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing,shapes.geometric}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.18}
+% the figures of step (3): categorical colours validated for colour-vision deficiency (dataviz palette slots 1-3), with line styles
+\definecolor{mcblue}{HTML}{2A78D6}
+\definecolor{ownorange}{HTML}{EB6834}
+\definecolor{foaqua}{HTML}{1BAF7A}
+\pgfplotsset{mcstyle/.style={width=7.2cm, tick label style={font=\scriptsize}, label style={font=\small}, title style={font=\small},
+  legend style={font=\scriptsize, draw=none, fill=white, fill opacity=0.9, text opacity=1, cells={anchor=west}}, unbounded coords=jump}}
 \usepackage{placeins}
 \usepackage{xurl}
 \usepackage{hyperref}
@@ -627,12 +633,99 @@ NLO の事象にそのままシャワーをかけると、1個目の放射を NL
 \end{itemize}
 直したあとは、シャワーの1つの仕事のメモリは約 0.4~GB、全体で約5分だった。
 
-\paragraph{(c) 結果。}表~\ref{tab:mc} にまとめる。期待 (i)〜(iv) を順に見る。
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[mcstyle, name=top, height=5.2cm, ymode=log, xmin=0, xmax=250, ymin=5e-3, ymax=1e3, xticklabels={},
+  ylabel={$d\sigma/dp_T$ [pb/GeV]}, title={$Z$（$m_{ee}>50$~GeV）}, legend pos=north east]
+\addplot[mcblue, thick] table[x=x, y=mc]{figs/mc_pt_z.dat};\addlegendentry{MC@NLO + Pythia 8}
+\addplot[ownorange, thick, dashed] table[x=x, y=own]{figs/mc_pt_z.dat};\addlegendentry{LO の $Z$$+$ジェット（自分）}
+\end{axis}
+\begin{axis}[mcstyle, at={(top.south west)}, anchor=north west, yshift=-0.12cm, height=3.0cm, xmin=0, xmax=250, ymin=0.2, ymax=1.9,
+  ytick={0.5,1,1.5}, xlabel={ボソンの $p_T$ [GeV]}, ylabel={比}]
+\addplot[gray, thin] coordinates {(0,1) (250,1)};
+\addplot[mcblue, only marks, mark=*, mark size=1pt, error bars/.cd, y dir=both, y explicit]
+  table[x=x, y=ratio, y error=err]{figs/mc_ptratio_z.dat};
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[mcstyle, name=top, height=5.2cm, ymode=log, xmin=0, xmax=250, ymin=1e-3, ymax=20, xticklabels={},
+  ylabel={$d\sigma/dp_T$ [pb/GeV]}, title={$H$}, legend pos=north east]
+\addplot[mcblue, thick] table[x=x, y=mc]{figs/mc_pt_h.dat};\addlegendentry{MC@NLO + Pythia 8}
+\addplot[ownorange, thick, dashed] table[x=x, y=own]{figs/mc_pt_h.dat};\addlegendentry{LO の $H$$+$ジェット（自分）}
+\end{axis}
+\begin{axis}[mcstyle, at={(top.south west)}, anchor=north west, yshift=-0.12cm, height=3.0cm, xmin=0, xmax=250, ymin=0.2, ymax=1.9,
+  ytick={0.5,1,1.5}, xlabel={ボソンの $p_T$ [GeV]}, ylabel={比}]
+\addplot[gray, thin] coordinates {(0,1) (250,1)};
+\addplot[mcblue, only marks, mark=*, mark size=1pt, error bars/.cd, y dir=both, y explicit]
+  table[x=x, y=ratio, y error=err]{figs/mc_ptratio_h.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{ボソンの横運動量の分布（5~GeV ごと）。上段は MC@NLO と Pythia 8（実線）と、自分で4次元の実の放射から求めた LO の V$+$ジェット（破線。$H$ は $q\bar q$ を除く）、下段はその比（MC@NLO / 自分の LO）と MC@NLO の統計の誤差。大きい $p_T$ で比は 1 に近づく。LO の V$+$ジェットは $p_T\to0$ で発散するので、最初のビン（0〜5~GeV）には描いていない。}
+\label{fig:mcpt}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[mcstyle, height=5.2cm, xmin=0, xmax=30, ymin=0, ymax=0.12, xlabel={ボソンの $p_T$ [GeV]},
+  ylabel={$\frac1\sigma\,d\sigma/dp_T$ [1/GeV]}, title={$Z$（$m_{ee}>50$~GeV）}, legend pos=north east, scaled y ticks=false,
+  yticklabel style={/pgf/number format/fixed, /pgf/number format/precision=3}]
+\addplot[mcblue, thick] table[x=x, y=mc]{figs/mc_lowpt_z.dat};\addlegendentry{MC@NLO + Pythia 8}
+\addplot[ownorange, thick, dashed] table[x=x, y=own]{figs/mc_lowpt_z.dat};\addlegendentry{LO の $Z$$+$ジェット（自分）}
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[mcstyle, height=5.2cm, xmin=0, xmax=30, ymin=0, ymax=0.05, xlabel={ボソンの $p_T$ [GeV]},
+  ylabel={$\frac1\sigma\,d\sigma/dp_T$ [1/GeV]}, title={$H$}, legend pos=north east, scaled y ticks=false,
+  yticklabel style={/pgf/number format/fixed, /pgf/number format/precision=3}]
+\addplot[mcblue, thick] table[x=x, y=mc]{figs/mc_lowpt_h.dat};\addlegendentry{MC@NLO + Pythia 8}
+\addplot[ownorange, thick, dashed] table[x=x, y=own]{figs/mc_lowpt_h.dat};\addlegendentry{LO の $H$$+$ジェット（自分）}
+\end{axis}
+\end{tikzpicture}
+\caption{小さい横運動量（1~GeV ごと、MC@NLO の全断面積で割ったもの）。固定次数の LO の V$+$ジェット（破線）は $p_T\to0$ で発散し、図の上にはみ出す。シャワーをつないだ MC@NLO（実線）は有限で、$H$ は 9〜12~GeV に山を持つ。$Z$ の数 GeV より下は、切ってある primordial $k_T$ とハドロン化に左右される。}
+\label{fig:mclow}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[mcstyle, name=top, height=5.2cm, xmin=-4.5, xmax=4.5, ymin=0, ymax=420, xticklabels={}, ylabel={$d\sigma/dy$ [pb]},
+  title={$Z$（$66<m_{ee}<116$~GeV）}, legend pos=north west]
+\addplot[mcblue, thick] table[x=x, y=mc]{figs/mc_y_z.dat};\addlegendentry{MC@NLO + Pythia 8}
+\addplot[ownorange, thick, dashed] table[x=x, y=ref]{figs/mc_y_z.dat};\addlegendentry{NLO（自分）}
+\end{axis}
+\begin{axis}[mcstyle, at={(top.south west)}, anchor=north west, yshift=-0.12cm, height=3.0cm, xmin=-4.5, xmax=4.5, ymin=0.8, ymax=1.2,
+  ytick={0.9,1,1.1}, xlabel={ボソンのラピディティ $y$}, ylabel={比}]
+\addplot[gray, thin] coordinates {(-4.5,1) (4.5,1)};
+\addplot[mcblue, only marks, mark=*, mark size=1pt, error bars/.cd, y dir=both, y explicit]
+  table[x=x, y=ratio, y error=err]{figs/mc_yratio_z.dat};
+\end{axis}
+\end{tikzpicture}\hfill
+\begin{tikzpicture}
+\begin{axis}[mcstyle, name=top, height=5.2cm, xmin=-4.5, xmax=4.5, ymin=0, ymax=9.5, xticklabels={}, ylabel={$d\sigma/dy$ [pb]},
+  title={$H$}, legend pos=north west]
+\addplot[mcblue, thick] table[x=x, y=mc]{figs/mc_y_h.dat};\addlegendentry{MC@NLO + Pythia 8}
+\addplot[foaqua, thick, dotted] table[x=x, y=ref]{figs/mc_y_h.dat};\addlegendentry{固定次数の NLO（MG5）}
+\end{axis}
+\begin{axis}[mcstyle, at={(top.south west)}, anchor=north west, yshift=-0.12cm, height=3.0cm, xmin=-4.5, xmax=4.5, ymin=0.8, ymax=1.2,
+  ytick={0.9,1,1.1}, xlabel={ボソンのラピディティ $y$}, ylabel={比}]
+\addplot[gray, thin] coordinates {(-4.5,1) (4.5,1)};
+\addplot[mcblue, only marks, mark=*, mark size=1pt, error bars/.cd, y dir=both, y explicit]
+  table[x=x, y=ratio, y error=err]{figs/mc_yratio_h.dat};
+\end{axis}
+\end{tikzpicture}
+\caption{ボソンのラピディティの分布。上段は MC@NLO と Pythia 8（実線）と NLO（$Z$ は自分の NLO、破線。$H$ は同じ模型の固定次数の NLO、点線）、下段はその比と誤差（$H$ は両方の統計の誤差）。シャワーはラピディティをほとんど変えない。}
+\label{fig:mcy}
+\end{figure}
+
+\paragraph{(c) 結果。}表~\ref{tab:mc} と図~\ref{fig:mcpt}〜\ref{fig:mcy} にまとめる。期待 (i)〜(iv) を順に見る。
 \begin{description}
 \item[(i) 全断面積] MC@NLO の事象の重みの和は、$Z$ の全体で $-0.06\sigma$、$66<m_{ee}<116$~GeV で $-0.33\sigma$、$H$ で $-0.45\sigma$ と、自分の NLO と一致した。シャワーは確率を保つので、MC@NLO の規格化は NLO のものである。
-\item[(ii) ラピディティ] $|y|<2.5$ のビンで、MC@NLO と NLO の比は 0.97〜1.02（$Z$、自分の NLO と）、0.97〜1.04（$H$、同じ模型の固定次数の NLO と。$gg\to H$ の NLO のラピディティは自分で導いていない）で、ビンの統計の誤差（1〜2\%）と同じくらいだった。$\chi^2$ は 40 ビンで 60.7、34 ビンで 62.7 で、数 \% の形の違い（$\alpha_s^2$ の違い）が少し見えている。
-\item[(iii) 大きい $p_T$] MC@NLO と自分の LO の V$+$ジェットの比は $p_T$ とともに 1 に近づき、150〜250~GeV で $Z$ が $1.00\pm0.05$、$H$ が $1.035\pm0.018$ になった。途中の 20〜100~GeV では、$Z$ で 1.2〜1.4、$H$ で約 1.5 と大きい。NLO の規格化を持つ Born の事象にシャワーの放射が加わるためと考えられ、$K$ の大きい $H$ ほど差が大きい。
-\item[(iv) 小さい $p_T$] 固定次数で発散する $p_T\to0$ の分布は有限になった。$H$ は 9〜12~GeV に Sudakov の山を持ち（1~GeV あたり全体の 2.6\%）、5~GeV より下は全体の 6.8\% である。$Z$ は 1〜4~GeV でほぼ平ら（1~GeV あたり全体の 5\%）で、0〜1~GeV に 10\% がある。数 GeV より下は、切ってある primordial $k_T$ やハドロン化に左右される領域なので、比べていない。
+\item[(ii) ラピディティ]（図~\ref{fig:mcy}）$|y|<2.5$ のビンで、MC@NLO と NLO の比は 0.97〜1.02（$Z$、自分の NLO と）、0.97〜1.04（$H$、同じ模型の固定次数の NLO と。$gg\to H$ の NLO のラピディティは自分で導いていない）で、ビンの統計の誤差（1〜2\%）と同じくらいだった。$\chi^2$ は 40 ビンで 60.7、34 ビンで 62.7 で、数 \% の形の違い（$\alpha_s^2$ の違い）が少し見えている。
+\item[(iii) 大きい $p_T$]（図~\ref{fig:mcpt}）MC@NLO と自分の LO の V$+$ジェットの比は $p_T$ とともに 1 に近づき、150〜250~GeV で $Z$ が $1.00\pm0.05$、$H$ が $1.035\pm0.018$ になった。途中の 20〜100~GeV では、$Z$ で 1.2〜1.4、$H$ で約 1.5 と大きい。NLO の規格化を持つ Born の事象にシャワーの放射が加わるためと考えられ、$K$ の大きい $H$ ほど差が大きい。
+\item[(iv) 小さい $p_T$]（図~\ref{fig:mclow}）固定次数で発散する $p_T\to0$ の分布は有限になった。$H$ は 9〜12~GeV に Sudakov の山を持ち（1~GeV あたり全体の 2.6\%）、5~GeV より下は全体の 6.8\% である。$Z$ は 1〜4~GeV でほぼ平ら（1~GeV あたり全体の 5\%）で、0〜1~GeV に 10\% がある。数 GeV より下は、切ってある primordial $k_T$ やハドロン化に左右される領域なので、比べていない。
 \end{description}
 
 \begin{table}[htbp]

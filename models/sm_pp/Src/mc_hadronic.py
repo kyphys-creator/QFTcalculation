@@ -16,7 +16,9 @@ emission enters: the Born, virtual and counter-events have p_T = 0):
 equal to the NLO integral: m_ee > 50 GeV and 66 < m_ee < 116 GeV for the Z; the H without the Wilson coefficient and q qbar), the
 rapidity of the boson (Z: the own NLO of dy_hadronic.py in 66-116 GeV; H: the fixed-order NLO run o_NLO, an MG5-internal
 comparison, the own NLO rapidity of g g -> H not being derived), and its p_T against the own LO V + jet, H + jet of (3a).
-Writes results/mc_hadronic.csv.  Run with ~/hep/opt/lhc/bin/python (from Src/).
+Writes results/mc_hadronic.csv and the data of the note's figures (ResearchNote/figs/mc_*.dat: p_T in 5-GeV bins with the ratio,
+p_T in 1-GeV bins up to 30 GeV divided by the total, the rapidity with the ratio; histograms as step lines, two rows per bin).
+Run with ~/hep/opt/lhc/bin/python (from Src/).
 """
 import csv
 import math
@@ -31,6 +33,7 @@ import gh_hadronic as gh  # noqa: E402
 
 SRC = Path(__file__).resolve().parent
 RES = SRC / "results"
+FIGS = SRC.parent / "ResearchNote" / "figs"
 CF, TR = 4.0 / 3.0, 0.5
 MZ0, MH = 91.188, 125.2
 LEG = {n: np.polynomial.legendre.leggauss(n) for n in (16, 24, 32, 48, 64, 96)}
@@ -209,6 +212,47 @@ def compare_hist(name, ref, mc, out, ref_err=None):
              sum(r[2] for r in rows), sum(ref)))
 
 
+def write_steps(path, cols, rows):
+    """a pgfplots table: for every bin two rows (lo, values) and (hi, values), so that a plain line draws the histogram;
+    cols: names after x; rows: (lo, hi, [values])"""
+    with open(path, "w") as f:
+        f.write("x " + " ".join(cols) + "\n")
+        for lo, hi, vals in rows:
+            v = " ".join("%.6e" % x if x == x else "nan" for x in vals)
+            f.write("%g %s\n%g %s\n" % (lo, v, hi, v))
+
+
+def write_points(path, cols, rows):
+    """a pgfplots table of bin centres: rows (centre, [values])"""
+    with open(path, "w") as f:
+        f.write("x " + " ".join(cols) + "\n")
+        for x, vals in rows:
+            f.write("%g %s\n" % (x, " ".join("%.6e" % v if v == v else "nan" for v in vals)))
+
+
+def fig_data(tag, mc, own_pt, own_low, ref_y, yname, ref_y_err=None):
+    """mc: the showered histograms; own_pt: the own LO V + jet in the 5-GeV bins; own_low: in the 1-GeV bins (index 0 unused);
+    ref_y: the reference rapidity (pb per bin) for the histogram yname"""
+    FIGS.mkdir(exist_ok=True)
+    nan = float("nan")
+    rows = mc["ptB"][1]
+    w = [r[1] - r[0] for r in rows]
+    write_steps(FIGS / ("mc_pt_%s.dat" % tag), ["mc", "own"],
+                [(r[0], r[1], [r[2] / wi, own_pt[k] / wi if k >= 1 else nan]) for k, (r, wi) in enumerate(zip(rows, w))])
+    write_points(FIGS / ("mc_ptratio_%s.dat" % tag), ["ratio", "err"],
+                 [(0.5 * (r[0] + r[1]), [r[2] / own_pt[k], r[3] / own_pt[k]]) for k, r in enumerate(rows) if k >= 1])
+    tot = mc["total"][1][0][2]
+    low = mc["ptB 0-30"][1]
+    write_steps(FIGS / ("mc_lowpt_%s.dat" % tag), ["mc", "own"],
+                [(r[0], r[1], [r[2] / tot, own_low[k] / tot if k >= 1 else nan]) for k, r in enumerate(low)])
+    yrows = mc[yname][1]
+    write_steps(FIGS / ("mc_y_%s.dat" % tag), ["mc", "ref"],
+                [(r[0], r[1], [r[2] / (r[1] - r[0]), ref_y[k] / (r[1] - r[0])]) for k, r in enumerate(yrows)])
+    write_points(FIGS / ("mc_yratio_%s.dat" % tag), ["ratio", "err"],
+                 [(0.5 * (r[0] + r[1]), [r[2] / ref_y[k], math.sqrt(r[3] ** 2 + (ref_y_err[k] if ref_y_err else 0.0) ** 2) / ref_y[k]])
+                  for k, r in enumerate(yrows) if ref_y[k] > 0 and abs(0.5 * (r[0] + r[1])) < 4.0])
+
+
 def main():
     RES.mkdir(exist_ok=True)
     dy.lhapdf.setVerbosity(0)
@@ -257,6 +301,8 @@ def main():
         tot = hz["total"][1][0][2]
         peak = max(low, key=lambda r: r[2])
         print("    Z ptB below 5 GeV: %.3f of the total;  the largest 1-GeV bin %g-%g GeV" % (sum(r[2] for r in low[:5]) / tot, peak[0], peak[1]))
+        own_vlow = dy_pt_bins(np.arange(0.0, 31.0, 1.0), ew, lum, pdf.alphasQ, MZ0)
+        fig_data("z", hz, own_v, own_vlow, yown, "yB 66-116")
     hh = mc_hwu("h")
     if hh is None:
         print("    no MC@NLO run of the H (mc_mg5.sh)")
@@ -272,6 +318,9 @@ def main():
         tot = hh["total"][1][0][2]
         peak = max(low, key=lambda r: r[2])
         print("    H ptB below 5 GeV: %.3f of the total;  the largest 1-GeV bin %g-%g GeV" % (sum(r[2] for r in low[:5]) / tot, peak[0], peak[1]))
+        own_hlow = h_pt_bins(np.arange(0.0, 31.0, 1.0), lumh, pdf.alphasQ, vo, MH)
+        fig_data("h", hh, own_h, own_hlow, [r[2] for r in hfo["yH"][1]], "yB", ref_y_err=[r[3] for r in hfo["yH"][1]])
+        print("    figure data: %s" % ", ".join(sorted(f.name for f in FIGS.glob("mc_*.dat"))))
     with open(RES / "mc_hadronic.csv", "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["quantity", "bin", "own_pb", "mg5_pb", "mg5_err_pb", "pull"])
