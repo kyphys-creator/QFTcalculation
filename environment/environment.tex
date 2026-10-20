@@ -1190,7 +1190,7 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 
 \section{LHC の現象論の道具の追加}\label{sec:lhc}
 
-2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）を記録する。
+2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）、段階 4（MadAnalysis5 と PADForSFS）を記録する。
 
 どの段階も Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
 
@@ -1430,6 +1430,94 @@ gzip -dc events.hepmc.gz | $D/DelphesHepMC2 $D/cards/delphes_card_CMS.tcl out.ro
 ~/hep/opt/lhc/bin/python -c "import uproot; t = uproot.open('out.root')['Delphes']; print(t['Jet.PT'].array())"
 # in MG5: launch <proc>, then shower=Pythia8 and detector=Delphes
 cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage3.sh
+\end{Verbatim}
+
+\subsection{段階 4：MadAnalysis5 と PADForSFS}\label{sec:lhc4}
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 4 で入れたものの版、配置、入手元。配置の \texttt{M} は \pth{hep/MG5_aMC_v3_8_1/HEPTools/madanalysis5/madanalysis5}。大きさは取得したもの。}
+\label{tab:lhc4}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.0cm}}
+\toprule
+\textbf{もの} & \textbf{版} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+MadAnalysis5 & 1.11.0 & \texttt{M}（\MGaMC{} の \texttt{install MadAnalysis5} が展開） & GitHub のタグ~\cite{ma5,ma5expert,url:ma5}（1.88 MB、2回取得。最新は 1.11.3） \\
+FastJet、fjcontrib（MadAnalysis5 用） & 3.4.1、1.052 & \texttt{M/tools/fastjet}（MadAnalysis5 が自分のために構築する。Delphes の中のものとも Python の fastjet とも別） & madanalysis.irmp.ucl.ac.be（2.98 MB、0.87 MB） \\
+PADForSFS（17 の解析、12 の SFS の card） & — & \texttt{M/tools/PADForSFS} & 索引4つは madanalysis.irmp.ucl.ac.be（計 44 KB）、解析のコードと card は dataverse.uclouvain.be~\cite{sfs}（約 1 MB） \\
+11 の解析の尤度（JSON） & — & \texttt{M/tools/PADForSFS/}\allowbreak\texttt{Build/SampleAnalyzer/}\allowbreak\texttt{User/Analyzer}。承認の一覧になかった取得物なので、ゴミ箱へ移した & 同上（計 14.4 MB） \\
+Spey、spey-pyhf、pyhf、autograd、semantic\_version、importlib-resources & 0.2.7、0.2.2、0.7.6、1.9.1、2.10.0、7.1.0 & 仮想環境 \pth{hep/opt/lhc}（段階 3 のもの） & PyPI~\cite{spey,pyhf}（計 0.46 MB） \\
+\nolinkurl{package_info.dat}、\nolinkurl{HEPToolsInstaller_V168.tar.gz} & — & 段階 1 と同じ & 段階 1 と同じ（1.4 KB、35.8 KB） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{導入。}MadAnalysis5 は、\MGaMC{} の \texttt{install MadAnalysis5} で取得して展開した。続く MadAnalysis5 自身の導入（FastJet と PADForSFS）は失敗した。\MGaMC{} が動く \texttt{qft} の Python に \texttt{requests} がなく、しかも MadAnalysis5 の例外の処理が \texttt{requests} を参照して \texttt{UnboundLocalError} で止まるからである。そこで、展開した MadAnalysis5 を miniforge の base の Python で直接起動し、FastJet と PADForSFS を入れた。PADForSFS の置き場の Dataverse は、応答に Content-Length を付けない。MadAnalysis5 の取得の関数は、これを壊れた記述とみなしてファイルを飛ばす。そこで、大きさを確かめずに取得するように局所的に直した（\texttt{madanalysis/install/install\_service.py}、元は \texttt{.orig}）。このとき PADForSFS の導入は、承認した解析のコードと card のほかに、11 の解析の尤度の JSON（計 14.4 MB）も取得した。これは承認の一覧になかったので、\texttt{/usr/bin/trash} でゴミ箱へ移した。ATLAS-SUSY-2016-07 の解析はこれを使わず、移したあとも再解釈の動作が最後まで通ることを確かめた。JSON は ATLAS-SUSY-2018-16、2018-22、2018-31、2019-09 の4つの解析の尤度なので、それらで尤度を使うときは取り直す。
+
+MadAnalysis5 の再解釈（recast）の動作は、統計の道具 Spey~\cite{spey} がないと始まらない。承認を得て、Spey、spey-pyhf と依存の4つを段階 3 の仮想環境 \pth{hep/opt/lhc} に入れた（base は変えない）。以後、MadAnalysis5 はこの仮想環境の Python で動かす。MadAnalysis5 は macOS の zlib を見つけない（\texttt{zlib.h} が SDK の中にある）ので、gzip の HepMC を読めなかった。そこで \texttt{madanalysis/input/installation\_options.dat} に \MGaMC{} の HEPTools の zlib の場所を書き（元は \texttt{.orig}）、SampleAnalyzer を一度作り直した（\texttt{-b}）。MadAnalysis5 は C++ のコンパイラを PATH の \texttt{g++} から取る。この Mac の PATH の先頭は MESA SDK の GCC なので、\texttt{/usr/bin} の \texttt{g++}、\texttt{gcc}、\texttt{c++}、\texttt{cc} へのリンクだけを置いた \pth{hep/opt/apple-cc/bin} を、PATH の先頭に置いて起動する。信号の崩壊に使う MadSpin~\cite{madspin} は、崩壊の行列要素を numpy の f2py で Python の拡張にする。numpy 2 の f2py は meson と ninja を使うので、第~\ref{sec:twoloop} 節の仮想環境 \pth{hep/opt/buildtools} の meson と ninja へのリンクだけを置いた \pth{hep/opt/meson-ninja/bin} を PATH に加えた（buildtools の \texttt{bin} には python と pip もあるので、そのままは PATH に入れない）。
+
+\paragraph{検証。}SFS の論文~\cite{sfs} の 5.2 節の検証を再現した。信号は、グルイーノが 1 TeV、最も軽いニュートラリーノが 825 GeV で、ほかの超対称粒子を切り離した（ここでは 4.5 TeV）点である。グルイーノは分岐比 1 で $\tilde g\to q\bar q\tilde\chi^0_1$（$q=u,d,s,c,b$）と壊れる。MSSM\_SLHA2 で $pp\to\tilde g\tilde g$ に 0、1、2 本のジェットを加えて MLM（xqcut 125~GeV、qCut 187.5~GeV）でつなぎ、PDF は NNPDF2.3 の LO~\cite{nnpdf23}（nn23lo1、Pythia の ISR の既定と同じ）、崩壊は MadSpin、シャワーとハドロン化は Pythia 8 とした。5 万事象を作った（論文は 20 万事象）。これを PADForSFS の ATLAS-SUSY-2016-07~\cite{atlas1607} の解析と ATLAS の SFS の card に通し、論文の表 9 の3つの信号の領域のカットフロー（参照）と比べた（\nolinkurl{tests/lhc/run_stage4.sh}、約16分）。結果を表~\ref{tab:lhc4tests} にまとめる。比べるのは各カットの効率 $n_i/n_{i-1}$ と、初めの 7262.2 事象（論文の表の数）にそろえた数である。
+
+最初の実行では、最後のカットの後の事象が論文の SFS の値の 7.0、2.5、3.6 倍（Meff-3j-1300、Meff-4j-1400、Meff-6j-1200）になった。違いは最初の前選別（$E_T^{\mathrm{miss}}>250$~GeV、$p_T(j_1)>200$~GeV、$M_{\mathrm{eff}}>800$~GeV、レプトンなし）で始まり、効率が 0.275（論文 0.150）、$p_T(j_1)>700$~GeV の効率が 0.36（論文 0.074）だった。原因を次の順に調べた。
+\begin{itemize}
+\item \textbf{マッチングと崩壊。}Pythia の受け入れの数をジェットの数ごとに見て、0、1、2 本の試料が正しく分けられていることを確かめた。MadSpin の後の LHE で、$\tilde\chi^0_1$ の質量は 825 GeV、崩壊のクォークのエネルギーは中央値 104 GeV で、質量の差 175 GeV と境界の速さに見合っていた。
+\item \textbf{マッチングをしない試料。}$pp\to\tilde g\tilde g$ だけを Pythia のシャワーで作った2万事象では、論文の値がよく再現された（表~\ref{tab:lhc4tests} の 9）。違いはマッチングした試料の行列要素の側にある。
+\item \textbf{行列要素のジェット。}マッチングした試料の LHE では、全事象の 18\% に、グルイーノの崩壊から来ない $p_T>700$~GeV のパートンがあった。1本のジェットの事象の $p_T$ の分布は 1.5〜3~TeV に山を持っていた。これは $\tilde q\to q\tilde g$ のヤコビアンの山 $(m_{\tilde q}^2-m_{\tilde g}^2)/(2m_{\tilde q})=2.14$~TeV である。
+\item \textbf{原因。}スクォークの質量を 4.5 TeV に上げたが、幅は模型の既定の card の値（0.29〜7.4 GeV）のままだった。on-shell のスクォークを含む $qg\to\tilde q\tilde g\to q\tilde g\tilde g$ の重みは、正しい幅（MadWidth の2体の崩壊で 200〜213 GeV）との比、37〜715 倍（$u,d,s,c$ のスクォーク）だけ大きくなる。スクォークの幅を MadWidth で計算し直すと山は消え、崩壊から来ない $p_T>1.5$~TeV のパートンを持つ事象は 0.13\% になった。マッチングした断面積は 0.2941 から 0.2113~pb に下がり、最後の数は SFS の 1.38、2.16、1.97 倍に縮んだ。
+\end{itemize}
+もう一つ、グルイーノの全幅を模型の $\alpha_s=0.118$ の card で計算していたため、MadSpin が自分で計算した部分幅より 7\% 小さかった。MadSpin は、部分幅と全幅の比を崩壊ごとに断面積に掛けるので、断面積が 15\% 大きくなっていた（効率には影響しない）。PDF の $\alpha_s=0.130$ の card で計算した全幅 $2.6792\times10^{-8}$~GeV は、MadSpin の部分幅 $2.678\times10^{-8}$~GeV と 0.04\% で一致した。
+
+幅を直したあとも残る違いは、ジェットの数と硬さのカットに集まっている。前選別の効率は 0.176（論文 0.150）、$p_T(j_1)>700$~GeV は 0.097（0.074）、4本以上のジェットは 0.863（0.755）、6本以上は 0.380（0.207）、$p_T(j_4)>100$~GeV は 0.377（0.225）である。一方、角度、非平面度（aplanarity）、$E_T^{\mathrm{miss}}$ の比のカットの効率は、論文と 9\% 以内で合う。比べるための3つの試料（\texttt{run\_stage4.sh --controls}、2万事象ずつ）を作った。行列要素のジェットを入れず、ジェットをシャワーだけで作ると、すべてのカットの効率が論文と統計の範囲で合い、最後の数は SFS の 0.98、1.14、1.03 倍になった（表の 9）。行列要素のジェットを 0、1 本にした試料は、0、1、2 本の試料とほぼ同じだった（表の 10）。一方、マッチングの目盛りを2倍（xqcut 250~GeV）にすると、断面積は 10\%、最後の数は 13〜30\% 下がった（表の 11）。したがって、MadAnalysis5、PADForSFS、SFS の連鎖は論文の値を再現する。違いは信号の事象の作り方、特に行列要素で足すジェットにある。論文は行列要素をマッチングしたとだけ書き、足したジェットの数やマッチングの目盛りを書いていない。圧縮したスペクトル（質量の差 175 GeV）の信号は、ISR のジェットの扱いに敏感である。この信号の MLM の予言は、マッチングの目盛りに 13〜30\% よる。段階 2 の $pp\to e^+e^-$ でも、qCut の付近に 15〜25\% の継ぎ目が残った。この信号の DJR はまだ確かめていない。再解釈で信号の効率を出すときは、マッチングの設定（足すジェットの数、xqcut）を変えた幅を不定性として付けるか、NLO のマッチング（FxFx）や CKKW-L を使う。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 4 の検証の結果。1 TeV のグルイーノと 825 GeV のニュートラリーノ（13 TeV）、ATLAS-SUSY-2016-07 の SFS（PADForSFS）。事象の数は、論文~\cite{sfs} の表 9 の初めの 7262.2 事象にそろえた。論文の SFS と PAD（Delphes）の値は参照。誤差はモンテカルロの統計（二項分布）。}
+\label{tab:lhc4tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.6cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & スクォークの幅（4.5 TeV） & $\Gamma(\tilde q\to q\tilde g)=\frac{2\alpha_s}3m_{\tilde q}(1-m_{\tilde g}^2/m_{\tilde q}^2)^2$、$\alpha_s(4.5\,\mathrm{TeV})=0.0756$（0.118 から1ループ、5つの香り）で 205.0 GeV & MadWidth で 202.2 GeV（$\alpha_s=0.0746$ に当たる）。$q\tilde\chi^0_1$ を加えた全幅は 200〜213 GeV & 一致（1.4\%） \\
+2 & グルイーノの全幅 & MadSpin の部分幅 $2.678\times10^{-8}$~GeV & MadWidth（$\alpha_s=0.130$）の和 $2.6792\times10^{-8}$~GeV & 一致（0.04\%） \\
+3 & 偽の硬いジェット & 崩壊から来ない $p_T>1.5$~TeV のパートンがほぼない（模型の幅では 5.4\% 以上） & 5 万事象のうち 65（0.13\%） & 一致 \\
+4 & 断面積 & 論文の表から 0.2012~pb（参照） & マッチングして $0.2113\pm0.0007$~pb（幅を直す前は 0.2941~pb）。MLM の前の LO の和は 0.3292~pb & 5\% 大きい \\
+5 & 前選別、$p_T(j_1)>700$~GeV の効率 & 論文の SFS で 0.150、0.074 & 0.176、0.097 & 大きい \\
+6 & Meff-3j-1300 の最後の数 & SFS 44.4、PAD 43.0 & $61.4\pm3.6$（SFS の 1.38 倍） & 大きい \\
+7 & Meff-4j-1400 の最後の数 & SFS 27.5、PAD 27.0 & $59.3\pm3.6$（2.16 倍） & 大きい \\
+8 & Meff-6j-1200 の最後の数 & SFS 61.6、PAD 67.6 & $121.3\pm5.1$（1.97 倍） & 大きい \\
+9 & 行列要素のジェットなし（シャワーのジェットだけ、2万事象） & 同上 & 前選別 0.147、$p_T(j_1)>700$~GeV 0.077、4本以上 0.794（0.755）、6本以上 0.230（0.207）。最後の数 $43.6\pm4.0$、$31.2\pm3.4$、$63.5\pm4.8$（SFS の 0.98、1.14、1.03 倍） & 一致 \\
+10 & 0、1 本のジェット（MLM、2万事象） & 0、1、2 本の試料と同じ & 前選別 0.199、$p_T(j_1)>700$~GeV 0.111、6本以上 0.371。最後の数 $74.9\pm5.9$、$58.2\pm5.2$、$135.3\pm7.9$ & 0、1、2 本と、3j で $2.0\sigma$、6j で $1.5\sigma$ の差 \\
+11 & マッチングの目盛りを2倍（xqcut 250~GeV、qCut 375~GeV、2万事象） & 同上 & 断面積 0.1903~pb（xqcut 125~GeV の 0.90 倍）。前選別 0.197、$p_T(j_1)>700$~GeV 0.063、6本以上 0.297。最後の数 $43.2\pm4.3$、$42.3\pm4.2$、$105.3\pm6.7$（xqcut 125~GeV の 0.70、0.71、0.87 倍） & 目盛りに 13〜30\% よる \\
+12 & 幅を直す前（5万事象） & 同上 & 前選別 0.275、$p_T(j_1)>700$~GeV 0.36。最後の数 311、69.5、224.5（SFS の 7.0、2.5、3.6 倍） & 原因を特定 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}導入と照合の途中で、次のことが分かった。
+\begin{itemize}
+\item \textbf{模型の card の質量を動かしたら、幅も計算し直す。}MSSM\_SLHA2 の既定の card の幅は、その card のスペクトル（SPS1a に近い）のものである。スクォークを 4.5 TeV に上げても、幅は 0.29〜7.4 GeV のまま残る。$pp\to\tilde g\tilde g j$ の中の $qg\to\tilde q\tilde g\to q\tilde g\tilde g$ では、on-shell のスクォークの寄与は狭い幅の近似で $\sigma(qg\to\tilde q\tilde g)\,\Gamma(\tilde q\to q\tilde g)/\Gamma_{\mathrm{card}}$ になる。正しい幅（約 200 GeV）との比 37〜715 だけ重みが増え、メッセージは出ない。
+\item \MGaMC{} の MadWidth~\cite{madwidth} は、色を持つ粒子の 0.1 GeV より小さい部分幅を「QCD の目盛りより小さい」として0にする。グルイーノの3体崩壊の部分幅（合わせて $2.7\times10^{-8}$~GeV）はすべて0になり、MadSpin はグルイーノを崩壊させられない。崩壊の表は card に直接書く（\nolinkurl{tests/lhc/set_gluino_card.py}）。
+\item MadWidth は、card の $\alpha_s(M_Z)$ を崩壊する粒子の質量まで走らせて使う。\MGaMC{} は \texttt{launch} で card の $\alpha_s$ を PDF の値（nn23lo1 では 0.130）に書き換えるが、Auto の幅の計算はその書き換えの前に行う。MadSpin は崩壊の部分幅を自分で計算し、card の全幅との比を、崩壊する粒子ごとに断面積に掛ける（部分幅が全幅より大きいと警告を出す）。グルイーノの全幅を模型の 0.118 で計算すると 7\% 小さく、断面積が $1.072^2=1.149$ 倍になった。また MadSpin は、Breit--Wigner の切り詰め（\texttt{BW\_cut = 15}）で残る割合 0.958 を断面積に掛けて報告する。
+\item card の幅を Auto にすると、\MGaMC{} は \texttt{launch} で \texttt{--body\_decay=4.0025} の計算をし、4.5 TeV のスクォークでは3体と4体の崩壊を作って数値積分し始めた（推定の誤差が幅より大きく出る）。数分たっても終わらなかったので止めた。2体の崩壊で足りるときは、card を編集する問いで \texttt{compute\_widths --body\_decay=2} とする（Auto の粒子を自動で拾う）。
+\item MadAnalysis5 の再解釈の動作は Spey を要求し、検出器のシミュレーション（SFS）を通した reco の動作（\texttt{bin/ma5 -R}）でだけ使える。再解釈の card の行は \texttt{<解析> <版> <on/off> <検出器の card>} で、PADForSFS の版は \texttt{vSFS}、ATLAS-SUSY-2016-07 の card は \texttt{sfs\_card\_atlas\_susy\_2016\_07.ma5} である。カットフローは \texttt{<作業の場所>/Output/SAF/<試料>/<解析>/Cutflows/<信号の領域>.saf} に、カットごとに事象の数と重みの和（正と負の別）で書かれる。
+\item MadAnalysis5 の SFS のぼかしの乱数は、種を時刻から取る（\texttt{RandomService.h} の \texttt{std::srand(time(0))}）。同じ事象を2回解析すると、最後の数が 1.5\% ほど変わった（62.3、58.8、122.0 と 61.4、59.3、121.3）。モンテカルロの誤差より小さいが、結果は1バイト単位では再現しない。
+\item MadAnalysis5 の \texttt{installation\_options.dat} を変えたら、\texttt{-b} を一度付けて SampleAnalyzer を作り直す。毎回付けると、そのたびに作り直す。
+\item MadAnalysis5 は新しい版（1.11.3）があることを起動のたびに知らせる。PADForSFS の導入は、解析のコードと card のほかに、統計の尤度の JSON を取得する。取得するものを先に決めて承認を得る運用では、一覧に入れておく。
+\item \MGaMC{} の \texttt{install MadAnalysis5} は、\MGaMC{} の Python（\texttt{qft}）で MadAnalysis5 の導入を走らせる。その Python に \texttt{requests} がないと失敗し、MadAnalysis5 の例外の処理の誤りで原因の分からない \texttt{UnboundLocalError} になる。
+\end{itemize}
+
+\paragraph{使い方。}MadAnalysis5 は、仮想環境 \pth{hep/opt/lhc} の Python と Apple clang で、そのディレクトリから起動する。照合は \nolinkurl{tests/lhc/run_stage4.sh} で実行し直す（約16分、HepMC は 2.7 GB。\texttt{--controls} で比べるための3つの試料も作り（合わせて約40分、7 GB）、\texttt{--reuse} で HepMC のある試料を作り直さない）。\texttt{tests/run\_all.sh} の \texttt{--lhc} もこれを実行する。
+\begin{Verbatim}
+M=~/hep/MG5_aMC_v3_8_1/HEPTools/madanalysis5/madanalysis5   W=$PWD
+echo "atlas_susy_2016_07   vSFS   on   sfs_card_atlas_susy_2016_07.ma5" > $W/recast.dat
+printf '%s\n' "set main.recast = on" "set main.recast.card_path = $W/recast.dat" \
+  "import $W/events.hepmc.gz as signal" "set signal.xsection = 0.25" "submit $W/ma5_work" > $W/recast.ma5
+(cd $M && PATH=$HOME/hep/opt/apple-cc/bin:$HOME/hep/root-6.32.14/bin:$HOME/hep/opt/lhc/bin:$PATH \
+   ~/hep/opt/lhc/bin/python bin/ma5 -R -f -s $W/recast.ma5)       # add -b once to rebuild SampleAnalyzer
+ls $W/ma5_work/Output/SAF/signal/atlas_susy_2016_07/Cutflows    # <signal region>.saf
+# MG5, at the card prompt of launch (widths set to Auto in the card): two-body widths only
+compute_widths --body_decay=2
+cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage4.sh
 \end{Verbatim}
 
 \section{EFT・暗黒物質の道具の追加}\label{sec:eftdm}
@@ -1822,6 +1910,16 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{delphes} J. de Favereau \textit{et al.} (DELPHES 3), ``DELPHES 3: a modular framework for fast simulation of a generic collider experiment,'' JHEP \textbf{02} (2014) 057, \href{https://arxiv.org/abs/1307.6346}{arXiv:1307.6346}.
 \bibitem{url:delphes} Delphes. \url{https://github.com/delphes/delphes}
 \bibitem{fastjet} M. Cacciari, G. P. Salam, G. Soyez, ``FastJet user manual,'' Eur.Phys.J.C \textbf{72} (2012) 1896, \href{https://arxiv.org/abs/1111.6097}{arXiv:1111.6097}.
+\bibitem{ma5} E. Conte, B. Fuks, G. Serret, ``MadAnalysis 5, a user-friendly framework for collider phenomenology,'' Comput.Phys.Commun. \textbf{184} (2013) 222, \href{https://arxiv.org/abs/1206.1599}{arXiv:1206.1599}.
+\bibitem{ma5expert} E. Conte, B. Dumont, B. Fuks, C. Wymant, ``Designing and recasting LHC analyses with MadAnalysis 5,'' Eur.Phys.J.C \textbf{74} (2014) 3103, \href{https://arxiv.org/abs/1405.3982}{arXiv:1405.3982}.
+\bibitem{url:ma5} MadAnalysis 5. \url{https://github.com/MadAnalysis/madanalysis5}
+\bibitem{sfs} J. Y. Araz, B. Fuks, G. Polykratis, ``Simplified fast detector simulation in MadAnalysis 5,'' Eur.Phys.J.C \textbf{81} (2021) 329, \href{https://arxiv.org/abs/2006.09387}{arXiv:2006.09387}.
+\bibitem{atlas1607} ATLAS Collaboration, ``Search for squarks and gluinos in final states with jets and missing transverse momentum using 36 fb$^{-1}$ of $\sqrt s=13$ TeV $pp$ collision data with the ATLAS detector,'' Phys.Rev.D \textbf{97} (2018) 112001, \href{https://arxiv.org/abs/1712.02332}{arXiv:1712.02332}.
+\bibitem{spey} J. Y. Araz, ``Spey: smooth inference for reinterpretation studies,'' SciPost Phys. \textbf{16} (2024) 032, \href{https://arxiv.org/abs/2307.06996}{arXiv:2307.06996}.
+\bibitem{pyhf} L. Heinrich, M. Feickert, G. Stark, K. Cranmer, ``pyhf: pure-Python implementation of HistFactory statistical models,'' J.Open Source Softw. \textbf{6} (2021) 2823.
+\bibitem{madspin} P. Artoisenet, R. Frederix, O. Mattelaer, R. Rietkerk, ``Automatic spin-entangled decays of heavy resonances in Monte Carlo simulations,'' JHEP \textbf{03} (2013) 015, \href{https://arxiv.org/abs/1212.3460}{arXiv:1212.3460}.
+\bibitem{madwidth} J. Alwall, C. Duhr, B. Fuks, O. Mattelaer, D. G. \"Ozt\"urk, C.-H. Shen, ``Computing decay rates for new physics theories with FeynRules and MadGraph5\_aMC@NLO,'' Comput.Phys.Commun. \textbf{197} (2015) 312, \href{https://arxiv.org/abs/1402.1178}{arXiv:1402.1178}.
+\bibitem{nnpdf23} R. D. Ball \textit{et al.} (NNPDF), ``Parton distributions with LHC data,'' Nucl.Phys.B \textbf{867} (2013) 244, \href{https://arxiv.org/abs/1207.1303}{arXiv:1207.1303}.
 \bibitem{url:feynmaster} D. Fontes, J. C. Rom\~ao, FeynMaster Manual v2（Mathematica 14 での FeynRules の \texttt{MatrixSymbol} の扱い）. \url{https://porthos.tecnico.ulisboa.pt/FeynMaster/Manual/Manual-v2.pdf}
 \bibitem{phi34thermal} $\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波（本リポジトリ \nolinkurl{models/phi34_thermal/ResearchNote/note.pdf}）。熱的な道具との照合は第7節と付録~H。
 \bibitem{cosmotransitions} C. L. Wainwright, ``CosmoTransitions: computing cosmological phase transition temperatures and bubble profiles with multiple fields,'' Comput.Phys.Commun. \textbf{183} (2012) 2006, \href{https://arxiv.org/abs/1109.4189}{arXiv:1109.4189}.

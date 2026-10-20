@@ -9,7 +9,9 @@
 #   --lhc re-runs the checks of the LHC tools (environment.pdf, Sec. 9) in ./lhc: stage 1, LHAPDF and the PDF sets
 #   (sum rules; p p -> e+ e- and g g -> H in MG5 against own integrals; about 1 minute); stage 2, Pythia 8 and HepMC
 #   (shower, conservation laws, MLM matching and DJRs; about 45 minutes, 3.5 GB in lhc/out); stage 3, ROOT and Delphes
-#   (GenJets against own FastJet, the efficiencies and smearing against the card; about 1.5 minutes).
+#   (GenJets against own FastJet, the efficiencies and smearing against the card; about 1.5 minutes); stage 4,
+#   MadAnalysis5 and PADForSFS (a 1 TeV gluino signal through ATLAS-SUSY-2016-07, cutflows against the SFS paper;
+#   about 16 minutes, 2.7 GB in lhc/out; the control samples of run_stage4.sh --controls are not made here).
 #   --eftdm re-runs the checks of the EFT and dark-matter tools (environment.pdf, Sec. EFT/DM) in ./eftdm: stage 1,
 #   wilson and DsixTools (SMEFT and WET running, tree matching, against own formulas and each other); stage 2, DirectDM;
 #   stage 3, MadDM 3.3 (sigma_SI, <sigma v>, Omega h^2 of a Higgs-portal scalar against own formulas); stage 4,
@@ -81,6 +83,8 @@ if [ "$LHC" = 1 ]; then
   ./lhc/run_stage2.sh 2>&1 | tee -a "$log"
   step "LHC tools, stage 3: ROOT 6.32.14, Delphes 3.5.1, FastJet (GenJets, efficiencies, smearing)"
   ./lhc/run_stage3.sh 2>&1 | grep -v "^#" | tee -a "$log"
+  step "LHC tools, stage 4: MadAnalysis5 1.11.0, PADForSFS (ATLAS-SUSY-2016-07 cutflows of a 1 TeV gluino)"
+  ./lhc/run_stage4.sh 2>&1 | tee -a "$log"
 fi
 if [ "$EFTDM" = 1 ]; then
   step "EFT/DM tools, stage 1: wilson (d21596fa) and DsixTools 2.1 (running, matching, WCxf)"
