@@ -43,7 +43,7 @@
 \maketitle
 
 \begin{abstract}
-SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote}、ヒッグスのノート~\cite{higgsnote} は、崩壊の NLO を実の放射まで含めて求めた。QCD ノート~\cite{qcdnote} は、$e^+e^-\to$ ハドロンと重いクォークの対生成の NLO を、QCD だけの模型で aMC@NLO と突き合わせた。本ノートでは、陽子の中のパートンが始状態にある色を持たない粒子の生成の NLO の QCD の補正を扱う（パートン、パートン分布、NLO の補正の考え方は、第~\ref{sec:primer} 節で学部の物理から説明する）。$\overline{\mathrm{MS}}$ の共線の対抗項でパートン分布に吸収する始状態の放射が、終状態だけの崩壊と違う点である。四つの手順の計画を立てる。(1) Drell--Yan（$pp\to\gamma^*/Z\to e^+e^-$、$W^\pm\to e\nu$）、(2) 重いトップの有効理論の $gg\to H$、(3) MC@NLO と Pythia 8、(4) 段階 6 の $Z'$ の NLO。手順 (1) では、$q\bar q\to V^*g$、$qg\to V^*q$ の実の放射と形状因子を $d$ 次元で $\epsilon$ について厳密に求め、$\MSbar$ の共線の対抗項を足すと極が記号として消え、$\ln\mu_R$ が落ち、係数関数が Altarelli--Ellis--Martinelli の $\MSbar$ の形（参照）と記号として一致することを確かめた。4次元の振幅の2乗は、本ノートの FeynArts の模型の $\gamma$、$Z$、$W$ の4過程と記号として一致した。係数関数を NNPDF4.0 NLO と自分で畳み込んだ断面積を、\MGaMC{} の固定次数の LO と NLO（\texttt{[QCD]}）と比べた。$Z$ の共鳴の付近、0.5~TeV より上、$W^\pm$ の全断面積と質量の窓、$m_{\ell\ell}$ の分布、ラピディティの分布（\ref{app:rap} の自分の $d$ 次元の式）、9通りの $(\mu_R,\mu_F)$ の重みの付け直しは、LO と NLO で統計の範囲で一致した（$Z$ の NLO の全断面積は $2064.54$~pb に対し $2064.78\pm0.22$~pb）。$K$ は $Z$、$W^+$、$W^-$ で 1.140、1.150、1.138（$q\bar q$ が $+29\%$、$qg$ が $-15\%$）、0.5~TeV より上で 1.188 で、スケールの範囲は LO の $\pm12\%$ から NLO の $^{+4}_{-7}\%$ に縮む。$W$ の NLO の全断面積は \MGaMC{} の積分ごとのばらつきが誤差の約2.4倍あり、その源は $m_{e\nu}<1$~GeV の正と負の重みの打ち消しだった。自分の積分では、Breit--Wigner の変数だけの求積が $W$ の裾を $10^{-3}$ 少なく見積もっていたことが、この比較で分かった。手順 (2) では、重いトップの有効理論の $gg\to H$ の $gg$、$qg$、$q\bar q$ の係数関数を $d$ 次元で求め、文献の形（参照）と記号として一致させた。NLOCT は次元5の演算子の頂点の R2 と紫外の対抗項を出せなかったので、まず HC\_NLO\_X0（FeynRules の模型のデータベース）を使った。その MadLoop の仮想の補正は、ウィルソン係数の補正を足すと自分の値と $2\times10^{-14}$ で一致したが、軽いクォークの紫外の対抗項の極が MG5 3.8.1 で落ちて aMC@NLO が止まるので、作業用の複製で直した。$\mu_R$ の重みの付け直しが $g_{Hgg}$ の中の $\alpha_s^2$ を動かさないこと、赤外で有限な $q\bar q\to Hg$ が \texttt{[QCD]} に入らないことも分かり、それらを考えに入れると LO と NLO の断面積は統計の範囲で一致した。$\mu=M_H$ で $K=2.29$ である。次に、$GGH$ の頂点の R2 と紫外の対抗項を FeynCalc で自分で導き（R2 は HC\_NLO\_X0 のもの（参照）と7つの係数がすべて一致した）、NLOCT の $H$ の頂点と入れ替えて自作の NLO の UFO を作った。MadLoop は直しなしで自分の値と $2\times10^{-14}$ で一致し、aMC@NLO の LO と NLO は、今度は $\mu_R$ を含む9通りの $(\mu_R,\mu_F)$ の重みの付け直しで、統計の範囲で一致した。
+SM ノート~\cite{smnote}、CKM ノート~\cite{ckmnote}、NLO ノート~\cite{nlonote}、ヒッグスのノート~\cite{higgsnote} は、崩壊の NLO を実の放射まで含めて求めた。QCD ノート~\cite{qcdnote} は、$e^+e^-\to$ ハドロンと重いクォークの対生成の NLO を、QCD だけの模型で aMC@NLO と突き合わせた。本ノートでは、陽子の中のパートンが始状態にある色を持たない粒子の生成の NLO の QCD の補正を扱う（パートン、パートン分布、NLO の補正の考え方は、第~\ref{sec:primer} 節で学部の物理から説明する）。$\overline{\mathrm{MS}}$ の共線の対抗項でパートン分布に吸収する始状態の放射が、終状態だけの崩壊と違う点である。四つの手順の計画を立てる。(1) Drell--Yan（$pp\to\gamma^*/Z\to e^+e^-$、$W^\pm\to e\nu$）、(2) 重いトップの有効理論の $gg\to H$、(3) MC@NLO と Pythia 8、(4) 段階 6 の $Z'$ の NLO。手順 (1) では、$q\bar q\to V^*g$、$qg\to V^*q$ の実の放射と形状因子を $d$ 次元で $\epsilon$ について厳密に求め、$\MSbar$ の共線の対抗項を足すと極が記号として消え、$\ln\mu_R$ が落ち、係数関数が Altarelli--Ellis--Martinelli の $\MSbar$ の形（参照）と記号として一致することを確かめた。4次元の振幅の2乗は、本ノートの FeynArts の模型の $\gamma$、$Z$、$W$ の4過程と記号として一致した。係数関数を NNPDF4.0 NLO と自分で畳み込んだ断面積を、\MGaMC{} の固定次数の LO と NLO（\texttt{[QCD]}）と比べた。$Z$ の共鳴の付近、0.5~TeV より上、$W^\pm$ の全断面積と質量の窓、$m_{\ell\ell}$ の分布、ラピディティの分布（\ref{app:rap} の自分の $d$ 次元の式）、9通りの $(\mu_R,\mu_F)$ の重みの付け直しは、LO と NLO で統計の範囲で一致した（$Z$ の NLO の全断面積は $2064.54$~pb に対し $2064.78\pm0.22$~pb）。$K$ は $Z$、$W^+$、$W^-$ で 1.140、1.150、1.138（$q\bar q$ が $+29\%$、$qg$ が $-15\%$）、0.5~TeV より上で 1.188 で、スケールの範囲は LO の $\pm12\%$ から NLO の $^{+4}_{-7}\%$ に縮む。$W$ の NLO の全断面積は \MGaMC{} の積分ごとのばらつきが誤差の約2.4倍あり、その源は $m_{e\nu}<1$~GeV の正と負の重みの打ち消しだった。自分の積分では、Breit--Wigner の変数だけの求積が $W$ の裾を $10^{-3}$ 少なく見積もっていたことが、この比較で分かった。手順 (2) では、重いトップの有効理論の $gg\to H$ の $gg$、$qg$、$q\bar q$ の係数関数を $d$ 次元で求め、文献の形（参照）と記号として一致させた。NLOCT は次元5の演算子の頂点の R2 と紫外の対抗項を出せなかったので、まず HC\_NLO\_X0（FeynRules の模型のデータベース）を使った。その MadLoop の仮想の補正は、ウィルソン係数の補正を足すと自分の値と $2\times10^{-14}$ で一致したが、軽いクォークの紫外の対抗項の極が MG5 3.8.1 で落ちて aMC@NLO が止まるので、作業用の複製で直した。$\mu_R$ の重みの付け直しが $g_{Hgg}$ の中の $\alpha_s^2$ を動かさないこと、赤外で有限な $q\bar q\to Hg$ が \texttt{[QCD]} に入らないことも分かり、それらを考えに入れると LO と NLO の断面積は統計の範囲で一致した。$\mu=M_H$ で $K=2.29$ である。次に、$GGH$ の頂点の R2 と紫外の対抗項を FeynCalc で自分で導き（R2 は HC\_NLO\_X0 のもの（参照）と7つの係数がすべて一致した）、NLOCT の $H$ の頂点と入れ替えて自作の NLO の UFO を作った。MadLoop は直しなしで自分の値と $2\times10^{-14}$ で一致し、aMC@NLO の LO と NLO は、今度は $\mu_R$ を含む9通りの $(\mu_R,\mu_F)$ の重みの付け直しで、統計の範囲で一致した。手順 (3) では、$Z$ と $H$ を MC@NLO で作り、Pythia 8 でシャワーをかけた（パートンの段階）。全断面積は自分の NLO と統計の範囲で一致し（$-0.06\sigma$、$-0.45\sigma$）、ボソンのラピディティは NLO と数 \% で合った。大きい $p_T$ では、自分で4次元の実の放射から求めた LO の V$+$ジェットに近づき（150〜250~GeV で比 1.00、1.035）、小さい $p_T$ では固定次数の発散が有限な分布になった。その途中で、スケールの重みを切ると \MGaMC{} 3.8.1 のシャワーの段がメモリを使い尽くすことなど、ツールの問題を三つ見つけた。
 \end{abstract}
 
 \tableofcontents
@@ -300,6 +300,8 @@ $C_F=\frac43$、$T_R=\frac12$、$N_c=3$ & QCD の色の数え上げの因子 \\
 $V^*$、$\sigma_0$ & 仮想の $\gamma^*$、$Z$、$W$、LO のパートンの断面積 \\
 pb、fb & 断面積の単位（$10^{-36}$、$10^{-39}~\mathrm{cm}^2$） \\
 固定次数、MC@NLO & シャワーなしの NLO の計算、シャワーとつないだ NLO \\
+パートンシャワー & パートンが次々に放射する様子を確率的に作るプログラム（Pythia 8 など。第~\ref{sec:step3} 節） \\
+Sudakov の因子 & ある $p_T$ より上では放射しない確率 \\
 プル & 2つの値の差を誤差で割ったもの（統計の一致の目安） \\
 重いトップの有効理論 & トップのループを点にした $ggH$ の結合（第~\ref{sec:heftintro} 節） \\
 ウィルソン係数 & 有効な結合の係数 $c_{Hgg}$ とその $\alpha_s$ の補正 $\frac{11}4\frac{\alpha_s}\pi$ \\
@@ -408,7 +410,7 @@ Drell--Yan と同じく、パートンの断面積を $\hat\sigma_{ij}=\sigma_0z
 \midrule
 Drell--Yan の係数関数 \eqref{eq:dqq}、\eqref{eq:dqg} & 第~\ref{sec:coef} 節 & $d$ 次元の実と仮想、対抗項；LHAPDF との畳み込み & 固定次数の LO と NLO、重みの付け直し \\
 $gg\to H$（有効理論） & 式~\eqref{eq:dgg}、\eqref{eq:dqgh} & 有効理論の1ループと実の放射、対抗項；畳み込み & HC\_NLO\_X0 と自作の NLO の UFO（R2 と紫外の対抗項を自分で導出）の MadLoop、木の振幅、固定次数 \\
-MC@NLO & — & 固定次数の NLO との比 & Pythia 8 のシャワー \\
+MC@NLO & 4次元の実の放射（V$+$ジェット） & 自分の NLO と LO の V$+$ジェットとの比 & Pythia 8 のシャワー \\
 $Z'$ の $K$ 因子 & 式~\eqref{eq:dqq}、\eqref{eq:dqg} & $Z'$ の結合での畳み込み & 自分の NLO の UFO で固定次数 \\
 \bottomrule
 \end{tabularx}
@@ -594,6 +596,67 @@ $(2,\frac12)$ & 10.1124 & 10.1134(9) ($+1.1$) & 22.5217 & 22.5219(23) ($+0.1$) \
 \end{tabular}
 \end{table}
 
+\subsection{手順 (3)：MC@NLO と Pythia 8}\label{sec:step3}
+
+\paragraph{考え方。}固定次数の NLO は、グルーオンを高々1個放つところまでを正しく数える。実際の衝突では、始状態のパートンは陽子から出てくるまでに何度もグルーオンを放ち、その反跳でボソンは横向きの運動量 $p_T$ を受け取る。$p_T$ が小さいと、1回の放射の確率 $\sim\alpha_s\ln^2(Q^2/p_T^2)$ が 1 に近づくので、何回もの放射を足し上げなければならない。\textbf{パートンシャワー}（ここでは Pythia~8）は、「ある $p_T$ より上では何も放たない確率」（\textbf{Sudakov の因子}）を使って放射を順に確率的に作り、この足し上げを近似する。固定次数の NLO の $p_T$ の分布は $p_T\to0$ で発散する（打ち消しの相手の仮想の補正が $p_T=0$ にある）が、シャワーをつなぐと有限な分布になる。
+
+NLO の事象にそのままシャワーをかけると、1個目の放射を NLO の実の放射とシャワーの両方で数えてしまう。\textbf{MC@NLO}~\cite{mcatnlo} は、シャワーが1回目に放つ分（MC の対抗項。シャワーの放射の確率を $\alpha_s$ の1次で展開したもの）を NLO の実の放射から引き、同じものを Born の事象の側に足しておく。こうすると、シャワーをかけた結果を $\alpha_s$ の1次で展開したものが NLO と一致し、それより高い次数をシャワーが補う。引き算のため、事象の重みには負のものが混じる。シャワーは確率を保つ（事象を消さず、放射を足すだけ）ので、次のことが期待される。
+\begin{itemize}
+\item[(i)] 全断面積は固定次数の NLO と統計の範囲で一致する。
+\item[(ii)] ボソンのラピディティのように放射に鈍い量は、NLO と $\alpha_s^2$ の違いしかない。
+\item[(iii)] $p_T$ が大きいところは1回の硬い放射で決まり、LO の V$+$ジェット（$\alpha_s$ の1次の実の放射）に近づく。
+\item[(iv)] $p_T$ が小さいところは、発散のかわりに Sudakov の山になる。
+\end{itemize}
+手順 (3) ではこれらを自分の計算と比べる。
+
+手順 (3) は \texttt{Src/run\_mc\_check.sh} で再現できる（約5分。手順 (1)、(2) の固定次数の実行が要る）。
+
+\paragraph{(a) 自分の LO の V$+$ジェットと H$+$ジェット。}比べる相手の大きい $p_T$ の分布は、手順 (1)、(2) で求めた4次元の実の放射から作る（\texttt{mc\_hadronic.py}）。Drell--Yan では、$t=-\hat s(1-z)v$、$u=-\hat s(1-z)(1-v)$ として
+\[
+\frac{d\sigma_{ij}}{dQ^2\,dv}=\frac{\sigma_0(Q^2)}{\hat s}\,a_s(1-z)\,r_{ij}(z,v),\qquad r_{q\bar q}=2C_F\Bigl(\frac ut+\frac tu+\frac{2Q^2\hat s}{ut}\Bigr),\quad r_{qg}=-2T_R\Bigl(\frac u{\hat s}+\frac{\hat s}u+\frac{2Q^2t}{u\hat s}\Bigr)
+\]
+で、ボソンの横運動量は $p_T^2=tu/\hat s=\hat s(1-z)^2v(1-v)$ である。$p_T$ のビンに入る $v$ の範囲で積分し、Drell--Yan の Born と同じ $Q^2$ と $z$ の畳み込みをする（$p_T>0$ ではプラスの分布は要らない）。$gg\to H$ では \texttt{gh\_tree.py} の $gg\to Hg$、$qg\to Hq$、$q\bar q\to Hg$ の振幅の2乗を使う。積分の節点を倍にしても $10^{-7}$ しか動かない。固定次数の NLO の $p_T>0$ のビンには実の放射の事象しか入らない（Born、仮想の補正、引き算の事象は $p_T=0$）ので、手順 (1)、(2) の固定次数の実行の $p_T$ の分布（5~GeV ごとに 250~GeV まで）でこの式を確かめられる。$p_T>5$~GeV の49ビンで、$Z$ は $\chi^2=59.7$、43.0（2回の積分）、和は自分の 1485.35~pb に対し 1485.26~pb、1484.88~pb、$H$（$q\bar q$ を除く）は $\chi^2=37.3$、自分の 26.993~pb に対し 26.994~pb で一致した。
+
+\paragraph{(b) MC@NLO の実行。}\texttt{mc\_mg5.sh} は、$Z$ を \texttt{loop\_sm-no\_b\_mass} の \texttt{p p > e+ e- [QCD]}（$m_{ee}>50$~GeV、$\mu_R=\mu_F=M_Z$）で、$H$ を自作の NLO の UFO の \texttt{p p > h [QCD]}（$\mu_R=\mu_F=M_H$、ウィルソン係数の補正なし）で、それぞれ20万事象作り、Pythia~8.317~\cite{pythia83} でシャワーをかける。比べやすさのため、パートンの段階で止める（ハドロン化、多重パートン相互作用、QED のシャワー、primordial $k_T$ を切る）。解析は自分で書いた \texttt{py8an\_HwU\_mc.f} で、固定次数と同じヒストグラム（ボソンのラピディティと $p_T$）を作る。$Z$ のボソンは $e^+e^-$ の対である（始状態の放射の反跳は対を丸ごと動かすので、$m_{ee}$ は変わらない）。
+
+動かすまでに、ツールの側の問題が三つあった（計算環境の記録~\cite{env} の表）。
+\begin{itemize}
+\item シャワーのプログラムのリンクが \texttt{library 'gfortran' not found} で止まった。shower\_card の \texttt{EXTRAPATHS} に libgfortran の場所を足して直した。
+\item スケールの重みを切ると、事象に重みの塊（\texttt{<rwgt>}）がなく、\MGaMC{} の事象の読み込み（\texttt{LHEFRead.h}）が終わらないループに入った。そのループは1回ごとに LHE のヘッダーを付け足すので、シャワーの1つの仕事が数十 GB のメモリを使い、10並列でマシンが止まった。スケールの重みを入れて直した（9通りのスケールの重みは、シャワーのあとの分布にも付く）。
+\item 自作の模型では、QCD のほかの結合の次数が \texttt{HIG} だけなので、事象を作る段の \texttt{split\_type} が「QED の位置 $=-1$」の配列の外を読み、\texttt{IPROCMAP: NOT IMPLEMENTED} で止まった。MC@NLO 用の複製で、次数の名前を \texttt{QED} に替えて直した。
+\end{itemize}
+直したあとは、シャワーの1つの仕事のメモリは約 0.4~GB、全体で約5分だった。
+
+\paragraph{(c) 結果。}表~\ref{tab:mc} にまとめる。期待 (i)〜(iv) を順に見る。
+\begin{description}
+\item[(i) 全断面積] MC@NLO の事象の重みの和は、$Z$ の全体で $-0.06\sigma$、$66<m_{ee}<116$~GeV で $-0.33\sigma$、$H$ で $-0.45\sigma$ と、自分の NLO と一致した。シャワーは確率を保つので、MC@NLO の規格化は NLO のものである。
+\item[(ii) ラピディティ] $|y|<2.5$ のビンで、MC@NLO と NLO の比は 0.97〜1.02（$Z$、自分の NLO と）、0.97〜1.04（$H$、同じ模型の固定次数の NLO と。$gg\to H$ の NLO のラピディティは自分で導いていない）で、ビンの統計の誤差（1〜2\%）と同じくらいだった。$\chi^2$ は 40 ビンで 60.7、34 ビンで 62.7 で、数 \% の形の違い（$\alpha_s^2$ の違い）が少し見えている。
+\item[(iii) 大きい $p_T$] MC@NLO と自分の LO の V$+$ジェットの比は $p_T$ とともに 1 に近づき、150〜250~GeV で $Z$ が $1.00\pm0.05$、$H$ が $1.035\pm0.018$ になった。途中の 20〜100~GeV では、$Z$ で 1.2〜1.4、$H$ で約 1.5 と大きい。NLO の規格化を持つ Born の事象にシャワーの放射が加わるためと考えられ、$K$ の大きい $H$ ほど差が大きい。
+\item[(iv) 小さい $p_T$] 固定次数で発散する $p_T\to0$ の分布は有限になった。$H$ は 9〜12~GeV に Sudakov の山を持ち（1~GeV あたり全体の 2.6\%）、5~GeV より下は全体の 6.8\% である。$Z$ は 1〜4~GeV でほぼ平ら（1~GeV あたり全体の 5\%）で、0〜1~GeV に 10\% がある。数 GeV より下は、切ってある primordial $k_T$ やハドロン化に左右される領域なので、比べていない。
+\end{description}
+
+\begin{table}[htbp]
+\centering\small
+\caption{MC@NLO と Pythia 8（パートンの段階、各20万事象）と自分の計算。断面積は pb、括弧は誤差とプル。$p_T$ の比は、MC@NLO を自分の LO の V$+$ジェット、H$+$ジェット（$q\bar q$ を除く）で割ったもの。}
+\label{tab:mc}
+\begin{tabular}{lll}
+\toprule
+ & $Z$（$m_{ee}>50$~GeV） & $H$ \\
+\midrule
+全断面積：自分の NLO & 2064.54 & 27.037 \\
+全断面積：MC@NLO & 2064.2(5.5) ($-0.06$) & 27.003(75) ($-0.45$) \\
+$66<m_{ee}<116$~GeV：自分、MC@NLO & 1966.68、1964.9(5.4) ($-0.33$) & \\
+ラピディティの比（$|y|<2.5$） & 0.973〜1.024（自分の NLO と） & 0.975〜1.039（固定次数の NLO と） \\
+$p_T$ の比 5〜20~GeV & 0.813(3) & 0.582(3) \\
+\phantom{$p_T$ の比 }20〜50~GeV & 1.358(8) & 1.522(7) \\
+\phantom{$p_T$ の比 }50〜100~GeV & 1.182(13) & 1.494(10) \\
+\phantom{$p_T$ の比 }100〜150~GeV & 1.040(29) & 1.174(15) \\
+\phantom{$p_T$ の比 }150〜250~GeV & 1.001(47) & 1.035(18) \\
+$p_T<5$~GeV の割合 & 0.311 & 0.068 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手順 (1) で分かったこと。}第一の問いには肯定で答えられる。$d$ 次元の実の放射と形状因子に $\MSbar$ の共線の対抗項を足すと、$q\bar q$ の2重極と単極、$qg$ の単極が記号として消え、$\ln\mu_R$ が落ち、係数関数は $\MSbar$ のパートン分布の規約（グルーオンの偏極の平均 $1/(2(1-\epsilon))$）と合う形になった。この規約は、$\MSbar$ で決めた NNPDF4.0 と組み合わせたハドロンの断面積が \MGaMC{} と一致したことで、実際に確かめられた。$\delta(1-z)$ の係数 $8\zeta_2-16$ に入る時間的な形状因子の $\pi^2$ の項と、$\mathcal D_1$ の軟らかい放射の対数が $q\bar q$ を約 $+29\%$ 上げ、$qg$ が約 $-15\%$ 下げて、$Z$、$W$ の共鳴の付近で $K\approx1.14$〜$1.15$ になる。
@@ -602,7 +665,9 @@ $(2,\frac12)$ & 10.1124 & 10.1134(9) ($+1.1$) & 22.5217 & 22.5219(23) ($+0.1$) \
 
 \paragraph{手順 (2) で分かったこと。}$gg\to H$ の係数関数は、Drell--Yan と同じ手順で $d$ 次元で求まり、三つのチャンネルが文献と記号として一致した。\MGaMC{} の側では、ツールの使い方に三つの注意が要った。次元5の演算子の NLO の UFO は NLOCT だけでは作れないこと（R2 と紫外の対抗項を自分で導いて入れると作れ、MadLoop は直しなしで正しく、aMC@NLO は次数の明示と頂点のないダミーの粒子を足すだけで動いた）、配布の HC\_NLO\_X0 は MG5 3.8.1 で軽いクォークの対抗項の極が落ちること（極の確かめで止まる）、その結合の次数のために $\mu_R$ の重みの付け直しが効かないことである。さらに、aMC@NLO の \texttt{[QCD]} は FKS の対に写らない有限な実の放射（$q\bar q\to Hg$、LO の $0.13\%$）を含まない。これらは自分の計算と並べて初めて分かったことで、計算環境の記録~\cite{env} の表に加えた。物理としては、$K=2.29$ と大きく、スケールの範囲が NLO でも縮まないので、$gg\to H$ の精密な予言には NNLO 以上が要る。
 
-\paragraph{今後。}手順 (3) の MC@NLO では、手順 (1)、(2) の固定次数の値を基準に、Pythia 8 のシャワーをつないだ全断面積と分布を確かめる。手順 (4) では、式~\eqref{eq:dqq}、\eqref{eq:dqg} は $Z'$ にもそのまま使え、段階 6 の $Z'$ の断面積を NLO にできる。ラピディティの分布を除く、レプトンにカットを掛けた分布（fiducial な断面積）は、自分の計算がレプトンの角度を積分しているので比べていない。$gg\to H$ の NLO のラピディティの分布と、トップの質量を残した NLO（2ループの仮想の補正）も比べていない。
+\paragraph{手順 (3) で分かったこと。}第三の問いには次のように答えられる。MC@NLO で Pythia 8 のシャワーをつないでも、全断面積は NLO のまま変わらず（$Z$、$H$ とも統計の範囲）、ボソンのラピディティは数 \% しか変わらない。変わるのは $p_T$ の分布で、固定次数の NLO が $p_T\to0$ で発散するところが有限な分布になり、大きい $p_T$ では LO の V$+$ジェットに戻る。途中の 20〜100~GeV では、MC@NLO は LO の V$+$ジェットより $Z$ で 20〜40\%、$H$ で約 50\% 大きく、この領域の予言は NLO の補正の大きさとシャワーのつなぎ方に敏感である。ツールの側では、スケールの重みを切った MC@NLO のシャワーがメモリを使い尽くすこと、Pythia 8 のリンクに gfortran の場所が要ること、QED の次数を持たない模型で事象の生成が止まることが分かり、計算環境の記録~\cite{env} の表に加えた。
+
+\paragraph{今後。}手順 (3) では、ハドロン化と多重パートン相互作用、primordial $k_T$ を切ったパートンの段階で比べた。数 GeV より下の $p_T$ の形と、ジェットの観測量は比べていない。手順 (4) では、式~\eqref{eq:dqq}、\eqref{eq:dqg} は $Z'$ にもそのまま使え、段階 6 の $Z'$ の断面積を NLO にできる。ラピディティの分布を除く、レプトンにカットを掛けた分布（fiducial な断面積）は、自分の計算がレプトンの角度を積分しているので比べていない。$gg\to H$ の NLO のラピディティの分布と、トップの質量を残した NLO（2ループの仮想の補正）も比べていない。
 
 \appendix
 \section{Drell--Yan の $d$ 次元の導出の細部}\label{app:dy}
@@ -651,6 +716,8 @@ G(z,v)=\int\dd t\,x f_i(e^t)\,x f_j(\tau e^{-t}/z)\,\Theta\bigl(t+\tfrac12\ln(z/
 \bibitem{nnpdf40} R. D. Ball \textit{et al.} (NNPDF Collaboration), ``The path to proton structure at 1\% accuracy,'' Eur. Phys. J. C \textbf{82}, 428 (2022), arXiv:2109.02653。
 \bibitem{fks} S. Frixione, Z. Kunszt, A. Signer, ``Three-jet cross sections to next-to-leading order,'' Nucl. Phys. B \textbf{467}, 399 (1996), arXiv:hep-ph/9512328；R. Frederix, S. Frixione, F. Maltoni, T. Stelzer, ``Automation of next-to-leading order computations in QCD: the FKS subtraction,'' JHEP \textbf{10}, 003 (2009), arXiv:0908.4272。
 \bibitem{mg5} J. Alwall \textit{et al.}, ``The automated computation of tree-level and next-to-leading order differential cross sections, and their matching to parton shower simulations,'' JHEP \textbf{07}, 079 (2014), arXiv:1405.0301。
+\bibitem{mcatnlo} S. Frixione, B. R. Webber, ``Matching NLO QCD computations and parton shower simulations,'' JHEP \textbf{06}, 029 (2002), arXiv:hep-ph/0204244.
+\bibitem{pythia83} C. Bierlich \textit{et al.}, ``A comprehensive guide to the physics and usage of PYTHIA 8.3,'' SciPost Phys.\ Codebases \textbf{8} (2022), arXiv:2203.11601.
 \bibitem{atlaswz} ATLAS Collaboration, ``Measurement of $W^\pm$ and $Z$-boson production cross sections in $pp$ collisions at $\sqrt s=13$~TeV with the ATLAS detector,'' Phys. Lett. B \textbf{759}, 601 (2016), arXiv:1603.09222（参照）。
 \bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}）。
 \end{thebibliography}
