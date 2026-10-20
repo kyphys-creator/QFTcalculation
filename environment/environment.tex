@@ -1190,7 +1190,7 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 
 \section{LHC の現象論の道具の追加}\label{sec:lhc}
 
-2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）、段階 4（MadAnalysis5 と PADForSFS）を記録する。
+2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）、段階 4（MadAnalysis5 と PADForSFS）、段階 5（pyhf、SModelS、HiggsTools）を記録する。
 
 どの段階も Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
 
@@ -1518,6 +1518,93 @@ ls $W/ma5_work/Output/SAF/signal/atlas_susy_2016_07/Cutflows    # <signal region
 # MG5, at the card prompt of launch (widths set to Auto in the card): two-body widths only
 compute_widths --body_decay=2
 cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage4.sh
+\end{Verbatim}
+
+\subsection{段階 5：pyhf、SModelS、HiggsTools}\label{sec:lhc5}
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 5 で入れたものの版、配置、入手元。仮想環境は段階 3 の \pth{hep/opt/lhc}。大きさは取得したもの。取得したファイルは \pth{hep/src/lhc5-dl} に残した。}
+\label{tab:lhc5}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.4cm}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.0cm}}
+\toprule
+\textbf{もの} & \textbf{版} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+pyhf & 0.7.6 & 仮想環境（段階 4 で Spey とともに入れたもの） & —~\cite{pyhf} \\
+ATLAS-SUSY-2019-08 の完全な尤度と表6つ & HEPData v4 & \pth{hep/data/hepdata-ins1755298} & hepdata.net~\cite{atlas1lbb}（2.62 MB、表は計 15 KB） \\
+SModelS & 3.2.1 & 仮想環境 & PyPI~\cite{smodels3}（sdist、1.88 MB） \\
+docutils、Unum、pyslha、tex2pix、onnx、onnxruntime、protobuf、ml\_dtypes、flatbuffers、scipy & 0.23、4.2.1、3.3.2、0.3.1、1.23.2、1.31.0、7.36.2、0.6.0、25.12.19、1.16.3 & 仮想環境（base の scipy 1.16.0 を SModelS が除外するので、仮想環境に 1.16.3） & PyPI（計 53 MB） \\
+SModelS のデータベース 3.2.1 の一部（ATLAS-SUSY-2016-07、ATLAS-SUSY-2019-08 の UL と EM） & 3.2.1 & \pth{hep/data/smodels-db-3.2.1} & GitHub の SModelS/smodels-database-release（65 のファイル、11.5 MB。git の blob の hash を照合） \\
+HiggsTools（examples/ と tools/ を除く） & 1.3 & \pth{hep/HiggsTools-1.3}（\texttt{source}、\texttt{build}）。Python の \texttt{Higgs} を仮想環境に & gitlab.com/higgsbounds~\cite{higgstools}（git の sparse checkout、転送 6.9 MB） \\
+HSDataSet & v1.1 & \pth{hep/data/hsdataset-v1.1} & 同上（2 MB） \\
+range-v3、magic\_enum、fmt、spdlog、pybind11、nlohmann/json（HiggsTools の構築用） & 0.12.0、0.7.3、8.0.1、1.9.2、3.0.1、3.12.0 & \pth{hep/HiggsTools-1.3/deps} & GitHub（計 2.8 MB）。Eigen は Homebrew の 5.0.1 \\
+numpy、scipy、chardet、requests、jsonpatch、jsonpointer ほか8つ & 2.5.4、1.18.1、7.7.0、2.34.2、1.36、3.4 & 承認外の取得物（SModelS の setup.py の自動の \texttt{pip install --user}）。\pth{.local} に入ったので約2分後にゴミ箱へ移した & PyPI（新たに取得したものは計 27 MB） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{導入。}Python のものは、取得したファイルだけから \texttt{pip install --no-index --no-deps --no-build-isolation} で仮想環境に入れた。ところが SModelS の \texttt{setup.py} は、入れる処理の最後に \texttt{pip install --user --upgrade -r requirements.txt} を自分で呼ぶ（\texttt{smodels/installation.py} の \texttt{resolve\_dependencies}）。この中の pip には外側の \texttt{--no-index} も \texttt{--no-deps} も効かないので、PyPI から最新版を取得して利用者の site-packages（\pth{.local/lib/python3.12}）に入れた（表~\ref{tab:lhc5} の最後の行）。そこは Python 3.12 のどの環境（miniforge の base、\texttt{qft}、仮想環境）からも site-packages より先に見えるので、base の numpy 2.2.6 と scipy 1.16.0 が、20:10 から約2分間 2.5.4 と 1.18.1 に隠れた（\texttt{qft} は元から同じ版）。入ったものを各パッケージの \texttt{RECORD} で特定し、14 のパッケージと \pth{.local/bin} の 24 のスクリプト（と、このとき作られた \pth{.local/bin} そのもの）だけを \texttt{/usr/bin/trash} でゴミ箱へ移して元に戻した（前からあった openpyxl などはそのまま）。
+
+SModelS のデータベースは、公式の完全なもの（pickle で 1.17 GB）ではなく、検証に使う3つの結果のテキストを GitHub から1ファイルずつ取得した。SModelS は最初の読み込みで \texttt{db3.pcl} をデータベースの場所に書く。HiggsTools は PyPI にないので、GitLab から examples/（179 MB）と tools/（61 MB）を除いて取得した。その CMake は依存の7つを git で丸ごと取得する（json、Eigen、pybind11 は版を固定しない master）ので、版を固定したソースを \texttt{FETCHCONTENT\_}\allowbreak\texttt{SOURCE\_DIR\_<名前>} で渡し、\texttt{FETCHCONTENT\_}\allowbreak\texttt{FULLY\_DISCONNECTED=ON} で取得を止めた。Eigen には、Homebrew の 5.0.1 の場所に \texttt{Eigen3::Eigen} を作るだけの CMakeLists.txt（\pth{hep/HiggsTools-1.3/deps/eigen-homebrew}）を渡した。fmt 8.0.1 と spdlog 1.9.2 は CMake 4 では古すぎると止まるので、\texttt{CMAKE\_POLICY\_}\allowbreak\texttt{VERSION\_MINIMUM=3.5} とした。Python の拡張は CMake で直接作り（Apple clang、11.5 秒）、\texttt{python/Higgs} の \texttt{.py} とともに仮想環境の \texttt{site-packages/Higgs} に写した（\texttt{setup.py} は scikit-build と ninja を取得しようとする）。
+
+\paragraph{検証。}結果を表~\ref{tab:lhc5tests} にまとめる（\nolinkurl{tests/lhc/run_stage5.sh}、約10分）。どれも、ネットへの接続を塞ぎ（プロキシの変数）、\texttt{PYTHONNOUSERSITE=1} で走らせた。
+\begin{itemize}
+\item \textbf{pyhf と自分の式。}段階 4 の Meff-5j-2000（$n=59$、$b=65\pm7$、信号は段階 4 の効率と断面積で 53.0 事象）の1ビンの模型で、pyhf（\texttt{uncorrelated\_background}：背景をポアソンで拘束、$\tilde q_\mu$、漸近式）の CLs と信号強度の上限を、同じ尤度を解析的にプロファイルした自分の式（Cowan らの漸近式）と比べた。Asimov データは、背景だけを観測にフィットした母数で作る。
+\item \textbf{MadAnalysis5（Spey）の上限。}Spey の \texttt{default.uncorrelated\_background} は、背景をガウスで拘束する（$\mathrm{Pois}(n|\mu s+b+\theta\sigma_b)\,\mathcal N(\theta|0,1)$）。さらに、Asimov データの主の測定はフィット後の値にするが、拘束の中心（補助の観測値）は名目の 0 のまま残す。この規約で自分の式を組むと、MadAnalysis5 の上限を $4\times10^{-6}$ で再現した。pyhf と同じく拘束の中心もずらすと、上限は観測で 4\%、期待で 13\% 弱くなる。
+\item \textbf{1Lbb の背景。}ATLAS-SUSY-2019-08（1 レプトン、$h\to b\bar b$、$E_T^{\mathrm{miss}}$、139 fb$^{-1}$~\cite{atlas1lbb}）の背景だけのワークスペースを、信号領域を除いて（制御領域だけで）フィットし、3つの信号領域の9つのビンの背景を HEPData のフィット後の値（参照）と比べた。
+\item \textbf{1Lbb の除外。}パッチの 125 の信号点すべてで CLs（$\mu=1$）を出し、$\log$ CLs を格子の三角分割で線形に補間して、公表の観測と期待の除外の線（CLs $=0.05$ のはず）の上の値を見た。各点の上限 $\mu_{\mathrm{UL}}$ は、pyhf の \texttt{hypotest} で $\log(\mathrm{CLs}/0.05)$ をセカント法で 0 にして求めた（pyhf の \texttt{toms748\_scan} は1点に4分かかる）。HEPData の断面積の上限を $\mu_{\mathrm{UL}}$ で割ると、その点で ATLAS が仮定した信号の断面積になるので、$m(\tilde\chi^\pm_1/\tilde\chi^0_2)$ だけによるはずである。
+\item \textbf{SModelS。}段階 4 のグルイーノの点（T1）の $r=\sigma\,\mathrm{BR}/\mathrm{UL}$ を、同じ UL の地図を自分で補間した値と比べた。また、1Lbb の点 $(700,150)$~GeV に上の断面積を与え、UL の地図と、効率地図を統計模型で組み合わせた結果の $r$ を、自分の pyhf の $1/\mu_{\mathrm{UL}}$ と比べた。
+\item \textbf{HiggsTools。}HiggsSignals で、HiggsPredictions 自身の SM（YR4 の表。$M_H=125.2$~GeV で $\Gamma_H=4.1159$~MeV）の $\chi^2$ を出した。次に、部分幅を手で入れ直して同じ $\chi^2$ になることを確かめ、ヒッグスのノート~\cite{higgsnote}の部分幅（$\Gamma_H=3.8905$~MeV）を入れた $\chi^2$ を出した。生成の断面積は HiggsPredictions の SM のままである。
+\end{itemize}
+pyhf、SModelS、HiggsTools は、それぞれ自分の式と、またツールどうしで一致した。食い違いは二つある。一つは、段階 4 のグルイーノの点で、MadAnalysis5 の再解釈の上限（最もよい信号領域）が、ATLAS 自身の UL の地図より 3.0 倍（マッチングした試料）、1.6 倍（シャワーのジェットだけの試料）強いことである。原因は確かめていない。段階 4 で見たとおり、この圧縮したスペクトルの信号の効率は ISR の扱いに強くよる。また ATLAS の地図は ATLAS 自身の信号の試料から作られていて、どの信号領域の上限かは SModelS のデータベースに書かれていないので、同じ領域どうしの比較ではない。もう一つは、SModelS の配布の版では 1Lbb の組み合わせが動かないことである（下の注意）。ヒッグスのノートの部分幅では $\chi^2$ が 1.71 増える。主に $H\to gg$ が YR4 より 12\% 小さく、全幅が 5.5\% 小さいためである。計画（表~\ref{tab:lhcplan}）の、SModelS の配布の例を参照の出力と比べることはしていない。参照の出力は完全なデータベース（1.17 GB）を要るからである。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 5 の検証の結果。公表の値（HEPData、ATLAS の UL の地図）は参照。}
+\label{tab:lhc5tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.6cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & 1ビンの CLs（$\mu=0.3$） & 自分の式（ポアソンの拘束）：観測 0.068753、期待 0.134744 & pyhf：0.068751、0.134734（$2.5\times10^{-5}$、$6.8\times10^{-5}$） & 一致 \\
+2 & 1ビンの $\mu_{\mathrm{UL}}$ & 自分の式：観測 0.326361、期待 0.395576 & pyhf：0.326359、0.395566（$7\times10^{-6}$、$2.4\times10^{-5}$） & 一致 \\
+3 & MadAnalysis5 の $\sigma_{95}$（Meff-5j-2000） & 自分の式（ガウスの拘束、Spey の Asimov データ）：観測 0.067714、期待 0.075746~pb & MadAnalysis5（Spey）：0.067715、0.075746~pb（$4\times10^{-6}$） & 一致 \\
+4 & Asimov データの規約の差 & 同じ尤度で、pyhf の規約（拘束の中心もずらす） & 観測 $+4.2\%$、期待 $+13.0\%$（ガウス）。ポアソンの拘束では $+1.8\%$、$+10.3\%$ & 規約による \\
+5 & 1Lbb の背景（9 ビン） & HEPData のフィット後の値（参照） & 制御領域だけのフィットで、最大のずれ $0.001\sigma$（表示の桁で同じ）。信号領域も入れたフィットでは違う & 一致 \\
+6 & 1Lbb の除外の線 & 公表の線の上で CLs $=0.05$ & 観測：中央値 0.0519（16〜84\% で 0.044〜0.058、124 点）。期待：0.0516（0.041〜0.054、149 点） & 一致 \\
+7 & UL(HEPData)$/\mu_{\mathrm{UL}}$ & $m(\tilde\chi^0_1)$ によらない & 25 の質量で、ばらつきの中央値 0.3\%、最大 4\%。例えば 700~GeV で 9.284 fb & 一致 \\
+8 & SModelS、T1（1000, 825）& 自分の補間：UL 206.55~fb、$r=0.8087$ & SModelS：206.55~fb、$r=0.8087$ & 一致 \\
+9 & MadAnalysis5 と ATLAS の UL & ATLAS の地図（参照）：206.55~fb & MadAnalysis5 の $\sigma_{95}$：67.7~fb（マッチング）、132.5~fb（シャワーだけ） & 3.0、1.6 倍強い \\
+10 & SModelS、1Lbb（700, 150）の UL の地図 & 自分の pyhf：$1/\mu_{\mathrm{UL}}=0.9384$ & $r=0.9384$ & 一致 \\
+11 & SModelS、1Lbb の効率地図の組み合わせ & 同上 & 完全な尤度（pyhf）：0.980（$+4.4\%$）。単純化した尤度：1.184（$+26\%$）。配布のまま（onnx）：動かない & 完全な尤度で一致 \\
+12 & HiggsSignals の SM の $\chi^2$ & 部分幅を手で入れ直しても同じ & 151.6421（159 の観測量）。入れ直して差 0 & 一致 \\
+13 & ヒッグスのノートの部分幅 & HiggsPredictions の SM との差 & $\chi^2=153.354$、$\Delta\chi^2=+1.712$。BR の比：$gg$ $-12\%$、$\tau\tau$ $+5.8\%$、$\gamma\gamma$ $+6.4\%$、$ZZ$ $+4.6\%$、$WW$ $+2.9\%$、$b\bar b$ $-0.1\%$ & 差を説明 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}導入と照合の途中で、次のことが分かった。
+\begin{itemize}
+\item \textbf{SModelS の setup.py は、入れるときに自分で pip を呼ぶ。}\texttt{pip install --user --upgrade -r requirements.txt} を外側の pip の指定と無関係に走らせ、PyPI の最新版を利用者の site-packages に入れる。そこは Python 3.12 のどの環境でも site-packages より先に読まれる。判定の \texttt{test\_requirements} は \texttt{requests[use\_chardet\_on\_py3]} のような名前を import できないので、依存がそろっていても走る。入れ直すときは、\texttt{PIP\_NO\_INDEX=1} と \texttt{PIP\_FIND\_LINKS=<取得したファイルの場所>} を環境に置いて中の pip も PyPI に行けないようにし、入れたあとに \pth{.local} が変わっていないことを確かめる（この方法は試していない）。
+\item SModelS 3.2.1 の PyPI の sdist には \texttt{smodels/statistics/hep\_olll}（ニューラルネットの尤度の部品）が入っていない。データベースの ATLAS-SUSY-2019-08-eff は統計模型の最初に onnx を挙げ、SModelS は最初のものだけを使うので、効率地図の組み合わせが \texttt{ModuleNotFoundError} で止まる。統計模型を \texttt{('pyhf', 'BkgOnly.json')} だけにしたデータベースの写しで動かした（\nolinkurl{tests/lhc/test_smodels.py}）。データベースが2番目以降に挙げる \texttt{full\_pyhf} という型は、最初に置くと受け付けられない。
+\item SModelS は、データベースに URL（\texttt{official} など）を与えると取得し（公式のものは 1.17 GB）、断面積の計算では resummino を取得して構築する。ローカルの場所を渡し、ネットを塞いで走らせる。SModelS は scipy 1.16.0〜1.16.2 を除外する。
+\item 1Lbb のワークスペースは信号強度を $[0,5]$ に制限する。感度の低い点の上限はそれを超えるので、\texttt{par\_bounds} で広げる。HEPData の 1Lbb の表のうち2つは、背景の列の名前が \texttt{Expected Bakground} と綴られている。HEPData の「フィット後」の信号領域の背景は、制御領域だけのフィットのものである。
+\item MadAnalysis5（Spey）と pyhf は、同じ尤度でも Asimov データの規約が違い、期待の上限が 10〜13\% 違う（表~\ref{tab:lhc5tests} の 4）。ツールの上限を比べるときは規約をそろえる。
+\item HiggsTools の CMake は、依存の7つを git で取得する（json、Eigen、pybind11 は master なので再現しない）。版を固定したソースを \texttt{FETCHCONTENT\_}\allowbreak\texttt{SOURCE\_DIR\_<名前>} で渡し、\texttt{FETCHCONTENT\_}\allowbreak\texttt{FULLY\_DISCONNECTED=ON} とする。最上位の CMakeLists.txt は文書を作らなくても \texttt{doc/} が要る。CMake 4 では \texttt{CMAKE\_POLICY\_}\allowbreak\texttt{VERSION\_MINIMUM=3.5} が要る。
+\item HiggsPredictions の崩壊の \texttt{inv} は directInv と $ZZ\to4\nu$ の合成である。部分幅を入れ直すときに含めると $ZZ\to4\nu$ を2回数え、全幅が 0.1\% 増える。\texttt{setDecayWidth} は全幅を足し直し、\texttt{setTotalWidth} は分岐比を保って全幅を変える。
+\end{itemize}
+
+\paragraph{使い方。}どれも仮想環境の Python で使う。照合は \nolinkurl{tests/lhc/run_stage5.sh} で実行し直す（約10分。段階 4 の \texttt{out/ma5\_gluino} が要る。\texttt{--reuse} で 1Lbb の格子の結果を読み直す）。\texttt{tests/run\_all.sh} の \texttt{--lhc} もこれを実行する。
+\begin{Verbatim}
+P=~/hep/opt/lhc/bin/python
+PYTHONNOUSERSITE=1 $P -c "import pyhf, json; ws = pyhf.Workspace(json.load(open('BkgOnly.json')))"
+PYTHONNOUSERSITE=1 HTTPS_PROXY=http://127.0.0.1:9 $P -c \
+  "from smodels.experiment.databaseObj import Database; print(Database('$HOME/hep/data/smodels-db-3.2.1'))"
+PYTHONNOUSERSITE=1 $P -c "import Higgs.signals as HS; print(HS.Signals('$HOME/hep/data/hsdataset-v1.1').observableCount())"
+# rebuild HiggsTools offline (cmake with -DFETCHCONTENT_SOURCE_DIR_<NAME>=deps/..., FETCHCONTENT_FULLY_DISCONNECTED=ON,
+# CMAKE_POLICY_VERSION_MINIMUM=3.5; then copies python/Higgs and _Higgs*.so into the venv):
+~/hep/HiggsTools-1.3/build.sh
+cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage5.sh
 \end{Verbatim}
 
 \section{EFT・暗黒物質の道具の追加}\label{sec:eftdm}
@@ -1988,6 +2075,9 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{madspin} P. Artoisenet, R. Frederix, O. Mattelaer, R. Rietkerk, ``Automatic spin-entangled decays of heavy resonances in Monte Carlo simulations,'' JHEP \textbf{03} (2013) 015, \href{https://arxiv.org/abs/1212.3460}{arXiv:1212.3460}.
 \bibitem{madwidth} J. Alwall, C. Duhr, B. Fuks, O. Mattelaer, D. G. \"Ozt\"urk, C.-H. Shen, ``Computing decay rates for new physics theories with FeynRules and MadGraph5\_aMC@NLO,'' Comput.Phys.Commun. \textbf{197} (2015) 312, \href{https://arxiv.org/abs/1402.1178}{arXiv:1402.1178}.
 \bibitem{nnpdf23} R. D. Ball \textit{et al.} (NNPDF), ``Parton distributions with LHC data,'' Nucl.Phys.B \textbf{867} (2013) 244, \href{https://arxiv.org/abs/1207.1303}{arXiv:1207.1303}.
+\bibitem{atlas1lbb} ATLAS Collaboration, ``Search for direct production of electroweakinos in final states with one lepton, missing transverse momentum and a Higgs boson decaying into two $b$-jets in $pp$ collisions at $\sqrt s=13$ TeV with the ATLAS detector,'' Eur.Phys.J.C \textbf{80} (2020) 691, \href{https://arxiv.org/abs/1909.09226}{arXiv:1909.09226}; HEPData ins1755298.
+\bibitem{smodels3} S. Kraml \textit{et al.}, ``SModelS: a tool for interpreting simplified-model results from the LHC and its application to supersymmetry,'' Eur.Phys.J.C \textbf{74} (2014) 2868, \href{https://arxiv.org/abs/1312.4175}{arXiv:1312.4175}; SModelS, \url{https://smodels.github.io/}
+\bibitem{higgstools} H. Bahl \textit{et al.}, ``HiggsTools: BSM scalar phenomenology with new versions of HiggsBounds and HiggsSignals,'' \href{https://arxiv.org/abs/2210.09332}{arXiv:2210.09332}.
 \bibitem{url:feynmaster} D. Fontes, J. C. Rom\~ao, FeynMaster Manual v2（Mathematica 14 での FeynRules の \texttt{MatrixSymbol} の扱い）. \url{https://porthos.tecnico.ulisboa.pt/FeynMaster/Manual/Manual-v2.pdf}
 \bibitem{phi34thermal} $\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波（本リポジトリ \nolinkurl{models/phi34_thermal/ResearchNote/note.pdf}）。熱的な道具との照合は第7節と付録~H。
 \bibitem{cosmotransitions} C. L. Wainwright, ``CosmoTransitions: computing cosmological phase transition temperatures and bubble profiles with multiple fields,'' Comput.Phys.Commun. \textbf{183} (2012) 2006, \href{https://arxiv.org/abs/1109.4189}{arXiv:1109.4189}.
