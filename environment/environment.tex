@@ -1190,7 +1190,7 @@ cd ~/Documents/Claude/QFTcalculation/models/phi3/Src && ./run_twoloop4_check.sh
 
 \section{LHC の現象論の道具の追加}\label{sec:lhc}
 
-2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）、段階 4（MadAnalysis5 と PADForSFS）、段階 5（pyhf、SModelS、HiggsTools）を記録する。
+2026年10月19日に、LHC の探索の現象論（BSM の模型の信号を、シャワー、検出器、解析を通して公表の探索と比べること）に進むため、\MGaMC{} の後ろの段の道具を6段階で入れる計画を立てた（表~\ref{tab:lhcplan}）。各段階では、自分で計算できる量とツールの出力を突き合わせる。この節には段階 1（LHAPDF と PDF の組）、段階 2（Pythia 8 と HepMC）、段階 3（ROOT、Delphes、FastJet）、段階 4（MadAnalysis5 と PADForSFS）、段階 5（pyhf、SModelS、HiggsTools）、段階 6（自作の $Z'$ の模型での通しの確かめ）を記録する。
 
 どの段階も Mac Studio（Apple M4 Max、14コア、メモリ 36 GB、macOS 15.5）で行った。これは表~\ref{tab:machine} の計算機（Apple M3、8コア、16 GB、macOS 26.2）とは別の計算機である。この Mac の \pth{hep} の道具は2026年10月15日に作られているが、本稿にはその記録がない。導入の前のこの Mac には、\MGaMC{} 3.8.1（MadLoop の COLLIER、Ninja、OneLOop を含む）、Homebrew の GCC 16（gfortran）、CMake 4.4.4、boost、gsl、miniforge の Python 3.12 があった。PDF、シャワー、検出器、ジェット、解析、統計の道具はなかった。
 
@@ -1605,6 +1605,79 @@ PYTHONNOUSERSITE=1 $P -c "import Higgs.signals as HS; print(HS.Signals('$HOME/he
 # CMAKE_POLICY_VERSION_MINIMUM=3.5; then copies python/Higgs and _Higgs*.so into the venv):
 ~/hep/HiggsTools-1.3/build.sh
 cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc && ./run_stage5.sh
+\end{Verbatim}
+
+\subsection{段階 6：自作の $Z'$ の模型で通して確かめる}\label{sec:lhc6}
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 6 で取得したもの。ソフトウェアは取得していない。}
+\label{tab:lhc6}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{5.2cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.0cm}}
+\toprule
+\textbf{もの} & \textbf{配置} & \textbf{入手元} \\
+\midrule
+ATLAS のダイレプトンの共鳴の探索（139 fb$^{-1}$~\cite{atlasll}）の表 12（ee と $\mu\mu$ の $m_{\ell\ell}$ の分布、観測と期待の断面積の上限6つ、SSM に対する比、選別の効率、ee と $\mu\mu$ の質量分解能のパラメータ）と、背景の関数と質量分解能の疑似コード & \pth{hep/data/hepdata-ins1725190}（取得したものは \pth{hep/src/lhc6-dl}） & hepdata.net（ins1725190、計 616 KB） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{模型。}FeynRules の SM.fr の上に、$Z$ と同じ結合でフェルミオンにつく重いベクトル $Z'$（PDG 32、sequential standard model、SSM）を加えた \nolinkurl{tests/lhc/zprime/ZpSSM.fr} を書いた（$Z$ との混合、$W$、$Z$、$H$ への結合はない）。
+\[
+\mathcal L_{Z'}=-\tfrac14Z'_{\mu\nu}Z'^{\mu\nu}+\tfrac12M_{Z'}^2Z'_\mu Z'^\mu+g_{Z'}\frac e{s_Wc_W}Z'_\mu\sum_f\bar f\gamma^\mu(T_3^fP_L-Q_fs_W^2)f,\qquad g_{Z'}=1 .
+\]
+\nolinkurl{tests/lhc/zprime/generate_zp.wl} は、制限 DiagonalCKM.rst と Massless.rst（$t$、$b$、$\tau$ だけが質量を持つ）のもとで、$Z'f\bar f$ の頂点を SM.fr の $Zf\bar f$ の頂点と比べ、UFO を書く。
+
+\paragraph{検証。}結果を表~\ref{tab:lhc6tests} にまとめる（\nolinkurl{tests/lhc/run_stage6.sh}、約20分、\texttt{out/zprime} に HepMC 2.4 GB と Delphes の出力 6 GB）。比べる相手は、自分の式と自分の積分、そして ATLAS の 139 fb$^{-1}$ のダイレプトンの共鳴の探索~\cite{atlasll}の HEPData（参照）である。
+\begin{itemize}
+\item \textbf{模型。}$Z'f\bar f$ の12の頂点（世代ごとに展開）は、$Z'\to Z$、$g_{Z'}\to1$ とすると SM.fr の $Zf\bar f$ の頂点と符号まで一致した（$\gamma^\mu=\gamma^\mu P_L+\gamma^\mu P_R$ と $c_W^2+s_W^2=1$ を使って比べる）。
+\item \textbf{幅。}MadWidth の2体の崩壊の幅を、$\Gamma=\sum_f N_cM(e/s_Wc_W)^2\beta[g_V^2(1+2x)+g_A^2(1-4x)]/(48\pi)$（$g_V=g_L+g_R$、$g_A=g_L-g_R$、$g_L=T_3-Qs_W^2$、$g_R=-Qs_W^2$、$x=m_f^2/M^2$）と比べた。
+\item \textbf{断面積。}\MGaMC{} の $pp\to Z'\to\ell^+\ell^-$（$\ell=e,\mu$、NNPDF4.0 NLO、$\mu_F=\mu_R=M$）を、同じ LHAPDF の組での $q\bar q\to Z'\to\ell\ell$ の自分の積分（$u,d,s,c$、MadWidth の幅の Breit--Wigner）と、9つの質量 0.5〜6 TeV で比べた。
+\item \textbf{検出器。}Pythia 8 と Delphes の ATLAS の card で、探索の選別（$p_T>30$~GeV、電子は $|\eta|<2.47$ で 1.37〜1.52 を除く、ミューオンは $|\eta|<2.5$ で電荷が逆、$m_{\ell\ell}>225$~GeV）を当てた。A$\times\varepsilon$ を ATLAS の spin-1 の選別の効率と、ピークの相対分解能（$m_{\mathrm{reco}}/m_{\mathrm{true}}-1$ の中央 68\% の半幅）を ATLAS のパラメータ化と比べた。
+\item \textbf{上限。}公表の ee と $\mu\mu$ の $m_{\ell\ell}$ の分布（225 GeV〜5.8 TeV の 99 ビン、データの事象数だけ）に、公表の背景の関数（疑似コードの式）を自分でフィットした（規格化、$b$、$p_0$〜$p_3$ をチャンネルごとに自由に）。自分の信号の $m_{\ell\ell}$ の分布を型にして、背景の母数をプロファイルしたビンごとのポアソンの尤度、$\tilde q_\mu$、漸近式の CLs（段階 5 の式）で、$\sigma\times B(Z'\to\ell\ell)$ の 95\% の上限を出した。
+\end{itemize}
+模型、幅、断面積は、自分の式と積分に一致した。検出器の段では、Delphes の ATLAS の card の電子の A$\times\varepsilon$ が 0.29〜0.39 で、ATLAS の 0.69〜0.74 の半分ほどしかない（下の注意）。ミューオンは 0.49〜0.69 で、高い $p_T$ のミューオンの厳しい条件を使う ATLAS の 0.38〜0.52 より高い。分解能は、電子で ATLAS の 0.6〜1 倍、ミューオンで 0.7 倍ほどである。孤立を飛跡だけで取る card では電子の A$\times\varepsilon$ が 0.33〜0.46 に上がったが、新たに残った電子は FSR の光子のエネルギーを含まないので、分解能が 2〜5\% に悪くなった。上限は二つの card でほぼ同じだった。SSM の断面積に対する上限の比は、4〜5.5 TeV で ATLAS の値（参照）と 12\% 以内で合い、SSM の質量の下限は 5.04 TeV（期待 4.99 TeV）、孤立を飛跡で取る card で 5.07 TeV（5.02 TeV）になった。ATLAS の値は 5.1 TeV（参照）である。ただし自分の SSM の断面積は LO、ATLAS は NNLO であり、低い質量（0.5〜3 TeV）では比が ATLAS の 1.3〜1.8 倍になる。ee と $\mu\mu$ を別々に fiducial な上限で比べると、4〜5.5 TeV の ee で 3〜8 倍の差があり、効率の差だけでは説明できない（下の注意の fiducial の定義）。
+
+\begin{table}[htbp]
+\centering\small
+\caption{段階 6 の検証の結果。SSM の $Z'$（$\Gamma/M\approx3\%$）、13 TeV、9つの質量 0.5〜6 TeV。ATLAS の値（HEPData）は参照。Delphes の結果は ATLAS の card のもの（括弧は孤立を飛跡だけで取る card）。}
+\label{tab:lhc6tests}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{0.35cm}>{\raggedright\arraybackslash}p{2.9cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{1.6cm}}
+\toprule
+& \textbf{対象} & \textbf{期待値} & \textbf{結果} & \textbf{判定} \\
+\midrule
+1 & $Z'f\bar f$ の頂点 & SM.fr の $Zf\bar f$ と同じ & 12 の頂点すべてが記号として一致 & 一致 \\
+2 & $Z'$ の幅 & 自分の式 & MadWidth：9つの質量で $\le3\times10^{-7}$。$\Gamma/M=0.028$（0.5 TeV）〜0.0296 & 一致 \\
+3 & 断面積（$m_{\ell\ell}>225$~GeV） & 自分の積分（NNPDF4.0 NLO） & \MGaMC{}：9つの質量で $-1.2\times10^{-3}$〜$+4.5\times10^{-3}$（\MGaMC{} の統計の誤差 0.2〜1.2\% の範囲） & 一致 \\
+4 & 断面積（カットなし） & 同上 & $-6.6\times10^{-3}$〜$+1.3\times10^{-2}$ & 裾の積分 \\
+5 & ee の A$\times\varepsilon$ & ATLAS：0.69〜0.74 & 0.29〜0.39（0.33〜0.46） & 半分ほど \\
+6 & $\mu\mu$ の A$\times\varepsilon$ & ATLAS：0.38〜0.52 & 0.49〜0.69（0.52〜0.76） & 高い \\
+7 & 相対分解能 & ATLAS：ee 0.009〜0.013、$\mu\mu$ 0.054〜0.27 & ee 0.005〜0.009（0.02〜0.05）、$\mu\mu$ 0.035〜0.19 & card による \\
+8 & 背景だけのフィット & 99 ビンの公表のデータ & deviance：ee 110.8、$\mu\mu$ 83.4（自由度 93） & 妥当 \\
+9 & 上限$/\sigma_{\mathrm{SSM}}$（ee+$\mu\mu$、観測） & ATLAS（NNLO の SSM）：1 TeV 0.00100、3 TeV 0.0140、4 TeV 0.173、5 TeV 0.832、5.5 TeV 2.53 & 0.00127、0.0186、0.176、0.932、2.52（0.00127、0.0181、0.171、0.873、2.40） & 4〜5.5 TeV で 12\% 以内 \\
+10 & SSM の質量の下限 & ATLAS：5.1 TeV（NNLO） & 観測 5.04 TeV、期待 4.99 TeV（5.07、5.02 TeV）。自分の LO の断面積 & 0.6〜1.3\% 低い \\
+11 & fiducial な上限（5 TeV） & ATLAS（幅 3\%）：ee 0.020、$\mu\mu$ 0.051 fb & ee 0.123、$\mu\mu$ 0.061 fb（0.117、0.056 fb） & 定義の違い \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{注意。}照合の途中で、次のことが分かった。
+\begin{itemize}
+\item \MGaMC{} は、$s$ チャンネルの指定 \texttt{p p > zp > l+ l-} では $Z'$ の仮想質量を \texttt{bwcutoff} で切らない（\texttt{SubProcesses/myamp.f}：切るのは崩壊の鎖で on-shell を強制した共鳴（\texttt{gForceBW = 1}）だけ）。重い $Z'$ では、パートンの光度が持ち上げる低い質量の裾が大きく、$|m-M|<2\Gamma$ の部分は 0.5 TeV で 84\%、5 TeV で 26\%、6 TeV で 11\% にすぎない。裾の遠い部分は \MGaMC{} の積分でよく拾えず、カットなしの断面積は自分の積分と最大 1.3\% ずれた。比べるときは \texttt{mmll} などで範囲を決める。
+\item Delphes の ATLAS の card の電子の孤立は、光子を含むエネルギー流の対象の和（$\Delta R<0.5$、$p_T$ の比 0.12）で、高い $p_T$ の電子はすぐそばの FSR の光子で落ちる。1 TeV の $Z'$ の ee の事象で2本の電子が残る割合は、伝播 0.917、飛跡 0.781、エネルギー流 0.710、効率の式 0.608、孤立 0.430 と減った。ATLAS は飛跡の孤立を使う。
+\item Delphes の \texttt{Isolation} は、候補自身を \texttt{UniqueID} が同じかどうかで除く。電子はエネルギー流で別の対象に作り直されるので、孤立の入力を飛跡（\texttt{TrackMerger/tracks}）にすると自分の飛跡を数えて全て落ちる。\texttt{UseMiniCone} と \texttt{DeltaRMin} で内側の小さな円錐を除く。こうして飛跡だけで孤立を取ると電子の効率は上がるが、Delphes の電子は FSR の光子のエネルギーを含まないので、新たに残った電子の質量の分解能は悪い。
+\item HEPData の分布の表はデータの事象数（10 GeV あたりに直したもの）だけで、背景のフィットの母数はない。疑似コードの関数を自分でフィットした。ee の $b$ は負（$-2.5$）になり、$p_0$〜$p_3$ と縮退している。分布は 5.8 TeV で終わるので、6 TeV の信号の多くは範囲の外にある。高い質量では背景が 0.01 事象ほどで、漸近式の CLs の妥当性は確かめていない（疑似実験はしていない）。
+\item ATLAS の fiducial な断面積の定義は論文で確かめていない。ATLAS の spin-1 の効率は零幅の Drell--Yan の試料のもの（HEPData の説明）で、信号を質量 $M$ に置いた共鳴として扱う。自分の SSM の信号には低い質量の裾が入るので、fiducial な上限どうしの比較は高い質量で定義の違いを含む。SSM に対する比と質量の下限は、信号の模型どうしの比較で、この違いを受けにくい。
+\item HEPData の分解能の母数の値は、\texttt{a \textbackslash cdot 10\^{}\{b\}} の \texttt{\textbackslash cdot} の前に空白があるものとないものが混ざっている。
+\end{itemize}
+
+\paragraph{使い方。}FeynRules の模型から UFO を作り、\MGaMC{}、Pythia、Delphes に流す手順は \nolinkurl{tests/lhc/run_stage6.sh} にある（約20分。\texttt{--reuse} で、できているものを作り直さない）。\texttt{tests/run\_all.sh} の \texttt{--lhc} もこれを実行する。
+\begin{Verbatim}
+cd ~/Documents/Claude/QFTcalculation/environment/tests/lhc
+wolframscript -file zprime/generate_zp.wl $PWD/out/zprime     # vertices check, out/zprime/ZpSSM_UFO
+./run_stage6.sh --reuse
+# MG5 at the card prompt: set MZp 3000; set WZp Auto; compute_widths --body_decay=2
+# Delphes with own lepton isolation (tracks only): see out/zprime/delphes_card_ATLAS_trkiso.tcl
 \end{Verbatim}
 
 \section{EFT・暗黒物質の道具の追加}\label{sec:eftdm}
@@ -2078,6 +2151,7 @@ ln -sf ~/hep/bin/LoopTools $FH/ExternalTools/LoopTools/LoopTools
 \bibitem{atlas1lbb} ATLAS Collaboration, ``Search for direct production of electroweakinos in final states with one lepton, missing transverse momentum and a Higgs boson decaying into two $b$-jets in $pp$ collisions at $\sqrt s=13$ TeV with the ATLAS detector,'' Eur.Phys.J.C \textbf{80} (2020) 691, \href{https://arxiv.org/abs/1909.09226}{arXiv:1909.09226}; HEPData ins1755298.
 \bibitem{smodels3} S. Kraml \textit{et al.}, ``SModelS: a tool for interpreting simplified-model results from the LHC and its application to supersymmetry,'' Eur.Phys.J.C \textbf{74} (2014) 2868, \href{https://arxiv.org/abs/1312.4175}{arXiv:1312.4175}; SModelS, \url{https://smodels.github.io/}
 \bibitem{higgstools} H. Bahl \textit{et al.}, ``HiggsTools: BSM scalar phenomenology with new versions of HiggsBounds and HiggsSignals,'' \href{https://arxiv.org/abs/2210.09332}{arXiv:2210.09332}.
+\bibitem{atlasll} ATLAS Collaboration, ``Search for high-mass dilepton resonances using 139 fb$^{-1}$ of $pp$ collision data collected at $\sqrt s=13$ TeV with the ATLAS detector,'' Phys.Lett.B \textbf{796} (2019) 68, \href{https://arxiv.org/abs/1903.06248}{arXiv:1903.06248}; HEPData ins1725190.
 \bibitem{url:feynmaster} D. Fontes, J. C. Rom\~ao, FeynMaster Manual v2（Mathematica 14 での FeynRules の \texttt{MatrixSymbol} の扱い）. \url{https://porthos.tecnico.ulisboa.pt/FeynMaster/Manual/Manual-v2.pdf}
 \bibitem{phi34thermal} $\phi^3+\phi^4$ 理論の有限温度の一次相転移と重力波（本リポジトリ \nolinkurl{models/phi34_thermal/ResearchNote/note.pdf}）。熱的な道具との照合は第7節と付録~H。
 \bibitem{cosmotransitions} C. L. Wainwright, ``CosmoTransitions: computing cosmological phase transition temperatures and bubble profiles with multiple fields,'' Comput.Phys.Commun. \textbf{183} (2012) 2006, \href{https://arxiv.org/abs/1109.4189}{arXiv:1109.4189}.

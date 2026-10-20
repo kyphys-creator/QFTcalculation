@@ -1,0 +1,44 @@
+(* ZpSSM.fr: a sequential-standard-model Z' for stage 6 of the LHC tools (environment.pdf), loaded after FeynRules' SM.fr:
+     LoadModel["SM.fr", "ZpSSM.fr"]
+   A massive vector Zp (PDG 32) with the couplings of the Z to the fermions, times gZp (1 for the SSM):
+     L_Zp = -(1/4) Zp_{mu nu} Zp^{mu nu} + (1/2) MZp^2 Zp_mu Zp^mu
+            + gZp ee/(sw cw) Zp_mu sum_f fbar gamma^mu (T3_f P_L - Q_f sw^2) f,
+   no mixing with the Z, no couplings to the W, Z or H bosons (so the width is the fermions' only).  The sign is the one of
+   SM.fr's Z f f vertex (checked in generate_zp.wl).  SM.fr itself is unchanged. *)
+
+M$ClassesDescription = {
+  V[100] == {
+    ClassName       -> Zp,
+    SelfConjugate   -> True,
+    Mass            -> {MZp, 3000.},
+    Width           -> {WZp, 90.},
+    ParticleName    -> "Zp",
+    PDG             -> 32,
+    PropagatorLabel -> "Zp",
+    PropagatorType  -> Sine,
+    PropagatorArrow -> None,
+    FullName        -> "Zprime"
+  }
+};
+
+M$Parameters = {
+  gZp == {
+    ParameterType    -> External,
+    BlockName        -> ZPCOUP,
+    OrderBlock       -> 1,
+    Value            -> 1.,
+    InteractionOrder -> {QED, 1},
+    TeX              -> Subscript[g, Zp],
+    Description      -> "Z' couplings in units of the Z's (1: SSM)"
+  }
+};
+
+LZpKin := Block[{mu, nu}, ExpandIndices[-1/4 FS[Zp, mu, nu] FS[Zp, mu, nu] + 1/2 MZp^2 Zp[mu] Zp[mu]]];
+
+LZpF := Block[{mu}, ExpandIndices[gZp ee/(sw cw) Zp[mu] (
+     1/2 vlbar.Ga[mu].ProjM.vl
+   - 1/2 lbar.Ga[mu].ProjM.l + sw^2 lbar.Ga[mu].l
+   + 1/2 uqbar.Ga[mu].ProjM.uq - 2/3 sw^2 uqbar.Ga[mu].uq
+   - 1/2 dqbar.Ga[mu].ProjM.dq + 1/3 sw^2 dqbar.Ga[mu].dq)]];
+
+LZp := LZpKin + LZpF;
