@@ -18,13 +18,17 @@
 #      the HepMC file, the e+- in the 3 T field against own helix; about 4 minutes; needs ../lhc/out from run_stage3.sh)
 #   9. with --fcal only: the ATLAS FCAL test-beam example (fcal/run_fcal.sh: run1.mac against its reference output,
 #      muons against own MIP sampling fraction, electrons from 20 to 200 GeV; about 8 minutes)
-#  10. with --qt only: B1's geometry and 10 events in the Qt session (an OpenGL and a ToolsSG viewer), exported to out/qt/qt_ogl_0000.png, qt_tsg.png;
+#  10. with --ccal only: the CMS HCAL test-beam example (ccal/run_ccal.sh: muons against own sampling fraction, e- and
+#      pi- from 20 to 300 GeV; about 4 minutes)
+#  11. with --qt only: B1's geometry and 10 events in the Qt session (an OpenGL and a ToolsSG viewer), exported to out/qt/qt_ogl_0000.png, qt_tsg.png;
 #      the window opens on the screen for about 12 s and closes itself
 # Output in ./out.  About 35 s (the first run of each new executable takes about 10 s longer: macOS scans it).
 cd "$(dirname "$0")"
 HERE=$(pwd)
-QT=0; HEPMC=0; FCAL=0
-for a in "$@"; do [ "$a" = --qt ] && QT=1; [ "$a" = --hepmc ] && HEPMC=1; [ "$a" = --fcal ] && FCAL=1; done
+QT=0; HEPMC=0; FCAL=0; CCAL=0
+for a in "$@"; do
+  [ "$a" = --qt ] && QT=1; [ "$a" = --hepmc ] && HEPMC=1; [ "$a" = --fcal ] && FCAL=1; [ "$a" = --ccal ] && CCAL=1
+done
 G4=$HOME/hep/geant4-11.4.3
 EX=$G4/share/Geant4/examples
 source ~/hep/opt/geant4env.sh   # geant4.sh, CMAKE_PREFIX_PATH with Qt, Apple clang, default SDK
@@ -87,6 +91,10 @@ fi
 
 if [ "$FCAL" = 1 ]; then
   ./fcal/run_fcal.sh
+fi
+
+if [ "$CCAL" = 1 ]; then
+  ./ccal/run_ccal.sh
 fi
 
 if [ "$QT" = 1 ]; then
