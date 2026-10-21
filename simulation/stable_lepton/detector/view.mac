@@ -1,0 +1,52 @@
+# view.mac: the barrel detector and the p p -> lv+ lv- events in the Qt session, one event at a time (run_view.sh adds
+# the first event).  In the Qt window: drag to rotate, wheel to zoom; /run/beamOn 1 for the next event,
+# /vlldet/event N then /run/beamOn 1 for event N of the file.  End view (r-phi): /vis/viewer/set/viewpointVector 0 0 1;
+# side view: /vis/viewer/set/viewpointVector 1 0 0.  Only the tracks above 1 GeV (and lv+-) are kept for drawing
+# (/vlldet/storeAbove 0.3 GeV keeps more, for the next event; a full event has some 10^5 tracks).
+/control/verbose 0
+/run/verbose 0
+/tracking/verbose 0
+#
+/vis/open TSG_QT_GLES 1200x900
+/vis/viewer/set/autoRefresh false
+/vis/verbose errors
+/vis/drawVolume
+/vis/geometry/set/visibility World 0 false
+/vis/geometry/set/visibility Solenoid 0 false
+/vis/geometry/set/colour BeamPipe 0 0.7 0.7 0.7 0.3
+/vis/geometry/set/colour TrackerLayer 0 0.8 0.8 0.9 0.06
+/vis/geometry/set/colour ECAL 0 0.2 0.9 0.4 0.15
+/vis/geometry/set/colour HCAL 0 0.95 0.6 0.2 0.08
+/vis/geometry/set/visibility HCALScint 0 false
+/vis/geometry/set/colour Coil 0 0.6 0.6 0.7 0.10
+/vis/geometry/set/colour YokeIron 0 0.85 0.2 0.2 0.07
+/vis/geometry/set/colour MuonStation 0 0.3 0.8 1.0 0.15
+/vis/viewer/set/style surface
+/vis/viewer/set/background 0.04 0.04 0.08
+/vis/viewer/set/viewpointThetaPhi 55 25 deg
+/vis/viewer/zoom 1.3
+/vis/scene/add/axes 0 0 0 1 m
+/vis/scene/add/eventID
+# trajectories: lv+- orange, muons green, e+- red, photons faint yellow, charged hadrons white, other neutrals grey
+/vis/scene/add/trajectories smooth
+/vis/modeling/trajectories/create/drawByParticleID vll
+/vis/modeling/trajectories/vll/setRGBA lv- 1 0.55 0 1
+/vis/modeling/trajectories/vll/setRGBA lv+ 1 0.55 0 1
+/vis/modeling/trajectories/vll/set mu- green
+/vis/modeling/trajectories/vll/set mu+ green
+/vis/modeling/trajectories/vll/set e- red
+/vis/modeling/trajectories/vll/set e+ red
+/vis/modeling/trajectories/vll/setRGBA gamma 1 1 0 0.25
+/vis/modeling/trajectories/vll/setRGBA pi+ 1 1 1 0.6
+/vis/modeling/trajectories/vll/setRGBA pi- 1 1 1 0.6
+/vis/modeling/trajectories/vll/setRGBA kaon+ 1 1 1 0.6
+/vis/modeling/trajectories/vll/setRGBA kaon- 1 1 1 0.6
+/vis/modeling/trajectories/vll/setRGBA proton 1 1 1 0.6
+/vis/modeling/trajectories/vll/setRGBA anti_proton 1 1 1 0.6
+/vis/modeling/trajectories/vll/setDefaultRGBA 0.6 0.6 0.6 0.4
+# hide the tracks below 1 GeV at their start
+/vis/filtering/trajectories/create/attributeFilter soft
+/vis/filtering/trajectories/soft/setAttribute IMag
+/vis/filtering/trajectories/soft/addInterval 1 GeV 100000 GeV
+/vis/scene/endOfEventAction refresh
+/vis/viewer/set/autoRefresh true

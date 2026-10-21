@@ -20,6 +20,7 @@ models/<模型>/
   ResearchNote/note.pdf   導出、結果、検算の記録
   figs/                   ノートの図
 models/backup_20261009/   旧環境から退避した自作の FeynRules・FeynArts の模型（README.md）
+simulation/<流れ>/         模型（.fr）から検出器の模擬と表示までの一連の流れ（FeynRules → MG5 → Pythia 8 → Geant4 → Qt）と、その検算
 ```
 
 ## 環境
@@ -56,6 +57,12 @@ models/backup_20261009/   旧環境から退避した自作の FeynRules・FeynA
 | `sm_nlo` | 標準模型の NLO の物理量：実の放射を含む崩壊幅、ρ パラメータ、Z 極、m_W | [note.pdf](models/sm_nlo/ResearchNote/note.pdf) |
 
 どのノートも、おおむね「目的と問い」「設定」「結果」「検算の計画」「検算」「議論と今後」の順に書き、導出は付録に置く。
+
+## シミュレーションの流れ
+
+| 流れ | 内容 | 説明 |
+|---|---|---|
+| `stable_lepton` | SM + 安定なベクトル的荷電レプトン（500 GeV）：pp → lv⁺lv⁻ を Pythia 8 と簡略化した円筒の検出器（Geant4）に通し、Qt で表示する。Si のエネルギー損失、飛跡の曲率、飛行時間と質量を自前の計算と照合する | [README.md](simulation/stable_lepton/README.md) |
 
 ## 使い方
 

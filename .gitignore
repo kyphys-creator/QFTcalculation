@@ -35,3 +35,6 @@ models/sm_pp/Src/work/
 models/sm_ckm/Src/generated/SM_CKM_CTms.nlo
 # MadGraph's crash logs
 MG5_debug
+# the outputs of the simulation workflows (simulation/*/run_workflow.sh, run_view.sh): UFO, MG5 process and HepMC
+# events, the Geant4 build and its ROOT file
+simulation/*/out/

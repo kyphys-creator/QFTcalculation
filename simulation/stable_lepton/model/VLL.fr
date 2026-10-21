@@ -1,0 +1,29 @@
+(* VLL.fr: a vector-like charged lepton LV, an SU(2) singlet with hypercharge -1 in both chiralities (the quantum numbers
+   of e_R), loaded after FeynRules' SM.fr:
+     LoadModel["SM.fr", "VLL.fr"]
+     L_LV = LVbar (i gamma^mu D_mu - MLV) LV,   D_mu = d_mu - i g1 Y B_mu,  Y = -1.
+   No Yukawa coupling to the SM leptons and no mixing, so LV is stable (its own lepton number): pair-produced through
+   the photon and the Z only, it crosses the detector as a heavy, slow charged particle.  Its photon and Z vertices are
+   the right-handed electron's, in both chiralities (checked in generate_vll.wl).  SM.fr itself is unchanged. *)
+
+M$ModelName = "SM_VLL";
+M$Information = {Authors -> {"QFTcalculation"}, Version -> "1.0", Date -> "2026-10-20"};
+
+M$ClassesDescription = {
+  F[100] == {
+    ClassName        -> LV,
+    SelfConjugate    -> False,
+    QuantumNumbers   -> {Y -> -1, Q -> -1},
+    Mass             -> {MLV, 500.},
+    Width            -> 0,
+    PropagatorLabel  -> "LV",
+    PropagatorType   -> Straight,
+    PropagatorArrow  -> Forward,
+    PDG              -> 9000011,
+    ParticleName     -> "lv-",
+    AntiParticleName -> "lv+",
+    FullName         -> "vector-like lepton"
+  }
+};
+
+LLV := I LVbar.Ga[mu].DC[LV, mu] - MLV LVbar.LV;
