@@ -53,7 +53,7 @@ Geant4 を使うので、どのスクリプトも `~/hep/opt/geant4env.sh` を�
 simulation/stable_lepton/run_workflow.sh
 ```
 
-全段を実行する（4000 事象、約 15 分）。`run_workflow.sh 1000` で事象数を変え、`--reuse` でできているもの（UFO、事象、Geant4 の出力）を使い回す。出力は `out/` に書かれ、git には入らない。
+全段を実行する（4000 事象、約 7 分。うち Geant4 が 4 スレッドで約 5 分）。`run_workflow.sh 1000` で事象数を変え、`--reuse` でできているもの（UFO、事象、Geant4 の出力）を使い回す。出力は `out/` に書かれ、git には入らない。
 
 ```bash
 simulation/stable_lepton/run_view.sh
@@ -105,5 +105,5 @@ Qt の出力欄には、事象ごとに lv± の運動量、β、飛跡の終わ
 - **表示は、窓を開く前に画面の外で確かめる。** `run_view.sh --check` は窓を開かず、同じ視点を `TSG_OFFSCREEN` で `out/view/check.png` に描く。この描画器は `DrawView` のときにしかファイルを書かないので、事象のあとに `/vis/viewer/rebuild` を置く。表示では 1 GeV を超える飛跡と lv± の軌跡だけを保存する（全部を保存して描くときに隠すと、シャワーの 10⁵ 本の軌跡がメモリに残る）。バッチの実行と表示は同時に動かさない。
 - **Pythia の崩壊の設定。** Pythia の既定では K⁰_S や Λ も崩壊させるので、ブーストした崩壊点が検出器の外（> 7 m）になり、その娘が一次粒子として世界の外に置かれて Geant4 が `G4SteppingManager::SetInitialStep` で落ちた。cτ < 10 mm の粒子だけを崩壊させるようにした（生成点は最も遠くて r = 8 cm）。MG5 の `set` は既定の Pythia のカードにない設定（`ParticleDecays:limitTau0` など）を受け付けないので、`Cards/pythia8_card.dat` に書き足してから `launch` する。
 - **Geant4 11.4.3 の磁場の後始末。** `G4FieldManager` を `G4AutoDelete::Register` に渡すと、終了時に二重に解放されて落ちる（`G4FieldManagerStore` が自分で消す）。磁場そのものだけを渡す。
-- **新粒子の電磁過程。** Geant4 の標準の電磁物理の builder は、列挙した粒子にしか過程を付けない。lv± には `G4hMultipleScattering` と `G4hIonisation` を自分で付けた。`G4hIonisation` は、スピン 1/2 の粒子には陽子（負電荷なら反陽子）の表を、運動エネルギーを質量比で縮めて使う。2 MeV × M/m_p ≈ 1 GeV より下は Bragg（ICRU73）、上は Bethe–Bloch である。
+- **新粒子の電磁過程。** Geant4 の標準の電磁物理の builder は、列挙した粒子にしか過程を付けない。lv± には `G4hMultipleScattering` と `G4hIonisation` を自分で付けた。`G4hIonisation` は、スピン 1/2 の粒子には陽子（負電荷なら反陽子）の表を、運動エネルギーを質量比で縮めて使う。2 MeV × M/m_p ≈ 1.07 GeV より下は Bragg（負の電荷は ICRU73QO）、上は Bethe–Bloch の模型である。
 - **FeynRules の頂点の照合。** FeynRules の `TensDot[Ga[_], ProjM][_, _]` は、それ自身にパターンとして当たらない。記号 `TensDot` を別の記号に置き換えてから照合する。

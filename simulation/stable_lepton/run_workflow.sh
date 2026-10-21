@@ -11,7 +11,7 @@
 #      tracker, the time of flight to the muon stations, and the mass of lv from both, against own calculations
 # Usage: ./run_workflow.sh [N events, default 4000] [--reuse]
 #   --reuse: keep what exists (the UFO, the events, the Geant4 run)
-# About 10 minutes for 4000 events.  Output in ./out; the check's figure in figs/.  run_view.sh shows the events in Qt.
+# About 7 minutes for 4000 events (Geant4 about 5 with 4 threads).  Output in ./out; the check's figure in figs/.  run_view.sh shows the events in Qt.
 cd "$(dirname "$0")"
 HERE=$(pwd)
 N=4000; REUSE=0
