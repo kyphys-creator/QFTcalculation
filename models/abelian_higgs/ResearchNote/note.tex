@@ -45,7 +45,7 @@
 \maketitle
 
 \begin{abstract}
-スピノル QED と標準模型のノート~\cite{qednote,smnote} に続き、自発的に破れたゲージ理論の最も簡単な模型として、$U(1)$ のゲージ場 $A_\mu$ と電荷1の複素スカラー $\Phi$ からなるアーベル・ヒッグス模型を $d=4$ で調べる。一般の $R_\xi$ ゲージで Goldstone ボソン $G$ とゴーストを残し、紫外発散を次元正則化と $\MSbar$ で処理し、タドポールは打ち消さずに図として含める（Fleischer--Jegerlehner（FJ）の処方~\cite{fj81}）。$\MSbar$ のパラメータは破れていないラグランジアンの $e$、$\lambda$、$m^2$ で、真空期待値は $v=\sqrt{m^2/\lambda}$、$\MSbar$ の質量は $M_A=ev$、$M_h^2=2m^2$ である。本ノートではまず、Feynman 則（10個の頂点のクラス）、BRST 変換と Slavnov--Taylor 恒等式、べき数え上げ、1ループのタドポールと2点関数、$\MSbar$ の対抗項、繰り込み群、極質量、木の振幅を手で求めた。標準模型と違い、2点関数はすべて $D$ 次元で数行の閉じた式になり、ゲージ依存の消え方を式の上で追える。タドポールを付けた図を含めると、(i) ゲージ場の横波の自己エネルギー $\Sigma_T$ は、すべての運動量で $\xi$ によらない（$A$--$h$ のループの $\xi$ の部分は $h$--$G$ のループと打ち消し、$G$ のシーガルの $A_0(\xi M_A^2)$ はタドポールと打ち消す）。(ii) ヒッグスの自己エネルギーの $\xi$ 依存は $(p^2-M_h^2)[A_0(\xi M_A^2)-\frac12(p^2+M_h^2)B_0(p^2;\xi M_A^2,\xi M_A^2)]/(Kv^2)$ だけで、質量殻上で消える。(iii) 縦波、混合、Goldstone の2点関数は、BRST 不変性から導いた $p^2\Sigma_L-2M_Ap^2\Sigma^{AG}-M_A^2\Sigma^{GG}=0$ を $D$ 次元で厳密に満たす。タドポールを除くと右辺は $-M_A^2T/v$ になり、$\Sigma^{GG}(0)=0$（Goldstone の定理）もタドポールを含めて初めて成り立つ。対抗項は $\delta Z_A=-\frac{e^2}{3K}\DUV$、$\delta Z_\Phi=(3-\xi)\frac{e^2}K\DUV$、$\delta_{m^2}=\frac{4\lambda-3e^2}K\DUV$、$\delta_\lambda=\frac{10\lambda-6e^2+3e^4/\lambda}K\DUV$（$K=(4\pi)^2$）で、FJ では裸の真空期待値を裸の木のポテンシャルの最小点にとるので、これらだけで $A$、$h$、$G$ の2点関数がすべて有限になる。$\beta_e=e^3/(3K)$、$\beta_\lambda=(20\lambda^2-12e^2\lambda+6e^4)/K$、$\beta_{m^2}=m^2(8\lambda-6e^2)/K$ で、$\MSbar$ の質量の走りにはタドポールから $1/\lambda$ の項が入る。基準点（$e=\frac12$、$M_A=\mu=1$、$M_h=\frac52$）の1ループの極質量は $M_{h,\mathrm p}=2.559100$、$M_{A,\mathrm p}=0.993696$ で、$\xi=0,\frac12,1,3$ で同じ値になり、$\im\Sigma^H(M_h^2)/M_h$ は木の $\Gamma(h\to AA)=0.0155549$ と一致する。木のレベルでは、縦波の $AA\to AA$ の振幅の閉じた式を求め、高エネルギーで $GG\to GG$ の $-6\lambda$ に $M_A^2/E^2$ の速さで近づくこと（等価定理）を確かめた。検算と応用（有効ポテンシャルのゲージ依存と Nielsen 恒等式、Coleman--Weinberg の機構、摂動のユニタリー性、有限温度の相転移、Abrikosov--Nielsen--Olesen の渦糸）の十一の手順を定め、その最初の手順として FeynRules の模型ファイルを作った。10個の頂点のクラスはすべて手計算の表と記号として一致し（わざと3か所を誤らせた表では3個の差が出た）、MadGraph 3.8.1 の6個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。導出は付録に載せる。
+スピノル QED と標準模型のノート~\cite{qednote,smnote} に続き、自発的に破れたゲージ理論の最も簡単な模型として、$U(1)$ のゲージ場 $A_\mu$ と電荷1の複素スカラー $\Phi$ からなるアーベル・ヒッグス模型を $d=4$ で調べる。一般の $R_\xi$ ゲージで Goldstone ボソン $G$ とゴーストを残し、紫外発散を次元正則化と $\MSbar$ で処理し、タドポールは打ち消さずに図として含める（Fleischer--Jegerlehner（FJ）の処方~\cite{fj81}）。$\MSbar$ のパラメータは破れていないラグランジアンの $e$、$\lambda$、$m^2$ で、真空期待値は $v=\sqrt{m^2/\lambda}$、$\MSbar$ の質量は $M_A=ev$、$M_h^2=2m^2$ である。本ノートではまず、Feynman 則（10個の頂点のクラス）、BRST 変換と Slavnov--Taylor 恒等式、べき数え上げ、1ループのタドポールと2点関数、$\MSbar$ の対抗項、繰り込み群、極質量、木の振幅を手で求めた。標準模型と違い、2点関数はすべて $D$ 次元で数行の閉じた式になり、ゲージ依存の消え方を式の上で追える。タドポールを付けた図を含めると、(i) ゲージ場の横波の自己エネルギー $\Sigma_T$ は、すべての運動量で $\xi$ によらない（$A$--$h$ のループの $\xi$ の部分は $h$--$G$ のループと打ち消し、$G$ のシーガルの $A_0(\xi M_A^2)$ はタドポールと打ち消す）。(ii) ヒッグスの自己エネルギーの $\xi$ 依存は $(p^2-M_h^2)[A_0(\xi M_A^2)-\frac12(p^2+M_h^2)B_0(p^2;\xi M_A^2,\xi M_A^2)]/(Kv^2)$ だけで、質量殻上で消える。(iii) 縦波、混合、Goldstone の2点関数は、BRST 不変性から導いた $p^2\Sigma_L-2M_Ap^2\Sigma^{AG}-M_A^2\Sigma^{GG}=0$ を $D$ 次元で厳密に満たす。タドポールを除くと右辺は $-M_A^2T/v$ になり、$\Sigma^{GG}(0)=0$（Goldstone の定理）もタドポールを含めて初めて成り立つ。対抗項は $\delta Z_A=-\frac{e^2}{3K}\DUV$、$\delta Z_\Phi=(3-\xi)\frac{e^2}K\DUV$、$\delta_{m^2}=\frac{4\lambda-3e^2}K\DUV$、$\delta_\lambda=\frac{10\lambda-6e^2+3e^4/\lambda}K\DUV$（$K=(4\pi)^2$）で、FJ では裸の真空期待値を裸の木のポテンシャルの最小点にとるので、これらだけで $A$、$h$、$G$ の2点関数がすべて有限になる。$\beta_e=e^3/(3K)$、$\beta_\lambda=(20\lambda^2-12e^2\lambda+6e^4)/K$、$\beta_{m^2}=m^2(8\lambda-6e^2)/K$ で、$\MSbar$ の質量の走りにはタドポールから $1/\lambda$ の項が入る。基準点（$e=\frac12$、$M_A=\mu=1$、$M_h=\frac52$）の1ループの極質量は $M_{h,\mathrm p}=2.559100$、$M_{A,\mathrm p}=0.993696$ で、$\xi=0,\frac12,1,3$ で同じ値になり、$\im\Sigma^H(M_h^2)/M_h$ は木の $\Gamma(h\to AA)=0.0155549$ と一致する。木のレベルでは、縦波の $AA\to AA$ の振幅の閉じた式を求め、高エネルギーで $GG\to GG$ の $-6\lambda$ に $M_A^2/E^2$ の速さで近づくこと（等価定理）を確かめた。検算と応用（有効ポテンシャルのゲージ依存と Nielsen 恒等式、Coleman--Weinberg の機構、摂動のユニタリー性、有限温度の相転移、Abrikosov--Nielsen--Olesen の渦糸）の十一の手順を定め、その最初の手順として FeynRules の模型ファイルを作った。10個の頂点のクラスはすべて手計算の表と記号として一致し（わざと3か所を誤らせた表では3個の差が出た）、MadGraph 3.8.1 の6個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。手順 (2) では、本ノートの FeynArts の模型から FeynCalc で作った $h\to AA$、$AA\to AA$、$AA\to hh$、$hh\to hh$、$GG\to GG$、$GG\to hh$ の振幅が手計算の式と記号として一致し、$AA\to hh$ の6個の $R_\xi$ の図の和は $\xi$ によらなかった（ゲージ場の交換の $\xi$ の部分は $G$ の交換とチャンネルごとに打ち消す）。陽な偏極ベクトルの数値は FeynCalc の厳密値と $10^{-15}$ で一致し、等価定理による縦波の振幅と Goldstone ボソンの振幅の差は $M_A^2/E^2$ で小さくなった（$AA\to hh$ では $-1$ 倍）。MadGraph の $\Gamma(h\to AA)$ は全桁、standalone の行列要素は両方のゲージで $2\times10^{-15}$ 以内（高エネルギーでは縦波の打ち消しの桁落ちまで）、断面積は統計誤差の1倍以内で一致した。MadGraph 3.8.1 は光子のない模型で $t$ チャンネルの $h$ を含む過程の MadEvent の出力に失敗し、部分過程をまとめない設定で避けた。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -411,6 +411,28 @@ M_{h,\mathrm p}=2.559100,\quad M_{A,\mathrm p}=0.993696
 \end{equation}
 となる。$e^2$ の項も $s+t+u$ と偏極ベクトルの $M_A^2$ の補正の和で打ち消し、極限は Goldstone ボソンの散乱の値に等しい（等価定理~\cite{clt74,lqt77}）。基準点で $\theta=0.7$ とすると、二つの振幅は $E=3$ で $-3.1666$ と $-3.7573$、$E=100$ で $-4.684242$ と $-4.685394$ で、差は $M_A^2/E^2$ に比例して小さくなり、$-6\lambda=-4.6875$ に近づく。式~\eqref{eq:MLL} は、偏極ベクトルを陽に作った式~\eqref{eq:Maa} の数値と相対 $10^{-15}$ で一致した。
 
+\paragraph{$AA\to hh$、$hh\to hh$。}$A(k_1,\varepsilon_1)A(k_2,\varepsilon_2)\to h(p_1)h(p_2)$（$t=(k_1-p_1)^2$、$u=(k_1-p_2)^2$）は、ユニタリーゲージでは接触項、$s$ チャンネルの $h$、$t$、$u$ チャンネルの $A$ の4個の図からなり
+\begin{equation}
+\begin{aligned}
+\mathcal M(AA\to hh)={}&2e^2(\varepsilon_1\cdot\varepsilon_2)\Bigl(1+\frac{3M_h^2}{s-M_h^2}\Bigr)
++\frac{4e^2[M_A^2\,\varepsilon_1\cdot\varepsilon_2+(\varepsilon_1\cdot p_1)(\varepsilon_2\cdot p_2)]}{t-M_A^2}\\
+&+\frac{4e^2[M_A^2\,\varepsilon_1\cdot\varepsilon_2+(\varepsilon_1\cdot p_2)(\varepsilon_2\cdot p_1)]}{u-M_A^2}
+\end{aligned}
+\label{eq:Mahh}
+\end{equation}
+である（\ref{app:tree}）。$R_\xi$ ゲージでは $t$、$u$ チャンネルに $G$ の交換が加わって6個の図になるが、ゲージ場の交換の $X$ の部分 $-4e^2(\varepsilon_1\cdot p_1)(\varepsilon_2\cdot p_2)/(t-\xi M_A^2)$ と $G$ の交換がチャンネルごとに打ち消し、式~\eqref{eq:Mahh} だけが残る。$hh\to hh$ は
+\begin{equation}
+\mathcal M(hh\to hh)=-6\lambda-\frac{9M_h^4}{v^2}\Bigl[\frac1{s-M_h^2}+\frac1{t-M_h^2}+\frac1{u-M_h^2}\Bigr]
+\label{eq:Mhh}
+\end{equation}
+である。縦波の $AA\to hh$ も各項が $s/M_A^2$ に比例して増え、和で打ち消して、高エネルギーで Landau ゲージ（$G$ の質量0）の
+\begin{equation}
+\mathcal M(GG\to hh)=-2\lambda-\frac{3M_h^4}{v^2(s-M_h^2)}-\frac{M_h^4}{v^2}\Bigl(\frac1t+\frac1u\Bigr)
+-\frac{e^2(s-u+M_h^4/t)}{t-M_A^2}-\frac{e^2(s-t+M_h^4/u)}{u-M_A^2}
+\label{eq:Mgghh}
+\end{equation}
+の $-1$ 倍に近づく。$-1$ は、縦波の偏極 $\varepsilon_L\approx k/M_A$ と Goldstone ボソンの間の位相 $i$ が2本の外線に付くことによる（$AA\to AA$ では $i^4=1$）。$s\to\infty$ では $\mathcal M(GG\to hh)\to-2\lambda+e^2[(3+\cos\theta)/(1-\cos\theta)+(3-\cos\theta)/(1+\cos\theta)]$ で、$AA\to AA$ と違い $t$、$u$ チャンネルのゲージ場の交換から $e^2$ の項が残る。
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、式~\eqref{eq:T}、\eqref{eq:se} と\ref{app:se} の $\Sigma_L$、$\Sigma^{AG}$ を、手で書いた Feynman 則から FeynCalc で $D$ 次元で記号として確かめた（図ごとの値も）。恒等式~\eqref{eq:stid}、$\Sigma^{GG}(0)=0$、$\Sigma_T$ が $\xi$ によらないこと、$\Sigma^H$ の $\xi$ 依存の形、式~\eqref{eq:uv} の極、対抗項~\eqref{eq:ct} で五つの2点関数が有限になること、極質量~\eqref{eq:polenum}（$\xi=0,\frac12,1,3$）と光学定理~\eqref{eq:optical} も同じ計算で確かめた。式~\eqref{eq:MLL} は偏極ベクトルを陽に作った数値で確かめた。正式な検算は手順 (2)〜(5) で行う。
@@ -424,7 +446,7 @@ M_{h,\mathrm p}=2.559100,\quad M_{A,\mathrm p}=0.993696
 \textbf{量} & \textbf{手計算} & \textbf{FeynCalc（+ FeynArts）} & \textbf{Package-X} & \textbf{LoopTools、COLLIER} & \textbf{MadGraph} \\
 \midrule
 Feynman 則 & \ref{app:rules} & FeynRules の頂点を表~\ref{tab:rules} と記号として比べる & — & — & UFO と図の数（両ゲージ） \\
-木の振幅 \eqref{eq:width}、\eqref{eq:Maa}、\eqref{eq:MLL} & \ref{app:tree} & 記号として一致。偏極ベクトルを陽に作った数値も & — & — & 幅と断面積（両ゲージ） \\
+木の振幅 \eqref{eq:width}、\eqref{eq:Maa}、\eqref{eq:MLL}、\eqref{eq:Mahh} & \ref{app:tree} & 記号として一致。偏極ベクトルを陽に作った数値も & — & — & 幅と断面積（両ゲージ） \\
 タドポールと2点関数 \eqref{eq:T}、\eqref{eq:se}、恒等式 \eqref{eq:stid} & \ref{app:brst}、\ref{app:se} & 本ノートの FeynArts の模型で一般の $\xi$。図ごとにも & 解析式 & 数値 & — \\
 対抗項 \eqref{eq:ct}、3点・4点の関数の極 & \ref{app:ren}、後で & 一般の $\xi$ で極を抽出。$AAAA$ が有限 & — & — & NLOCT の対抗項 \\
 極質量 \eqref{eq:pole}、光学定理、NLO の $\Gamma(h\to AA)$ & \ref{app:pole}、後で & ゲージによらないこと（FormCalc でも） & 数値 & 数値 & MadLoop \\
@@ -444,7 +466,7 @@ Coleman--Weinberg の機構 & 後で & — & — & — & — \\
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}、手順 (2) は \texttt{run\_tree\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/AbelianHiggs.fr} を作った。ラグランジアンは式~\eqref{eq:L} からゲージ固定の項（頂点を持たない）と対抗項を除き、ゴーストの項 $\mathcal L_{\mathrm{FP}}$ を加えたものである。ゲージ群は $U(1)$ で、$\Phi$ に電荷 $Q_X=1$ を与えて共変微分で結合を書き、$\Phi=(v+h+iG)/\sqrt2$ を定義として与えた。外部パラメータは $e$、$M_A$、$M_h$、$\xi$ で、$v=M_A/e$、$\lambda=M_h^2/(2v^2)$、$m^2=\lambda v^2$ を内部パラメータとした（\ref{app:details}）。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通った。頂点は10個のクラスで、すべてが表~\ref{tab:rules} と記号として一致した（差がすべて0）。比べる手続きが誤りを見逃さないことは、表の3か所（$AGh$ の符号、$GGh$ の因子2、ゴーストの頂点の $\xi$）をわざと誤らせた写しで、ちょうど3個の差が出ることで確かめた。FeynArts の模型では、ゴーストと $h$ の結合が $-i\,\texttt{EL}\,\texttt{MA}\,\texttt{GaugeXi[A]}$ になるように \texttt{xiA} を \texttt{GaugeXi[A]} に置き換えた。伝播関数は FeynArts の一般の模型の $R_\xi$ の形で、$G$ とゴーストの質量は $\sqrt{\xi}M_A$ である（\texttt{GaugeXi[S[2]]}$=$\texttt{GaugeXi[U[1]]}$=$\texttt{GaugeXi[A]}）。FeynRules は電荷の単位 \texttt{ee} を FeynArts の \texttt{EL} に置き換えた。UFO は Feynman ゲージ（$\xi=1$）で、\texttt{gauge = [0, 1]} を宣言する。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の図を両方のゲージで生成し、すべて手で数えた数と一致した。スクリプトは \texttt{generate\_AbelianHiggs.wl}（FeynRules）と \texttt{model\_mg5.mg5}（MadGraph）である。
 
@@ -467,12 +489,56 @@ $AA\to AAh$ & 21 / 33 & $AA\to AA$ の3個の図の $h$ の線から（3）、�
 \end{tabularx}
 \end{table}
 
+\paragraph{手順 (2)：木の振幅。}本ノートの FeynArts の模型から FeynCalc で、$h\to AA$、$AA\to AA$、$AA\to hh$、$hh\to hh$ と、Landau ゲージの $GG\to GG$、$GG\to hh$ の振幅を一般の $R_\xi$ ゲージで作り、式~\eqref{eq:width}、\eqref{eq:Maa}、\eqref{eq:Mahh}、\eqref{eq:Mhh}、\eqref{eq:et}、\eqref{eq:Mgghh} と比べた（\texttt{tree\_feyncalc.wl}、表~\ref{tab:tree}）。差はすべて記号として0で、$AA\to hh$ の6個の図の和は、振幅でも偏極の和をとった $\sum|\mathcal M|^2$ でも、$\xi$ で微分すると0になった。次に、ヘリシティの偏極ベクトルを陽に作り（\texttt{tree\_numeric.py}。完全性 $\sum_\lambda\varepsilon^\mu\varepsilon^{\nu*}=-g^{\mu\nu}+k^\mu k^\nu/M_A^2$ は $2\times10^{-15}$ で成り立つ）、$AA\to AA$ の81個、$AA\to hh$ の9個のヘリシティの和を、FeynCalc が偏極の和で厳密に求めた値と10点で比べた。$\sqrt s\le20$ では相対 $3\times10^{-16}$〜$5\times10^{-15}$ で一致した。$\sqrt s=200$、$2000$ では差が $9\times10^{-14}$、$1.3\times10^{-11}$ に増えるが、これは縦波の各図が $s/M_A^2$ に比例して増えて和で打ち消すための倍精度の桁落ちで、大きさは $s/(4M_A^2)\times10^{-16}$ 程度である。$AA\to hh$ の6個の図を陽に組むと、$\xi=0,\frac12,1,3,10$ で式~\eqref{eq:Mahh} と $1.5\times10^{-13}$ で一致し、ゲージ場の交換の $X$ の部分と $G$ の交換の和はチャンネルごとに $3\times10^{-14}$ 以下（振幅は $O(1)$）だった。等価定理は表~\ref{tab:et} の通りで、縦波の振幅と Goldstone ボソンの振幅の差は $E$ が10倍になるごとに100分の1になり、$-6\lambda$ と $0.318452$（$\cos\theta=0.4$ の $GG\to hh$ の極限）に近づいた。
+
+MadGraph 3.8.1 では三つを比べた（\texttt{tree\_mg5.mg5}、\texttt{compare\_tree\_mg5.py}）。\texttt{compute\_widths} の $\Gamma(h\to AA)=0.01555490889124696$ は式~\eqref{eq:width} と全桁一致した。standalone の行列要素を、ユニタリーゲージと Feynman ゲージ（$G$ の交換を含む）で上の点に評価すると（\texttt{tree\_me\_points.f}）、$\sqrt s\le20$ では両方のゲージで厳密値と $2\times10^{-15}$ 以内で一致した。$\sqrt s=2000$ では $AA\to AA$ が $7.6\times10^{-11}$、$AA\to hh$ がユニタリーゲージで $2.6\times10^{-11}$、Feynman ゲージで $6.7\times10^{-12}$ ずれ、陽な偏極ベクトルの数値と同じ大きさの桁落ちだった。$AA\to AA$、$AA\to hh$、$hh\to hh$ の $\sqrt s=6$、$20$ の断面積（$10^4$ 事象）は、$\cos\theta$ の数値積分と統計誤差の $-0.93$〜$+0.58$ 倍で一致した。この過程で MadGraph の問題を一つ見つけた。MadEvent の出力（断面積）で部分過程をまとめると、MadGraph 3.8.1 は $t$ チャンネルの PDG 23、25 の線の質量と幅を光子（PDG 22）の粒子から取る（\texttt{group\_subprocs.py} の \texttt{vertex\_id\_from\_vertex}）。光子のない本ノートの模型ではその粒子がなく、$t$ チャンネルに $h$ のある過程の出力が \texttt{AttributeError} で止まった。\texttt{set group\_subprocesses False} で避けた（standalone の出力と \texttt{compute\_widths} は影響を受けない）。細部は\ref{app:details} にある。
+
+\begin{table}[tbp]
+\centering\small
+\caption{手順 (2) の比較。「厳密値」は FeynCalc が偏極の和で求めた値。相対差は（比べたもの）/（基準）$-1$、断面積は（MadGraph $-$ 数値積分）/ 統計誤差。}
+\label{tab:tree}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{4.6cm}}
+\toprule
+量 & 比べたもの & 結果 \\
+\midrule
+$h\to AA$ の $\sum|\mathcal M|^2$ & FeynCalc と式~\eqref{eq:width} & 記号として差0 \\
+$AA\to AA$ の振幅 & FeynCalc（3個の図）と式~\eqref{eq:Maa} & 差0、$\xi$ によらない \\
+$AA\to hh$ の振幅 & FeynCalc（$R_\xi$ の6個の図）と式~\eqref{eq:Mahh} & 差0、$\partial_\xi=0$ \\
+$hh\to hh$、$GG\to GG$、$GG\to hh$ & FeynCalc と式~\eqref{eq:Mhh}、\eqref{eq:et}、\eqref{eq:Mgghh} & 差0 \\
+$\sum|\mathcal M|^2$（10点） & 陽な偏極ベクトルと厳密値 & $\sqrt s\le20$ で $5\times10^{-15}$ 以内、$\sqrt s=2000$ で $1.3\times10^{-11}$ \\
+$AA\to hh$ の $R_\xi$ の図 & $\xi=0,\frac12,1,3,10$ と式~\eqref{eq:Mahh} & $1.5\times10^{-13}$ \\
+$\Gamma(h\to AA)$ & 陽なヘリシティの和、\texttt{compute\_widths} と式~\eqref{eq:width} & $2\times10^{-16}$、0 \\
+行列要素（12点） & MadGraph の両方のゲージと厳密値 & $\sqrt s\le20$ で $2\times10^{-15}$ 以内、$\sqrt s=2000$ で $7.6\times10^{-11}$ 以下 \\
+断面積（6個） & MadGraph と $\cos\theta$ の数値積分 & $-0.93$〜$+0.58$ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\caption{等価定理（$\cos\theta=0.4$、基準点）。縦波の振幅と Landau ゲージの Goldstone ボソンの振幅。$AA\to hh$ は $GG\to hh$ の $-1$ 倍に近づくので和を示す。}
+\label{tab:et}
+\begin{tabular}{rrrrrrr}
+\toprule
+$E$ & $\mathcal M_{LLLL}$ & $\mathcal M(GG\to GG)$ & 差 & $\mathcal M(A_LA_L\to hh)$ & $\mathcal M(GG\to hh)$ & 和 \\
+\midrule
+3 & $-3.79615$ & $-4.13248$ & $3.4\times10^{-1}$ & $-1.71860$ & $1.27866$ & $-4.4\times10^{-1}$ \\
+10 & $-4.57341$ & $-4.60083$ & $2.7\times10^{-2}$ & $-0.40465$ & $0.38706$ & $-1.8\times10^{-2}$ \\
+100 & $-4.686313$ & $-4.686582$ & $2.7\times10^{-4}$ & $-0.319284$ & $0.319120$ & $-1.6\times10^{-4}$ \\
+1000 & $-4.6874881$ & $-4.6874908$ & $2.7\times10^{-6}$ & $-0.3184607$ & $0.3184591$ & $-1.6\times10^{-6}$ \\
+$\infty$ & $-4.6875$ & $-4.6875$ & & & $0.318452$ & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手計算で分かったこと。}対称性が破れたことで、スピノル QED のノートになかった構造が三つ現れた。一つ目はタドポールで、FJ の処方では真空期待値をループで補正しない代わりに、タドポールの付いた図がすべての関数に入る。Slavnov--Taylor 恒等式~\eqref{eq:stid}、Goldstone の定理 $\Sigma^{GG}(0)=0$、極質量のゲージ不変性は、どれもタドポールの付いた図を含めて初めて成り立つ。二つ目はゲージパラメータの入り方で、ゲージ場の伝播関数を質量 $M_A$ の部分と質量 $\sqrt\xi M_A$ の部分に分けると、$\xi$ は $X$、$G$、ゴーストの質量にしか現れない。その結果、$\Sigma_T$ はすべての運動量で $\xi$ によらず、$\Sigma^H$ の $\xi$ 依存は $(p^2-M_h^2)$ に比例する一つの項にまとまる。これは、ゲージ依存が運動方程式に比例する形でしか現れないという Nielsen 恒等式~\cite{nielsen75} の、2点関数での現れと考えられる（手順 (7) で確かめる）。三つ目は真空期待値の繰り込みで、FJ の処方では $v_0=\sqrt{m_0^2/\lambda_0}$ が場の繰り込みと違う割合で繰り込まれ、$\MSbar$ の質量 $M_A$ の走りにタドポールから $-6e^4/\lambda$ の項が入る。対抗項は対称な $Z_A$、$Z_\Phi$、$\delta_{m^2}$、$\delta_\lambda$ だけで、ゲージ固定の項を繰り込まれた場で書いても、$A$、$h$、$G$ の2点関数はすべて有限になった。
 
-\paragraph{今後。}次は手順 (2) で、木の振幅を FeynCalc と陽な偏極ベクトルで確かめ、MadGraph の幅と断面積を両方のゲージで比べる。その後、手順 (3) で本ノートの FeynArts の模型から2点関数を求め、式~\eqref{eq:se} と図ごとに比べる。
+\paragraph{手順 (2) で分かったこと。}木のレベルでも、ゲージ依存の打ち消しはゲージ場の伝播関数の $X$ の部分と $G$ の間で起こり、$AA\to hh$ ではチャンネルごとに完全に打ち消した。縦波の振幅は各図が $s/M_A^2$ に比例して増え、和で打ち消して Goldstone ボソンの振幅に近づく（等価定理。外線2本では位相 $i^2=-1$ が付く）。この打ち消しは倍精度の計算に $s/(4M_A^2)$ 倍の桁落ちを生み、陽な偏極ベクトルの数値と MadGraph の行列要素に同じ大きさで現れた。ツールについては、MadGraph 3.8.1 が光子を持たない模型で $t$ チャンネルの $h$ を含む過程の MadEvent の出力に失敗することが分かった（部分過程をまとめなければ動く）。
+
+\paragraph{今後。}次は手順 (3) で、本ノートの FeynArts の模型から1ループのタドポールと2点関数を一般の $\xi$ で求め、式~\eqref{eq:T}、\eqref{eq:se} と図ごとに比べ、恒等式~\eqref{eq:stid} を確かめる。有限部分は Package-X、LoopTools、COLLIER で比べる。
 
 \appendix
 
@@ -627,9 +693,20 @@ K\Sigma^{AG}={}&\frac{e^2}{M_Ap^2}\Bigl\{-\lK(p^2,M_A^2,M_h^2)B_0(p^2;M_A^2,M_h^
 \end{equation*}
 である。$s=4E^2$、$t=-2p^2(1-\cos\theta)$、$u=-2p^2(1+\cos\theta)$、$p^2=E^2-M_A^2$ から $p^2+E^2=\frac s2-M_A^2$、$p^2-E^2\cos\theta=-\frac t2-M_A^2\cos\theta$、$p^2+E^2\cos\theta=-\frac u2+M_A^2\cos\theta$ で、式~\eqref{eq:MLL} になる。高エネルギーの展開は $(x/2+a)^2/(x-M_h^2)=\frac x4+\frac{M_h^2}4+a+O(1/x)$ で、三つのチャンネルの和は $\frac14(s+t+u)+\frac34M_h^2+(-M_A^2+M_A^2\cos\theta-M_A^2\cos\theta)=\frac34M_h^2$ である。これに $-4e^2/M_A^2$ を掛けて $-3e^2M_h^2/M_A^2=-6\lambda$ を得る。$GG\to GG$ は接触項 $-6i\lambda$ と、$GGh$ の頂点 $-iM_h^2/v$ による $h$ の交換の和で、式~\eqref{eq:et} である。
 
+\paragraph{$AA\to hh$。}接触項は $2ie^2(\varepsilon_1\cdot\varepsilon_2)$、$s$ チャンネルは $(2ieM_A)(-6i\lambda v)\,i/(s-M_h^2)\,(\varepsilon_1\cdot\varepsilon_2)=i\cdot12eM_A\lambda v(\varepsilon_1\cdot\varepsilon_2)/(s-M_h^2)$ で、$12eM_A\lambda v=6e^2M_h^2$ である。$t$ チャンネルのゲージ場の交換（運動量 $q=k_1-p_1=p_2-k_2$、$\varepsilon_1\cdot q=-\varepsilon_1\cdot p_1$、$\varepsilon_2\cdot q=\varepsilon_2\cdot p_2$）は、伝播関数~\eqref{eq:propsplit} の $U$ の部分から
+\begin{equation*}
+(2ieM_A)^2\,\varepsilon_1^\mu\,\frac{-i}{t-M_A^2}\Bigl(g_{\mu\nu}-\frac{q_\mu q_\nu}{M_A^2}\Bigr)\varepsilon_2^\nu
+=i\,\frac{4e^2[M_A^2\,\varepsilon_1\cdot\varepsilon_2+(\varepsilon_1\cdot p_1)(\varepsilon_2\cdot p_2)]}{t-M_A^2}
+\end{equation*}
+を、$X$ の部分から $i\cdot4e^2(\varepsilon_1\cdot q)(\varepsilon_2\cdot q)/(t-\xi M_A^2)=-i\cdot4e^2(\varepsilon_1\cdot p_1)(\varepsilon_2\cdot p_2)/(t-\xi M_A^2)$ を与える。$G$ の交換では、頂点 $e(p_h-p_G)\cdot\varepsilon$ が $e\,\varepsilon_1\cdot(k_1-2p_1)=-2e\,\varepsilon_1\cdot p_1$ と $-2e\,\varepsilon_2\cdot p_2$ になり、伝播関数 $i/(t-\xi M_A^2)$ と合わせて $+i\cdot4e^2(\varepsilon_1\cdot p_1)(\varepsilon_2\cdot p_2)/(t-\xi M_A^2)$ で、$X$ の部分をちょうど打ち消す。$u$ チャンネルは $p_1\leftrightarrow p_2$ である。以上で式~\eqref{eq:Mahh} を得る。ユニタリーゲージ（$\xi\to\infty$）では $X$ と $G$ の図がどちらも0になる。
+
+\paragraph{$hh\to hh$、$GG\to hh$。}$hh\to hh$ は接触項 $-6i\lambda$ と、$hhh$ の頂点による $h$ の交換 $(-6i\lambda v)^2\,i/(x-M_h^2)=-i\cdot9M_h^4/(v^2(x-M_h^2))$（$x=s,t,u$）の和で、式~\eqref{eq:Mhh} である。$GG\to hh$（Landau ゲージ、$G$ の質量0）は、接触項 $-2i\lambda$、$s$ チャンネルの $h$（$(-2i\lambda v)(-6i\lambda v)i/(s-M_h^2)$）、$t$、$u$ チャンネルの $G$（$GGh$ の頂点2個で $(-2i\lambda v)^2i/t$）、$t$、$u$ チャンネルのゲージ場の和である。ゲージ場の交換は、$AGh$ の頂点が $-e(k_1+p_1)^\mu$、$-e(k_2+p_2)^\nu$ で、Landau ゲージの伝播関数 $-i(g_{\mu\nu}-q_\mu q_\nu/q^2)/(q^2-M_A^2)$ と、$(k_1+p_1)\cdot q=-M_h^2$、$(k_2+p_2)\cdot q=M_h^2$、$(k_1+p_1)\cdot(k_2+p_2)=s-u$ から $-e^2(s-u+M_h^4/t)/(t-M_A^2)$ になる。以上で式~\eqref{eq:Mgghh} を得る。$s\to\infty$（$t\to-s(1-\cos\theta)/2$）では $h$ と $G$ の交換は0になり、ゲージ場の交換は $-e^2(1+2s/t)\to e^2(3+\cos\theta)/(1-\cos\theta)$ になる。
+
 \section{検算の細部}\label{app:details}
 
 \paragraph{手順 (1) の模型ファイル。}パラメータの名前は、$e$ が \texttt{ee}（ブロック \texttt{AHINPUTS}）、$\xi$ が \texttt{xiA}（ブロック \texttt{GAUGE}、値1）、質量が \texttt{MA}、\texttt{MH} で、\texttt{vev}$=$\texttt{MA/ee}、\texttt{lam}$=$\texttt{MH\^{}2/(2 vev\^{}2)}、\texttt{muH2}$=$\texttt{lam vev\^{}2} を内部パラメータとした。基準点の値を入れてある（$h$ の幅 \texttt{WH} は式~\eqref{eq:width} の値 $0.0155549$）。MadGraph の結合の次数は、標準模型のノートと同じく $e$ を \texttt{QED}$=1$、$\lambda$ を \texttt{QED}$=2$ と数える（$\lambda=e^2M_h^2/(2M_A^2)$）。$U(1)$ の電荷は \texttt{Q} でなく \texttt{QX} とし、UFO ではすべての粒子の電荷を0にした（$h$、$G$ は $\Phi$ の実の成分で、決まった電荷を持たない）。MadGraph の粒子名は、ゲージ場が \texttt{zp}（PDG 32）、$h$ が \texttt{h}（PDG 25）、$G$ が \texttt{G0}（PDG 250）である。ゲージ場を \texttt{a} と呼ばないのは、MadGraph が光子として扱う（質量0の粒子の切断を当てる）のを避けるためである。\texttt{FeynmanGauge = True} は UFO に \texttt{gauge = [0, 1]} を宣言させるだけで、ラグランジアンはいつも $G$ とゴーストを含む。MadGraph はユニタリーゲージでは \texttt{Goldstone -> A} の付いた $G$ とゴーストを自分で除く。ゲージ固定の項は頂点を持たないので模型ファイルに書かない。そのため FeynRules の質量スペクトルのチェックは $G$ の質量項を見ないが、ゴーストの質量項 $\xi M_A^2\bar cc$ は含まれ、$\xi=1$ で \texttt{MA} と一致した。
+
+\paragraph{手順 (2) の細部。}偏極ベクトルは、運動量 $k=(E,|\boldsymbol k|\boldsymbol n)$、$\boldsymbol n=(\sin\vartheta\cos\varphi,\sin\vartheta\sin\varphi,\cos\vartheta)$ について $\varepsilon(\pm)=(0,\mp(\boldsymbol e_\vartheta\pm i\boldsymbol e_\varphi)/\sqrt2)$、$\varepsilon(0)=(|\boldsymbol k|,E\boldsymbol n)/M_A$ とし、出ていくゲージ場には複素共役を使った。FeynCalc の偏極の和は \texttt{DoPolarizationSums}（質量のあるベクトル場の $-g+kk/M_A^2$）で、厳密値は有理数の運動量（$\cos\theta$ を有理数にとる）で20桁求めた（\texttt{results/tree\_feyncalc\_points.csv}）。MadGraph の \texttt{SMATRIX} は始状態のヘリシティの平均と終状態の同種粒子の因子を含むので、$\sum|\mathcal M|^2$ を $18$（$AA\to AA$、$AA\to hh$）、$2$（$hh\to hh$）で割って比べた（行列要素のファイルの \texttt{IDEN}）。standalone の \texttt{param\_card.dat} の $h$ の幅は0にした（式は幅0）。断面積の計算では幅 $0.0155549$ のままにしたが、その影響は $s$ チャンネルで $(M_h\Gamma_h/(s-M_h^2))^2\le2\times10^{-6}$ で（$t$、$u$ チャンネルでは MadGraph が幅を0にする）、統計誤差より小さい。ビームは \texttt{lpp}$=0$ の固定のエネルギー（$\sqrt s/2$ ずつ）で、$zp$ と $h$ には既定の切断がかからない。
 
 \paragraph{図の数え方。}$AA\to AAh$ の図は、$AA\to AA$ の3個の図（$s$、$t$、$u$ の $h$）に外線の $h$ を付ける場所で数えた。$h$ の線から $hhh$ で出す図が3個、4本の外線の $A$ から $AAh$ で出す図が $4\times3=12$ 個、二つの $AAh$ の頂点を $AAhh$ に置き換える図が $2\times3=6$ 個で、合わせて21個である。Feynman ゲージでは、外線の $A$ から出す12個のそれぞれで内線の $A$ を $G$ に置き換えられる（$A\to Gh$ の $AGh$ の頂点と、$G$ ともう一つの外線の $A$ と内線の $h$ を結ぶ $AGh$ の頂点）ので、12個増えて33個である。ほかに $G$ を含む図はない（$AAG$ の頂点がなく、$AAGG$ の頂点を使うと頂点が一つ多くなる）。
 

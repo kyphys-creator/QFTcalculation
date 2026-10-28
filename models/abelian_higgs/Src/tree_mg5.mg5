@@ -1,0 +1,78 @@
+# tree_mg5.mg5 -- step (2) of the abelian Higgs note: tree-level width, standalone matrix elements and cross sections
+# from MadGraph 3.8.1 with the UFO of AbelianHiggs.fr (benchmark e = 1/2, MA = 1, MH = 5/2).
+# Run from Src/ by run_tree_check.sh (imports a copy of generated/AbelianHiggs_UFO in work/).
+#  - compute_widths h: Gamma(h -> zp zp), written to work/tree_widths.dat
+#  - standalone matrix elements (evaluated at fixed points with tree_me_points.f, h width set to 0 by
+#    run_tree_check.sh): zp zp > zp zp, zp zp > h h, h h > h h in unitary gauge, zp zp > zp zp, zp zp > h h in
+#    Feynman gauge (with G0 exchange)
+#  - cross sections with fixed-energy beams (lpp = 0) in the CM frame at sqrt(s) = 6 and 20, unitary gauge, in this
+#    order (compare_tree_mg5.py relies on it): zp zp > zp zp, zp zp > h h, h h > h h.  No cuts apply to zp and h.
+#  - group_subprocesses False: with grouping, MadGraph 3.8.1 crashes on a t-channel h in a model without a photon
+#    (group_subprocs.py, vertex_id_from_vertex, takes the mass and width of a t-channel PDG 23 or 25 line from
+#    model.get_particle(22), which is None here).
+set automatic_html_opening False
+set group_subprocesses False
+set gauge unitary
+import model ./work/AbelianHiggs_UFO
+compute_widths h --body_decay=2 --output=./work/tree_widths.dat
+generate zp zp > zp zp
+output standalone work/sa_aaaa_u -f
+generate zp zp > h h
+output standalone work/sa_aahh_u -f
+generate h h > h h
+output standalone work/sa_hhhh_u -f
+generate zp zp > zp zp
+output work/mg5_aaaa -f
+launch work/mg5_aaaa
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set use_syst False
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_aaaa
+0
+set ebeam1 10.0
+set ebeam2 10.0
+0
+generate zp zp > h h
+output work/mg5_aahh -f
+launch work/mg5_aahh
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set use_syst False
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_aahh
+0
+set ebeam1 10.0
+set ebeam2 10.0
+0
+generate h h > h h
+output work/mg5_hhhh -f
+launch work/mg5_hhhh
+0
+set lpp1 0
+set lpp2 0
+set nevents 10000
+set use_syst False
+set ebeam1 3.0
+set ebeam2 3.0
+0
+launch work/mg5_hhhh
+0
+set ebeam1 10.0
+set ebeam2 10.0
+0
+set gauge Feynman
+import model ./work/AbelianHiggs_UFO
+generate zp zp > zp zp
+output standalone work/sa_aaaa_f -f
+generate zp zp > h h
+output standalone work/sa_aahh_f -f
+quit
