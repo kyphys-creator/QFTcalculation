@@ -1,0 +1,300 @@
+% note.tex — アーベル・ヒッグス模型の2ループの有効ポテンシャル：ゲージ依存の次の次数と検算
+% コンパイル: lualatex note.tex（目次と参照の解決のため2〜3回）
+\documentclass[a4paper,10pt]{ltjsarticle}
+\usepackage[margin=20mm]{geometry}
+\usepackage[haranoaji,deluxe]{luatexja-preset}
+\ltjsetparameter{jacharrange={-3}}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs,tabularx,array}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,positioning,decorations.markings,decorations.pathmorphing}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{xurl}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue!50!black,citecolor=green!40!black,urlcolor=blue!60!black,
+  pdftitle={The abelian Higgs model: the two-loop effective potential and tool checks},pdfauthor={}}
+
+\setlength{\emergencystretch}{3em}
+\renewcommand{\jsParagraphMark}{\textcolor{black!65}{\rule[-0.02\zw]{0.62\zw}{0.62\zw}}\hspace{0.35\zw}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\MSbar}{\overline{\mathrm{MS}}}
+\newcommand{\lnb}{\overline{\ln}\,}
+\newcommand{\Aeps}{A_\epsilon}
+
+\tikzset{
+  photon/.style={thick,decorate,decoration={snake,amplitude=1.1pt,segment length=4.6pt}},
+  scalar/.style={thick,dashed},
+  gold/.style={thick,dash dot},
+  vtx/.style={circle,fill=black,inner sep=1.3pt},
+  slab/.style={font=\scriptsize,align=center},
+  box/.style={rectangle,rounded corners=2pt,draw=black!70,thick,fill=#1,align=center,font=\small,inner sep=3pt},
+  box/.default=white,
+  flow/.style={-{Stealth[length=2.2mm]},thick,black!70},
+}
+% figure-eight: \eight{left loop}{right loop}
+\newcommand{\eight}[2]{%
+  \draw[#1] (0,0) arc (0:360:0.42); \draw[#2] (0,0) arc (180:-180:0.42); \node[vtx] at (0,0) {};}
+% sunset: \sunset{top arc}{middle line}{bottom arc}
+\newcommand{\sunset}[3]{%
+  \draw[#1] (0.62,0) arc (0:180:0.62); \draw[#2] (-0.62,0) -- (0.62,0); \draw[#3] (-0.62,0) arc (180:360:0.62);
+  \node[vtx] at (-0.62,0) {}; \node[vtx] at (0.62,0) {};}
+
+\title{アーベル・ヒッグス模型の2ループの有効ポテンシャル\\（$\MSbar$、Landau ゲージと一般のゲージ、$d=4$）}
+\author{}
+\date{2026年10月28日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+アーベル・ヒッグス模型の1ループのノート~\cite{ahnote} では、有効ポテンシャルのゲージ依存（手順 (7)）、Coleman--Weinberg の比のゲージ依存（手順 (8)）、有限温度の $\phi_c/T_c$ のゲージ依存（手順 (10)）が、どれも主要な次数の先に現れ、それを消すには2ループが要ることを見た。本ノートでは、同じ模型（$U(1)$ のゲージ場と電荷1の複素スカラー、$\MSbar$、$d=4$）の2ループの有効ポテンシャルを求め、次の次数のゲージ依存を調べる。手順は七つで、Landau ゲージの $V_2$、2ループの繰り込み群での不変性、最小点の Goldstone ボソンの赤外の問題とその再和、一般のゲージの $V_2$ と Nielsen 恒等式、Coleman--Weinberg の比の次の次数、有限温度の次の次数、3次元の格子との比較である。本稿ではまず、Landau ゲージの $V_2$ を手で求めた。2ループの真空の図は、スカラーの日の出型の図2個、8の字の図5個、$hGA$ と $AAh$ の日の出型の図の9個で（ゴーストは Landau ゲージでは結合しない）、$V_2$ は $\MSbar$ の真空の日の出型の積分 $I(x,y,z)$ と $A(x)=x(\ln x-1)$ で閉じた式になる。手順 (1) では、1ループのノートの FeynRules の模型から FeynArts で10個の真空の図を作り、FeynCalc で Lorentz の縮約と部分分数、Kira 3.1 でマスター積分への簡約を行い、Landau ゲージの1ループの $\MSbar$ の対抗項の挿入を加えた。$1/\epsilon^2$ と $1/\epsilon$ の極は $\phi^2$ の多項式（局所的）になり、有限部分は Martin の一般の式を本模型の結合で書いた手計算の式と、17個の単項式のすべてで記号として一致した。$I(x,y,z)$ は TSIL 1.46 と AMFlow 2.0 で求め、11個の質量の組で相対 $2\times10^{-15}$ 以内で一致した。
+\end{abstract}
+
+\tableofcontents
+
+\section{目的と問い}\label{sec:intro}
+
+本ノートの問いは次の一つである。\textbf{アーベル・ヒッグス模型の2ループの有効ポテンシャルで、1ループのノートで見た「主要な次数の先に現れるゲージ依存」は、次の次数で Nielsen 恒等式の通りに消えるか。そのために、2ループの有効ポテンシャルをどのゲージでも閉じた式で求め、図からの計算、一般の公式、独立な数値積分と突き合わせられるか。}
+
+この問いを立てる理由は三つある。一つ目は、1ループのノート~\cite{ahnote} の三つの結果が、いずれも2ループを指していることである。手順 (7) では極値の値がゲージによらないことを示したが、その確認は1ループの精度で、$\hbar$ の2次の項は混ざったままだった。手順 (8) では、Coleman--Weinberg（CW）の比 $M_h^2/M_A^2=3e^2/(8\pi^2)$ の1ループの閉じた式に、次の次数の $\pm\frac23\xi e^2/K$（$K=16\pi^2$）のゲージ依存が残った。手順 (10) では、再和した1ループのポテンシャルの $\phi_c/T_c$ が、背景場の $R_\xi$ ゲージで $e^2$、Fermi ゲージで $e^{3/4}$ でしか小さくならなかった。これらを消すには、同じ次数の2ループの項が要る。二つ目は、2ループの有効ポテンシャルには、1ループにない構造が現れることである。最小点では Goldstone ボソンの質量の2乗が $\hbar$ の大きさになり、$V_2$ の微分が赤外で発散する。これは再和で取り除けることが知られている~\cite{martin14,eek14}。Fermi ゲージでは、この赤外の問題とゲージ依存が絡む~\cite{egk16}。三つ目は、これまでに入れた2ループの道具（Kira、FIRE、AMFlow、pySecDec、TSIL）と熱的な道具（DRalgo）を、有効ポテンシャルという一つの量で組み合わせて使えることである。
+
+求める量は六つである。(i) Landau ゲージの $V_2$（手で求め、図から計算し、一般の公式~\cite{martin01} と比べる）。(ii) 2ループの $\beta$ 関数と場の異常次元、および $V$ の繰り込み群での不変性。(iii) 最小点の Goldstone ボソンの赤外の発散と、その再和。(iv) 背景場の $R_\xi$ ゲージと Fermi ゲージの $V_2$~\cite{mp18} と、$O(\hbar^2)$ の Nielsen 恒等式。(v) CW の比の次の次数と、そのゲージによらないこと~\cite{afs15}。(vi) 有限温度の $T_c$ と $\phi_c/T_c$ の次の次数~\cite{el20}。
+
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で Landau ゲージの $V_2$ の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（手順 (1)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:v2}に、検算の細部は\ref{app:details}に置く。
+
+\section{設定}\label{sec:setup}
+
+模型と記号は1ループのノート~\cite{ahnote} と同じである。ラグランジアン密度は
+\begin{equation}
+\mathcal L=-\frac14F_{\mu\nu}F^{\mu\nu}+(D_\mu\Phi)^\dagger(D^\mu\Phi)+m^2\Phi^\dagger\Phi-\lambda(\Phi^\dagger\Phi)^2+\mathcal L_{\mathrm{gf}}+\mathcal L_{\mathrm{FP}},\qquad
+D_\mu=\partial_\mu-ieA_\mu
+\label{eq:L}
+\end{equation}
+で、一定の背景場 $\phi$ のまわりで $\Phi=(\phi+h+iG)/\sqrt2$ と展開する。場に依存する質量の2乗を
+\begin{equation}
+x_h=-m^2+3\lambda\phi^2,\qquad x_G=-m^2+\lambda\phi^2,\qquad x_A=e^2\phi^2
+\label{eq:masses}
+\end{equation}
+と書く。有効ポテンシャルを
+\begin{equation}
+V(\phi)=V_0+\frac1KV_1+\frac1{K^2}V_2+\cdots,\qquad V_0=-\frac12m^2\phi^2+\frac14\lambda\phi^4,\qquad K=16\pi^2
+\label{eq:V}
+\end{equation}
+と展開する（Martin の規約~\cite{martin01}。$V_1$、$V_2$ は $1/K$、$1/K^2$ を外に出した量）。Landau ゲージの1ループは
+\begin{equation}
+V_1=\frac14\Bigl[x_h^2\Bigl(\lnb x_h-\frac32\Bigr)+x_G^2\Bigl(\lnb x_G-\frac32\Bigr)+3x_A^2\Bigl(\lnb x_A-\frac56\Bigr)\Bigr],\qquad \lnb x=\ln\frac x{Q^2}
+\label{eq:V1}
+\end{equation}
+で、1ループのノートの式（$s=0$）と同じである。$Q$ は $\MSbar$ の尺度（1ループのノートの $\mu$）である。
+
+\paragraph{2ループの関数。}1ループの関数 $A(x)=x(\lnb x-1)$ と、$\MSbar$ で繰り込んだ真空の日の出型の積分 $I(x,y,z)$ を使う~\cite{martin01,tsil}。次元正則化した（「太字の」）積分は、Euclid の運動量で1ループあたり $16\pi^2\mu^{2\epsilon}\int\dd^Dk/(2\pi)^D$ の測度をとると
+\begin{equation}
+\begin{aligned}
+\mathbf A(x)&=16\pi^2\mu^{2\epsilon}\int\frac{\dd^Dk}{(2\pi)^D}\frac1{k^2+x}=-\frac x\epsilon+A(x)+\epsilon\Aeps(x),\qquad \Aeps(x)=x\Bigl(-1-\frac{\zeta_2}2+\lnb x-\frac12\lnb^2x\Bigr),\\
+\mathbf I(x,y,z)&=(16\pi^2\mu^{2\epsilon})^2\int\frac{\dd^Dk\,\dd^Dq}{(2\pi)^{2D}}\frac1{(k^2+x)(q^2+y)((k+q)^2+z)}\\
+&=-\frac{x+y+z}{2\epsilon^2}+\frac{A(x)+A(y)+A(z)-(x+y+z)/2}{\epsilon}+I(x,y,z)+\Aeps(x)+\Aeps(y)+\Aeps(z)
+\end{aligned}
+\label{eq:bold}
+\end{equation}
+である（$D=4-2\epsilon$、$\mu^2=Q^2e^{\gamma_E}/(4\pi)$。TSIL の \texttt{TSIL\_SetBoldS} の $s=0$ の形）。$I$ は二重対数で閉じた形を持ち~\cite{martin01}、たとえば $I(0,0,x)=-\frac x2\lnb^2x+2x\lnb x-(\frac52+\zeta_2)x$ である。
+
+\paragraph{前提。}本ノートは次の前提に立つ。
+\begin{enumerate}
+\item 計量、共変微分の符号、$\MSbar$ のパラメータ（$e$、$\lambda$、$m^2$）、繰り込み定数の定義は1ループのノート~\cite{ahnote} と同じとする。$\MSbar$ の場 $\phi$ を背景場とする（タドポールの処方は有効ポテンシャルには現れない）。
+\item ゲージは、手順 (1)〜(3) では Landau ゲージ（$\mathcal L_{\mathrm{gf}}=-\frac1{2\xi}(\partial A)^2$、$\xi\to0$）とする。ゲージ場の伝播関数は横波だけになり、$A$--$\partial G$ の混合は効かず、ゴーストは質量を持たず、スカラーと結合しない。手順 (4) で背景場の $R_\xi$ ゲージと Fermi ゲージに広げる。
+\item 2ループは $V_2$ の $1/K^2$ の項で、$\hbar$ の数え方では $\hbar^2$ である。
+\item 数値の基準点は1ループのノートと同じ $e=\frac12$、$\lambda=\frac{25}{32}$、$m^2=\frac{25}8$（木の最小点 $v=2$、$M_A=1$、$M_h=\frac52$）、$Q=1$ とする。
+\end{enumerate}
+本文で使う記号を表~\ref{tab:notation} にまとめる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{記号の一覧。}
+\label{tab:notation}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.2cm}X}
+\toprule
+記号 & 意味 \\
+\midrule
+$\phi$ & $\MSbar$ の背景場（$\Phi=(\phi+h+iG)/\sqrt2$） \\
+$x_h,\ x_G,\ x_A$ & 場に依存する質量の2乗 \eqref{eq:masses} \\
+$K$ & $16\pi^2$ \\
+$Q$ & $\MSbar$ の尺度、$\lnb x=\ln(x/Q^2)$ \\
+$V_0,\ V_1,\ V_2$ & 有効ポテンシャルの木、1ループ、2ループ（$1/K$、$1/K^2$ を外に出す）\eqref{eq:V} \\
+$A(x),\ \Aeps(x)$ & 1ループの関数 $x(\lnb x-1)$ と、太字の積分の $\epsilon$ の1次の係数 \eqref{eq:bold} \\
+$I(x,y,z)$ & $\MSbar$ で繰り込んだ真空の日の出型の積分 \eqref{eq:bold} \\
+$\mathbf A,\ \mathbf I$ & 次元正則化した（太字の）積分 \eqref{eq:bold} \\
+$f_{SSV},\ f_{VS},\ f_{VVS}$ & Martin の2ループの関数 \eqref{eq:fs} \\
+$\lambda^{ijk},\ \lambda^{ijkl},\ g^{aij},\ g^{abi},\ g^{abij}$ & Martin の規約の結合（\ref{app:v2}） \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{結果}\label{sec:results}
+
+\subsection{Landau ゲージの2ループの有効ポテンシャル}\label{sec:landau}
+
+Landau ゲージの2ループの有効ポテンシャルは、標準模型で Ford--Jack--Jones~\cite{fjj92} が求め、Martin が一般の繰り込み可能な理論に広げた~\cite{martin01}。本模型の真空の図は、図~\ref{fig:v2diag} の9個である（ゴーストの図は結合が $\xi$ に比例して消える）。Martin の一般の式~\cite{martin01} に、本模型の結合（\ref{app:v2}）を入れると
+\begin{equation}
+\begin{aligned}
+V_2={}&-3\lambda^2\phi^2I(x_h,x_h,x_h)-\lambda^2\phi^2I(x_h,x_G,x_G)+\frac34\lambda\bigl[A(x_h)^2+A(x_G)^2\bigr]+\frac12\lambda A(x_h)A(x_G)\\
+&+\frac{e^2}2f_{SSV}(x_h,x_G,x_A)+\frac{e^2}2\bigl[f_{VS}(x_A,x_h)+f_{VS}(x_A,x_G)\bigr]+e^4\phi^2f_{VVS}(x_A,x_A,x_h)
+\end{aligned}
+\label{eq:V2}
+\end{equation}
+になる（\ref{app:v2}）。1行目はスカラーだけの図（日の出型の $hhh$、$hGG$ と8の字の $hh$、$hG$、$GG$）、2行目はゲージ場を含む図（日の出型の $hGA$、8の字の $Ah$、$AG$、日の出型の $AAh$）である。$\MSbar$ の関数は
+\begin{equation}
+\begin{aligned}
+f_{SSV}(x,y,z)={}&\frac1z\Bigl[-\lambda_K(x,y,z)\,I(x,y,z)+(x-y)^2I(0,x,y)+(y-x-z)A(x)A(z)\\
+&+(x-y-z)A(y)A(z)+zA(x)A(y)\Bigr]+2\Bigl(x+y-\frac z3\Bigr)A(z),\\
+f_{VS}(x,y)={}&3A(x)A(y)+2xA(y),\\
+f_{VVS}(x,y,z)={}&\frac1{4xy}\Bigl[-\bigl(\lambda_K(x,y,z)+12xy\bigr)I(x,y,z)+(x-z)^2I(0,x,z)+(y-z)^2I(0,y,z)-z^2I(0,0,z)\\
+&+(z-x-y)A(x)A(y)+yA(x)A(z)+xA(y)A(z)\Bigr]+\frac12A(x)+\frac12A(y)+2A(z)-x-y-z
+\end{aligned}
+\label{eq:fs}
+\end{equation}
+である（$\lambda_K(x,y,z)=x^2+y^2+z^2-2xy-2xz-2yz$）。$f_{VS}$ の $2xA(y)$ と $f_{SSV}$、$f_{VVS}$ の $A$ の1次の項は、$\MSbar$ で $D-1=3-2\epsilon$ 個の横波の $\epsilon$ の項が1ループの極と掛け合わさって残る項である（DR の体系では異なる）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+\foreach \x/\a/\b/\lbl in {0/scalar/scalar/{(a) $hh$}, 2.3/scalar/gold/{(b) $hG$}, 4.6/gold/gold/{(c) $GG$},
+    6.9/photon/scalar/{(d) $Ah$}, 9.2/photon/gold/{(e) $AG$}} {
+  \begin{scope}[shift={(\x,0)}]
+    \eight{\a}{\b}
+    \node[slab] at (0,-0.9) {\lbl};
+  \end{scope}}
+\begin{scope}[shift={(0.4,-2.6)}]
+\foreach \x/\t/\m/\bo/\lbl in {0/scalar/scalar/scalar/{(f) $hhh$}, 2.5/gold/scalar/gold/{(g) $hGG$},
+    5.0/scalar/photon/gold/{(h) $hGA$}, 7.5/photon/scalar/photon/{(i) $AAh$}} {
+  \begin{scope}[shift={(\x,0)}]
+    \sunset{\t}{\m}{\bo}
+    \node[slab] at (0,-1.05) {\lbl};
+  \end{scope}}
+\end{scope}
+\end{tikzpicture}
+\caption{Landau ゲージの2ループの真空の図（1粒子既約）。破線は $h$、一点鎖線は Goldstone ボソン $G$、波線はゲージ場 $A$（横波）。(a)〜(c) は4点の頂点 $\lambda(h^2+G^2)^2/4$、(d)、(e) は $\frac12e^2A^2(h^2+G^2)$、(f)、(g) は $\lambda\phi h(h^2+G^2)$、(h) は微分を含む $eA_\mu(G\partial^\mu h-h\partial^\mu G)$、(i) は $e^2\phi A^2h$ の頂点による。ゴーストの日の出型の図は、ゴーストと $h$ の結合が $\xi$ に比例するので Landau ゲージでは0である。式~\eqref{eq:V2} の1行目が (a)〜(c)、(f)、(g)、2行目が (d)、(e)、(h)、(i) である。}
+\label{fig:v2diag}
+\end{figure}
+
+\paragraph{極と対抗項。}$\MSbar$ の $V_2$ は、2ループの図に、1ループの $\MSbar$ の対抗項を1ループの図に挿入した項を加えた和の $\epsilon^0$ の係数である。Landau ゲージの1ループの対抗項は1ループのノートの値の $\xi=0$ で、$\delta Z_\Phi=3e^2/(K\epsilon)$、$\delta Z_A=-e^2/(3K\epsilon)$、$\delta_{m^2}=(4\lambda-3e^2)/(K\epsilon)$、$\delta_\lambda=(10\lambda-6e^2+3e^4/\lambda)/(K\epsilon)$ である。これらを場に依存する質量に入れると、挿入の項は
+\begin{equation}
+\frac1{K^2}\Bigl[\frac{X_h}2\mathbf A(x_h)+\frac{X_G}2\mathbf A(x_G)+\frac{3-2\epsilon}2\cdot\frac{10e^2x_A}{3\epsilon}\mathbf A(x_A)\Bigr],\qquad
+X_{h,G}=\frac1\epsilon\Bigl[-m^2(4\lambda-3e^2)+c_{h,G}\lambda\phi^2\Bigl(10\lambda-3e^2+\frac{3e^4}\lambda\Bigr)\Bigr]
+\label{eq:ct}
+\end{equation}
+になる（$c_h=3$、$c_G=1$。\ref{app:v2}）。ゲージ場の項は $x_A(\delta Z_\Phi-\delta Z_A)$ で、$Z_eZ_A^{1/2}=1$ から $x_A$ の繰り込みは場の $Z_\Phi$ だけになる。2ループの図と式~\eqref{eq:ct} の和の極は
+\begin{equation}
+\begin{aligned}
+\frac1{\epsilon^2}:\ &\frac{3e^2-4\lambda}2m^4+(3e^4-6e^2\lambda+14\lambda^2)m^2\phi^2-\frac52(e^6+3e^4\lambda-3e^2\lambda^2+10\lambda^3)\phi^4,\\
+\frac1\epsilon:\ &-2e^2m^4+\Bigl(\frac{11}4e^4+8e^2\lambda-6\lambda^2\Bigr)m^2\phi^2+\Bigl(\frac{13}3e^6-\frac{23}4e^4\lambda-7e^2\lambda^2+16\lambda^3\Bigr)\phi^4
+\end{aligned}
+\label{eq:poles}
+\end{equation}
+で（$1/K^2$ を除く）、$\phi^2$ の多項式（局所的）になり、2ループの対抗項（$\delta_\lambda$、$\delta_{m^2}$、$\delta Z_\Phi$ の2ループの部分と真空のエネルギー）で消える。$A(x)$、$I$ を含む非局所的な極が残らないことが、図と1ループの対抗項の整合の検算になる（手順 (1)）。$1/\epsilon^2$ の係数は1ループの量で決まり、$1/\epsilon$ の係数は2ループの $\beta$ 関数と場の異常次元を与える（手順 (2) で確かめる）。
+
+\section{検算の計画}\label{sec:plan}
+
+第~\ref{sec:results} 節の量と、これから求める量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、1ループのノートと同じものを使う。
+
+\begin{table}[tbp]
+\centering\small
+\caption{各量と、それを計算して突き合わせる手段。「—」はその手段を使わないことを表す。}
+\label{tab:plan}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{3.3cm}>{\raggedright\arraybackslash}p{1.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}p{2.4cm}}
+\toprule
+\textbf{量} & \textbf{手計算} & \textbf{FeynArts、FeynCalc、Kira} & \textbf{数値（TSIL、AMFlow）} & \textbf{その他} \\
+\midrule
+(1) Landau ゲージの $V_2$ \eqref{eq:V2} & \ref{app:v2} & 10個の真空の図、対抗項の挿入、Martin の式と記号として & $I(x,y,z)$ & — \\
+(2) 2ループの繰り込み群 & 後で & 極 \eqref{eq:poles} から $\beta$、$\gamma_\phi$ & $\dd V/\dd\ln Q$ & 一般の公式~\cite{mv83} \\
+(3) Goldstone の赤外の再和 & 後で & — & 最小点、$V_{\min}$、曲率 & 文献~\cite{martin14,eek14} \\
+(4) 一般のゲージの $V_2$、Nielsen 恒等式 & 後で & 一つのゲージで図から & $V_{\min}$ の $\xi$ によらないこと & Martin--Patel~\cite{mp18} \\
+(5) CW の比の次の次数 & 後で & — & 5個のゲージ & 文献~\cite{afs15} \\
+(6) 有限温度の次の次数 & 後で & — & $T_c$、$\phi_c/T_c$ & DRalgo~\cite{dralgo} \\
+(7) 3次元の格子との比較（任意） & 後で & — & 3次元のパラメータ & 文献~\cite{kklp98} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{一致の基準。}記号の比較は、極と有限部分の差が記号として0になることを求める。$I(x,y,z)$ のように閉じた形の関数は、独立な二つの数値（TSIL の解析式と AMFlow の微分方程式）が倍精度の範囲で一致することを求める。ゲージによらないはずの量は、複数の $\xi$ とゲージで同じ値になることを、$\hbar$ の次数ごとに求める。文献との比較は、文献の数を写すのでなく、本ノートの模型と規格化で計算した量で行う。
+
+\paragraph{手順。}次の順に進める。(1) Landau ゲージの $V_2$：手計算の式~\eqref{eq:V2} を、FeynArts で作った2ループの真空の図（FeynCalc で縮約と部分分数、Kira で簡約）と1ループの対抗項の挿入から求めた値と記号として比べる。$I(x,y,z)$ の数値を TSIL と AMFlow で比べる。(2) 2ループの繰り込み群：一般の公式~\cite{mv83} から2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$ と Landau ゲージの $\gamma_\phi$ を求め、極~\eqref{eq:poles} との整合と、$\dd V/\dd\ln Q=O(\hbar^3)$ を記号として確かめる。(3) Goldstone の赤外の問題：最小点で $x_G\sim\hbar$ となり、$V_2$ の微分に $\ln x_G$ が現れることを示し、再和~\cite{martin14,eek14} で最小点、$V_{\min}$、曲率を2ループの精度で求める。(4) 一般のゲージ：Martin--Patel の一般のゲージ固定の式~\cite{mp18} を本模型に当てはめて、背景場の $R_\xi$ ゲージと Fermi ゲージの $V_2$ を作り、一つのゲージでは図からも計算する。極値の値が $O(\hbar^2)$ まで $\xi$ によらないことを、1ループのノートの手順 (7) の $\hbar$ の尺度の方法で確かめる。Fermi ゲージの赤外の問題~\cite{egk16} は手順 (3) の再和と組み合わせる。(5) CW の比：$m^2=0$、$\lambda\sim e^4/K$ と数えて $M_h^2/M_A^2$ を相対 $e^2/K$ まで求め、1ループのノートの手順 (8) のゲージ依存が消えることを確かめる。Andreassen--Frost--Schwartz~\cite{afs15} とは、本ノートの模型で計算した量で比べる。(6) 有限温度：DRalgo の NLO の次元簡約と3次元の2ループのポテンシャルで、$\lambda\sim e^3$ と数えて $T_c$ と $\phi_c/T_c$ を次の次数までゲージによらない展開で求め~\cite{el20}、1ループのノートの手順 (10) と比べる。(7) 3次元の U(1)＋ヒッグスの格子の結果~\cite{kklp98} と、本ノートで求めた3次元のパラメータで比べる（任意）。
+
+\section{検算}\label{sec:checks}
+
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_v2\_check.sh} で再実行できる。
+
+\paragraph{手順 (1)：Landau ゲージの $V_2$。}三つのスクリプトで確かめた。一つ目は \texttt{v2\_landau\_feyncalc.wl} である。(a) 1ループのノートの FeynRules の模型（\texttt{models/abelian\_higgs/Src/generated/AbelianHiggs\_FA}）を FeynCalc の FeynArts のパッチを当てて写し、Goldstone ボソンの質量を $\sqrt\xi M_A$ から独立な記号 $M_G$ に替えた（Landau ゲージの背景場での質量 $x_G$）。FeynArts の \texttt{CreateTopologies[2, 0 -> 0]} から1粒子既約な真空の図を作ると10個で、ゴーストの図は \texttt{GaugeXi -> 0} で0になった（残りが図~\ref{fig:v2diag} の9個）。背景場は模型の \texttt{vev} を $\phi$ と読み替えた（結合は $\lambda\,\texttt{vev}$、$e^2\texttt{vev}$ の形で、質量の記号とは独立である）。(b) FeynCalc で Lorentz の添字を縮約し、\texttt{ApartFF} で横波の射影の $1/k^2$ を部分分数に分け、\texttt{FCLoopFindTopologies}、\texttt{FCLoopFindTopologyMappings}、\texttt{FCLoopBasisFindCompletion} で10個の積分族と23個の積分にまとめた。(c) Kira 3.1 で、点や分子のない積分（日の出型と1ループの積の積分）を優先したマスター積分に簡約した。18個のマスター積分はすべて点も分子もなく、係数の分母に $D$ を含む因子はなかった（$\epsilon$ の極を持つ係数がない）。(d) Minkowski の積分を Euclid の太字の積分 \eqref{eq:bold} に直し（1ループの積は $-\mathbf A\mathbf A$、日の出型は $+\mathbf I$。\ref{app:details}）、対抗項の挿入~\eqref{eq:ct} を加えて $\epsilon$ で展開した。$1/\epsilon^2$ と $1/\epsilon$ の係数には $A$、$\Aeps$、$I$ を含む項が残らず、極は式~\eqref{eq:poles} の多項式になった。有限部分は、$\Aeps(x)=-\frac12[x(1+\zeta_2)+A(x)^2/x]$ を使うと、式~\eqref{eq:V2} と17個の単項式（$I$ の7通り、$A$ の積と1次の項、定数）のすべてで記号として一致した。式~\eqref{eq:V2} を \texttt{results/v2\_landau.m} に書き出した。
+
+二つ目と三つ目は $I(x,y,z)$ の数値である。$\phi=2$（木の最小点、$x_G=0$）と $\phi=3$ で $V_2$ に要る11個の質量の組について、TSIL 1.46~\cite{tsil} の \texttt{TSIL\_I2}（解析式、\texttt{v2\_tsil.c}）と、AMFlow 2.0~\cite{amflow} の補助質量の流れ（Kira で簡約、30桁、\texttt{v2\_amflow.wl}）で求めた。AMFlow の太字の積分の $\epsilon^{-2}$、$\epsilon^{-1}$ の係数は式~\eqref{eq:bold} と27桁以上一致し、$I$ は TSIL と相対 $2\times10^{-15}$ 以内で一致した（\texttt{v2\_numeric.py}、表~\ref{tab:v2num}）。基準点の木の最小点 $\phi=2$ では、$V_0=-3.125$、$V_1/K=0.0166095$、$V_2/K^2=-0.00251355$ で、2ループは1ループの15\%の大きさで符号が逆である（$\lambda=0.78$ の $hhh$ の日の出型が最も大きい）。$\phi=3$ では $V_2/K^2=0.0150405$ で、$V_1/K=0.705954$ の2\%である。二つの $I$ の組で求めた $V_2$ は相対 $9\times10^{-16}$ 以内で一致した。
+
+\begin{table}[tbp]
+\centering\small
+\caption{基準点（$e=\frac12$、$\lambda=\frac{25}{32}$、$m^2=\frac{25}8$、$Q=1$）での Landau ゲージの有効ポテンシャルの各次数。$V_2/K^2$ は TSIL と AMFlow の $I$ で求めた値（\texttt{results/v2\_numeric.csv}）。}
+\label{tab:v2num}
+\begin{tabular}{rrrrr}
+\toprule
+$\phi$ & $V_0$ & $V_1/K$ & $V_2/K^2$（TSIL） & $V_2/K^2$（AMFlow） \\
+\midrule
+2 & $-3.125$ & $0.01660949$ & $-2.513548132989\times10^{-3}$ & $-2.513548132989\times10^{-3}$ \\
+3 & $1.7578125$ & $0.70595449$ & $1.504050155047\times10^{-2}$ & $1.504050155047\times10^{-2}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{議論と今後}\label{sec:discussion}
+
+\paragraph{手順 (1) で分かったこと。}Landau ゲージの $V_2$ は、Martin の一般の式に本模型の8種類の結合を入れるだけで得られ、図からの直接の計算と完全に一致した。2ループの図だけでは極に $A(x)$ や $\Aeps(x)$ を含む非局所的な項が残り、1ループのノートの Landau ゲージの対抗項（とくにゲージ場の質量の繰り込みが $Z_\Phi$ だけになること）を挿入して初めて極が局所的になり、$\Aeps$ も有限部分から消える。ゲージ場を含む図では、横波の数 $D-1$ の $\epsilon$ の部分が1ループの極と掛け合わさって $\MSbar$ に固有の有限の項（$f_{VS}$ の $2xA(y)$ など）を作る。最小点 $\phi=v$ では $x_G=0$ で $V_2$ 自体は有限だが、$x_G$ を含む項の微分は手順 (3) で扱う赤外の問題を持つ。
+
+\paragraph{今後。}手順 (2) で2ループの繰り込み群を確かめ、手順 (3) で最小点の Goldstone ボソンの再和を行う。その後、手順 (4) で一般のゲージに進み、1ループのノートで見た次の次数のゲージ依存が消えることを、手順 (4)〜(6) で示す。
+
+\appendix
+
+\section{Landau ゲージの $V_2$ の導出}\label{app:v2}
+
+\paragraph{一般の式の結合。}Martin~\cite{martin01} は、計量 $(-,+,+,+)$ で実のスカラー $R_i$ と実のベクトル $A^a$ の相互作用を
+\begin{equation*}
+-\mathcal L_S=\frac16\lambda^{ijk}R_iR_jR_k+\frac1{24}\lambda^{ijkl}R_iR_jR_kR_l,\qquad
+\mathcal L_{SV}=-g^{aij}A^a_\mu R_i\partial^\mu R_j-\frac12g^{abi}A^a_\mu A^{b\mu}R_i-\frac14g^{abij}A^a_\mu A^{b\mu}R_iR_j
+\end{equation*}
+と書き、Landau ゲージの $\MSbar$ の $V_2$ を $V_{SSS}=\frac1{12}(\lambda^{ijk})^2f_{SSS}$、$V_{SS}=\frac18\lambda^{iijj}f_{SS}$、$V_{SSV}=\frac14(g^{aij})^2f_{SSV}$、$V_{VS}=\frac14g^{aaii}f_{VS}$、$V_{VVS}=\frac14(g^{abi})^2f_{VVS}$ の和で与える（添字はすべて和をとる。$f_{SSS}=-I$、$f_{SS}(x,y)=A(x)A(y)$、ほかは式~\eqref{eq:fs}）。本模型を背景場 $\phi$ のまわりで展開すると、$V=\frac\lambda4((\phi+h)^2+G^2)^2-\frac{m^2}2((\phi+h)^2+G^2)$ から
+\begin{equation*}
+\lambda^{hhh}=6\lambda\phi,\quad \lambda^{hGG}=2\lambda\phi,\quad \lambda^{hhhh}=\lambda^{GGGG}=6\lambda,\quad \lambda^{hhGG}=2\lambda
+\end{equation*}
+を得る。運動項 $-|D\Phi|^2=-\frac12[(\partial h+eAG)^2+(\partial G-eA(\phi+h))^2]$（計量 $(-,+,+,+)$）からは
+\begin{equation*}
+g^{AAh}=2e^2\phi,\quad g^{AAhh}=g^{AAGG}=2e^2,\quad g^{AGh}=-g^{AhG}=e
+\end{equation*}
+を得る。$-e\phi A\cdot\partial G$ の混合は横波の伝播関数と縮約して消える。和をとると、$V_{SSS}=-\frac1{12}[36\lambda^2\phi^2I(x_h,x_h,x_h)+3\cdot4\lambda^2\phi^2I(x_h,x_G,x_G)]$、$V_{SS}=\frac18[6\lambda A(x_h)^2+6\lambda A(x_G)^2+2\cdot2\lambda A(x_h)A(x_G)]$、$V_{SSV}=\frac14\cdot2e^2f_{SSV}(x_h,x_G,x_A)$（$f_{SSV}$ は前の二つの引数について対称）、$V_{VS}=\frac14\cdot2e^2[f_{VS}(x_A,x_h)+f_{VS}(x_A,x_G)]$、$V_{VVS}=\frac14(2e^2\phi)^2f_{VVS}(x_A,x_A,x_h)$ で、式~\eqref{eq:V2} になる。
+
+\paragraph{図からの計算。}Euclid の作用で、$V_2$ は相互作用の1次の4点の項の期待値と、3点の項の2次の連結な期待値の $-\frac12$ 倍の和である。スカラーだけの図は、8の字が $\frac\lambda4\langle(h^2+G^2)^2\rangle=\frac34\lambda T_h^2+\frac12\lambda T_hT_G+\frac34\lambda T_G^2$（$T_x=\int\frac1{k^2+x}$）、日の出型が $-\frac12\lambda^2\phi^2\langle h^3h^3\rangle-\frac12\lambda^2\phi^2\langle hG^2\,hG^2\rangle=-3\lambda^2\phi^2S(x_h,x_h,x_h)-\lambda^2\phi^2S(x_h,x_G,x_G)$ である（$S$ は日の出型の積分）。ゲージ場の図では、横波の射影 $P_{\mu\nu}(k)=\delta_{\mu\nu}-k_\mu k_\nu/k^2$ の縮約 $P_{\mu\mu}=D-1$、$P(k){:}P(q)=D-2+(k\cdot q)^2/(k^2q^2)$ と、$hGA$ の頂点の $(2k+p)\!\cdot\!P(p)\!\cdot\!(2k+p)=4[k^2-(k\cdot p)^2/p^2]$ が現れる。$k\cdot q$ を伝播関数の分母で書き、$1/(k^2(k^2+x))$ を部分分数に分けると、すべての積分が $T_xT_y$ と、質量が $\{0,x_h,x_G,x_A\}$ の日の出型 $S$ に直る（手順 (1) の FeynCalc と Kira の計算はこれを自動で行う）。
+
+\paragraph{対抗項の挿入。}裸の量を $m_0^2=(1+\delta_{m^2})m^2$、$\lambda_0=\mu^{2\epsilon}(1+\delta_\lambda)\lambda$、$\phi_0=Z_\Phi^{1/2}\phi$、$A_0=Z_A^{1/2}A$、$e_0=\mu^\epsilon Z_ee$（$Z_eZ_A^{1/2}=1$）とすると、揺らぎ $h$ の2次の項は $\frac12Z_\Phi[(\partial h)^2+x_{h0}h^2]$、$x_{h0}=-m_0^2+3\lambda_0\phi_0^2$ になる。1ループの図への挿入は $\frac12\int(\delta Z_\Phi k^2+\delta Z_\Phi x_h+\delta x_h)/(k^2+x_h)=\frac12\delta x_hT_h$（$\int1=0$）で、$\delta x_h=-m^2\delta_{m^2}+3\lambda\phi^2(\delta_\lambda+\delta Z_\Phi)$ である。$G$ も同様に $\delta x_G=-m^2\delta_{m^2}+\lambda\phi^2(\delta_\lambda+\delta Z_\Phi)$ である。ゲージ場の横波の2次の項は $\frac12[Z_Ak^2+e^2Z_\Phi\phi^2]$ なので、挿入は $\frac{D-1}2x_A(\delta Z_\Phi-\delta Z_A)T_A$ である。Landau ゲージの1ループの値を入れると式~\eqref{eq:ct} になる。$\delta_{m^2}$ と $\delta_\lambda$ はゲージによらず、$V_1$ の極を $V_0(\phi_0)$ の対抗項で消す条件 $\delta_{m^2}+\delta Z_\Phi=4\lambda/(K\epsilon)$、$\lambda(\delta_\lambda+2\delta Z_\Phi)=(10\lambda^2+3e^4)/(K\epsilon)$ を満たす。
+
+\section{検算の細部}\label{app:details}
+
+\paragraph{Minkowski の積分から太字の積分へ。}FeynArts の振幅は Feynman 則の積の $-i$ 倍で、1ループあたり $1/(2\pi)^4$ を含む。$V_2$ は真空の図の和の $i$ 倍なので、FeynArts の振幅の和の $-1$ 倍に、$(2\pi)^8$ を掛けて1ループあたり $\int\dd^Dk/(2\pi)^D$ の測度に読み替えたものである（スカラーの8の字で $+\frac34\lambda T_h^2$ になることで確かめた）。Minkowski の積分は、1ループあたり $\dd^Dk_M=i\,\dd^Dk_E$、$1/(k_M^2-x)=-1/(k_E^2+x)$ なので、二つの1ループの積は $(-iT_x)(-iT_y)=-T_xT_y$、日の出型は $i^2(-1)^3S=S$ である。$T_x=\mathbf A(x)/K$、$S=\mathbf I/K^2$ とする。
+
+\paragraph{AMFlow の規格化。}AMFlow の積分は $J=\int\prod\dd^Dq/(i\pi^{D/2})\prod1/(q^2-x+i0)$ で、太字の積分は $\mathbf I=(-1)^3e^{2\epsilon\gamma_E}J$（$Q=1$）である（$\phi^3$ 理論のノートと同じ）。$I=\mathbf I|_{\epsilon^0}-\sum\Aeps$ とした。
+
+\begin{thebibliography}{99}
+\bibitem{ahnote} アーベル・ヒッグス模型：1ループの構造と検算（本リポジトリ \nolinkurl{models/abelian_higgs/ResearchNote/note.pdf}）。
+\bibitem{env} ループ計算環境の構築記録（本リポジトリ \nolinkurl{environment/environment.pdf}）。
+\bibitem{martin01} S. P. Martin, ``Two-loop effective potential for a general renormalizable theory and softly broken supersymmetry,'' Phys. Rev. D \textbf{65}, 116003 (2002), arXiv:hep-ph/0111209。
+\bibitem{mp18} S. P. Martin, H. H. Patel, ``Two-loop effective potential for generalized gauge fixing,'' arXiv:1808.07615。
+\bibitem{fjj92} C. Ford, I. Jack, D. R. T. Jones, ``The standard model effective potential at two loops,'' Nucl. Phys. B \textbf{387}, 373 (1992)。
+\bibitem{martin14} S. P. Martin, ``Taming the Goldstone contributions to the effective potential,'' Phys. Rev. D \textbf{90}, 016013 (2014), arXiv:1406.2355。
+\bibitem{eek14} J. Elias-Miró, J. R. Espinosa, T. Konstandin, ``Taming infrared divergences in the effective potential,'' JHEP \textbf{08}, 034 (2014), arXiv:1406.2652。
+\bibitem{egk16} J. R. Espinosa, M. Garny, T. Konstandin, ``Interplay of infrared divergences and gauge-dependence of the effective potential,'' Phys. Rev. D \textbf{94}, 055026 (2016), arXiv:1607.08432。
+\bibitem{afs15} A. Andreassen, W. Frost, M. D. Schwartz, ``Consistent use of effective potentials,'' Phys. Rev. D \textbf{91}, 016009 (2015), arXiv:1408.0287。
+\bibitem{el20} A. Ekstedt, J. Löfgren, ``A critical look at the electroweak phase transition,'' JHEP \textbf{12}, 136 (2020), arXiv:2006.12614。
+\bibitem{kklp98} K. Kajantie, M. Karjalainen, M. Laine, J. Peisa, ``Three-dimensional U(1) gauge+Higgs theory as an effective theory for finite temperature phase transitions,'' Nucl. Phys. B \textbf{520}, 345 (1998), arXiv:hep-lat/9711048。
+\bibitem{mv83} M. E. Machacek, M. T. Vaughn, ``Two-loop renormalization group equations in a general quantum field theory (I)--(III),'' Nucl. Phys. B \textbf{222}, 83 (1983); \textbf{236}, 221 (1984); \textbf{249}, 70 (1985)。
+\bibitem{tsil} S. P. Martin, D. G. Robertson, ``TSIL: a program for the calculation of two-loop self-energy integrals,'' Comput. Phys. Commun. \textbf{174}, 133 (2006), arXiv:hep-ph/0501132。
+\bibitem{amflow} X. Liu, Y.-Q. Ma, ``AMFlow: a Mathematica package for Feynman integrals computation via auxiliary mass flow,'' Comput. Phys. Commun. \textbf{283}, 108565 (2023)。
+\bibitem{dralgo} A. Ekstedt, P. Schicho, T. V. I. Tenkanen, ``DRalgo: a package for effective field theory approach for thermal phase transitions,'' Comput. Phys. Commun. \textbf{288}, 108725 (2023), arXiv:2205.08815。
+\end{thebibliography}
+
+\end{document}
