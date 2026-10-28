@@ -1,0 +1,4 @@
+channel,a0,a1_at_mu2_eq_s,lam_tree_bound,lam_ReNLO_bound,lam_ratio_bound
+charge 0,-lam/(4*pi),lam**2*(13 + 2*I*pi)/(32*pi**3),6.283185307,9.920385723,5.468386234
+charge 2 (hh - GG),-lam/(8*pi),lam**2*(14 + I*pi)/(64*pi**3),12.56637061,11.69813297,5.502925299
+charge 2 (hG),-lam/(8*pi),lam**2*(14 + I*pi)/(64*pi**3),12.56637061,11.69813297,5.502925299

@@ -1,0 +1,26 @@
+# unitarity_mg5.mg5 -- step (9) of the abelian Higgs note: standalone matrix elements of the coupled channels with
+# longitudinal gauge bosons (MadGraph polarized-particle syntax {0}), UFO of AbelianHiggs.fr (benchmark e = 1/2, MA = 1,
+# MH = 5/2), unitary and Feynman gauge.  Run from Src/ by run_unitarity_check.sh (imports a copy of
+# generated/AbelianHiggs_UFO in work/); evaluated at the points of unitarity_feyncalc.wl with tree_me_points.f.
+#  - group_subprocesses False: see tree_mg5.mg5 (MadGraph 3.8.1 and a t-channel h in a model without a photon).
+set automatic_html_opening False
+set group_subprocesses False
+set gauge unitary
+import model ./work/AbelianHiggs_UFO
+generate zp{0} zp{0} > zp{0} zp{0}
+output standalone work/sa_LL_u -f
+generate zp{0} zp{0} > h h
+output standalone work/sa_LLhh_u -f
+generate h h > h h
+output standalone work/sa_hh_u -f
+generate zp{0} h > zp{0} h
+output standalone work/sa_Lh_u -f
+set gauge Feynman
+import model ./work/AbelianHiggs_UFO
+generate zp{0} zp{0} > zp{0} zp{0}
+output standalone work/sa_LL_f -f
+generate zp{0} zp{0} > h h
+output standalone work/sa_LLhh_f -f
+generate zp{0} h > zp{0} h
+output standalone work/sa_Lh_f -f
+quit
