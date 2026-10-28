@@ -211,6 +211,9 @@ Print["(d) monomials in the finite part: ", Length[coefsVL$[finVL$ /. canonVL$]]
 (*(e) output*)
 
 
-Put[{"V2" -> v2MartinVL$, "masses" -> {xh -> -m2 + 3 lam phi^2, xg -> -m2 + lam phi^2, xa -> el^2 phi^2}},
+(* "poles": the 1/eps^2 and 1/eps coefficients (times 1/K^2) of the two-loop diagrams plus the counterterm insertions,
+   used in step (2) *)
+Put[{"V2" -> v2MartinVL$, "masses" -> {xh -> -m2 + 3 lam phi^2, xg -> -m2 + lam phi^2, xa -> el^2 phi^2},
+   "poles" -> (Collect[Simplify[# /. coefRulesVL$], phi, Simplify] & /@ polesVL$)},
   FileNameJoin[{resDirVL$, "v2_landau.m"}]];
 Print["(e) written results/v2_landau.m"];

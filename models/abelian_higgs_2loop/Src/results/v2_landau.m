@@ -10,4 +10,8 @@
           2*xg*xh - xh^2)*II[xh, xg, xa])/xa))/2 - 
    lam^2*phi^2*II[xh, xg, xg] - 3*lam^2*phi^2*II[xh, xh, xh], 
  "masses" -> {xh -> -m2 + 3*lam*phi^2, xg -> -m2 + lam*phi^2, 
-   xa -> el^2*phi^2}}
+   xa -> el^2*phi^2}, "poles" -> {((3*el^2 - 4*lam)*m2^2)/2 + 
+    (3*el^4 - 6*el^2*lam + 14*lam^2)*m2*phi^2 - 
+    (5*(el^6 + 3*el^4*lam - 3*el^2*lam^2 + 10*lam^3)*phi^4)/2, 
+   -2*el^2*m2^2 + ((11*el^4*m2)/4 + 8*el^2*lam*m2 - 6*lam^2*m2)*phi^2 + 
+    ((13*el^6)/3 - (23*el^4*lam)/4 - 7*el^2*lam^2 + 16*lam^3)*phi^4}}
