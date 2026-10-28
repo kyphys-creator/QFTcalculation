@@ -55,7 +55,7 @@ simulation/<流れ>/         模型（.fr）から検出器の模擬と表示ま
 | `sm_ckm` | 標準模型と CKM 行列：湯川行列の MS-bar の繰り込みと世代を変える過程 | [note.pdf](models/sm_ckm/ResearchNote/note.pdf) |
 | `sm_higgs` | ヒッグスの崩壊：NLO の部分幅と分岐比 | [note.pdf](models/sm_higgs/ResearchNote/note.pdf) |
 | `sm_nlo` | 標準模型の NLO の物理量：実の放射を含む崩壊幅、ρ パラメータ、Z 極、m_W | [note.pdf](models/sm_nlo/ResearchNote/note.pdf) |
-| `abelian_higgs` | アーベル・ヒッグス模型（U(1) のゲージ場と電荷1の複素スカラー）：一般の R_ξ ゲージの1ループの構造（FJ のタドポール、Slavnov–Taylor 恒等式、ゲージ依存の打ち消し）、繰り込み群、極質量、木の振幅と等価定理、ゲージによらない極質量、3点・4点の対抗項と NLOCT、NLO の Γ(h→AA) と MadLoop、繰り込み群の走りと自明性の限界、背景場の R_ξ と Fermi ゲージの有効ポテンシャルと Nielsen 恒等式（真空期待値の走りと SSV の γ̂）、Coleman–Weinberg の機構（M_h²/M_A²=3e²/8π²、繰り込み群による改良）、摂動のユニタリー性（A_LA_L、hh、A_Lh の部分波、λ≤2π と1ループの補正）、有限温度の相転移（一般形の係数 E=e³/4π と Debye 遮蔽、DRalgo と CosmoTransitions、ゲージ依存の大きさ）。現在は手順 (10) まで | [note.pdf](models/abelian_higgs/ResearchNote/note.pdf) |
+| `abelian_higgs` | アーベル・ヒッグス模型（U(1) のゲージ場と電荷1の複素スカラー）：一般の R_ξ ゲージの1ループの構造（FJ のタドポール、Slavnov–Taylor 恒等式、ゲージ依存の打ち消し）、繰り込み群、極質量、木の振幅と等価定理、ゲージによらない極質量、3点・4点の対抗項と NLOCT、NLO の Γ(h→AA) と MadLoop、繰り込み群の走りと自明性の限界、背景場の R_ξ と Fermi ゲージの有効ポテンシャルと Nielsen 恒等式（真空期待値の走りと SSV の γ̂）、Coleman–Weinberg の機構（M_h²/M_A²=3e²/8π²、繰り込み群による改良）、摂動のユニタリー性（A_LA_L、hh、A_Lh の部分波、λ≤2π と1ループの補正）、有限温度の相転移（一般形の係数 E=e³/4π と Debye 遮蔽、DRalgo と CosmoTransitions、ゲージ依存の大きさ）、Abrikosov–Nielsen–Olesen の渦糸（BPS の張力 πv²|n|、第一種・第二種の境界）。計画した手順 (1)〜(11) をすべて終えた | [note.pdf](models/abelian_higgs/ResearchNote/note.pdf) |
 
 どのノートも、おおむね「目的と問い」「設定」「結果」「検算の計画」「検算」「議論と今後」の順に書き、導出は付録に置く。
 
