@@ -1,0 +1,198 @@
+(* ::Package:: *)
+
+(* AbelianHiggs.fr -- FeynRules model file of the abelian Higgs model in the MS-bar scheme and a general R_xi gauge
+   (models/abelian_higgs/ResearchNote/note.tex, Eqs. (L), (gf), (fp)).
+
+   L = -1/4 F_{mu nu} F^{mu nu} + (D Phi)^dagger (D Phi) + muH2 Phi^dagger Phi - lam (Phi^dagger Phi)^2 + L_gf + L_FP,
+   D_mu = d_mu - i ee QX A_mu,  QX(Phi) = 1   (FeynRules' sign convention for DC, as in SpinorQED.fr and SM.fr)
+   Phi = (vev + H + i G0)/sqrt 2
+
+   - Parameters.  The independent MS-bar parameters of the note are (ee, lam, muH2); the file uses the equivalent set
+     (ee, MA, MH) defined by the tree relations MA = ee vev, MH^2 = 2 lam vev^2 = 2 muH2.  vev = sqrt(muH2/lam) is the
+     minimum of the tree potential (the tadpoles are not cancelled, note Sec. 2).  The values are the benchmark point of
+     the note (ee = 1/2, MA = 1, MH = 5/2, so vev = 2, lam = 25/32), not physical values.
+   - Gauge fixing (note Eq. (gf)), written in renormalized fields and not added here because it has no vertices:
+       L_gf = -(d.A + xiA MA G0)^2/(2 xiA).
+     It removes the A-G0 mixing -MA A.dG0 of |D Phi|^2 and gives G0 the mass^2 xiA MA^2.
+     L_FP = -ghAbar s F with s A_mu = d_mu ghA and s Phi = i ee ghA Phi, i.e. s G0 = ee ghA (vev + H):
+       L_FP = -ghAbar d^2 ghA - xiA MA ee ghAbar ghA (vev + H)
+     (ghost mass^2 xiA MA^2 and the ghost-ghost-H coupling).
+   - The charge of the U(1) is called QX, not Q, so that the UFO gives every particle electric charge 0 (H and G0 are
+     the real components of Phi and carry no definite QX).
+   - Gauge parameter xiA (block GAUGE, value 1 = Feynman gauge for MadGraph).  In the FeynArts model the propagators
+     carry GaugeXi[A]; generate_AbelianHiggs.wl writes the FeynArts model with xiA -> GaugeXi[A] in the ghost-scalar
+     coupling.
+   - Coupling orders (MadGraph): ee counts QED = 1 and lam QED = 2 (lam = ee^2 MH^2/(2 MA^2)), as in SM.fr.
+   - MadGraph names: zp (the vector, PDG 32), h (PDG 25), G0 (PDG 250), ghA.  The vector is not called a, so that
+     MadGraph does not treat it as a photon.
+   - Load from this folder:
+       $FeynRulesPath = FileNameJoin[{$UserBaseDirectory, "Applications", "FeynRules"}];
+       SetDirectory[$FeynRulesPath]; << FeynRules`
+       SetDirectory[".../models/abelian_higgs/Src"]; LoadModel["AbelianHiggs.fr"]
+*)
+
+(* The Lagrangian always contains the Goldstone boson and the ghost (general R_xi gauge).  FeynmanGauge = True only
+   makes the UFO declare gauge = [0, 1], so that MadGraph accepts "set gauge Feynman"; MadGraph removes the Goldstone
+   and the ghost itself in unitary gauge. *)
+FeynmanGauge = True;
+
+M$ModelName = "AbelianHiggs";
+
+M$Information = {
+  Authors -> {"K. Yasuda"},
+  Date    -> "2026-10-27",
+  Version -> "1.0",
+  Comment -> "Abelian Higgs model, MS-bar parameters, general R_xi gauge (cross-check model for the loop stack)"
+};
+
+M$InteractionOrderHierarchy = {
+  {QED, 1}
+};
+
+(* ************************** *)
+(* *****      vevs      ***** *)
+(* ************************** *)
+
+M$vevs = { {Phi, vev} };
+
+(* ************************** *)
+(* *****  Gauge groups  ***** *)
+(* ************************** *)
+
+M$GaugeGroups = {
+  U1X == {
+    Abelian          -> True,
+    CouplingConstant -> ee,
+    GaugeBoson       -> A,
+    Charge           -> QX
+  }
+};
+
+(* ************************** *)
+(* *****   Parameters   ***** *)
+(* ************************** *)
+
+M$Parameters = {
+  (* external: MS-bar values at the benchmark scale *)
+  ee == {
+    ParameterType    -> External,
+    BlockName        -> AHINPUTS,
+    OrderBlock       -> 1,
+    Value            -> 0.5,
+    InteractionOrder -> {QED, 1},
+    TeX              -> e,
+    Description      -> "MS-bar gauge coupling of the U(1)"
+  },
+  xiA == {
+    ParameterType -> External,
+    BlockName     -> GAUGE,
+    OrderBlock    -> 1,
+    Value         -> 1.,
+    TeX           -> Subscript[\[Xi], A],
+    Description   -> "Gauge parameter of the R_xi gauge"
+  },
+  (* internal *)
+  vev == {
+    ParameterType    -> Internal,
+    Value            -> MA/ee,
+    InteractionOrder -> {QED, -1},
+    Description      -> "Minimum of the tree potential sqrt(muH2/lam)"
+  },
+  lam == {
+    ParameterType    -> Internal,
+    Value            -> MH^2/(2 vev^2),
+    InteractionOrder -> {QED, 2},
+    TeX              -> \[Lambda],
+    Description      -> "Quartic coupling"
+  },
+  muH2 == {
+    ParameterType -> Internal,
+    Value         -> lam vev^2,
+    TeX           -> Superscript[\[Mu], 2],
+    Description   -> "Mass parameter of the potential"
+  }
+};
+
+(* ************************** *)
+(* *****   Particles    ***** *)
+(* ************************** *)
+
+M$ClassesDescription = {
+  V[1] == {
+    ClassName       -> A,
+    SelfConjugate   -> True,
+    Mass            -> {MA, 1.},
+    Width           -> {WA, 0.},
+    ParticleName    -> "zp",
+    PDG             -> 32,
+    PropagatorLabel -> "A",
+    PropagatorType  -> Sine,
+    PropagatorArrow -> None,
+    FullName        -> "U(1) gauge boson"
+  },
+  U[1] == {
+    ClassName       -> ghA,
+    SelfConjugate   -> False,
+    Ghost           -> A,
+    QuantumNumbers  -> {GhostNumber -> 1},
+    Mass            -> {MA, 1.},
+    Width           -> {WA, 0.},
+    PropagatorLabel -> "uA",
+    PropagatorType  -> GhostDash,
+    PropagatorArrow -> Forward
+  },
+  S[1] == {
+    ClassName       -> H,
+    SelfConjugate   -> True,
+    Mass            -> {MH, 2.5},
+    Width           -> {WH, 0.0155549},
+    PropagatorLabel -> "h",
+    PropagatorType  -> D,
+    PropagatorArrow -> None,
+    PDG             -> 25,
+    ParticleName    -> "h",
+    FullName        -> "Higgs"
+  },
+  S[2] == {
+    ClassName       -> G0,
+    SelfConjugate   -> True,
+    Goldstone       -> A,
+    Mass            -> {MA, 1.},
+    Width           -> {WA, 0.},
+    PropagatorLabel -> "G",
+    PropagatorType  -> D,
+    PropagatorArrow -> None,
+    PDG             -> 250,
+    ParticleName    -> "G0",
+    FullName        -> "Goldstone"
+  },
+  S[11] == {
+    ClassName      -> Phi,
+    Unphysical     -> True,
+    SelfConjugate  -> False,
+    QuantumNumbers -> {QX -> 1},
+    Definitions    -> {Phi -> (vev + H + I G0)/Sqrt[2]}
+  }
+};
+
+(* FeynArts propagators: R_xi gauge (the Goldstone boson and the ghost have mass^2 xi MA^2) *)
+GaugeXi[V[1]] = GaugeXi[A];
+GaugeXi[S[1]] = 1;
+GaugeXi[S[2]] = GaugeXi[A];
+GaugeXi[U[1]] = GaugeXi[A];
+
+(* ************************** *)
+(* *****   Lagrangian   ***** *)
+(* ************************** *)
+
+(* FS[A, mu, nu] is the field strength and DC the covariant derivative d - I ee QX A.  The parentheses are needed:
+   in a package file a line that is a complete expression ends the statement. *)
+LGaugeAH := (-1/4 FS[A, mu, nu] FS[A, mu, nu]);
+
+(* V = -muH2 |Phi|^2 + lam |Phi|^4 has its minimum at |Phi|^2 = vev^2/2 because muH2 = lam vev^2 *)
+LHiggsAH := (DC[Phibar, mu] DC[Phi, mu] + muH2 Phibar Phi - lam Phibar Phi Phibar Phi);
+
+(* Faddeev-Popov term -ghAbar s F with F = d.A + xiA MA G0:  s(d.A) = d^2 ghA,  s G0 = ee ghA (vev + H) *)
+LGhostAH := (-ghAbar.del[del[ghA, mu], mu] - xiA MA ee ghAbar.ghA (vev + H));
+
+LAH := LGaugeAH + LHiggsAH + LGhostAH;
