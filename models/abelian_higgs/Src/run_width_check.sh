@@ -9,6 +9,10 @@
 #   5. MadLoop: generate h > zp zp [virt=QED], output standalone -> work/ml_haa; check_sa.f reads the point from PS.input
 #      and MU_R from MU_R.input
 #   6. madloop_numeric.py    : MadLoop's finite/born against delta_OS -> results/madloop.csv
+#   7. nlo_width_fortran.wl  : FormCalc's Fortran code (WriteSquaredME, WriteRenConst, SetupCodeDir) for the width with
+#                              the counterterm dCTAAh -> work/fc_haa
+#   8. formcalc_fortran.py   : builds it with LoopTools (Delta = 0, 1e3, 1e7; mu = 1/2, 1, 2, 5), runs the decay and compares
+#                              with delta_OS -> results/nlo_width_fortran.csv
 # Needs generated/AbelianHiggs_FA, results/oneloop_sigma.m (run_oneloop_check.sh) and generated/AbelianHiggs_CT.nlo
 # (run_vertex_check.sh).  Each Mathematica step runs in its own kernel.
 cd "$(dirname "$0")"
@@ -44,3 +48,5 @@ open(p, "w").write(s.replace(old, new))
 PYEOF
 (cd "$P" && make check > make.log 2>&1 && echo "compiled $P/check") || { echo "compilation failed, see $P/make.log"; exit 1; }
 "$PY" madloop_numeric.py
+wolframscript -file nlo_width_fortran.wl 2>&1 | grep -E "^(one-loop|written)"
+"$PY" formcalc_fortran.py
