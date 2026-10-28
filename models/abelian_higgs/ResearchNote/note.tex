@@ -45,7 +45,7 @@
 \maketitle
 
 \begin{abstract}
-スピノル QED と標準模型のノート~\cite{qednote,smnote} に続き、自発的に破れたゲージ理論の最も簡単な模型として、$U(1)$ のゲージ場 $A_\mu$ と電荷1の複素スカラー $\Phi$ からなるアーベル・ヒッグス模型を $d=4$ で調べる。一般の $R_\xi$ ゲージで Goldstone ボソン $G$ とゴーストを残し、紫外発散を次元正則化と $\MSbar$ で処理し、タドポールは打ち消さずに図として含める（Fleischer--Jegerlehner（FJ）の処方~\cite{fj81}）。$\MSbar$ のパラメータは破れていないラグランジアンの $e$、$\lambda$、$m^2$ で、真空期待値は $v=\sqrt{m^2/\lambda}$、$\MSbar$ の質量は $M_A=ev$、$M_h^2=2m^2$ である。本ノートではまず、Feynman 則（10個の頂点のクラス）、BRST 変換と Slavnov--Taylor 恒等式、べき数え上げ、1ループのタドポールと2点関数、$\MSbar$ の対抗項、繰り込み群、極質量、木の振幅を手で求めた。標準模型と違い、2点関数はすべて $D$ 次元で数行の閉じた式になり、ゲージ依存の消え方を式の上で追える。タドポールを付けた図を含めると、(i) ゲージ場の横波の自己エネルギー $\Sigma_T$ は、すべての運動量で $\xi$ によらない（$A$--$h$ のループの $\xi$ の部分は $h$--$G$ のループと打ち消し、$G$ のシーガルの $A_0(\xi M_A^2)$ はタドポールと打ち消す）。(ii) ヒッグスの自己エネルギーの $\xi$ 依存は $(p^2-M_h^2)[A_0(\xi M_A^2)-\frac12(p^2+M_h^2)B_0(p^2;\xi M_A^2,\xi M_A^2)]/(Kv^2)$ だけで、質量殻上で消える。(iii) 縦波、混合、Goldstone の2点関数は、BRST 不変性から導いた $p^2\Sigma_L-2M_Ap^2\Sigma^{AG}-M_A^2\Sigma^{GG}=0$ を $D$ 次元で厳密に満たす。タドポールを除くと右辺は $-M_A^2T/v$ になり、$\Sigma^{GG}(0)=0$（Goldstone の定理）もタドポールを含めて初めて成り立つ。対抗項は $\delta Z_A=-\frac{e^2}{3K}\DUV$、$\delta Z_\Phi=(3-\xi)\frac{e^2}K\DUV$、$\delta_{m^2}=\frac{4\lambda-3e^2}K\DUV$、$\delta_\lambda=\frac{10\lambda-6e^2+3e^4/\lambda}K\DUV$（$K=(4\pi)^2$）で、FJ では裸の真空期待値を裸の木のポテンシャルの最小点にとるので、これらだけで $A$、$h$、$G$ の2点関数がすべて有限になる。$\beta_e=e^3/(3K)$、$\beta_\lambda=(20\lambda^2-12e^2\lambda+6e^4)/K$、$\beta_{m^2}=m^2(8\lambda-6e^2)/K$ で、$\MSbar$ の質量の走りにはタドポールから $1/\lambda$ の項が入る。基準点（$e=\frac12$、$M_A=\mu=1$、$M_h=\frac52$）の1ループの極質量は $M_{h,\mathrm p}=2.559100$、$M_{A,\mathrm p}=0.993696$ で、$\xi=0,\frac12,1,3$ で同じ値になり、$\im\Sigma^H(M_h^2)/M_h$ は木の $\Gamma(h\to AA)=0.0155549$ と一致する。木のレベルでは、縦波の $AA\to AA$ の振幅の閉じた式を求め、高エネルギーで $GG\to GG$ の $-6\lambda$ に $M_A^2/E^2$ の速さで近づくこと（等価定理）を確かめた。検算と応用（有効ポテンシャルのゲージ依存と Nielsen 恒等式、Coleman--Weinberg の機構、摂動のユニタリー性、有限温度の相転移、Abrikosov--Nielsen--Olesen の渦糸）の十一の手順を定め、その最初の手順として FeynRules の模型ファイルを作った。10個の頂点のクラスはすべて手計算の表と記号として一致し（わざと3か所を誤らせた表では3個の差が出た）、MadGraph 3.8.1 の6個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。手順 (2) では、本ノートの FeynArts の模型から FeynCalc で作った $h\to AA$、$AA\to AA$、$AA\to hh$、$hh\to hh$、$GG\to GG$、$GG\to hh$ の振幅が手計算の式と記号として一致し、$AA\to hh$ の6個の $R_\xi$ の図の和は $\xi$ によらなかった（ゲージ場の交換の $\xi$ の部分は $G$ の交換とチャンネルごとに打ち消す）。陽な偏極ベクトルの数値は FeynCalc の厳密値と $10^{-15}$ で一致し、等価定理による縦波の振幅と Goldstone ボソンの振幅の差は $M_A^2/E^2$ で小さくなった（$AA\to hh$ では $-1$ 倍）。MadGraph の $\Gamma(h\to AA)$ は全桁、standalone の行列要素は両方のゲージで $2\times10^{-15}$ 以内（高エネルギーでは縦波の打ち消しの桁落ちまで）、断面積は統計誤差の1倍以内で一致した。MadGraph 3.8.1 は光子のない模型で $t$ チャンネルの $h$ を含む過程の MadEvent の出力に失敗し、部分過程をまとめない設定で避けた。手順 (3) では、本ノートの FeynArts の模型から求めたタドポールと五つの2点関数とゴーストの2点関数が手計算の式に $D$ 次元で記号として一致し（$\Sigma^H$ は図ごとにも）、Slavnov--Taylor 恒等式、紫外の極、対抗項での有限性も確かめた。極質量は $\xi=0,\frac12,1,3,10$ で30桁以上同じで、1PI の部分だけでは $M_{h,\mathrm p}$ が $2.6002$〜$2.6399$ と変わった。$B_0$ は LoopTools、COLLIER、Package-X が $2\times10^{-16}$ で一致した。手順 (4) では、3点と4点の10個の関数の紫外の極が、2点関数から決めた対抗項と FJ の $\delta v$ で一般の $\xi$ について記号として消え、$AAAA$ に極がないことを確かめた。NLOCT の13個の UV の頂点の極は、タドポールの図を含まない1PI の極を消す値（タドポールを対抗項で消す処方）に一致し、本ノートとの差はちょうどタドポールの付いた図の極だった。NLOCT は $A$--$G$ の混合の UV の頂点を書き出さない。導出は付録に載せる。
+スピノル QED と標準模型のノート~\cite{qednote,smnote} に続き、自発的に破れたゲージ理論の最も簡単な模型として、$U(1)$ のゲージ場 $A_\mu$ と電荷1の複素スカラー $\Phi$ からなるアーベル・ヒッグス模型を $d=4$ で調べる。一般の $R_\xi$ ゲージで Goldstone ボソン $G$ とゴーストを残し、紫外発散を次元正則化と $\MSbar$ で処理し、タドポールは打ち消さずに図として含める（Fleischer--Jegerlehner（FJ）の処方~\cite{fj81}）。$\MSbar$ のパラメータは破れていないラグランジアンの $e$、$\lambda$、$m^2$ で、真空期待値は $v=\sqrt{m^2/\lambda}$、$\MSbar$ の質量は $M_A=ev$、$M_h^2=2m^2$ である。本ノートではまず、Feynman 則（10個の頂点のクラス）、BRST 変換と Slavnov--Taylor 恒等式、べき数え上げ、1ループのタドポールと2点関数、$\MSbar$ の対抗項、繰り込み群、極質量、木の振幅を手で求めた。標準模型と違い、2点関数はすべて $D$ 次元で数行の閉じた式になり、ゲージ依存の消え方を式の上で追える。タドポールを付けた図を含めると、(i) ゲージ場の横波の自己エネルギー $\Sigma_T$ は、すべての運動量で $\xi$ によらない（$A$--$h$ のループの $\xi$ の部分は $h$--$G$ のループと打ち消し、$G$ のシーガルの $A_0(\xi M_A^2)$ はタドポールと打ち消す）。(ii) ヒッグスの自己エネルギーの $\xi$ 依存は $(p^2-M_h^2)[A_0(\xi M_A^2)-\frac12(p^2+M_h^2)B_0(p^2;\xi M_A^2,\xi M_A^2)]/(Kv^2)$ だけで、質量殻上で消える。(iii) 縦波、混合、Goldstone の2点関数は、BRST 不変性から導いた $p^2\Sigma_L-2M_Ap^2\Sigma^{AG}-M_A^2\Sigma^{GG}=0$ を $D$ 次元で厳密に満たす。タドポールを除くと右辺は $-M_A^2T/v$ になり、$\Sigma^{GG}(0)=0$（Goldstone の定理）もタドポールを含めて初めて成り立つ。対抗項は $\delta Z_A=-\frac{e^2}{3K}\DUV$、$\delta Z_\Phi=(3-\xi)\frac{e^2}K\DUV$、$\delta_{m^2}=\frac{4\lambda-3e^2}K\DUV$、$\delta_\lambda=\frac{10\lambda-6e^2+3e^4/\lambda}K\DUV$（$K=(4\pi)^2$）で、FJ では裸の真空期待値を裸の木のポテンシャルの最小点にとるので、これらだけで $A$、$h$、$G$ の2点関数がすべて有限になる。$\beta_e=e^3/(3K)$、$\beta_\lambda=(20\lambda^2-12e^2\lambda+6e^4)/K$、$\beta_{m^2}=m^2(8\lambda-6e^2)/K$ で、$\MSbar$ の質量の走りにはタドポールから $1/\lambda$ の項が入る。基準点（$e=\frac12$、$M_A=\mu=1$、$M_h=\frac52$）の1ループの極質量は $M_{h,\mathrm p}=2.559100$、$M_{A,\mathrm p}=0.993696$ で、$\xi=0,\frac12,1,3$ で同じ値になり、$\im\Sigma^H(M_h^2)/M_h$ は木の $\Gamma(h\to AA)=0.0155549$ と一致する。木のレベルでは、縦波の $AA\to AA$ の振幅の閉じた式を求め、高エネルギーで $GG\to GG$ の $-6\lambda$ に $M_A^2/E^2$ の速さで近づくこと（等価定理）を確かめた。検算と応用（有効ポテンシャルのゲージ依存と Nielsen 恒等式、Coleman--Weinberg の機構、摂動のユニタリー性、有限温度の相転移、Abrikosov--Nielsen--Olesen の渦糸）の十一の手順を定め、その最初の手順として FeynRules の模型ファイルを作った。10個の頂点のクラスはすべて手計算の表と記号として一致し（わざと3か所を誤らせた表では3個の差が出た）、MadGraph 3.8.1 の6個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。手順 (2) では、本ノートの FeynArts の模型から FeynCalc で作った $h\to AA$、$AA\to AA$、$AA\to hh$、$hh\to hh$、$GG\to GG$、$GG\to hh$ の振幅が手計算の式と記号として一致し、$AA\to hh$ の6個の $R_\xi$ の図の和は $\xi$ によらなかった（ゲージ場の交換の $\xi$ の部分は $G$ の交換とチャンネルごとに打ち消す）。陽な偏極ベクトルの数値は FeynCalc の厳密値と $10^{-15}$ で一致し、等価定理による縦波の振幅と Goldstone ボソンの振幅の差は $M_A^2/E^2$ で小さくなった（$AA\to hh$ では $-1$ 倍）。MadGraph の $\Gamma(h\to AA)$ は全桁、standalone の行列要素は両方のゲージで $2\times10^{-15}$ 以内（高エネルギーでは縦波の打ち消しの桁落ちまで）、断面積は統計誤差の1倍以内で一致した。MadGraph 3.8.1 は光子のない模型で $t$ チャンネルの $h$ を含む過程の MadEvent の出力に失敗し、部分過程をまとめない設定で避けた。手順 (3) では、本ノートの FeynArts の模型から求めたタドポールと五つの2点関数とゴーストの2点関数が手計算の式に $D$ 次元で記号として一致し（$\Sigma^H$ は図ごとにも）、Slavnov--Taylor 恒等式、紫外の極、対抗項での有限性も確かめた。極質量は $\xi=0,\frac12,1,3,10$ で30桁以上同じで、1PI の部分だけでは $M_{h,\mathrm p}$ が $2.6002$〜$2.6399$ と変わった。$B_0$ は LoopTools、COLLIER、Package-X が $2\times10^{-16}$ で一致した。手順 (4) では、3点と4点の10個の関数の紫外の極が、2点関数から決めた対抗項と FJ の $\delta v$ で一般の $\xi$ について記号として消え、$AAAA$ に極がないことを確かめた。NLOCT の13個の UV の頂点の極は、タドポールの図を含まない1PI の極を消す値（タドポールを対抗項で消す処方）に一致し、本ノートとの差はちょうどタドポールの付いた図の極だった。NLOCT は $A$--$G$ の混合の UV の頂点を書き出さない。手順 (5) では、$h\to AA$ の NLO の幅を求めた。形状因子は FeynCalc（一般の $\xi$）と FormCalc（Feynman ゲージ）で記号として一致し、on-shell の質量の処方の補正 $\delta_{\mathrm{OS}}=0.0201540$ は $\xi=\frac12,1,3,10$ で30桁同じで、$\mu$ には $e^2$ の走りを打ち消す分だけ依存した。NLOCT の UFO の MadLoop は $\mu_R=0.5$〜$5$ で $\delta_{\mathrm{OS}}$ と $1.7\times10^{-11}$ で一致した。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -445,6 +445,28 @@ M_{h,\mathrm p}=2.559100,\quad M_{A,\mathrm p}=0.993696
 \end{equation}
 の $-1$ 倍に近づく。$-1$ は、縦波の偏極 $\varepsilon_L\approx k/M_A$ と Goldstone ボソンの間の位相 $i$ が2本の外線に付くことによる（$AA\to AA$ では $i^4=1$）。$s\to\infty$ では $\mathcal M(GG\to hh)\to-2\lambda+e^2[(3+\cos\theta)/(1-\cos\theta)+(3-\cos\theta)/(1+\cos\theta)]$ で、$AA\to AA$ と違い $t$、$u$ チャンネルのゲージ場の交換から $e^2$ の項が残る。
 
+\subsection{NLO の崩壊幅}\label{sec:nlo}
+
+$h(p)\to A(k_1)A(k_2)$ の1ループの振幅を、物理的な偏極で消えない二つの形状因子で
+\begin{equation}
+\mathcal M^{\mu\nu}=F_g\,g^{\mu\nu}+F_b\,k_2^\mu k_1^\nu+(k_1^\mu,\ k_2^\nu\ \text{に比例する項}),\qquad
+\mathcal M_0^{\mu\nu}=2eM_A\,g^{\mu\nu}
+\label{eq:ff}
+\end{equation}
+と書く（FeynArts の形、Feynman 則の積の $1/i$ 倍）。$\MSbar$（FJ）で繰り込んだ S 行列要素の1ループの部分は
+\begin{equation}
+F_g^{\mathrm R}=F_g^{\mathrm{1PI}}+F_g^{\mathrm{tad}}+c_A\,2eM_A+\frac12\bigl(\delta R_h+2\delta R_A\bigr)2eM_A,\qquad
+\delta R_h=-\bigl[\Sigma^{H\prime}+\delta Z_\Phi\bigr]_{M_h^2},\quad \delta R_A=-\bigl[\Sigma_T'+\delta Z_A\bigr]_{M_A^2}
+\label{eq:nloamp}
+\end{equation}
+と $F_b$ である（\ref{app:nlo}）。$F_g^{\mathrm{tad}}$ は $AAhh$ の頂点にタドポールをつないだ図、$c_A$ は式~\eqref{eq:ctv}、$\delta R$ は外線の留数（$\Sigma'=\dd\Sigma/\dd p^2$）である。$F_b$ は紫外で有限で $\xi$ によらない。$e$ を $\MSbar$ の $e(\mu)$、$M_A$ と $M_h$ を極質量とする（on-shell の質量の処方）と、幅は
+\begin{equation}
+\Gamma=\Gamma_0\bigl(e(\mu),M_{A,\mathrm p},M_{h,\mathrm p}\bigr)\,(1+\delta_{\mathrm{OS}}),\qquad
+\delta_{\mathrm{OS}}=\frac{\re[F_g^{\mathrm R}+F_bS_b/S_g]}{eM_A}+\frac{\re\Sigma_T(M_A^2)}{M_A^2}
+\label{eq:nlowidth}
+\end{equation}
+になる。$\Gamma_0$ は式~\eqref{eq:width}、$S_g=3-M_h^2/M_A^2+M_h^4/(4M_A^4)$ と $S_b=M_h^2(M_h^2-4M_A^2)(M_h^2-2M_A^2)/(8M_A^4)$ は偏極の和、最後の項は木の結合 $2eM_A$ の $M_A$ を $\MSbar$ から極質量に直す分である（$\Sigma$ は $\MSbar$ の有限部分）。$\delta_{\mathrm{OS}}$ には三つの性質がある。一つ目に、$\xi$ によらない。二つ目に、タドポールを含まない。$F_g^{\mathrm{tad}}/(eM_A)=2\Delta v/v$ が $\Sigma_T$ のタドポールの部分 $-2M_A^2\Delta v/v$ と打ち消すからである。したがって、タドポールを対抗項で消す処方（NLOCT と MadLoop）でも同じ値になる。三つ目に、$\mu$ には $\Gamma_0$ の $e^2(\mu)$ の走りを打ち消す $\dd\delta_{\mathrm{OS}}/\dd\ln\mu=-2e^2/(3K)$ だけを通じて依存する。形状因子 $F_g^{\mathrm{1PI}}$、$F_b$ は手で閉じた形にはせず、FeynCalc（一般の $\xi$）と FormCalc（Feynman ゲージ）で求めた（手順 (5)）。基準点（$\mu=1$）では $\delta_{\mathrm{OS}}=0.0201540$、$\Gamma=0.0158684$ で、木より $2.0\%$ 大きい。
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、式~\eqref{eq:T}、\eqref{eq:se} と\ref{app:se} の $\Sigma_L$、$\Sigma^{AG}$ を、手で書いた Feynman 則から FeynCalc で $D$ 次元で記号として確かめた（図ごとの値も）。恒等式~\eqref{eq:stid}、$\Sigma^{GG}(0)=0$、$\Sigma_T$ が $\xi$ によらないこと、$\Sigma^H$ の $\xi$ 依存の形、式~\eqref{eq:uv} の極、対抗項~\eqref{eq:ct} で五つの2点関数が有限になること、極質量~\eqref{eq:polenum}（$\xi=0,\frac12,1,3$）と光学定理~\eqref{eq:optical} も同じ計算で確かめた。式~\eqref{eq:MLL} は偏極ベクトルを陽に作った数値で確かめた。正式な検算は手順 (2)〜(5) で行う。
@@ -461,7 +483,7 @@ Feynman 則 & \ref{app:rules} & FeynRules の頂点を表~\ref{tab:rules} と記
 木の振幅 \eqref{eq:width}、\eqref{eq:Maa}、\eqref{eq:MLL}、\eqref{eq:Mahh} & \ref{app:tree} & 記号として一致。偏極ベクトルを陽に作った数値も & — & — & 幅と断面積（両ゲージ） \\
 タドポールと2点関数 \eqref{eq:T}、\eqref{eq:se}、恒等式 \eqref{eq:stid} & \ref{app:brst}、\ref{app:se} & 本ノートの FeynArts の模型で一般の $\xi$。図ごとにも & 解析式 & 数値 & — \\
 対抗項 \eqref{eq:ct}、\eqref{eq:ctv}、3点・4点の関数の極 & \ref{app:ren} & 一般の $\xi$ で極を抽出。$AAAA$ が有限 & — & — & NLOCT の対抗項 \\
-極質量 \eqref{eq:pole}、光学定理、NLO の $\Gamma(h\to AA)$ & \ref{app:pole}、後で & ゲージによらないこと（FormCalc でも） & 数値 & 数値 & MadLoop \\
+極質量 \eqref{eq:pole}、光学定理、NLO の $\Gamma(h\to AA)$ \eqref{eq:nlowidth} & \ref{app:pole}、\ref{app:nlo} & ゲージによらないこと（FormCalc でも） & 数値 & 数値 & MadLoop \\
 繰り込み群 \eqref{eq:rge}、\eqref{eq:mrun} & \ref{app:ren} & $\mu$ を変えて評価 & — & 数値 & MadLoop の $\mu_R$ \\
 有効ポテンシャル、Nielsen 恒等式 & 後で & 背景場の $R_\xi$ と Fermi ゲージ & — & — & — \\
 Coleman--Weinberg の機構 & 後で & — & — & — & — \\
@@ -478,7 +500,7 @@ Coleman--Weinberg の機構 & 後で & — & — & — & — \\
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}、手順 (2) は \texttt{run\_tree\_check.sh}、手順 (3) は \texttt{run\_oneloop\_check.sh}、手順 (4) は \texttt{run\_vertex\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}、手順 (2) は \texttt{run\_tree\_check.sh}、手順 (3) は \texttt{run\_oneloop\_check.sh}、手順 (4) は \texttt{run\_vertex\_check.sh}、手順 (5) は \texttt{run\_width\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/AbelianHiggs.fr} を作った。ラグランジアンは式~\eqref{eq:L} からゲージ固定の項（頂点を持たない）と対抗項を除き、ゴーストの項 $\mathcal L_{\mathrm{FP}}$ を加えたものである。ゲージ群は $U(1)$ で、$\Phi$ に電荷 $Q_X=1$ を与えて共変微分で結合を書き、$\Phi=(v+h+iG)/\sqrt2$ を定義として与えた。外部パラメータは $e$、$M_A$、$M_h$、$\xi$ で、$v=M_A/e$、$\lambda=M_h^2/(2v^2)$、$m^2=\lambda v^2$ を内部パラメータとした（\ref{app:details}）。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通った。頂点は10個のクラスで、すべてが表~\ref{tab:rules} と記号として一致した（差がすべて0）。比べる手続きが誤りを見逃さないことは、表の3か所（$AGh$ の符号、$GGh$ の因子2、ゴーストの頂点の $\xi$）をわざと誤らせた写しで、ちょうど3個の差が出ることで確かめた。FeynArts の模型では、ゴーストと $h$ の結合が $-i\,\texttt{EL}\,\texttt{MA}\,\texttt{GaugeXi[A]}$ になるように \texttt{xiA} を \texttt{GaugeXi[A]} に置き換えた。伝播関数は FeynArts の一般の模型の $R_\xi$ の形で、$G$ とゴーストの質量は $\sqrt{\xi}M_A$ である（\texttt{GaugeXi[S[2]]}$=$\texttt{GaugeXi[U[1]]}$=$\texttt{GaugeXi[A]}）。FeynRules は電荷の単位 \texttt{ee} を FeynArts の \texttt{EL} に置き換えた。UFO は Feynman ゲージ（$\xi=1$）で、\texttt{gauge = [0, 1]} を宣言する。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の図を両方のゲージで生成し、すべて手で数えた数と一致した。スクリプトは \texttt{generate\_AbelianHiggs.wl}（FeynRules）と \texttt{model\_mg5.mg5}（MadGraph）である。
 
@@ -612,6 +634,26 @@ $AAAA$ & 0 & 0 & 0 \\
 \end{tabularx}
 \end{table}
 
+\paragraph{手順 (5)：NLO の崩壊幅。}$h\to AA$ の1ループの図は、1PI が10個、$AAhh$ の頂点にタドポールをつないだ図が4個である。FormCalc（Feynman ゲージ、\texttt{nlo\_width\_formcalc.wl}）では \texttt{CalcFeynAmp} の \texttt{Dimension -> D}、\texttt{PaVeReduce -> True} で $A_0$、$B_0$、$C_0$ だけの形にし、二つの形状因子を取り出した。FeynCalc（一般の $\xi$、\texttt{nlo\_width\_feyncalc.wl}）では $D$ 次元の偏極の和で取り出した。$\xi=1$ で両者の極と $\MSbar$ の有限部分は $F_g$、$F_b$ ともに記号として一致した（$C_0$ の引数は三角形の6通りの付け替えで正準化した）。式~\eqref{eq:nloamp} の極は一般の $\xi$ で記号として0になった（\texttt{nlo\_width\_numeric.wl}）。基準点の $\delta_{\mathrm{OS}}$ を Package-X の $B_0$、$B_0'$、$C_0$（40桁）で求めると、表~\ref{tab:nlo} のとおり、$\xi=\frac12,1,3,10$ で30桁同じ $0.020153961861606966$（$\mu=1$）だった。1PI、タドポール、留数の部分はそれぞれ $\xi$ で大きく変わり、タドポールの部分は質量の処方の項 $\re\Sigma_T/M_A^2$ のタドポールの部分とちょうど打ち消す。$\mu=2$ との差 $-7.3156763304878\times10^{-4}$ は $-(2e^2/3K)\ln2$ と全桁一致した。$\Gamma=\Gamma_0(1+\delta_{\mathrm{OS}})=0.01586840$ である。
+
+MadLoop には、NLOCT の UV と R2 の頂点を入れた UFO（\texttt{nlo\_ufo.wl}。R2 の $h$ の1点の頂点は除いた）を使った。\texttt{generate h > zp zp [virt=QED]} は Born 1個、ループ10個、UV 13個の図を作り、ループの図は FeynArts の1PI の図と同じ数である（MadLoop はタドポールの図を作らない）。$\mu_R=0.5,1,2,5$ で finite/born は式~\eqref{eq:nlowidth} の $\delta_{\mathrm{OS}}$ と相対 $1.5$〜$1.7\times10^{-11}$ で一致し（MadLoop の数値の削減の精度で、差は $\mu_R$ によらない $-3\times10^{-13}$）、極は $2\times10^{-16}$ だった（\texttt{madloop\_numeric.py}）。タドポールを対抗項で消す NLOCT の処方と本ノートの FJ の処方は、極質量で書いた物理量で一致する。
+
+\begin{table}[tbp]
+\centering\small
+\caption{基準点の $\delta_{\mathrm{OS}}$（$\mu=1$）とその内訳。各部分は式~\eqref{eq:nlowidth} の $\re[\cdots]/(eM_A)$ の1PI（$F_b$ を含む）、タドポール、留数の項（$\MSbar$ の有限部分）。質量の処方の項 $\re\Sigma_T(M_A^2)/M_A^2=0.0125677$ と $\delta_{\mathrm{OS}}$ は $\xi$ によらない。}
+\label{tab:nlo}
+\begin{tabular}{rrrrr}
+\toprule
+$\xi$ & 1PI & タドポール & 留数 & $\delta_{\mathrm{OS}}$ \\
+\midrule
+$\frac12$ & $0.0335862$ & $-0.0228674$ & $-0.0031324$ & $0.020153961861606966$ \\
+1 & $0.0295641$ & $-0.0226245$ & $0.0006467$ & $0.020153961861606966$ \\
+3 & $0.0475077$ & $-0.0246760$ & $-0.0152454$ & $0.020153961861606966$ \\
+10 & $0.0628050$ & $-0.0448295$ & $-0.0103892$ & $0.020153961861606966$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
@@ -623,7 +665,9 @@ $AAAA$ & 0 & 0 & 0 \\
 
 \paragraph{手順 (4) で分かったこと。}2点関数の極だけで決めた四つの対抗項 \eqref{eq:ct} が、3点と4点のすべての関数の極を一般の $\xi$ で消し、対称な対抗項と FJ の真空期待値のずれ $\delta v$ だけで模型が繰り込めることを、2点関数を超えて確かめた。$\delta v$ の部分は、3点の関数のタドポールの付いた図と対になっている。NLOCT は同じ模型からタドポールを対抗項で消す処方の極を与え、その差はちょうどタドポールの付いた図の極だった。二つの処方は極の置き場所が違うだけで、物理量は同じになるはずである（手順 (5) で確かめる）。NLOCT は $A$--$G$ の混合の UV の頂点を書き出さないので、NLOCT の UFO で内線にこの混合が現れる過程を計算するときは、自分で加える必要がある。
 
-\paragraph{今後。}次は手順 (5) で、NLO の $\Gamma(h\to AA)$ を一般の $\xi$ で求め（FormCalc でも）、NLOCT で作った UFO の MadLoop と比べる。
+\paragraph{手順 (5) で分かったこと。}物理量の NLO の補正では、1PI の図、タドポール、外線の留数がそれぞれ $\xi$ で数\%変わり、和だけがゲージによらない。タドポールは質量の処方を通じて消え、極質量で書いた幅は FJ でもタドポールを対抗項で消す処方でも同じになり、MadLoop がそれを $10^{-11}$ で確かめた。$\mu$ 依存は $e$ の走りの1次の打ち消しとして厳密に現れる。
+
+\paragraph{今後。}次は手順 (6) で、繰り込み群を極質量と S 行列要素の $\mu$ 依存から読み取り、一般の公式と比べ、$e$ と $\lambda$ の走り、Landau 極、真空の安定性を調べる。
 
 \appendix
 
@@ -788,6 +832,23 @@ K\Sigma^{AG}={}&\frac{e^2}{M_Ap^2}\Bigl\{-\lK(p^2,M_A^2,M_h^2)B_0(p^2;M_A^2,M_h^
 を、$X$ の部分から $i\cdot4e^2(\varepsilon_1\cdot q)(\varepsilon_2\cdot q)/(t-\xi M_A^2)=-i\cdot4e^2(\varepsilon_1\cdot p_1)(\varepsilon_2\cdot p_2)/(t-\xi M_A^2)$ を与える。$G$ の交換では、頂点 $e(p_h-p_G)\cdot\varepsilon$ が $e\,\varepsilon_1\cdot(k_1-2p_1)=-2e\,\varepsilon_1\cdot p_1$ と $-2e\,\varepsilon_2\cdot p_2$ になり、伝播関数 $i/(t-\xi M_A^2)$ と合わせて $+i\cdot4e^2(\varepsilon_1\cdot p_1)(\varepsilon_2\cdot p_2)/(t-\xi M_A^2)$ で、$X$ の部分をちょうど打ち消す。$u$ チャンネルは $p_1\leftrightarrow p_2$ である。以上で式~\eqref{eq:Mahh} を得る。ユニタリーゲージ（$\xi\to\infty$）では $X$ と $G$ の図がどちらも0になる。
 
 \paragraph{$hh\to hh$、$GG\to hh$。}$hh\to hh$ は接触項 $-6i\lambda$ と、$hhh$ の頂点による $h$ の交換 $(-6i\lambda v)^2\,i/(x-M_h^2)=-i\cdot9M_h^4/(v^2(x-M_h^2))$（$x=s,t,u$）の和で、式~\eqref{eq:Mhh} である。$GG\to hh$（Landau ゲージ、$G$ の質量0）は、接触項 $-2i\lambda$、$s$ チャンネルの $h$（$(-2i\lambda v)(-6i\lambda v)i/(s-M_h^2)$）、$t$、$u$ チャンネルの $G$（$GGh$ の頂点2個で $(-2i\lambda v)^2i/t$）、$t$、$u$ チャンネルのゲージ場の和である。ゲージ場の交換は、$AGh$ の頂点が $-e(k_1+p_1)^\mu$、$-e(k_2+p_2)^\nu$ で、Landau ゲージの伝播関数 $-i(g_{\mu\nu}-q_\mu q_\nu/q^2)/(q^2-M_A^2)$ と、$(k_1+p_1)\cdot q=-M_h^2$、$(k_2+p_2)\cdot q=M_h^2$、$(k_1+p_1)\cdot(k_2+p_2)=s-u$ から $-e^2(s-u+M_h^4/t)/(t-M_A^2)$ になる。以上で式~\eqref{eq:Mgghh} を得る。$s\to\infty$（$t\to-s(1-\cos\theta)/2$）では $h$ と $G$ の交換は0になり、ゲージ場の交換は $-e^2(1+2s/t)\to e^2(3+\cos\theta)/(1-\cos\theta)$ になる。
+
+\section{NLO の崩壊幅の導出}\label{app:nlo}
+
+\paragraph{繰り込まれた振幅。}LSZ の公式により、S 行列要素は切断した3点関数に外線の留数の平方根を掛けたもので、1ループでは $\mathcal M=\mathcal M_0+\Gamma^{(1)}_{\mathrm R}+\frac12(\delta R_h+\delta R_{A_1}+\delta R_{A_2})\mathcal M_0$ である。$\Gamma^{(1)}_{\mathrm R}$ は1PI の図、タドポールの付いた図、対抗項の頂点 $c_A\mathcal M_0$ の和で、留数は $R=1-\Sigma_{\mathrm R}'(M^2)$、$\Sigma_{\mathrm R}=\Sigma+\Sigma_{\mathrm{ct}}$ から $\delta R=-(\Sigma'+\delta Z)$（式~\eqref{eq:ctse} の $\Sigma^H_{\mathrm{ct}}{}'=\delta Z_\Phi$、$\Sigma_{T,\mathrm{ct}}'=\delta Z_A$）である。外線のゲージ場の偏極は $\varepsilon\cdot k=0$ を満たすので、$A$--$G$ の混合（$k_\mu\Sigma^{AG}$）と縦波の部分 $\Sigma_L$ は外線に寄与しない。$\mathcal M_0$ は $g^{\mu\nu}$ だけを持つので、対抗項と留数は $F_g$ にだけ入り、式~\eqref{eq:nloamp} を得る。極は $\Gamma^{(1)}$ の極 $K F_g|_{\DUV}=e^3(6M_A^4-6M_A^2M_h^2+3M_h^4+\xi M_A^2M_h^2)/(M_AM_h^2)$ と対抗項、留数の極が打ち消す。
+
+\paragraph{偏極の和。}質量のあるゲージ場の偏極の和 $P_i^{\mu\nu}=-g^{\mu\nu}+k_i^\mu k_i^\nu/M_A^2$ で、$x=k_1\cdot k_2=\frac12(M_h^2-2M_A^2)$ として
+\begin{equation*}
+\begin{gathered}
+\sum|\mathcal M_0|^2=4e^2M_A^2S_g,\qquad
+\sum\mathcal M_0^*\mathcal M=2eM_A\bigl(F_gS_g+F_bS_b\bigr),\\
+S_g=P_{1\mu\rho}P_2^{\mu\rho}=2+\frac{x^2}{M_A^4},\qquad
+S_b=k_2P_1P_2k_1=\frac{x(x^2-M_A^4)}{M_A^4}
+\end{gathered}
+\end{equation*}
+である（$D$ 次元では $S_g$ の2が $D-2$ になる。形状因子は $D$ 次元で極を消してから4次元で偏極の和をとる）。$P_1k_1=P_2k_2=0$ なので、$k_1^\mu$、$k_2^\nu$ に比例する項は落ちる。したがって $2\re\sum\mathcal M_0^*\mathcal M_1/\sum|\mathcal M_0|^2=\re[F_g+F_bS_b/S_g]/(eM_A)$ である。形状因子は $D$ 次元の偏極の和 $s_{11}$、$s_{12}$、$s_{22}$ の $2\times2$ の方程式で取り出した。
+
+\paragraph{質量の処方。}$\MSbar$ の $M_A$ は式~\eqref{eq:pole} で $M_A=M_{A,\mathrm p}[1+\re\Sigma_T(M_A^2)/(2M_A^2)]$ なので、木の結合 $2eM_A$ を極質量で書くと $|\mathcal M_0|^2$ に $1+\re\Sigma_T/M_A^2$ が掛かる。運動学（位相空間と偏極の和）は極質量で、1ループの部分の質量の違いは2ループの大きさである。以上で式~\eqref{eq:nlowidth} を得る。$\delta_{\mathrm{OS}}$ の $\mu$ 依存は、ゲージ場の場の繰り込みと $e$ の走りだけが残るので $\dd\delta_{\mathrm{OS}}/\dd\ln\mu=-2\beta_e/e=-2e^2/(3K)$ で、$\Gamma_0\propto e^2(\mu)$ の走りを打ち消す。
 
 \section{検算の細部}\label{app:details}
 
