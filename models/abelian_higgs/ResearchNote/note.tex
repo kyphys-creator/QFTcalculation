@@ -45,7 +45,7 @@
 \maketitle
 
 \begin{abstract}
-スピノル QED と標準模型のノート~\cite{qednote,smnote} に続き、自発的に破れたゲージ理論の最も簡単な模型として、$U(1)$ のゲージ場 $A_\mu$ と電荷1の複素スカラー $\Phi$ からなるアーベル・ヒッグス模型を $d=4$ で調べる。一般の $R_\xi$ ゲージで Goldstone ボソン $G$ とゴーストを残し、紫外発散を次元正則化と $\MSbar$ で処理し、タドポールは打ち消さずに図として含める（Fleischer--Jegerlehner（FJ）の処方~\cite{fj81}）。$\MSbar$ のパラメータは破れていないラグランジアンの $e$、$\lambda$、$m^2$ で、真空期待値は $v=\sqrt{m^2/\lambda}$、$\MSbar$ の質量は $M_A=ev$、$M_h^2=2m^2$ である。本ノートではまず、Feynman 則（10個の頂点のクラス）、BRST 変換と Slavnov--Taylor 恒等式、べき数え上げ、1ループのタドポールと2点関数、$\MSbar$ の対抗項、繰り込み群、極質量、木の振幅を手で求めた。標準模型と違い、2点関数はすべて $D$ 次元で数行の閉じた式になり、ゲージ依存の消え方を式の上で追える。タドポールを付けた図を含めると、(i) ゲージ場の横波の自己エネルギー $\Sigma_T$ は、すべての運動量で $\xi$ によらない（$A$--$h$ のループの $\xi$ の部分は $h$--$G$ のループと打ち消し、$G$ のシーガルの $A_0(\xi M_A^2)$ はタドポールと打ち消す）。(ii) ヒッグスの自己エネルギーの $\xi$ 依存は $(p^2-M_h^2)[A_0(\xi M_A^2)-\frac12(p^2+M_h^2)B_0(p^2;\xi M_A^2,\xi M_A^2)]/(Kv^2)$ だけで、質量殻上で消える。(iii) 縦波、混合、Goldstone の2点関数は、BRST 不変性から導いた $p^2\Sigma_L-2M_Ap^2\Sigma^{AG}-M_A^2\Sigma^{GG}=0$ を $D$ 次元で厳密に満たす。タドポールを除くと右辺は $-M_A^2T/v$ になり、$\Sigma^{GG}(0)=0$（Goldstone の定理）もタドポールを含めて初めて成り立つ。対抗項は $\delta Z_A=-\frac{e^2}{3K}\DUV$、$\delta Z_\Phi=(3-\xi)\frac{e^2}K\DUV$、$\delta_{m^2}=\frac{4\lambda-3e^2}K\DUV$、$\delta_\lambda=\frac{10\lambda-6e^2+3e^4/\lambda}K\DUV$（$K=(4\pi)^2$）で、FJ では裸の真空期待値を裸の木のポテンシャルの最小点にとるので、これらだけで $A$、$h$、$G$ の2点関数がすべて有限になる。$\beta_e=e^3/(3K)$、$\beta_\lambda=(20\lambda^2-12e^2\lambda+6e^4)/K$、$\beta_{m^2}=m^2(8\lambda-6e^2)/K$ で、$\MSbar$ の質量の走りにはタドポールから $1/\lambda$ の項が入る。基準点（$e=\frac12$、$M_A=\mu=1$、$M_h=\frac52$）の1ループの極質量は $M_{h,\mathrm p}=2.559100$、$M_{A,\mathrm p}=0.993696$ で、$\xi=0,\frac12,1,3$ で同じ値になり、$\im\Sigma^H(M_h^2)/M_h$ は木の $\Gamma(h\to AA)=0.0155549$ と一致する。木のレベルでは、縦波の $AA\to AA$ の振幅の閉じた式を求め、高エネルギーで $GG\to GG$ の $-6\lambda$ に $M_A^2/E^2$ の速さで近づくこと（等価定理）を確かめた。検算と応用（有効ポテンシャルのゲージ依存と Nielsen 恒等式、Coleman--Weinberg の機構、摂動のユニタリー性、有限温度の相転移、Abrikosov--Nielsen--Olesen の渦糸）の十一の手順を定め、その最初の手順として FeynRules の模型ファイルを作った。10個の頂点のクラスはすべて手計算の表と記号として一致し（わざと3か所を誤らせた表では3個の差が出た）、MadGraph 3.8.1 の6個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。手順 (2) では、本ノートの FeynArts の模型から FeynCalc で作った $h\to AA$、$AA\to AA$、$AA\to hh$、$hh\to hh$、$GG\to GG$、$GG\to hh$ の振幅が手計算の式と記号として一致し、$AA\to hh$ の6個の $R_\xi$ の図の和は $\xi$ によらなかった（ゲージ場の交換の $\xi$ の部分は $G$ の交換とチャンネルごとに打ち消す）。陽な偏極ベクトルの数値は FeynCalc の厳密値と $10^{-15}$ で一致し、等価定理による縦波の振幅と Goldstone ボソンの振幅の差は $M_A^2/E^2$ で小さくなった（$AA\to hh$ では $-1$ 倍）。MadGraph の $\Gamma(h\to AA)$ は全桁、standalone の行列要素は両方のゲージで $2\times10^{-15}$ 以内（高エネルギーでは縦波の打ち消しの桁落ちまで）、断面積は統計誤差の1倍以内で一致した。MadGraph 3.8.1 は光子のない模型で $t$ チャンネルの $h$ を含む過程の MadEvent の出力に失敗し、部分過程をまとめない設定で避けた。手順 (3) では、本ノートの FeynArts の模型から求めたタドポールと五つの2点関数とゴーストの2点関数が手計算の式に $D$ 次元で記号として一致し（$\Sigma^H$ は図ごとにも）、Slavnov--Taylor 恒等式、紫外の極、対抗項での有限性も確かめた。極質量は $\xi=0,\frac12,1,3,10$ で30桁以上同じで、1PI の部分だけでは $M_{h,\mathrm p}$ が $2.6002$〜$2.6399$ と変わった。$B_0$ は LoopTools、COLLIER、Package-X が $2\times10^{-16}$ で一致した。手順 (4) では、3点と4点の10個の関数の紫外の極が、2点関数から決めた対抗項と FJ の $\delta v$ で一般の $\xi$ について記号として消え、$AAAA$ に極がないことを確かめた。NLOCT の13個の UV の頂点の極は、タドポールの図を含まない1PI の極を消す値（タドポールを対抗項で消す処方）に一致し、本ノートとの差はちょうどタドポールの付いた図の極だった。NLOCT は $A$--$G$ の混合の UV の頂点を書き出さない。手順 (5) では、$h\to AA$ の NLO の幅を求めた。形状因子は FeynCalc（一般の $\xi$）と FormCalc（Feynman ゲージ）で記号として一致し、on-shell の質量の処方の補正 $\delta_{\mathrm{OS}}=0.0201540$ は $\xi=\frac12,1,3,10$ で30桁同じで、$\mu$ には $e^2$ の走りを打ち消す分だけ依存した。NLOCT の UFO の MadLoop は $\mu_R=0.5$〜$5$ で $\delta_{\mathrm{OS}}$ と $1.7\times10^{-11}$ で一致した。手順 (6) では、$\beta$ 関数を極質量と幅の $\mu$ 依存から読み取り、陽な実の成分で組んだ一般の公式とともに式~\eqref{eq:rge} を確かめた。$\beta_\lambda$ はどの $\lambda$ でも正で、基準点の $\lambda$ は $\mu=6.5\times10^4M_A$ で Landau 極に達し、$\Lambda=10^4M_A$ までの自明性の限界は $M_h/M_A<2.72$ である。手順 (7) では、背景場の $R_\xi$ ゲージと Fermi ゲージで1ループの有効ポテンシャルを求めた。$\xi$ 依存は Nielsen 恒等式 $\partial_\xi V_1=C\,\partial_\phi V_0$ の形で、係数 $C$ はゴーストと $G$ の泡1個の図に一致し、極値の値 $V_0(v)+V_1(v)$ はどのゲージでも同じだった。背景場の $R_\xi$ ゲージの最小点は $\beta_t$ の処方の真空期待値 $v+T/M_h^2$ に一致し、$(3+\xi)e^2/K$ で走る。これは場の $(3-\xi)e^2/K$ と違い、Sperling--Stöckinger--Voigt の $\hat\gamma=2\xi e^2/K$ を本ノートの模型で再現する。2点関数では、$\Sigma^H$ の $\xi$ 微分が $2(p^2-M_h^2)K_{hh}$（$K_{hh}$ は Nielsen の関数の3個の図）に $D$ 次元で厳密に一致し、極質量がゲージによらないことが恒等式から導かれた。Fermi ゲージでは、最小点で Goldstone ボソンと縦波の組が $1/k^4$ の伝播関数を持ち、1ループのタドポールが対数で発散して、最小点が $\hbar\ln\hbar$ でずれる。導出は付録に載せる。
+スピノル QED と標準模型のノート~\cite{qednote,smnote} に続き、自発的に破れたゲージ理論の最も簡単な模型として、$U(1)$ のゲージ場 $A_\mu$ と電荷1の複素スカラー $\Phi$ からなるアーベル・ヒッグス模型を $d=4$ で調べる。一般の $R_\xi$ ゲージで Goldstone ボソン $G$ とゴーストを残し、紫外発散を次元正則化と $\MSbar$ で処理し、タドポールは打ち消さずに図として含める（Fleischer--Jegerlehner（FJ）の処方~\cite{fj81}）。$\MSbar$ のパラメータは破れていないラグランジアンの $e$、$\lambda$、$m^2$ で、真空期待値は $v=\sqrt{m^2/\lambda}$、$\MSbar$ の質量は $M_A=ev$、$M_h^2=2m^2$ である。本ノートではまず、Feynman 則（10個の頂点のクラス）、BRST 変換と Slavnov--Taylor 恒等式、べき数え上げ、1ループのタドポールと2点関数、$\MSbar$ の対抗項、繰り込み群、極質量、木の振幅を手で求めた。標準模型と違い、2点関数はすべて $D$ 次元で数行の閉じた式になり、ゲージ依存の消え方を式の上で追える。タドポールを付けた図を含めると、(i) ゲージ場の横波の自己エネルギー $\Sigma_T$ は、すべての運動量で $\xi$ によらない（$A$--$h$ のループの $\xi$ の部分は $h$--$G$ のループと打ち消し、$G$ のシーガルの $A_0(\xi M_A^2)$ はタドポールと打ち消す）。(ii) ヒッグスの自己エネルギーの $\xi$ 依存は $(p^2-M_h^2)[A_0(\xi M_A^2)-\frac12(p^2+M_h^2)B_0(p^2;\xi M_A^2,\xi M_A^2)]/(Kv^2)$ だけで、質量殻上で消える。(iii) 縦波、混合、Goldstone の2点関数は、BRST 不変性から導いた $p^2\Sigma_L-2M_Ap^2\Sigma^{AG}-M_A^2\Sigma^{GG}=0$ を $D$ 次元で厳密に満たす。タドポールを除くと右辺は $-M_A^2T/v$ になり、$\Sigma^{GG}(0)=0$（Goldstone の定理）もタドポールを含めて初めて成り立つ。対抗項は $\delta Z_A=-\frac{e^2}{3K}\DUV$、$\delta Z_\Phi=(3-\xi)\frac{e^2}K\DUV$、$\delta_{m^2}=\frac{4\lambda-3e^2}K\DUV$、$\delta_\lambda=\frac{10\lambda-6e^2+3e^4/\lambda}K\DUV$（$K=(4\pi)^2$）で、FJ では裸の真空期待値を裸の木のポテンシャルの最小点にとるので、これらだけで $A$、$h$、$G$ の2点関数がすべて有限になる。$\beta_e=e^3/(3K)$、$\beta_\lambda=(20\lambda^2-12e^2\lambda+6e^4)/K$、$\beta_{m^2}=m^2(8\lambda-6e^2)/K$ で、$\MSbar$ の質量の走りにはタドポールから $1/\lambda$ の項が入る。基準点（$e=\frac12$、$M_A=\mu=1$、$M_h=\frac52$）の1ループの極質量は $M_{h,\mathrm p}=2.559100$、$M_{A,\mathrm p}=0.993696$ で、$\xi=0,\frac12,1,3$ で同じ値になり、$\im\Sigma^H(M_h^2)/M_h$ は木の $\Gamma(h\to AA)=0.0155549$ と一致する。木のレベルでは、縦波の $AA\to AA$ の振幅の閉じた式を求め、高エネルギーで $GG\to GG$ の $-6\lambda$ に $M_A^2/E^2$ の速さで近づくこと（等価定理）を確かめた。検算と応用（有効ポテンシャルのゲージ依存と Nielsen 恒等式、Coleman--Weinberg の機構、摂動のユニタリー性、有限温度の相転移、Abrikosov--Nielsen--Olesen の渦糸）の十一の手順を定め、その最初の手順として FeynRules の模型ファイルを作った。10個の頂点のクラスはすべて手計算の表と記号として一致し（わざと3か所を誤らせた表では3個の差が出た）、MadGraph 3.8.1 の6個の過程の木の図の数は、ユニタリーゲージと Feynman ゲージの両方で手で数えた数と一致した。手順 (2) では、本ノートの FeynArts の模型から FeynCalc で作った $h\to AA$、$AA\to AA$、$AA\to hh$、$hh\to hh$、$GG\to GG$、$GG\to hh$ の振幅が手計算の式と記号として一致し、$AA\to hh$ の6個の $R_\xi$ の図の和は $\xi$ によらなかった（ゲージ場の交換の $\xi$ の部分は $G$ の交換とチャンネルごとに打ち消す）。陽な偏極ベクトルの数値は FeynCalc の厳密値と $10^{-15}$ で一致し、等価定理による縦波の振幅と Goldstone ボソンの振幅の差は $M_A^2/E^2$ で小さくなった（$AA\to hh$ では $-1$ 倍）。MadGraph の $\Gamma(h\to AA)$ は全桁、standalone の行列要素は両方のゲージで $2\times10^{-15}$ 以内（高エネルギーでは縦波の打ち消しの桁落ちまで）、断面積は統計誤差の1倍以内で一致した。MadGraph 3.8.1 は光子のない模型で $t$ チャンネルの $h$ を含む過程の MadEvent の出力に失敗し、部分過程をまとめない設定で避けた。手順 (3) では、本ノートの FeynArts の模型から求めたタドポールと五つの2点関数とゴーストの2点関数が手計算の式に $D$ 次元で記号として一致し（$\Sigma^H$ は図ごとにも）、Slavnov--Taylor 恒等式、紫外の極、対抗項での有限性も確かめた。極質量は $\xi=0,\frac12,1,3,10$ で30桁以上同じで、1PI の部分だけでは $M_{h,\mathrm p}$ が $2.6002$〜$2.6399$ と変わった。$B_0$ は LoopTools、COLLIER、Package-X が $2\times10^{-16}$ で一致した。手順 (4) では、3点と4点の10個の関数の紫外の極が、2点関数から決めた対抗項と FJ の $\delta v$ で一般の $\xi$ について記号として消え、$AAAA$ に極がないことを確かめた。NLOCT の13個の UV の頂点の極は、タドポールの図を含まない1PI の極を消す値（タドポールを対抗項で消す処方）に一致し、本ノートとの差はちょうどタドポールの付いた図の極だった。NLOCT は $A$--$G$ の混合の UV の頂点を書き出さない。手順 (5) では、$h\to AA$ の NLO の幅を求めた。形状因子は FeynCalc（一般の $\xi$）と FormCalc（Feynman ゲージ）で記号として一致し、on-shell の質量の処方の補正 $\delta_{\mathrm{OS}}=0.0201540$ は $\xi=\frac12,1,3,10$ で30桁同じで、$\mu$ には $e^2$ の走りを打ち消す分だけ依存した。NLOCT の UFO の MadLoop は $\mu_R=0.5$〜$5$ で $\delta_{\mathrm{OS}}$ と $1.7\times10^{-11}$ で一致した。手順 (6) では、$\beta$ 関数を極質量と幅の $\mu$ 依存から読み取り、陽な実の成分で組んだ一般の公式とともに式~\eqref{eq:rge} を確かめた。$\beta_\lambda$ はどの $\lambda$ でも正で、基準点の $\lambda$ は $\mu=6.5\times10^4M_A$ で Landau 極に達し、$\Lambda=10^4M_A$ までの自明性の限界は $M_h/M_A<2.72$ である。手順 (7) では、背景場の $R_\xi$ ゲージと Fermi ゲージで1ループの有効ポテンシャルを求めた。$\xi$ 依存は Nielsen 恒等式 $\partial_\xi V_1=C\,\partial_\phi V_0$ の形で、係数 $C$ はゴーストと $G$ の泡1個の図に一致し、極値の値 $V_0(v)+V_1(v)$ はどのゲージでも同じだった。背景場の $R_\xi$ ゲージの最小点は $\beta_t$ の処方の真空期待値 $v+T/M_h^2$ に一致し、$(3+\xi)e^2/K$ で走る。これは場の $(3-\xi)e^2/K$ と違い、Sperling--Stöckinger--Voigt の $\hat\gamma=2\xi e^2/K$ を本ノートの模型で再現する。2点関数では、$\Sigma^H$ の $\xi$ 微分が $2(p^2-M_h^2)K_{hh}$（$K_{hh}$ は Nielsen の関数の3個の図）に $D$ 次元で厳密に一致し、極質量がゲージによらないことが恒等式から導かれた。Fermi ゲージでは、最小点で Goldstone ボソンと縦波の組が $1/k^4$ の伝播関数を持ち、1ループのタドポールが対数で発散して、最小点が $\hbar\ln\hbar$ でずれる。手順 (8) では、$m^2=0$ の模型で Coleman--Weinberg の機構を調べた。主要な次数の $M_h^2/M_A^2=3e^2/(8\pi^2)$ と、Coleman--Weinberg の処方の $\lambda=\frac{33}{8\pi^2}e^4$ を本ノートの $\MSbar$ の式から再現した。すべての質量が $\phi^2$ に比例することから1ループの比を閉じた式で求め、そのゲージ依存が次の次数の $\pm\frac23\xi e^2/K$ であることを、5個のゲージの数値の最小点と $10^{-25}$ 以内で確かめた。CosmoTransitions の $V_1$ は $2\times10^{-15}$ で一致した。繰り込み群で $\mu=M_A$ まで走らせると比は $3e(M_A)^2/(8\pi^2)$ になり、大きな対数（$\tau_0=12$）を残した1ループの式とは $\ln v$ が $2.0$ 違った。導出は付録に載せる。
 \end{abstract}
 
 \tableofcontents
@@ -60,7 +60,7 @@
 
 求める量は五つである。(i) Feynman 則、BRST 変換と Slavnov--Taylor 恒等式、べき数え上げ。(ii) 1ループのタドポールと2点関数（$h$、$A$ の横波と縦波、$A$--$G$ の混合、$G$、ゴースト）の $D$ 次元の閉じた式と、その紫外発散と $\MSbar$ の対抗項。(iii) 繰り込み群の係数、$\MSbar$ の質量の走り、極質量とそのゲージによらないこと、光学定理。(iv) 木の振幅 $h\to AA$、$AA\to AA$（縦波と等価定理）。(v) 応用として、有効ポテンシャルと Nielsen 恒等式、Coleman--Weinberg の機構、摂動のユニタリー性、有限温度の相転移、渦糸。手計算とツールの間で求める一致は、これまでのノートと同じく、発散部分と対抗項では記号として完全な一致、有限部分では基準点での倍精度の一致である。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) と (v) の有効ポテンシャルの手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(7)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:effpot} に、検算の細部は\ref{app:details} にある。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で上の (i)〜(iv) と (v) の有効ポテンシャルと Coleman--Weinberg の機構の手計算の結果を述べる。第~\ref{sec:plan} 節で、これらと (v) を各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（現時点では手順 (1)〜(8)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:rules}〜\ref{app:cw} に、検算の細部は\ref{app:details} にある。
 
 \section{設定}\label{sec:setup}
 
@@ -124,6 +124,7 @@ $\phi$, $V_0$, $V_1$ & 一定の背景場（$\Phi=\phi/\sqrt2$）と、木と1�
 $m_h^2,\ m_G^2,\ m_A^2$ & 場に依存する質量 $-m^2+3\lambda\phi^2$、$-m^2+\lambda\phi^2$、$e^2\phi^2$。Fermi ゲージの $G$ と縦波の組は $m_\pm^2$ \\
 $C,\ K_h,\ K_{hh}$ & Nielsen 恒等式の係数（式~\eqref{eq:nielsen}、\eqref{eq:C}、\eqref{eq:nielsen2}） \\
 $v_\beta$, $\gamma_v$ & $\beta_t$ の処方の真空期待値 $v+\Delta v$ と、背景場の $R_\xi$ ゲージの背景場の異常次元 \\
+$\lambda_{\mathrm{CW}}$, $\tau_0$, $\mu^*$ & Coleman--Weinberg の処方の4点結合、$\mu_0$ での大きな対数 $K\lambda_0/(6e_0^4)$、繰り込み群で走らせる先のスケール（$M_A$） \\
 $M_{h,\mathrm p}$, $M_{A,\mathrm p}$ & 極質量 \\
 $\varepsilon_L(k)$ & ゲージ場の縦波の偏極ベクトル \\
 $s,\ t,\ u,\ \theta$ & Mandelstam 変数と重心系の散乱角 \\
@@ -536,6 +537,38 @@ C_{\mathrm{bg}}'(v)=\frac{e^2}{2K}\Bigl[\ln\frac{\xi M_A^2}{\mu^2}+2+\frac{M_h^2
 \end{equation*}
 で変わる。Landau ゲージと Fermi ゲージでは、$V_1''(v)$ がそれぞれ $\ln|m_G^2|$ と $1/m_G^2$ で発散する（Goldstone ボソンの赤外の発散）。
 
+\subsection{Coleman--Weinberg の機構}\label{sec:cw}
+
+$m^2=0$ の模型では、木のポテンシャル $V_0=\frac14\lambda\phi^4$ の最小点は原点にあるが、1ループの補正が対称性を破る~\cite{cw73}。場に依存する質量は $m_h^2=3\lambda\phi^2$、$m_G^2=\lambda\phi^2$、$m_A^2=e^2\phi^2$ である。$\lambda\sim e^4/K$ と数えると、式~\eqref{eq:V1} のうちゲージ場の $(3,\frac56)$ の項だけが $V_0$ と同じ次数になり
+\begin{equation}
+V_{\mathrm{LO}}=\frac{\phi^4}4\Bigl[\lambda+\frac{3e^4}K\Bigl(\ln\frac{e^2\phi^2}{\mu^2}-\frac56\Bigr)\Bigr]
+\label{eq:VLO}
+\end{equation}
+である。スカラーのループは $\lambda^2$、$G$ と縦波の組のゲージ依存の部分は $\xi e^2\lambda$ の次数で、どちらも次の次数以下である。最小点、質量、最小点の値は
+\begin{equation}
+\ln\frac{e^2v^2}{\mu^2}=\frac13-\frac{K\lambda}{3e^4},\qquad
+M_h^2=V''(v)=\frac{6e^4}Kv^2,\qquad
+\frac{M_h^2}{M_A^2}=\frac{3e^2}{8\pi^2},\qquad
+V(v)=-\frac{M_h^2v^2}{16}
+\label{eq:cw}
+\end{equation}
+である（\ref{app:cw}）。無次元の $\lambda$ が質量の次元を持つ $v$ に置き換わる（次元転移）。$\mu=M_A$ では $\lambda(M_A)=e^4/K$ である。この次数では $\beta_\lambda=6e^4/K$ なので、$\ln(e^2v^2/\mu^2)+K\lambda/(3e^4)$ は $\mu$ によらない。
+
+Coleman と Weinberg は、4点結合を $\lambda_{\mathrm{CW}}=\dd^4V/\dd\phi^4|_{\phi=M}$（木で $V_0=\lambda_{\mathrm{CW}}\phi^4/4!$）で定め、
+\begin{equation*}
+V=\frac{\lambda_{\mathrm{CW}}}{4!}\phi^4+\frac{3e^4}{64\pi^2}\phi^4\Bigl(\ln\frac{\phi^2}{M^2}-\frac{25}6\Bigr)
+\end{equation*}
+と書いた~\cite{cw73}。式~\eqref{eq:VLO} とは $\lambda_{\mathrm{CW}}=6\lambda+\frac{18e^4}K(\ln\frac{e^2M^2}{\mu^2}+\frac{10}3)$ で結ばれる。$M=\langle\phi\rangle$ ととると $\lambda_{\mathrm{CW}}=\frac{33}{8\pi^2}e^4$ で、質量の比は同じ $3e^2/(8\pi^2)$ になる。
+
+\paragraph{1ループの全体とゲージ依存。}$m^2=0$ ではすべての質量が $m_i^2=k_i\phi^2$ の形なので、1ループのポテンシャルは厳密に $\frac{\phi^4}4[\Lambda+\beta\ln\phi^2]$（$\beta=\sum_in_ik_i^2/K$）で、最小点で $V''=2\beta v^2$ である。したがって
+\begin{equation}
+\frac{M_h^2}{M_A^2}=\frac{3e^2}{8\pi^2}\Bigl[1+\frac{10\lambda^2+2s\,\xi e^2\lambda}{3e^4}\Bigr]
+\label{eq:cwratio}
+\end{equation}
+である。$s=0$ は Landau、$+1$ は背景場の $R_\xi$、$-1$ は Fermi ゲージである（Fermi ゲージは $m_+^4+m_-^4=m_G^4-2\xi m_A^2m_G^2$ から）。$\lambda\sim e^4/K$ では、$\xi$ による補正は $\pm\frac23\xi e^2/K$ で次の次数であり、主要な次数の比 $3e^2/(8\pi^2)$ はゲージによらない。次の次数では2ループのゲージ場の $e^6$ の項も同じ大きさになるので、ゲージによらない比を得るには2ループの有効ポテンシャルが要る~\cite{afs15}。Nielsen 恒等式から見ると、CW の最小点では $\partial_\phi V_0=\lambda v^3$ が $\partial_\phi V_1$ と釣り合って0でないので、1ループで打ち切った $\partial_\xi V=C\,\partial_\phi V_0$ は $e^2/K$ だけ小さい次数で残る。
+
+\paragraph{繰り込み群による改良。}式~\eqref{eq:cw} は $\ln(e^2v^2/\mu^2)$ が小さいとき、すなわち $\mu\simeq M_A$ で使う式である。$\mu_0$ で与えた $\lambda_0$ が $e_0^4/K$ よりずっと大きいと、$\mu_0$ のままでは $\tau_0=K\lambda_0/(6e_0^4)$ の大きな対数が現れる。改良するには、$e$、$\lambda$、場を1ループの方程式~\eqref{eq:rge}（$m^2=0$。場は Landau ゲージの $\gamma_\Phi=-3e^2/K$）で $\mu^*=e(\mu^*)v(\mu^*)$ まで走らせ、そこで1ループのポテンシャルを最小にする。$\beta_\lambda$ の $-12e^2\lambda$ は場の繰り込みの $-4\gamma_\Phi\lambda$ と打ち消し、$\lambda\phi^4$ の係数は $(20\lambda^2+6e^4)/K$ で走る。CW のスケールは $\lambda(\mu^*)\simeq e(\mu^*)^4/K$ となる $\mu^*$ で決まり、質量の比は $3e(M_A)^2/(8\pi^2)$ になる。$\mu$ を $M_A$ から離して1ループの式を使うと、$V_1$ の中の $m_A^2=e^2\phi^2$ が $\frac{20}3e^2/K$ の速さで走る分（2ループの有効ポテンシャルの対数が打ち消す）が残り、$t=\ln(\mu/M_A)$ として $\ln v$ が $\frac{20}3\frac{e^2}K(t^2-\frac t6)$ 程度ずれる（\ref{app:cw}）。
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、式~\eqref{eq:T}、\eqref{eq:se} と\ref{app:se} の $\Sigma_L$、$\Sigma^{AG}$ を、手で書いた Feynman 則から FeynCalc で $D$ 次元で記号として確かめた（図ごとの値も）。恒等式~\eqref{eq:stid}、$\Sigma^{GG}(0)=0$、$\Sigma_T$ が $\xi$ によらないこと、$\Sigma^H$ の $\xi$ 依存の形、式~\eqref{eq:uv} の極、対抗項~\eqref{eq:ct} で五つの2点関数が有限になること、極質量~\eqref{eq:polenum}（$\xi=0,\frac12,1,3$）と光学定理~\eqref{eq:optical} も同じ計算で確かめた。式~\eqref{eq:MLL} は偏極ベクトルを陽に作った数値で確かめた。正式な検算は手順 (2)〜(5) で行う。
@@ -555,7 +588,7 @@ Feynman 則 & \ref{app:rules} & FeynRules の頂点を表~\ref{tab:rules} と記
 極質量 \eqref{eq:pole}、光学定理、NLO の $\Gamma(h\to AA)$ \eqref{eq:nlowidth} & \ref{app:pole}、\ref{app:nlo} & ゲージによらないこと（FormCalc でも） & 数値 & 数値 & MadLoop \\
 繰り込み群 \eqref{eq:rge}、\eqref{eq:mrun} & \ref{app:ren} & $\mu$ を変えて評価 & — & 数値 & MadLoop の $\mu_R$ \\
 有効ポテンシャル \eqref{eq:V1}、Nielsen 恒等式 \eqref{eq:nielsen2} & \ref{app:effpot} & 背景場の $R_\xi$ と Fermi ゲージ。$K_h$、$K_{hh}$ の図を $D$ 次元で、手順 (3) の $T$、$\Sigma^H$ の $\xi$ 微分と記号として & 数値 & — & — \\
-Coleman--Weinberg の機構 & 後で & — & — & — & — \\
+Coleman--Weinberg の機構 \eqref{eq:cw}、\eqref{eq:cwratio} & \ref{app:cw} & —（CosmoTransitions の $V_1$ と比べる） & — & — & — \\
 摂動のユニタリー性 & 後で & 部分波 & — & — & 断面積 \\
 有限温度の相転移 & 後で & — & — & — & — \\
 渦糸 & 後で & — & — & — & — \\
@@ -569,7 +602,7 @@ Coleman--Weinberg の機構 & 後で & — & — & — & — \\
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}、手順 (2) は \texttt{run\_tree\_check.sh}、手順 (3) は \texttt{run\_oneloop\_check.sh}、手順 (4) は \texttt{run\_vertex\_check.sh}、手順 (5) は \texttt{run\_width\_check.sh}、手順 (6) は \texttt{run\_rg\_check.sh}、手順 (7) は \texttt{run\_effpot\_check.sh} で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_model\_check.sh}、手順 (2) は \texttt{run\_tree\_check.sh}、手順 (3) は \texttt{run\_oneloop\_check.sh}、手順 (4) は \texttt{run\_vertex\_check.sh}、手順 (5) は \texttt{run\_width\_check.sh}、手順 (6) は \texttt{run\_rg\_check.sh}、手順 (7) は \texttt{run\_effpot\_check.sh}、手順 (8) は \texttt{run\_cw\_check.sh} で再実行できる。
 
 \paragraph{手順 (1)：模型ファイル。}FeynRules の模型ファイル \texttt{Src/AbelianHiggs.fr} を作った。ラグランジアンは式~\eqref{eq:L} からゲージ固定の項（頂点を持たない）と対抗項を除き、ゴーストの項 $\mathcal L_{\mathrm{FP}}$ を加えたものである。ゲージ群は $U(1)$ で、$\Phi$ に電荷 $Q_X=1$ を与えて共変微分で結合を書き、$\Phi=(v+h+iG)/\sqrt2$ を定義として与えた。外部パラメータは $e$、$M_A$、$M_h$、$\xi$ で、$v=M_A/e$、$\lambda=M_h^2/(2v^2)$、$m^2=\lambda v^2$ を内部パラメータとした（\ref{app:details}）。FeynRules のチェック（エルミート性、運動項の規格化、質量スペクトル）はすべて通った。頂点は10個のクラスで、すべてが表~\ref{tab:rules} と記号として一致した（差がすべて0）。比べる手続きが誤りを見逃さないことは、表の3か所（$AGh$ の符号、$GGh$ の因子2、ゴーストの頂点の $\xi$）をわざと誤らせた写しで、ちょうど3個の差が出ることで確かめた。FeynArts の模型では、ゴーストと $h$ の結合が $-i\,\texttt{EL}\,\texttt{MA}\,\texttt{GaugeXi[A]}$ になるように \texttt{xiA} を \texttt{GaugeXi[A]} に置き換えた。伝播関数は FeynArts の一般の模型の $R_\xi$ の形で、$G$ とゴーストの質量は $\sqrt{\xi}M_A$ である（\texttt{GaugeXi[S[2]]}$=$\texttt{GaugeXi[U[1]]}$=$\texttt{GaugeXi[A]}）。FeynRules は電荷の単位 \texttt{ee} を FeynArts の \texttt{EL} に置き換えた。UFO は Feynman ゲージ（$\xi=1$）で、\texttt{gauge = [0, 1]} を宣言する。MadGraph 3.8.1 は、その UFO から表~\ref{tab:diagrams} の数の図を両方のゲージで生成し、すべて手で数えた数と一致した。スクリプトは \texttt{generate\_AbelianHiggs.wl}（FeynRules）と \texttt{model\_mg5.mg5}（MadGraph）である。
 
@@ -782,6 +815,38 @@ $\frac12$ & $-0.022867$ & $-0.0010974$ & 6.5951 & $-0.021350$ & $-0.024580$ & $-
 \label{fig:effpot}
 \end{figure}
 
+\paragraph{手順 (8)：Coleman--Weinberg の機構。}二つのスクリプトで確かめた（\texttt{run\_cw\_check.sh}）。一つ目は \texttt{cw.wl} である。(a) 式~\eqref{eq:VLO} から式~\eqref{eq:cw} を記号として求めた。$V_1$ のゲージ場の項以外は Landau ゲージで $\lambda^2$ の次数で、背景場の $R_\xi$ と Fermi ゲージの $\sum n_im_i^4$ は Landau ゲージと $\pm2\xi e^2\lambda\phi^4$ だけ違う。(b) CW の処方の定数 $-\frac{25}6$、$\lambda_{\mathrm{CW}}$ と $\lambda$ の関係、$\lambda_{\mathrm{CW}}=\frac{33}{8\pi^2}e^4$ を記号として再現した。(c) $\beta$ は、Landau と背景場の $R_\xi$ ゲージで記号として、Fermi ゲージで数値で、式~\eqref{eq:cwratio} の形になった。$\mu=1$、$\lambda=e^4/K$（主要な次数の最小点が $ev=1$）とし、$e=\frac12$〜$\frac1{32}$ で1ループのポテンシャルを数値で最小にした比は、5個のゲージ（Landau、背景場の $R_\xi$ と Fermi の $\xi=1,3$）で式~\eqref{eq:cwratio} と $10^{-25}$ 以内で一致した。$3e^2/(8\pi^2)$ からのずれの $K/e^2$ 倍は、$e=\frac1{32}$ で $0.66669$、$2.00002$（背景場）、$-0.66665$、$-1.99998$（Fermi）、$2\times10^{-5}$（Landau）で、図~\ref{fig:cw} の左の通り $\pm\frac23\xi$ に近づく。(d) $e=\frac12$ の点の結合と場を1ループの方程式で $\mu=2^{-6}$〜$2^6$ に走らせ、そこで最小点を求めた。$\mu_0=1$ の規格化に直した $v$ は $\mu=1$ で $2.00005$ で、$\ln v$ は $\mu=2^{-2},2^{-4},2^{-6}$ で $0.023$、$0.087$、$0.187$、$\mu=2^2,2^4,2^6$ で $0.020$、$0.083$、$0.191$ だけ大きくなった。上の見積もり $\frac{20}3\frac{e^2}K(t^2-\frac t6)$ はそれぞれ $0.023$、$0.086$、$0.190$、$0.018$、$0.076$、$0.175$ である。各 $\mu$ での $V''/(e^2v^2)$ は $0.009489$〜$0.009590$ で、主要な次数の $0.009499$ から1\%以内だった。結合を走らせないと、$v$ は $\mu$ に比例して $0.031$ から $128$ まで変わる。
+
+二つ目は \texttt{cw\_rg.py} である。CosmoTransitions 2.0.7 の \texttt{generic\_potential} の $\MSbar$ の $V_1$ に本ノートの場に依存する質量を与えると、Landau と背景場の $R_\xi$（$\xi=1$）の7点で \texttt{cw.wl} と $2\times10^{-15}$ で一致し、Landau ゲージの最小点も $4\times10^{-10}$（数値の最小化の精度）で一致した。繰り込み群による改良は、$e_0=\frac12$、$\mu_0=1$ で $\tau_0=0$〜$12$ の $\lambda_0$ について行った（表~\ref{tab:cw}、図~\ref{fig:cw} の右）。$\mu^*$ では $K\lambda(\mu^*)/e(\mu^*)^4=1.00016$ で、比は式~\eqref{eq:cwratio} に $\mu^*$ の結合を入れた値と $2\times10^{-16}$ で一致した。$\tau_0=12$ では、改良した $\ln(e_0v)=-13.33$ は $\mu_0$ での1ループの値 $-11.30$ と $2.04$ 違う。これは $t=\ln(\mu_0/M_A)=13.4$ の見積もり $\frac{20}3\frac{e^2}K(t^2-\frac t6)=1.87$ と同じ大きさである。$\mu^*$ を2倍、$\frac12$ 倍にしても、改良した値は $0.005$ しか変わらない。比は、$\mu_0$ での1ループの値では $\lambda_0^2$ の項で4\%大きくなる。改良した値は $e(M_A)^2/e_0^2=0.98605$ 倍で、$3e(M_A)^2/(8\pi^2)$ になる。
+
+\begin{table}[tbp]
+\centering\small
+\caption{Coleman--Weinberg の最小点の繰り込み群による改良（$e_0=\frac12$、$\mu_0=1$、Landau ゲージ）。$\ln(e_0v)$ は $\mu_0$ の規格化の場で、主要な次数は $\frac16-\tau_0$。比は $M_h^2/M_A^2$ を $3e_0^2/(8\pi^2)$ で割った値で、最後の列は $\mu^*=M_A$ での $e^2$ の比である。}
+\label{tab:cw}
+\begin{tabular}{rrrrrrr}
+\toprule
+& \multicolumn{3}{c}{$\ln(e_0v)$} & \multicolumn{2}{c}{比} & \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}
+$\tau_0$ & 主要な次数 & $\mu=\mu_0$ & 改良 & $\mu=\mu_0$ & 改良 & $e(M_A)^2/e_0^2$ \\
+\midrule
+0 & 0.1667 & 0.1667 & 0.1661 & 1.000000 & 1.000185 & 1.000176 \\
+2 & $-1.8333$ & $-1.8287$ & $-1.8657$ & 1.001203 & 0.998033 & 0.998024 \\
+4 & $-3.8333$ & $-3.8071$ & $-3.9834$ & 1.004812 & 0.995800 & 0.995791 \\
+6 & $-5.8333$ & $-5.7554$ & $-6.1885$ & 1.010827 & 0.993485 & 0.993477 \\
+8 & $-7.8333$ & $-7.6610$ & $-8.4820$ & 1.019249 & 0.991089 & 0.991081 \\
+10 & $-9.8333$ & $-9.5117$ & $-10.8642$ & 1.030076 & 0.988613 & 0.988604 \\
+12 & $-11.8333$ & $-11.2968$ & $-13.3346$ & 1.043310 & 0.986057 & 0.986049 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=\linewidth]{../figs/cw.pdf}
+\caption{左：$m^2=0$ の1ループのポテンシャルの最小点での $M_h^2/M_A^2$ の $3e^2/(8\pi^2)$ からのずれ（$K/e^2$ 倍、$\lambda=e^4/K$、$\mu=1$）。点は数値で最小にした値、線は式~\eqref{eq:cwratio}。ゲージ依存は次の次数で、$\pm\frac23\xi$ に近づく。右：$\mu_0$ で与えた $\lambda_0$ に対する最小点（$e_0=\frac12$）。$\mu_0$ のまま1ループで求めた値（破線）は、$M_A$ まで走らせて改良した値（実線）から大きな対数とともに離れる。点線は主要な次数の $\frac16-\tau_0$。}
+\label{fig:cw}
+\end{figure}
+
 \FloatBarrier
 \section{議論と今後}\label{sec:discussion}
 
@@ -799,7 +864,9 @@ $\frac12$ & $-0.022867$ & $-0.0010974$ & 6.5951 & $-0.021350$ & $-0.024580$ & $-
 
 \paragraph{手順 (7) で分かったこと。}有効ポテンシャルのゲージ依存は、Nielsen 恒等式~\eqref{eq:nielsen} の係数 $C$（ゴーストと $G$ の泡1個）で完全に表される。極値の値と極質量はゲージによらないが、極値の位置（$\beta_t$ の処方の真空期待値）と曲率はゲージによる。手順 (3) で見た $\Sigma^H$ の $\xi$ 依存の形 $(p^2-M_h^2)\times(\cdots)$ は、この恒等式を2点関数で書いたもので、括弧の中は Nielsen の関数 $K_{hh}$ の3個の図の和だった。背景場の $R_\xi$ ゲージの最小点は FJ のタドポールから決まる $v_\beta$ にちょうど一致し、場と $2\xi e^2/K$ だけ違う割合で走る。これにより、標準模型のノートで見た $v_\beta$ の $\xi$ に依存する走りと SSV の $\hat\gamma$ が、同じ一つの式~\eqref{eq:vbeta} になる。Fermi ゲージでは $\hat\gamma=0$ で、背景場は場と同じに走る。その代わりに、最小点で Goldstone ボソンと縦波の組が $1/k^4$ の伝播関数を持ち、1ループのタドポールが赤外で発散して、最小点が $\hbar\ln\hbar$ でずれる。$\hbar$ で展開すれば、どのゲージでも極値の値は $V_0(v)+V_1(v)$ である。手順 (10) の有限温度の相転移でも、ゲージによらない量はこの展開で作る必要がある~\cite{afs15,egk16}。
 
-\paragraph{今後。}次は手順 (8) で、$m^2=0$ の模型で Coleman--Weinberg の機構による対称性の破れを求め、$M_h^2/M_A^2=3e^2/(8\pi^2)$ を確かめ、繰り込み群で改良する。
+\paragraph{手順 (8) で分かったこと。}$m^2=0$ の模型では、ゲージ場のループが $\lambda\sim e^4/K$ のときに木の項と釣り合い、$M_h^2/M_A^2=3e^2/(8\pi^2)$ の軽いヒッグス粒子を与える。この比は主要な次数でゲージによらず、Coleman と Weinberg の処方でも同じで、彼らの $\lambda=\frac{33}{8\pi^2}e^4$ も本ノートの $\MSbar$ の式から出る。すべての質量が $\phi^2$ に比例するので、1ループのポテンシャルは厳密に $\phi^4(\Lambda+\beta\ln\phi^2)$ の形になり、比の次の次数の補正（ゲージ依存 $\pm\frac23\xi e^2/K$ を含む）が閉じた式で読める。手順 (7) と同じく、ゲージ依存は Nielsen 恒等式の通り次の次数に現れ、それを消すには2ループが要る。繰り込み群では、$\beta_\lambda>0$ なので、紫外で与えた正の $\lambda_0$ は赤外へ向かって $e^4/K$ まで下がり、そこが CW のスケールになる。大きな対数を残した1ループの式は $\ln v$ が $\frac{20}3\frac{e^2}Kt^2$ 程度ずれ、$\mu=M_A$ まで走らせる必要がある。
+
+\paragraph{今後。}次は手順 (9) で、$A_LA_L$、$hh$、$Ah$ の結合したチャンネルの部分波を求め、木のユニタリー性の限界 $\lambda\le2\pi$ と1ループの補正を調べる。
 
 \appendix
 
@@ -1019,6 +1086,16 @@ C_0(0,p^2,p^2;m^2,m^2,m^2)=\frac{(D-3)B_0(p^2;m^2,m^2)-\frac{D-2}{2m^2}A_0(m^2)}
 \paragraph{曲率。}$\partial_\xi V_1=CV_0'$ を $\phi$ で2回微分すると、$v$ で $\partial_\xi V_1''=2C'M_h^2+CV_0'''$ である。$3T/v=V_0'''\Delta v$ の $\xi$ 微分は $-V_0'''C$ なので、$\dd M_{\mathrm{curv}}^2/\dd\xi=2C'(v)M_h^2$ である。$C_{\mathrm{bg}}$ を $m_G^2$ で展開すると $C_{\mathrm{bg}}=\frac{e^2\phi}{2K}[\ln(\xi m_A^2/\mu^2)+m_G^2/(2\xi m_A^2)+O(m_G^4)]$ で、$C'_{\mathrm{bg}}(v)$ が第~\ref{sec:effpot} 節の式になる。
 
 \paragraph{紫外の極と背景場の繰り込み。}$\MSbar$ の $V_1$ の極は $-\DUV\sum n_im_i^4/(4K)$ である。$\sum n_im_i^4$ は Landau ゲージの $m_h^4+3m_A^4+m_G^4$ に、Fermi ゲージでは $m_+^4+m_-^4-m_G^4=-2\xi m_A^2m_G^2$、背景場の $R_\xi$ ゲージでは $(m_G^2+\xi m_A^2)^2-\xi^2m_A^4-m_G^4=2\xi m_A^2m_G^2$ を加えたもので、$m_A^2m_G^2=e^2\phi\,\partial_\phi V_0$ である。背景場を $\phi_0=\sqrt{Z}\phi$ と繰り込むと $V_0$ に $\frac12\delta Z\,\phi\,\partial_\phi V_0$ が加わる。$\xi$ の部分を消すには、Fermi ゲージで $\delta Z_\Phi$ の $\xi$ の部分 $-\xi e^2\DUV/K$、背景場の $R_\xi$ ゲージで符号が逆の $+\xi e^2\DUV/K$ が要る。したがって背景場の $R_\xi$ ゲージの背景場は $\delta Z_v=(3+\xi)e^2\DUV/K$ で繰り込まれ、$\gamma_v=-(3+\xi)e^2/K$ である。$\frac12(\delta Z_v-\delta Z_\Phi)=\xi e^2\DUV/K$ は、SSV の真空期待値の余分の対抗項 $\delta v^{(1)}-\frac12\delta Z_\Phi^{(1)}v=\xi g^2C_2(S)v\DUV/K$~\cite{ssv13} に当たる。式~\eqref{eq:vbeta} の二つの項は、$v^2=m^2/\lambda$ の $\beta_{m^2}/m^2-\beta_\lambda/\lambda$ の半分と、式~\eqref{eq:T} の $A_0(m^2)$ の $m^2\ln\mu^2$ から来る $\dd(KT)/\dd\ln\mu=(6M_A^4+3M_h^4+\xi M_A^2M_h^2)/v$ である。
+
+\section{Coleman--Weinberg の機構の導出}\label{app:cw}
+
+\paragraph{主要な次数。}$V=\frac{\phi^4}4[\Lambda+\beta\ln\phi^2]$ の形では、$V'=\phi^3[\Lambda+\beta\ln\phi^2+\frac\beta2]$ なので、最小点は $\ln v^2=-\Lambda/\beta-\frac12$ で、$V''(v)=3v^2(\Lambda+\beta\ln v^2)+\frac72\beta v^2=2\beta v^2$、$V(v)=-\frac18\beta v^4$ である。式~\eqref{eq:VLO} は $\beta=3e^4/K$、$\Lambda=\lambda+\frac{3e^4}K(\ln\frac{e^2}{\mu^2}-\frac56)$ で、式~\eqref{eq:cw} を得る。
+
+\paragraph{CW の処方。}$\phi^4\ln(\phi^2/M^2)$ の4階微分は $\phi=M$ で $100$、$\phi^4$ の4階微分は $24$ なので、ループの部分の4階微分を $\phi=M$ で0にする定数は $-\frac{100}{24}=-\frac{25}6$ である。$\phi^4$ の係数を式~\eqref{eq:VLO} と比べて $\lambda_{\mathrm{CW}}$ と $\lambda$ の関係を得る。$\phi=M$ で $V'=0$ とすると $\frac{\lambda_{\mathrm{CW}}}6+\frac{3e^4}K(-\frac{25}6+\frac12)=0$、すなわち $\lambda_{\mathrm{CW}}=66e^4/K=\frac{33}{8\pi^2}e^4$ である。
+
+\paragraph{1ループの全体。}$m_i^2=k_i\phi^2$ なら $m_i^4(\ln\frac{m_i^2}{\mu^2}-c_i)=k_i^2\phi^4(\ln\phi^2+\ln\frac{k_i}{\mu^2}-c_i)$ なので、$\beta=\sum n_ik_i^2/K$、$\Lambda=\lambda+\sum n_ik_i^2(\ln\frac{k_i}{\mu^2}-c_i)/K$ である。Landau ゲージでは $(k_i,n_i)=(3\lambda,1)$、$(\lambda,1)$、$(e^2,3)$ で $\sum n_ik_i^2=10\lambda^2+3e^4$ である。背景場の $R_\xi$ では、$G$、縦波、ゴーストが $(\lambda+\xi e^2)^2-\xi^2e^4=\lambda^2+2\xi e^2\lambda$ を与える。Fermi ゲージでは $k_++k_-=\lambda$、$k_+k_-=\xi e^2\lambda$ から $k_+^2+k_-^2=\lambda^2-2\xi e^2\lambda$ である（$k_\pm$ が複素共役のときは $\re$ をとる）。$M_h^2/M_A^2=2\beta/e^2$ から式~\eqref{eq:cwratio} を得る。
+
+\paragraph{走り。}$m^2=0$ でも式~\eqref{eq:rge} の $\beta_e$、$\beta_\lambda$、$\gamma_\Phi$ がそのまま使える。$\phi_\mu=z\phi_{\mu_0}$、$\dd\ln z/\dd\ln\mu=-\gamma_\Phi=3e^2/K$（Landau ゲージ）とすると、$\lambda z^4$ は $(\beta_\lambda-4\gamma_\Phi\lambda)z^4=(20\lambda^2+6e^4)z^4/K$ で走り、$V_1$ の明示的な $\mu$ 依存と（場によらない真空のエネルギーを除いて）打ち消す。残るのは $V_1$ の中の質量の走りで、$m_A^2=e^2z^2\phi_{\mu_0}^2$ は $\dd\ln m_A^2/\dd\ln\mu=2\beta_e/e-2\gamma_\Phi=\frac{20}3e^2/K$ で走る。$\partial V_1/\partial m_A^2=\frac{3m_A^2}{4K}(2\ln\frac{m_A^2}{\mu^2}-\frac23)$ から、$\mu_0$ の規格化で $\dd V/\dd t=\frac{5e^2m_A^4}{K^2}(2\ln\frac{m_A^2}{\mu^2}-\frac23)$（$t=\ln(\mu/M_A)$）が残る。$\ln(m_A^2/\mu^2)=\ln(e^2\phi^2/M_A^2)-2t$ として $t$ で積分すると、$\Lambda$ と $\beta$ が $\delta\Lambda=\frac{20e^6}{K^2}[(2\ln\frac{e^2}{M_A^2}-\frac23)t-2t^2]$、$\delta\beta=\frac{40e^6}{K^2}t$ だけずれる。$\delta\ln v^2=-\delta\Lambda/\beta+(\Lambda/\beta)\delta\beta/\beta$ に $\Lambda/\beta=\ln\frac{e^2}{M_A^2}-\frac12$ を入れると、$\delta\ln v=\frac{20}3\frac{e^2}K(t^2-\frac t6)$ になる（$e$ の走りなどの、さらに高い次数の項を除く）。
 
 \section{検算の細部}\label{app:details}
 
