@@ -50,7 +50,7 @@
 \maketitle
 
 \begin{abstract}
-アーベル・ヒッグス模型の1ループのノート~\cite{ahnote} では、有効ポテンシャルのゲージ依存（手順 (7)）、Coleman--Weinberg の比のゲージ依存（手順 (8)）、有限温度の $\phi_c/T_c$ のゲージ依存（手順 (10)）が、どれも主要な次数の先に現れ、それを消すには2ループが要ることを見た。本ノートでは、同じ模型（$U(1)$ のゲージ場と電荷1の複素スカラー、$\MSbar$、$d=4$）の2ループの有効ポテンシャルを求め、次の次数のゲージ依存を調べる。手順は七つで、Landau ゲージの $V_2$、2ループの繰り込み群での不変性、最小点の Goldstone ボソンの赤外の問題とその再和、一般のゲージの $V_2$ と Nielsen 恒等式、Coleman--Weinberg の比の次の次数、有限温度の次の次数、3次元の格子との比較である。本稿ではまず、Landau ゲージの $V_2$ を手で求めた。2ループの真空の図は、スカラーの日の出型の図2個、8の字の図5個、$hGA$ と $AAh$ の日の出型の図の9個で（ゴーストは Landau ゲージでは結合しない）、$V_2$ は $\MSbar$ の真空の日の出型の積分 $I(x,y,z)$ と $A(x)=x(\ln x-1)$ で閉じた式になる。手順 (1) では、1ループのノートの FeynRules の模型から FeynArts で10個の真空の図を作り、FeynCalc で Lorentz の縮約と部分分数、Kira 3.1 でマスター積分への簡約を行い、Landau ゲージの1ループの $\MSbar$ の対抗項の挿入を加えた。$1/\epsilon^2$ と $1/\epsilon$ の極は $\phi^2$ の多項式（局所的）になり、有限部分は Martin の一般の式を本模型の結合で書いた手計算の式と、17個の単項式のすべてで記号として一致した。$I(x,y,z)$ は TSIL 1.46 と AMFlow 2.0 で求め、11個の質量の組で相対 $2\times10^{-15}$ 以内で一致した。手順 (2) では、Machacek--Vaughn の2ループの一般の式を Luo--Wang--Xiao の修正込みでテンソルとして実装し、標準模型の $U(1)_Y$ の部分で文献の値と一致することを確かめてから本模型に当てはめ、2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$、真空のエネルギーの $\beta$ と、Landau ゲージの場の異常次元を求めた。これらから作った2ループの対抗項は、手順 (1) の図の $1/\epsilon^2$ と $1/\epsilon$ の極を記号として打ち消し、$V_0+V_1/K+V_2/K^2$ の $Q$ 依存は $1/K^2$ まで記号として消えた。数値では、繰り込み群の流れに沿った $V$ の変化が、結合を $s$ 倍すると1ループで $s$、2ループで $s^2$ に比例した。
+アーベル・ヒッグス模型の1ループのノート~\cite{ahnote} では、有効ポテンシャルのゲージ依存（手順 (7)）、Coleman--Weinberg の比のゲージ依存（手順 (8)）、有限温度の $\phi_c/T_c$ のゲージ依存（手順 (10)）が、どれも主要な次数の先に現れ、それを消すには2ループが要ることを見た。本ノートでは、同じ模型（$U(1)$ のゲージ場と電荷1の複素スカラー、$\MSbar$、$d=4$）の2ループの有効ポテンシャルを求め、次の次数のゲージ依存を調べる。手順は七つで、Landau ゲージの $V_2$、2ループの繰り込み群での不変性、最小点の Goldstone ボソンの赤外の問題とその再和、一般のゲージの $V_2$ と Nielsen 恒等式、Coleman--Weinberg の比の次の次数、有限温度の次の次数、3次元の格子との比較である。本稿ではまず、Landau ゲージの $V_2$ を手で求めた。2ループの真空の図は、スカラーの日の出型の図2個、8の字の図5個、$hGA$ と $AAh$ の日の出型の図の9個で（ゴーストは Landau ゲージでは結合しない）、$V_2$ は $\MSbar$ の真空の日の出型の積分 $I(x,y,z)$ と $A(x)=x(\ln x-1)$ で閉じた式になる。手順 (1) では、1ループのノートの FeynRules の模型から FeynArts で10個の真空の図を作り、FeynCalc で Lorentz の縮約と部分分数、Kira 3.1 でマスター積分への簡約を行い、Landau ゲージの1ループの $\MSbar$ の対抗項の挿入を加えた。$1/\epsilon^2$ と $1/\epsilon$ の極は $\phi^2$ の多項式（局所的）になり、有限部分は Martin の一般の式を本模型の結合で書いた手計算の式と、17個の単項式のすべてで記号として一致した。$I(x,y,z)$ は TSIL 1.46 と AMFlow 2.0 で求め、11個の質量の組で相対 $2\times10^{-15}$ 以内で一致した。手順 (2) では、Machacek--Vaughn の2ループの一般の式を Luo--Wang--Xiao の修正込みでテンソルとして実装し、標準模型の $U(1)_Y$ の部分で文献の値と一致することを確かめてから本模型に当てはめ、2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$、真空のエネルギーの $\beta$ と、Landau ゲージの場の異常次元を求めた。これらから作った2ループの対抗項は、手順 (1) の図の $1/\epsilon^2$ と $1/\epsilon$ の極を記号として打ち消し、$V_0+V_1/K+V_2/K^2$ の $Q$ 依存は $1/K^2$ まで記号として消えた。数値では、繰り込み群の流れに沿った $V$ の変化が、結合を $s$ 倍すると1ループで $s$、2ループで $s^2$ に比例した。手順 (3) では、木の最小点で0になる Goldstone ボソンの質量の2乗 $G$ について、$V_2$ の $G\ln G$ の係数が $h$ と $A$ のループによる自己エネルギー $\Delta_1$ の半分であり、最小化の条件が $\lambda\Delta_1\ln G$ で発散することを記号として示した。Martin の再和を本模型に当てはめ、最小化の条件を $G$ を含まない形にし、その2ループの係数 $\hat\Delta_2$ と最小値を閉じた式で求めた。これらは繰り込み群で不変で、$m^2$ を固定した $\hbar$ 展開と記号として一致した。数値では、再和した $V$ の最小点は $G$ を含まない条件と $1/K^3$ まで合い、再和しない2ループの $V$ の最小点は $1/K^2$ の大きさでずれた。
 \end{abstract}
 
 \tableofcontents
@@ -63,7 +63,7 @@
 
 求める量は六つである。(i) Landau ゲージの $V_2$（手で求め、図から計算し、一般の公式~\cite{martin01} と比べる）。(ii) 2ループの $\beta$ 関数と場の異常次元、および $V$ の繰り込み群での不変性。(iii) 最小点の Goldstone ボソンの赤外の発散と、その再和。(iv) 背景場の $R_\xi$ ゲージと Fermi ゲージの $V_2$~\cite{mp18} と、$O(\hbar^2)$ の Nielsen 恒等式。(v) CW の比の次の次数と、そのゲージによらないこと~\cite{afs15}。(vi) 有限温度の $T_c$ と $\phi_c/T_c$ の次の次数~\cite{el20}。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で Landau ゲージの $V_2$ の手計算の結果と、2ループの繰り込み群の関数を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（手順 (1)、(2)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:v2}と\ref{app:rg}に、検算の細部は\ref{app:details}に置く。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で Landau ゲージの $V_2$ の手計算の結果、2ループの繰り込み群の関数、最小点の Goldstone ボソンの再和を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（手順 (1)〜(3)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:v2}と\ref{app:rg}に、検算の細部は\ref{app:details}に置く。
 
 \section{設定}\label{sec:setup}
 
@@ -128,6 +128,11 @@ $I(x,y,z)$ & $\MSbar$ で繰り込んだ真空の日の出型の積分 \eqref{eq
 $\mathbf A,\ \mathbf I$ & 次元正則化した（太字の）積分 \eqref{eq:bold} \\
 $f_{SSV},\ f_{VS},\ f_{VVS}$ & Martin の2ループの関数 \eqref{eq:fs} \\
 $\lambda^{ijk},\ \lambda^{ijkl},\ g^{aij},\ g^{abi},\ g^{abij}$ & Martin の規約の結合（\ref{app:v2}） \\
+$\Lambda$ & 場によらない真空のエネルギー（$V_0$ に加える） \\
+$\beta_X,\ \gamma$ & $\dd X/\dd\ln Q$ と場の異常次元（$\dd\phi/\dd\ln Q=-\gamma\phi$）\eqref{eq:rg} \\
+$G$ & $x_G$（木の最小点で0） \\
+$\Delta_1,\ \hat\Delta_1,\ \hat\Delta_2$ & $G$ の運動量0の自己エネルギーと、最小化の条件の係数 \eqref{eq:soft}、\eqref{eq:mincond}、\eqref{eq:dh2} \\
+$\hat V,\ \hat V_{\min}$ & 再和した有効ポテンシャルとその最小値 \eqref{eq:vhat}、\eqref{eq:vmin} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -225,6 +230,46 @@ $V_0$ の裸の量は $m_0^2\phi_0^2$ と $\lambda_0\phi_0^4$ の組でしか現
 \end{equation}
 であり、これは極~\eqref{eq:poles} の $1/\epsilon$ の係数の $\phi^4$、$\phi^2$ の項の $-16$ 倍、$8$ 倍に等しい（手順 (2) で確かめる）。
 
+\subsection{最小点の Goldstone ボソン}\label{sec:goldstone}
+
+木の最小点 $\phi=v_0$（$v_0^2=m^2/\lambda$）では $G\equiv x_G=-m^2+\lambda\phi^2$ が0になり、$G$ の小さいところで $V_2$ は解析的でない。Martin~\cite{martin14} に従って、$G\to0$ での主要な項を取り出す。$G$ の線の運動量が $\sqrt G$ 程度の領域では、残りの部分図は運動量0の $G$ の自己エネルギーになり、
+\begin{equation}
+V_2=\frac12\Delta_1A(G)+(\text{$G$ の0次と1次の項})+O(G^2\ln^2G),\qquad
+\Delta_1=3\lambda A(x_h)+e^2\bigl[3A(x_A)+2x_A\bigr]
+\label{eq:soft}
+\end{equation}
+となる。$\Delta_1$ は $h$ と $A$ のループによる $G$ の運動量0の自己エネルギーで、$h$ の4点の頂点の $\lambda A(x_h)$、$h$ と $G$ の泡の $(\lambda^{hGG})^2A(x_h)/x_h=2\lambda A(x_h)$（$x_h=2\lambda\phi^2$ のとき）、$A$ の4点の頂点の $e^2(3-2\epsilon)\mathbf A(x_A)$ の有限部分 $e^2[3A(x_A)+2x_A]$ からなる。$AGh$ の頂点は、$G$ の運動量が0のとき横波の射影で0になる。$\Delta_1$ は、$V_1$ から $G$ の項を除いたものの $\phi^{-1}\partial/\partial\phi$ に等しい。式~\eqref{eq:soft} から、$\phi^{-1}\partial V_2/\partial\phi$ は $\lambda\Delta_1\ln G$ を含み、木の最小点で対数で発散する。3ループ以上では $1/G$ の冪で発散する~\cite{martin14}。また、ループの補正を入れた最小点では $G\approx-\Delta_1/K$ である。基準点（$Q=1$）では $\Delta_1>0$ なので最小点で $G<0$ になり、$V_1$ の $f(G)=\frac14G^2(\ln G-\frac32)$ が虚部を持つ。
+
+Martin の再和は、$G$ の線の輪に自己エネルギーの挿入を並べた図を全次数で足して $f(G)$ を $f(G+\Delta)$ に置き換えるもので、2ループまでの $V$ に対しては
+\begin{equation}
+\hat V=V+\frac1K\Bigl[f\Bigl(G+\frac{\Delta_1}K\Bigr)-f(G)\Bigr]-\frac1{K^2}\,\frac{\Delta_1}2A(G)
+\label{eq:vhat}
+\end{equation}
+である（Goldstone ボソンは1個）。$\hat V$ の最小化の条件は、$G$ を含まない形
+\begin{equation}
+-m^2+\lambda v^2=-\frac1K\hat\Delta_1-\frac1{K^2}\hat\Delta_2,\qquad
+\hat\Delta_1=3\lambda A(h)+e^2\bigl[3A(x_A)+2x_A\bigr],\qquad h=2\lambda v^2,\quad x_A=e^2v^2
+\label{eq:mincond}
+\end{equation}
+に書ける~\cite{martin14}。$\hat\Delta_2$ は、$\phi^{-1}\partial V_2/\partial\phi$ から $\lambda\Delta_1\ln G$ を除いて $G\to0$ とし、$3\lambda A(x_h)=3\lambda A(h)+3\lambda G\ln h+\cdots$ の $G$ を $-\hat\Delta_1/K$ で置き換えた $-3\lambda\hat\Delta_1\ln h$ を加えたものである。本模型では
+\begin{equation}
+\begin{aligned}
+v^4\hat\Delta_2={}&-\frac{15}4h^2I(h,h,h)-\frac12h^2I(0,0,h)+\frac32h(h+x_A)I(0,x_A,h)\\
+&-\frac{7h^3-50h^2x_A+148hx_A^2-216x_A^3}{4(h-4x_A)}I(x_A,x_A,h)+\frac{13h^3-59h^2x_A+76hx_A^2-180x_A^3}{2(h-4x_A)}A(h)\\
+&-\frac{2h^2-11hx_A+18x_A^2}{h-4x_A}A(h)A(x_A)+\frac{7h^2-36hx_A+56x_A^2}{4(h-4x_A)}A(x_A)^2+\frac{x_A(3h^2+44hx_A-188x_A^2)}{3(h-4x_A)}A(x_A)\\
+&-\frac{42h^4-180h^3x_A+51h^2x_A^2+172hx_A^3-520x_A^4}{6(h-4x_A)}
+\end{aligned}
+\label{eq:dh2}
+\end{equation}
+である（手順 (3)、\texttt{results/goldstone.m}）。最小点での $\hat V$ の値は、$m^2$ と $G$ を消して
+\begin{equation}
+\hat V_{\min}=\Lambda-\frac\lambda4v^4+\frac1K\Bigl[f(h)+3f_V(x_A)-\frac{v^2}2\hat\Delta_1\Bigr]+\frac1{K^2}\Bigl[V_2\big|_{G=0,\,x_h=h}-\frac{v^2}2\hat\Delta_2-\frac12\hat\Delta_1A(h)\Bigr]
+\label{eq:vmin}
+\end{equation}
+となる（$f_V(x)=\frac14x^2(\ln x-\frac56)$）。$m^2$ を固定するなら、木の最小点のまわりの $\hbar$ 展開~\cite{pr11} $v=v_0+v_1/K+v_2/K^2$、$V_{\min}=V_0+V_1/K+[V_2-V_1'^2/(2V_0'')]/K^2$（右辺は $v_0$ での値）でもよい。$V_{\min}$ のこの式は $G=0$ でも有限である。$v_2$ では $V_2'$ と $v_1V_1''$ の $\ln G$ が打ち消す。
+
+最小点での曲率 $\partial^2V/\partial\phi^2$ は、1ループですでに $f''(G)(2\lambda\phi)^2=2\lambda^2\phi^2\ln G$ を含む。再和しても $\ln(G+\Delta)$ の形で残り、$G+\Delta$ は最小点で0に近い。これは質量0の Goldstone ボソンのループが運動量0のスカラーの自己エネルギーに与える赤外の対数で、曲率はスカラーの質量の良い近似にならない。そこで、計画した「曲率」は求めず、スカラーの質量には自己エネルギーの運動量依存（極の質量）が要るとして本ノートの範囲の外とした。
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の量と、これから求める量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、1ループのノートと同じものを使う。
@@ -239,7 +284,7 @@ $V_0$ の裸の量は $m_0^2\phi_0^2$ と $\lambda_0\phi_0^4$ の組でしか現
 \midrule
 (1) Landau ゲージの $V_2$ \eqref{eq:V2} & \ref{app:v2} & 10個の真空の図、対抗項の挿入、Martin の式と記号として & $I(x,y,z)$ & — \\
 (2) 2ループの繰り込み群 \eqref{eq:rg} & \ref{app:rg} & 極 \eqref{eq:poles} から $\beta$、$\gamma_\phi$ & $\dd V/\dd\ln Q$ & 一般の公式~\cite{mv83,lwx03} \\
-(3) Goldstone の赤外の再和 & 後で & — & 最小点、$V_{\min}$、曲率 & 文献~\cite{martin14,eek14} \\
+(3) Goldstone の赤外の再和 & \ref{sec:goldstone} & — & 最小点、$V_{\min}$ & 文献~\cite{martin14,eek14,pr11} \\
 (4) 一般のゲージの $V_2$、Nielsen 恒等式 & 後で & 一つのゲージで図から & $V_{\min}$ の $\xi$ によらないこと & Martin--Patel~\cite{mp18} \\
 (5) CW の比の次の次数 & 後で & — & 5個のゲージ & 文献~\cite{afs15} \\
 (6) 有限温度の次の次数 & 後で & — & $T_c$、$\phi_c/T_c$ & DRalgo~\cite{dralgo} \\
@@ -250,11 +295,11 @@ $V_0$ の裸の量は $m_0^2\phi_0^2$ と $\lambda_0\phi_0^4$ の組でしか現
 
 \paragraph{一致の基準。}記号の比較は、極と有限部分の差が記号として0になることを求める。$I(x,y,z)$ のように閉じた形の関数は、独立な二つの数値（TSIL の解析式と AMFlow の微分方程式）が倍精度の範囲で一致することを求める。ゲージによらないはずの量は、複数の $\xi$ とゲージで同じ値になることを、$\hbar$ の次数ごとに求める。文献との比較は、文献の数を写すのでなく、本ノートの模型と規格化で計算した量で行う。
 
-\paragraph{手順。}次の順に進める。(1) Landau ゲージの $V_2$：手計算の式~\eqref{eq:V2} を、FeynArts で作った2ループの真空の図（FeynCalc で縮約と部分分数、Kira で簡約）と1ループの対抗項の挿入から求めた値と記号として比べる。$I(x,y,z)$ の数値を TSIL と AMFlow で比べる。(2) 2ループの繰り込み群：一般の公式~\cite{mv83,lwx03} から2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$ と Landau ゲージの $\gamma_\phi$ を求め、極~\eqref{eq:poles} との整合と、$\dd V/\dd\ln Q=O(\hbar^3)$ を記号として確かめる。(3) Goldstone の赤外の問題：最小点で $x_G\sim\hbar$ となり、$V_2$ の微分に $\ln x_G$ が現れることを示し、再和~\cite{martin14,eek14} で最小点、$V_{\min}$、曲率を2ループの精度で求める。(4) 一般のゲージ：Martin--Patel の一般のゲージ固定の式~\cite{mp18} を本模型に当てはめて、背景場の $R_\xi$ ゲージと Fermi ゲージの $V_2$ を作り、一つのゲージでは図からも計算する。極値の値が $O(\hbar^2)$ まで $\xi$ によらないことを、1ループのノートの手順 (7) の $\hbar$ の尺度の方法で確かめる。Fermi ゲージの赤外の問題~\cite{egk16} は手順 (3) の再和と組み合わせる。(5) CW の比：$m^2=0$、$\lambda\sim e^4/K$ と数えて $M_h^2/M_A^2$ を相対 $e^2/K$ まで求め、1ループのノートの手順 (8) のゲージ依存が消えることを確かめる。Andreassen--Frost--Schwartz~\cite{afs15} とは、本ノートの模型で計算した量で比べる。(6) 有限温度：DRalgo の NLO の次元簡約と3次元の2ループのポテンシャルで、$\lambda\sim e^3$ と数えて $T_c$ と $\phi_c/T_c$ を次の次数までゲージによらない展開で求め~\cite{el20}、1ループのノートの手順 (10) と比べる。(7) 3次元の U(1)＋ヒッグスの格子の結果~\cite{kklp98} と、本ノートで求めた3次元のパラメータで比べる（任意）。
+\paragraph{手順。}次の順に進める。(1) Landau ゲージの $V_2$：手計算の式~\eqref{eq:V2} を、FeynArts で作った2ループの真空の図（FeynCalc で縮約と部分分数、Kira で簡約）と1ループの対抗項の挿入から求めた値と記号として比べる。$I(x,y,z)$ の数値を TSIL と AMFlow で比べる。(2) 2ループの繰り込み群：一般の公式~\cite{mv83,lwx03} から2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$ と Landau ゲージの $\gamma_\phi$ を求め、極~\eqref{eq:poles} との整合と、$\dd V/\dd\ln Q=O(\hbar^3)$ を記号として確かめる。(3) Goldstone の赤外の問題：最小点で $x_G\sim\hbar$ となり、$V_2$ の微分に $\ln x_G$ が現れることを示し、再和~\cite{martin14,eek14} で最小点と $V_{\min}$ を2ループの精度で求める（計画の時点では曲率も挙げたが、最小点で赤外の対数を持つので除いた。第~\ref{sec:goldstone} 節）。(4) 一般のゲージ：Martin--Patel の一般のゲージ固定の式~\cite{mp18} を本模型に当てはめて、背景場の $R_\xi$ ゲージと Fermi ゲージの $V_2$ を作り、一つのゲージでは図からも計算する。極値の値が $O(\hbar^2)$ まで $\xi$ によらないことを、1ループのノートの手順 (7) の $\hbar$ の尺度の方法で確かめる。Fermi ゲージの赤外の問題~\cite{egk16} は手順 (3) の再和と組み合わせる。(5) CW の比：$m^2=0$、$\lambda\sim e^4/K$ と数えて $M_h^2/M_A^2$ を相対 $e^2/K$ まで求め、1ループのノートの手順 (8) のゲージ依存が消えることを確かめる。Andreassen--Frost--Schwartz~\cite{afs15} とは、本ノートの模型で計算した量で比べる。(6) 有限温度：DRalgo の NLO の次元簡約と3次元の2ループのポテンシャルで、$\lambda\sim e^3$ と数えて $T_c$ と $\phi_c/T_c$ を次の次数までゲージによらない展開で求め~\cite{el20}、1ループのノートの手順 (10) と比べる。(7) 3次元の U(1)＋ヒッグスの格子の結果~\cite{kklp98} と、本ノートで求めた3次元のパラメータで比べる（任意）。
 
 \section{検算}\label{sec:checks}
 
-第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_v2\_check.sh}（AMFlow を含めて約40分）、手順 (2) は \texttt{run\_rg2\_check.sh}（数秒）で再実行できる。
+第~\ref{sec:plan} 節の手順を順に行う。スクリプトはすべて \texttt{Src/} にあり、手順 (1) は \texttt{run\_v2\_check.sh}（AMFlow を含めて約40分）、手順 (2) は \texttt{run\_rg2\_check.sh}（数秒）、手順 (3) は \texttt{run\_goldstone\_check.sh}（約15秒）で再実行できる。
 
 \paragraph{手順 (1)：Landau ゲージの $V_2$。}三つのスクリプトで確かめた。一つ目は \texttt{v2\_landau\_feyncalc.wl} である。(a) 1ループのノートの FeynRules の模型（\texttt{models/abelian\_higgs/Src/generated/AbelianHiggs\_FA}）を FeynCalc の FeynArts のパッチを当てて写し、Goldstone ボソンの質量を $\sqrt\xi M_A$ から独立な記号 $M_G$ に替えた（Landau ゲージの背景場での質量 $x_G$）。FeynArts の \texttt{CreateTopologies[2, 0 -> 0]} から1粒子既約な真空の図を作ると10個で、ゴーストの図は \texttt{GaugeXi -> 0} で0になった（残りが図~\ref{fig:v2diag} の9個）。背景場は模型の \texttt{vev} を $\phi$ と読み替えた（結合は $\lambda\,\texttt{vev}$、$e^2\texttt{vev}$ の形で、質量の記号とは独立である）。(b) FeynCalc で Lorentz の添字を縮約し、\texttt{ApartFF} で横波の射影の $1/k^2$ を部分分数に分け、\texttt{FCLoopFindTopologies}、\texttt{FCLoopFindTopologyMappings}、\texttt{FCLoopBasisFindCompletion} で10個の積分族と23個の積分にまとめた。(c) Kira 3.1 で、点や分子のない積分（日の出型と1ループの積の積分）を優先したマスター積分に簡約した。18個のマスター積分はすべて点も分子もなく、係数の分母に $D$ を含む因子はなかった（$\epsilon$ の極を持つ係数がない）。(d) Minkowski の積分を Euclid の太字の積分 \eqref{eq:bold} に直し（1ループの積は $-\mathbf A\mathbf A$、日の出型は $+\mathbf I$。\ref{app:details}）、対抗項の挿入~\eqref{eq:ct} を加えて $\epsilon$ で展開した。$1/\epsilon^2$ と $1/\epsilon$ の係数には $A$、$\Aeps$、$I$ を含む項が残らず、極は式~\eqref{eq:poles} の多項式になった。有限部分は、$\Aeps(x)=-\frac12[x(1+\zeta_2)+A(x)^2/x]$ を使うと、式~\eqref{eq:V2} と17個の単項式（$I$ の7通り、$A$ の積と1次の項、定数）のすべてで記号として一致した。式~\eqref{eq:V2} を \texttt{results/v2\_landau.m} に書き出した。
 
@@ -296,13 +341,51 @@ $\frac18$ & $14.7703$ & $1.089\times10^{-2}$ & $6.399\times10^{-3}$ & $-8.267\ti
 \end{tabular}
 \end{table}
 
+\paragraph{手順 (3)：最小点の Goldstone ボソン。}二つのスクリプトで確かめた。一つ目は \texttt{goldstone\_ir.wl} で、Martin~\cite{martin14} の付録の $I$ の公式（質量の2乗での微分の式 (A.23)、小さい $G$ での展開の式 (A.27)、(A.28)）を使う。(a) 式~\eqref{eq:V2} に $G$ の展開を入れると、$G\ln^2G$ の項はなく、$G\ln G$ の係数は $x_h=2\lambda\phi^2$、$x_A=e^2\phi^2$ で $\Delta_1/2$ に記号として等しかった（式~\eqref{eq:soft}）。(b) $\phi^{-1}\partial V_2/\partial\phi$ を (A.23) で求めて $G\to0$ とすると、$\ln^2G$ の項はなく、$\ln G$ の係数は $\lambda\hat\Delta_1$ に等しく、残りから式~\eqref{eq:dh2} を得た。(c) $m^2$ を固定した $\hbar$ 展開では、$V_2'$ の $\ln G$ と、$v_1V_1''$ の $\ln G$（$f''(G)=\frac12\ln G$ から）が打ち消し、$v_2$ は条件~\eqref{eq:mincond} を展開したものと記号として一致した。(d) 式~\eqref{eq:vmin} に $\hbar$ 展開の $v$ を入れると、$\hbar$ 展開の $V_{\min}$ と $1/K^2$ まで記号として一致した。(e) 条件~\eqref{eq:mincond} と $\hat V_{\min}$ に、手順 (2) の $\beta$、$\gamma$（$\beta_\Lambda$ を含む）で $Q\,\dd/\dd Q$ を作用させて $m^2$ を条件で消すと、$1/K$ と $1/K^2$ の項はともに0になった。(e) は $\hat\Delta_2$ の対数を含む部分の検算で、$Q$ によらない多項式の部分は次の数値で確かめる。
+
+二つ目は \texttt{goldstone\_numeric.py} である。(a) 式 (A.23) は TSIL の $I$ の中心差分と相対 $4\times10^{-9}$（差分の誤差の大きさ）で、式 (A.27)、(A.28) は TSIL と $G^2\ln^2G$ 程度の差で一致した（$G=10^{-3}$〜$10^{-5}$）。(b) 図~\ref{fig:goldstone} は、$Q=1$ の基準点の木の最小点の近くで、$K\phi^{-1}\partial(V-V_0)/\partial\phi$ を $G$ の関数として描いたものである（\texttt{goldstone\_ir.wl} で解析的に微分し、$I$ に TSIL の値を入れた）。2ループの曲線は $\ln G$ について傾き $0.0591009$ で下がり続け、$\lambda\hat\Delta_1/K=0.0591008$ と一致する。再和した曲線は $G=10^{-10}$〜$10^{-6}$ で $1\times10^{-5}$ しか変わらない。なお、倍精度の TSIL の $I(G,G,x_h)$ は $G/x_h\lesssim10^{-7}$ で精度を落とす（式 (A.27) との差が $G=10^{-8}$ で $2\times10^{-6}$、$10^{-12}$ で $0.03$）ので、この図では差分を使わなかった。(c) $Q=1$ では最小点の $G\approx-\hat\Delta_1/K=-0.0756$ が負で、通常の $V$ は最小点で複素数になる。条件~\eqref{eq:mincond} と式~\eqref{eq:vmin} からは $v=1.978615$、$\hat V_{\min}=-3.112595$ を得て、$\hbar$ 展開の $v=1.978772$、$V_{\min}=-3.112735$ と $1/K^3$ の大きさの差で合う（1ループの $V_{\min}$ は $-3.108391$）。$V$ の最小点を数値で直接求めるため、$e$、$\lambda$、$m^2$ を同じ値のまま $Q=2$ で与えた点も使った。そこでは $\hat\Delta_1=-9.40$、最小点の $G\approx+0.0595$ で、$V$ は実数である。$\hat V$ と2ループの $V$ の最小点を数値で求め（5点の差分の導関数の根）、条件~\eqref{eq:mincond}、$\hbar$ 展開と比べた（表~\ref{tab:goldstone}）。手順 (2) と同じく結合を $s$ 倍すると、$\hat V$ の最小点と条件~\eqref{eq:mincond}、$\hbar$ 展開との差は $s^{2.5}$（$1/K^3$）で減り、$s$ を半分にするごとの比は 5.43、5.53（期待値 $2^{2.5}=5.66$）である。一方、再和しない2ループの $V$ の最小点は $s^{1.5}$（比 2.79、期待値 2.83）でずれ、$1/K^2$ の精度を持たない。3ループの $\frac14\Delta_1^2\ln G$ の微分 $\lambda\Delta_1^2/(2G)$ が、$G\sim1/K$ の最小点では2ループの大きさになるためである。$V_{\min}$ の差は、$\hat V$ と $\hbar$ 展開の間で $s^2$（$1/K^3$、比 4.02）、2ループの $V$ と $\hbar$ 展開の間でも $s^2$ に $\ln G$ の掛かる程度（比 4.27）である。極値なので、最小点のずれは $V_{\min}$ には2次でしか効かない。
+
+\begin{figure}[tbp]
+\centering
+\includegraphics[width=0.72\linewidth]{../figs/goldstone.pdf}
+\caption{木の最小点の近くの最小化の条件。$Q=1$ の基準点で、$K\phi^{-1}\partial(V-V_0)/\partial\phi$ を Goldstone ボソンの木の質量の2乗 $G$ の関数として描いた（$m^2$ を固定して $\phi$ を動かす）。点線は1ループ、破線は2ループ、実線は再和した2ループ \eqref{eq:vhat}。2ループの曲線は $\lambda\hat\Delta_1\ln G/K$ で発散し、再和した曲線は $G\to0$ で一定の値に近づく（\texttt{results/goldstone\_curve.csv}）。}
+\label{fig:goldstone}
+\end{figure}
+
+\begin{table}[tbp]
+\centering\small
+\caption{$Q=2$（$e=\frac12\sqrt s$、$\lambda=\frac{25}{32}s$、$m^2=\frac{25}8$）での最小点 $v$ と最小値 $V_{\min}$（$\Lambda=0$）。再和した $\hat V$ \eqref{eq:vhat} と2ループの $V$ は数値で最小化し、条件~\eqref{eq:mincond} と式~\eqref{eq:vmin}、$\hbar$ 展開と比べた（\texttt{results/goldstone\_numeric.csv}）。最後の行は $s=\frac14$ と $\frac18$ の差の比で、左から $\hat V$ と条件、$\hat V$ と $\hbar$ 展開、2ループの $V$ と $\hat V$ の差（$v$）、$\hat V$ と $\hbar$ 展開の差（$V_{\min}$）。}
+\label{tab:goldstone}
+\begin{tabular}{rrrrr}
+\toprule
+$s$ & $\hat V$ を最小化 & 条件 \eqref{eq:mincond} & $\hbar$ 展開 & 2ループの $V$ を最小化 \\
+\midrule
+\multicolumn{5}{l}{$v$} \\
+1 & $2.0197635988$ & $2.0197168811$ & $2.0196785261$ & $2.0198485583$ \\
+$\frac12$ & $2.8421350585$ & $2.8421263927$ & $2.8421196916$ & $2.8421664283$ \\
+$\frac14$ & $4.0096063101$ & $4.0096047068$ & $4.0096035288$ & $4.0096176877$ \\
+$\frac18$ & $5.6636176911$ & $5.6636173959$ & $5.6636171883$ & $5.6636217742$ \\
+\midrule
+\multicolumn{5}{l}{$V_{\min}$（条件の列は式~\eqref{eq:vmin}）} \\
+1 & $-3.1978013503$ & $-3.1976716255$ & $-3.1976888986$ & $-3.1977765293$ \\
+$\frac12$ & $-6.3242244164$ & $-6.3241928651$ & $-6.3241970486$ & $-6.3242170556$ \\
+$\frac14$ & $-12.5749578807$ & $-12.5749500935$ & $-12.5749511236$ & $-12.5749557727$ \\
+$\frac18$ & $-25.0753298405$ & $-25.0753279055$ & $-25.0753281611$ & $-25.0753292495$ \\
+\midrule
+比 & $5.43$ & $5.53$ & $2.79$ & $4.02$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手順 (1) で分かったこと。}Landau ゲージの $V_2$ は、Martin の一般の式に本模型の8種類の結合を入れるだけで得られ、図からの直接の計算と完全に一致した。2ループの図だけでは極に $A(x)$ や $\Aeps(x)$ を含む非局所的な項が残り、1ループのノートの Landau ゲージの対抗項（とくにゲージ場の質量の繰り込みが $Z_\Phi$ だけになること）を挿入して初めて極が局所的になり、$\Aeps$ も有限部分から消える。ゲージ場を含む図では、横波の数 $D-1$ の $\epsilon$ の部分が1ループの極と掛け合わさって $\MSbar$ に固有の有限の項（$f_{VS}$ の $2xA(y)$ など）を作る。最小点 $\phi=v$ では $x_G=0$ で $V_2$ 自体は有限だが、$x_G$ を含む項の微分は手順 (3) で扱う赤外の問題を持つ。
 
 \paragraph{手順 (2) で分かったこと。}有効ポテンシャルの極からは、$\beta$ と場の異常次元の組~\eqref{eq:rgcomb} しか決まらない。場の異常次元を別に知るにはスカラーの自己エネルギーが要るが、本ノートではそれを計算せず、一般の式の Landau ゲージの $\gamma^{(2)}$ を使った。ゲージによらない $\beta$ と、ゲージに依存する $\gamma$ を組み合わせた値が、図の極と有限部分の両方に合ったので、両者が互いの検算になっている。一般の式を写すときの誤り（係数の写し違いや括弧の読み違い）は、標準模型の文献の値との比較で取り除いた。$V_0$ が $e$ を含まないので、$\beta_e^{(2)}$ はこの次数では検算されていない。数値では、基準点の結合と $\phi=3$ で $Q$ を2倍にすると、1ループの $V$ は4\%変わるが、2ループの $V$ と2ループの流れでは0.24\%に下がる。
 
-\paragraph{今後。}手順 (3) で最小点の Goldstone ボソンの再和を行う。その後、手順 (4) で一般のゲージに進み、1ループのノートで見た次の次数のゲージ依存が消えることを、手順 (4)〜(6) で示す。文献~\cite{lwx03} の式 (23) では、ゲージのパラメータ $\xi$ が2ループで $C_2(G)$ にだけ掛かるので、$U(1)$ の共変ゲージ（Fermi ゲージ）の $\gamma^{(2)}$ は $\xi$ によらず式~\eqref{eq:rg} と同じで、$\xi$ 依存は1ループの $\gamma^{(1)}=-(3-\xi)e^2$ だけである。これはゲージ依存が1ループで尽きるという Landau--Khalatnikov--Fradkin の変換の結果と合う。手順 (4) の Fermi ゲージの $V_2$ の繰り込み群の検算（$\xi$ の走りも加わる）に使える。
+\paragraph{手順 (3) で分かったこと。}Landau ゲージの Goldstone ボソンの赤外の問題は、2ループでは最小点の位置に現れる。再和しない2ループの $V$ の最小点は $1/K^2$ の大きさでずれ、基準点の $Q=1$ では最小点で $G<0$ になって $V$ が複素数になる。Martin の再和と $G$ を含まない条件~\eqref{eq:mincond} はどちらも解消し、$m^2$ を固定した $\hbar$ 展開と $1/K^3$ まで一致する。本模型の $\hat\Delta_2$ \eqref{eq:dh2} は、Martin が標準模型で求めたもの~\cite{martin14} と同じ手順で、Goldstone ボソンが1個の場合として得た。最小値 $V_{\min}$ は極値なので2ループでは赤外の問題を持たず、$\hbar$ 展開の式がそのまま使える。$V_{\min}$ は原理的にゲージによらないので、手順 (4) の Nielsen 恒等式の検算の基準になる（$v$ はゲージに依存する）。曲率は最小点で赤外の対数を持つので、スカラーの質量には極の質量が要る。
+
+\paragraph{今後。}手順 (4) で一般のゲージに進み、1ループのノートで見た次の次数のゲージ依存が消えることを、手順 (4)〜(6) で示す。文献~\cite{lwx03} の式 (23) では、ゲージのパラメータ $\xi$ が2ループで $C_2(G)$ にだけ掛かるので、$U(1)$ の共変ゲージ（Fermi ゲージ）の $\gamma^{(2)}$ は $\xi$ によらず式~\eqref{eq:rg} と同じで、$\xi$ 依存は1ループの $\gamma^{(1)}=-(3-\xi)e^2$ だけである。これはゲージ依存が1ループで尽きるという Landau--Khalatnikov--Fradkin の変換の結果と合う。手順 (4) の Fermi ゲージの $V_2$ の繰り込み群の検算（$\xi$ の走りも加わる）に使える。
 
 \appendix
 
@@ -362,6 +445,7 @@ V_0^{\mathrm{bare}}=\mu^{-2\epsilon}\Bigl[R-\frac12M\phi^2+\frac14L\phi^4\Bigr],
 \bibitem{martin14} S. P. Martin, ``Taming the Goldstone contributions to the effective potential,'' Phys. Rev. D \textbf{90}, 016013 (2014), arXiv:1406.2355。
 \bibitem{eek14} J. Elias-Miró, J. R. Espinosa, T. Konstandin, ``Taming infrared divergences in the effective potential,'' JHEP \textbf{08}, 034 (2014), arXiv:1406.2652。
 \bibitem{egk16} J. R. Espinosa, M. Garny, T. Konstandin, ``Interplay of infrared divergences and gauge-dependence of the effective potential,'' Phys. Rev. D \textbf{94}, 055026 (2016), arXiv:1607.08432。
+\bibitem{pr11} H. H. Patel, M. J. Ramsey-Musolf, ``Baryon washout, electroweak phase transition, and perturbation theory,'' JHEP \textbf{07}, 029 (2011), arXiv:1101.4665。
 \bibitem{afs15} A. Andreassen, W. Frost, M. D. Schwartz, ``Consistent use of effective potentials,'' Phys. Rev. D \textbf{91}, 016009 (2015), arXiv:1408.0287。
 \bibitem{el20} A. Ekstedt, J. Löfgren, ``A critical look at the electroweak phase transition,'' JHEP \textbf{12}, 136 (2020), arXiv:2006.12614。
 \bibitem{kklp98} K. Kajantie, M. Karjalainen, M. Laine, J. Peisa, ``Three-dimensional U(1) gauge+Higgs theory as an effective theory for finite temperature phase transitions,'' Nucl. Phys. B \textbf{520}, 345 (1998), arXiv:hep-lat/9711048。
