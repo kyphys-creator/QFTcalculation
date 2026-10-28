@@ -1,0 +1,39 @@
+quantity,value
+t_e,947.482022505
+t_lam_closed,11.0831884423
+t_unit_closed,9.81151450795
+t_unit_numerical,9.81534426378
+t_zero_closed,-137.123093338
+t_zero_numerical,-154.845471475
+MHmax_over_MA_log10Lambda_0.25_pole_unit,10.50360514 5.897874535
+MHmax_over_MA_log10Lambda_0.5_pole_unit,7.447119495 5.163231856
+MHmax_over_MA_log10Lambda_0.75_pole_unit,6.096645595 4.653168236
+MHmax_over_MA_log10Lambda_1_pole_unit,5.293636443 4.272819825
+MHmax_over_MA_log10Lambda_1.25_pole_unit,4.746967481 3.975322144
+MHmax_over_MA_log10Lambda_1.5_pole_unit,4.344378445 3.734516206
+MHmax_over_MA_log10Lambda_1.75_pole_unit,4.032193331 3.534502524
+MHmax_over_MA_log10Lambda_2_pole_unit,3.78109626 3.36498865
+MHmax_over_MA_log10Lambda_2.25_pole_unit,3.573545251 3.218979741
+MHmax_over_MA_log10Lambda_2.5_pole_unit,3.398317747 3.091534347
+MHmax_over_MA_log10Lambda_2.75_pole_unit,3.247856888 2.979049609
+MHmax_over_MA_log10Lambda_3_pole_unit,3.116863716 2.87882873
+MHmax_over_MA_log10Lambda_3.25_pole_unit,3.001498259 2.788807809
+MHmax_over_MA_log10Lambda_3.5_pole_unit,2.898900918 2.707376993
+MHmax_over_MA_log10Lambda_3.75_pole_unit,2.806892698 2.633259744
+MHmax_over_MA_log10Lambda_4_pole_unit,2.723780332 2.565429139
+MHmax_over_MA_log10Lambda_4.25_pole_unit,2.648225503 2.503048496
+MHmax_over_MA_log10Lambda_4.5_pole_unit,2.579154665 2.445428388
+MHmax_over_MA_log10Lambda_4.75_pole_unit,2.515695361 2.391994957
+MHmax_over_MA_log10Lambda_5_pole_unit,2.457130309 2.342266174
+MHmax_over_MA_log10Lambda_5.25_pole_unit,2.402863669 2.2958338
+MHmax_over_MA_log10Lambda_5.5_pole_unit,2.352395862 2.252349494
+MHmax_over_MA_log10Lambda_5.75_pole_unit,2.305304487 2.211513981
+MHmax_over_MA_log10Lambda_6_pole_unit,2.261229659 2.173068532
+MHmax_over_MA_log10Lambda_6.25_pole_unit,2.219862614 2.136788171
+MHmax_over_MA_log10Lambda_6.5_pole_unit,2.180936756 2.10247623
+MHmax_over_MA_log10Lambda_6.75_pole_unit,2.144220539 2.069959938
+MHmax_over_MA_log10Lambda_7_pole_unit,2.109511771 2.039086819
+MHmax_over_MA_log10Lambda_7.25_pole_unit,2.076633003 2.009721733
+MHmax_over_MA_log10Lambda_7.5_pole_unit,2.045427781 1.98174443
+MHmax_over_MA_log10Lambda_7.75_pole_unit,2.015757555 1.955047505
+MHmax_over_MA_log10Lambda_8_pole_unit,1.987499142 1.929534693
