@@ -50,7 +50,7 @@
 \maketitle
 
 \begin{abstract}
-アーベル・ヒッグス模型の1ループのノート~\cite{ahnote} では、有効ポテンシャルのゲージ依存（手順 (7)）、Coleman--Weinberg の比のゲージ依存（手順 (8)）、有限温度の $\phi_c/T_c$ のゲージ依存（手順 (10)）が、どれも主要な次数の先に現れ、それを消すには2ループが要ることを見た。本ノートでは、同じ模型（$U(1)$ のゲージ場と電荷1の複素スカラー、$\MSbar$、$d=4$）の2ループの有効ポテンシャルを求め、次の次数のゲージ依存を調べる。手順は七つで、Landau ゲージの $V_2$、2ループの繰り込み群での不変性、最小点の Goldstone ボソンの赤外の問題とその再和、一般のゲージの $V_2$ と Nielsen 恒等式、Coleman--Weinberg の比の次の次数、有限温度の次の次数、3次元の格子との比較である。本稿ではまず、Landau ゲージの $V_2$ を手で求めた。2ループの真空の図は、スカラーの日の出型の図2個、8の字の図5個、$hGA$ と $AAh$ の日の出型の図の9個で（ゴーストは Landau ゲージでは結合しない）、$V_2$ は $\MSbar$ の真空の日の出型の積分 $I(x,y,z)$ と $A(x)=x(\ln x-1)$ で閉じた式になる。手順 (1) では、1ループのノートの FeynRules の模型から FeynArts で10個の真空の図を作り、FeynCalc で Lorentz の縮約と部分分数、Kira 3.1 でマスター積分への簡約を行い、Landau ゲージの1ループの $\MSbar$ の対抗項の挿入を加えた。$1/\epsilon^2$ と $1/\epsilon$ の極は $\phi^2$ の多項式（局所的）になり、有限部分は Martin の一般の式を本模型の結合で書いた手計算の式と、17個の単項式のすべてで記号として一致した。$I(x,y,z)$ は TSIL 1.46 と AMFlow 2.0 で求め、11個の質量の組で相対 $2\times10^{-15}$ 以内で一致した。手順 (2) では、Machacek--Vaughn の2ループの一般の式を Luo--Wang--Xiao の修正込みでテンソルとして実装し、標準模型の $U(1)_Y$ の部分で文献の値と一致することを確かめてから本模型に当てはめ、2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$、真空のエネルギーの $\beta$ と、Landau ゲージの場の異常次元を求めた。これらから作った2ループの対抗項は、手順 (1) の図の $1/\epsilon^2$ と $1/\epsilon$ の極を記号として打ち消し、$V_0+V_1/K+V_2/K^2$ の $Q$ 依存は $1/K^2$ まで記号として消えた。数値では、繰り込み群の流れに沿った $V$ の変化が、結合を $s$ 倍すると1ループで $s$、2ループで $s^2$ に比例した。手順 (3) では、木の最小点で0になる Goldstone ボソンの質量の2乗 $G$ について、$V_2$ の $G\ln G$ の係数が $h$ と $A$ のループによる自己エネルギー $\Delta_1$ の半分であり、最小化の条件が $\lambda\Delta_1\ln G$ で発散することを記号として示した。Martin の再和を本模型に当てはめ、最小化の条件を $G$ を含まない形にし、その2ループの係数 $\hat\Delta_2$ と最小値を閉じた式で求めた。これらは繰り込み群で不変で、$m^2$ を固定した $\hbar$ 展開と記号として一致した。数値では、再和した $V$ の最小点は $G$ を含まない条件と $1/K^3$ まで合い、再和しない2ループの $V$ の最小点は $1/K^2$ の大きさでずれた。手順 (4) では、背景場の $R_\xi$ ゲージの $V_2$ を図から計算した（ゴーストを含む10個の図、24個のマスター積分）。極は Martin--Patel の2ループの対抗項と打ち消し、有限部分は彼らの閉じた式と記号として一致した。$\xi\to0$ で Landau ゲージに戻り、背景場の異常次元と $\xi$ の走りを入れた繰り込み群の方程式を $1/K^2$ まで満たす。$\hbar$ 展開の最小値 $V_0+V_1/K+[V_2-V_1'^2/(2V_0'')]/K^2$ は、$\xi$ で微分すると記号として0になり、$O(\hbar^2)$ まで $\xi$ によらないこと（Nielsen 恒等式）を示した。数値では、$V_2(v_0)$ は $\xi=0$〜$10$ で117変わるが、最小値は $6\times10^{-14}$ 以内で同じだった。Fermi ゲージでは、Martin--Patel の一般のゲージの $V_2$ が本ノートの図からの計算と Landau ゲージの結果に一致し、繰り込み群の方程式を $1/K^2$ まで満たすことを確かめた。木の最小点では $V_1'$ と $V_2$ が $\ln G$ で発散して $\hbar$ 展開が作れない。固定した2ループの次数で数値で最小化した値は、結合を $s$ 倍したときゲージによらない値との差が $s$ でしか減らず（背景場の $R_\xi$ ゲージでは $s^2$）、Espinosa--Garny--Konstandin の指摘どおり、$O(\hbar^2)$ のゲージ依存が残った。手順 (5) では、$m^2=0$ の Coleman--Weinberg の模型を $\lambda\sim e^4/K$ と数えて次の次数まで調べた。$\lambda\to0$ の $V_2$ は Andreassen--Frost--Schwartz の $e^6$ の項に一致し、背景場の $R_\xi$ ゲージの $\xi$ 依存は2ループの Nielsen 恒等式の形になった。最小値は次の次数でゲージによらず、繰り込み群で不変だった。一方、曲率の比 $V''(v)/(e^2v^2)$ のゲージ依存は1ループの $\frac23\xi e^2/K$ から $2\xi\ln\xi\,e^2/K$ に変わるだけで残り、Nielsen 恒等式の予言に一致した。1ループのノートで見込んだ「比のゲージ依存が2ループで消える」ことは、曲率の比には当てはまらない。全体のポテンシャルの数値の最小化は、これらの次の次数の式と $(e^2/K)^2$ の範囲で一致した。
+アーベル・ヒッグス模型の1ループのノート~\cite{ahnote} では、有効ポテンシャルのゲージ依存（手順 (7)）、Coleman--Weinberg の比のゲージ依存（手順 (8)）、有限温度の $\phi_c/T_c$ のゲージ依存（手順 (10)）が、どれも主要な次数の先に現れ、それを消すには2ループが要ることを見た。本ノートでは、同じ模型（$U(1)$ のゲージ場と電荷1の複素スカラー、$\MSbar$、$d=4$）の2ループの有効ポテンシャルを求め、次の次数のゲージ依存を調べる。手順は七つで、Landau ゲージの $V_2$、2ループの繰り込み群での不変性、最小点の Goldstone ボソンの赤外の問題とその再和、一般のゲージの $V_2$ と Nielsen 恒等式、Coleman--Weinberg の比の次の次数、有限温度の次の次数、3次元の格子との比較である。本稿ではまず、Landau ゲージの $V_2$ を手で求めた。2ループの真空の図は、スカラーの日の出型の図2個、8の字の図5個、$hGA$ と $AAh$ の日の出型の図の9個で（ゴーストは Landau ゲージでは結合しない）、$V_2$ は $\MSbar$ の真空の日の出型の積分 $I(x,y,z)$ と $A(x)=x(\ln x-1)$ で閉じた式になる。手順 (1) では、1ループのノートの FeynRules の模型から FeynArts で10個の真空の図を作り、FeynCalc で Lorentz の縮約と部分分数、Kira 3.1 でマスター積分への簡約を行い、Landau ゲージの1ループの $\MSbar$ の対抗項の挿入を加えた。$1/\epsilon^2$ と $1/\epsilon$ の極は $\phi^2$ の多項式（局所的）になり、有限部分は Martin の一般の式を本模型の結合で書いた手計算の式と、17個の単項式のすべてで記号として一致した。$I(x,y,z)$ は TSIL 1.46 と AMFlow 2.0 で求め、11個の質量の組で相対 $2\times10^{-15}$ 以内で一致した。手順 (2) では、Machacek--Vaughn の2ループの一般の式を Luo--Wang--Xiao の修正込みでテンソルとして実装し、標準模型の $U(1)_Y$ の部分で文献の値と一致することを確かめてから本模型に当てはめ、2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$、真空のエネルギーの $\beta$ と、Landau ゲージの場の異常次元を求めた。これらから作った2ループの対抗項は、手順 (1) の図の $1/\epsilon^2$ と $1/\epsilon$ の極を記号として打ち消し、$V_0+V_1/K+V_2/K^2$ の $Q$ 依存は $1/K^2$ まで記号として消えた。数値では、繰り込み群の流れに沿った $V$ の変化が、結合を $s$ 倍すると1ループで $s$、2ループで $s^2$ に比例した。手順 (3) では、木の最小点で0になる Goldstone ボソンの質量の2乗 $G$ について、$V_2$ の $G\ln G$ の係数が $h$ と $A$ のループによる自己エネルギー $\Delta_1$ の半分であり、最小化の条件が $\lambda\Delta_1\ln G$ で発散することを記号として示した。Martin の再和を本模型に当てはめ、最小化の条件を $G$ を含まない形にし、その2ループの係数 $\hat\Delta_2$ と最小値を閉じた式で求めた。これらは繰り込み群で不変で、$m^2$ を固定した $\hbar$ 展開と記号として一致した。数値では、再和した $V$ の最小点は $G$ を含まない条件と $1/K^3$ まで合い、再和しない2ループの $V$ の最小点は $1/K^2$ の大きさでずれた。手順 (4) では、背景場の $R_\xi$ ゲージの $V_2$ を図から計算した（ゴーストを含む10個の図、24個のマスター積分）。極は Martin--Patel の2ループの対抗項と打ち消し、有限部分は彼らの閉じた式と記号として一致した。$\xi\to0$ で Landau ゲージに戻り、背景場の異常次元と $\xi$ の走りを入れた繰り込み群の方程式を $1/K^2$ まで満たす。$\hbar$ 展開の最小値 $V_0+V_1/K+[V_2-V_1'^2/(2V_0'')]/K^2$ は、$\xi$ で微分すると記号として0になり、$O(\hbar^2)$ まで $\xi$ によらないこと（Nielsen 恒等式）を示した。数値では、$V_2(v_0)$ は $\xi=0$〜$10$ で117変わるが、最小値は $6\times10^{-14}$ 以内で同じだった。Fermi ゲージでは、Martin--Patel の一般のゲージの $V_2$ が本ノートの図からの計算と Landau ゲージの結果に一致し、繰り込み群の方程式を $1/K^2$ まで満たすことを確かめた。木の最小点では $V_1'$ と $V_2$ が $\ln G$ で発散して $\hbar$ 展開が作れない。固定した2ループの次数で数値で最小化した値は、結合を $s$ 倍したときゲージによらない値との差が $s$ でしか減らず（背景場の $R_\xi$ ゲージでは $s^2$）、Espinosa--Garny--Konstandin の指摘どおり、$O(\hbar^2)$ のゲージ依存が残った。手順 (5) では、$m^2=0$ の Coleman--Weinberg の模型を $\lambda\sim e^4/K$ と数えて次の次数まで調べた。$\lambda\to0$ の $V_2$ は Andreassen--Frost--Schwartz の $e^6$ の項に一致し、背景場の $R_\xi$ ゲージの $\xi$ 依存は2ループの Nielsen 恒等式の形になった。最小値は次の次数でゲージによらず、繰り込み群で不変だった。一方、曲率の比 $V''(v)/(e^2v^2)$ のゲージ依存は1ループの $\frac23\xi e^2/K$ から $2\xi\ln\xi\,e^2/K$ に変わるだけで残り、Nielsen 恒等式の予言に一致した。1ループのノートで見込んだ「比のゲージ依存が2ループで消える」ことは、曲率の比には当てはまらない。全体のポテンシャルの数値の最小化は、これらの次の次数の式と $(e^2/K)^2$ の範囲で一致した。手順 (6) では、DRalgo で模型を次の次数まで次元簡約し（3次元の結合と2ループの質量は Kajantie--Karjalainen--Laine--Peisa の値に一致）、3次元の有効理論で $\lambda\sim e^3$ と数えて、転移温度 $T_c$ と凝縮の跳び（から定めた $v_c/T_c$）を主要な次数の転移のまわりの展開で次の次数まで求めた。ソフトな理論の2ループのポテンシャルは、ループの中のスカラーの質量を0にすると Hirvonen らの式に一致し、その3次元の尺度依存は質量の走りと打ち消した。ゲージの項は主要な次数のポテンシャルの微分に比例するので、$T_c$ と $v_c/T_c$ は $\xi_3$ によらない（$10^{-37}$ 以内）。$M_h=\frac12$ では $T_c$ の尺度依存が2.1\%から0.28\%に下がり、$v_c/T_c$ は $0.458$ から $0.300$ に下がった。この補正は $e$ に比例して小さくなる。$M_h=1$ では次の次数の補正が主要な次数を超え、展開が破れた。素朴に最小化した場の値は次の次数でゲージに依存し（1ループのノートで見たゲージ依存に当たる）、原点が極小でなくなるので素朴な $T_c$ は定まらない。
 \end{abstract}
 
 \tableofcontents
@@ -63,7 +63,7 @@
 
 求める量は六つである。(i) Landau ゲージの $V_2$（手で求め、図から計算し、一般の公式~\cite{martin01} と比べる）。(ii) 2ループの $\beta$ 関数と場の異常次元、および $V$ の繰り込み群での不変性。(iii) 最小点の Goldstone ボソンの赤外の発散と、その再和。(iv) 背景場の $R_\xi$ ゲージと Fermi ゲージの $V_2$~\cite{mp18} と、$O(\hbar^2)$ の Nielsen 恒等式。(v) CW の模型の次の次数の最小値と質量の比、そのゲージ依存~\cite{afs15}。(vi) 有限温度の $T_c$ と $\phi_c/T_c$ の次の次数~\cite{el20}。
 
-本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で Landau ゲージの $V_2$ の手計算の結果、2ループの繰り込み群の関数、最小点の Goldstone ボソンの再和、背景場の $R_\xi$ ゲージの $V_2$ と Nielsen 恒等式を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（手順 (1)〜(4)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:v2}と\ref{app:rg}に、検算の細部は\ref{app:details}に置く。
+本ノートの構成は次の通りである。第~\ref{sec:setup} 節で模型と前提を定める。第~\ref{sec:results} 節で Landau ゲージの $V_2$ の手計算の結果、2ループの繰り込み群の関数、最小点の Goldstone ボソンの再和、背景場の $R_\xi$ ゲージの $V_2$ と Nielsen 恒等式、CW の模型と有限温度の次の次数を述べる。第~\ref{sec:plan} 節で、これらを各ツールと突き合わせる計画を定める。第~\ref{sec:checks} 節で検算の結果を示す（手順 (1)〜(6)）。第~\ref{sec:discussion} 節で次の手順をまとめる。導出は\ref{app:v2}と\ref{app:rg}に、検算の細部は\ref{app:details}に置く。
 
 \section{設定}\label{sec:setup}
 
@@ -139,6 +139,9 @@ $Z_\pm$（Fermi ゲージ） & $G$ と縦波の組の質量の2乗 $\frac12[G\pm
 $N$ & $\hbar$ 展開の最小値の2ループの係数 \eqref{eq:N} \\
 $L,\ W(L),\ L_0$ & CW の模型（$m^2=0$）の $\ln(e^2\phi^2/Q^2)$、$V/\phi^4$、主要な次数の最小点 \\
 $P_\xi,\ R,\ r_1$ & CW の模型の $V_2$ の $\lambda\to0$ \eqref{eq:Pxi}、曲率の比 $V''(v)/(e^2v^2)$ とその次の次数 \eqref{eq:cwR} \\
+$g_3,\ h_3,\ \lambda_3,\ \lambda_A,\ m_D,\ m_3^2$ & 3次元の有効理論のパラメータ \eqref{eq:L3}、\eqref{eq:dr} \\
+$\mu_3,\ \xi_3,\ x,\ L_b$ & 3次元の $\MSbar$ の尺度、ゲージのパラメータ、$\lambda_3/g_3^2$、次元簡約の対数 \eqref{eq:dr} \\
+$T_0,\ \phi_0;\ T_c,\ v_c$ & 主要な次数の転移、次の次数の転移温度と $\sqrt{2\Delta\langle\Phi^\dagger\Phi\rangle_3T_c}$ \eqref{eq:strict} \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -332,6 +335,47 @@ R=\frac{6e^2}K\Bigl[1+\frac{e^2}Kr_1\Bigr],\qquad r_1=\frac29\bigl[30L_0-47+9\xi
 \end{equation}
 となり、ゲージに依存する。1ループだけでは $r_1=\frac23\xi(1-3L_0)$ で（1ループのノートの式の背景場の $R_\xi$ ゲージ）、$V_2$ を加えると $\xi$ 依存が $2\xi(L_0+\ln\xi)$ に変わるが消えない。Nielsen 恒等式から、最小点の曲率は $\dd V''(v)/\dd\xi=2C'V''$、最小点は $\dd v/\dd\xi=-C$ で動くので $\dd\ln R/\dd\xi=2C'+2C/v$ となり、$C_1$ を入れると $\frac{2e^2}K(L_0+\ln\xi+1)$ で、$\dd r_1/\dd\xi$ に一致する。曲率は運動量0の2点関数で、極の質量ではないので、ゲージによらない質量の比には自己エネルギーの運動量依存が要る。
 
+\subsection{有限温度の次の次数}\label{sec:thnlo}
+
+1ループのノートの手順 (10) では、再和した1ループのポテンシャルの $\phi_c/T_c$ がゲージに依存した。ここでは $\lambda\sim e^3$ と数え、3次元の有効理論でゲージによらない展開~\cite{el20,hlrst22} を次の次数まで行う。高温で0でない松原モードを積分すると（次元簡約）、静的なモードの3次元の理論（Euclid）
+\begin{equation}
+\mathcal L_3=\frac14F_{ij}^2+\frac12(\partial_iA_0)^2+\frac12m_D^2A_0^2+\frac{\lambda_A}4A_0^4+|D_i\Phi|^2+m_3^2\Phi^\dagger\Phi+\lambda_3(\Phi^\dagger\Phi)^2+h_3A_0^2\Phi^\dagger\Phi,\qquad D_i=\partial_i-ig_3A_i
+\label{eq:L3}
+\end{equation}
+が得られる。次の次数の次元簡約（結合は1ループ、質量は2ループ）は、Kajantie--Karjalainen--Laine--Peisa~\cite{kklp98} の付録 B（$N_f=0$、$g_Y=0$）で
+\begin{equation}
+\begin{aligned}
+g_3^2&=e^2T\Bigl[1-\frac{e^2L_b}{3K}\Bigr],\qquad h_3=e^2T\Bigl[1+\frac1K\Bigl(\frac43e^2-\frac13e^2L_b+8\lambda\Bigr)\Bigr],\qquad \lambda_A=\frac{e^4T}{6\pi^2},\qquad m_D^2=\frac13e^2T^2,\\
+\lambda_3&=T\Bigl[\lambda+\frac1K\bigl((-3e^4+6\lambda e^2-10\lambda^2)L_b+2e^4\bigr)\Bigr],\\
+m_3^2(\mu_3)&=-m^2\Bigl[1+\frac{(3e^2-4\lambda)L_b}K\Bigr]+T\Bigl(\frac{\lambda_3}3+\frac{g_3^2}4\Bigr)+\frac{T^2}K\Bigl(\frac23\lambda e^2-\frac89e^4\Bigr)\\
+&\quad-\frac2K\bigl(h_3^2+2g_3^4-4\lambda_3g_3^2+4\lambda_3^2\bigr)\Bigl(\ln\frac{3T}{\mu_3}+c\Bigr)
+\end{aligned}
+\label{eq:dr}
+\end{equation}
+である。$L_b=\ln(Q^2/T^2)+2\gamma_E-2\ln4\pi$、$c=\frac12[\ln\frac{8\pi}9+\frac{\zeta'(2)}{\zeta(2)}-2\gamma_E]$ で、$\mu_3$ は3次元の $\MSbar$ の尺度、$\phi$ は3次元の場（主要な次数で4次元の場の $1/\sqrt T$ 倍）である。$m_D^2$ の次の次数の補正は、次の次の次数にしか効かない（数値では DRalgo の値を使う）。
+
+$x\equiv\lambda_3/g_3^2=\lambda/e^2\sim e$ が小さいとき、破れた極小は $\phi\sim g_3/x$ にあり、ベクトルの質量 $g_3\phi$ と $m_D$ は $eT$ の大きさ、スカラーの質量は $e^{3/2}T$ の大きさである。主要な次数はベクトル（横波2個と $A_0$）の1ループまでで、
+\begin{equation}
+V_{\mathrm{LO}}=\frac12m_3^2\phi^2+\frac14\lambda_3\phi^4-\frac1{12\pi}\bigl[2g_3^3\phi^3+(m_D^2+h_3\phi^2)^{3/2}\bigr]
+\label{eq:vlo3}
+\end{equation}
+はゲージのパラメータを含まない。次の次数はベクトルの2ループ（ループの中のスカラーの質量は0）で、3次元の背景場の $R_\xi$ ゲージ（パラメータ $\xi_3$）では Hirvonen--Löfgren--Ramsey-Musolf--Schicho--Tenkanen~\cite{hlrst22} の式 (B.54)、(B.57) から
+\begin{equation}
+V_{\mathrm{NLO}}=\frac1K\Bigl[g_3^4\phi^2\Bigl(\ln\frac{4g_3^2\phi^2}{\mu_3^2}-1\Bigr)+\frac34\lambda_A(m_D^2+h_3\phi^2)-\frac12h_3^2\phi^2\Bigl(1-\ln\frac{4(m_D^2+h_3\phi^2)}{\mu_3^2}\Bigr)\Bigr]-\frac{\sqrt{\xi_3}\,g_3}{8\pi}V_{\mathrm{LO}}'(\phi)
+\label{eq:vnlo3}
+\end{equation}
+である。$V_{\mathrm{NLO}}/V_{\mathrm{LO}}$ は $x$ の大きさで、スカラーのループは相対 $x^{3/2}$ でこの先にある。$V_{\mathrm{NLO}}$ の $\mu_3$ 依存は、$\lambda_3\to0$ で式~\eqref{eq:dr} の $m_3^2$ の走りを打ち消す。
+
+ゲージによらない量は、主要な次数の転移のまわりで展開して作る。主要な次数の転移 $(T_0,\phi_0)$ を $\Delta V_{\mathrm{LO}}\equiv V_{\mathrm{LO}}(\phi_0)-V_{\mathrm{LO}}(0)=0$、$V_{\mathrm{LO}}'(\phi_0)=0$ で定めると、次の次数の転移温度と、凝縮 $\langle\Phi^\dagger\Phi\rangle_3=\partial V/\partial m_3^2$ の跳びは
+\begin{equation}
+T_c=T_0-\frac{\Delta V_{\mathrm{NLO}}}{\partial_T\Delta V_{\mathrm{LO}}},\qquad
+\Delta\langle\Phi^\dagger\Phi\rangle_3=\frac12\phi_0^2+\Bigl[\frac{\partial\Delta V_{\mathrm{NLO}}}{\partial m_3^2}+V_{\mathrm{NLO}}'\frac{\partial\phi_0}{\partial m_3^2}\Bigr]+\phi_0\frac{\partial\phi_0}{\partial T}(T_c-T_0)
+\label{eq:strict}
+\end{equation}
+である（右辺は $(T_0,\phi_0)$ で評価し、$\partial\phi_0/\partial m_3^2=-\partial_{m_3^2}V_{\mathrm{LO}}'/V_{\mathrm{LO}}''$、$\partial\phi_0/\partial T=-\partial_TV_{\mathrm{LO}}'/V_{\mathrm{LO}}''$）。$\xi_3$ の項 $-c_\xi V_{\mathrm{LO}}'$（$c_\xi=\sqrt{\xi_3}g_3/(8\pi)$）は、$V_{\mathrm{LO}}'(\phi_0)=V_{\mathrm{LO}}'(0)=0$ なので $\Delta V_{\mathrm{NLO}}$ に寄与せず、凝縮の括弧の中では $-c_\xi\partial_{m_3^2}V_{\mathrm{LO}}'+c_\xi V_{\mathrm{LO}}''\cdot\partial_{m_3^2}V_{\mathrm{LO}}'/V_{\mathrm{LO}}''=0$ と打ち消す。したがって $T_c$ と凝縮の跳びは、次の次数で厳密にゲージによらない。秩序変数は $v_c/T_c\equiv\sqrt{2\Delta\langle\Phi^\dagger\Phi\rangle_3/T_c}$ と定める（主要な次数では4次元の $\phi_0/T_0$）。4次元の凝縮との換算には $\partial m_3^2/\partial(-m^2)=1+(3e^2-4\lambda)L_b/K$ が掛かるが、この違いは相対 $e^2/K$ で、ここでの次の次数より先である。
+
+一方、$V_{\mathrm{LO}}+V_{\mathrm{NLO}}$ をそのまま最小化すると、破れた極小は $c_\xi$ だけ動き（1ループのノートで見た $\phi_c$ のゲージ依存に当たる）、$\phi\to0$ では $g_3^4\phi^2\ln\phi^2$ が負になって原点が極小でなくなるので、素朴な $T_c$ は定まらない。比較には、スカラーの質量を残した Landau ゲージの1ループと2ループのポテンシャル（DRalgo の値）の最小化を使う。
+
 \section{検算の計画}\label{sec:plan}
 
 第~\ref{sec:results} 節の量と、これから求める量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、1ループのノートと同じものを使う。
@@ -349,7 +393,7 @@ R=\frac{6e^2}K\Bigl[1+\frac{e^2}Kr_1\Bigr],\qquad r_1=\frac29\bigl[30L_0-47+9\xi
 (3) Goldstone の赤外の再和 & \ref{sec:goldstone} & — & 最小点、$V_{\min}$ & 文献~\cite{martin14,eek14,pr11} \\
 (4) 背景場の $R_\xi$ と Fermi ゲージの $V_2$ \eqref{eq:V2rxi}、Nielsen 恒等式 & \ref{sec:rxi} & 背景場の $R_\xi$ ゲージで図から & $V_{\min}$ の $\xi$ によらないこと、固定次数の最小値 & Martin--Patel~\cite{mp18}、文献~\cite{egk16} \\
 (5) CW の模型の次の次数（最小値と曲率の比） & \ref{sec:cwnlo} & — & 全体のポテンシャルを最小化（Landau、背景場の $R_\xi$） & 文献~\cite{afs15,egk16} \\
-(6) 有限温度の次の次数 & 後で & — & $T_c$、$\phi_c/T_c$ & DRalgo~\cite{dralgo} \\
+(6) 有限温度の次の次数（$T_c$、凝縮） & \ref{sec:thnlo} & — & 厳密な展開、Landau ゲージの最小化 & DRalgo~\cite{dralgo}、文献~\cite{kklp98,hlrst22} \\
 (7) 3次元の格子との比較（任意） & 後で & — & 3次元のパラメータ & 文献~\cite{kklp98} \\
 \bottomrule
 \end{tabularx}
@@ -357,7 +401,7 @@ R=\frac{6e^2}K\Bigl[1+\frac{e^2}Kr_1\Bigr],\qquad r_1=\frac29\bigl[30L_0-47+9\xi
 
 \paragraph{一致の基準。}記号の比較は、極と有限部分の差が記号として0になることを求める。$I(x,y,z)$ のように閉じた形の関数は、独立な二つの数値（TSIL の解析式と AMFlow の微分方程式）が倍精度の範囲で一致することを求める。ゲージによらないはずの量は、複数の $\xi$ とゲージで同じ値になることを、$\hbar$ の次数ごとに求める。文献との比較は、文献の数を写すのでなく、本ノートの模型と規格化で計算した量で行う。
 
-\paragraph{手順。}次の順に進める。(1) Landau ゲージの $V_2$：手計算の式~\eqref{eq:V2} を、FeynArts で作った2ループの真空の図（FeynCalc で縮約と部分分数、Kira で簡約）と1ループの対抗項の挿入から求めた値と記号として比べる。$I(x,y,z)$ の数値を TSIL と AMFlow で比べる。(2) 2ループの繰り込み群：一般の公式~\cite{mv83,lwx03} から2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$ と Landau ゲージの $\gamma_\phi$ を求め、極~\eqref{eq:poles} との整合と、$\dd V/\dd\ln Q=O(\hbar^3)$ を記号として確かめる。(3) Goldstone の赤外の問題：最小点で $x_G\sim\hbar$ となり、$V_2$ の微分に $\ln x_G$ が現れることを示し、再和~\cite{martin14,eek14} で最小点と $V_{\min}$ を2ループの精度で求める（計画の時点では曲率も挙げたが、最小点で赤外の対数を持つので除いた。第~\ref{sec:goldstone} 節）。(4) 一般のゲージ：Martin--Patel の一般のゲージ固定の式~\cite{mp18} を本模型に当てはめて、背景場の $R_\xi$ ゲージと Fermi ゲージの $V_2$ を作り、一つのゲージでは図からも計算する。極値の値が $O(\hbar^2)$ まで $\xi$ によらないことを、1ループのノートの手順 (7) の $\hbar$ の尺度の方法で確かめる。Fermi ゲージの赤外の問題~\cite{egk16} は手順 (3) の再和と組み合わせる（実際には、Fermi ゲージでは木の最小点で $V_1'$ と $V_2$ が対数で発散して式~\eqref{eq:N} の $\hbar$ 展開が作れないので、Martin--Patel の一般のゲージの $V_2$ で固定した次数の最小値を数値で求め、ゲージによらない値と比べた。再和はしていない）。(5) CW の模型：$m^2=0$、$\lambda\sim e^4/K$ と数えて、最小値と曲率の比 $M_h^2/M_A^2=V''(v)/(e^2v^2)$ を相対 $e^2/K$ まで求め、1ループのノートの手順 (8) のゲージ依存がどうなるかを確かめる（計画の時点では比のゲージ依存が消えると見込んだが、消えるのは最小値で、曲率の比は Nielsen 恒等式どおり次の次数でもゲージに依存した。第~\ref{sec:cwnlo} 節）。Andreassen--Frost--Schwartz~\cite{afs15} とは、本ノートの模型で計算した量で比べる。(6) 有限温度：DRalgo の NLO の次元簡約と3次元の2ループのポテンシャルで、$\lambda\sim e^3$ と数えて $T_c$ と $\phi_c/T_c$ を次の次数までゲージによらない展開で求め~\cite{el20}、1ループのノートの手順 (10) と比べる。(7) 3次元の U(1)＋ヒッグスの格子の結果~\cite{kklp98} と、本ノートで求めた3次元のパラメータで比べる（任意）。
+\paragraph{手順。}次の順に進める。(1) Landau ゲージの $V_2$：手計算の式~\eqref{eq:V2} を、FeynArts で作った2ループの真空の図（FeynCalc で縮約と部分分数、Kira で簡約）と1ループの対抗項の挿入から求めた値と記号として比べる。$I(x,y,z)$ の数値を TSIL と AMFlow で比べる。(2) 2ループの繰り込み群：一般の公式~\cite{mv83,lwx03} から2ループの $\beta_\lambda$、$\beta_{m^2}$、$\beta_e$ と Landau ゲージの $\gamma_\phi$ を求め、極~\eqref{eq:poles} との整合と、$\dd V/\dd\ln Q=O(\hbar^3)$ を記号として確かめる。(3) Goldstone の赤外の問題：最小点で $x_G\sim\hbar$ となり、$V_2$ の微分に $\ln x_G$ が現れることを示し、再和~\cite{martin14,eek14} で最小点と $V_{\min}$ を2ループの精度で求める（計画の時点では曲率も挙げたが、最小点で赤外の対数を持つので除いた。第~\ref{sec:goldstone} 節）。(4) 一般のゲージ：Martin--Patel の一般のゲージ固定の式~\cite{mp18} を本模型に当てはめて、背景場の $R_\xi$ ゲージと Fermi ゲージの $V_2$ を作り、一つのゲージでは図からも計算する。極値の値が $O(\hbar^2)$ まで $\xi$ によらないことを、1ループのノートの手順 (7) の $\hbar$ の尺度の方法で確かめる。Fermi ゲージの赤外の問題~\cite{egk16} は手順 (3) の再和と組み合わせる（実際には、Fermi ゲージでは木の最小点で $V_1'$ と $V_2$ が対数で発散して式~\eqref{eq:N} の $\hbar$ 展開が作れないので、Martin--Patel の一般のゲージの $V_2$ で固定した次数の最小値を数値で求め、ゲージによらない値と比べた。再和はしていない）。(5) CW の模型：$m^2=0$、$\lambda\sim e^4/K$ と数えて、最小値と曲率の比 $M_h^2/M_A^2=V''(v)/(e^2v^2)$ を相対 $e^2/K$ まで求め、1ループのノートの手順 (8) のゲージ依存がどうなるかを確かめる（計画の時点では比のゲージ依存が消えると見込んだが、消えるのは最小値で、曲率の比は Nielsen 恒等式どおり次の次数でもゲージに依存した。第~\ref{sec:cwnlo} 節）。Andreassen--Frost--Schwartz~\cite{afs15} とは、本ノートの模型で計算した量で比べる。(6) 有限温度：DRalgo の NLO の次元簡約と3次元の2ループのポテンシャルで、$\lambda\sim e^3$ と数えて $T_c$ と $\phi_c/T_c$ を次の次数までゲージによらない展開で求め~\cite{el20}、1ループのノートの手順 (10) と比べる（計画の時点では $\phi_c/T_c$ を挙げたが、ゲージによらない秩序変数として凝縮の跳びから $v_c/T_c$ を定めた。素朴な最小化は、厳密な $V_{\mathrm{NLO}}$ では原点が極小でなく $T_c$ が定まらないので、スカラーの質量を残した Landau ゲージのポテンシャルで比べた。第~\ref{sec:thnlo} 節）。(7) 3次元の U(1)＋ヒッグスの格子の結果~\cite{kklp98} と、本ノートで求めた3次元のパラメータで比べる（任意）。
 
 \section{検算}\label{sec:checks}
 
@@ -492,6 +536,50 @@ $\frac1{16}$ & $2.742\times10^{-7}$ & $-1.487\times10^{-7}$ & $2.768\times10^{-7
 \label{fig:fermi}
 \end{figure}
 
+\paragraph{手順 (6)：有限温度の次の次数。}\texttt{thermal\_nlo.wl} で確かめた（\texttt{run\_thermal\_nlo\_check.sh}、約15秒）。DRalgo 1.5.0~\cite{dralgo} で模型を次の次数まで次元簡約し、ソフトな3次元の理論（$A_i$、$A_0$、$\Phi$）の有効ポテンシャルを Landau ゲージで2ループまで求めた。(a) DRalgo の $g_3^2$、$h_3$（DRalgo の $\lambda_{VL}=2h_3$）、$\lambda_3$、$\lambda_A$（$\lambda_{VLL}=6\lambda_A$）は式~\eqref{eq:dr} に記号として一致した。2ループの $m_3^2$ は、4次元の尺度の対数に掛かる係数を DRalgo は4次元の結合で、文献~\cite{kklp98} は3次元の結合で書くので、差は $2g_3^4+h_3^2-4g_3^2\lambda_3+4\lambda_3^2-(3e^4-4e^2\lambda+4\lambda^2)T^2$ に比例し、3次元の結合の主要な値を入れると0になった（差は $1/K^2$）。定数の比較には $\zeta'(2)/\zeta(2)=\gamma_E+\ln2\pi-12\ln A$（$A$ は Glaisher の定数）を使った。(b) DRalgo の2ループのポテンシャルで、ループの中のスカラーの質量（$m_3^2$、$\lambda_3$）を0にすると、式~\eqref{eq:vnlo3} の $\xi_3=0$ に記号として一致した。$\frac12m_3^2(\mu_3)\phi^2+V_{\mathrm{NLO}}$ の $\mu_3$ 微分は、$\lambda_3\to0$ で記号として0だった。(c) 一般の $V_{\mathrm{LO}}(\phi;m_3^2)$ で、$\xi_3$ の項が $\Delta V$ にも凝縮にも寄与しないことを記号として確かめた。式~\eqref{eq:strict} の次の次数の項は、$V_{\mathrm{LO}}+sV_{\mathrm{NLO}}$ の転移を70桁で解いて $s=\pm10^{-20}$ の中心差分をとった値と、相対 $10^{-37}$ で一致した。
+
+(d) 1ループのノートの手順 (10) と同じ $e=\frac12$、$M_A=1$（$v=2$、$m^2=4\lambda$）、$Q=1$ で、$M_h=\frac12$（$\lambda=e^3/4$）と $M_h=1$（$\lambda=e^3$）について、$\mu_3=T/2,\,T,\,2T$ で求めた（表~\ref{tab:thnlo}、\texttt{results/thermal\_nlo.csv}）。$\xi_3=1,3$ の $T_c$ と $v_c/T_c$ は、$\xi_3=0$ と $10^{-37}$ 以内で同じだった。$M_h=\frac12$ では、$T_c$ の $\mu_3$ 依存は主要な次数の2.1\%から次の次数の0.28\%に下がった（Landau ゲージでは1ループの2.2\%から2ループの0.11\%）。$\mu_3=T$ で、次の次数は $T_c$ を2.1\%上げ、$v_c/T_c$ を $0.458$ から $0.300$ に35\%下げた。$M_h=1$ では、凝縮の次の次数の項（$\mu_3=T$ で $-0.0293$）が主要な次数（$0.0132$）を超えて跳びが負になり、展開は破れた。(e) $\lambda=e^3/4$（$m^2=4\lambda$）のまま $e$ を半分にしていくと（$\mu_3=T$、表~\ref{tab:thscan}）、$v_c/T_c$ の相対的な補正は $e$ に比例して減り（隣どうしの比が $2.41$、$2.17$、$2.08$、$2.04$）、$T_c$ の補正はそれより速く、おおよそ $e^2\ln e$ で減った（比が $2.52$ から $3.27$ に増える）。(f) $M_h=\frac12$、$\mu_3=T$、$T=T_0$ で $V_{\mathrm{LO}}+V_{\mathrm{NLO}}$ の破れた極小を求めると、$\xi_3=1,3$ では $\xi_3=0$ から $c_\xi$ の $0.973$、$1.021$ 倍だけ動いた（$\phi/\sqrt T$ は $\xi_3=0,1,3$ で $0.573$、$0.592$、$0.608$）。$V_{\mathrm{LO}}+sV_{\mathrm{NLO}}$ の転移を $s$ で追うと、$s=0.9$ と $1$ の間で $\Delta V=0$ と $V'=0$ の解がなくなり、素朴な $T_c$ は定まらなかった。
+
+1ループのノートの手順 (10) の値（$Q=1$）は、$M_h=\frac12$ で $T_c=1.360$、$\phi_c/T_c=0.532$（4次元の1ループ）、$1.412$、$0.474$（daisy の再和）、$1.396$、$0.460$（超ソフトの有効理論）、$M_h=1$ で同じ順に $2.207$、$0.150$；$2.342$、$0.158$；$2.262$、$0.107$ だった。本ノートの主要な次数（$\mu_3=T$）の $v_c/T_c=0.458$（$M_h=\frac12$）、$0.109$（$M_h=1$）は、同じ次数の超ソフトの有効理論の値と0.5\%と2\%で合う（$T_c$ は0.8\%低い）。
+
+\begin{table}[tbp]
+\centering\footnotesize
+\caption{有限温度の転移（$e=\frac12$、$M_A=1$、$Q=1$、\texttt{results/thermal\_nlo.csv}）。LO と NLO はゲージによらない展開~\eqref{eq:strict}（$v_c/T_c=\sqrt{2\Delta\langle\Phi^\dagger\Phi\rangle_3/T_c}$）で、$\xi_3$ によらない。1L と 2L は、スカラーのループを含む Landau ゲージの3次元のポテンシャルを最小化した $T_c$ と $\phi/\sqrt T$ である。$\mu_3$ は3次元の尺度。$M_h=1$ の NLO の凝縮の跳びは負になる（—）。}
+\label{tab:thnlo}
+\begin{tabular}{ccrrrrrrrr}
+\toprule
+&& \multicolumn{4}{c}{$T_c$} & \multicolumn{4}{c}{$v_c/T_c$} \\
+\cmidrule(lr){3-6}\cmidrule(lr){7-10}
+$M_h$ & $\mu_3/T$ & LO & NLO & 1L & 2L & LO & NLO & 1L & 2L \\
+\midrule
+$\frac12$ & $\frac12$ & $1.3996$ & $1.4109$ & $1.4184$ & $1.4067$ & $0.4580$ & $0.2974$ & $0.5103$ & $0.3841$ \\
+ & $1$ & $1.3846$ & $1.4132$ & $1.4027$ & $1.4075$ & $0.4583$ & $0.2997$ & $0.5106$ & $0.3832$ \\
+ & $2$ & $1.3700$ & $1.4149$ & $1.3875$ & $1.4082$ & $0.4586$ & $0.3019$ & $0.5109$ & $0.3827$ \\
+\midrule
+$1$ & $\frac12$ & $2.2558$ & $2.2961$ & $2.3169$ & $2.2866$ & $0.1087$ & — & $0.1816$ & $0.0928$ \\
+ & $1$ & $2.2431$ & $2.3015$ & $2.3031$ & $2.2907$ & $0.1087$ & — & $0.1817$ & $0.0891$ \\
+ & $2$ & $2.2305$ & $2.3066$ & $2.2896$ & $2.2944$ & $0.1087$ & — & $0.1817$ & $0.0875$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[tbp]
+\centering\small
+\caption{$\lambda=e^3/4$、$m^2=4\lambda$、$Q=1$、$\mu_3=T$ で $e$ を変えたときの、ゲージによらない展開の次の次数の相対的な補正（\texttt{results/thermal\_nlo.csv}）。}
+\label{tab:thscan}
+\begin{tabular}{crrr}
+\toprule
+$e$ & $(v_c/T_c)_{\mathrm{LO}}$ & $T_c^{\mathrm{NLO}}/T_c^{\mathrm{LO}}-1$ & $(v_c/T_c)_{\mathrm{NLO}}/(v_c/T_c)_{\mathrm{LO}}-1$ \\
+\midrule
+$\frac12$ & $0.4583$ & $2.068\times10^{-2}$ & $-0.3460$ \\
+$\frac14$ & $0.4989$ & $8.204\times10^{-3}$ & $-0.1435$ \\
+$\frac18$ & $0.5229$ & $2.839\times10^{-3}$ & $-0.06609$ \\
+$\frac1{16}$ & $0.5349$ & $9.113\times10^{-4}$ & $-0.03180$ \\
+$\frac1{32}$ & $0.5405$ & $2.788\times10^{-4}$ & $-0.01562$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{議論と今後}\label{sec:discussion}
 
 \paragraph{手順 (1) で分かったこと。}Landau ゲージの $V_2$ は、Martin の一般の式に本模型の8種類の結合を入れるだけで得られ、図からの直接の計算と完全に一致した。2ループの図だけでは極に $A(x)$ や $\Aeps(x)$ を含む非局所的な項が残り、1ループのノートの Landau ゲージの対抗項（とくにゲージ場の質量の繰り込みが $Z_\Phi$ だけになること）を挿入して初めて極が局所的になり、$\Aeps$ も有限部分から消える。ゲージ場を含む図では、横波の数 $D-1$ の $\epsilon$ の部分が1ループの極と掛け合わさって $\MSbar$ に固有の有限の項（$f_{VS}$ の $2xA(y)$ など）を作る。最小点 $\phi=v$ では $x_G=0$ で $V_2$ 自体は有限だが、$x_G$ を含む項の微分は手順 (3) で扱う赤外の問題を持つ。
@@ -504,7 +592,9 @@ $\frac1{16}$ & $2.742\times10^{-7}$ & $-1.487\times10^{-7}$ & $2.768\times10^{-7
 
 \paragraph{手順 (5) で分かったこと。}1ループのノートでは、CW の模型の曲率の比 $V''(v)/(e^2v^2)$ に残る $\pm\frac23\xi e^2/K$ のゲージ依存は、同じ次数の2ループの項で消えると見込んだ。実際に $V_2$ を入れると、次の次数でゲージによらなくなるのは最小値 $V_{\min}$（式~\eqref{eq:cwvmin}）で、曲率の比は $\xi$ 依存の形が $\frac23\xi$ から $2\xi\ln\xi$ に変わるだけで残る（式~\eqref{eq:cwR}）。これは Nielsen 恒等式から $\dd\ln R/\dd\xi=2C'+2C/v$ として予言される量そのもので、曲率が観測量でないことの表れである。ゲージによらない質量の比には極の質量が要る。$\lambda\to0$ の $V_2$ は Andreassen--Frost--Schwartz と Espinosa--Garny--Konstandin の結果に、本ノートの模型と $\MSbar$ の規約で一致した。背景場の $R_\xi$ ゲージでは、$V_2$ の $\xi$ 依存が1ループの $\lambda\xi$ の項と最小点でちょうど打ち消し、再和は要らない。Fermi ゲージでは文献~\cite{afs15} のとおり $\lambda^{-1}e^{10}$ の daisy の図の和が次の次数に効くので、本ノートでは扱わなかった。
 
-\paragraph{今後。}Fermi ゲージで極値の値を $O(\hbar^2)$ までゲージによらなくするには、文献~\cite{egk16} の再和や場の再定義を2ループで行う必要がある。本ノートではそこまでは扱わない。文献~\cite{lwx03} の式 (23) では、ゲージのパラメータ $\xi$ が2ループで $C_2(G)$ にだけ掛かるので、$U(1)$ の共変ゲージ（Fermi ゲージ）の $\gamma^{(2)}$ は $\xi$ によらず式~\eqref{eq:rg} と同じで、$\xi$ 依存は1ループの $\gamma^{(1)}=-(3-\xi)e^2$ だけである。これはゲージ依存が1ループで尽きるという Landau--Khalatnikov--Fradkin の変換の結果と合い、Martin--Patel の $\beta_\phi$ の $\tilde\xi=0$ の値とも一致する。次は手順 (6) の有限温度で、1ループのノートの手順 (10) で見た $\phi_c/T_c$ のゲージ依存を、次の次数までゲージによらない展開で扱う。
+\paragraph{手順 (6) で分かったこと。}1ループのノートの手順 (10) では、再和した1ループのポテンシャルの $\phi_c/T_c$ がゲージに依存した。3次元の有効理論で $\lambda\sim e^3$ と数えると、主要な次数のポテンシャル~\eqref{eq:vlo3} はゲージのパラメータを含まず、ゲージ依存は次の次数で $V_{\mathrm{LO}}'$ に比例する形~\eqref{eq:vnlo3} でだけ入る。$T_c$ と凝縮の跳びは、主要な次数の転移のまわりで展開すればこの項が落ち、厳密にゲージによらない。1ループのノートで見たゲージ依存は、素朴な極小の位置が $c_\xi$ だけ動くことに当たり、秩序変数を $\phi$ でなく凝縮で定めれば消える。$V_{\mathrm{NLO}}$ は $m_3^2$ の走りを打ち消すので、$T_c$ の3次元の尺度依存は1桁下がった。一方、次の次数の補正は小さくない。$M_h=\frac12$（$x=\frac18$）では $v_c/T_c$ が35\%下がり、$e$ に比例して減るので展開としては整合しているが、係数は約 $-2.8x$ と大きい。$M_h=1$（$x=\frac12$）では凝縮の補正が主要な次数を超え、この展開は使えない。Landau ゲージの2ループの最小化は、$T_c$ では厳密な展開の次の次数と0.4\%で合うが、$v_c/T_c$ では $0.383$ と $0.300$ で違う。差はスカラーのループ（相対 $x^{3/2}$）と、最小化が拾う高次の項による。
+
+\paragraph{今後。}Fermi ゲージで極値の値を $O(\hbar^2)$ までゲージによらなくするには、文献~\cite{egk16} の再和や場の再定義を2ループで行う必要がある。本ノートではそこまでは扱わない。文献~\cite{lwx03} の式 (23) では、ゲージのパラメータ $\xi$ が2ループで $C_2(G)$ にだけ掛かるので、$U(1)$ の共変ゲージ（Fermi ゲージ）の $\gamma^{(2)}$ は $\xi$ によらず式~\eqref{eq:rg} と同じで、$\xi$ 依存は1ループの $\gamma^{(1)}=-(3-\xi)e^2$ だけである。これはゲージ依存が1ループで尽きるという Landau--Khalatnikov--Fradkin の変換の結果と合い、Martin--Patel の $\beta_\phi$ の $\tilde\xi=0$ の値とも一致する。有限温度では、厳密な展開の次の次の次数（スカラーのループ、相対 $x^{3/2}$）を入れれば、$M_h=\frac12$ の $v_c/T_c$ の収束を確かめられる。残る手順 (7)（任意）では、式~\eqref{eq:dr} の3次元のパラメータを使って、U(1)＋ヒッグスの3次元の格子の結果~\cite{kklp98} と比べる。
 
 \appendix
 
@@ -568,6 +658,7 @@ V_0^{\mathrm{bare}}=\mu^{-2\epsilon}\Bigl[R-\frac12M\phi^2+\frac14L\phi^4\Bigr],
 \bibitem{pr11} H. H. Patel, M. J. Ramsey-Musolf, ``Baryon washout, electroweak phase transition, and perturbation theory,'' JHEP \textbf{07}, 029 (2011), arXiv:1101.4665。
 \bibitem{afs15} A. Andreassen, W. Frost, M. D. Schwartz, ``Consistent use of effective potentials,'' Phys. Rev. D \textbf{91}, 016009 (2015), arXiv:1408.0287。
 \bibitem{el20} A. Ekstedt, J. Löfgren, ``A critical look at the electroweak phase transition,'' JHEP \textbf{12}, 136 (2020), arXiv:2006.12614。
+\bibitem{hlrst22} J. Hirvonen, J. Löfgren, M. J. Ramsey-Musolf, P. Schicho, T. V. I. Tenkanen, ``Computing the gauge-invariant bubble nucleation rate in finite temperature effective field theory,'' JHEP \textbf{07}, 135 (2022), arXiv:2112.08912。
 \bibitem{kklp98} K. Kajantie, M. Karjalainen, M. Laine, J. Peisa, ``Three-dimensional U(1) gauge+Higgs theory as an effective theory for finite temperature phase transitions,'' Nucl. Phys. B \textbf{520}, 345 (1998), arXiv:hep-lat/9711048。
 \bibitem{mv83} M. E. Machacek, M. T. Vaughn, ``Two-loop renormalization group equations in a general quantum field theory (I)--(III),'' Nucl. Phys. B \textbf{222}, 83 (1983); \textbf{236}, 221 (1984); \textbf{249}, 70 (1985)。
 \bibitem{lwx03} M. Luo, H. Wang, Y. Xiao, ``Two-loop renormalization group equations in general gauge field theories,'' Phys. Rev. D \textbf{67}, 065019 (2003), arXiv:hep-ph/0211440。
