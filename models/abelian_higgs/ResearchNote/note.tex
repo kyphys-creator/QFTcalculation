@@ -36,6 +36,45 @@
   slab/.style={font=\scriptsize,align=center},
   blob/.style={circle,draw=black,thick,fill=black!12,inner sep=0pt},
 }
+% ---- extra TikZ styles and macros for the diagrams (step figures) ----
+\tikzset{
+  gold/.style={thick,dash dot},
+  mom/.style={-{Stealth[length=1.6mm]},thin,black!70},
+  ins/.style={circle,draw=black,thick,fill=white,inner sep=0pt,minimum size=2.6mm,
+    path picture={\draw[thick] (path picture bounding box.south east) -- (path picture bounding box.north west)
+      (path picture bounding box.south west) -- (path picture bounding box.north east);}},
+  insq/.style={rectangle,draw=black,thick,fill=black!10,inner sep=1.2pt,font=\scriptsize},
+  box/.style={rectangle,rounded corners=2pt,draw=black!70,thick,fill=#1,align=center,font=\small,inner sep=3pt},
+  box/.default=white,
+  flow/.style={-{Stealth[length=2.2mm]},thick,black!70},
+}
+% 2 -> 2 topologies in a unit cell centred at the origin: arguments are the line styles
+% \schan{in top}{in bottom}{propagator}{out top}{out bottom}
+\newcommand{\schan}[5]{%
+  \draw[#1] (-1.05,0.62) -- (-0.42,0); \draw[#2] (-1.05,-0.62) -- (-0.42,0);
+  \draw[#3] (-0.42,0) -- (0.42,0);
+  \draw[#4] (0.42,0) -- (1.05,0.62); \draw[#5] (0.42,0) -- (1.05,-0.62);
+  \node[vtx] at (-0.42,0) {}; \node[vtx] at (0.42,0) {};}
+% \tchan{in top}{out top}{propagator}{in bottom}{out bottom}
+\newcommand{\tchan}[5]{%
+  \draw[#1] (-1.0,0.72) -- (0,0.4); \draw[#2] (0,0.4) -- (1.0,0.72);
+  \draw[#3] (0,0.4) -- (0,-0.4);
+  \draw[#4] (-1.0,-0.72) -- (0,-0.4); \draw[#5] (0,-0.4) -- (1.0,-0.72);
+  \node[vtx] at (0,0.4) {}; \node[vtx] at (0,-0.4) {};}
+% \uchan{in top}{out bottom}{propagator}{in bottom}{out top}: the outgoing lines cross
+\newcommand{\uchan}[5]{%
+  \draw[#1] (-1.0,0.72) -- (0,0.4); \draw[#2] (0,0.4) -- (1.0,-0.72);
+  \draw[#3] (0,0.4) -- (0,-0.4);
+  \draw[#4] (-1.0,-0.72) -- (0,-0.4); \draw[#5] (0,-0.4) -- (1.0,0.72);
+  \node[vtx] at (0,0.4) {}; \node[vtx] at (0,-0.4) {};}
+% \contact{in top}{in bottom}{out top}{out bottom}
+\newcommand{\contact}[4]{%
+  \draw[#1] (-1.0,0.66) -- (0,0); \draw[#2] (-1.0,-0.66) -- (0,0);
+  \draw[#3] (0,0) -- (1.0,0.66); \draw[#4] (0,0) -- (1.0,-0.66); \node[vtx] at (0,0) {};}
+% external labels: in top, in bottom, out top, out bottom
+\newcommand{\labs}[4]{%
+  \node[font=\scriptsize] at (-1.2,0.82) {#1}; \node[font=\scriptsize] at (-1.2,-0.82) {#2};
+  \node[font=\scriptsize] at (1.2,0.82) {#3}; \node[font=\scriptsize] at (1.2,-0.82) {#4};}
 
 \title{アーベル・ヒッグス模型：1ループの構造と検算\\（$\MSbar$、FJ のタドポール、一般の $R_\xi$ ゲージ、$d=4$）}
 \author{}
@@ -148,7 +187,7 @@ $s,\ t,\ u,\ \theta$ & Mandelstam 変数と重心系の散乱角 \\
 \end{aligned}
 \label{eq:Lexp}
 \end{equation}
-となる。伝播関数と頂点を表~\ref{tab:rules} に示す。ゲージ場の伝播関数は、質量 $M_A$ のユニタリーゲージの部分 $U$ と、質量 $\sqrt\xi M_A$ の部分 $X$ に分けられる。
+となる。伝播関数と頂点を表~\ref{tab:rules} に、頂点の図を図~\ref{fig:vertices} に示す。ゲージ場の伝播関数は、質量 $M_A$ のユニタリーゲージの部分 $U$ と、質量 $\sqrt\xi M_A$ の部分 $X$ に分けられる。
 \begin{equation}
 \frac{-i}{k^2-M_A^2}\Bigl[g_{\mu\nu}-(1-\xi)\frac{k_\mu k_\nu}{k^2-\xi M_A^2}\Bigr]
 =\underbrace{\frac{-i}{k^2-M_A^2}\Bigl[g_{\mu\nu}-\frac{k_\mu k_\nu}{M_A^2}\Bigr]}_{U}
@@ -183,6 +222,50 @@ $\bar c\,c\,h$ & $-i\xi eM_A$ & $-\xi eM_A\,h\bar cc$ \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+% three-point vertices: legs to the left, upper right, lower right
+\foreach \x/\l/\a/\b/\la/\lb/\lc/\rule in {
+    0/scalar/scalar/scalar/h/h/h/{$-6i\lambda v$},
+    3.1/scalar/gold/gold/h/G/G/{$-2i\lambda v$},
+    6.2/scalar/photon/photon/h/{A_\mu}/{A_\nu}/{$2ieM_A\,g^{\mu\nu}$},
+    9.3/scalar/ghost/ghost/h/c/{\bar c}/{$-i\xi eM_A$}} {
+  \begin{scope}[shift={(\x,0)}]
+    \draw[\l] (-0.95,0) -- (0,0); \draw[\a] (0,0) -- (0.72,0.62); \draw[\b] (0.72,-0.62) -- (0,0);
+    \node[vtx] at (0,0) {};
+    \node[font=\scriptsize] at (-1.12,0) {$\la$}; \node[font=\scriptsize] at (0.92,0.78) {$\lb$}; \node[font=\scriptsize] at (0.92,-0.78) {$\lc$};
+    \node[font=\small] at (0,-1.25) {\rule};
+  \end{scope}}
+% A G h with the momenta
+\begin{scope}[shift={(12.4,0)}]
+  \draw[photon] (-0.95,0) -- (0,0); \draw[gold] (0,0) -- (0.72,0.62); \draw[scalar] (0,0) -- (0.72,-0.62);
+  \node[vtx] at (0,0) {};
+  \draw[mom] (0.78,0.42) -- (0.36,0.06); \draw[mom] (0.78,-0.42) -- (0.36,-0.06);
+  \node[font=\scriptsize] at (-1.12,0.0) {$A_\mu$}; \node[font=\scriptsize] at (0.92,0.78) {$G$}; \node[font=\scriptsize] at (0.92,-0.78) {$h$};
+  \node[font=\scriptsize] at (1.08,0.3) {$p_2$}; \node[font=\scriptsize] at (1.08,-0.3) {$p_3$};
+  \node[font=\small] at (0,-1.25) {$e\,(p_3-p_2)^\mu$};
+\end{scope}
+% four-point vertices
+\foreach \x/\p/\q/\r/\s/\lp/\lq/\lr/\ls/\rule in {
+    0/scalar/scalar/scalar/scalar/h/h/h/h/{$-6i\lambda$},
+    3.1/gold/gold/gold/gold/G/G/G/G/{$-6i\lambda$},
+    6.2/scalar/scalar/gold/gold/h/h/G/G/{$-2i\lambda$},
+    9.3/photon/photon/scalar/scalar/{A_\mu}/{A_\nu}/h/h/{$2ie^2g^{\mu\nu}$},
+    12.4/photon/photon/gold/gold/{A_\mu}/{A_\nu}/G/G/{$2ie^2g^{\mu\nu}$}} {
+  \begin{scope}[shift={(\x,-3.0)}]
+    \draw[\p] (-0.72,0.62) -- (0,0); \draw[\q] (-0.72,-0.62) -- (0,0);
+    \draw[\r] (0,0) -- (0.72,0.62); \draw[\s] (0,0) -- (0.72,-0.62);
+    \node[vtx] at (0,0) {};
+    \node[font=\scriptsize] at (-0.92,0.78) {$\lp$}; \node[font=\scriptsize] at (-0.92,-0.78) {$\lq$};
+    \node[font=\scriptsize] at (0.92,0.78) {$\lr$}; \node[font=\scriptsize] at (0.92,-0.78) {$\ls$};
+    \node[font=\small] at (0,-1.25) {\rule};
+  \end{scope}}
+\end{tikzpicture}
+\caption{表~\ref{tab:rules} の10個の頂点のクラス。破線は $h$、一点鎖線は Goldstone ボソン $G$、波線はゲージ場 $A$、矢印付きの点線はゴーストである。$AGh$ の運動量はすべて頂点に入る向きにとる。$\xi$ に依存する頂点はゴーストの $\bar cch$ だけで、ゲージ固定の $G$ の質量 $\xi M_A^2$ は伝播関数に入る。}
+\label{fig:vertices}
+\end{figure}
 
 \paragraph{BRST 対称性と Slavnov--Taylor 恒等式。}$\mathcal L_{\mathrm{gf}}+\mathcal L_{\mathrm{FP}}$ は BRST 変換で閉じた形に書け、そこから $\langle T\,F(x)F(y)\rangle=-i\xi\,\delta^4(x-y)$ がすべての次数で厳密に成り立つ（\ref{app:brst}）。2点関数を
 \begin{equation}
@@ -423,7 +506,41 @@ M_{h,\mathrm p}=2.559100,\quad M_{A,\mathrm p}=0.993696
 \end{equation}
 である。同種粒子の因子 $\frac12$ を含む。基準点では $x=\frac4{25}$、$\beta=\frac35$ で $\Gamma=1.56375/(32\pi)=0.0155549$ である。$e^2/M_A^2=1/v^2$ なので、標準模型の $\Gamma(H\to ZZ)$ と同じ形である。
 
-\paragraph{$AA\to AA$ と等価定理。}$A(k_1)A(k_2)\to A(k_3)A(k_4)$ は $h$ の $s$、$t$、$u$ チャンネルの交換の3個の図からなり（どちらのゲージでも $G$ は交換されない）
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.82]
+% h -> A A
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.0,0) -- (0,0); \draw[photon] (0,0) -- (0.9,0.6); \draw[photon] (0,0) -- (0.9,-0.6);
+  \node[vtx] at (0,0) {};
+  \node[font=\scriptsize] at (-1.18,0) {$h$}; \node[font=\scriptsize] at (1.08,0.72) {$A$}; \node[font=\scriptsize] at (1.08,-0.72) {$A$};
+  \node[slab] at (0,-1.3) {$h\to AA$};
+\end{scope}
+% A A -> A A
+\begin{scope}[shift={(3.2,0)}] \schan{photon}{photon}{scalar}{photon}{photon} \labs{$A$}{$A$}{$A$}{$A$} \node[slab] at (0,-1.3) {$s$}; \end{scope}
+\begin{scope}[shift={(6.0,0)}] \tchan{photon}{photon}{scalar}{photon}{photon} \node[slab] at (0,-1.3) {$t$}; \end{scope}
+\begin{scope}[shift={(8.8,0)}] \uchan{photon}{photon}{scalar}{photon}{photon} \node[slab] at (0,-1.3) {$u$}; \end{scope}
+\node[font=\small] at (6.0,1.35) {$AA\to AA$（$h$ の交換）};
+% h h -> h h
+\begin{scope}[shift={(12.0,0)}] \contact{scalar}{scalar}{scalar}{scalar} \labs{$h$}{$h$}{$h$}{$h$} \node[slab] at (0,-1.3) {接触項}; \end{scope}
+\begin{scope}[shift={(14.8,0)}] \schan{scalar}{scalar}{scalar}{scalar}{scalar} \node[slab] at (0,-1.3) {$s,\ t,\ u$}; \end{scope}
+\node[font=\small] at (13.4,1.35) {$hh\to hh$};
+% A A -> h h
+\begin{scope}[shift={(0,-3.4)}] \contact{photon}{photon}{scalar}{scalar} \labs{$A$}{$A$}{$h$}{$h$} \node[slab] at (0,-1.3) {接触項}; \end{scope}
+\begin{scope}[shift={(2.9,-3.4)}] \schan{photon}{photon}{scalar}{scalar}{scalar} \node[slab] at (0,-1.3) {$s$：$h$}; \end{scope}
+\begin{scope}[shift={(5.8,-3.4)}] \tchan{photon}{scalar}{photon}{photon}{scalar} \node[slab] at (0,-1.3) {$t$：$A$（$U+X$）}; \end{scope}
+\begin{scope}[shift={(8.7,-3.4)}] \uchan{photon}{scalar}{photon}{photon}{scalar} \node[slab] at (0,-1.3) {$u$：$A$}; \end{scope}
+\begin{scope}[shift={(11.9,-3.4)}] \tchan{photon}{scalar}{gold}{photon}{scalar} \node[slab] at (0,-1.3) {$t$：$G$}; \end{scope}
+\begin{scope}[shift={(14.8,-3.4)}] \uchan{photon}{scalar}{gold}{photon}{scalar} \node[slab] at (0,-1.3) {$u$：$G$}; \end{scope}
+\node[font=\small] at (5.8,-2.05) {$AA\to hh$（ユニタリーゲージは左の4個）};
+\node[font=\small] at (13.35,-2.05) {$R_\xi$ ゲージで加わる図};
+\draw[black!40] (10.35,-2.3) -- (10.35,-4.8);
+\end{tikzpicture}
+\caption{木の振幅の図（手順 (2)）。$AA\to hh$ の $R_\xi$ ゲージの $G$ の交換は、ゲージ場の伝播関数の $X$ の部分（$k_\mu k_\nu$ に比例し、質量 $\sqrt\xi M_A$）と $\xi$ の依存を打ち消し合い、和はユニタリーゲージの4個の図に等しい（式~\eqref{eq:Mahh}）。}
+\label{fig:treediag}
+\end{figure}
+
+\paragraph{$AA\to AA$ と等価定理。}$A(k_1)A(k_2)\to A(k_3)A(k_4)$ は $h$ の $s$、$t$、$u$ チャンネルの交換の3個の図（図~\ref{fig:treediag}）からなり（どちらのゲージでも $G$ は交換されない）
 \begin{equation}
 \mathcal M=-4e^2M_A^2\Bigl[\frac{(\varepsilon_1\cdot\varepsilon_2)(\varepsilon_3^*\cdot\varepsilon_4^*)}{s-M_h^2}+\frac{(\varepsilon_1\cdot\varepsilon_3^*)(\varepsilon_2\cdot\varepsilon_4^*)}{t-M_h^2}+\frac{(\varepsilon_1\cdot\varepsilon_4^*)(\varepsilon_2\cdot\varepsilon_3^*)}{u-M_h^2}\Bigr]
 \label{eq:Maa}
@@ -471,7 +588,7 @@ $h(p)\to A(k_1)A(k_2)$ の1ループの振幅を、物理的な偏極で消え�
 \mathcal M_0^{\mu\nu}=2eM_A\,g^{\mu\nu}
 \label{eq:ff}
 \end{equation}
-と書く（FeynArts の形、Feynman 則の積の $1/i$ 倍）。$\MSbar$（FJ）で繰り込んだ S 行列要素の1ループの部分は
+と書く（FeynArts の形、Feynman 則の積の $1/i$ 倍。図の型は図~\ref{fig:nlodiag}）。$\MSbar$（FJ）で繰り込んだ S 行列要素の1ループの部分は
 \begin{equation}
 F_g^{\mathrm R}=F_g^{\mathrm{1PI}}+F_g^{\mathrm{tad}}+c_A\,2eM_A+\frac12\bigl(\delta R_h+2\delta R_A\bigr)2eM_A,\qquad
 \delta R_h=-\bigl[\Sigma^{H\prime}+\delta Z_\Phi\bigr]_{M_h^2},\quad \delta R_A=-\bigl[\Sigma_T'+\delta Z_A\bigr]_{M_A^2}
@@ -484,6 +601,59 @@ F_g^{\mathrm R}=F_g^{\mathrm{1PI}}+F_g^{\mathrm{tad}}+c_A\,2eM_A+\frac12\bigl(\d
 \label{eq:nlowidth}
 \end{equation}
 になる。$\Gamma_0$ は式~\eqref{eq:width}、$S_g=3-M_h^2/M_A^2+M_h^4/(4M_A^4)$ と $S_b=M_h^2(M_h^2-4M_A^2)(M_h^2-2M_A^2)/(8M_A^4)$ は偏極の和、最後の項は木の結合 $2eM_A$ の $M_A$ を $\MSbar$ から極質量に直す分である（$\Sigma$ は $\MSbar$ の有限部分）。$\delta_{\mathrm{OS}}$ には三つの性質がある。一つ目に、$\xi$ によらない。二つ目に、タドポールを含まない。$F_g^{\mathrm{tad}}/(eM_A)=2\Delta v/v$ が $\Sigma_T$ のタドポールの部分 $-2M_A^2\Delta v/v$ と打ち消すからである。したがって、タドポールを対抗項で消す処方（NLOCT と MadLoop）でも同じ値になる。三つ目に、$\mu$ には $\Gamma_0$ の $e^2(\mu)$ の走りを打ち消す $\dd\delta_{\mathrm{OS}}/\dd\ln\mu=-2e^2/(3K)$ だけを通じて依存する。形状因子 $F_g^{\mathrm{1PI}}$、$F_b$ は手で閉じた形にはせず、FeynCalc（一般の $\xi$）と FormCalc（Feynman ゲージ）で求めた（手順 (5)）。基準点（$\mu=1$）では $\delta_{\mathrm{OS}}=0.0201540$、$\Gamma=0.0158684$ で、木より $2.0\%$ 大きい。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.88]
+% (a) triangle
+\begin{scope}[shift={(0,0)}]
+  \draw[scalar] (-1.25,0) -- (-0.45,0);
+  \draw[thick] (-0.45,0) -- (0.4,0.55) -- (0.4,-0.55) -- cycle;
+  \draw[photon] (0.4,0.55) -- (1.15,0.85); \draw[photon] (0.4,-0.55) -- (1.15,-0.85);
+  \foreach \p in {(-0.45,0),(0.4,0.55),(0.4,-0.55)} \node[vtx] at \p {};
+  \node[font=\scriptsize] at (-1.4,0) {$h$}; \node[font=\scriptsize] at (1.3,0.95) {$A$}; \node[font=\scriptsize] at (1.3,-0.95) {$A$};
+  \node[slab] at (0,-1.35) {(a) 三角形\\$hAA$、$hGG$、$AGh$、$\bar cch$};
+\end{scope}
+% (b) bubble at the A A end (A A h h, A A G G)
+\begin{scope}[shift={(3.4,0)}]
+  \draw[scalar] (-1.25,0) -- (-0.7,0);
+  \draw[thick] (-0.7,0) arc (180:0:0.4); \draw[thick] (0.1,0) arc (0:-180:0.4);
+  \draw[photon] (0.1,0) -- (0.85,0.65); \draw[photon] (0.1,0) -- (0.85,-0.65);
+  \node[vtx] at (-0.7,0) {}; \node[vtx] at (0.1,0) {};
+  \node[slab] at (0,-1.35) {(b) 泡\\$AAhh$、$AAGG$ の頂点};
+\end{scope}
+% (c) bubble with one A at the quartic vertex
+\begin{scope}[shift={(6.8,0)}]
+  \draw[scalar] (-1.25,0.3) -- (-0.55,0); \draw[photon] (-0.55,0) -- (-1.15,-0.65);
+  \draw[thick] (-0.55,0) arc (180:0:0.42); \draw[thick] (0.29,0) arc (0:-180:0.42);
+  \draw[photon] (0.29,0) -- (1.0,0);
+  \node[vtx] at (-0.55,0) {}; \node[vtx] at (0.29,0) {};
+  \node[slab] at (0,-1.35) {(c) 泡\\$h$ と $A$ が同じ頂点};
+\end{scope}
+% (d) tadpole attached to A A h h
+\begin{scope}[shift={(10.0,0)}]
+  \draw[scalar] (-1.25,0) -- (0,0); \draw[photon] (0,0) -- (0.85,0.65); \draw[photon] (0,0) -- (0.85,-0.65);
+  \draw[scalar] (0,0) -- (0,0.55); \node[blob,minimum size=0.5cm] at (0,0.8) {$T$};
+  \node[vtx] at (0,0) {};
+  \node[slab] at (0,-1.35) {(d) タドポール\\$F_g^{\mathrm{tad}}$};
+\end{scope}
+% (e) counterterm
+\begin{scope}[shift={(13.0,0)}]
+  \draw[scalar] (-1.15,0) -- (0,0); \draw[photon] (0,0) -- (0.85,0.65); \draw[photon] (0,0) -- (0.85,-0.65);
+  \node[ins] at (0,0) {};
+  \node[slab] at (0,-1.35) {(e) 対抗項\\$c_A\,2eM_A$};
+\end{scope}
+% (f) external-leg corrections
+\begin{scope}[shift={(15.9,0)}]
+  \draw[scalar] (-1.15,0) -- (0,0); \draw[photon] (0,0) -- (0.85,0.65); \draw[photon] (0,0) -- (0.85,-0.65);
+  \node[vtx] at (0,0) {};
+  \node[blob,minimum size=0.32cm] at (-0.6,0) {}; \node[blob,minimum size=0.32cm] at (0.45,0.34) {}; \node[blob,minimum size=0.32cm] at (0.45,-0.34) {};
+  \node[slab] at (0,-1.35) {(f) 外線\\留数 $\delta R_h$、$\delta R_A$};
+\end{scope}
+\end{tikzpicture}
+\caption{NLO の $h\to AA$ の図の型（手順 (5)）。実線のループの内線は $h$、$G$、$A$（$U$ と $X$）、$c$ のうち頂点が許すもので、1PI の図は (a)〜(c) の10個である（ゴーストは (a) の三角形だけに入る）。(d) は $AAhh$ の頂点にタドポールを運動量0の $h$ の線でつないだ図、(e) は式~\eqref{eq:ctv} の $c_A$ の対抗項、(f) は LSZ の留数で、式~\eqref{eq:nloamp} の $F_g^{\mathrm R}$ はこれらの和である。}
+\label{fig:nlodiag}
+\end{figure}
 
 \subsection{有効ポテンシャルと Nielsen 恒等式}\label{sec:effpot}
 
@@ -504,7 +674,7 @@ V_1=\frac1{4K}\sum_in_im_i^4\Bigl(\ln\frac{m_i^2}{\mu^2}-c_i\Bigr)
 K_i(z)=i\Bigl\langle s\phi_i(z)\int\dd^4y\,\bar c\Bigl(\frac{\partial F}{\partial\xi}+\frac B2\Bigr)(y)\Bigr\rangle
 \label{eq:nielsen}
 \end{equation}
-が成り立つ~\cite{nielsen75}（$B=-F/\xi$。\ref{app:effpot}）。一定の場では $\partial_\xi V=C\,\partial_\phi V$、$C=K_h$ で、1ループでは $\partial_\xi V_1=C\,\partial_\phi V_0$ である。$sh=-ecG$ なので、$C$ はゴーストと $G$（Fermi ゲージでは $G$ と $\partial\!\cdot\!A$ の混合）の泡1個で
+が成り立つ~\cite{nielsen75}（$B=-F/\xi$。\ref{app:effpot}）。一定の場では $\partial_\xi V=C\,\partial_\phi V$、$C=K_h$ で、1ループでは $\partial_\xi V_1=C\,\partial_\phi V_0$ である。$sh=-ecG$ なので、$C$ はゴーストと $G$（Fermi ゲージでは $G$ と $\partial\!\cdot\!A$ の混合）の泡1個（図~\ref{fig:nielsendiag}）で
 \begin{equation}
 C_{\mathrm{bg}}=-\frac{e^2\phi}{2K}B_0(0;\xi m_A^2,m_G^2+\xi m_A^2),\qquad
 C_{\mathrm F}=\frac{e^2\phi}{2K}B_0(0;m_+^2,m_-^2)
@@ -541,6 +711,51 @@ C_{\mathrm{bg}}'(v)=\frac{e^2}{2K}\Bigl[\ln\frac{\xi M_A^2}{\mu^2}+2+\frac{M_h^2
 \end{equation*}
 で変わる。Landau ゲージと Fermi ゲージでは、$V_1''(v)$ がそれぞれ $\ln|m_G^2|$ と $1/m_G^2$ で発散する（Goldstone ボソンの赤外の発散）。
 
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.92]
+% K_h
+\begin{scope}[shift={(0,0)}]
+  \node[ins] (z) at (-0.85,0) {}; \node[insq] (y) at (0.85,0) {$X$};
+  \draw[ghost] (y.north west) .. controls (0.35,0.75) and (-0.35,0.75) .. (z.north east);
+  \draw[gold] (z.south east) .. controls (-0.35,-0.75) and (0.35,-0.75) .. (y.south west);
+  \node[font=\scriptsize] at (0,0.75) {$c$}; \node[font=\scriptsize] at (0,-0.78) {$G$};
+  \node[font=\scriptsize] at (-0.85,0.38) {$sh$};
+  \node[slab] at (0,-1.35) {$K_h$：$X$ の $\frac12M_AG$};
+\end{scope}
+% K_hh (a): h on the ghost line
+\begin{scope}[shift={(3.6,0)}]
+  \node[ins] (z) at (-0.85,0) {}; \node[insq] (y) at (0.85,0) {$X$};
+  \draw[ghost] (y.north west) .. controls (0.6,0.55) .. (0,0.62); \draw[ghost] (0,0.62) .. controls (-0.6,0.55) .. (z.north east);
+  \draw[gold] (z.south east) .. controls (-0.35,-0.75) and (0.35,-0.75) .. (y.south west);
+  \draw[scalar] (0,0.62) -- (0,1.25); \node[vtx] at (0,0.62) {};
+  \node[font=\scriptsize] at (0.2,1.22) {$h$};
+  \node[slab] at (0,-1.35) {(a) $\bar cch$};
+\end{scope}
+% (b): h on the G line
+\begin{scope}[shift={(7.2,0)}]
+  \node[ins] (z) at (-0.85,0) {}; \node[insq] (y) at (0.85,0) {$X$};
+  \draw[ghost] (y.north west) .. controls (0.35,0.75) and (-0.35,0.75) .. (z.north east);
+  \draw[gold] (z.south east) .. controls (-0.6,-0.55) .. (0,-0.62); \draw[gold] (0,-0.62) .. controls (0.6,-0.55) .. (y.south west);
+  \draw[scalar] (0,-0.62) -- (0,-1.15); \node[vtx] at (0,-0.62) {};
+  \node[font=\scriptsize] at (0.22,-1.08) {$h$};
+  \node[slab] at (0,-1.6) {(b) $GGh$};
+\end{scope}
+% (c): G -> A through A G h, A into d.A of X
+\begin{scope}[shift={(10.8,0)}]
+  \node[ins] (z) at (-0.85,0) {}; \node[insq] (y) at (0.85,0) {$X$};
+  \draw[ghost] (y.north west) .. controls (0.35,0.75) and (-0.35,0.75) .. (z.north east);
+  \draw[gold] (z.south east) .. controls (-0.6,-0.55) .. (0,-0.62); \draw[photon] (0,-0.62) .. controls (0.6,-0.55) .. (y.south west);
+  \draw[scalar] (0,-0.62) -- (0,-1.15); \node[vtx] at (0,-0.62) {};
+  \node[font=\scriptsize] at (0.22,-1.08) {$h$}; \node[font=\scriptsize] at (0.62,-0.82) {$A$};
+  \node[slab] at (0,-1.6) {(c) $AGh$、$X$ の $-\frac1{2\xi}\partial\!\cdot\!A$};
+\end{scope}
+\node[font=\small] at (7.2,1.6) {$K_{hh}(p^2)$};
+\end{tikzpicture}
+\caption{Nielsen 恒等式~\eqref{eq:nielsen} の係数の1ループの図（手順 (7)）。$\otimes$ は BRST 変換 $sh=-ecG$ の挿入、四角は $X=\int\bar c(\partial_\xi F+\frac B2)=\int\bar c\,\frac12(M_AG-\partial\!\cdot\!A/\xi)$ の挿入（運動量0）である。$c$ の線は必ず二つの挿入を結ぶ。$K_h$ の有限部分は背景場の $R_\xi$ の $C(v)$ に等しく、$K_{hh}$ の3個の図の和が式~\eqref{eq:nielsen2} で、$\partial_\xi\Sigma^H=2(p^2-M_h^2)K_{hh}$ を与える。}
+\label{fig:nielsendiag}
+\end{figure}
+
 \subsection{Coleman--Weinberg の機構}\label{sec:cw}
 
 $m^2=0$ の模型では、木のポテンシャル $V_0=\frac14\lambda\phi^4$ の最小点は原点にあるが、1ループの補正が対称性を破る~\cite{cw73}。場に依存する質量は $m_h^2=3\lambda\phi^2$、$m_G^2=\lambda\phi^2$、$m_A^2=e^2\phi^2$ である。$\lambda\sim e^4/K$ と数えると、式~\eqref{eq:V1} のうちゲージ場の $(3,\frac56)$ の項だけが $V_0$ と同じ次数になり
@@ -575,7 +790,7 @@ V=\frac{\lambda_{\mathrm{CW}}}{4!}\phi^4+\frac{3e^4}{64\pi^2}\phi^4\Bigl(\ln\fra
 
 \subsection{摂動のユニタリー性}\label{sec:unitarity}
 
-\paragraph{$Ah\to Ah$。}$A(k_1,\varepsilon_1)h(k_2)\to A(k_3,\varepsilon_3)h(k_4)$（$t=(k_1-k_3)^2$、$u=(k_1-k_4)^2$）は、ユニタリーゲージでは接触項、$t$ チャンネルの $h$、$s$ と $u$ チャンネルの $A$ の4個の図からなり
+\paragraph{$Ah\to Ah$。}$A(k_1,\varepsilon_1)h(k_2)\to A(k_3,\varepsilon_3)h(k_4)$（$t=(k_1-k_3)^2$、$u=(k_1-k_4)^2$）は、ユニタリーゲージでは接触項、$t$ チャンネルの $h$、$s$ と $u$ チャンネルの $A$ の4個の図（図~\ref{fig:unitdiag} の左）からなり
 \begin{equation}
 \begin{aligned}
 \mathcal M(Ah\to Ah)={}&2e^2(\varepsilon_1\cdot\varepsilon_3^*)\Bigl(1+\frac{3M_h^2}{t-M_h^2}\Bigr)
@@ -585,6 +800,36 @@ V=\frac{\lambda_{\mathrm{CW}}}{4!}\phi^4+\frac{3e^4}{64\pi^2}\phi^4\Bigl(\ln\fra
 \label{eq:Mah}
 \end{equation}
 である（式~\eqref{eq:Mahh} の交差。\ref{app:unitarity}）。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.84]
+% A h -> A h (unitary gauge)
+\begin{scope}[shift={(0,0)}] \contact{photon}{scalar}{photon}{scalar} \labs{$A$}{$h$}{$A$}{$h$} \node[slab] at (0,-1.3) {接触項}; \end{scope}
+\begin{scope}[shift={(2.8,0)}] \tchan{photon}{photon}{scalar}{scalar}{scalar} \node[slab] at (0,-1.3) {$t$：$h$}; \end{scope}
+\begin{scope}[shift={(5.6,0)}] \schan{photon}{scalar}{photon}{photon}{scalar} \node[slab] at (0,-1.3) {$s$：$A$}; \end{scope}
+\begin{scope}[shift={(8.4,0)}] \uchan{photon}{scalar}{photon}{scalar}{photon} \node[slab] at (0,-1.3) {$u$：$A$}; \end{scope}
+\node[font=\small] at (4.2,1.35) {$Ah\to Ah$（ユニタリーゲージ）};
+% one-loop bubbles of the scalar sector at high energy
+\begin{scope}[shift={(11.8,0)}]
+  \draw[scalar] (-1.05,0.6) -- (-0.45,0); \draw[scalar] (-1.05,-0.6) -- (-0.45,0);
+  \draw[scalar] (-0.45,0) arc (180:0:0.45); \draw[scalar] (0.45,0) arc (0:-180:0.45);
+  \draw[scalar] (0.45,0) -- (1.05,0.6); \draw[scalar] (0.45,0) -- (1.05,-0.6);
+  \node[vtx] at (-0.45,0) {}; \node[vtx] at (0.45,0) {};
+  \node[slab] at (0,-1.3) {$s$：$B(s)$};
+\end{scope}
+\begin{scope}[shift={(14.6,0)}]
+  \draw[scalar] (-1.0,0.75) -- (0,0.45); \draw[scalar] (0,0.45) -- (1.0,0.75);
+  \draw[scalar] (0,0.45) arc (90:270:0.45); \draw[scalar] (0,-0.45) arc (-90:90:0.45);
+  \draw[scalar] (-1.0,-0.75) -- (0,-0.45); \draw[scalar] (0,-0.45) -- (1.0,-0.75);
+  \node[vtx] at (0,0.45) {}; \node[vtx] at (0,-0.45) {};
+  \node[slab] at (0,-1.3) {$t$、$u$：$B(t)$、$B(u)$};
+\end{scope}
+\node[font=\small] at (13.2,1.35) {高エネルギーの1ループ（$h$、$G$）};
+\end{tikzpicture}
+\caption{左：$Ah\to Ah$ の木の図（手順 (9)、式~\eqref{eq:Mah}）。$R_\xi$ ゲージでは $s$、$u$ チャンネルに $G$ の交換が加わり、ゲージ場の $X$ の部分と打ち消す。右：$s$ がすべての質量より大きいときのスカラーの部分の1ループの図。4点の頂点 $\lambda_{abcd}$ を泡でつなぎ、$s$ チャンネルの泡だけが虚部 $i\pi$ を持つ（式~\eqref{eq:a1} の $\im a^{(1)}=(a^{(0)})^2$）。}
+\label{fig:unitdiag}
+\end{figure}
 
 \paragraph{部分波。}$J=0$ の部分波を
 \begin{equation*}
@@ -612,7 +857,7 @@ a_0^{(\lambda)}=\frac\lambda{16\pi}\begin{pmatrix}-3&1\\1&-3\end{pmatrix}\ \ (A_
 
 \paragraph{ゲージ場の交換の対数。}式~\eqref{eq:mlim} の $e^2$ の項は、$t$、$u$ チャンネルの $A$ の交換の前方と後方の極で、有限の $s$ では $1\mp c\sim M_A^2/s$ で切れる。そのため $A_LA_L\to hh$ と $A_Lh\to A_Lh$ の部分波には $-\frac{e^2}{8\pi}\ln\frac s{M_A^2}$ が加わり、電荷0の固有値を正の向きに、電荷2の固有値を負の向きにずらす。これが無視できるのは $\ln(s/M_A^2)\ll\lambda/e^2$ のときである。また、$M_h>2M_A$ では $A_Lh\to A_Lh$ の $u$ チャンネルの $A$ が物理領域で質量殻上に来うる（$u$ は $2M_A^2+2M_h^2-s$ から $(M_h^2-M_A^2)^2/s$ まで動く）ので、$\sqrt s>(M_h^2-M_A^2)/M_A$ で考える。
 
-\paragraph{1ループの補正。}$s$ がすべての質量より大きく $\lambda\gg e^2$ のとき、散乱は $V=\frac\lambda4(h^2+G^2)^2$ の質量のない2成分の理論と同じになる。$\MSbar$ の1ループの振幅は
+\paragraph{1ループの補正。}$s$ がすべての質量より大きく $\lambda\gg e^2$ のとき、散乱は $V=\frac\lambda4(h^2+G^2)^2$ の質量のない2成分の理論と同じになる。$\MSbar$ の1ループの振幅（図~\ref{fig:unitdiag} の右）は
 \begin{equation*}
 \mathcal M^{(1)}_{abcd}=\frac1{2K}\sum_{ef}\bigl[\lambda_{abef}\lambda_{efcd}B(s)+\lambda_{acef}\lambda_{efbd}B(t)+\lambda_{adef}\lambda_{efbc}B(u)\bigr],\qquad B(x)=2-\ln\frac{-x-i0}{\mu^2}
 \end{equation*}
@@ -630,7 +875,33 @@ a^{(1)}=\bigl(a^{(0)}\bigr)^2\Bigl(\frac{13}{2\pi}+i\Bigr)\ \ (\text{電荷0}),\
 \frac{m^2T^2}{24}-\frac{T}{12\pi}(m^2)^{3/2}+\frac{m^4}{64\pi^2}\Bigl(\frac32-L_b-c\Bigr),\qquad L_b=2\ln\frac\mu T+2\gamma_E-2\ln4\pi
 \label{eq:hT}
 \end{equation}
-になる（場によらない項と $m^6/T^2$ 以下を除く）。$T^2$ の項から、$h$ と $G$ の熱質量 $\Pi_h=\Pi_G=(\frac\lambda3+\frac{e^2}4)T^2$ が出る。背景場の $R_\xi$ ゲージでも Fermi ゲージでも、$G$ と縦波とゴーストの $T^2$ の項の和は $m_G^2T^2/24$ で、熱質量はゲージによらない。ゲージ場の時間成分は Debye 質量 $\Pi_L=e^2T^2/3$ を持つ。
+になる（場によらない項と $m^6/T^2$ 以下を除く）。$T^2$ の項から、$h$ と $G$ の熱質量 $\Pi_h=\Pi_G=(\frac\lambda3+\frac{e^2}4)T^2$ が出る。背景場の $R_\xi$ ゲージでも Fermi ゲージでも、$G$ と縦波とゴーストの $T^2$ の項の和は $m_G^2T^2/24$ で、熱質量はゲージによらない。ゲージ場の時間成分は Debye 質量 $\Pi_L=e^2T^2/3$ を持つ。熱質量を挿入したリングの図を足し上げると（daisy の再和、図~\ref{fig:thermaldiag} の (a)）、$n=0$ のモードの3次の項は $(m^2+\Pi)^{3/2}$ になる。
+
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.9]
+% (a) daisy: a soft loop with hard self-energy insertions (petals)
+\begin{scope}[shift={(0,0.1)}]
+  \draw[scalar] (0,0) circle (0.8);
+  \foreach \ang in {90,162,234,306,18} {
+    \draw[thick,decorate,decoration={snake,amplitude=0.7pt,segment length=2.8pt}] (\ang:1.1) circle (0.3);
+    \node[vtx] at (\ang:0.8) {};}
+  \node[font=\scriptsize,align=center] at (0,0) {ソフト\\$n=0$};
+  \draw[-{Stealth[length=1.4mm]},thin] (-1.95,1.3) node[left,font=\scriptsize,align=right] {ハード\\$n\ne0$} -- (-1.38,0.62);
+  \node[font=\scriptsize,align=center] at (0,-1.85) {(a) リングの図：ソフトな $A_0$、$h$、$G$ の\\ループにハードな $\Pi_L$、$\Pi_{h,G}$ を挿入};
+\end{scope}
+% (b) the hierarchy of scales
+\begin{scope}[shift={(4.0,1.6)}]
+  \node[box=black!5,minimum width=6.2cm] (h) at (3.1,0) {4次元、温度 $T$：松原の振動数 $2\pi nT$（ハード、$\sim\pi T$）};
+  \node[box=blue!7,minimum width=6.2cm] (s) at (3.1,-1.75) {3次元のソフトな理論：$A_i$、$A_0$、$\Phi$\\$m_D^2=\Pi_L=\tfrac13e^2T^2$、$m_3^2=-m^2+(\tfrac\lambda3+\tfrac{e^2}4)T^2$};
+  \node[box=orange!10,minimum width=6.2cm] (u) at (3.1,-3.6) {3次元の超ソフトな理論：$A_i$、$\Phi$（$\sim eT$）\\$E\to\tfrac23E$、$D$ と $\lambda_T$ のずれ（式~\eqref{eq:genUS}）};
+  \draw[flow] (h) -- node[right,font=\scriptsize,align=left,xshift=2pt] {$n\ne0$ を積分（DRalgo \texttt{PerformDRhard}）} (s);
+  \draw[flow] (s) -- node[right,font=\scriptsize,align=left,xshift=2pt] {$A_0$（$\sim eT$）を積分（\texttt{PerformDRsoft}）} (u);
+\end{scope}
+\end{tikzpicture}
+\caption{有限温度の再和（手順 (10)）。(a) 熱質量 $\Pi$ を挿入したリングの図の和が、3次の項 $-\frac T{12\pi}(m^2+\Pi)^{3/2}$（Arnold--Espinosa）を与える。(b) 次元簡約の階層。ハードなモードを積分した3次元の理論の1ループのポテンシャルは、再和した4次元の1ループのポテンシャルに一致し（硬いモードの場の規格化を含む）、$A_0$ をさらに積分すると縦波の遮蔽が一般形の係数のずれになる。}
+\label{fig:thermaldiag}
+\end{figure}
 
 \paragraph{一般形。}ゲージ場の3次と4次の項だけを残すと、有限温度のノート~\cite{thermalnote} の一般形
 \begin{equation}
@@ -643,7 +914,7 @@ D=\frac{4\lambda+3e^2}{24},\quad E=\frac{e^3}{4\pi},\quad \lambda_T=\lambda+\fra
 E\to\frac23E,\qquad D\to D-\frac{e^3}{8\sqrt3\,\pi},\qquad \lambda_T\to\lambda_T-\frac{\sqrt3\,e^3}{8\pi}
 \label{eq:genUS}
 \end{equation}
-になる。これは $A_0$ を積分した3次元の超ソフトの有効理論の値で、$\phi_c/T_c$ を $\frac23$ 程度にする。
+になる。これは $A_0$ を積分した3次元の超ソフトの有効理論の値で（図~\ref{fig:thermaldiag} の (b)）、$\phi_c/T_c$ を $\frac23$ 程度にする。
 
 \paragraph{ゲージ依存。}$G$ の質量を熱質量で $m_{\mathrm{eff}}^2=m_G^2+\Pi_G$ としたポテンシャル（3次元の有効理論の1ループに当たる）で、ゲージを比べる。$T_c$ の近くでは $m_{\mathrm{eff}}^2=2D(T^2-T_0^2)+\lambda\phi^2\sim e^3T^2$ が $\xi m_A^2\sim\xi e^2T^2$ より小さい。背景場の $R_\xi$ ゲージの $G$ とゴーストの3次の項 $-\frac T{12\pi}[(m_{\mathrm{eff}}^2+\xi m_A^2)^{3/2}-(\xi m_A^2)^{3/2}]$ は $-\frac T{8\pi}\sqrt\xi\,e\phi\,m_{\mathrm{eff}}^2$ で、$ET\phi^3$ に比べて $e$ の大きさである。ただし $T_c$ と $\phi_c/T_c$ には $\lambda/D\sim e$ が掛かって現れるので、ずれは $\sqrt\xi e^2$ の次数になる（$\phi^2$ の係数の $\xi$ 依存は $T_c$ に吸収され、$\xi e^2L_b/K$ の大きさ）。Fermi ゲージでは $m_\pm^2\simeq\pm i\sqrt{\xi m_A^2m_{\mathrm{eff}}^2}$ から $\frac{\sqrt2T}{12\pi}(\xi m_A^2m_{\mathrm{eff}}^2)^{3/4}$ が加わる。これは $\phi^3$ の係数を $E$ に比べて $(\xi e)^{3/4}$ の割合で変えるので、$\phi_c/T_c$ のずれは $e^{3/4}$ でしか小さくならない。どちらでも、$\lambda\sim e^3$ の数え方で主要な次数の $T_c$ と $\phi_c/T_c$（式~\eqref{eq:genAH}、\eqref{eq:genUS}）はゲージによらず、ゲージ依存はその先に現れる。これは零温度の手順 (7)、(8) と同じ Nielsen 恒等式~\cite{nielsen75} の構造である。$\phi\lesssim m_{\mathrm{eff}}/(\sqrt\xi e)$ ではこの展開が成り立たず、$\xi$ が大きいと小さい $\phi$ に $\xi$ による別の極小が現れうる。
 
@@ -653,7 +924,7 @@ $z$ 方向に一様な静的な弦（巻き数 $n$）を、$\rho=M_Ar$、$\theta
 \begin{equation*}
 \Phi=\frac v{\sqrt2}f(\rho)\,e^{in\theta},\qquad A_\theta=\frac n{er}\,a(\rho)
 \end{equation*}
-と置く~\cite{abrikosov57,no73}。ポテンシャルを $V=\lambda(|\Phi|^2-v^2/2)^2$ と最小値0にずらすと、単位長さあたりのエネルギー（張力）は
+と置く~\cite{abrikosov57,no73}（断面の模式図は図~\ref{fig:vortexdiag}）。ポテンシャルを $V=\lambda(|\Phi|^2-v^2/2)^2$ と最小値0にずらすと、単位長さあたりのエネルギー（張力）は
 \begin{equation}
 \mathcal T=2\pi v^2\int_0^\infty\rho\,\dd\rho\Bigl[\frac{n^2a'^2}{2\rho^2}+\frac{f'^2}2+\frac{n^2f^2(1-a)^2}{2\rho^2}+\frac\beta8(1-f^2)^2\Bigr],\qquad \beta=\frac{M_h^2}{M_A^2}=\frac{2\lambda}{e^2}
 \label{eq:tension}
@@ -676,9 +947,44 @@ f''+\frac{f'}\rho-\frac{n^2f(1-a)^2}{\rho^2}+\frac\beta2f(1-f^2)=0,\qquad a''-\f
 \end{equation}
 で成り立つ（Bogomolny の限界）。$\beta=1$ では $\mathcal T(n)=n\mathcal T(1)$ で、渦糸の間に力が働かない。$\beta<1$ では $\mathcal T(n)<n\mathcal T(1)$ で渦糸は引き合い（第一種の超伝導）、$\beta>1$ では反発する（第二種）。境界の $\beta=1$ は Ginzburg--Landau の $\kappa=M_h/(\sqrt2M_A)=1/\sqrt2$ である。$x\to sx$ の変形に対する停留性（Derrick の議論）から、どの $\beta$ でも磁場とポテンシャルのエネルギーが等しい（$\int\frac12B^2=\int V$）。遠方では $1-a\propto\rho K_1(\rho)$（質量 $M_A$）、$1-f\propto K_0(\sqrt\beta\rho)$（質量 $M_h$、$\beta<4$）で減衰する。$\beta\gg1$ では、スカラーの芯 $1/M_h$ とゲージ場の遮蔽の長さ $1/M_A$ の間で勾配のエネルギーが $\frac{n^2v^2}{2\rho^2}$ になり、$\mathcal T\simeq\pi v^2\frac{n^2}2\ln\beta$ と対数で増える（\ref{app:vortex}）。
 
+\begin{figure}[tbp]
+\centering
+\begin{tikzpicture}[scale=0.95]
+% (a) cross section of an n = 1 vortex
+\begin{scope}[shift={(0,0)}]
+  \shade[inner color=white,outer color=black!22] (0,0) circle (1.95);
+  \fill[blue!14,opacity=0.8] (0,0) circle (1.15);
+  \draw[blue!50!black,thick] (0,0) circle (1.15);
+  \draw[black!60,dashed] (0,0) circle (0.55);
+  \foreach \p in {(0,0.82),(0.62,0.55),(-0.62,0.55),(-0.88,-0.15),(-0.45,-0.78),(0.3,-0.95),(0.9,0.0)} {
+    \draw[thick,blue!60!black] \p circle (0.07); \fill[blue!60!black] \p circle (0.025);}
+  \foreach \ang in {0,45,...,315}
+    \draw[-{Stealth[length=1.6mm]},thick,black!75] ($(\ang:1.6)+(\ang+90:-0.2)$) -- ($(\ang:1.6)+(\ang+90:0.2)$);
+  \draw[{Stealth[length=1.3mm]}-{Stealth[length=1.3mm]},thin] (0,0) -- (-0.55,0) node[midway,above,font=\scriptsize,fill=blue!7,inner sep=1pt,rounded corners=1pt,yshift=1pt] {$1/M_h$};
+  \draw[{Stealth[length=1.3mm]}-{Stealth[length=1.3mm]},thin] (0,0) -- (-45:1.15);
+  \node[font=\scriptsize,fill=blue!7,inner sep=1pt,rounded corners=1pt] at (0.12,-0.6) {$1/M_A$};
+  \node[font=\scriptsize,align=center] at (0,-2.65) {(a) $n=1$ の断面。$|\Phi|$ は芯（破線、\\$\sim1/M_h$）で0、磁束 $2\pi/e$（$\odot$）は\\$\sim1/M_A$ に閉じ込められる。矢印は\\$\Phi$ の位相（一周で $2\pi n$ 回る）};
+\end{scope}
+% (b) type I / type II
+\begin{scope}[shift={(5.7,0.75)}]
+  \node[font=\scriptsize,align=center] at (0,1.0) {$\beta=1$（BPS）では力が働かず $\mathcal T=\pi v^2|n|$};
+  \foreach \x in {-0.75,0.75} { \shade[inner color=white,outer color=black!20] (\x,0) circle (0.5); \fill[blue!14] (\x,0) circle (0.3);}
+  \draw[-{Stealth[length=2mm]},thick] (-0.75,0.62) -- (-0.25,0.62); \draw[-{Stealth[length=2mm]},thick] (0.75,0.62) -- (0.25,0.62);
+  \node[font=\scriptsize,align=center] at (0,-0.85) {$\beta<1$（$M_h<M_A$）：引き合う（第一種）\\$\mathcal T(2)<2\mathcal T(1)$};
+  \begin{scope}[shift={(0,-2.3)}]
+    \foreach \x in {-0.75,0.75} { \shade[inner color=white,outer color=black!20] (\x,0) circle (0.5); \fill[blue!14] (\x,0) circle (0.3);}
+    \draw[-{Stealth[length=2mm]},thick] (-0.75,0.62) -- (-1.25,0.62); \draw[-{Stealth[length=2mm]},thick] (0.75,0.62) -- (1.25,0.62);
+    \node[font=\scriptsize,align=center] at (0,-0.85) {$\beta>1$（$M_h>M_A$）：反発する（第二種）\\$\mathcal T(2)>2\mathcal T(1)$};
+  \end{scope}
+\end{scope}
+\end{tikzpicture}
+\caption{Abrikosov--Nielsen--Olesen の渦糸（手順 (11)）。(a) スカラーの芯の大きさ $1/M_h$ と磁束の広がり $1/M_A$ の比が $\sqrt\beta$ である。(b) $\beta=M_h^2/M_A^2$ による渦糸の間の力。$\beta<1$ では芯の重なりの得が磁場の反発に勝って引き合い、$\beta>1$ では反発する。}
+\label{fig:vortexdiag}
+\end{figure}
+
 \section{検算の計画}\label{sec:plan}
 
-第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、式~\eqref{eq:T}、\eqref{eq:se} と\ref{app:se} の $\Sigma_L$、$\Sigma^{AG}$ を、手で書いた Feynman 則から FeynCalc で $D$ 次元で記号として確かめた（図ごとの値も）。恒等式~\eqref{eq:stid}、$\Sigma^{GG}(0)=0$、$\Sigma_T$ が $\xi$ によらないこと、$\Sigma^H$ の $\xi$ 依存の形、式~\eqref{eq:uv} の極、対抗項~\eqref{eq:ct} で五つの2点関数が有限になること、極質量~\eqref{eq:polenum}（$\xi=0,\frac12,1,3$）と光学定理~\eqref{eq:optical} も同じ計算で確かめた。式~\eqref{eq:MLL} は偏極ベクトルを陽に作った数値で確かめた。正式な検算は手順 (2)〜(5) で行う。
+第~\ref{sec:results} 節の各量を、どの手段で計算して突き合わせるかを表~\ref{tab:plan} に、道具の流れを図~\ref{fig:workflow} に示す。手計算（付録）を基準とし、ツールの出力がそれと一致するかを確かめる。ツールの版と配置は計算環境の記録~\cite{env} にあり、これまでのノートで使ったものと同じである。ノートを書く前に、式~\eqref{eq:T}、\eqref{eq:se} と\ref{app:se} の $\Sigma_L$、$\Sigma^{AG}$ を、手で書いた Feynman 則から FeynCalc で $D$ 次元で記号として確かめた（図ごとの値も）。恒等式~\eqref{eq:stid}、$\Sigma^{GG}(0)=0$、$\Sigma_T$ が $\xi$ によらないこと、$\Sigma^H$ の $\xi$ 依存の形、式~\eqref{eq:uv} の極、対抗項~\eqref{eq:ct} で五つの2点関数が有限になること、極質量~\eqref{eq:polenum}（$\xi=0,\frac12,1,3$）と光学定理~\eqref{eq:optical} も同じ計算で確かめた。式~\eqref{eq:MLL} は偏極ベクトルを陽に作った数値で確かめた。正式な検算は手順 (2)〜(5) で行う。
 
 \begin{table}[tbp]
 \centering\small
@@ -702,6 +1008,33 @@ Coleman--Weinberg の機構 \eqref{eq:cw}、\eqref{eq:cwratio} & \ref{app:cw} & 
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\begin{figure}[tbp]
+\centering
+\newcommand{\stp}[1]{\\[-1pt]{\scriptsize\color{black!60}手順 #1}}
+\begin{tikzpicture}[scale=0.88,every node/.style={transform shape}]
+\node[box=black!6] (fr) at (0,0) {FeynRules\\\texttt{AbelianHiggs.fr}\stp{(1)}};
+\node[box=blue!7] (fa) at (3.7,1.6) {FeynArts の模型\\（一般の $R_\xi$）};
+\node[box=blue!7] (fc) at (7.4,2.3) {FeynCalc（$D$ 次元）\stp{(2)〜(5)、(7)、(9)}};
+\node[box=blue!7] (fo) at (7.4,0.9) {FormCalc\\（Feynman ゲージ）\stp{(5)}};
+\node[box=green!8] (px) at (11.1,1.6) {Package-X、LoopTools、\\COLLIER\stp{(3)、(5)〜(7)}};
+\node[box=orange!10] (ufo) at (3.7,-0.8) {UFO};
+\node[box=orange!10] (mg) at (7.4,-0.8) {MadGraph 3.8.1\\木、偏極 \texttt{zp\{0\}}\stp{(1)、(2)、(9)}};
+\node[box=orange!10] (nl) at (3.7,-2.3) {NLOCT\\$\to$ NLO の UFO};
+\node[box=orange!10] (ml) at (7.4,-2.3) {MadLoop\stp{(4)〜(6)}};
+\node[box=purple!8,minimum width=5.2cm] (oth) at (5.55,-3.75) {DRalgo、CosmoTransitions、scipy\stp{(6)、(8)、(10)、(11)}};
+\node[box=black!6,minimum height=2.9cm,text width=1.9cm] (hand) at (14.3,-1.0) {手計算\\（付録）\\[2pt]{\scriptsize 記号と数値の基準}};
+\draw[flow] (fr) -- (fa); \draw[flow] (fa) -- (fc); \draw[flow] (fa) -- (fo);
+\draw[flow] (fc) -- (px); \draw[flow] (fo) -- (px);
+\draw[flow] (fr) -- (ufo); \draw[flow] (ufo) -- (mg); \draw[flow] (fr) |- (nl); \draw[flow] (nl) -- (ml);
+\draw[flow,dashed] (px.east) -| ($(hand.north)$);
+\draw[flow,dashed] (mg.east) -- (mg.east -| hand.west);
+\draw[flow,dashed] (ml.east) -- (ml.east -| hand.west);
+\draw[flow,dashed] (oth.east) -| (hand.south);
+\end{tikzpicture}
+\caption{検算の道具の流れ（第~\ref{sec:plan} 節）。FeynRules の模型から FeynArts の模型と UFO を書き出し、FeynCalc と FormCalc で記号の振幅を、Package-X、LoopTools、COLLIER で有限部分を、MadGraph と MadLoop で行列要素と NLO の幅を求める。灰色の文字はその道具を使う手順で、Mathematica はすべての手順で使う。破線の矢印はすべて手計算の式との突き合わせである。}
+\label{fig:workflow}
+\end{figure}
 
 \paragraph{一致の基準。}発散部分と対抗項は、$1/\epsilon$ の係数が記号として完全に一致することを求める。有限部分は、基準点で、ツールどうしと手計算の数値が倍精度の丸め誤差の範囲（相対 $10^{-12}$ 程度）で一致することを求める。FeynCalc の PaVe 関数の $\epsilon^0$ の係数は、これまでのノートと同じく $\MSbar$ の値に直してから比べる。$\xi$ によらないはずの量は、$\xi=0,\frac12,1,3$ で同じ値になることを求める。MadGraph の断面積は、自分で数値積分した値と統計誤差の範囲で一致することを求める。
 
